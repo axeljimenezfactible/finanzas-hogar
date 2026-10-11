@@ -7,3 +7,8 @@ Opciones:
 - (c) Cambiar el oráculo para devengar de otra forma (consecuencia: invalida cifras canon; no se recomienda).
 Impacto: S2-07 queda PROVISIONAL (alta una vez resuelto). El motor y el revisor no pueden declarar cumplido el invariante literal del plan.
 Cómo seguí: S2.md S2-07 exige verificar la opción (b) como identidad exacta, marcada PROVISIONAL, y que la diferencia acumulada coincida con `periodos[i].diferencia_acumulada`. Ninguna cifra cambió.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (b): identidad con el saldo no devengado: deuda viva total = (devengado acumulado − efectivo acumulado) + saldo no devengado (10-abr-2027: 6,293.44 = 1,258.70 + 5,034.74). Se reescribe el criterio S2-07; ninguna cifra cambia.
+- **Estado:** RESUELTO. Se aplica en: criterios S2-07, S2.

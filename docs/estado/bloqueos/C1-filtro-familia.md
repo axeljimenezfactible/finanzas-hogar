@@ -7,3 +7,8 @@ Opciones:
 - C. Dos valores (Hogar, Karen) incluyentes, sin «Conjunto». Consecuencia: N-040 pierde la opción «Conjunto» y U1 debe corregirse.
 Impacto: Solo el significado del parámetro `family` en listExpenses, listCreditPurchases, listScheduledPayments, listCalendarEvents, getExpenseTotals, getExpenseSummary, getExpenseMonthlyTrend y queryView. Ninguna cifra canon depende de esto.
 Cómo seguí: C1 v1.0 usa la opción A, marcada `x-provisional` en el parámetro y PROVISIONAL en `C1-datos.md` §6. Se registró la inconsistencia de U1 como solicitud fuera de alcance.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción A: tres valores incluyentes (Hogar, Karen, Conjunto). «Hogar» incluye lo conjunto; «Karen» incluye lo conjunto. Deja de ser PROVISIONAL.
+- **Estado:** RESUELTO. Se aplica en: C1 v1.1 (parámetro `family`), U1 N-040.

@@ -24,10 +24,13 @@ Este archivo lo lee **todo agente** antes de empezar. Es parte del contrato de t
 - Solo escribes en los archivos y carpetas que tu prompt te asigna. Si necesitas cambiar algo fuera de tu alcance, lo escribes como **solicitud** en tu reporte (ruta, cambio, motivo) y el integrador decide.
 - No haces `git commit`: el integrador del flujo hace un commit por flujo. Tú solo dejas archivos.
 
-## 4. Tope de 300K tokens por agente
-- Planifica el trabajo en bloques. Cada ~40 acciones de herramienta actualiza `docs/estado/<flujo>/<agente>.md` con el progreso (qué está hecho, qué falta).
-- Si pasas de ~120 acciones de herramienta o ves que lo restante no cabe en una sesión corta, **cierra limpio**: deja todo consistente, escribe en el reporte la lista exacta de lo pendiente con rutas, y termina. No comprimas ni resumas contexto para «que quepa».
-- No leas archivos enteros grandes si solo necesitas una parte (`sed -n`, `grep`).
+## 4. Tope de 300K tokens por agente (reparto fino desde la puerta 1)
+En WF-0, 13 de 14 agentes superaron 300K de contexto en su pico por leer y escribir archivos enteros muy grandes. Desde la puerta 1 rigen estos límites **por agente**:
+- **Lectura ≤ 400 KB en total y escritura ≤ 150 KB en total** (suma de todo lo que lees y escribes con herramientas). Lleva la cuenta aproximada en tu archivo de progreso.
+- **≤ 60 acciones de herramienta.** A las ~30 actualiza `docs/estado/<flujo>/<agente>.md` con el progreso (qué está hecho, qué falta). Si vas a pasar de 60 o lo restante no cabe, **cierra limpio**: deja todo consistente, escribe en el reporte la lista exacta de lo pendiente con rutas, marca `cerrado_por_tope: true` y termina. No comprimas ni resumas contexto para «que quepa».
+- **Nunca leas enteros** `docs/contratos/openapi.yaml` (597 KB), `C1-datos.md` (113 KB), `diccionario-datos.md` (162 KB), `U1-arquitectura.md` (123 KB) ni la migración (137 KB). Usa los **extractos por módulo** de `docs/contratos/extractos/` (los genera `backend/internal/api/c1gen/build.py --extractos`) y `grep`/`sed -n` para lo demás.
+- Escribe archivos grandes **por partes** (varias escrituras cortas o un script que los genere), nunca un solo volcado de más de 40 KB.
+- Si una tarea no cabe en estos límites, no es tu problema resolverlo apretando: repórtalo como **Pendiente con rutas** y el orquestador la reparte.
 
 ## 5. Reporte final (obligatorio, es lo que devuelves)
 Ruta: `docs/estado/<flujo>/<agente>.md`. Secciones: **Hecho** (lista), **Archivos** (rutas creadas o modificadas), **Verificación** (comandos ejecutados y su salida resumida: pruebas, compilaciones, cálculos), **Supuestos**, **Bloqueos** (rutas a los archivos de bloqueo), **Pendientes**, **Solicitudes fuera de alcance**, **Paquetes instalados** (si instalaste algo del sistema), **Consumo aproximado** (número de acciones de herramienta y tamaño de lo leído y escrito).

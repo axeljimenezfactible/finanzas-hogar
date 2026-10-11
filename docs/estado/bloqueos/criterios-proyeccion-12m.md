@@ -7,3 +7,8 @@ Opciones:
 - (c) Dejar la proyección de los meses 7–12 configurable en Ajustes con (b) por defecto.
 Impacto: Los meses 7–12 no tienen cifra canon; el motor los marca PROVISIONAL.
 Cómo seguí: S2-09 exige que P1–P6 coincidan con el oráculo y que los meses 7–12 lleven la marca PROVISIONAL y apunten a este bloqueo.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (c): configurable en Ajustes, con (b) por defecto: solo compromisos contratados más gastos fijos e ingresos del CSV de Axel; un interruptor agrega la cadencia bimestral de despensa a crédito y el papel alterno de $199.
+- **Estado:** RESUELTO. Se aplica en: criterios S2-09, S1 1.2 (clave de ajuste), S2, U4.

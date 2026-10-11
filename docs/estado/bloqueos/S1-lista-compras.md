@@ -7,3 +7,8 @@ Opciones:
 - C. Lista solo calculada, sin marcas ni artículos a mano. Consecuencia: las dos tablas salen del esquema y U1 quita N-151 a N-153 y N-165 (y el paso 3 de F-3 cambia).
 Impacto: `shopping_list` y `shopping_list_item` (migración 00001), RN-15 de `reglas-negocio.md` y las operaciones de C1 para N-151, N-152, N-153 y N-165 quedan PROVISIONALES hasta la puerta 1. Ninguna cifra canon depende de esto.
 Cómo seguí: Implementé la opción A marcada PROVISIONAL en la migración (`@entity` y `@desc` de las dos tablas), en el diccionario y en RN-15, para que la matriz U1 ↔ C1 pueda cerrarse. Si Axel elige B o C, se quitan las dos tablas y sus disparadores `updated_at` en la siguiente revisión del esquema.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción A: compartida en el servidor. Las dos tablas se quedan y dejan de ser PROVISIONALES.
+- **Estado:** RESUELTO. Se aplica en: S1 1.2 (diccionario y reglas), C1 v1.1.

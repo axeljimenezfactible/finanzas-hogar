@@ -10,3 +10,8 @@ Opciones:
 - Punto 3. A: captura manual del chat_id (`createNotificationRecipient`, dato solo de entrada que nunca se devuelve). B: el bot lo detecta y la persona lo confirma. Consecuencia: el esquema no cambia en ninguna; con B, S7 detecta el chat y C1 agrega la confirmación.
 Impacto: lo que hace la API en N-087, N-278, N-075 y N-299 queda PROVISIONAL en `C1-datos.md` (§10, §13 y §14). Ninguna cifra canon depende de esto.
 Cómo seguí: C1 usa las tablas del esquema 1.1 y deja PROVISIONAL solo estos tres puntos: el presupuesto acepta cualquier vigencia que no se traslape, «Guardar para después» guarda solo la lectura cruda y el chat se registra a mano. Ninguna necesidad queda sin operación. No inventé columnas ni valores.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Punto 1 (vigencia del presupuesto): configurable en cada cambio, «solo este mes» o «de este mes en adelante», con «de este mes en adelante» preseleccionado; la operación que cambia el monto recibe el alcance (`scope`). Punto 2 (ticket OCR «Guardar para después»): opción B, se guardan las correcciones como borrador (columna nueva en la migración 00002 y operación nueva en C1). Punto 3 (chat de Ximena): opción B, el bot lo detecta cuando ella escribe y ella confirma (S7 lo implementa; C1 suma la lectura de candidatos y la confirmación).
+- **Estado:** RESUELTO. Se aplica en: C1 v1.1, S1 1.2 (migración 00002), U1 (N-087, N-275, N-278, N-075, N-299), S7 en WF-3.

@@ -7,6 +7,8 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 - **Cuándo responder.** La columna «Fase que la usa» sale del «Impacto» de cada archivo. Las de la tabla A fijan C1 y U1, que se aprueban en la puerta 1. Las de la tabla B las necesitan los motores de WF-1, que arranca después de la puerta 1. Las de la tabla C son de diseño (WF-1, se aprueban en la puerta 2). Las de la tabla D son de construcción y operación (WF-3 y WF-4).
 - Cuando Axel responda, el orquestador anota la respuesta en cada archivo y regenera lo afectado (C1 v1.1 con `backend/internal/api/c1gen/build.py`; migración 00002 si cambia el esquema).
 
+> **Estado al 11-oct-2026 (puerta 1): las 31 preguntas quedaron RESUELTAS.** Axel respondió en la sesión; la respuesta está al final de cada archivo (sección «Respuesta de Axel») y consolidada en `docs/plan/decisiones.md` §K. Las dos preguntas sin archivo ya lo tienen: `C1-decimales-tasa.md` (A12) y `S1-tope-quincena-karen.md` (A13). Lo que sigue: aplicar las respuestas (C1 v1.1, migración 00002, U1, criterios y colorimetría) en el flujo de la puerta 1.
+
 ## Resumen
 
 | # | Tema | Archivo(s) | Fase que la usa | Lo que quedó mientras tanto |
@@ -254,3 +256,39 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 
 ### criterios-nxx · Qué significa «N-xx»
 - Resuelto el 10-oct-2026 en la ronda 1 de correcciones con la opción (b): «N-xx» es una necesidad de datos (`N-xxx` en U1 §3) y la pantalla es `P-xx` (`P-26.xx` para las secciones de Ajustes). No cambió cifras, esquema ni operaciones. Solo se reabre si Axel prefiere otra lectura (opción c).
+
+## Respuestas de la puerta 1 (11-oct-2026)
+
+| # | Respuesta de Axel (resumen) |
+|---|---|
+| A1 | A: lista compartida en el servidor |
+| A2 | Configurable por cambio («solo este mes» / «de este mes en adelante»); preselección «en adelante» |
+| A3 | B: se guardan las correcciones del OCR como borrador |
+| A4 | B: el bot detecta el chat y Ximena confirma |
+| A5 | A: tres valores incluyentes |
+| A6 | Aprobados los 5 valores y los 4 límites de R3-02 |
+| A7 | A: las cinco definiciones como están |
+| A8 | Lunes a domingo; quincenas 1–15 y 16–fin de mes |
+| A9 | 2: cola en el teléfono para gastos y peso |
+| A10 | (a) toques en controles; 3 toques |
+| A11 | (a) ventana deslizante 15 min por usuario e IP; sesión 90 días renovable |
+| A12 | Como se capturó (17.27 % y 25.8685 %) |
+| A13 | Sin tope fijo; Axel lo captura por persona |
+| B1 | A: los dos modos del oráculo |
+| B2 | B: capital repuesto solo al completarse el pago |
+| B3 | A: globales en Ajustes, ajustables por comparación; línea y crédito usados |
+| B4 | (a) mín-máx; desviación estándar; unidades por peso |
+| B5 | (a) Axel captura tasa y método por producto |
+| B6 | (b) identidad con el saldo no devengado |
+| B7 | (a) total ÷ días reales; semanal = diario × 7 |
+| B8 | (c) configurable; por defecto solo compromisos y CSV |
+| B9 | C: decaimiento lineal 30→90 días; PROFECO solo referencia |
+| B10 | D: Mifflin-St Jeor × actividad con ajuste por objetivo |
+| B11 | (a) 5 tickets reales de Axel; renglón = descripción + cantidad + importe |
+| B12 | (a) dominio, motores, recetas y precios |
+| C1 | 2: gasto a terracota 40–45°; mover Karen y Bodega Aurrera |
+| C2 | (a) consecutivas con refuerzo |
+| D1 | pacman -Sy (sin u) + go del repositorio: Go 1.27.2 instalado |
+| D2 | (a) solo LAN |
+| D3 | (b) ACL de lectura de openclaw.json para el servicio |
+| D4 | (a) cada agente propone; Axel aprueba en su puerta |

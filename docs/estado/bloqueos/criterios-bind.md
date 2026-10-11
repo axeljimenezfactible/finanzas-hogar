@@ -7,3 +7,8 @@ Opciones:
 - (c) LAN ahora y Tailscale como decisión posterior.
 Impacto: La dirección de escucha en S6, WF-4 y el certificado de mkcert (¿incluye el nombre de Tailscale?) quedan sin fijar.
 Cómo seguí: S6-14 exige declarar la dirección y no abrir Tailscale mientras no haya decisión.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (a): el servicio escucha solo en la LAN (192.168.50.x) con el nombre `finanzas.local`. Tailscale no se abre.
+- **Estado:** RESUELTO. Se aplica en: criterios S6-14, S6, WF-4 (mkcert solo para finanzas.local).

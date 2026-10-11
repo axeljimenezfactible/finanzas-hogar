@@ -7,3 +7,8 @@ Opciones:
 - (c) 85 % en todo `internal/`.
 Impacto: Los criterios exigen 85 % en dominio, motor_fin y motor_cred (seguro) y miden los demás; recetas y precios quedan con 85 % sujeto a confirmación.
 Cómo seguí: S4-15 y S5-13 piden medir y reportar con umbral 85 % sujeto a esta confirmación.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (a): el 85 % aplica a dominio, motor_fin, motor_cred, recetas y precios. API, auth, jobs, reportes y Telegram se miden y se reportan sin umbral.
+- **Estado:** RESUELTO. Se aplica en: criterios S4-15, S5-13, S6-02.

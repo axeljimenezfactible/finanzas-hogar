@@ -7,3 +7,8 @@ Opciones:
 - (c) Que S6 proponga valores en C1 y Axel los apruebe en la puerta 1.
 Impacto: Comportamiento PROVISIONAL en C1 y S6; el umbral 5/15 sí es canon.
 Cómo seguí: S6-06 y S6-07 prueban 5 en 15 min y una sesión de al menos 2 meses (plural de «meses»); el resto marcado PROVISIONAL.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (a): ventana deslizante de 15 minutos por usuario e IP (el bloqueo se levanta cuando en los últimos 15 min hay menos de 5 fallos); sesión de 90 días renovable con cada uso. Dejan de ser PROVISIONALES.
+- **Estado:** RESUELTO. Se aplica en: criterios S6-06 y S6-07, C1 v1.1, S6.

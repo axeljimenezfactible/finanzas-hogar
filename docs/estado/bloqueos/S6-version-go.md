@@ -7,3 +7,8 @@ Opciones:
 - C. Seguir con Go 1.26 hasta la siguiente actualización normal del sistema. Consecuencia: S6-01 no se puede declarar cumplido; el código actual no usa nada exclusivo de 1.27.
 Impacto: Solo la versión declarada; `go build ./...` y `go vet ./...` pasan con 1.26.5.
 Cómo seguí: `backend/go.mod` declara `go 1.26` (compatible con el Go instalado, como pide la tarea) y no instalé nada con pacman.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Axel: «corre pacman -Sy sin el u e instala la versión de Go que necesites». Hecho el 11-oct-2026: `pacman -Sy` y `pacman -S go` → Go 1.27.2 instalado; `go build` y `go vet` pasan. `go.mod` pasa a `go 1.27`.
+- **Estado:** RESUELTO. Se aplica en: backend/go.mod (1.27), criterio S6-01.

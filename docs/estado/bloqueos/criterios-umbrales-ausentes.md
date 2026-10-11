@@ -7,3 +7,8 @@ Opciones:
 - (c) Valores por defecto estándar documentados (cabeceras OWASP, 90 días de retención, etc.) marcados PROVISIONAL.
 Impacto: Esos valores quedan PROVISIONAL en cada criterio afectado; ninguno bloquea las partes no dependientes.
 Cómo seguí: Los criterios piden que el valor esté escrito y marcado PROVISIONAL hasta aprobación; nadie los inventa en silencio.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (a): cada agente propone el valor con su justificación y Axel lo aprueba en la puerta que toque (tiempo máximo del optimizador en la puerta 2; reportes, respaldos, cabeceras, adjuntos, PDF y permisos en la puerta 4). Hasta entonces, PROVISIONAL con la propuesta escrita.
+- **Estado:** RESUELTO. Se aplica en: criterios S3-12, S6-09, S6-10, S7-04, S7-08, S7-10, S8-02, WF4-04, WF4-08.

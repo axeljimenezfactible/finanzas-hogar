@@ -7,3 +7,8 @@ Opciones:
 - C. Lista solo calculada, sin marcas ni artículos a mano. Consecuencia: las dos tablas salen del esquema y U1 quita N-151 a N-153 y N-165 (cambia el paso 3 de F-3). C1 conserva solo la lectura calculada.
 Impacto: las 5 operaciones de la lista y sus necesidades (N-150 a N-153, N-165, N-127 y N-073) quedan PROVISIONALES en `openapi.yaml` y en `C1-datos.md` (§10, §13 y §14) hasta la puerta 1. Ninguna cifra canon depende de esto.
 Cómo seguí: Igual que S1 en `S1-lista-compras`: C1 implementa la opción A sobre las tablas del esquema 1.1 y la marca PROVISIONAL, así que ninguna necesidad queda sin operación. Si Axel elige B o C, la siguiente regeneración de C1 (`backend/internal/api/c1gen/gen3_ops.py` y `gen2_schemas.py`) quita las operaciones y los esquemas de la opción A.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción A: la lista se comparta en el servidor (`shopping_list`, `shopping_list_item` y sus 5 operaciones). Dejan de ser PROVISIONALES.
+- **Estado:** RESUELTO. Se aplica en: C1 v1.1 (quitar marcas), S1 1.2 (quitar marcas), U1.

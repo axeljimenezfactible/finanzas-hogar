@@ -7,3 +7,8 @@ Opciones:
 - (c) Pares que aparecen juntos en una misma gráfica (máx. 5 series por gráfica).
 Impacto: U2-09 mide ambas lecturas; la lectura mínima (a) es el umbral duro y la (b) informativa hasta decidir.
 Cómo seguí: Criterio U2-09 redactado con (a) como mínimo y reporte de las dos métricas.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (a): ΔL ≥ 0.10 entre series consecutivas en el orden de uso, con forma, patrón y etiqueta como refuerzo. Todos los pares se reportan como información.
+- **Estado:** RESUELTO. Se aplica en: criterios U2-09.

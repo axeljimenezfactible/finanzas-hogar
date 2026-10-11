@@ -8,3 +8,8 @@ C. Todo con base truncada. Consecuencia: rompe 773.63/773.61 y las series A/B (1
 D. Como A, pero las partes por persona también con base truncada (igual que los montos). Consecuencia: reproduce el oráculo, y la persona externa paga el centavo de diferencia en el último pago en lugar de en los primeros.
 Impacto: S3 (generar series de compras nuevas) y S2 (devengo con centavos impares). El esquema no cambia, porque las series se guardan ya calculadas (`scheduled_payment`, `scheduled_payment_share`).
 Cómo seguí: En RN-07 dejé FIRME lo que fija el oráculo (montos truncados, capital HALF_UP, titular = monto − partes, referencia HALF_UP) y marqué PROVISIONAL solo la generalización, con la opción A como propuesta. Ninguna cifra canon ni del esquema depende de esta respuesta.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción A: conservar los dos modos del oráculo (montos con base truncada; capital con base HALF_UP; partes de personas externas con HALF_UP y el titular toma el resto; devengo HALF_UP y el último pago ajusta; el pago de referencia solo en cotizaciones). Deja de ser PROVISIONAL.
+- **Estado:** RESUELTO. Se aplica en: S1 1.2 (RN-07), S2, S3.

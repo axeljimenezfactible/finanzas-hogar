@@ -12,3 +12,8 @@ Opciones:
 - C. Quitar de C1 los campos que no se aprueben. Consecuencia: U1 pierde esas cifras en pantalla.
 Impacto: Campos `bmi_class`, `base_unit_price_cents`, `membership.*`, `value_per_peso_milli`, `score_bp` y `status` de inventario en `openapi.yaml`. Ninguna cifra canon del oráculo depende de esto.
 Cómo seguí: Los campos van con `x-provisional` y la referencia a este bloqueo; las fórmulas FIRMES (IMC = peso ÷ estatura², promedios de kcal, sumas de dinero) no se marcaron.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción A: las cinco definiciones como están (IMC OMS 18.5/25/30; precio por unidad base por 1 kg, 1 l o 1 pieza con ROUND_HALF_UP; punto de equilibrio de Sam's en compras al año; rendimiento por peso y puntaje ponderado según `criterios-optimizador`; estado de inventario reponer/agotado). Se quitan las marcas `x-provisional`.
+- **Estado:** RESUELTO. Se aplica en: C1 v1.1, S3, S4, S5.

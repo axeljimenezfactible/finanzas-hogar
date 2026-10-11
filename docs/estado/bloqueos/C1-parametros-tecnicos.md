@@ -11,3 +11,8 @@ Opciones:
 - B. Cambiar uno o varios valores. Consecuencia: C1 v1.1 con los valores nuevos (no cambian rutas ni esquemas, solo límites y descripciones).
 Impacto: Parámetros `Limit` e `IdempotencyKey`, `securitySchemes.cookieAuth`, `PasswordChangeRequest` e `importProfeco`. Ninguna cifra canon depende de esto.
 Cómo seguí: C1 v1.0 usa los valores de la opción A marcados `x-provisional` y PROVISIONAL en `C1-datos.md` §1, §2 y §5.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Aprobados los cinco valores (200 por página; idempotencia 24 h; cookie `SameSite=Strict`; contraseña nueva ≥ 12; PROFECO ≤ 1 GB) y los cuatro límites de R3-02 (cursor ≤ 512; búsqueda ≤ 200; usuario 3–64; clave de idempotencia 16–128). Dejan de ser PROVISIONALES.
+- **Estado:** RESUELTO. Se aplica en: C1 v1.1, S1 1.2 (CHECK ya existentes, sin cambio), S6.

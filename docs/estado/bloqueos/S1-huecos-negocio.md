@@ -10,3 +10,8 @@ Opciones:
 - Punto 3. A: captura manual del chat_id. B: el bot lo detecta y la persona lo confirma. Consecuencia: el esquema no cambia en ninguna (`notification_recipient.chat_id`, `verified_at`); cambia el trabajo de S7.
 Impacto: el comportamiento de N-087, N-275, N-278, N-075 y N-299 en la API (C1) queda PROVISIONAL. Ninguna cifra canon depende de esto.
 Cómo seguí: `budget` tiene vigencia y admite las dos lecturas del punto 1 (marcado PROVISIONAL en la columna `valid_to_date` y en RN-22). No agregué columna para el punto 2 ni cambié nada para el punto 3. Nada provisional entró en cifras.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Punto 1: vigencia configurable por cambio («solo este mes» o «de este mes en adelante»; preselección «en adelante»); el esquema con `budget.valid_to_date` ya lo admite. Punto 2: opción B, borrador de correcciones del OCR (columna nueva, migración 00002). Punto 3: opción B, el bot detecta el chat y Ximena confirma (tabla o columna de candidatos pendientes, migración 00002, sin guardar más que el chat_id y el nombre que da Telegram).
+- **Estado:** RESUELTO. Se aplica en: S1 1.2 (migración 00002, diccionario, reglas), C1 v1.1, S7.

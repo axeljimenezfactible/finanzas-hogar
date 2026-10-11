@@ -8,3 +8,8 @@ C. Primero su capital propio: la parte de Karen repone su capital por pago (1,19
 D. Lo que diga Kueski cuando Axel confirme cómo repone el capital (va junto con el interruptor A/B). Consecuencia: queda en espera de esa confirmación.
 Impacto: El disponible A/B entre pagos parciales y el estado de cuenta de Karen (S3, S7). El esquema no cambia: `credit_payment` guarda quién pagó, cuánto y cuándo.
 Cómo seguí: Documenté la regla a nivel de pago completo (FIRME, sale del oráculo) y marqué PROVISIONAL cómo se divide el capital entre las partes.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción B: el capital se repone solo cuando el pago se completa (la más conservadora). Deja de ser PROVISIONAL.
+- **Estado:** RESUELTO. Se aplica en: S1 1.2 (regla), S3, S7.

@@ -15,3 +15,8 @@ Opciones:
 Impacto: cambian las cifras de promedios semanales, costo semanal de comidas, tendencias por semana, flujo por quincena y la tarjeta «Flujo quincenal». No cambian las pantallas, los flujos ni las necesidades de datos (solo sus fechas de corte).
 
 Cómo seguí: en U1 usé Semana A y Quincena C marcadas **PROVISIONAL** (§0.2 del documento). Ninguna cifra se calculó en U1 con esas fechas. S1 y S2 deben usar la misma respuesta en `docs/contratos/reglas-negocio.md`.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Semana de lunes a domingo (ISO 8601). Quincenas del 1 al 15 y del 16 al último día del mes; el 31 cae en la segunda. FIRME.
+- **Estado:** RESUELTO. Se aplica en: U1 §0.2, S1 (CHECK de `period` y RN-06 dejan de ser PROVISIONALES), S2.

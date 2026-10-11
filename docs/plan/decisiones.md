@@ -64,3 +64,41 @@ Fuente: 17 rondas de preguntas en la Etapa A (registro completo en `plan.md` §2
 
 ## J. Puertas de aprobación en la Etapa B
 1. Tras WF-0: C1 + U1 + criterios. 2. Tras WF-1: DESIGN.md + C2 + motores. 3. Antes de Pista 3: Axel inicia sesión en claude.ai/design y comparte `docs/design/entrada/`. 4. Tras WF-3: C3 + U5. Entre puertas no se pregunta salvo bloqueos.
+
+## K. Respuestas de la puerta 1 (11-oct-2026)
+Axel respondió en la sesión las 31 preguntas de `docs/estado/bloqueos/INDICE.md` más 3 de proceso. **Son decisiones cerradas**; cada archivo de bloqueo lleva la respuesta al final. Se aplican en el flujo de la puerta 1 (C1 v1.1, esquema 1.2 con migración 00002, U1 1.1, criterios 1.1, colorimetría 1.1) y en los motores de WF-1.
+
+- **K1 (A1) Lista de compras:** compartida en el servidor (`shopping_list`, `shopping_list_item`, 5 operaciones). Deja de ser PROVISIONAL.
+- **K2 (A2) Vigencia de un cambio de presupuesto:** configurable en cada cambio («solo este mes» o «de este mes en adelante»), con **«de este mes en adelante» preseleccionado**. La operación que cambia el monto recibe el alcance (`scope`); el esquema ya lo admite.
+- **K3 (A3) Ticket con OCR, «Guardar para después»:** se guardan las correcciones como **borrador** (columna nueva en 00002; operación nueva en C1).
+- **K4 (A4) Chat de Telegram de Ximena:** **el bot lo detecta cuando ella escribe y ella confirma** en Ajustes. S7 lo implementa; C1 suma la lectura de candidatos pendientes y la confirmación. Nota técnica para S7: MultiX ya consume las actualizaciones del bot; S7 verifica cómo convivir (bitácora de MultiX, código de enlace u otra vía) y, si no hay forma limpia, deja bloqueo en vez de asumir.
+- **K5 (A5) Filtro «familia»:** tres valores incluyentes: Hogar (incluye lo conjunto), Karen (incluye lo conjunto), Conjunto.
+- **K6 (A6) Valores técnicos aprobados:** 200 registros por página; `Idempotency-Key` retenida 24 h; cookie `SameSite=Strict`; contraseña nueva ≥ 12 caracteres; PROFECO ≤ 1 GB; cursor ≤ 512; búsqueda ≤ 200; usuario 3–64; clave de idempotencia 16–128. Dejan de ser PROVISIONALES.
+- **K7 (A7) Campos calculados aprobados como están:** IMC OMS (18.5 / 25 / 30); precio por unidad base (1 kg, 1 l, 1 pieza; ROUND_HALF_UP); punto de equilibrio de Sam's (compras al año que cubren la membresía); rendimiento por peso y puntaje (según K17); estado de inventario (reponer si existencia ≤ nivel de reposición; agotado si 0).
+- **K8 (A8) Periodos:** semana **lunes a domingo**; quincenas **del 1 al 15 y del 16 al último día del mes** (el 31 cae en la segunda). FIRME.
+- **K9 (A9) Captura sin conexión:** **cola en el teléfono para gastos y peso**, enviada al volver a la red de casa sin duplicar: claves de idempotencia en `expense` y `weight_entry` (00002); C1 acepta capturas atrasadas con `Idempotency-Key` y fecha de captura; la PWA implementa la cola en WF-3.
+- **K10 (A10) «Toque»:** solo los toques en controles (abrir, elegir, guardar); teclear y los valores por defecto no cuentan. Registrar un gasto = 3 toques.
+- **K11 (A11) Login y sesión:** ventana deslizante de 15 min por usuario e IP; sesión de 90 días renovable con el uso.
+- **K12 (A12) Tasas en pantalla:** **como se capturaron** (17.27 % y 25.8685 %): se guarda el número de decimales capturado y la pantalla lo respeta; los cálculos usan la fracción exacta. El sufijo «Z» de fechas-hora solo se acepta en entradas.
+- **K13 (A13) Tope por quincena de Karen:** sin tope fijo; Axel lo captura por persona en Ajustes › Personas y reparto cuando quiera. 374.93 fue su parte por pago, no un tope.
+- **K14 (B1) Redondeo de series nuevas:** los dos modos del oráculo (montos con base truncada; capital con base HALF_UP; partes de personas externas con HALF_UP y el titular toma el resto; devengo HALF_UP y el último pago ajusta; pago de referencia solo en cotizaciones).
+- **K15 (B2) Parte de Karen pagada por separado:** el capital se repone **solo cuando el pago se completa**.
+- **K16 (B3) Restricciones duras del comparador:** globales en Ajustes › Créditos y condiciones, ajustables en cada comparación; colchón medido en la línea que se usa; compras vivas y deuda en cero en el crédito que se usa. **Los valores los captura Axel**; mientras no existan, el comparador avisa «faltan restricciones» y no recomienda (no se inventa un valor por defecto).
+- **K17 (B4) Puntaje ponderado:** normalización mín-máx entre los escenarios generados; «pago parejo y bajo tope» = desviación estándar de los pagos (y pico contra el tope cuando hay tope por persona); «comprar más por peso» = unidades base de la canasta por peso gastado con los precios vigentes de cada tienda.
+- **K18 (B5) Tarjeta bancaria y crédito de tienda:** Axel captura por producto (desde su estado de cuenta) tasa anual, base diaria o mensual, si incluye IVA, porcentaje de pago mínimo y mínimo fijo; el motor aplica la fórmula general; sin datos muestra «falta capturar».
+- **K19 (B6) Deuda viva:** deuda viva total = (devengado acumulado − efectivo acumulado) + saldo no devengado. Al 10-abr-2027: 6,293.44 = 1,258.70 + 5,034.74. Se reescribe S2-07; ninguna cifra cambia.
+- **K20 (B7) Promedios:** diario = total del periodo ÷ días reales del periodo; semanal = diario × 7.
+- **K21 (B8) Proyección meses 7 a 12:** configurable; por defecto solo compromisos contratados más gastos fijos e ingresos del CSV; un interruptor en Ajustes agrega la cadencia bimestral de despensa a crédito y el papel alterno de $199.
+- **K22 (B9) Precio viejo:** a los 30 días o más (el del 10-oct-2026 ya es viejo el 9-nov-2026). Peso 1 hasta el día 29; entre 30 y 90 días decae en línea recta de 1 a 0; después solo se muestra marcado y no compite. **PROFECO nunca compite: solo se muestra como referencia.** Ticket manual y OCR confirmado compiten (PROPUESTA del orquestador: con el mismo peso; Axel no lo especificó).
+- **K23 (B10) Meta de calorías:** sugerida con Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9) **con ajuste por objetivo** (bajar, mantener, subir; columna nueva en 00002); la persona confirma o escribe otra.
+- **K24 (B11) Prueba del OCR:** 5 tickets reales fotografiados por Axel (`datos/semilla/tickets/`); renglón correcto = descripción legible + cantidad + importe exactos. S5 arranca sin las fotos y mide al final.
+- **K25 (B12) Cobertura ≥ 85 %:** dominio, motor_fin, motor_cred, recetas y precios. API, auth, jobs, reportes y Telegram se miden y reportan sin umbral.
+- **K26 (C1) Color de gasto:** **gasto pasa a terracota 40–45°**; error se queda en 20°. Karen y Bodega Aurrera (hoy 50°) se mueven en la paleta categórica; el barrido de pares cercanos incluye la marca (R3-04). Todo regenerado por el script con contraste verificado.
+- **K27 (C2) Paleta de gráficas:** ΔL ≥ 0.10 entre series consecutivas, con forma, patrón y etiqueta de refuerzo; todos los pares se reportan como información.
+- **K28 (D1) Go 1.27:** Axel: «corre pacman -Sy sin el u e instala la versión de Go que necesites». Hecho el 11-oct-2026: Go 1.27.2 instalado desde el repositorio; `go.mod` pasa a `go 1.27`.
+- **K29 (D2) Red:** solo LAN; Tailscale no se abre.
+- **K30 (D3) Token del bot:** el usuario del servicio recibe permiso de lectura (ACL) sobre `~/.openclaw/openclaw.json` y lee `bots.multix.botToken` en tiempo de ejecución; el token jamás se copia, imprime ni entra al repositorio.
+- **K31 (D4) Ocho valores operativos:** cada agente propone el valor con justificación; Axel aprueba en la puerta que toque (tiempo máximo del optimizador en la puerta 2; reportes, respaldos, cabeceras, adjuntos, PDF y permisos en la puerta 4). Hasta entonces, PROVISIONAL con la propuesta escrita.
+- **K32 Proceso · tope de 300K:** en WF-0, 13 de 14 agentes superaron 300K de contexto en su pico (máximo 454K) sin comprimir. Decisión: **reparto fino**: cada agente lee ≤ 400 KB y escribe ≤ 150 KB, con ≤ 60 acciones de herramienta; `openapi.yaml` (597 KB) solo se lee por **extractos por módulo** (`docs/contratos/extractos/`); un revisor por artefacto; más agentes por flujo. Ver `protocolo-agentes.md` §4.
+- **K33 Proceso · consumo:** WF-0 contó 5.33M tokens contra 850K planeados (6.3×). Sin tope total; al cerrar cada flujo se reporta plan contra real por agente.
+- **K34 Puerta 1 APROBADA:** C1 v1.0 (pasa a v1.1 con estas respuestas), U1 y los criterios de las 18 fases.

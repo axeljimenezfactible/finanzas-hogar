@@ -7,3 +7,8 @@ Opciones:
 - (c) Promedio mensual ÷ días del mes calendario correspondiente (varía por mes).
 Impacto: Las cifras diarias y semanales no tienen valor canon; el criterio S2-08 las deja PROVISIONAL hasta que la fórmula esté escrita en `reglas-negocio.md` con ejemplo.
 Cómo seguí: S2-08 exige que el motor y el oráculo coincidan con la fórmula escrita; el promedio mensual sí es canon (R-56, R-57).
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (a): promedio diario = total del periodo ÷ días reales del periodo; semanal = diario × 7.
+- **Estado:** RESUELTO. Se aplica en: criterios S2-08, S2.

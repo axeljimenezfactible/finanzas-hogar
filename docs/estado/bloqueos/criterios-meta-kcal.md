@@ -7,3 +7,8 @@ Opciones:
 - (c) Ambas: fórmula como sugerencia y captura como valor vigente.
 Impacto: La meta de calorías queda como captura manual o PROVISIONAL; IMC sí es fórmula estándar.
 Cómo seguí: S4-07 prohíbe inventar fórmula o datos de Axel y Ximena.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Igual que `S1-meta-kcal`: opción D, Mifflin-St Jeor × actividad con ajuste por objetivo, confirmada por la persona.
+- **Estado:** RESUELTO. Se aplica en: criterios S4-07, S4.

@@ -8,3 +8,7 @@ frontend/dist/
 *.db-wal
 *.db-shm
 .env
+
+# temporales de verificación y Python
+datos/tmp/
+__pycache__/

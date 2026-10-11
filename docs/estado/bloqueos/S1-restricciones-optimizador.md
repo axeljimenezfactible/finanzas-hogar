@@ -8,3 +8,8 @@ C. Por compra planeada: columnas nuevas en `planned_item` (migración 00002). Co
 D. Globales sobre todo el hogar: colchón sobre la suma de las líneas, compras vivas y deuda en todos los créditos. Consecuencia: es lo más estricto y no cambia el esquema.
 Impacto: S3 (optimizador) y U4 (Ajustes «Créditos y condiciones»). Las claves `optimizer.min_available_buffer_cents`, `optimizer.max_live_purchases`, `optimizer.zero_debt_by_date` y `optimizer.date_window_days` quedan sin valor.
 Cómo seguí: Las definiciones de las tres restricciones quedaron FIRMES en RN-11, con ejemplos sobre fechas del oráculo. Los valores y el alcance quedaron PROVISIONALES. No agregué columnas por crédito ni por compra para no adelantar la decisión.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción A: restricciones globales en Ajustes › Créditos y condiciones, ajustables en cada comparación; el colchón se mide en la línea que se usa; compras vivas y deuda en cero se cuentan en el crédito que se usa. Los valores los captura Axel (sin valor por defecto inventado: mientras no estén capturados, el comparador avisa «faltan restricciones» y no recomienda).
+- **Estado:** RESUELTO. Se aplica en: S1 1.2 (claves `optimizer.*` sin valor), S3, U4.

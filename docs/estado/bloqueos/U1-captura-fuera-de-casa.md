@@ -12,3 +12,8 @@ Opciones:
 Impacto: el estado «Sin conexión» (G-07) y una variante de F-1 y F-6. El camino de 3 toques no cambia con ninguna opción. Con las opciones 2 o 3, C1 y S6 necesitan una forma de recibir varios gastos capturados antes (con su fecha y hora de captura) sin duplicarlos.
 
 Cómo seguí: diseñé con la opción 1 marcada **PROVISIONAL** (§2.4 del documento). Ninguna cifra, esquema ni contrato depende de esto.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción 2: cola en el teléfono para gastos y peso, que se envía al volver a la red de casa sin duplicar. Claves de idempotencia en `expense` y `weight_entry` (migración 00002); C1 acepta capturas atrasadas con `Idempotency-Key` y fecha de captura; la PWA implementa la cola en WF-3 (estado «Sin conexión» con captura habilitada).
+- **Estado:** RESUELTO. Se aplica en: S1 1.2 (migración 00002), C1 v1.1, U1 (F-1, F-6, estado «Sin conexión»), S6 y frontend en WF-3.

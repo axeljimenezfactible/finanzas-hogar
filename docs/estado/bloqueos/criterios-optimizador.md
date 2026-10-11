@@ -7,3 +7,8 @@ Opciones:
 - (c) Que el agente proponga las tres definiciones en `reglas-negocio.md` y Axel las apruebe en la puerta 2.
 Impacto: La recomendación ponderada y la medida de los objetivos 2 y 4 quedan PROVISIONAL; los 4 óptimos por objetivo individual no dependen de la normalización.
 Cómo seguí: S3-13 pide óptimos por objetivo independientes (4 distintos en 3 casos) y S3-14 pide la definición escrita; sin ella, PROVISIONAL.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción (a): normalización mín-máx entre los escenarios generados; «pago parejo y bajo tope» = desviación estándar de los pagos (y pico contra el tope cuando hay tope por persona); «comprar más por peso» = unidades base de la canasta por peso gastado, con los precios vigentes de cada tienda.
+- **Estado:** RESUELTO. Se aplica en: criterios S3-13 y S3-14, S3.

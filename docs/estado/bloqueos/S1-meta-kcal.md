@@ -8,3 +8,8 @@ C. Sugerencia con Harris-Benedict revisada × los mismos factores. Consecuencia:
 D. B más un ajuste según el objetivo (por ejemplo −500 kcal para bajar). Consecuencia: hace falta una columna de objetivo (migración nueva).
 Impacto: S4 (meta y comparación de kcal por día) y la pantalla Salud. `health_profile.activity_level` queda PROVISIONAL.
 Cómo seguí: El esquema guarda los insumos (estatura, fecha de nacimiento, sexo, actividad, historial de peso) y la meta capturada (`daily_kcal_target`). La escala de actividad de 5 niveles va marcada PROVISIONAL en la migración y en el diccionario.
+
+
+## Respuesta de Axel (puerta 1, 11-oct-2026)
+- **Decisión:** Opción D: meta sugerida con Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9) con ajuste por objetivo (bajar, mantener, subir de peso; columna nueva en la migración 00002); la persona confirma o escribe otra.
+- **Estado:** RESUELTO. Se aplica en: S1 1.2 (migración 00002), S4, U4.
