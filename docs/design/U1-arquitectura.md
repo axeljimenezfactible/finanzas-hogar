@@ -3,15 +3,31 @@
 | | |
 |---|---|
 | Fase | U1 «Arquitectura de información» (Pista 2, flujo WF-0) |
-| Agente | U1-arquitectura (v1.0) · U1-1.1 (v1.1) |
-| Versión | **1.1** (11-oct-2026): respuestas de la puerta 1 (`decisiones.md` §K) y hallazgos R2-05 y R3-01 |
-| Fecha | 10-oct-2026 (v1.0) · 11-oct-2026 (v1.1) |
-| Estado | v1.0 aprobada en la puerta 1 (K34); v1.1 para revisión |
-| Fuentes | `plan.md` §1 (HECHOS), §2, §3.4 (S2 a S7 y 3.4.1), §3.5 (U1, U3, U4, U5), §3.7; `decisiones.md` A a G (y H solo para IA opcional y PWA); en v1.1, también §K y `docs/criterios/U1.md` 1.1 |
+| Agente | U1-arquitectura (v1.0) · U1-1.1 (v1.1) · U1-1.2 (v1.2) |
+| Versión | **1.2** (11-oct-2026): respuestas de la puerta 1b (`decisiones.md` K35 a K44) sobre la 1.1 (respuestas de la puerta 1, §K, y hallazgos R2-05 y R3-01) |
+| Fecha | 10-oct-2026 (v1.0) · 11-oct-2026 (v1.1 y v1.2) |
+| Estado | v1.0 aprobada en la puerta 1 (K34); v1.1 cerrada en el flujo P1; v1.2 para revisión |
+| Fuentes | `plan.md` §1 (HECHOS), §2, §3.4 (S2 a S7 y 3.4.1), §3.5 (U1, U3, U4, U5), §3.7; `decisiones.md` A a G (y H solo para IA opcional y PWA); en v1.1, también §K y `docs/criterios/U1.md` 1.1; en v1.2, K35 a K44 |
 | Fuera de alcance | Colores, tipografías, espaciados y tamaños (U2, contrato C2). Endpoints y esquemas (C1, S1, S6). Campos y validaciones finas de Ajustes (U4). |
 
 Este documento dice **qué pantallas existen, qué muestra cada una y qué datos necesita**. C1 dice **cómo** se piden esos datos: cada necesidad `N-xxx` de la sección 3 se mapea a uno o más endpoints en C1.
 
+
+## Cambios de la versión 1.2 (11-oct-2026)
+
+Aplica las respuestas de Axel en la puerta 1b que tocan a U1 (`decisiones.md` K35 a K44) y decide el pendiente «Descartar chat detectado» (`docs/estado/p1/INTEGRACION.md` §7, punto 7). No cambian la barra lateral, las 27 pantallas, las 14 secciones de Ajustes, el camino de 3 toques de F-1 ni ninguna cifra del oráculo. Necesidades: **211** (antes 203): 138 de lectura y 73 de escritura; las nuevas son N-320 a N-327 (números a continuación de la última, sin reusar).
+
+| # | Cambio | Origen | Dónde |
+|---|---|---|---|
+| 1 | Semana por defecto: los domingos, P-10, P-13 y P-14 abren la semana que empieza el lunes; «Cambiar semana» siempre disponible. Pasa a **FIRME** y se quitan sus marcas PROVISIONAL | K38 | §0.2, §7 (N-120, N-150 y N-160 remiten a §0.2) |
+| 2 | Pasan a **FIRMES** la definición de «casillas sin armar» (N-023) y los valores de C1 que eran propuesta: adjunto de hasta 10 MB (N-064), comparador de hasta 5 s (N-226), hora `send_time` de reportes y avisos y anticipación `advance_days` del aviso de precios viejos (N-297, N-298, N-300; la del pago próximo es `alerts.payment_due_days_before`, valor inicial [1, 0], decisión F, y se edita en N-323) | K43 | N-023, N-064, N-226, N-297, N-298, N-300, §7 |
+| 3 | Todo parámetro operativo existe y se cambia en la sección de Ajustes a la que pertenece, sin sección nueva: valor inicial visible, validación «sin valor inventado» y «Restablecer al valor inicial»; una necesidad por grupo de parámetros | K44 (ubicación por sección: lectura PROPUESTA del orquestador; Axel la ve en la puerta 2) | §0.2 (precio viejo), §2.3 (P-26.01, P-26.05, P-26.06, P-26.09, P-26.11, P-26.13 y tabla «Parámetros operativos»), §2.6, N-320 a N-323, N-325, N-326, §7 |
+| 4 | Ajuste de la meta de kcal por objetivo: valores de la casa en Ajustes › Salud y metas de ahorro (0 y 0 kcal) y ajuste por persona en P-21 (valor inicial «el de la casa», «Restablecer»); «mantener» no ajusta | K36 | §2.2 (P-21), §2.3 (P-26.13), §2.6 (P-21), N-230, N-311, N-326, N-327, §7 |
+| 5 | «Descartar chat detectado» existe: borra un chat detectado que nadie va a confirmar | U1 (INTEGRACION §7, punto 7) | §2.3 (P-26.09), N-299, N-324 |
+| 6 | La Pista 3 (Claude Design) la ejecuta Axel con el paquete de `docs/design/entrada/` | K35 | §7 |
+| 7 | Matriz §3.29 con N-320 a N-327 y conteos rehechos por script. Verificación: `python3 -I docs/design/tools/verificar_u1.py` | — | §3.29 |
+| 8 | Corrección r1 (H-01 de `docs/estado/p1c/REVISION-U1-r1.md`): la anticipación del aviso de pago próximo se nombra con su clave del esquema, `days_before` (lista de días antes del pago, valor inicial [1, 0], decisión F), y `advance_days` queda solo para el aviso de precios viejos, como en `00003_puerta1b.sql` | Revisión r1 | §2.3 (tabla de parámetros), N-298, N-300 |
+| 9 | Corrección r2 (H-r2-01 de `docs/estado/p1c/REVISION-U1-r2.md`): coherencia con el esquema 1.3 tal como quedó tras la corrección S1-r1 (H-01 de `docs/estado/p1c/REVISION-S1-r1.md`). Los umbrales del presupuesto y los días antes del pago próximo son claves de `app_setting` (`alerts.budget_warning_pct` 80, `alerts.budget_limit_pct` 100 y `alerts.payment_due_days_before` [1, 0]; decisión F, K44) y ya no van en `notification.params_json`; los lee, guarda y restablece N-323. N-300 se queda con `send_time` y `advance_days`, cuya ubicación decide el bloqueo abierto `S1-parametros-avisos`. «Para C1» corregida: `docs/estado/p1c/correccion-U1-r2.md` | Revisión r2 | §2.3 (tabla de parámetros), N-298, N-300, N-323, §7 |
 
 ## Cambios de la versión 1.1 (11-oct-2026)
 
@@ -62,8 +78,8 @@ Aplica las respuestas de Axel en la puerta 1 que tocan a U1 (`decisiones.md` §K
 - **Parte del hogar / parte de Karen**: lo que corresponde a cada uno según el reparto, con la regla de `reglas-negocio.md` (S1), que garantiza que la suma de las partes es el total. **Toda cifra de presupuesto, flujo y ahorro usa la parte del hogar.** La parte de Karen es informativa (decisión A) y solo aparece donde ella participa.
 - **Devengado y efectivo**: según `reglas-negocio.md` (S1, S2). El presupuesto (real contra plan) se mide en devengado, porque la despensa bimestral se devenga a mitad por mes (decisión B). El flujo por quincena se mide en efectivo.
 - **Pago pendiente**: pago programado con al menos una parte (hogar o Karen) sin marcar como pagada. Cada parte se marca por separado porque cada quien paga directo a Kueski (decisión A).
-- **Precio viejo**: precio cuya fecha tiene 30 días o más respecto a hoy (decisión E y K22: a los 30 días o más; el precio del 10-oct-2026 ya es viejo el 9-nov-2026). Si no, **fresco**.
-- **Semana por defecto y lista de compras vigente** (única definición; R3-01, U1-16): P-10, P-13 y P-14 abren por defecto la **semana en curso** (lunes a domingo, K8) y, **los domingos, la semana siguiente** (la regla del domingo es **PROVISIONAL**, bloqueo `U1-lista-vigente-domingo`). La **lista de compras vigente** es la lista de esa semana. El cambio ocurre a las 00:00 de `America/Mexico_City`; una pantalla abierta conserva la semana que muestra hasta que la persona cambie de semana o vuelva a entrar. **Toda lectura y escritura de la lista lleva la semana (`week` en C1, obligatoria) que la pantalla muestra**: ninguna acción actúa sobre una semana que no se ve. El plan de la semana (P-10) recibe su semana en el filtro `period` de C1 y, si no lo manda, C1 aplica esta misma regla (`getMealPlanWeek`).
+- **Precio viejo**: precio cuya fecha tiene 30 días o más respecto a hoy (decisión E y K22: a los 30 días o más; el precio del 10-oct-2026 ya es viejo el 9-nov-2026). Si no, **fresco**. Los 30 días y los 90 en que el peso de un precio llega a cero (K40) son parámetros de Ajustes › Tiendas y precios con esos valores iniciales (K44, N-322).
+- **Semana por defecto y lista de compras vigente** (única definición; R3-01, U1-16): P-10, P-13 y P-14 abren por defecto la **semana en curso** (lunes a domingo, K8) y, **los domingos, la semana siguiente**, la que empieza el lunes (**FIRME**, K38; «Cambiar semana» siempre disponible). La **lista de compras vigente** es la lista de esa semana. El cambio ocurre a las 00:00 de `America/Mexico_City`; una pantalla abierta conserva la semana que muestra hasta que la persona cambie de semana o vuelva a entrar. **Toda lectura y escritura de la lista lleva la semana (`week` en C1, obligatoria) que la pantalla muestra**: ninguna acción actúa sobre una semana que no se ve. El plan de la semana (P-10) recibe su semana en el filtro `period` de C1 y, si no lo manda, C1 aplica esta misma regla (`getMealPlanWeek`, K38).
 - **Motor Sx**: la cifra la calcula ese motor (S2 financiero, S3 créditos, S4 recetas y comidas, S5 precios y tiendas, S7 reportes). La interfaz no recalcula reglas de negocio: muestra, filtra, ordena y suma lo que está a la vista.
 - **Sin datos no es cero**: si falta una entrada (sin plan, sin precio, sin peso, sin meta), se muestra «—» con el motivo, nunca `$0.00` ni `0 %`.
 
@@ -251,7 +267,7 @@ La acción primaria es única por pantalla y siempre visible (en móvil, en el e
 | P-18 | Marcar pago | Registrar compra; Simular compra; Editar condiciones (abre P-26.05) | «Sin compras vivas» (revolvente) o «Sin pagos pendientes». Tarjeta bancaria o crédito de tienda sin alguno de los cinco datos de su estado de cuenta (N-283): «Falta capturar · Capturar» (abre P-26.05 en esa línea) en lugar de sus intereses y su pago mínimo (K18) | Esqueleto | Reintentar |
 | P-19 | Guardar (alta) o Marcar pago (detalle) | Editar; Eliminar; Ver gasto vinculado | — | Vista previa «Calculando…» | Dato inválido: junto al campo. Motor sin resultado: «No se pudo calcular el calendario» y no guarda |
 | P-20 | Usar escenario recomendado | Usar otro óptimo; Cambiar restricciones (solo para esta comparación, K16); Cambiar pesos | «Ningún escenario cumple las restricciones» + la restricción que más descarta. Sin restricciones capturadas: «Faltan restricciones · Capturar» y no hay recomendación (K16) | «Evaluando N escenarios…» | Reintentar |
-| P-21 | Registrar peso | Editar perfil (abre P-26.13); Confirmar meta sugerida (K23) | «Completa el perfil de salud» | Esqueleto | Reintentar |
+| P-21 | Registrar peso | Editar perfil (abre P-26.13); Confirmar meta sugerida (K23); Ajuste por objetivo de cada persona, en el lugar, con «Restablecer» (K36, N-327) | «Completa el perfil de salud» | Esqueleto | Reintentar |
 | P-22 | Guardar | Cambiar persona | — | Guardar en espera | Junto al campo |
 | P-23 | Generar reporte mensual | Estado de cuenta de Karen; Ver reporte web; Filtrar | «Aún no hay reportes (el primero se genera el día 1)» | Esqueleto | Fila en error con motivo y «Reintentar envío» |
 | P-24 | Descargar PDF (o Generar PDF si no existe) | Cambiar mes; Compartir | «Sin datos en sep-2026» | Esqueleto por sección | Por sección, con Reintentar |
@@ -264,22 +280,49 @@ En escritorio, Ajustes muestra una columna interna con las 14 secciones y el con
 
 | Id | Sección | Contiene | Vistas | Acción primaria |
 |---|---|---|---|---|
-| P-26.01 | Cuenta y roles | Usuarios Axel y Ximena (co-titulares, mismos permisos), cambio de la contraseña propia, sesiones de ambos por dispositivo con cierre, «Este dispositivo» (instalar la app, certificado de la CA local) | Tabla (sesiones) | Cerrar otras sesiones |
+| P-26.01 | Cuenta y roles | Usuarios Axel y Ximena (co-titulares, mismos permisos), cambio de la contraseña propia, sesiones de ambos por dispositivo con cierre, «Este dispositivo» (instalar la app, certificado de la CA local), parámetros de acceso: intentos de inicio de sesión, su ventana, días de sesión y largo mínimo de contraseña (K44, N-320) | Tabla (sesiones) | Cerrar otras sesiones |
 | P-26.02 | Presupuesto | Monto mensual por categoría, gastos fijos recurrentes, despensa bimestral programada (monto base, día, línea y plazo con que se paga), interruptor de proyección de los meses 7 a 12 «Repetir la despensa bimestral y el papel» (apagado por defecto, K21) | Tabla | Nuevo gasto fijo |
 | P-26.03 | Ingresos | Ingreso quincenal esperado de Axel (quincena del 15 y del 30) | Tabla | — (edición en el lugar) |
 | P-26.04 | Categorías | Nombre, tipo, reparto por defecto, orden (arrastrar), activa | Tabla*, tablero (por reparto) | Nueva categoría |
-| P-26.05 | Créditos y condiciones (incluye promociones) | Líneas por tipo y sus condiciones (tarjeta bancaria y crédito de tienda: tasa anual tal como se capturó, base diaria o mensual, si incluye IVA, porcentaje de pago mínimo y mínimo fijo, tomados de su estado de cuenta; los captura Axel, sin valor por defecto, y mientras falte alguno la línea dice «Falta capturar», K12 y K18), interruptor A/B con vista previa, tabla de tasas por plazo, calendario de promociones, restricciones duras globales del comparador (las captura Axel; sin valor por defecto, K16) y sus pesos | Galería (líneas), tabla (tasas), calendario* (promociones) | Nuevo crédito |
-| P-26.06 | Tiendas y precios (incluye mercados y membresía Sam's) | Cadenas y sucursales, mercados y tianguis (días de visita, qué se compra ahí), membresía de Sam's (costo anual), fuentes de precio (manual, OCR, lectura asistida bloqueada hasta veredicto, PROFECO) | Tabla*, galería | Nueva tienda o mercado |
+| P-26.05 | Créditos y condiciones (incluye promociones) | Líneas por tipo y sus condiciones (tarjeta bancaria y crédito de tienda: tasa anual tal como se capturó, base diaria o mensual, si incluye IVA, porcentaje de pago mínimo y mínimo fijo, tomados de su estado de cuenta; los captura Axel, sin valor por defecto, y mientras falte alguno la línea dice «Falta capturar», K12 y K18), interruptor A/B con vista previa, tabla de tasas por plazo, calendario de promociones, restricciones duras globales del comparador (las captura Axel; sin valor por defecto, K16) y sus pesos, tiempo máximo del comparador (K43 y K44, N-321) | Galería (líneas), tabla (tasas), calendario* (promociones) | Nuevo crédito |
+| P-26.06 | Tiendas y precios (incluye mercados y membresía Sam's) | Cadenas y sucursales, mercados y tianguis (días de visita, qué se compra ahí), membresía de Sam's (costo anual), fuentes de precio (manual, OCR, lectura asistida bloqueada hasta veredicto, PROFECO), parámetros de precios: días para precio viejo, días para peso cero y tamaño máximo del corte PROFECO (K6, K22, K40 y K44, N-322) | Tabla*, galería | Nueva tienda o mercado |
 | P-26.07 | Recetas | Porciones base, tiempos de comida, bases nutricionales locales (USDA, Open Food Facts, manuales), recetario inicial | Tabla | Recargar base nutricional |
 | P-26.08 | Reportes y frecuencias | Resumen diario (noche), semanal (domingo), mensual PDF (día 1), vista web mensual, destinatarios | Tabla | Generar reporte mensual ahora |
-| P-26.09 | Notificaciones | Las 4 alertas (activa, destinatarios, anticipación), chats de Axel y de Ximena en el bot MultiX: el bot detecta el chat cuando la persona le escribe y ella lo confirma aquí (K4) | Tabla | Enviar aviso de prueba |
+| P-26.09 | Notificaciones | Las 4 alertas (activa, destinatarios, anticipación), chats de Axel y de Ximena en el bot MultiX: el bot detecta el chat cuando la persona le escribe y ella lo confirma aquí o lo descarta (K4, N-324), umbrales del aviso de presupuesto (K44, N-323) | Tabla | Enviar aviso de prueba |
 | P-26.10 | Apariencia | Tema: sistema (por defecto), claro u oscuro | — | — (un solo control) |
-| P-26.11 | Datos y respaldos | Respaldos (lista, integridad, restauración), importar `gastos_fijos_ingresos.csv`, estado de la semilla, IA opcional (interruptores), estado del servicio | Tabla | Respaldar ahora |
+| P-26.11 | Datos y respaldos | Respaldos (lista, integridad, restauración), importar `gastos_fijos_ingresos.csv`, estado de la semilla, IA opcional (interruptores), estado del servicio, parámetros de datos: tamaño máximo de un adjunto y retención de las claves de idempotencia (K43 y K44, N-325) | Tabla | Respaldar ahora |
 | P-26.12 | Personas y reparto | Axel, Ximena, Karen (externa, sin cuenta), reparto por defecto del conjunto (50/50), tope de pago por quincena por persona (opcional, K13) | Tabla | — (edición en el lugar) |
-| P-26.13 | Salud y metas de ahorro | Perfiles de salud de Axel y Ximena (objetivo de peso y meta de kcal sugerida para confirmar, K23), metas de ahorro con fecha, aportación planificada al fondo | Tabla, galería (metas) | Nueva meta |
+| P-26.13 | Salud y metas de ahorro | Perfiles de salud de Axel y Ximena (objetivo de peso y meta de kcal sugerida para confirmar, K23; ajuste por objetivo de cada persona, K36, N-327), ajuste por objetivo de la casa para bajar y para subir (K36 y K44, N-326), metas de ahorro con fecha, aportación planificada al fondo | Tabla, galería (metas) | Nueva meta |
 | P-26.14 | Inventario | Modo por producto (stock por unidad o ritmo de consumo), umbral de reposición, regla de sobrantes | Tabla*, tablero (por modo) | — (edición en el lugar) |
 
 Estados de Ajustes: vacío por sección con su acción (p. ej. «Sin créditos · Nuevo crédito»); carga con esqueleto del formulario; error con el campo de vuelta a su valor anterior. El interruptor A/B y la restauración de un respaldo muestran su efecto antes de confirmar.
+
+**Parámetros operativos (K44).** Todo valor numérico operativo existe y se cambia en Ajustes, incluidos los de seguridad. Cada uno vive en la sección a la que pertenece, sin sección nueva: siguen las 14 de la decisión G (ubicación por sección: lectura PROPUESTA del orquestador en K44; Axel la ve en la puerta 2; U4 especifica los campos). Reglas comunes:
+- **Valor inicial visible**: junto a cada campo se lee «Valor inicial: …», el decidido en `decisiones.md` (columna «Decisión»). Con los valores iniciales el sistema reproduce las cifras canon del oráculo.
+- **Sin valor inventado**: un campo vacío o no válido no se guarda y vuelve a su valor anterior con el aviso (estado de Ajustes de arriba). El sistema nunca pone un valor que nadie decidió: el único que ofrece es el inicial. Los mínimos y máximos de los valores de seguridad los propone S1 y se aprueban en la puerta 2 (K44); hasta entonces no hay topes.
+- **«Restablecer al valor inicial»**: una acción por parámetro, activa cuando el valor vigente difiere del inicial.
+- **Sin valor decidido**: si un parámetro no tiene valor inicial decidido (p. ej. `send_time` y `advance_days`, cuyas claves fijó K43), el campo dice «Sin valor inicial», «Restablecer» no aparece y nada se rellena con un valor inventado; el valor se propone según K31.
+- **Una necesidad por grupo**, no una por parámetro: lee cada valor vigente con su valor inicial y guarda o restablece los del grupo.
+
+| Sección | Parámetro | Valor inicial | Decisión | Necesidad |
+|---|---|---|---|---|
+| P-26.01 Cuenta y roles | Intentos fallidos de inicio de sesión permitidos en la ventana | 5 | K44 | N-320 |
+| P-26.01 Cuenta y roles | Ventana de los intentos (deslizante, por usuario e IP) | 15 min | K11, K44 | N-320 |
+| P-26.01 Cuenta y roles | Duración de la sesión (renovable con el uso) | 90 días | K11, K44 | N-320 |
+| P-26.01 Cuenta y roles | Largo mínimo de una contraseña nueva | 12 caracteres | K6, K44 | N-320 |
+| P-26.05 Créditos y condiciones | Tiempo máximo del comparador (si se pasa, responde «no disponible») | 5 s | K43, K44 | N-321 |
+| P-26.06 Tiendas y precios | Días para que un precio sea viejo | 30 días | K22, K44 | N-322 |
+| P-26.06 Tiendas y precios | Días en que el peso de un precio viejo llega a cero y deja de competir | 90 días | K40, K44 | N-322 |
+| P-26.06 Tiendas y precios | Tamaño máximo de un corte PROFECO importado | 1 GB | K6, K44 | N-322 |
+| P-26.08 Reportes y frecuencias | Hora de cada reporte (`send_time`) | Sin valor inicial decidido (K31) | K43, K44 | N-297 (por reporte) |
+| P-26.09 Notificaciones | Umbrales del aviso de presupuesto, categoría y total (`alerts.budget_warning_pct` y `alerts.budget_limit_pct`) | 80 % y 100 % | K44 | N-323 |
+| P-26.09 Notificaciones | Anticipación del aviso de pago próximo (`alerts.payment_due_days_before`: lista de días antes del pago) | [1, 0]: 1 día antes y el mismo día (decisión F; N-298) | K44 | N-323 |
+| P-26.09 Notificaciones | Anticipación del aviso de precios viejos antes del día de despensa (`advance_days`, días enteros ≥ 0) y hora de los avisos que la llevan (`send_time`) | Sin valor inicial decidido (K31) | K43, K44 | N-300 (por aviso) |
+| P-26.11 Datos y respaldos | Tamaño máximo de un adjunto de gasto | 10 MB | K43, K44 | N-325 |
+| P-26.11 Datos y respaldos | Retención de las claves de idempotencia | 24 h | K6, K44 | N-325 |
+| P-26.13 Salud y metas de ahorro | Ajuste por objetivo de la casa: bajar y subir | 0 kcal y 0 kcal | K36, K44 | N-326 |
+
+El ajuste por objetivo **de cada persona** (K36) no es un parámetro de la casa: se edita en P-21 (N-327) y en su ficha de P-26.13; vacío = usa el de la casa. Los demás parámetros que inventaríe S1 en el esquema 1.3 (K44) siguen estas mismas reglas en la sección a la que pertenecen; si alguno no cabe en un grupo de esta tabla, U1 suma su necesidad en la versión siguiente.
 
 ### 2.4 Estados comunes
 
@@ -380,9 +423,9 @@ Como en Notion: se toca el valor, se cambia y se guarda solo. Lo calculado nunca
 | P-17, P-18 | — | Todo se calcula o viene de P-19 y P-26.05; «Marcar pago» es una acción (N-210) |
 | P-19 | Comercio y nota; capital, intereses, plazo y reparto recalculan con vista previa (N-216) antes de guardar (N-219) | Pagos (se marcan con N-210) |
 | P-20 | Datos de entrada: monto, fecha, holgura, restricciones, tope y pesos | Resultados (calculados) |
-| P-21 | Registros del historial de peso (N-242) | Perfil (en P-26.13); IMC y kcal (calculados) |
+| P-21 | Registros del historial de peso (N-242); ajuste por objetivo de cada persona, para bajar y para subir, en kcal (N-327, K36) | Perfil (en P-26.13); IMC y kcal (calculados) |
 | P-23, P-24, P-25 | — | Reportes generados (son copias con fecha) |
-| P-26.01 a P-26.14 | Todos los campos de configuración, con guardado automático | El interruptor A/B y la restauración de un respaldo piden confirmar después de mostrar su efecto |
+| P-26.01 a P-26.14 | Todos los campos de configuración, con guardado automático; los parámetros operativos muestran su valor inicial y «Restablecer al valor inicial» (K44, §2.3) | El interruptor A/B y la restauración de un respaldo piden confirmar después de mostrar su efecto |
 
 ---
 
@@ -418,7 +461,7 @@ Como en Notion: se toca el valor, se cambia y se guarda solo. Lo calculado nunca
 | N-020 | L | Tarjeta «Mes vs plan» | Mes en curso. **Real** = suma de la parte del hogar de todo lo devengado en el mes (motor S2). **Plan** = suma del presupuesto mensual de las categorías activas (P-26.02). **% usado** = real ÷ plan × 100, entero. **Restante** = plan − real (negativo si se rebasó). **Estado**: normal si % < 80; aviso si ≥ 80; excedido si ≥ 100 (mismos umbrales que la alerta, decisión F). **Días que faltan** para terminar el mes, contando hoy. Sin plan: «—» | Diaria |
 | N-021 | L | Tarjeta «Flujo quincenal» | Quincena en curso, en efectivo y parte del hogar (motor S2). **Ingresos** = quincena de Axel (capturada; si no, la esperada de P-26.03 con la marca «esperada») + extras con fecha en la quincena. **Egresos hechos** = salidas de efectivo con fecha en la quincena hasta hoy (gastos de contado + partes del hogar ya marcadas como pagadas). **Comprometido** = partes del hogar de pagos pendientes con fecha en la quincena + gastos venideros y fijos de la quincena aún no pagados. **Saldo al cierre** = ingresos − egresos hechos − comprometido | Diaria |
 | N-022 | L | Tarjeta «Próximo pago y disponible» | **(a) Próximo pago**: entre todas las líneas, el pago pendiente con la fecha más cercana igual o posterior a hoy. Si existe algún pago pendiente con fecha anterior a hoy, se muestra primero el más antiguo con la marca «sin marcar como pagado». Campos: fecha con día de la semana, línea, monto total, parte del hogar, parte de Karen y días que faltan; si varios pagos caen el mismo día, se suman y se indica cuántos son. **(b) Disponible**: para cada línea revolvente con interruptor A/B (hoy, Kueski), el disponible de hoy según la lectura activa (motor S3), con su etiqueta («Lectura B») y el aviso «pendiente confirmar» | Diaria |
-| N-023 | L | Tarjeta «Comidas de la semana» | Semana en curso (costo y kcal: motor S4). **Costo** = suma del costo de las casillas con receta; las marcadas «fuera» no suman, porque su gasto se registra como gasto normal. **kcal promedio por día** de cada persona = suma de kcal asignadas a esa persona ÷ número de días de la semana con al menos un tiempo asignado a esa persona (se muestra «n de 7 días»), contra su meta diaria (P-26.13). **Casillas sin armar** = número de pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna de las 2 personas no tiene receta ni «fuera»; máximo 21; las colaciones son opcionales y no cuentan. Esta definición es de U1 y sigue **PROVISIONAL**, con esta propuesta escrita, hasta que Axel apruebe la del aviso «plan sin armar» en la puerta que toque (K31; bloqueo `criterios-umbrales-ausentes`) | Inmediata |
+| N-023 | L | Tarjeta «Comidas de la semana» | Semana en curso (costo y kcal: motor S4). **Costo** = suma del costo de las casillas con receta; las marcadas «fuera» no suman, porque su gasto se registra como gasto normal. **kcal promedio por día** de cada persona = suma de kcal asignadas a esa persona ÷ número de días de la semana con al menos un tiempo asignado a esa persona (se muestra «n de 7 días»), contra su meta diaria (P-26.13). **Casillas sin armar** = número de pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna de las 2 personas no tiene receta ni «fuera»; máximo 21; las colaciones son opcionales y no cuentan. Definición **FIRME** (K43), la misma del aviso «plan sin armar»; es una regla, no un parámetro | Inmediata |
 | N-024 | L | Tarjeta «Mejor canasta» | Lista de compras vigente (§0.2, N-150) comparada por el motor S5: tienda con menor total (Sam's Club se compara como si tuvieran membresía y lleva esa marca), diferencia contra la segunda tienda, cobertura (artículos con precio en esa tienda ÷ artículos de la lista) y número de precios viejos usados. Si la lista está vacía, usa la canasta de la última compra registrada con renglones e indica cuál | Diaria |
 | N-025 | L | Tarjeta «Ahorro» | **Ahorrado** = suma de aportaciones − retiros de fondo y metas. **Aportado este mes** contra **planificado del mes** (suma de aportaciones mensuales planificadas del fondo y de las metas activas). **Meta más próxima** por fecha: nombre, % de avance (ahorrado ÷ monto meta, entero), fecha meta y estado (en ruta, atrasada o cumplida; motor S2) | Diaria |
 
@@ -470,7 +513,7 @@ Las pestañas Ingreso y Peso de la misma hoja usan N-102 y N-240; la pestaña Ti
 | N-061 | L | Renglones del ticket | Si el gasto viene de un ticket, por renglón: producto, presentación, cantidad, precio unitario, importe y cuenta (Hogar, Karen, Conjunto con %, o «mixto» según S1). Totales por cuenta y partes del hogar y de Karen. Si la suma de importes difiere del total del ticket, la diferencia aparece como renglón «Ajuste del ticket» (descuentos, redondeo). Orden: el del ticket | Inmediata |
 | N-062 | E | Actualizar gasto | Cambia una o varias propiedades o renglones (edición en el lugar con guardado automático) y recalcula las partes | — |
 | N-063 | E | Eliminar gasto | Con confirmación. Un gasto con compra a crédito vinculada no se elimina desde aquí: primero se elimina la compra en P-19 | — |
-| N-064 | E | Adjuntar o quitar ticket | Imagen (JPG, PNG o WebP) o PDF; el tamaño máximo lo fija S6 | — |
+| N-064 | E | Adjuntar o quitar ticket | Imagen (JPG, PNG o WebP) o PDF de hasta 10 MB (**FIRME**, K43); el máximo se cambia en Ajustes › Datos y respaldos (K44, N-325). Un archivo más grande no se adjunta y el aviso dice el máximo vigente | — |
 | N-065 | E | Marcar venidero como pagado | Para un gasto venidero: fecha real (hoy por defecto) y monto real (el previsto por defecto); pasa a gasto realizado | — |
 | N-066 | E | Duplicar gasto | Crea una copia con fecha de hoy | — |
 
@@ -655,7 +698,7 @@ Canon semilla (`model.json`, despensa 1): capital $3,094.50, intereses $800.50 a
 | Id | Tipo | Métrica o lista | Definición | Actualización |
 |---|---|---|---|---|
 | N-225 | L | Valores por defecto | Restricciones duras globales de P-26.05 (N-288, K16): colchón mínimo de disponible en la línea que se usa, máximo de compras vivas a la vez en el crédito que se usa y fecha opcional de deuda en cero en el crédito que se usa; se pueden cambiar para esta comparación sin tocar las globales. No tienen valor por defecto: si no están capturadas, P-20 muestra «Faltan restricciones» y no recomienda. Tope de pago por quincena de cada persona, de P-26.12 (N-309; opcional y no es restricción dura, K13), y pesos de los 4 objetivos (iguales y normalizados) | Inmediata |
-| N-226 | L | Resultado del comparador | Motor S3, búsqueda exhaustiva sin solver. **Entrada**: monto, fecha deseada ± días, comercio o tienda, quién compra (Hogar, Karen o Conjunto con %), restricciones, tope y pesos. **Salida**: escenarios válidos (línea × plazo × fecha × promoción) con intereses totales, pago por quincena (máximo y diferencia entre quincenas), disponible mínimo resultante, compras vivas máximas, fecha en que la deuda queda en cero y rendimiento de compra por peso (tienda más barata y promociones); el óptimo de cada uno de los 4 objetivos, lado a lado; la recomendación por puntaje ponderado con su puntaje; los descartados con la restricción que violan; y el total evaluado. Si faltan restricciones duras, no hay recomendación y la salida lo indica (K16) | Al generar (en cada cambio de entrada) |
+| N-226 | L | Resultado del comparador | Motor S3, búsqueda exhaustiva sin solver. **Entrada**: monto, fecha deseada ± días, comercio o tienda, quién compra (Hogar, Karen o Conjunto con %), restricciones, tope y pesos. **Salida**: escenarios válidos (línea × plazo × fecha × promoción) con intereses totales, pago por quincena (máximo y diferencia entre quincenas), disponible mínimo resultante, compras vivas máximas, fecha en que la deuda queda en cero y rendimiento de compra por peso (tienda más barata y promociones); el óptimo de cada uno de los 4 objetivos, lado a lado; la recomendación por puntaje ponderado con su puntaje; los descartados con la restricción que violan; y el total evaluado. Si faltan restricciones duras, no hay recomendación y la salida lo indica (K16). Tiempo máximo del cálculo: 5 s (**FIRME**, K43; se cambia en Ajustes › Créditos y condiciones, K44, N-321); si se pasa, P-20 avisa «Comparador no disponible» sin resultados parciales | Al generar (en cada cambio de entrada) |
 
 «Usar escenario» abre P-19 prellenada; no escribe nada hasta guardar ahí.
 
@@ -663,12 +706,13 @@ Canon semilla (`model.json`, despensa 1): capital $3,094.50, intereses $800.50 a
 
 | Id | Tipo | Métrica o lista | Definición | Actualización |
 |---|---|---|---|---|
-| N-230 | L | Perfiles | Por persona (Axel, Ximena): altura, peso actual (último registro y su fecha), edad, sexo, actividad, IMC con su clasificación (motor S4), objetivo (bajar, mantener o subir de peso), meta de calorías por día confirmada o escrita por la persona y la sugerida por S4 (Mifflin-St Jeor × factor de actividad de 5 niveles, 1.2 a 1.9, con ajuste por objetivo), con «Confirmar» si difieren (K23); sin meta confirmada, N-023, N-231 y N-233 muestran «—» con «Meta sin confirmar» (§0.2) y restricciones alimentarias (vacías hoy, decisión D) | Inmediata |
+| N-230 | L | Perfiles | Por persona (Axel, Ximena): altura, peso actual (último registro y su fecha), edad, sexo, actividad, IMC con su clasificación (motor S4), objetivo (bajar, mantener o subir de peso), meta de calorías por día confirmada o escrita por la persona y la sugerida por S4 (Mifflin-St Jeor × factor de actividad de 5 niveles, 1.2 a 1.9, menos el ajuste de bajar o más el de subir; «mantener» no ajusta; RN-17, K36), con «Confirmar» si difieren (K23); el ajuste por objetivo de la persona, para bajar y para subir, en kcal: su valor o, si está vacío, «El de la casa: n kcal» (N-326, K36); sin meta confirmada, N-023, N-231 y N-233 muestran «—» con «Meta sin confirmar» (§0.2) y restricciones alimentarias (vacías hoy, decisión D) | Inmediata |
 | N-231 | L | Calorías de hoy | Por persona: kcal planeadas hoy (suma de las casillas de hoy con receta), meta y diferencia; los tiempos «fuera» se marcan sin kcal | Diaria |
 | N-232 | L | Historial de peso | Registros (fecha, peso, IMC a esa fecha) por persona, por fecha descendente. En Tendencias: serie de peso por persona | Inmediata |
 | N-233 | L | kcal promedio por semana | Últimas 12 semanas: kcal promedio por día de cada persona (definición de N-023) contra su meta | Inmediata |
+| N-327 | E | Ajuste por objetivo de una persona | En la ficha de cada persona (Axel, Ximena), dos campos en kcal (≥ 0): ajuste para bajar y ajuste para subir (K36). Valor inicial: el de la casa (N-326; 0 y 0 kcal al empezar), que se muestra junto al campo; vacío = usa el de la casa. «Restablecer» vacía el campo y vuelve a usar el de la casa. Sin valor inventado: un valor no válido no se guarda y el campo vuelve al anterior. La meta sugerida de N-230 se recalcula con el ajuste del objetivo elegido; la meta confirmada no cambia sola (K23) | — |
 
-«Editar perfil» abre P-26.13 (N-311, N-313).
+«Editar perfil» abre P-26.13 (N-311, N-313). El ajuste por objetivo de cada persona se edita aquí, en el lugar (N-327), y también en su ficha de P-26.13.
 
 ### 3.24 P-22 Registrar peso
 
@@ -716,6 +760,7 @@ Canon semilla (`model.json`, despensa 1): capital $3,094.50, intereses $800.50 a
 | N-272 | E | 01 | Cerrar sesiones | Una sesión, todas las de un usuario salvo la actual, o todas | — |
 | N-273 | E | 01 | Cambiar contraseña | Solo la propia: contraseña actual y nueva | — |
 | N-274 | L | 01 | Este dispositivo | Si la app está instalada (dato del navegador, Local) y el certificado raíz público de la CA local para descargar, con instrucciones (S6) | Inmediata |
+| N-320 | E | 01 | Parámetros de acceso | Intentos fallidos de inicio de sesión permitidos en la ventana (valor inicial 5), ventana deslizante por usuario e IP (valor inicial 15 min) duración de la sesión, renovable con el uso (valor inicial 90 días) (K11, K44), y largo mínimo de una contraseña nueva (valor inicial 12 caracteres; K6; lo usa N-273). Lee cada valor vigente con su valor inicial; guarda o restablece (reglas de §2.3, «Parámetros operativos») | — |
 | N-275 | L | 02 | Presupuesto mensual | Por categoría activa: monto del mes en curso y, si es de «Solo este mes» (K2), esa marca y el monto que rige desde el mes siguiente; total del mes en curso | Inmediata |
 | N-276 | L | 02 | Gastos fijos recurrentes | Concepto, categoría, monto, día del mes, reparto y activo; orden por día | Inmediata |
 | N-277 | L | 02 | Despensa programada | Monto base, día de la despensa y frecuencia bimestral, línea y plazo con que se paga, próxima fecha | Inmediata |
@@ -733,18 +778,22 @@ Canon semilla (`model.json`, despensa 1): capital $3,094.50, intereses $800.50 a
 | N-287 | L | 05 | Promociones | Comercio, línea, plazo, tasa promocional por todo el plazo tal como se capturó («sin intereses» si es 0; K12), compra mínima, vigencia (inicio y fin), fuente o nota y si está vigente hoy. Vista calendario por vigencia; tabla ordenada por inicio | Diaria |
 | N-288 | L | 05 | Valores del comparador | Restricciones duras globales (K16): colchón mínimo (medido en la línea que se usa), máximo de compras vivas (en el crédito que se usa) y fecha de deuda en cero (opcional; en el crédito que se usa). Las captura Axel y no tienen valor por defecto: mientras falten, se muestra «Falta capturar». Pesos de los 4 objetivos. El tope por persona está en P-26.12 (N-309, K13) | Inmediata |
 | N-289 | E | 05 | Editar créditos y condiciones | Líneas (en tarjeta bancaria y crédito de tienda, los cinco datos del estado de cuenta de N-283, sin valor por defecto; si se guarda sin alguno, la línea queda en «Falta capturar», K18), interruptor A/B, tasas (se guardan con los decimales tecleados, K12; también la tasa anual), promociones, y restricciones duras y pesos del comparador (K16) | — |
+| N-321 | E | 05 | Tiempo máximo del comparador | Segundos que puede tardar el cálculo de N-226 antes de responder «no disponible» (valor inicial 5 s; K43, K44). Lee el valor vigente con su valor inicial; guarda o restablece (reglas de §2.3) | — |
 | N-290 | L | 06 | Tiendas | Cadenas y sucursales (Walmart, Bodega Aurrera, Sam's Club), mercados y tianguis (nombre, días de visita, qué se compra ahí) y membresía (Sam's: costo anual; «no la tienen», se evalúa) | Inmediata |
 | N-291 | L | 06 | Fuentes de precio | Captura manual (siempre activa); OCR local (Tesseract, español); lectura asistida por sitio (desactivada; solo se puede activar si `docs/estado/S5-terminos.md` tiene veredicto favorable para ese sitio, que se muestra); PROFECO (último corte importado, fecha, registros y cobertura por cadena y municipio) | Inmediata |
 | N-292 | E | 06 | Editar tiendas y fuentes | Crear y editar tiendas y mercados; activar la lectura asistida de un sitio solo si su veredicto lo permite | — |
 | N-293 | E | 06 | Importar corte PROFECO | Archivo local (RAR o CSV de datos abiertos); devuelve registros cargados y cobertura | Al generar |
+| N-322 | E | 06 | Parámetros de precios | Días para que un precio sea viejo (valor inicial 30; K22) y días en que su peso llega a cero y deja de competir (valor inicial 90; K40). S5 aplica RN-12 con los valores vigentes. Tamaño máximo de un corte PROFECO importado (valor inicial 1 GB; K6; lo usa N-293). Lee cada valor vigente con su valor inicial; guarda o restablece (reglas de §2.3; K44) | — |
 | N-294 | L | 07 | Recetario y nutrición | Porciones base (2), tiempos de comida (desayuno, comida, cena, colación), número de recetas por origen y bases nutricionales locales (USDA Foundation Foods 04/2026, Open Food Facts filtrado, manuales) con fecha de carga y número de alimentos | Inmediata |
 | N-295 | E | 07 | Recargar base nutricional | Desde el archivo local; devuelve el conteo | Al generar |
 | N-296 | L | 08 | Reportes programados | Resumen diario (activo, hora de la noche), semanal (domingo, hora), mensual PDF (día 1, hora, enviar por Telegram, guardar) y sus destinatarios (Axel, Ximena) | Inmediata |
-| N-297 | E | 08 | Editar reportes programados | Activo, hora y destinatarios | — |
-| N-298 | L | 09 | Alertas | Pago próximo (día anterior y mismo día), presupuesto al 80 % y al 100 % (categoría y total), precios viejos antes del día de despensa, plan de comidas sin armar (domingo): activa, destinatarios y anticipación u hora donde aplica | Inmediata |
-| N-299 | L | 09 | Registro de chat | Por persona (Axel, Ximena): chat confirmado sí o no y fecha. **Chats detectados** por el bot MultiX cuando alguien le escribe y aún sin confirmar (K4): nombre que muestra Telegram y fecha y hora del mensaje. Instrucciones para escribirle al bot y confirmar aquí (el texto exacto lo fija S7 según cómo detecte el chat). Nunca se muestra el token | Inmediata |
-| N-300 | E | 09 | Editar alertas y probar | Activa y destinatarios; «Enviar aviso de prueba» a una persona | — |
+| N-297 | E | 08 | Editar reportes programados | Activo, hora (`send_time`, `HH:MM` en `America/Mexico_City`; **FIRME**, K43) con «Restablecer al valor inicial» cuando lo hay (K44, §2.3), y destinatarios | — |
+| N-298 | L | 09 | Alertas | Pago próximo (día anterior y mismo día; anticipación `alerts.payment_due_days_before`: lista de días antes del pago, valor inicial [1, 0], decisión F; se edita en N-323), presupuesto al 80 % y al 100 % (categoría y total; umbrales en N-323, K44), precios viejos antes del día de despensa (anticipación `advance_days`, días enteros ≥ 0, solo de este aviso), plan de comidas sin armar (domingo): activa, destinatarios, anticipación y hora (`send_time`, `HH:MM` en `America/Mexico_City`) donde aplica, cada una con su valor inicial donde lo haya (claves `send_time` y `advance_days` **FIRMES**, K43; K44). los días antes del pago próximo y los umbrales son claves de `app_setting` desde el esquema 1.3 (00003, K44) y ya no van en `notification.params_json`; dónde se guardan `send_time` y `advance_days` lo decide el bloqueo abierto `S1-parametros-avisos` y la pantalla no cambia | Inmediata |
+| N-299 | L | 09 | Registro de chat | Por persona (Axel, Ximena): chat confirmado sí o no y fecha. **Chats detectados** por el bot MultiX cuando alguien le escribe y aún sin confirmar (K4): nombre que muestra Telegram y fecha y hora del mensaje. Instrucciones para escribirle al bot y confirmar aquí (el texto exacto lo fija S7 según cómo detecte el chat). Cada chat detectado se confirma (N-316) o se descarta (N-324). Nunca se muestra el token | Inmediata |
+| N-300 | E | 09 | Editar alertas y probar | Activa, destinatarios, anticipación y hora donde aplica: `advance_days` del aviso de precios viejos y `send_time`, en `params_json` (claves `send_time` y `advance_days` **FIRMES**, K43), con «Restablecer al valor inicial» cuando lo hay (K44, §2.3); la anticipación del pago próximo (`alerts.payment_due_days_before`, valor inicial [1, 0], decisión F) y los umbrales del presupuesto se editan en la misma pantalla con N-323 («Restablecer» vuelve a [1, 0] y a 80 % y 100 %); «Enviar aviso de prueba» a una persona | — |
 | N-316 | E | 09 | Confirmar chat detectado | Asigna un chat detectado (N-299) a una persona (por defecto el usuario de la sesión); desde entonces los avisos de esa persona van a ese chat (K4) | — |
+| N-323 | E | 09 | Umbrales del presupuesto y anticipación del pago próximo | Porcentajes del presupuesto (por categoría y total) en que salta el aviso (`alerts.budget_warning_pct` y `alerts.budget_limit_pct`, valores iniciales 80 % y 100 %; K44) y días antes del pago en que salta el aviso de pago próximo (`alerts.payment_due_days_before`, valor inicial [1, 0]: 1 día antes y el mismo día; decisión F, K44). Lee cada valor vigente con su valor inicial; guarda o restablece (reglas de §2.3). Son claves de `app_setting` desde el esquema 1.3 (00003) y ya no van en `notification.params_json`; la pantalla no cambia | — |
+| N-324 | E | 09 | Descartar chat detectado | Borra, con confirmación, un chat detectado (N-299) que nadie va a confirmar; no toca los chats ya confirmados (S1 1.2: descartar borra el candidato) | — |
 | N-301 | L | 10 | Tema | Sistema (por defecto), claro u oscuro; por dispositivo | Local |
 | N-302 | L | 11 | Respaldos | Lista (fecha y hora, tamaño, resultado de `integrity_check`, ubicación), último respaldo correcto, próximo programado (diario) y fecha de la última restauración probada | Inmediata |
 | N-303 | E | 11 | Respaldar y restaurar | «Respaldar ahora»; «Restaurar» pide doble confirmación (acción crítica) | Al generar |
@@ -753,17 +802,19 @@ Canon semilla (`model.json`, despensa 1): capital $3,094.50, intereses $800.50 a
 | N-306 | L | 11 | IA opcional | Modelo local (Ollama) y API de Claude: activa sí o no (desactivadas por defecto), usos permitidos (OCR de tickets, sugerencias de recetas) y disponible sí o no. La llave nunca se muestra; solo «configurada» | Inmediata |
 | N-307 | E | 11 | Activar o desactivar IA | Por proveedor | — |
 | N-308 | L | 11 | Estado del servicio | Versión, en marcha desde y tamaño de la base de datos | Inmediata |
+| N-325 | E | 11 | Parámetros de datos | Tamaño máximo de un adjunto de gasto (valor inicial 10 MB; K43; lo usa N-064) y retención de las claves de idempotencia (valor inicial 24 h; K6; las usan N-054 y N-240). Lee cada valor vigente con su valor inicial; guarda o restablece (reglas de §2.3; K44) | — |
 | N-309 | L | 12 | Personas y reparto | Axel (titular, usuario), Ximena (co-titular, usuaria) y Karen (participante externa, sin cuenta), con lo que hace cada quien en el sistema; reparto por defecto del conjunto (50/50 Hogar y Karen); tope de pago por quincena por persona, opcional y vacío mientras Axel no lo capture (K13; solo lo usa el comparador, N-225) | Inmediata |
 | N-310 | E | 12 | Editar personas y reparto | Nombres visibles, % por defecto del conjunto y tope por quincena de cada persona (se puede dejar vacío, K13) | — |
-| N-311 | L | 13 | Perfiles de salud | Por persona (Axel, Ximena): altura, fecha de nacimiento o edad (S1), sexo, actividad (5 niveles), objetivo (bajar, mantener o subir de peso), meta de kcal sugerida (motor S4: Mifflin-St Jeor × factor de actividad de 1.2 a 1.9, con ajuste por objetivo), meta confirmada o escrita por la persona (K23) y restricciones (vacías) | Inmediata |
+| N-311 | L | 13 | Perfiles de salud | Por persona (Axel, Ximena): altura, fecha de nacimiento o edad (S1), sexo, actividad (5 niveles), objetivo (bajar, mantener o subir de peso), meta de kcal sugerida (motor S4: Mifflin-St Jeor × factor de actividad de 1.2 a 1.9, menos el ajuste de bajar o más el de subir; «mantener» no ajusta; RN-17, K36), ajuste por objetivo de la persona (bajar y subir en kcal; vacío = el de la casa, N-327, K36), meta confirmada o escrita por la persona (K23) y restricciones (vacías) | Inmediata |
 | N-312 | L | 13 | Metas y fondo | Metas (nombre, monto, fecha, aportación mensual planificada, activa) y aportación mensual planificada al fondo general | Inmediata |
 | N-313 | E | 13 | Editar perfiles, metas y fondo | Crear, editar y desactivar. En el perfil: elegir el objetivo y confirmar la meta sugerida o escribir otra (K23; también desde P-21) | — |
+| N-326 | E | 13 | Ajuste por objetivo de la casa | Dos valores en kcal (≥ 0): ajuste para bajar y ajuste para subir (valores iniciales 0 kcal y 0 kcal; K36, K44). Son el valor inicial del ajuste de cada persona que lo tenga vacío (N-327). Lee cada valor vigente con su valor inicial; guarda o restablece (reglas de §2.3) | — |
 | N-314 | L | 14 | Configuración de inventario | Por producto: modo (stock por unidad o ritmo de consumo), unidad y umbral de reposición o ritmo inicial. Regla fija: los sobrantes de recetas entran como stock (decisión D) | Inmediata |
 | N-315 | E | 14 | Editar inventario | Modo, unidad y umbrales | — |
 
 ### 3.29 Matriz pantalla ↔ necesidades (para C1)
 
-C1 completa la última columna con el o los endpoints de cada necesidad. Una necesidad reutilizada se lista en cada pantalla que la usa. En v1.1 hay **203** necesidades (N-001 a N-319; 138 de lectura y 65 de escritura); N-317 es Local (vive en el teléfono), igual que N-003 y N-301.
+C1 completa la última columna con el o los endpoints de cada necesidad. Una necesidad reutilizada se lista en cada pantalla que la usa. En v1.2 hay **211** necesidades (N-001 a N-327; 138 de lectura y 73 de escritura); N-317 es Local (vive en el teléfono), igual que N-003 y N-301.
 
 | Pantalla | Lectura | Escritura | Endpoint C1 |
 |---|---|---|---|
@@ -789,24 +840,24 @@ C1 completa la última columna con el o los endpoints de cada necesidad. Una nec
 | P-18 | N-200 a N-209 | N-210 | Lo llena C1 |
 | P-19 | N-215, N-216, N-217 | N-210, N-218, N-219 | Lo llena C1 |
 | P-20 | N-225, N-226 | — | Lo llena C1 |
-| P-21 | N-230 a N-233 | N-242, N-313 | Lo llena C1 |
+| P-21 | N-230 a N-233 | N-242, N-313, N-327 | Lo llena C1 |
 | P-22 | N-241, N-317 | N-240 | Lo llena C1 |
 | P-23 | N-245, N-246, N-247, N-249 | N-248, N-250 | Lo llena C1 |
 | P-24 | N-255, N-256, N-257, N-249 | N-248 | Lo llena C1 |
 | P-25 | N-260, N-262, N-249 | N-261 | Lo llena C1 |
-| P-26.01 | N-270, N-271, N-274 | N-272, N-273 | Lo llena C1 |
+| P-26.01 | N-270, N-271, N-274 | N-272, N-273, N-320 | Lo llena C1 |
 | P-26.02 | N-275, N-276, N-277, N-318 | N-278, N-319 | Lo llena C1 |
 | P-26.03 | N-279 | N-280 | Lo llena C1 |
 | P-26.04 | N-281 | N-282 | Lo llena C1 |
-| P-26.05 | N-283 a N-288 | N-289 | Lo llena C1 |
-| P-26.06 | N-290, N-291 | N-292, N-293 | Lo llena C1 |
+| P-26.05 | N-283 a N-288 | N-289, N-321 | Lo llena C1 |
+| P-26.06 | N-290, N-291 | N-292, N-293, N-322 | Lo llena C1 |
 | P-26.07 | N-294 | N-295 | Lo llena C1 |
 | P-26.08 | N-296 | N-297, N-248 | Lo llena C1 |
-| P-26.09 | N-298, N-299 | N-300, N-316 | Lo llena C1 |
+| P-26.09 | N-298, N-299 | N-300, N-316, N-323, N-324 | Lo llena C1 |
 | P-26.10 | N-301 (Local, sin API) | — | No requiere |
-| P-26.11 | N-302, N-305, N-306, N-308 | N-303, N-304, N-307 | Lo llena C1 |
+| P-26.11 | N-302, N-305, N-306, N-308 | N-303, N-304, N-307, N-325 | Lo llena C1 |
 | P-26.12 | N-309 | N-310 | Lo llena C1 |
-| P-26.13 | N-311, N-312 | N-313 | Lo llena C1 |
+| P-26.13 | N-311, N-312 | N-313, N-326, N-327 | Lo llena C1 |
 | P-26.14 | N-314 | N-315 | Lo llena C1 |
 
 ### 3.30 Entidades de §3.4.1 y las pantallas que las usan (para S1)
@@ -1148,13 +1199,17 @@ Nada se guarda sin el paso 7 (confirmación humana, decisión E). Si la lectura 
 | Inicio de semana y días de cada quincena | **FIRME** (K8): lunes a domingo; 1–15 y 16–último día del mes | Bloqueo `U1-periodos-semana-quincena`, resuelto |
 | Captura sin conexión fuera de casa | **Decidido** (K9): cola en el teléfono para gastos y peso (§2.4, F-1, F-6, N-317) | Bloqueo `U1-captura-fuera-de-casa`, resuelto |
 | Frontera de «precio viejo» (30 días o más) | **Decidido** (K22) | Bloqueo `criterios-frescura-peso`, resuelto |
-| Definición de «casillas sin armar» (N-023) | **PROVISIONAL**, propuesta de U1; sigue así hasta que Axel apruebe el valor en la puerta que toque (K31) | Bloqueo `criterios-umbrales-ausentes` |
-| Semana por defecto los domingos (la siguiente) para P-10, P-13 y P-14 | **PROVISIONAL**, propuesta de U1 (§0.2); no afecta cifras, esquema ni operaciones porque la semana va explícita | Bloqueo `U1-lista-vigente-domingo` |
+| Definición de «casillas sin armar» (N-023) | **FIRME** (K43): pares día × tiempo obligatorio sin receta ni «fuera», máximo 21; es una regla, no un parámetro | Bloqueos `criterios-umbrales-ausentes` y `C1-valores-k31`, resueltos |
+| Semana por defecto los domingos (la siguiente) para P-10, P-13 y P-14 | **FIRME** (K38): los domingos abren la semana que empieza el lunes; «Cambiar semana» siempre disponible (§0.2; N-120, N-150 y N-160 remiten ahí) | Bloqueo `U1-lista-vigente-domingo`, resuelto |
 | Relación entre diferencia acumulada y deuda viva (N-091, N-092) | **Decidido** (K19): dos cifras distintas; deuda viva total = diferencia acumulada + saldo no devengado | Bloqueo `criterios-invariante-deuda`, resuelto |
 | Meses 7 a 12 de la proyección (N-090, N-091) | **Decidido** (K21): interruptor N-318, apagado por defecto | Bloqueo `criterios-proyeccion-12m`, resuelto |
 | Tarjeta bancaria y crédito de tienda: tasa anual, base, IVA, porcentaje de pago mínimo y mínimo fijo | **Decidido** (K18): los captura Axel por línea desde su estado de cuenta, sin valor por defecto; mientras falte alguno, «Falta capturar» (§2.4, P-26.05, P-18) | Bloqueo `criterios-credito-formulas`, resuelto; `reglas-negocio.md` RN-26 |
+| Ajuste de la meta de kcal por objetivo | **Decidido** (K36): valores de la casa 0 y 0 kcal en P-26.13 (N-326); por persona en P-21 (N-327), vacío = el de la casa; «mantener» no ajusta | Bloqueo `S1-ajuste-objetivo-kcal`, resuelto; RN-17 |
+| Valores de C1 que eran propuesta: adjunto, comparador, hora y anticipación de avisos | **Decidido** (K43): 10 MB (N-064), 5 s (N-226), `send_time` y `advance_days` (N-297, N-298, N-300) | Bloqueo `C1-valores-k31`, resuelto |
+| Parámetros operativos configurables | **Decidido** (K44): cada uno en su sección de Ajustes, con valor inicial y «Restablecer al valor inicial» (§2.3, N-320 a N-323, N-325, N-326). La ubicación por sección es lectura PROPUESTA del orquestador y Axel la ve en la puerta 2; los mínimos y máximos de los de seguridad los propone S1 para esa puerta. Los umbrales del presupuesto y los días antes del pago próximo son claves `alerts.*` de `app_setting` desde el esquema 1.3 (00003; N-323); dónde se guardan `send_time` y `advance_days` lo decide el bloqueo abierto `S1-parametros-avisos` (no cambia la pantalla) | `decisiones.md` K44; `docs/design/U4-ajustes.md` |
+| Diseño visual con Claude Design (Pista 3) | **Decidido** (K35): lo ejecuta Axel con el paquete de `docs/design/entrada/` que se entrega al cierre de WF-1; lo que descargue va en `docs/design/salida/`. El orquestador no abre la herramienta. U1 no entra como archivo en el paquete: sus pantallas llegan por U3, U4 y DESIGN.md | `decisiones.md` K35 |
 | Reglas de devengo, reparto, promedios, costo de receta, meta de kcal, IMC, frescura ponderada | Las fijan S1, S2, S4 y S5 en `reglas-negocio.md`; U1 solo muestra el resultado | `docs/contratos/reglas-negocio.md` |
-| Campos, validaciones y valores por defecto de Ajustes (hora del resumen diario, anticipación de alertas) | U4 | `docs/design/U4-ajustes.md` |
+| Campos, validaciones y valores por defecto de Ajustes (hora del resumen diario, anticipación de alertas) | U4; los parámetros operativos siguen las reglas comunes de §2.3 (K44) | `docs/design/U4-ajustes.md` |
 | Especificación de las 6 tarjetas | U3, a partir de N-020 a N-026 | `docs/design/U3-dashboard.md` |
 | Endpoints de cada necesidad | C1 llena la columna de 3.29 | `docs/contratos/C1-datos.md`, `openapi.yaml` |
 

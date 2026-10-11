@@ -20,7 +20,7 @@ type Route struct {
 	Public      bool // true solo en las operaciones sin sesión (login y salud)
 }
 
-// Routes es la lista completa de operaciones de docs/contratos/openapi.yaml (201).
+// Routes es la lista completa de operaciones de docs/contratos/openapi.yaml (210).
 var Routes = []Route{
 	{Method: "GET", Pattern: "/api/v1/ai/providers", OperationID: "listAiProviders", Public: false},
 	{Method: "PATCH", Pattern: "/api/v1/ai/providers/{provider}", OperationID: "updateAiProvider", Public: false},
@@ -189,6 +189,12 @@ var Routes = []Route{
 	{Method: "GET", Pattern: "/api/v1/sessions", OperationID: "listSessions", Public: false},
 	{Method: "POST", Pattern: "/api/v1/sessions/revoke", OperationID: "revokeSessions", Public: false},
 	{Method: "DELETE", Pattern: "/api/v1/sessions/{session_id}", OperationID: "revokeSession", Public: false},
+	{Method: "GET", Pattern: "/api/v1/settings/alerts", OperationID: "getAlertSettings", Public: false},
+	{Method: "PATCH", Pattern: "/api/v1/settings/alerts", OperationID: "updateAlertSettings", Public: false},
+	{Method: "GET", Pattern: "/api/v1/settings/data", OperationID: "getDataSettings", Public: false},
+	{Method: "PATCH", Pattern: "/api/v1/settings/data", OperationID: "updateDataSettings", Public: false},
+	{Method: "GET", Pattern: "/api/v1/settings/health", OperationID: "getHealthSettings", Public: false},
+	{Method: "PATCH", Pattern: "/api/v1/settings/health", OperationID: "updateHealthSettings", Public: false},
 	{Method: "GET", Pattern: "/api/v1/settings/optimizer", OperationID: "getOptimizerSettings", Public: false},
 	{Method: "PATCH", Pattern: "/api/v1/settings/optimizer", OperationID: "updateOptimizerSettings", Public: false},
 	{Method: "GET", Pattern: "/api/v1/settings/prices", OperationID: "getPriceSettings", Public: false},
@@ -196,6 +202,8 @@ var Routes = []Route{
 	{Method: "GET", Pattern: "/api/v1/settings/projection", OperationID: "getProjectionSettings", Public: false},
 	{Method: "PATCH", Pattern: "/api/v1/settings/projection", OperationID: "updateProjectionSettings", Public: false},
 	{Method: "GET", Pattern: "/api/v1/settings/recipes", OperationID: "getRecipeSettings", Public: false},
+	{Method: "GET", Pattern: "/api/v1/settings/security", OperationID: "getSecuritySettings", Public: false},
+	{Method: "PATCH", Pattern: "/api/v1/settings/security", OperationID: "updateSecuritySettings", Public: false},
 	{Method: "GET", Pattern: "/api/v1/shopping-list", OperationID: "getShoppingList", Public: false},
 	{Method: "POST", Pattern: "/api/v1/shopping-list/assign-store", OperationID: "assignShoppingListStore", Public: false},
 	{Method: "POST", Pattern: "/api/v1/shopping-list/generate", OperationID: "generateShoppingList", Public: false},
@@ -209,6 +217,7 @@ var Routes = []Route{
 	{Method: "GET", Pattern: "/api/v1/system/seed-status", OperationID: "getSeedStatus", Public: false},
 	{Method: "GET", Pattern: "/api/v1/system/status", OperationID: "getSystemStatus", Public: false},
 	{Method: "GET", Pattern: "/api/v1/telegram-chat-candidates", OperationID: "listTelegramChatCandidates", Public: false},
+	{Method: "DELETE", Pattern: "/api/v1/telegram-chat-candidates/{candidate_id}", OperationID: "dismissTelegramChatCandidate", Public: false},
 	{Method: "POST", Pattern: "/api/v1/telegram-chat-candidates/{candidate_id}/confirm", OperationID: "confirmTelegramChatCandidate", Public: false},
 	{Method: "GET", Pattern: "/api/v1/ticket-scans", OperationID: "listTicketScans", Public: false},
 	{Method: "POST", Pattern: "/api/v1/ticket-scans", OperationID: "createTicketScan", Public: false},

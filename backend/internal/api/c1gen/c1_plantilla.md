@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| Versión | **C1 v1.1** (11-oct-2026, puerta 1) · `info.version` 1.1.0 de `docs/contratos/openapi.yaml` |
-| Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2; v1.1 corrección r1: agente correccion-C1-r1; v1.1 corrección r4: agente correccion-C1-r4 |
+| Versión | **C1 v1.2** (11-oct-2026, puerta 1b) · `info.version` 1.2.0 de `docs/contratos/openapi.yaml` |
+| Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2; v1.1 corrección r1: agente correccion-C1-r1; v1.1 corrección r4: agente correccion-C1-r4; v1.2: agente C1-v1.2; v1.2 corrección r1: agente correccion-C1-r1 |
 | Estado | Propuesta para la puerta 1 (C1 + U1 + criterios) |
 | Fuentes | `plan.md` §1, §3.4 (S6, S7), §3.5 (U1), §3.7; `decisiones.md`; esquema de S1, versión 1.1 (`backend/db/migrations/00001_esquema.sql`, `docs/contratos/diccionario-datos.md`, `docs/contratos/reglas-negocio.md`); `docs/design/U1-arquitectura.md` (199 necesidades N-xxx) |
 | Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): {{N_RUTAS}} rutas, {{N_OPS}} operaciones, {{N_ESQ}} esquemas |
@@ -22,6 +22,18 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 | C1 v1.1 · corrección r1 | 11-oct-2026 | Sin cambios de rutas, parámetros, tipos ni cifras; solo textos (hallazgos H1 a H5 de `docs/estado/p1/REVISION-C1-r1.md`). §7.1 nueva: efecto de cada `scope` de `updateBudget` sobre las vigencias, con un ejemplo de cada uno (K2). §1 punto 8: ciclo de una captura de gasto o de peso antes y después de las 24 h, con ejemplo de reintento (K9). El borrador del ticket no crea gasto, precio ni inventario (K3). Las descripciones de los instantes ya no dicen «(UTC)», que contradecía la salida con el desplazamiento de America/Mexico_City (R2-06, K12). `info.version` sigue en 1.1.0. |
 | C1 v1.1 · corrección r2 | 11-oct-2026 | Hallazgos H-r2-01 y H-r2-02 de `docs/estado/p1/REVISION-C1-r2.md`. La semana de la lista de compras ya no se llama `period`: es la llave `week` (`components/parameters/ListWeek`, semana ISO, obligatoria, sin valor por omisión) en `getShoppingList`, `generateShoppingList`, `createShoppingListItem`, `updateShoppingListItem`, `assignShoppingListStore`, `listBaskets` y `getDashboardBestBasket`; el filtro `period` vuelve a tener una sola definición, §6 explica las llaves que no son filtros y la matriz recurso × filtro suma la columna de `week` (C1-06). `scope=onward` de `updateBudget`: el monto nuevo rige desde `month` sin fin y elimina los renglones posteriores de la misma categoría; §7.1 lo dice y trae el ejemplo, y `Budget.valid_to_date`, `BudgetCreate`/`BudgetUpdate` y `createBudget` dicen lo mismo (C1-16, K2). Cambia el nombre de un parámetro de consulta en 7 operaciones; sin cambios de rutas, cuerpos ni cifras. `info.version` sigue en 1.1.0. |
 | C1 v1.1 · corrección r4 | 11-oct-2026 | Hallazgos H-r3-01, H-r3-02 y H-r3-04 de `docs/estado/p1/REVISION-C1-r3.md`. `getBasketComparison` recibe la llave `week` (`ListWeek`, obligatoria; 422 `validation_failed` si falta) y ya no recibe el filtro `period`; su descripción dice qué compara con `basket=shopping_list` y con `basket=expense`; la matriz de §6 y la tabla «Llaves que no son filtros» la incluyen. El valor por omisión de `getMealPlanWeek` (los domingos, la semana siguiente) queda `x-provisional` con el bloqueo `U1-lista-vigente-domingo`, en §13 y en N-120 de §10. `Budget.valid_to_date` toma el texto completo del comentario de S1 (que ahora nombra `onward` y `this_month`) y se quitó el parche de `gen2_schemas.py`. `verify_c1.py`: C1-06 exige `week` a toda operación que lee `shopping_list` y C1-15 marca la regla del domingo sin marca |
+| C1 v1.2 (puerta 1b) | 11-oct-2026 | Aplica K35 a K44 (`decisiones.md` §K) y la sección «Para C1» de `docs/estado/p1c/U1-1.2.md` contra el esquema 1.3 de S1 (migraciones 00001, 00002 y 00003). Parámetros configurables (K44): cada clave de `app_setting` del inventario de S1 se lee con su valor vigente y su valor inicial y se cambia o restablece por clave; tabla generada en §11.7. Operaciones nuevas: `getSecuritySettings` y `updateSecuritySettings` (N-320), `getAlertSettings` y `updateAlertSettings` (N-323), `dismissTelegramChatCandidate` (N-324), `getDataSettings` y `updateDataSettings` (N-325), `getHealthSettings` y `updateHealthSettings` (N-326); N-321 y N-322 entran en las de comparador y precios; N-327 en `createHealthProfile` y `updateHealthProfile`. K36: `HealthProfile` con el ajuste por persona y el de la casa. K38, K39 y K43: sin marcas (N-023, N-042, N-064, N-120, N-226, N-230, N-297, N-300, N-311 y N-313 FIRMES en §10). `info.version` 1.2.0. Detalle en «C1 v1.2 (puerta 1b)», abajo. |
+| C1 v1.2 · corrección r1 | 11-oct-2026 | Hallazgo A-01 de `docs/estado/p1c/REVISION-C1-r1.md` (C1-23, K43). `params_json` de `Notification` y `NotificationUpdate` declara las propiedades `send_time` (`type: string`, patrón `HH:MM` de 24 horas) y `advance_days` (`type: integer`, `minimum: 0`), sin valor por omisión; `weekday` y `day_of_month` siguen por `additionalProperties: true` y la marca de lugar `x-provisional` (bloqueo `S1-parametros-avisos`) se queda. Detalle al final de §11.7. `verify_c1.py` comprueba C1-23. Sin cambios de rutas, operaciones, cifras ni versión (`info.version` 1.2.0). |
+
+### C1 v1.2 (puerta 1b)
+
+- **Entradas**: el generador aplica `00001_esquema.sql`, `00002_puerta1.sql` y `00003_puerta1b.sql` (esquema 1.3). `parse_schema.py` lee además las anotaciones `@param`, `@param_sin_valor` y `@col_note` de las migraciones y comprueba que cada valor inicial anotado sea el que la migración siembra en `app_setting`.
+- **Parámetros (K44)**: lectura y cambio **por clave** de `app_setting` en la operación de settings de su sección: `parameters` (valor vigente, valor inicial, tipo y unidad) y, al escribir, `parameters` y `reset_parameters`. «Restablecer» es un campo, no una operación. Detalle y tabla en §11.7.
+- **`PriceSettings`**: `stale_after_days` deja de ser un campo propio y pasa a `parameters` (`price.stale_after_days`), junto a `price.zero_weight_after_days` y `price.profeco_import_max_gb`. `PriceSettingsUpdate` ya no exige `assisted_reading_enabled`.
+- **Salud (K36)**: `HealthProfile`, `HealthProfileCreate` y `HealthProfileUpdate` traen `goal_adjust_lose_kcal` y `goal_adjust_gain_kcal` (ausente o `null` = el de la casa); `HealthProfile` suma `household_goal_adjust_lose_kcal` y `household_goal_adjust_gain_kcal` y `suggested_kcal_target` sigue RN-17 1.3.
+- **Valores de K43**: adjunto de 10 MB (`attachment.max_size_mb`, 413 con el máximo vigente en el mensaje), comparador de 5 s (`comparator.timeout_seconds`, 503 `unavailable`), claves `send_time` y `advance_days` de `params_json` y «casillas sin armar», sin marca.
+- **Contraseña**: `PasswordChangeRequest.new_password` ya no fija `minLength` 12 en el contrato: el mínimo es el valor vigente de `auth.password_min_length` (12 al sembrar).
+- **Otros**: N-289 sale de `updatePerson` (el tope por persona es de N-310, K13); `Notification.params_json` dice que los umbrales y los días antes del pago próximo pasaron a `app_setting`.
 
 ### C1 v1.1 (puerta 1)
 
@@ -77,7 +89,7 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 
 9. **Identificador de petición**: toda respuesta lleva `X-Request-Id`; el mismo valor va en `Error.request_id` y en `audit_log.request_id` de los cambios que haga la petición.
 10. **Cálculos**: la API no recalcula reglas en el cliente. Las cifras marcadas «motor Sx» las calcula ese motor con las reglas de `reglas-negocio.md`; la interfaz solo muestra, filtra, ordena y suma lo visible (U1 §0.2).
-11. **Valores técnicos aprobados (K6)**: 200 registros por página como máximo (`limit`); `Idempotency-Key` retenida 24 h; cookie `SameSite=Strict`; contraseña nueva de 12 caracteres o más; carga de PROFECO de 1 GB como máximo; `cursor` de 512 caracteres como máximo; búsqueda (`q`) de 200 caracteres como máximo; usuario de 3 a 64 caracteres; clave de idempotencia de 16 a 128 caracteres.
+11. **Valores técnicos aprobados (K6)**: 200 registros por página como máximo (`limit`); `Idempotency-Key` retenida 24 h; cookie `SameSite=Strict`; contraseña nueva de 12 caracteres o más; carga de PROFECO de 1 GB como máximo; `cursor` de 512 caracteres como máximo; búsqueda (`q`) de 200 caracteres como máximo; usuario de 3 a 64 caracteres; clave de idempotencia de 16 a 128 caracteres. Desde C1 v1.2, la retención de `Idempotency-Key`, la contraseña mínima y el máximo de PROFECO son parámetros configurables que nacen con esos valores (K44, §11.7).
 
 ## 2. Autenticación, sesiones y permisos
 
@@ -87,7 +99,7 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 - **Sesión larga por dispositivo** (decisión A, «meses»): 90 días desde el último uso, renovable con cada petición (K11; `device_session.expires_at`; `app_setting session.max_age_days = 90`, sembrado en 00002). `logout` cierra la del dispositivo; Ajustes lista las sesiones de **ambos** usuarios y cualquiera puede cerrarlas (`listSessions`, `revokeSession`, `revokeSessions`, N-271 y N-272). Una sesión cerrada responde 401 en la siguiente petición.
 - **Permisos**: Axel y Ximena son co-titulares con **los mismos permisos**; ninguna operación filtra ni oculta datos según quién inició sesión (U1 §0.5). El usuario de la sesión solo da valores por defecto (persona del gasto, del peso) y el «creado por» de `audit_log`. **No existe operación para crear cuentas**: Karen no tiene cuenta ni acceso (decisión A); `person` no se crea desde la API.
 - **CSRF**: con `SameSite=Strict` (K6) el navegador no envía la cookie en peticiones que vienen de otro sitio.
-- **Contraseña mínima** del cambio de contraseña (N-273): 12 caracteres (K6).
+- **Contraseña mínima** del cambio de contraseña (N-273): 12 caracteres al sembrar (K6); se usa el valor vigente de `auth.password_min_length` (K44, §11.7).
 
 ## 3. Modelo de errores (esquema único)
 
@@ -222,7 +234,7 @@ Las 6 tarjetas de Inicio › Resumen (U1 N-020 a N-025, U3) y las métricas de s
 | M-02 | Flujo quincenal (N-021) | ingresos = quincena capturada (o esperada, marcada) + extras de la quincena; egresos hechos = efectivo pagado hasta hoy (contado + partes del hogar pagadas); comprometido = partes del hogar pendientes de la quincena + fijos y venideros sin pagar; saldo al cierre = ingresos − egresos − comprometido | quincena en curso | `period` (`2026-10-q2`) | income, planned_item, expense, expense_share, scheduled_payment, scheduled_payment_share, credit_payment | GET `/api/v1/dashboard/fortnight-flow` | Q2 oct-2026: comprometido incluye la parte del hogar del pago del 30-oct **598.82** (R-13); ingreso: marcador |
 | M-03 | Próximo pago (N-022 a) | pago con alguna parte pendiente y fecha mínima ≥ hoy en todas las líneas; si hay pendientes con fecha < hoy, primero el más antiguo («sin marcar como pagado»); pagos del mismo día se suman | hoy en adelante | — | scheduled_payment, scheduled_payment_share, credit_payment, credit | GET `/api/v1/dashboard/next-payment` | **30-oct-2026, 973.75** (hogar 598.82, Karen 374.93) (R-13) |
 | M-04 | Disponible A/B (N-022 b, N-201, N-285) | disponible de hoy de cada línea revolvente con la lectura activa (B por defecto) y aviso «pendiente confirmar»; vista previa con ambas lecturas y el mínimo del horizonte (motor S3) | hoy y horizonte | `credit_id` | credit, credit_purchase, scheduled_payment, credit_payment | GET `/api/v1/dashboard/next-payment`, GET `/api/v1/credits/{credit_id}/availability-preview` | 10-oct-2026: **A 10,000.00 · B 6,905.50** (R-64); mínimos **8,094.50 · 5,000.00** (R-61, R-62) |
-| M-05 | Comidas de la semana (N-023) | costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día = Σ kcal de la persona ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio sin receta ni «fuera» para alguna persona (máx. 21; PROVISIONAL `C1-valores-k31`) | semana en curso (lunes a domingo, K8) | `period` (`2026-W42`) | meal_plan_entry, meal_slot, recipe, recipe_ingredient, nutrition_fact, price, presentation, health_profile | GET `/api/v1/dashboard/week-meals` | marcador (el oráculo no trae comidas) |
+| M-05 | Comidas de la semana (N-023) | costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día = Σ kcal de la persona ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio sin receta ni «fuera» para alguna persona (máx. 21; K43) | semana en curso (lunes a domingo, K8) | `period` (`2026-W42`) | meal_plan_entry, meal_slot, recipe, recipe_ingredient, nutrition_fact, price, presentation, health_profile | GET `/api/v1/dashboard/week-meals` | marcador (el oráculo no trae comidas) |
 | M-06 | Mejor canasta (N-024) | lista de compras vigente (o la última compra con renglones) comparada por tienda (motor S5); ganadora = menor total; diferencia contra la segunda; cobertura = artículos con precio ÷ artículos; precios viejos usados; Sam's como si tuvieran membresía | lista vigente | — | shopping_list, shopping_list_item, meal_plan_entry, recipe_ingredient, inventory_item, price, presentation, product, store, expense, expense_item | GET `/api/v1/dashboard/best-basket` | compra semilla 10-oct-2026: Bodega Aurrera **3,094.50** (R-01) contra Walmart 3,233.00 (`data.json totales.walmart`), diferencia **138.50** (plan §3.4 fila S5) |
 | M-07 | Ahorro (N-025) | ahorrado = Σ aportaciones − Σ retiros (fondo y metas); aportado del mes contra planificado del mes (Σ `planned_monthly_cents` activos); meta más próxima con % = ahorrado ÷ monto meta × 100 entero | mes en curso | — | savings_goal, savings_movement | GET `/api/v1/dashboard/savings` | marcador (el oráculo no trae ahorro) |
 | M-08 | Participación de Karen (N-026) | su parte devengada de la despensa del mes; sus compras vivas; sus partes de pagos del mes con estado; deuda viva = Σ partes pendientes | mes en curso | — | person, expense, expense_share, credit_purchase, credit_purchase_share, scheduled_payment, scheduled_payment_share, credit_payment | GET `/api/v1/persons/{person_id}/participation` | oct-2026: parte devengada **749.86** (`periodos[0].devengado.karen`); su parte del pago del 30-oct **374.93** (R-11) |
@@ -238,7 +250,7 @@ Las 6 tarjetas de Inicio › Resumen (U1 N-020 a N-025, U3) y las métricas de s
 
 ## 10. Matriz pantalla P-xx → necesidad N-xxx → endpoint(s)
 
-Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada pantalla que las usa, como en U1 §3.29). Estado: **OK** = cubierta; **PROVISIONAL** = cubierta en parte, con bloqueo; **BLOQUEO** = sin endpoint por un bloqueo abierto (hoy ninguna); **Local** = vive en el dispositivo (U1 la declara sin API).
+Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada pantalla que las usa, como en U1 §3.29). Estado: **OK** = cubierta; **FIRME (Kxx)** = cubierta y cerrada en la puerta 1b por la decisión citada (antes PROVISIONAL); **PROVISIONAL** = cubierta en parte, con bloqueo; **BLOQUEO** = sin endpoint por un bloqueo abierto (hoy ninguna); **Local** = vive en el dispositivo (U1 la declara sin API).
 
 {{MATRIZ}}
 
@@ -264,6 +276,23 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 ### 11.6 Capacidades exigidas (C1-11) → operaciones
 {{CAPACIDADES}}
 
+### 11.7 Parámetros operativos configurables (K44) → operaciones de settings
+
+Todo parámetro operativo es una clave de `app_setting` del hogar que nace con el valor decidido (K44; RN-29 de `reglas-negocio.md` 1.3). Esta tabla sale de las anotaciones `@param` de las migraciones y de los esquemas de settings de `openapi.yaml`; no se escribe a mano. `parse_schema.py` compara cada valor inicial con la siembra real y se detiene si no coinciden.
+
+- **Lectura**: el `GET /api/v1/settings/…` de la sección trae `parameters`, un objeto por clave de `app_setting` (`SettingParameterInteger` o `SettingParameterIntegerList`) con `value` (vigente), `initial_value` (sembrado; `null` si no lo hay), `is_initial`, `value_type` y `unit`.
+- **Cambio**: el `PATCH` de la misma ruta recibe `parameters` con el valor nuevo por clave. Un valor vacío, `null` o de otro tipo responde 422 `validation_failed` y no se sustituye por otro. Solo se valida tipo y signo (entero mayor o igual a 0, como los disparadores `trg_app_setting_param_int_*` de 00003); no hay topes mínimos ni máximos hasta la puerta 2.
+- **Restablecer** es un campo, no una operación: `reset_parameters` lista las claves que vuelven a su `initial_value`. Una clave no puede venir a la vez en `parameters` y en `reset_parameters` (422 `validation_failed`). Un mismo `PATCH` cambia unos y restablece otros, y `audit_log` registra el cambio.
+- **Quién usa el valor vigente**: `login`, `changeOwnPassword` y la renovación de la sesión (`auth.*`, `session.max_age_days`); la frescura y el peso de los precios (`price.stale_after_days`, `price.zero_weight_after_days`, RN-12); `importProfeco`; `compareScenarios` (503 `unavailable`); `uploadExpenseAttachment` (413 con el máximo en el mensaje); la purga de `idempotency_key`; `suggested_kcal_target` (`health.*` y el ajuste por persona de `health_profile`, RN-17); los avisos de presupuesto y de pago próximo (`alerts.*`).
+
+{{PARAMS}}
+
+Parámetros que existen sin valor sembrado o que viven en otra tabla (no se inventa un valor):
+
+{{PARAMS_SV}}
+
+{{PARAMS_K43}}
+
 ## 12. Índice de operaciones
 
 {{OPERACIONES}}
@@ -272,12 +301,9 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 
 | Tema | Qué queda PROVISIONAL en C1 | Bloqueo |
 |---|---|---|
-| Valores operativos (K31) | tamaño máximo de adjuntos (propuesta 10 MB; N-064); claves de `params_json` de reportes y alertas (hora del resumen diario, anticipación de precios viejos; N-297, N-300); tiempo máximo del comparador (N-226); definición de «casillas sin armar» de la tarjeta de comidas (máx. 21; N-023). Axel los aprueba en la puerta 2 (comparador) y en la puerta 4 (lo demás) | `C1-valores-k31` (C1) |
-| Promedio semanal | si el promedio diario se multiplica por 7 antes o después de redondear a centavos (N-042) | `criterios-promedios-redondeo` (existente) |
-| Meta de kcal sugerida | magnitud del ajuste por objetivo «bajar» y «subir» en `suggested_kcal_target` (N-230, N-311, N-313); la fórmula, los factores y «mantener» ya son firmes (K23) | `S1-ajuste-objetivo-kcal` (existente) |
-| Semana por omisión del plan de comidas | `getMealPlanWeek` sin `period`: la semana en curso y, los domingos, la siguiente (N-120); es la semana por defecto de U1 §0.2 y solo la regla de los domingos es provisional. La lista de compras no tiene semana por omisión (`week` obligatoria) | `U1-lista-vigente-domingo` (existente, de U1) |
+| Lugar de los parámetros de los avisos | dónde viven `send_time` y `advance_days` (claves FIRMES de K43, todavía sin valor sembrado) y `weekday` (7) y `day_of_month` (1) de la decisión F: hoy en `notification.params_json` (`Notification` y `NotificationUpdate`); si la respuesta los pasa a `app_setting`, saldrán por una operación de settings con valor inicial y «restablecer» (N-297, N-300) | `S1-parametros-avisos` (abierto, de S1) |
 
-Cerrados en la puerta 1 y ya sin marca: filtro familia (K5), lista de compras (K1), huecos U1 ↔ S1 (K2, K3, K4), parámetros técnicos (K6), campos calculados (K7), quincena y semana (K8), inicio de sesión y sesión (K11), tasas (K12), tope por persona (K13), reposición de la parte externa (K15), restricciones del comparador (K16), puntaje (K17), promedios diario y mensual (K20), meses 7 a 12 (K21), frescura de precios (K22) y escala de actividad (K23). La semana por omisión de la lista de compras (`U1-lista-vigente-domingo`, abierto) no afecta al contrato: la lista siempre recibe la semana explícita.
+Cerrados en la puerta 1 y ya sin marca: filtro familia (K5), lista de compras (K1), huecos U1 ↔ S1 (K2, K3, K4), parámetros técnicos (K6), campos calculados (K7), quincena y semana (K8), inicio de sesión y sesión (K11), tasas (K12), tope por persona (K13), reposición de la parte externa (K15), restricciones del comparador (K16), puntaje (K17), promedios diario y mensual (K20), meses 7 a 12 (K21), frescura de precios (K22) y escala de actividad (K23). Cerrados en la puerta 1b (C1 v1.2) y ya sin marca: valores de K31 que tocan a C1 (K43: adjunto de 10 MB, comparador de 5 s, claves `send_time` y `advance_days`, «casillas sin armar»), ajuste por objetivo de la meta de kcal (K36), semana por omisión de `getMealPlanWeek` (K38; la lista de compras sigue con `week` obligatoria, R3-01), promedio semanal (K39) y parámetros configurables (K44, §11.7).
 
 ## 14. Inconsistencias S1 ↔ U1 encontradas (sin tocar sus archivos)
 

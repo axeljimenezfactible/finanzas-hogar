@@ -1875,7 +1875,7 @@
         "light": {
           "$type": "color",
           "$value": "#B870AC",
-          "$description": "Karen en claro (L 0.642) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
+          "$description": "Karen en claro (L 0.642)",
           "$extensions": {
             "oklch": {
               "l": 0.642,
@@ -1887,7 +1887,7 @@
         "dark": {
           "$type": "color",
           "$value": "#D389C6",
-          "$description": "Karen en oscuro (L 0.725) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
+          "$description": "Karen en oscuro (L 0.725)",
           "$extensions": {
             "oklch": {
               "l": 0.725,
@@ -1944,7 +1944,7 @@
         "dark": {
           "$type": "color",
           "$value": "#7AA3EE",
-          "$description": "Walmart en oscuro (L 0.716) · PROVISIONAL: bloqueo U2a-walmart-oscuro (L 0.720 → 0.716)",
+          "$description": "Walmart en oscuro (L 0.716)",
           "$extensions": {
             "oklch": {
               "l": 0.716,
@@ -1959,7 +1959,7 @@
         "light": {
           "$type": "color",
           "$value": "#762C4C",
-          "$description": "Bodega Aurrera en claro (L 0.410) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
+          "$description": "Bodega Aurrera en claro (L 0.410)",
           "$extensions": {
             "oklch": {
               "l": 0.41,
@@ -1971,7 +1971,7 @@
         "dark": {
           "$type": "color",
           "$value": "#FFAAC9",
-          "$description": "Bodega Aurrera en oscuro (L 0.829) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
+          "$description": "Bodega Aurrera en oscuro (L 0.829)",
           "$extensions": {
             "oklch": {
               "l": 0.829,

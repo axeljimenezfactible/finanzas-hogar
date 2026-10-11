@@ -10,7 +10,15 @@
 # Revisión S1-r2 (agente correccion-S1-r2, hallazgo R2-01): S1-03 también marca las fechas (ISO, dd-mmm-aaaa y dd-mmm
 # con el año deducido de la frase) que no están en model.json ni en data.json dentro de frases sin rótulo, y las fechas
 # imposibles aunque estén rotuladas; una autoprueba con las frases que señaló la revisión comprueba que la marca funciona.
-import datetime, glob, json, os, re, shutil, sqlite3, subprocess, sys
+# Versión 1.3 (agente S1-esquema-1.3, flujo P1c): aplica también la 00003 (K36 y K44). DOWN13 prueba que el Down de la 00003
+# deja sqlite_master, app_setting y los datos de 1.2 idénticos; DDL comprueba que el DDL de 00001 y 00002 (sin comentarios)
+# es el de git HEAD; K44 prueba columnas y claves nuevas con sus valores iniciales, las negativas (ajuste −1, parámetro que no
+# es entero), las cifras de K36, K39 y K40 en las reglas y que ninguna marca PROVISIONAL cite un bloqueo ya resuelto.
+# Corrección S1-r1 de P1c (H-01 y H-02): K44 incluye las claves alerts.* y exige que params_json ya no las lleve; AVISOS13
+# prueba el traspaso params_json <-> app_setting con valores que no son los iniciales; S1-13 exige cada clave @param en la
+# fila de su sección de «Ajustes: 14 secciones»; DOWN13 exige los avisos de 1.2 byte por byte (params_json y updated_at).
+# S1-03 acepta cuentas citadas encadenadas («ruta × 7 / 31 = valor», un solo redondeo HALF_UP al final, K39).
+import datetime, functools, glob, json, os, re, shutil, sqlite3, subprocess, sys
 from fractions import Fraction
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 MIGS = sorted(glob.glob(R + '/backend/db/migrations/*.sql'))
@@ -35,8 +43,11 @@ c = lambda v: int(Fraction(str(v)) * 100)  # pesos con 2 decimales -> centavos e
 def one(q, a=()): return x(q, a).fetchone()[0]
 def lid(): return one('SELECT last_insert_rowid()')
 db.executescript(UPS[0]); E11 = esquema(db); A11 = ajustes(db)
-for u in UPS[1:]: db.executescript(u)
-E12 = esquema(db)
+db.executescript(UPS[1]); E12 = esquema(db); A12 = ajustes(db)
+cols12 = {t: [r[1] for r in x(f'PRAGMA table_info({t})')] for (t,) in x("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchall()}
+N12 = x(f"SELECT {', '.join(cols12['notification'])} FROM notification ORDER BY rowid").fetchall()  # avisos de 1.2: el Down de la 00003 los devuelve byte por byte
+for u in UPS[2:]: db.executescript(u)
+EF = esquema(db)
 tabs = [r[0] for r in x("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name")]
 cols = {t: [r[1] for r in x(f'PRAGMA table_info({t})')] for t in tabs}
 def has(tc):
@@ -156,7 +167,7 @@ for p in m['periodos']:
     acum += dv - ef; eq(acum, c(p['diferencia_acumulada']), f"diferencia acumulada {p['periodo']}")
 fechas_1_9 = [f for (f,) in x("SELECT purchase_date FROM credit_purchase UNION ALL SELECT due_date FROM scheduled_payment UNION ALL SELECT expense_date FROM expense WHERE payment_method='cash'") if int(f[8:]) <= 9]
 out('S1-12', not dif, f"ida y vuelta de oraculo/model.json: 4 despensas, {npag} pagos, {len(serie)} eventos, series A/B de {len(sA)}/{len(sB)} valores, mínimos {min(sA)}/{min(sB)}, P1–P6 por persona · valores comparados={n} · diferencias={len(dif)} · suma pagos d1={s_d1} · parte Axel d1={a_d1}" + (f' · {dif[:5]}' if dif else ''))
-out('KUESKI', s_d1 == 389500 and a_d1 == 239528 and len(MIGS) >= 2 and not dif, f"regresión Kueski sobre el esquema 1.2 ({', '.join(os.path.basename(q) for q in MIGS)}): suma de pagos de la despensa 1 = {s_d1} (esperado 389500) · parte de Axel = {a_d1} (esperado 239528) · diferencias contra model.json = {len(dif)}")
+out('KUESKI', s_d1 == 389500 and a_d1 == 239528 and len(MIGS) >= 2 and not dif, f"regresión Kueski sobre el esquema 1.3 ({', '.join(os.path.basename(q) for q in MIGS)}): suma de pagos de la despensa 1 = {s_d1} (esperado 389500) · parte de Axel = {a_d1} (esperado 239528) · diferencias contra model.json = {len(dif)}")
 # ---------- K12: la tasa se muestra con los decimales capturados y se calcula con la fracción
 x('UPDATE credit_term_rate SET rate_decimals = CASE term_count WHEN 2 THEN 2 ELSE 4 END WHERE credit_id = ?', (cr,))
 def pct_txt(num, den, d):
@@ -199,8 +210,10 @@ NOMBRES = ['Cuenta y roles', 'Presupuesto', 'Ingresos', 'Categorías', 'Crédito
 okn = [f[1].startswith(nm) for f, nm in zip(filas13, NOMBRES)]
 claves = {r[0] for r in x('SELECT setting_key FROM app_setting')} | set(re.findall(r'^\| `([a-z_.]+)` \|', DIC.split('## Claves de app_setting previstas sin valor')[1].split('\n## ')[0], re.M))
 refs = set(re.findall(r'`([a-z_]+\.[a-z_]+)`', sec)) - claves; malos = sorted(r for r in refs if r.split('.')[0] in cols and not has(r))
+PSEC = [(l.split(' | ')[0].strip(), l.split(' | ')[5].strip()) for l in re.findall(r'^-- @param (.+)$', mig, re.M)]
+mal13 = [k_ for k_, s_ in PSEC if not any(f[1].startswith(s_) and f'`{k_}`' in f[3] for f in filas13)]
 tablas13 = sorted({r.split('.')[0] for r in refs if r.split('.')[0] in cols})
-out('S1-13', len(filas13) == 14 and all(okn) and all(f[3].strip() for f in filas13) and not malos, f"diccionario «Ajustes: 14 secciones → campos → tabla.columna»: {len(filas13)} de 14 secciones en orden, 0 destinos vacíos={all(f[3].strip() for f in filas13)}, referencias tabla.columna={len(refs)} (inexistentes: {malos}), tablas citadas={len(tablas13)}; Apariencia local por dispositivo (N-301)")
+out('S1-13', len(filas13) == 14 and all(okn) and all(f[3].strip() for f in filas13) and not malos and PSEC and not mal13, f"diccionario «Ajustes: 14 secciones → campos → tabla.columna»: {len(filas13)} de 14 secciones en orden, 0 destinos vacíos={all(f[3].strip() for f in filas13)}, referencias tabla.columna={len(refs)} (inexistentes: {malos}), tablas citadas={len(tablas13)}; Apariencia local por dispositivo (N-301) · claves @param en la fila de su sección: {len(PSEC) - len(mal13)} de {len(PSEC)} (faltan: {mal13})")
 # ---------- S1-14
 sens = sorted(set(re.findall(r'\b\w*(?:password|token|secret|apikey)\w*\b', mig, re.I)))
 tg = re.findall(r'[0-9]{8,}:AA', mig)
@@ -309,14 +322,14 @@ for s in secs:
         pth = pth.strip()
         if pth == 'ruta': continue
         tot += 1
-        op = re.fullmatch(r'(.+?)\s*([/×*])\s*(\d+)', pth)  # cuenta citada: «ruta / n = valor», a centavos con HALF_UP
-        if op: pth = op.group(1)
+        op = re.fullmatch(r'(.+?)((?:\s*[/×*]\s*\d+)+)', pth)  # cuenta citada: «ruta / n = valor» o encadenada «ruta × 7 / 31 = valor», a centavos con HALF_UP al final
+        if op: pth = op.group(1); pasos = re.findall(r'([/×*])\s*(\d+)', op.group(2))
         try:
             v = path_get(m if src == 'model' else dj, pth)
         except (KeyError, IndexError, TypeError):
             malas3.append((rn, pth, 'ruta inexistente')); continue
         if op:
-            good = bool(val) and isinstance(v, (int, float)) and re.fullmatch(r'-?[\d,]+(\.\d+)?', val.strip()) is not None and half_up(OPS[op.group(2)](Fraction(str(v)), Fraction(op.group(3)))) == frac(val)
+            good = bool(val) and isinstance(v, (int, float)) and re.fullmatch(r'-?[\d,]+(\.\d+)?', val.strip()) is not None and half_up(functools.reduce(lambda a, st: OPS[st[0]](a, Fraction(st[1])), pasos, Fraction(str(v)))) == frac(val)
             if good: der.add(frac(val)); n_cuentas += 1
         elif val:
             good = str(v) == val.strip() or (isinstance(v, (int, float)) and re.fullmatch(r'-?[\d,]+(\.\d+)?', val.strip()) and Fraction(str(v)) == frac(val))
@@ -520,16 +533,110 @@ sembradas = dict(x("SELECT setting_key, value_json FROM app_setting WHERE settin
 k16 = [k for (k,) in x("SELECT setting_key FROM app_setting WHERE setting_key LIKE 'optimizer.%' AND setting_key <> 'optimizer.weights'")]
 out('NEG12', not acept12 and not rech12 and sembradas == {'projection.repeat_cadence_enabled': 'false', 'session.max_age_days': '90', 'idempotency.retention_hours': '24'} and not k16,
     f"pruebas negativas de 1.2: {len(NEG12)}, rechazadas {len(NEG12) - len(acept12)}, aceptadas por error {acept12} · positivas: {len(POS12)}, aceptadas {len(POS12) - len(rech12)}, rechazadas por error {rech12} · ajustes sembrados por la 00002: {sembradas} · claves optimizer.* de restricciones sembradas (K16, deben ser 0): {k16}")
-# ---------- Down de la 00002 (vuelve el esquema 1.1 idéntico), Down de la 00001 y Up otra vez
+# ---------- K44 y K36 (esquema 1.3): columnas, claves sembradas, negativas, cifras de las reglas y marcas PROVISIONAL
+SEM13 = {'health.goal_adjust_lose_kcal': '0', 'health.goal_adjust_gain_kcal': '0', 'price.zero_weight_after_days': '90', 'auth.password_min_length': '12', 'attachment.max_size_mb': '10', 'price.profeco_import_max_gb': '1', 'comparator.timeout_seconds': '5', 'alerts.budget_warning_pct': '80', 'alerts.budget_limit_pct': '100', 'alerts.payment_due_days_before': '[1, 0]'}
+PREV = {'auth.max_failed_attempts': '5', 'auth.lockout_window_minutes': '15', 'price.stale_after_days': '30', 'session.max_age_days': '90', 'idempotency.retention_hours': '24'}
+casa = dict(x('SELECT setting_key, value_json FROM app_setting WHERE user_account_id IS NULL').fetchall())
+anot = {l.split(' | ')[0].strip(): l.split(' | ')[3].strip() for l in re.findall(r'^-- @param (.+)$', mig, re.M)}
+cols13 = [cc for cc in ('goal_adjust_lose_kcal', 'goal_adjust_gain_kcal') if has('health_profile.' + cc)]
+x('UPDATE health_profile SET goal_adjust_lose_kcal = 300 WHERE person_id = ?', (AX,)); db.commit()  # dato que el Down de la 00003 debe dejar intacto en las columnas de 1.2
+NEG13 = [
+ ('ajuste_bajar_-1', f"UPDATE health_profile SET goal_adjust_lose_kcal = -1 WHERE person_id = {AX}"),
+ ('ajuste_subir_-1', f"UPDATE health_profile SET goal_adjust_gain_kcal = -1 WHERE person_id = {AX}"),
+ ('ajuste_bajar_texto', f"UPDATE health_profile SET goal_adjust_lose_kcal = '300 kcal' WHERE person_id = {AX}"),
+ ('casa_ajuste_-1', "UPDATE app_setting SET value_json = '-1' WHERE setting_key = 'health.goal_adjust_lose_kcal' AND user_account_id IS NULL"),
+ ('adjunto_como_texto', "UPDATE app_setting SET value_json = '\"10\"' WHERE setting_key = 'attachment.max_size_mb' AND user_account_id IS NULL"),
+ ('comparador_decimal', "UPDATE app_setting SET value_json = '5.5' WHERE setting_key = 'comparator.timeout_seconds' AND user_account_id IS NULL"),
+ ('intentos_booleano', "UPDATE app_setting SET value_json = 'true' WHERE setting_key = 'auth.max_failed_attempts' AND user_account_id IS NULL"),
+ ('clave_repetida', "INSERT INTO app_setting(setting_key, value_json) VALUES ('price.zero_weight_after_days', '120')"),
+ ('alta_por_cuenta_negativa', "INSERT INTO app_setting(setting_key, user_account_id, value_json) VALUES ('session.max_age_days', 1, '-90')"),
+ ('umbral_como_texto', "UPDATE app_setting SET value_json = '\"80\"' WHERE setting_key = 'alerts.budget_warning_pct' AND user_account_id IS NULL"),
+ ('tope_negativo', "UPDATE app_setting SET value_json = '-100' WHERE setting_key = 'alerts.budget_limit_pct' AND user_account_id IS NULL"),
+ ('dias_antes_no_lista', "UPDATE app_setting SET value_json = '1' WHERE setting_key = 'alerts.payment_due_days_before' AND user_account_id IS NULL"),
+ ('dias_antes_negativo', "UPDATE app_setting SET value_json = '[1, -1]' WHERE setting_key = 'alerts.payment_due_days_before' AND user_account_id IS NULL"),
+ ('dias_antes_decimal', "UPDATE app_setting SET value_json = '[1.5, 0]' WHERE setting_key = 'alerts.payment_due_days_before' AND user_account_id IS NULL"),
+ ('dias_antes_texto_por_cuenta', "INSERT INTO app_setting(setting_key, user_account_id, value_json) VALUES ('alerts.payment_due_days_before', 1, '[\"1\"]')"),
+]
+POS13 = [
+ ('ajuste_bajar_500', f"UPDATE health_profile SET goal_adjust_lose_kcal = 500, goal_adjust_gain_kcal = 0 WHERE person_id = {AX}"),
+ ('ajuste_null_valor_casa', f"UPDATE health_profile SET goal_adjust_lose_kcal = NULL, goal_adjust_gain_kcal = NULL WHERE person_id = {AX}"),
+ ('cambiar_intentos_a_3', "UPDATE app_setting SET value_json = '3' WHERE setting_key = 'auth.max_failed_attempts' AND user_account_id IS NULL"),
+ ('restablecer_peso_cero', "UPDATE app_setting SET value_json = '120' WHERE setting_key = 'price.zero_weight_after_days'; UPDATE app_setting SET value_json = '90' WHERE setting_key = 'price.zero_weight_after_days'"),
+ ('otro_ajuste_no_entero', "UPDATE app_setting SET value_json = 'true' WHERE setting_key = 'projection.repeat_cadence_enabled'"),
+ ('cambiar_aviso_a_70', "UPDATE app_setting SET value_json = '70' WHERE setting_key = 'alerts.budget_warning_pct' AND user_account_id IS NULL"),
+ ('dias_antes_3_1_0', "UPDATE app_setting SET value_json = '[3, 1, 0]' WHERE setting_key = 'alerts.payment_due_days_before' AND user_account_id IS NULL"),
+]
+acept13 = corre(NEG13, True); rech13 = corre(POS13, False)
+fr = lambda q, d: int(q * 10**d + Fraction(1, 2)) / Fraction(10**d)  # HALF_UP a d decimales (valores positivos)
+msj = (10 * Fraction('72.5') + Fraction('6.25') * 175 - 5 * 35 + 5) * Fraction('1.55')
+k36 = (fr(msj, 0), fr(msj - 500, 0)); k40 = [fr(Fraction(90 - d, 61), 4) for d in (30, 60, 90)]
+k39 = (half_up(Fraction(str(m['periodos'][0]['efectivo']['total'])) * 7 / 31), half_up(Fraction(str(m['periodos'][4]['efectivo']['total'])) * 7 / 28))
+txt_ok = k36 == (2556, 2056) and k40 == [Fraction('0.9836'), Fraction('0.4918'), 0] and k39 == (Fraction('219.88'), Fraction('629.35')) and all(v in REG for v in ('2,556', '2,056', '0.9836', '0.4918', '219.88', '629.35', '(90 − edad) / 61'))
+resueltos = sorted(f[:-3] for f in os.listdir(R + '/docs/estado/bloqueos') if f.endswith('.md') and 'Respuesta de Axel' in open(R + '/docs/estado/bloqueos/' + f, encoding='utf-8').read())
+prov_res = [(f, nm) for f, t in (('migraciones', mig), ('diccionario', DIC), ('reglas', REG)) for l in t.splitlines() if 'PROVISIONAL' in l for nm in re.findall(r'\b((?:S1|C1|U1|U2|U2a|S6|criterios)-[a-z0-9-]+[a-z0-9])\b', l) if nm in resueltos]
+k5 = ['S1-ajuste-objetivo-kcal', 'S1-fuentes-precio', 'criterios-promedios-redondeo', 'criterios-frescura-extremos', 'C1-valores-k31']
+notif13 = dict(x("SELECT code, params_json FROM notification WHERE code IN ('payment_due', 'budget_threshold')").fetchall())
+notif_ok = notif13 == {'payment_due': '{}', 'budget_threshold': '{"scopes": ["category", "total"]}'} and x('SELECT updated_at FROM notification ORDER BY rowid').fetchall() == [(r[-1],) for r in N12]
+ok44 = (len(cols13) == 2 and all(casa.get(k_) == v for k_, v in {**SEM13, **PREV}.items()) and all(anot.get(k_) == casa.get(k_) for k_ in anot) and len(anot) == 15
+        and not acept13 and not rech13 and txt_ok and not prov_res and all(k_ in resueltos for k_ in k5) and notif_ok)
+out('K44', ok44, f"columnas nuevas de health_profile={cols13} · claves sembradas por la 00003 con su valor inicial={all(casa.get(k_) == v for k_, v in SEM13.items())} ({len(SEM13)}) · las 5 de 00001/00002 intactas={all(casa.get(k_) == v for k_, v in PREV.items())} · anotaciones @param={len(anot)}, iguales a lo sembrado={all(anot.get(k_) == casa.get(k_) for k_ in anot)}"
+    f" · negativas: {len(NEG13)}, rechazadas {len(NEG13) - len(acept13)}, aceptadas por error {acept13} · positivas: {len(POS13)}, aceptadas {len(POS13) - len(rech13)}, rechazadas por error {rech13}"
+    f" · cifras: RN-17 meta {k36[0]} y con 500 kcal para bajar {k36[1]}; RN-12 pesos {[str(float(v)) for v in k40]}; RN-27 semanal {[str(float(v)) for v in k39]}; presentes en las reglas={txt_ok}"
+    f" · marcas PROVISIONAL que citan un bloqueo resuelto={prov_res} · los 5 bloqueos de esta puerta resueltos={all(k_ in resueltos for k_ in k5)} · params_json de payment_due y budget_threshold sin days_before ni thresholds_pct, con el updated_at de 1.2={notif_ok} ({notif13})")
+# ---------- AVISOS13 (corrección S1-r1 de P1c, H-01): traspaso params_json <-> app_setting con valores que no son los iniciales
+av = sqlite3.connect(':memory:'); av.executescript(UPS[0]); av.executescript(UPS[1])
+av.execute("UPDATE notification SET params_json = '{\"thresholds_pct\": [75, 95], \"scopes\": [\"total\"]}' WHERE code = 'budget_threshold'")
+av.execute("UPDATE notification SET params_json = '{\"days_before\": [3, 1, 0]}' WHERE code = 'payment_due'"); av.commit()
+qn = "SELECT code, params_json, updated_at FROM notification WHERE code IN ('payment_due', 'budget_threshold') ORDER BY code"
+qa = "SELECT setting_key, value_json FROM app_setting WHERE setting_key LIKE 'alerts.%' AND user_account_id IS NULL"
+n_a = av.execute(qn).fetchall(); av.executescript(UPS[2]); a_up = dict(av.execute(qa).fetchall()); n_up = av.execute(qn).fetchall()
+av.execute("UPDATE app_setting SET value_json = '70' WHERE setting_key = 'alerts.budget_warning_pct'")
+av.execute("UPDATE app_setting SET value_json = '[2,0]' WHERE setting_key = 'alerts.payment_due_days_before'"); av.commit()
+av.executescript(DOWNS[2]); n_dn = av.execute(qn).fetchall(); av.close()
+ok_av = (a_up == {'alerts.budget_warning_pct': '75', 'alerts.budget_limit_pct': '95', 'alerts.payment_due_days_before': '[3, 1, 0]'}
+         and [json.loads(r[1]) for r in n_up] == [{'scopes': ['total']}, {}]
+         and [json.loads(r[1]) for r in n_dn] == [{'thresholds_pct': [70, 95], 'scopes': ['total']}, {'days_before': [2, 0]}]
+         and [r[2] for r in n_a] == [r[2] for r in n_up] == [r[2] for r in n_dn])
+out('AVISOS13', ok_av, f"Up con avisos cambiados en 1.2 → app_setting {a_up}, params_json {[r[1] for r in n_up]} · Down tras poner 70 % y [2,0] en 1.3 → {[r[1] for r in n_dn]} · updated_at conservado={[r[2] for r in n_a] == [r[2] for r in n_up] == [r[2] for r in n_dn]}")
+# ---------- PROG13 (corrección S1-r2 de P1c, M-01): los días de programación de la decisión F (weekday 7 y day_of_month 1)
+# siguen en notification.params_json y están en el inventario de K44 de los cuatro artefactos, PROVISIONAL solo en su lugar
+prog = dict(x("SELECT code, params_json FROM notification WHERE code IN ('weekly_summary', 'meal_plan_missing', 'monthly_report')").fetchall())
+nv_l = [[c_.strip() for c_ in l.split(' | ')] for l in re.findall(r'^-- @param_sin_valor (.+)$', mig, re.M)]
+nv_p = {k_: [r_ for r_ in nv_l if k_ in r_[0] and 'PROVISIONAL' in r_[2] and 'S1-parametros-avisos' in r_[2] and v_ in r_[2] and 'decisión F' in r_[2]] for k_, v_ in (('weekday', 'valor 7'), ('day_of_month', 'valor 1'))}
+s44 = DIC.split('## Parámetros operativos de app_setting (K44)')[1].split('\n## ')[0]
+dic_p = {k_: any(k_ in l and 'PROVISIONAL' in l and 'S1-parametros-avisos' in l and v_ in l for l in s44.splitlines()) for k_, v_ in (('weekday', 'valor 7'), ('day_of_month', 'valor 1'))}
+rn29 = REG.split('\n## RN-29 ')[1].split('\n## ')[0]
+reg_p = all(t_ in rn29 for t_ in ('`weekday` = 7', '`day_of_month` = 1', 'decisión F', 'S1-parametros-avisos')) and all(t_ in rn29.splitlines()[0] for t_ in ('`weekday`', '`day_of_month`', 'PROVISIONAL'))
+blq = open(R + '/docs/estado/bloqueos/S1-parametros-avisos.md', encoding='utf-8').read()
+q_ = (re.search(r'^Qué falta:.*$', blq, re.M) or [''])[0]
+blq_p = 'Respuesta de Axel' in blq or all(t_ in q_ for t_ in ('send_time', 'advance_days', 'weekday', 'day_of_month'))
+sin_clave = one("SELECT count(*) FROM app_setting WHERE setting_key LIKE '%weekday%' OR setting_key LIKE '%day_of_month%'")
+ok_pg = (prog == {'weekly_summary': '{"weekday": 7}', 'meal_plan_missing': '{"weekday": 7}', 'monthly_report': '{"day_of_month": 1}'}
+         and all(len(v_) == 1 for v_ in nv_p.values()) and all(dic_p.values()) and reg_p and blq_p and sin_clave == 0)
+out('PROG13', ok_pg, f"params_json en 1.3 {prog} · @param_sin_valor con valor de F, PROVISIONAL y bloqueo: {{weekday: {len(nv_p['weekday'])}, day_of_month: {len(nv_p['day_of_month'])}}} · diccionario K44 {dic_p} · RN-29 (encabezado y lista)={reg_p} · pregunta del bloqueo con los 4={blq_p} · claves de app_setting con weekday o day_of_month={sin_clave}")
+# ---------- DDL de 00001 y 00002 sin cambios contra git HEAD (sin comentarios)
+def sin_coment(t): return '\n'.join(ln for ln in (re.sub(r'\s*--.*$', '', l).rstrip() for l in t.splitlines()) if ln)
+ddl = []
+for q in MIGS[:2]:
+    r_ = subprocess.run(['git', '-C', R, 'show', 'HEAD:' + os.path.relpath(q, R)], capture_output=True, text=True)
+    ddl.append((os.path.basename(q), r_.returncode == 0 and sin_coment(r_.stdout) == sin_coment(open(q, encoding='utf-8').read())))
+out('DDL', all(ok_ for _, ok_ in ddl), f"DDL sin comentarios igual al de git HEAD: {ddl}")
+# ---------- Down de la 00003 (vuelve el esquema 1.2 con sus datos), Down de la 00002 (vuelve el 1.1), Down de la 00001 y Up otra vez
 db.close(); db = sqlite3.connect(DB)
-for d_ in reversed(DOWNS[1:]): db.executescript(d_)
+def datos12(): return {t: db.execute(f'SELECT {", ".join(cs)} FROM {t} ORDER BY rowid').fetchall() for t, cs in cols12.items() if t != 'app_setting'}
+D_antes = datos12()
+for d_ in reversed(DOWNS[2:]): db.executescript(d_)
+E_d3 = esquema(db); A_d3 = ajustes(db); D_d3 = datos12(); dif3 = set(E12) ^ set(E_d3)
+n_filas = sum(len(v) for v in D_d3.values())
+out('DOWN13', E_d3 == E12 and A_d3 == A12 and D_d3 == {**D_antes, 'notification': N12} and n_filas > 0, f"Down de la 00003: sqlite_master igual al esquema 1.2 = {E_d3 == E12} ({len(E12)} objetos, diferencias={len(dif3)}) · app_setting igual a 1.2 = {A_d3 == A12} ({len(A12)} claves) · datos de las columnas de 1.2 en las otras {len(D_d3)} tablas iguales (notification con el params_json y el updated_at de 1.2) = {D_d3 == {**D_antes, 'notification': N12}} ({n_filas} filas, incluido el perfil con ajuste de kcal)")
+db.executescript(DOWNS[1])
 E_down = esquema(db); A_down = ajustes(db); difs = set(E11) ^ set(E_down)
 db.executescript(DOWNS[0])
 resto = db.execute("SELECT count(*) FROM sqlite_master WHERE name NOT LIKE 'sqlite_%'").fetchone()[0]
 for u in UPS: db.executescript(u)
 t2 = db.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone()[0]
 ic2 = db.execute('PRAGMA integrity_check').fetchone()[0]; E_again = esquema(db); db.close()
-out('DOWN', E_down == E11 and A_down == A11 and resto == 0 and t2 == len(tabs) and ic2 == 'ok' and E_again == E12, f"Down de la 00002: sqlite_master igual al esquema 1.1 = {E_down == E11} ({len(E11)} objetos, diferencias={len(difs)}) · app_setting igual a 1.1 = {A_down == A11} · Down de la 00001 deja {resto} objetos · Up otra vez: {t2} tablas, integrity_check={ic2}, esquema igual al 1.2 = {E_again == E12}")
+out('DOWN', E_down == E11 and A_down == A11 and resto == 0 and t2 == len(tabs) and ic2 == 'ok' and E_again == EF, f"Down de la 00002: sqlite_master igual al esquema 1.1 = {E_down == E11} ({len(E11)} objetos, diferencias={len(difs)}) · app_setting igual a 1.1 = {A_down == A11} · Down de la 00001 deja {resto} objetos · Up otra vez: {t2} tablas, integrity_check={ic2}, esquema igual al final ({len(MIGS)} migraciones) = {E_again == EF}")
 gs = os.environ.get('GOOSE') or shutil.which('goose')
 if gs:
     gdb = TMP + '/s1-verifica-goose.db'
@@ -542,7 +649,7 @@ if gs:
     ver = g.execute('SELECT max(version_id) FROM goose_db_version WHERE is_applied').fetchone()[0]
     cols_g = {tt: [r[1] for r in g.execute(f'PRAGMA table_info({tt})')] for tt in tabs}
     nom_g = sorted(g.execute("SELECT type, name FROM sqlite_master WHERE name NOT LIKE 'sqlite_%' AND name <> 'goose_db_version'").fetchall()); g.close(); os.remove(gdb)
-    nom_p = sorted((r[0], r[1]) for r in E12)
+    nom_p = sorted((r[0], r[1]) for r in EF)
     out('GOOSE', res == [0, 0, 0] and obj == [len(tabs), 0, len(tabs)] and ver == len(MIGS) and cols_g == cols and nom_g == nom_p, f"goose ({os.path.basename(gs)}) up / down-to 0 / up → códigos {res}, tablas tras cada paso={obj}, versión final={ver}, mismas columnas y objetos que con sqlite3={cols_g == cols and nom_g == nom_p}")
 else:
     print('GOOSE -    goose no está en el PATH ni en $GOOSE: se omitió (S1-02 ya probó el SQL con sqlite3)')

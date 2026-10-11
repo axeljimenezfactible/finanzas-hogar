@@ -2,6 +2,7 @@
 import json, re, os
 from c1paths import ROOT, WORK
 SCHEMA = json.load(open(os.path.join(WORK, 'schema.json'), encoding='utf-8'))
+PARAMS = json.load(open(os.path.join(WORK, 'params.json'), encoding='utf-8'))  # C1 v1.2: inventario K44 de parse_schema.py
 
 # ---------- emisor YAML (estilo bloque, cadenas entre comillas dobles) ----------
 PLAIN_KEY = re.compile(r'^[A-Za-z_$/][A-Za-z0-9_./{}$-]*$')

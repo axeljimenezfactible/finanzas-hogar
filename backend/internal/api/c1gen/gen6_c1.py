@@ -42,11 +42,17 @@ LOCAL = {'N-003': 'Recientes en el dispositivo (U1: Local)', 'N-301': 'Tema por 
 # dependen de un bloqueo abierto (valores operativos K31, redondeo del promedio semanal y ajuste por objetivo de la meta de kcal).
 # Corrección r4 (H-r3-02): N-120 por la semana por omisión de getMealPlanWeek (regla del domingo, bloqueo U1-lista-vigente-domingo).
 BLOCKED = {}
-PARTIAL = {'N-023': 'C1-valores-k31', 'N-064': 'C1-valores-k31', 'N-226': 'C1-valores-k31', 'N-297': 'C1-valores-k31', 'N-300': 'C1-valores-k31', 'N-042': 'criterios-promedios-redondeo', 'N-230': 'S1-ajuste-objetivo-kcal', 'N-311': 'S1-ajuste-objetivo-kcal', 'N-313': 'S1-ajuste-objetivo-kcal', 'N-120': 'U1-lista-vigente-domingo'}
+# C1 v1.2 (puerta 1b): K36, K38, K39 y K43 cerraron esas marcas; quedan FIRMES citando su decisión. N-297 y N-300 son FIRMES
+# (claves de K43), pero dónde viven send_time y advance_days sigue PROVISIONAL por el bloqueo abierto S1-parametros-avisos.
+PARTIAL = {}
+FIRM = {'N-023': 'K43', 'N-064': 'K43', 'N-226': 'K43', 'N-297': 'K43', 'N-300': 'K43', 'N-042': 'K39', 'N-230': 'K36', 'N-311': 'K36', 'N-313': 'K36', 'N-120': 'K38'}
+PLACE = {'N-297': 'S1-parametros-avisos', 'N-300': 'S1-parametros-avisos'}
 def status(n):
     if n in LOCAL: return 'Local'
     if n in BLOCKED: return f'BLOQUEO `{BLOCKED[n]}`'
     if n in PARTIAL: return f'PROVISIONAL `{PARTIAL[n]}`'
+    if n in PLACE: return f'FIRME ({FIRM[n]}) · dónde viven `send_time` y `advance_days`: PROVISIONAL `{PLACE[n]}`'
+    if n in FIRM: return f'FIRME ({FIRM[n]})'
     return 'OK' if BYN.get(n) else 'SIN ENDPOINT'
 rows = ['| Pantalla | Necesidad | Tipo | Qué necesita (U1) | Operación(es) C1 | Estado |', '|---|---|---|---|---|---|']
 for scr, rd, wr in SCREENS:
@@ -62,7 +68,7 @@ sin_ep = sorted(nset - mapped)
 sin_n = [o for o in OPS if not o['needs']]
 unknown_n = sorted({n for o in OPS for n in o['needs']} - nset)
 RESUMEN = '\n'.join([
- f'- Necesidades de U1: **{len(nset)}** (N-001 a N-319). Con operación: **{len(mapped)}**. Locales sin API (U1): **{len(set(LOCAL) & nset)}** ({", ".join(sorted(set(LOCAL) & nset))}). Sin endpoint por bloqueo: **{len(set(BLOCKED) & nset)}**{(" (" + ", ".join(sorted(BLOCKED)) + ")") if BLOCKED else ""}. Con cobertura PROVISIONAL (bloqueos de §13, p. ej. `C1-valores-k31`): **{len(set(PARTIAL) & mapped)}**.',
+ f'- Necesidades de U1: **{len(nset)}** (N-001 a {max(nset)}). Con operación: **{len(mapped)}**. Locales sin API (U1): **{len(set(LOCAL) & nset)}** ({", ".join(sorted(set(LOCAL) & nset))}). Sin endpoint por bloqueo: **{len(set(BLOCKED) & nset)}**{(" (" + ", ".join(sorted(BLOCKED)) + ")") if BLOCKED else ""}. Con cobertura parcial por un bloqueo abierto de §13: **{len(set(PARTIAL) & mapped)}**. FIRMES desde la puerta 1b (antes con marca): **{len(set(FIRM) & mapped)}**; en {len(PLACE)} de ellas solo queda pendiente dónde viven `send_time` y `advance_days` (bloqueo abierto `S1-parametros-avisos`, §13).',
  f'- Operaciones del contrato: **{len(OPS)}** en **{len(d["paths"])}** rutas. Con al menos una N-xxx: **{len(OPS) - len(sin_n)}**. Excepciones técnicas sin N-xxx: **{len(sin_n)}** (§11.2). N-xxx citadas por el contrato que no existen en U1: **{len(unknown_n)}**.',
  f'- Pantallas de la matriz de U1 §3.29: **{len(SCREENS)}** (Global, P-00 a P-25 y P-26.01 a P-26.14); filas de la matriz: **{len(rows) - 2}**.',
  f'- Tablas de S1: **{len(schema)}**; con al menos una operación: **{sum(1 for t in schema if any(t in o["tables"] for o in OPS))}** (§11.4). `idempotency_key` es infraestructura de S6: la declaran en `x-tablas` las **{sum(o["idem"] for o in OPS)}** operaciones con `Idempotency-Key` (§1 punto 8).'])
@@ -163,11 +169,42 @@ allids = {o['oid'] for o in OPS}
 cap_bad = [x for _, ops in CAP for x in re.findall(r'\b([a-z]+[A-Z][A-Za-z]*|login|logout|search)\b', ops) if re.match(r'^(list|get|create|update|delete|preview|mark|compare|upload|download|duplicate|confirm|revoke|reorder|set|send|generate|import|reload|restore|adjust|copy|suggest|logout|login|change|query|search)', x) and x not in allids]
 CAPACIDADES = '\n'.join(['| # | Capacidad | Operaciones |', '|---|---|---|'] + [f'| {i} | {c} | {ops} |' for i, (c, ops) in enumerate(CAP, 1)])
 OPERACIONES = '\n'.join(['| Método y ruta | operationId | Etiqueta | N-xxx | Tablas S1 (`x-tablas`) |', '|---|---|---|---|---|'] + [f"| {opstr(o)} | `{o['oid']}` | {o['tag']} | {', '.join(o['needs']) or '—'} | {', '.join(o['tables']) or '— (archivo, no base)'} |" for o in sorted(OPS, key=lambda x: (x['path'], x['m']))])
+# C1 v1.2 (puerta 1b, K44): §11.7, tabla de parámetros operativos. Sale de las anotaciones @param y @param_sin_valor de las
+# migraciones (params.json de parse_schema.py, que ya comparó cada valor inicial con la siembra) y de los esquemas de settings
+# de openapi.json: cada clave tiene que tener una sola lectura (GET con parameters) y un solo cambio con «restablecer».
+PRM = json.load(open(os.path.join(WORK, 'params.json'), encoding='utf-8'))
+SCH = d['components']['schemas']
+def _pk(ref_, campo):
+    s = SCH.get((ref_ or '').split('/')[-1], {}).get('properties', {}).get(campo, {})
+    return set(s.get('properties', {})) if campo == 'parameters' else set(s.get('items', {}).get('enum', []))
+prd, pwr = {}, {}
+for _p, _item in d['paths'].items():
+    for _m, _o in _item.items():
+        if not isinstance(_o, dict) or 'operationId' not in _o: continue
+        _rs = _o.get('responses', {}).get('200', {}).get('content', {}).get('application/json', {}).get('schema', {}).get('$ref')
+        _rq = _o.get('requestBody', {}).get('content', {}).get('application/json', {}).get('schema', {}).get('$ref')
+        if _m == 'get':
+            for k in _pk(_rs, 'parameters'): prd.setdefault(k, []).append(_o['operationId'])
+        if _m == 'patch':
+            for k in _pk(_rq, 'parameters') & _pk(_rq, 'reset_parameters'): pwr.setdefault(k, []).append(_o['operationId'])
+_pb = [p['key'] for p in PRM['params'] if len(prd.get(p['key'], [])) != 1 or len(pwr.get(p['key'], [])) != 1]
+assert not _pb, f'parámetros K44 sin una lectura y un cambio: {_pb}'
+PARAMS_T = '\n'.join(['| Clave de `app_setting` | Tipo | Unidad | Valor inicial | Decisión | Sección de Ajustes (propuesta de K44) | Sembrada en | Lectura | Cambio y «restablecer» |', '|---|---|---|---|---|---|---|---|---|'] +
+    [f"| `{p['key']}` | {p['type']} | {p['unit']} | `{p['initial_json']}` | {p['decision']} | {p['section']} | {p['migration']} | `{prd[p['key']][0]}` | `{pwr[p['key']][0]}` |" for p in PRM['params']])
+PARAMS_SV = '\n'.join(['| Parámetro | Para qué | Por qué no tiene valor sembrado aquí |', '|---|---|---|'] + [f"| {p['name']} | {p['purpose']} | {p['reason']} |" for p in PRM['params_sin_valor']])
+# C1 v1.2 · corrección r1 (A-01 de docs/estado/p1c/REVISION-C1-r1.md, C1-23): validación de send_time y advance_days (K43) tal como
+# la declaran las propiedades de params_json en openapi; Notification y NotificationUpdate tienen que traer las mismas.
+_pjk = {n: SCH[n]['properties']['params_json'].get('properties', {}) for n in ('Notification', 'NotificationUpdate')}
+assert _pjk['Notification'] == _pjk['NotificationUpdate'] and set(_pjk['Notification']) == {'send_time', 'advance_days'}, _pjk
+def _rng(v): return ', '.join(f'`{k}: {v[k]}`' for k in ('type', 'pattern', 'minimum') if k in v) + (f", valor por omisión `{v['default']}`" if 'default' in v else ', sin valor por omisión')
+PARAMS_K43 = '\n'.join(['Validación de las claves de K43 en `params_json` de `Notification` y `NotificationUpdate` (`updateNotification`). El tipo y el rango son FIRMES (K43); solo su lugar es PROVISIONAL, bloqueo `S1-parametros-avisos` (§13):', ''] +
+    [f"- `{k}`: {_rng(v)}." for k, v in _pjk['NotificationUpdate'].items()] +
+    ['- `weekday` y `day_of_month` (decisión F) no se declaran como propiedades: entran por `additionalProperties: true` con el valor que sembró la 00001.'])
 INCONS = open(os.path.join(HERE, 'c1_inconsistencias.md'), encoding='utf-8').read().strip()
 t = open(os.path.join(HERE, 'c1_plantilla.md'), encoding='utf-8').read()
 repl = {'N_TABLAS': str(len(schema)), 'N_TABLAS_OP': str(sum(1 for v in tabla_ops.values() if v)), 'N_RUTAS': str(len(d['paths'])), 'N_OPS': str(len(OPS)), 'N_ESQ': str(len(d['components']['schemas'])), 'N_IDEM': str(sum(o['idem'] for o in OPS)),
         'N_LISTAS': str(sum(1 for o in OPS if any(p.get('$ref', '').endswith('/Cursor') for p in o['params']))), 'FILTROS': FILTROS, 'ENTIDADES': ENTIDADES, 'VISTAS': VISTAS, 'MATRIZ': MATRIZ,
-        'RESUMEN': RESUMEN, 'SIN_N': SIN_N, 'N_SIN_EP': N_SIN_EP, 'TABLAS': TABLAS, 'AJUSTES': AJUSTES, 'CAPACIDADES': CAPACIDADES, 'OPERACIONES': OPERACIONES, 'INCONSISTENCIAS': INCONS}
+        'RESUMEN': RESUMEN, 'SIN_N': SIN_N, 'N_SIN_EP': N_SIN_EP, 'TABLAS': TABLAS, 'AJUSTES': AJUSTES, 'CAPACIDADES': CAPACIDADES, 'OPERACIONES': OPERACIONES, 'INCONSISTENCIAS': INCONS, 'PARAMS': PARAMS_T, 'PARAMS_SV': PARAMS_SV, 'PARAMS_K43': PARAMS_K43}
 for k, v in repl.items(): t = t.replace('{{%s}}' % k, v)
 assert '{{' not in t, re.findall(r'{{\w+}}', t)
 open(os.path.join(OUT, 'docs/contratos/C1-datos.md'), 'w', encoding='utf-8').write(t)

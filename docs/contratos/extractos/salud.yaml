@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «salud». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «salud». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto salud"
-  version: "1.1.0"
+  version: "1.2.0"
   description: "Extracto de la etiqueta «Salud» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -17,7 +17,7 @@ paths:
       tags:
         - "Salud"
       summary: "Perfiles de salud"
-      description: "Cada perfil trae el objetivo (goal) y la meta sugerida suggested_kcal_target (K23), calculada al consultar; no se guarda."
+      description: "Cada perfil trae el objetivo (goal), el ajuste por objetivo de la persona (goal_adjust_lose_kcal y goal_adjust_gain_kcal; ausente = usa el de la casa), los valores de la casa para mostrar «El de la casa: n kcal» (household_goal_adjust_lose_kcal y household_goal_adjust_gain_kcal; K36) y la meta sugerida suggested_kcal_target (RN-17 1.3, K23, K36), calculada al consultar; no se guarda."
       x-necesidades:
         - "N-230"
         - "N-311"
@@ -318,6 +318,12 @@ components:
             - "maintain"
             - "gain"
           description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
+        goal_adjust_lose_kcal:
+          type: "integer"
+          description: "Cuántas kcal se restan de la meta sugerida cuando el objetivo (goal) es lose. Es una magnitud: siempre se resta. NULL = usa el valor de la casa (app_setting health.goal_adjust_lose_kcal, 0 al sembrar)"
+        goal_adjust_gain_kcal:
+          type: "integer"
+          description: "Cuántas kcal se suman a la meta sugerida cuando el objetivo (goal) es gain. Es una magnitud: siempre se suma. maintain no ajusta. NULL = usa el valor de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar)"
         current_weight_g:
           type: "integer"
           description: "Último peso (weight_entry.weight_g)."
@@ -345,8 +351,15 @@ components:
           x-calculado: true
         suggested_kcal_target:
           type: "integer"
-          x-provisional: true
-          description: "Meta diaria de kcal sugerida (motor S4, RN-17, K23): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9) con ajuste por objetivo (goal); la persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo). Magnitud del ajuste de bajar y subir: PROVISIONAL, bloqueo S1-ajuste-objetivo-kcal."
+          description: "Meta diaria de kcal sugerida (motor S4, RN-17 1.3, K23, K36): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9); con goal = lose se resta el ajuste de bajar y con gain se suma el de subir: el de la persona (goal_adjust_lose_kcal o goal_adjust_gain_kcal) o, si es NULL, el de la casa (app_setting health.goal_adjust_lose_kcal o health.goal_adjust_gain_kcal); maintain no ajusta; un solo redondeo ROUND_HALF_UP al final. Con los valores iniciales (0 y 0) los tres objetivos sugieren lo mismo. La persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo)."
+          x-calculado: true
+        household_goal_adjust_lose_kcal:
+          type: "integer"
+          description: "Ajuste de bajar de la casa (app_setting health.goal_adjust_lose_kcal, 0 al sembrar; K36, K44), para mostrar «El de la casa: n kcal»; se cambia con updateHealthSettings (N-326)."
+          x-calculado: true
+        household_goal_adjust_gain_kcal:
+          type: "integer"
+          description: "Ajuste de subir de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar; K36, K44), para mostrar «El de la casa: n kcal»; se cambia con updateHealthSettings (N-326)."
           x-calculado: true
     TodayKcal:
       type: "object"

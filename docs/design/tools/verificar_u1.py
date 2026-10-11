@@ -1,4 +1,4 @@
-"""Verificación de U1 (docs/design/U1-arquitectura.md), versión 1.1.
+"""Verificación de U1 (docs/design/U1-arquitectura.md), versión 1.2.
 
 Uso: python3 -I docs/design/tools/verificar_u1.py [raiz_repo]
 
@@ -7,14 +7,28 @@ Lee U1, `oraculo/model.json`, `datos/semilla/data.json`, `docs/contratos/C1-dato
 `00002_puerta1.sql` (estos tres los carga el script por sí mismo: nadie necesita abrirlos; de las
 migraciones solo busca las columnas de K18).
 Acepta como excepciones técnicas las operaciones de la tabla de C1 §11.2 y como necesidades sin API
-las que U1 marca «Local» en la columna Actualización. Las N-xxx nuevas de la versión 1.1 que aún
-no tienen operación se reportan como PENDIENTE C1 (esperado hasta C1 v1.1), no como falla.
+las que U1 marca «Local» en la columna Actualización. Las N-xxx nuevas de la versión vigente (1.2) que aún
+no tienen operación se reportan como PENDIENTE C1 (esperado hasta C1 v1.2), no como falla.
 Origen: anexo `u1_verify.py` de docs/estado/wf0/U1-arquitectura.md, ampliado en la puerta 1 y en la
 corrección r1 (hallazgos M1 a M3 de docs/estado/p1/REVISION-U1-r1.md: N-090 con la regla de N-318,
 F-7 con la rama «Faltan restricciones» y la regla del domingo escrita solo en §0.2 y §7) y en la
 corrección r2 (hallazgo A1 de docs/estado/p1/REVISION-U1-r2.md: K18 en P-26.05, N-283, N-289 y P-18
 con «Falta capturar», las columnas de S1 1.2 que lo sostienen y los campos que C1 v1.1 debe exponer,
 reportados como PENDIENTE C1 mientras openapi.yaml no los tenga).
+En la versión 1.2 (puerta 1b, flujo P1c) suma K38 (domingo FIRME), K43 (N-023, N-064, N-226, N-297, N-298 y
+N-300 FIRMES), K44 (tabla «Parámetros operativos» de §2.3 y una necesidad por grupo), K36 (ajuste por
+objetivo de la casa y por persona), K35 (Pista 3 en §7) y «Descartar chat detectado» (N-324).
+Corrección r1 del flujo P1c (H-01 de docs/estado/p1c/REVISION-U1-r1.md): el aviso de pago próximo usa
+`days_before` con el valor inicial que siembra 00001 ([1, 0], decisión F) en N-298, N-300 y la tabla de §2.3,
+y `advance_days` es solo la anticipación del aviso de precios viejos, como define `00003_puerta1b.sql`
+(el script lee 00001 y 00003 por sí mismo).
+Corrección r2 del flujo P1c (H-r2-01 de docs/estado/p1c/REVISION-U1-r2.md): desde la corrección S1-r1, 00003 mueve
+los días antes del pago próximo y los umbrales del presupuesto a claves de app_setting (`alerts.payment_due_days_before`
+[1, 0], `alerts.budget_warning_pct` 80 y `alerts.budget_limit_pct` 100); el script lee sus líneas `@param` y exige
+esas claves en N-298, N-300, N-323 y la tabla de §2.3. También comprueba que la sección «Para C1» que lee C1 v1.2
+(la de docs/estado/p1c/U1-1.2.md si ya está corregida; si no, «Para C1 (corregida r2)» de
+docs/estado/p1c/correccion-U1-r2.md) trae las N nuevas y las viñetas de N-297, N-298, N-300 y N-323 coherentes con
+U1 1.2 y 00003, y la línea PENDIENTE apunta a esa sección.
 """
 import re, json, sys, os, datetime as dt
 
@@ -51,8 +65,8 @@ def norm(op):
 
 # Versión y lista de cambios
 i0 = doc.index('## 0. Convenciones'); cab = doc[:i0]; cuerpo0 = doc[:i0].count('\n')
-ok(re.search(r'\| Versión \| \*\*1\.1\*\*', cab) is not None and '## Cambios de la versión 1.1' in cab,
-   f'Versión 1.1 con lista de cambios al inicio (línea {lineas(r"^## Cambios de la versión 1\.1")})')
+ok(re.search(r'\| Versión \| \*\*1\.2\*\*', cab) is not None and 0 <= cab.find('## Cambios de la versión 1.2') < cab.find('## Cambios de la versión 1.1'),
+   f'Versión 1.2 con su lista de cambios al inicio, antes de la de 1.1 (línea {lineas(r"^## Cambios de la versión 1\.2")})')
 mnu = re.search(r'las nuevas son (N-\d{3}) a (N-\d{3})', cab)
 
 # U1-01 barra lateral
@@ -70,7 +84,7 @@ inv = rows(sec('### 2.1 Qué es cada pantalla', '### 2.2'))[1:]
 pids = [r[0] for r in inv]
 ok(len(pids) == len(set(pids)), f'U1-02 ids de pantalla únicos: {len(pids)} ({pids[0]}..{pids[-1]})')
 ok(all(len(r) >= 3 and r[1] and r[2] for r in inv), 'U1-02 cada pantalla con nombre y sección')
-ajs = rows(sec('### 2.3 Ajustes: las 14 secciones', '### 2.4'))[1:]
+ajs = rows(sec('### 2.3 Ajustes: las 14 secciones', '### 2.4').split('\nEstados de Ajustes')[0])[1:]  # solo la primera tabla
 nombres14 = ['Cuenta y roles', 'Presupuesto', 'Ingresos', 'Categorías', 'Créditos y condiciones (incluye promociones)', "Tiendas y precios (incluye mercados y membresía Sam's)", 'Recetas', 'Reportes y frecuencias', 'Notificaciones', 'Apariencia', 'Datos y respaldos', 'Personas y reparto', 'Salud y metas de ahorro', 'Inventario']
 ok([r[1] for r in ajs] == nombres14 and [r[0] for r in ajs] == [f'P-26.{i:02d}' for i in range(1, 15)], f'U1-08 Ajustes: {len(ajs)} secciones con nombre y orden exactos')
 todas_p = set(pids) | {r[0] for r in ajs}
@@ -84,7 +98,7 @@ ok(len(nids) == len(set(nids)), f'N-xxx definidas y únicas: {len(nids)} (L={nL}
 refs = set(re.findall(r'N-\d{3}', doc))
 ok(refs <= nset, f'Referencias a N-xxx inexistentes: {sorted(refs - nset)}')
 nuevas = {f'N-{i:03d}' for i in range(int(mnu.group(1)[2:]), int(mnu.group(2)[2:]) + 1)} if mnu else set()
-ok(bool(nuevas) and nuevas <= nset and min(nuevas) > max(nset - nuevas), f'N-xxx nuevas de v1.1 a continuación de la última, sin reusar: {sorted(nuevas)}')
+ok(bool(nuevas) and nuevas <= nset and min(nuevas) > max(nset - nuevas), f'N-xxx nuevas de la versión vigente a continuación de la última, sin reusar: {sorted(nuevas)}')
 locales = {r[0] for r in rows(nec) if re.fullmatch(r'N-\d{3}', r[0]) and r[-1] == 'Local'}
 info(f'N-xxx Local (columna Actualización = Local): {sorted(locales)}')
 m329 = sec('### 3.29', '### 3.30')
@@ -201,6 +215,87 @@ for n in lineas('PROVISIONAL', cuerpo0):
     if not bien: malas_p.append(n)
 ok(not malas_p, f'Toda marca PROVISIONAL cita un bloqueo abierto o la regla K31; sin justificar: {malas_p}')
 
+# Puerta 1b (U1 1.2): K38, K43, K44, K36, K35 y «Descartar chat detectado»
+def fila_de(n):
+    return next((r for r in rows(nec) if r and r[0] == n), [])
+txt = lambda n: ' '.join(fila_de(n))
+l02 = next((l for l in L if '**lista de compras vigente**' in l), '')
+s7 = sec('\n## 7. ', '\nObservación para S1')
+dom7 = next((r for r in rows(s7) if r and r[0].startswith('Semana por defecto los domingos')), [])
+ok('K38' in l02 and '**FIRME**' in l02 and 'PROVISIONAL' not in l02 and bool(dom7) and 'K38' in dom7[1] and 'FIRME' in dom7[1] and 'PROVISIONAL' not in ' '.join(dom7),
+   'K38 la regla del domingo es FIRME en §0.2 y en §7, sin marca PROVISIONAL')
+ok(all('§0.2' in txt(n) and 'PROVISIONAL' not in txt(n) for n in ('N-120', 'N-150', 'N-160')), 'K38 N-120, N-150 y N-160 remiten a §0.2 sin marca PROVISIONAL')
+k43 = {'N-023': ('FIRME', 'K43'), 'N-064': ('10 MB', 'K43', 'N-325'), 'N-226': ('5 s', 'K43', 'N-321'), 'N-297': ('send_time', 'K43'), 'N-298': ('advance_days', 'send_time', 'K43'), 'N-300': ('advance_days', 'send_time', 'K43')}
+mal43 = [n for n, ks in k43.items() if not all(k in txt(n) for k in ks) or 'PROVISIONAL' in txt(n)]
+ok(not mal43, f'K43 N-023, N-064, N-226, N-297, N-298 y N-300 FIRMES con sus valores (10 MB, 5 s, send_time, advance_days); mal: {mal43}')
+t23 = sec('### 2.3 Ajustes: las 14 secciones', '### 2.4')
+reglas = t23.split('**Parámetros operativos (K44).**')[1] if '**Parámetros operativos (K44).**' in t23 else ''
+par = [r for r in rows(reglas) if len(r) >= 5 and r[0].startswith('P-26.')]
+ESP44 = [('P-26.01', '5', 'N-320'), ('P-26.01', '15 min', 'N-320'), ('P-26.01', '90 días', 'N-320'), ('P-26.01', '12 caracteres', 'N-320'), ('P-26.05', '5 s', 'N-321'), ('P-26.06', '1 GB', 'N-322'),
+         ('P-26.06', '30 días', 'N-322'), ('P-26.06', '90 días', 'N-322'), ('P-26.09', '80 % y 100 %', 'N-323'),
+         ('P-26.11', '10 MB', 'N-325'), ('P-26.11', '24 h', 'N-325'), ('P-26.13', '0 kcal y 0 kcal', 'N-326')]
+falt44 = [e for e in ESP44 if not any(r[0].startswith(e[0]) and r[2] == e[1] and e[2] in r[4] for r in par)]
+sec_ok = all(r[0][:7] in {a[0] for a in ajs} and next(a[1] for a in ajs if a[0] == r[0][:7]).startswith(r[0][8:]) for r in par)
+ok(bool(par) and not falt44 and sec_ok and all(k in reglas for k in ('Valor inicial', 'Sin valor inventado', 'Restablecer al valor inicial', 'Sin valor inicial', 'sin sección nueva', 'puerta 2')),
+   f'K44 tabla «Parámetros operativos» (§2.3): {len(par)} filas, cada parámetro en una de las 14 secciones con su valor inicial, decisión y necesidad; reglas comunes escritas; faltan: {falt44}')
+# Corrección r1 y r2 del flujo P1c (H-01 y H-r2-01): días antes del pago próximo y umbrales del presupuesto como claves
+# alerts.* de app_setting (00003 tras la corrección S1-r1; origen en 00001, decisión F); advance_days solo de precios viejos
+def _mig(nombre):
+    p = os.path.join(ROOT, 'backend/db/migrations', nombre)
+    return open(p, encoding='utf-8').read() if os.path.exists(p) else ''
+_m1, _m3 = _mig('00001_esquema.sql'), _mig('00003_puerta1b.sql')
+_pd = re.search(r"\('payment_due',[^)]*'(\{[^']*\})'\)", _m1)
+db_ini = json.loads(_pd.group(1)).get('days_before') if _pd else None
+def _param3(clave):
+    l = next((l for l in _m3.split('\n') if re.match(rf'^-- @param {re.escape(clave)} \|', l)), '')
+    c = [x.strip() for x in l.split('|')]
+    return c[3] if len(c) > 3 else None
+ALERTS = ('alerts.payment_due_days_before', 'alerts.budget_warning_pct', 'alerts.budget_limit_pct')
+p3 = {k: _param3(k) for k in ALERTS}
+ini_txt = p3['alerts.payment_due_days_before'] or '¿?'
+adv3 = next((l for l in _m3.split('\n') if '@param_sin_valor' in l and 'advance_days' in l), '')
+fp = next((r for r in par if 'pago próximo' in r[1]), [])
+fu = next((r for r in par if 'Umbrales del aviso de presupuesto' in r[1]), [])
+fa = next((r for r in par if 'advance_days' in r[1]), [])
+mal_h01 = []
+if db_ini != [1, 0]: mal_h01.append(f'00001 payment_due days_before = {db_ini}')
+if p3 != dict(zip(ALERTS, ('[1, 0]', '80', '100'))): mal_h01.append(f'00003 @param alerts.* = {p3}')
+if 'precios viejos' not in adv3: mal_h01.append('00003 no define advance_days como anticipación del aviso de precios viejos')
+mal_h01 += [n for n in ('N-298', 'N-300') if not all(k in txt(n) for k in ('alerts.payment_due_days_before', ini_txt, 'decisión F', 'N-323', 'advance_days', 'precios viejos'))]
+if not all(k in txt('N-323') for k in ALERTS + ('80 %', '100 %', ini_txt, 'decisión F', 'app_setting')): mal_h01.append('N-323')
+mal_h01 += [r[0] for r in rows(nec) if r and '`days_before`' in ' '.join(r)] + [r[1] for r in par if '`days_before`' in ' '.join(r)]
+if not (fp and 'alerts.payment_due_days_before' in fp[1] and ini_txt in fp[2] and 'N-323' in fp[4]): mal_h01.append('fila «pago próximo» de §2.3')
+if not (fu and 'alerts.budget_warning_pct' in fu[1] and 'alerts.budget_limit_pct' in fu[1]): mal_h01.append('fila «umbrales» de §2.3')
+if not (fa and 'precios viejos' in fa[1] and 'demás avisos' not in fa[1] and 'pago' not in fa[1]): mal_h01.append('fila `advance_days` de §2.3')
+ok(not mal_h01, f'H-01/H-r2-01 (P1c) pago próximo con `alerts.payment_due_days_before` {ini_txt} y umbrales `alerts.budget_warning_pct` {p3["alerts.budget_warning_pct"]} y `alerts.budget_limit_pct` {p3["alerts.budget_limit_pct"]} (00003 tras S1-r1; origen 00001, decisión F) en N-298, N-300, N-323 y la tabla de §2.3, sin `days_before` suelto; `advance_days` solo del aviso de precios viejos; mal: {mal_h01}')
+# H-r2-01 (P1c r2): la sección «Para C1» que lee C1 v1.2 trae las N nuevas y es coherente con U1 1.2 y 00003
+FUENTES_C1 = [('docs/estado/p1c/U1-1.2.md', 'Para C1'), ('docs/estado/p1c/correccion-U1-r2.md', 'Para C1 (corregida r2)')]
+def _para_c1(ruta, titulo):
+    p = os.path.join(ROOT, ruta)
+    t = open(p, encoding='utf-8').read() if os.path.exists(p) else ''
+    return t.split(f'\n## {titulo}\n', 1)[1].split('\n## ', 1)[0] if f'\n## {titulo}\n' in t else ''
+def _vineta(t, n):
+    return next((l for l in t.split('\n') if l.startswith(f'- **{n}**')), '')
+def _c1_ok(t):
+    v, u = _vineta(t, 'N-297'), _vineta(t, 'N-323')
+    return (bool(t) and all(n in t for n in nuevas) and 'hoy no tienen valor sembrado' not in v
+            and all(k in v for k in ('alerts.payment_due_days_before', ini_txt, 'send_time', 'advance_days', 'S1-parametros-avisos'))
+            and all(k in u for k in ALERTS))
+fuente_c1 = next(((r, ti) for r, ti in FUENTES_C1 if _c1_ok(_para_c1(r, ti))), None)
+ok(fuente_c1 is not None, f'H-r2-01 «Para C1» coherente con U1 1.2 y 00003 ({len(nuevas)} N nuevas; N-297, N-298 y N-300 con `alerts.payment_due_days_before` {ini_txt} para «Restablecer»; N-323 con las tres claves alerts.*); fuente: ' + (f'«{fuente_c1[1]}» de {fuente_c1[0]}' if fuente_c1 else f'ninguna de {FUENTES_C1}'))
+mrow = {r[0]: expand(r[1]) | expand(r[2]) for r in mat}
+grupos = {'N-320': '01', 'N-321': '05', 'N-322': '06', 'N-323': '09', 'N-325': '11', 'N-326': '13'}
+mal_g = [n for n, sc in grupos.items() if not (len(fila_de(n)) >= 6 and fila_de(n)[1] == 'E' and fila_de(n)[2] == sc and 'valor inicial' in txt(n).lower()
+         and 'restablece' in txt(n).lower() and 'K44' in txt(n) + ' '.join(r[3] for r in par if r[4] == n) and n in mrow.get(f'P-26.{sc}', set()))]
+ok(not mal_g, f'K44 una necesidad de escritura por grupo ({", ".join(grupos)}) en su sección de §3.28, con valor inicial y restablecer, y en su fila de la matriz; mal: {mal_g}')
+f327, f230 = txt('N-327').lower(), txt('N-230').lower()
+ok('0 kcal y 0 kcal' in txt('N-326') and 'K36' in txt('N-326') and all(k in f327 for k in ('el de la casa', 'restablecer', 'kcal', 'k36'))
+   and 'N-327' in mrow.get('P-21', set()) and 'N-327' in mrow.get('P-26.13', set()) and 'el de la casa' in f230 and 'k36' in f230 and 'N-327' in sec('### 3.23 ', '### 3.24 '),
+   'K36 ajuste por objetivo: casa 0 y 0 kcal en P-26.13 (N-326); por persona en P-21 (N-327, §3.23) con «el de la casa» y «Restablecer»; N-230 lo muestra')
+ok('K35' in s7 and 'docs/design/entrada/' in s7, 'K35 §7: la Pista 3 la ejecuta Axel con el paquete de docs/design/entrada/')
+ok(fila_de('N-324')[1:3] == ['E', '09'] and 'Descartar' in txt('N-324') and 'N-324' in mrow.get('P-26.09', set()) and 'N-324' in txt('N-299'),
+   'Descartar chat detectado: N-324 (E, P-26.09), citado en N-299 y en la matriz')
+
 # Menú / y atajos
 cmd = rows(sec('### 5.2 Lista de comandos', '### 5.3'))[1:]
 ok(not [r[0] for r in cmd if not r[3] or r[3] == '—'], f'U1-07 comandos «/»: {len(cmd)} filas, todas con destino')
@@ -265,8 +360,8 @@ if os.path.exists(oa) and os.path.exists(c1):
     info(f'openapi.yaml versión {ver}: {len(ops)} operaciones, {sum(1 for v in ops.values() if v["n"])} con x-necesidades; excepciones de C1 §11.2: {sorted(exc)}')
     sin_op = sorted(n for n in nset - locales if n not in n_ops)
     pend = sorted(set(sin_op) & nuevas); reales = sorted(set(sin_op) - nuevas)
-    ok(not reales, f'U1-03 N-xxx sin operación ni Local (sin contar las nuevas de v1.1): {reales}')
-    if pend: print(f'PENDIENTE C1 v1.1: N-xxx nuevas de U1 1.1 sin operación todavía (esperado; van en «Para C1»): {pend}')
+    ok(not reales, f'U1-03 N-xxx sin operación ni Local (sin contar las nuevas de la versión vigente): {reales}')
+    if pend: print(f'PENDIENTE C1 v1.2: {len(pend)} N-xxx nuevas de U1 1.2 sin operación todavía (esperado; van en ' + (f'«{fuente_c1[1]}» de {fuente_c1[0]}' if fuente_c1 else '«Para C1» (sin fuente coherente: ver H-r2-01)') + f'): {pend}')
     oal = open(oa, encoding='utf-8').read().split('\n')
     def bloque(nombre):
         if f'    {nombre}:' not in oal: return ''

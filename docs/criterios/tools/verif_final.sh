@@ -14,3 +14,4 @@ echo "== 7. S1-09 (a): SQL en base temporal (s109_sql.sh)"; bash ./s109_sql.sh
 echo "== 8. S1-09 (b): equivalencia calendario vs ventanas del oraculo (s109_equiv.py)"; python3 -I s109_equiv.py
 echo "== 9. C1-02/U1-03: consistencia de la matriz (matriz_c102.py)"; uv run --no-project --with pyyaml python3 -I matriz_c102.py
 echo "== 10. rutas /tmp en los criterios S y WF4 (esperado 0)"; grep -n '[^s]/tmp/' /home/deepsec/finanzas-hogar/docs/criterios/{S1,S2,S3,S4,S5,S6,S7,S8,WF4-operacion}.md | wc -l
+echo "== 11. conteo propio por archivo, versiones y coincidencia con INDICE.md (conteo.py)"; python3 -I conteo.py | tail -2

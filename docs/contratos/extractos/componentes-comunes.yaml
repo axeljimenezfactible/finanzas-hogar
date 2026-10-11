@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.1.0 · componentes comunes. Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.2.0 · componentes comunes. Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · componentes comunes"
-  version: "1.1.0"
+  version: "1.2.0"
   description: "Componentes que comparten todos los extractos: parámetros, encabezados, respuestas, seguridad y los esquemas base (Error, Page, MoneyCents, Date, DateTime y los que ellos referencian)."
 paths: {}
 components:
@@ -149,7 +149,7 @@ components:
       name: "Idempotency-Key"
       in: "header"
       required: true
-      description: "Obligatorio en todo POST de captura. Clave única por intento (UUID v4 recomendado). Repetir la misma clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API la guarda por cuenta en la tabla idempotency_key de S1 (huella SHA-256 del cuerpo y respuesta); retención de 24 h (K6, app_setting idempotency.retention_hours). Gastos y pesos guardan además la clave en su propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9)."
+      description: "Obligatorio en todo POST de captura. Clave única por intento (UUID v4 recomendado). Repetir la misma clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API la guarda por cuenta en la tabla idempotency_key de S1 (huella SHA-256 del cuerpo y respuesta); retención de 24 h al sembrar (K6; valor vigente de app_setting idempotency.retention_hours, que se cambia con updateDataSettings, K44). Gastos y pesos guardan además la clave en su propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9)."
       schema:
         type: "string"
         minLength: 16
@@ -216,6 +216,15 @@ components:
             $ref: "#/components/schemas/Error"
     PayloadTooLarge:
       description: "Archivo demasiado grande (`payload_too_large`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    ServiceUnavailable:
+      description: "El cálculo pasó su tiempo máximo (`unavailable`); no se guardó nada."
       headers:
         X-Request-Id:
           $ref: "#/components/headers/RequestId"

@@ -1,12 +1,12 @@
 # Índice de criterios de aceptación · Finanzas Hogar (Etapa B)
 
-Versión 1.1 (10-oct-2026; filas y totales actualizados el 11-oct-2026, puerta 1; filas C1, U1 y U5 y total corregidos en la ronda 1 de P1; conteo reconciliado por el integrador de P1 el 11-oct-2026, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
+Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas, conteo propio con `tools/conteo.py`, cambios en §11 y correcciones de la revisión r1 de criterios (A-01 a A-03, M-01, M-02) y de la revisión r2 (hallazgos 1 a 4, fila de §11); versión 1.1 del 10-oct-2026 con filas y totales de la puerta 1 y conteo reconciliado por el integrador de P1, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
 
 ## 1. Cómo usar estos archivos
 - **Un archivo por ítem** (18 + este índice). Cada uno trae: 1 Objetivo · 2 Criterios numerados `<ID>-nn` (enunciado medible, «Verifica» con comando o cálculo, «Evidencia», severidad) · 3 No aceptable · 4 Umbrales numéricos · 5 Trazabilidad.
-- **Severidad:** *alta* bloquea la puerta; *media* el revisor la devuelve y debe quedar corregida o justificada por escrito antes de la ronda final; *baja* se registra en el informe del revisor. (Hoy los 257 criterios de la tabla son alta o media: 197 alta y 60 media; ninguno baja.)
+- **Severidad:** *alta* bloquea la puerta; *media* el revisor la devuelve y debe quedar corregida o justificada por escrito antes de la ronda final; *baja* se registra en el informe del revisor. (Hoy los 261 criterios de la tabla son alta o media: 201 alta y 60 media; ninguno baja.)
 - **Evidencia:** cada criterio deja una línea que **empieza con su ID** en `docs/estado/<flujo>/<agente>.md` (flujos `wf0`, `wf1`, `wf3`, `wf4`), con el comando ejecutado y su salida resumida; los archivos con nombre fijo del plan son `docs/estado/S3-escenarios.md`, `S5-terminos.md`, `S5-cobertura-profeco.md`, `U5-revision.md`, `P3-iter-N.md` e `informe-final.md`. El revisor **reejecuta** los comandos; no se aprueba por la sola palabra del agente.
-- **Lo que depende de Axel** (instalar la CA en los Android, abrir la PWA en Android, reiniciar la máquina, que Ximena escriba al bot, iniciar sesión en claude.ai/design) **no se declara cumplido** hasta que Axel lo confirme: queda «pendiente de Axel» o «no verificado» en el informe final.
+- **Lo que depende de Axel** (instalar la CA en los Android, abrir la PWA en Android, reiniciar la máquina, que Ximena escriba al bot, subir el paquete a Claude Design, iterar y avisar «iter-N lista»: la Pista 3 la ejecuta Axel, K35) **no se declara cumplido** hasta que Axel lo confirme: queda «pendiente de Axel» o «no verificado» en el informe final.
 - **Rutas y comandos:** absolutos, desde `/home/deepsec/finanzas-hogar`. `jq` no está instalado en la máquina (se usa `python3 -I`). Los scripts auxiliares los entrega cada agente y se nombran en su reporte; si falta una herramienta (`goose`, `govulncheck`, `mkcert`, validador OpenAPI, `style-dictionary`, `jsonschema`), se instala (autorizado) y se anota en «Paquetes instalados».
 - **Identificadores de U1 y C1:** pantalla `P-xx` (inventario de U1 §2.1; `P-26.xx` para las 14 secciones de Ajustes, §2.3); necesidad de datos `N-xxx` (U1 §3; tipo L lectura o E escritura); componente global `G-xx`; flujo clave `F-x` (U1 §0.1). En los criterios, «pantalla» es siempre `P-xx` y «necesidad» es siempre `N-xxx`; T es el número de pantallas `P-xx` más secciones `P-26.xx` que declara U1-02.
 - **Cifras:** toda cifra de `oraculo/model.json` (sha256 `1a57066689ddeed31e0001259f341c7a3f782a46cd4a05128ff453aad2f1bfd4`, 596 hojas numéricas) se reproduce exactamente; si difiere es hallazgo (protocolo §6).
@@ -15,7 +15,7 @@ Versión 1.1 (10-oct-2026; filas y totales actualizados el 11-oct-2026, puerta 1
 | Archivo | Ítem | Se construye en | Lo evalúa | Criterios (alta / media) |
 |---|---|---|---|---|
 | `S1.md` | Dominio y datos | WF-0 | Revisor WF-0 → puerta 1 | 17 (12 / 5) |
-| `C1.md` | Contrato de datos y API (OpenAPI) | WF-0 | Revisor WF-0 → puerta 1 | 21 (19 / 2) |
+| `C1.md` | Contrato de datos y API (OpenAPI) | WF-0 | Revisor WF-0 → puerta 1 | 23 (21 / 2) |
 | `U1.md` | Arquitectura de información | WF-0 | Revisor WF-0 → puerta 1 | 16 (10 / 6) |
 | `S2.md` | Motor financiero (85 cifras canon) | WF-1 | Revisor motores → puerta 2 | 16 (13 / 3) |
 | `S3.md` | Motor de créditos y optimizador (85 cifras canon) | WF-1 | Revisor motores → puerta 2 | 20 (17 / 3) |
@@ -24,15 +24,15 @@ Versión 1.1 (10-oct-2026; filas y totales actualizados el 11-oct-2026, puerta 1
 | `U2.md` | Sistema de diseño y DESIGN.md | WF-0 (colorimetría) y WF-1 | Revisor diseño → puerta 2 | 14 (10 / 4) |
 | `C2.md` | Contrato de tokens | WF-1 | Revisor diseño → puerta 2 | 12 (8 / 4) |
 | `U3.md` | Dashboard | WF-1 | Revisor diseño → puerta 2 (y U5) | 12 (8 / 4) |
-| `U4.md` | Ajustes estilo Notion | WF-1 | Revisor diseño → puerta 2 (y U5) | 11 (8 / 3) |
-| `P3-claude-design.md` | Pista 3 · Claude Design | Entre puertas 3 y 4 (orquestador) | Revisor visual Sonnet; puerta 4 | 13 (10 / 3) |
+| `U4.md` | Ajustes estilo Notion | WF-1 | Revisor diseño → puerta 2 (y U5) | 13 (10 / 3) |
+| `P3-claude-design.md` | Pista 3 · Claude Design | Entre puertas 3 y 4 (paquete: orquestador; Pista 3: Axel, K35) | Revisor visual Sonnet; puerta 4 | 13 (10 / 3) |
 | `S6.md` | Backend local | WF-3 | Revisores backend ×2 → puerta 4 | 16 (12 / 4) |
 | `S7.md` | Reportes | WF-3 | Revisor backend → puerta 4 | 14 (12 / 2) |
 | `U5.md` | Prototipo y verificación visual | WF-3 | Revisor visual → puerta 4 | 13 (10 / 3) |
 | `C3.md` | Contrato de integración | WF-3 | Revisor independiente → puerta 4 | 11 (9 / 2) |
 | `S8.md` | Calidad y operación | WF-4 | Revisor final | 11 (8 / 3) |
 | `WF4-operacion.md` | Operación, semilla, seguridad, informe | WF-4 | Revisor final | 12 (10 / 2) |
-| **Total** | | | | **257 (197 / 60)** |
+| **Total** | | | | **261 (201 / 60)** |
 
 Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 del frontend (plan §5) no tienen archivo propio: se evalúan por U3, U4, U5 y C3.
 
@@ -41,7 +41,7 @@ Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 d
 |---|---|---|
 | 1 · tras WF-0 | C1, U1, criterios de todas las fases | `C1.md`, `U1.md`, `S1.md`; este directorio completo |
 | 2 · tras WF-1 | DESIGN.md, C2, regresión de motores, bloqueos acumulados | `S2.md`, `S3.md`, `S4.md`, `S5.md`, `U2.md`, `C2.md`, `U3.md`, `U4.md` |
-| 3 · antes de Pista 3 | paquete de entrada | P3-01 y P3-02 de `P3-claude-design.md` |
+| 3 · paquete para la Pista 3 (K35) | paquete de entrada listo y revisado (la Pista 3 la ejecuta Axel) | P3-01 y P3-02 de `P3-claude-design.md` |
 | 4 · tras WF-3 | C3 firmado, capturas U5, informe de pruebas | `S6.md`, `S7.md`, `U5.md`, `C3.md`, `P3-claude-design.md` |
 | Cierre · WF-4 | informe final | `S8.md`, `WF4-operacion.md` |
 
@@ -58,31 +58,42 @@ Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 d
 5. **«33 idénticos»** son 33 renglones (55 piezas); los totales completos incluyen 3 sustitutos y el sexto atún de Bodega (S5, nota de §6).
 6. **Contraste de bordes de campo:** con los hex de partida de C, neutro 600 sobre neutro 50 da **3.71:1**, no «≥ 4.2:1» como dice plan.md §4.3; cumple el umbral de UI (3:1). Documentarlo (U2-05).
 7. **Roles como texto:** los pasos 600 de ingreso (4.21), ahorro (4.26) e información (4.41) no llegan a 4.5:1 sobre fondo 50; para texto debe usarse un paso más oscuro (U2-06).
-8. **Colisión no listada en decisiones I:** error (20°) y gasto (25°) quedan a 5° (y ingreso/éxito a 0°, ya aceptado). Se resuelven con refuerzo de icono o forma (U2-08).
-9. **ΔL ≥ 0.10 entre series** no es alcanzable entre los 28 pares de 8 series con contraste ≥ 3:1 sobre fondo claro; se usa la lectura de series consecutivas (U2-09, bloqueo `criterios-deltal`).
-10. **Token de Telegram vs usuario del servicio:** el archivo está en el home de `deepsec` y el servicio correría como `finanzas` (bloqueo `criterios-token-servicio`).
-11. **Go 1.26.5 instalado frente a Go 1.27 aprobado:** el plan ya pide actualizar (S6-01).
+8. **Colisión error–gasto (resuelta por K26 y K41):** con el gasto en terracota 40–45° y el error en 20° la colisión de 5° desaparece (U2-08); lo que queda es el refuerzo de Karen (333°) y Bodega Aurrera (356°), aceptado por K41 con orden fijo, forma y etiqueta directa, sin distinguir una persona y una tienda solo por color en una misma vista. El ingreso y el éxito a 0° siguen distinguiéndose por icono y contexto (o 135°, que decisiones I prevé).
+9. **ΔL ≥ 0.10 entre series** no es alcanzable entre los 28 pares de 8 series con contraste ≥ 3:1 sobre fondo claro; se usa la lectura de series consecutivas (U2-09). **Resuelto por K27** (bloqueo `criterios-deltal`).
+10. **Token de Telegram vs usuario del servicio (resuelto por K30):** el usuario del servicio recibe permiso de lectura (ACL) sobre `~/.openclaw/openclaw.json` y lee `bots.multix.botToken` en ejecución; el token no se copia ni se imprime (S7-06, WF4-01).
+11. **Go 1.26.5 instalado frente a Go 1.27 aprobado:** resuelto por K28 (Go 1.27.2 instalado el 11-oct-2026; S6-01).
 12. **Ventanas del oráculo (10 al 9) frente al mes calendario:** las decisiones B fijan el mes calendario como periodo base y P1–P6 de `model.json` van del día 10 al 9. Las 12 cifras de devengado y efectivo coinciden con oct-2026…mar-2027 solo porque la semilla no tiene eventos entre los días 1 y 9 de un mes. S1-09 pide la prueba de equivalencia con el oráculo y S2-09 la nota de que depende de la semilla (hallazgo H-07 de la ronda 1).
 
 ## 6. Bloqueos escritos (`docs/estado/bloqueos/`)
-| Archivo | Pregunta para Axel | Criterios afectados |
-|---|---|---|
-| `criterios-invariante-deuda.md` | qué es «deuda viva» en el invariante | S2-07 |
-| `criterios-promedios.md` | fórmula de promedio diario y semanal | S2-08 |
-| `criterios-proyeccion-12m.md` | supuestos de los meses 7–12 | S2-09 |
-| `criterios-credito-formulas.md` | mínimo e intereses de tarjeta; crédito de tienda | S3-08, S3-10 |
-| `criterios-optimizador.md` | normalización del puntaje y medidas de objetivos 2 y 4 | S3-13, S3-14 |
-| `criterios-frescura-peso.md` | factor de peso de precios viejos y frontera de 30 días | S5-04 |
-| `criterios-ocr-tickets.md` | origen de los 5 tickets y qué es renglón correcto | S5-06 |
-| `criterios-meta-kcal.md` | cómo se obtiene la meta de calorías | S4-07 |
-| `criterios-login-bloqueo.md` | duración del bloqueo y de la sesión larga | S6-06, S6-07 |
-| `criterios-bind.md` | ¿Tailscale además de la LAN? | S6-14 |
-| `criterios-token-servicio.md` | cómo llega el token al servicio con usuario propio | S7-06, S7-07, WF4-01 |
-| `criterios-toques.md` | qué cuenta como «toque» | U1-04, U5-09, C3-08 |
-| `criterios-nxx.md` | **Resuelto** en la ronda 1 de correcciones con la opción (b): «N-xx» = necesidad de datos `N-xxx`; la pantalla es `P-xx` (no queda pregunta para Axel) | U1-02, U1-03, C1-02, C3-02, U5-01 |
-| `criterios-deltal.md` | ΔL ≥ 0.10 entre series consecutivas o todos los pares | U2-09 |
-| `criterios-cobertura.md` | si el 85 % aplica a recetas y precios | S4-15, S5-13, S6-02 |
-| `criterios-umbrales-ausentes.md` | 8 valores no fijados (horas, retención, cabeceras, adjuntos…) | S3-12, S6-09, S6-10, S7-04, S7-08, S7-10, S8-02, WF4-04, WF4-08 |
+**Estado** = lo que dice el propio archivo: «RESUELTO» si trae la sección «Respuesta de Axel» (puerta 1 del 11-oct-2026 o puerta 1b); sin esa sección el bloqueo está abierto y la marca PROVISIONAL se conserva. Hoy, de los 25 de esta tabla, 24 están resueltos o respondidos y 1 está **abierto**: `S1-parametros-avisos.md` (C1-22, U4-12, S7-04, S7-08 y S7-10 lo citan con la marca PROVISIONAL sobre el lugar de esos parámetros; los valores iniciales no cambian en ninguna opción). Cuando traiga «Respuesta de Axel», se quitan esas marcas y la excepción de C1-22 y U4-12.
+
+| Archivo | Pregunta para Axel | Criterios afectados | Estado |
+|---|---|---|---|
+| `criterios-invariante-deuda.md` | qué es «deuda viva» en el invariante | S2-07 | RESUELTO (K19) |
+| `criterios-promedios.md` | fórmula de promedio diario y semanal | S2-08 | RESUELTO (K20) |
+| `criterios-promedios-redondeo.md` | redondeo del promedio semanal | S2-08 | RESUELTO (K39: 219.88 y 629.35) |
+| `criterios-proyeccion-12m.md` | supuestos de los meses 7–12 | S2-09 | RESUELTO (K21) |
+| `criterios-credito-formulas.md` | mínimo e intereses de tarjeta; crédito de tienda | S3-08, S3-10 | RESUELTO (K18) |
+| `criterios-optimizador.md` | normalización del puntaje y medidas de objetivos 2 y 4 | S3-13, S3-14 | RESUELTO (K17) |
+| `criterios-frescura-peso.md` | factor de peso de precios viejos y frontera de 30 días | S5-04 | RESUELTO (K22) |
+| `criterios-frescura-extremos.md` | peso entre los días 30 y 90 y después del 90 | S5-04 | RESUELTO (K40: (90 − días) / 61) |
+| `criterios-ocr-tickets.md` | origen de los 5 tickets y qué es renglón correcto | S5-06 | RESUELTO (K24) |
+| `criterios-meta-kcal.md` | cómo se obtiene la meta de calorías | S4-07 | RESUELTO (K23) |
+| `criterios-login-bloqueo.md` | duración del bloqueo y de la sesión larga | S6-06, S6-07 | RESUELTO (K11) |
+| `criterios-bind.md` | ¿Tailscale además de la LAN? | S6-14 | RESUELTO (K29: solo LAN) |
+| `criterios-token-servicio.md` | cómo llega el token al servicio con usuario propio | S7-06, S7-07, WF4-01 | RESUELTO (K30) |
+| `criterios-toques.md` | qué cuenta como «toque» | U1-04, U5-09, C3-08 | RESUELTO (K10) |
+| `criterios-nxx.md` | «N-xx» = necesidad de datos `N-xxx`; la pantalla es `P-xx` | U1-02, U1-03, C1-02, C3-02, U5-01 | RESUELTO en la ronda 1 de correcciones con la opción (b) (sin pregunta para Axel) |
+| `criterios-deltal.md` | ΔL ≥ 0.10 entre series consecutivas o todos los pares | U2-09 | RESUELTO (K27) |
+| `criterios-cobertura.md` | si el 85 % aplica a recetas y precios | S4-15, S5-13, S6-02 | RESUELTO (K25) |
+| `criterios-umbrales-ausentes.md` | 8 valores no fijados (horas, retención, cabeceras, adjuntos…) | S3-12, S6-09, S6-10, S7-04, S7-08, S7-10, S8-02, WF4-04, WF4-08 | RESPONDIDO (K31: cada agente propone y Axel aprueba en su puerta); adjunto 10 MB y comparador 5 s cerrados por K43 y K44 |
+| `S1-ajuste-objetivo-kcal.md` | cuánto ajustan «bajar» y «subir» en la meta de calorías | S4-07, U4-13, C1-22 | RESUELTO (K36: 0 y 0, por persona) |
+| `S1-fuentes-precio.md` | qué fuentes compiten en la comparativa | S5-04, S5-10 | RESUELTO (K37: opción C) |
+| `U1-lista-vigente-domingo.md` | semana por defecto los domingos | U1-16 | RESUELTO (K38: la semana siguiente) |
+| `U2a-rosas-ximena-bodega.md` | Karen 333° y Bodega Aurrera 356° con refuerzo | U2-02, U2-08 | RESUELTO (K41) |
+| `U2a-walmart-oscuro.md` | Walmart oscuro en L 0.716 | U2-08 | RESUELTO (K42) |
+| `C1-valores-k31.md` | cuatro valores de C1 (adjunto, comparador, hora y anticipación, casillas sin armar) | C1-23, S3-12, S6-10, U4-12 | RESUELTO (K43 y K44) |
+| `S1-parametros-avisos.md` | dónde viven los parámetros de avisos (umbrales 80 y 100 %, días antes del pago, `send_time`, `advance_days`): en `notification.params_json` (opción A, la que usa hoy el esquema 1.3) o en claves `alerts.*` de `app_setting` (opción B, que cambiaría C1 v1.2, U4 y S7) | C1-22, U4-12, S7-04, S7-08, S7-10 | **ABIERTO** (11-oct-2026, sin «Respuesta de Axel»; la marca PROVISIONAL sobre el lugar de esos parámetros se conserva) |
 
 ## 7. Trazabilidad con `docs/plan/decisiones.md`
 | Sección de decisiones | Frases cubiertas | Archivos |
@@ -113,34 +124,58 @@ Origen: `docs/estado/wf0/REVISION-r1.md` §5, hallazgos H-06, H-07 y H-08 (sever
 | H-07 · periodos | S1-09 ya no pide insertar P1–P6 (ventanas del 10 al 9): pide los meses calendario oct-2026…mar-2027 con sus quincenas, el rechazo de la ventana por el `CHECK` y la prueba de equivalencia con el oráculo (12 de 12 cifras). S2-09 y las notas de R-45…R-50 (`S2.md` §6 (e), `S3.md` §6 (d)) dicen que la equivalencia depende de la semilla; S2-06 usa una etiqueta de mes calendario; S2-03, S2-07 y el §4 de S2, C1-09, C3-09 y S7-02 (consumidores de R-45…R-50) aclaran que P1–P6 son oct-2026…mar-2027. | `S1.md` (S1-09, §3, §5), `S2.md` (S2-03, S2-06, S2-07, S2-09, §4, nota (e)), `S3.md` (nota (d)), `C1.md` (C1-09), `C3.md` (C3-09), `S7.md` (S7-02) |
 | H-08 · trazabilidad | Los 35 criterios que no aparecían en la sección 5 de su archivo tienen ahora su línea (al plan, a decisiones o al protocolo; lo que no deriva de una frase se marca «convención propia del directorio»). Todo criterio de los 18 archivos aparece ya en su sección 5 (248 de 248). | C1-04; S1-15; U1-14; C2-09, C2-10, C2-11; C3-03, C3-10, C3-11; P3-13; S2-08, S2-09, S2-14, S2-16; S3-04, S3-11, S3-20; S4-06, S4-15; S5-13; S6-08, S6-10, S6-15, S6-16; S7-14; S8-08; U3-08, U3-10, U3-12; U4-07, U4-09, U4-10, U4-11; U5-06, U5-12 |
 
-## 10. Conteo reconciliado de la puerta 1 (11-oct-2026, agente `integrador-p1`)
-Conteo propio por script sobre los 18 archivos (no incluye este índice): cuenta las líneas que empiezan con `**<ID>-nn` seguidas de la severidad entre paréntesis, y comprueba que no haya IDs repetidos y que cada archivo diga «Versión 1.1». Coincide fila por fila con la tabla de §2 y con los totales de `docs/criterios/tools/traza.py` (257 criterios definidos) y `refs.py` (257 IDs citados, 0 inexistentes).
+## 10. Conteo reconciliado (11-oct-2026; puerta 1 por el agente `integrador-p1`, actualizado en P1c por `criterios-1.2`)
+Conteo propio por script sobre los 18 archivos (no incluye este índice): `python3 -I docs/criterios/tools/conteo.py` cuenta las líneas que empiezan con `**<ID>-nn` seguidas de la severidad entre paréntesis, comprueba que no haya IDs repetidos, que cada archivo traiga la lista «Cambios de la versión» de su versión y que las tablas de §2 y de esta sección coincidan fila por fila y en el total. Coincide con `docs/criterios/tools/traza.py` (261 criterios definidos) y `refs.py` (261 IDs citados, 0 inexistentes). La versión de cada archivo es la de su línea 3: pasan a 1.2 los archivos tocados en P1c; los demás siguen en 1.1.
 
 | Archivo | Criterios (alta / media / baja) | Versión |
 |---|---|---|
 | `S1.md` | 17 (12 / 5 / 0) | 1.1 |
-| `S2.md` | 16 (13 / 3 / 0) | 1.1 |
-| `S3.md` | 20 (17 / 3 / 0) | 1.1 |
-| `S4.md` | 15 (11 / 4 / 0) | 1.1 |
-| `S5.md` | 13 (10 / 3 / 0) | 1.1 |
-| `S6.md` | 16 (12 / 4 / 0) | 1.1 |
-| `S7.md` | 14 (12 / 2 / 0) | 1.1 |
+| `S2.md` | 16 (13 / 3 / 0) | 1.2 |
+| `S3.md` | 20 (17 / 3 / 0) | 1.2 |
+| `S4.md` | 15 (11 / 4 / 0) | 1.2 |
+| `S5.md` | 13 (10 / 3 / 0) | 1.2 |
+| `S6.md` | 16 (12 / 4 / 0) | 1.2 |
+| `S7.md` | 14 (12 / 2 / 0) | 1.2 |
 | `S8.md` | 11 (8 / 3 / 0) | 1.1 |
 | `WF4-operacion.md` | 12 (10 / 2 / 0) | 1.1 |
-| `U1.md` | 16 (10 / 6 / 0) | 1.1 |
-| `U2.md` | 14 (10 / 4 / 0) | 1.1 |
+| `U1.md` | 16 (10 / 6 / 0) | 1.2 |
+| `U2.md` | 14 (10 / 4 / 0) | 1.2 |
 | `U3.md` | 12 (8 / 4 / 0) | 1.1 |
-| `U4.md` | 11 (8 / 3 / 0) | 1.1 |
-| `U5.md` | 13 (10 / 3 / 0) | 1.1 |
-| `C1.md` | 21 (19 / 2 / 0) | 1.1 |
-| `C2.md` | 12 (8 / 4 / 0) | 1.1 |
+| `U4.md` | 13 (10 / 3 / 0) | 1.2 |
+| `U5.md` | 13 (10 / 3 / 0) | 1.2 |
+| `C1.md` | 23 (21 / 2 / 0) | 1.2 |
+| `C2.md` | 12 (8 / 4 / 0) | 1.2 |
 | `C3.md` | 11 (9 / 2 / 0) | 1.1 |
-| `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.1 |
-| **Total (18 archivos)** | **257 (197 / 60 / 0)** | |
+| `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.2 |
+| **Total (18 archivos)** | **261 (201 / 60 / 0)** | |
 
-Reconciliación con los reportes de P1:
-- `docs/estado/p1/criterios-S-1.1.md`: S1–S8 y WF4 = 134 (105 / 29), sin cambio. **Coincide.** Su total de 248 era la tabla de antes de los cambios de U1 y C1; el mismo reporte anticipaba 256 con esos cambios.
-- `docs/estado/p1/criterios-UC-1.1.md`: daba 256 (196 / 60) en total. La diferencia es 1 criterio alto: U5-13, que agregó la ronda 1 de correcciones de P1 (`docs/estado/p1/correccion-criterios-r1.md`; U5 pasa a 13 = 10 / 3), con lo que el total queda en 257 (197 / 60). El conteo propio y `traza.py` confirman 257.
-- Comando: `make verify-criterios` (corre `docs/criterios/tools/verif_final.sh` y exige sus resultados esperados).
+Reconciliación con los cambios de P1c (el total pasa de 257 a 261): C1 suma C1-22 y C1-23 (21 alta / 2 media) y U4 suma U4-12 y U4-13 (10 alta / 3 media); los demás archivos conservan su número de criterios (P3 sigue en 13: P3-03, P3-04, P3-05 y P3-11 cambian de contenido, no de cantidad). Los 257 de la versión 1.1 fueron: `S1–S8` y `WF4` = 134 (105 / 29), sin cambio; las diferencias con los reportes de P1 (`criterios-S-1.1.md` daba 248 y `criterios-UC-1.1.md` 256) eran U5-13, agregado en la ronda 1 de correcciones, y los cambios de U1 y C1.
+- Comando: `make verify-criterios` (corre `docs/criterios/tools/verif_final.sh`, que ahora incluye `conteo.py`).
 
-Siguen registrados (hallazgo bajo B-01 de `docs/estado/p1/REVISION-criterios-r3.md`; el integrador no cambia contenido): las notas 8 y 10 de §5 todavía describen como problemas la colisión error–gasto y el token del bot, ya resueltos por K26 y K30, y §6 no lista los bloqueos nuevos `criterios-promedios-redondeo` y `criterios-frescura-extremos` (están en `docs/estado/bloqueos/INDICE.md`, sección «Bloqueos nuevos de P1»).
+## 11. Cambios de la versión 1.2 (11-oct-2026, flujo P1c, agente `criterios-1.2`)
+Respuestas de la puerta 1b aplicadas (decisiones K35 a K44) y hallazgos bajos B-01 a B-04 de `docs/estado/p1/REVISION-criterios-r3.md`. Cada archivo tocado trae su lista «Cambios de la versión 1.2».
+
+| Origen | Qué cambió | Archivos y criterios |
+|---|---|---|
+| K35 | La Pista 3 la ejecuta Axel; la puerta 3 se reduce a «paquete listo y revisado»; lista nueva del paquete con `LEEME.md` y `MANIFIESTO.md`; `iter-N/` y `siguiente-prompt.md` | `P3-claude-design.md` (P3-01 a P3-06, P3-11, §3 a §5), este índice (§1, §2, §3) |
+| K36 | Ajuste de calorías por persona, 0 y 0, «mantener» no ajusta | `S4.md` (S4-07), `U4.md` (U4-13), `C1.md` (C1-22) |
+| K37 | `manual` compite; `site_assisted` y PROFECO solo referencia | `S5.md` (S5-04, S5-10) |
+| K38 | Domingos: semana siguiente por defecto | `U1.md` (U1-16) |
+| K39 | Promedio semanal: diario exacto × 7, un solo redondeo (219.88 y 629.35) | `S2.md` (S2-08) |
+| K40 | Peso (90 − días) / 61 entre los días 30 y 90; 91 días no compite | `S5.md` (S5-04) |
+| K41 y K42 | Karen 333° y Bodega Aurrera 356° con refuerzo; Walmart oscuro `#7AA3EE` | `U2.md` (U2-02, U2-08) |
+| K43 | Adjunto 10 MB, comparador 5 s con 503, `send_time` y `advance_days`, casillas sin armar ≤ 21 | `C1.md` (C1-23), `S3.md` (S3-12), `S6.md` (S6-10) |
+| K44 | Todo parámetro operativo existe y es configurable, con valor inicial y «restablecer» | `U4.md` (U4-12, U4-04), `C1.md` (C1-22), `S3.md` (S3-12) |
+| Pendiente 4 de `INTEGRACION.md` §7 | C1-15 define «bloqueo abierto = sin Respuesta de Axel»; C1-21 pide `INDICE.md` en los extractos y suma igual a `openapi.yaml` | `C1.md` (C1-15, C1-21) |
+| B-01 | §1 con 261; notas 8 y 10 (y 9 y 11) como resueltas; §6 con los 24 bloqueos y su estado; conteo propio y versiones | este índice (§1, §5, §6, §10), `tools/conteo.py` |
+| B-02 | «Día de pago 15 y 30» separado de las quincenas de K8; C1-07 comprueba la declaración 1–15 y 16–último día | `C1.md` (C1-06, C1-07) |
+| B-03 | U2-02 cita decisiones I «o U2 propone 135°»; se quita la marca de convención propia | `U2.md` (§5) |
+| B-04 | Cinco citas de §5 reordenadas según su fuente (`citas.py` da 0 sin fuente) | `C1.md`, `C2.md`, `U2.md`, `U5.md` (§5) |
+| Revisión r1, A-01 y A-02 (K43, K44, protocolo §2) | Los parámetros de avisos (umbrales 80/100 %, días antes del pago, `send_time`, `advance_days`) viven hoy en `notification.params_json` y su lugar final es PROVISIONAL (bloqueo abierto `S1-parametros-avisos`); se excluyen de la comprobación «clave de `app_setting` en 00003» | `C1.md` (C1-22), `U4.md` (U4-12) |
+| Revisión r1, A-03 (K43, K44) | «Casillas sin armar» es regla FIRME (K43), sin marca; solo el valor inicial de la anticipación queda PROVISIONAL; hora, anticipación, umbrales y días antes del pago se leen de su parámetro, con prueba de cambio; S7 pasa a 1.2 | `S7.md` (S7-04, S7-08, S7-10, §3, §5) |
+| Revisión r1, M-01 (§6) | §6 lista `S1-parametros-avisos` como ABIERTO (25 filas: 24 resueltas y 1 abierta) | este índice (§6) |
+| Revisión r1, M-02 (K35) | P3-01 es solo «paquete listo y revisado»; el aviso de Axel «iter-N lista» pasa a P3-06 y la Pista 3 queda «pendiente de Axel» hasta que avise | `P3-claude-design.md` (P3-01, P3-06) |
+| Revisión r2, hallazgo 1 (K35) | P3-02 pide su evidencia en el reporte del agente `paquete-claude-design` y de su revisor en `docs/estado/wf1/` (`ls -l` y `sha256sum -c`), no en `P3-iter-1.md`, que no existe al evaluar la puerta 3 | `P3-claude-design.md` (P3-02) |
+| Revisión r2, hallazgo 2 (K43, K31, protocolo §2) | `send_time` y `advance_days` no tienen valor inicial decidido (lo propone S7, K31): la tabla de U4-12 los marca «sin valor inicial: lo propone S7, PROVISIONAL» y esa celda no cuenta como vacía; la lista mínima son 14 parámetros enumerados | `U4.md` (U4-12), `C1.md` (C1-22) |
+| Revisión r2, hallazgo 3 (K44) | Los cruces de C1-22 y U4-12 leen las claves sembradas en 00001 a 00003 (o el inventario `@param` de 00003) y aceptan un comentario que cita una decisión de §A–§K (letra o K-n) | `C1.md` (C1-22), `U4.md` (U4-12) |
+| Revisión r2, hallazgo 4 (K35, §1) | Las Verifica de P3-01, P3-03 y P3-12 buscan patrones de credencial (`password *[:=]`, `bot[_-]?token`, `api[_-]?key`, formato de token de bot) y no la palabra suelta «token», «clave» o «contraseña» | `P3-claude-design.md` (P3-01, P3-03, P3-12) |

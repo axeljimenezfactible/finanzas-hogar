@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «inicio». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «inicio». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto inicio"
-  version: "1.1.0"
+  version: "1.2.0"
   description: "Extracto de la etiqueta «Inicio» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -895,7 +895,7 @@ components:
       x-calculado: true
     DashboardWeekMeals:
       type: "object"
-      description: "Tarjeta «Comidas de la semana» (N-023, métrica M-05, motor S4). Costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día de cada persona = Σ kcal asignadas ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna persona no tiene receta ni «fuera» (máx. 21; PROVISIONAL, bloqueo C1-valores-k31). Semana de lunes a domingo (K8)."
+      description: "Tarjeta «Comidas de la semana» (N-023, métrica M-05, motor S4). Costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día de cada persona = Σ kcal asignadas ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna persona no tiene receta ni «fuera» (máx. 21; K43). Semana de lunes a domingo (K8)."
       properties:
         week_start:
           $ref: "componentes-comunes.yaml#/components/schemas/Date"

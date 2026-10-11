@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «creditos-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «creditos-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto creditos-b"
-  version: "1.1.0"
+  version: "1.2.0"
   description: "Extracto de la etiqueta «Créditos» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -497,8 +497,7 @@ paths:
       tags:
         - "Créditos"
       summary: "Comparador de escenarios"
-      description: "Búsqueda exhaustiva sin solver (crédito × plazo × fecha ± días × promoción). Respeta las 3 restricciones duras: las que trae la petición sobreescriben solo para esta comparación las globales (K16). Si después de eso falta alguna (o el «± días»), responde 200 con status missing_constraints, sin escenarios ni recomendación, y la pantalla avisa «faltan restricciones». El tope por persona es objetivo, no restricción (K13). No guarda nada: «Usar escenario» abre la captura de compra (createCreditPurchase). Tiempo máximo PROVISIONAL: propuesta escrita en el bloqueo C1-valores-k31 (Axel lo aprueba en la puerta 2)."
-      x-provisional: true
+      description: "Búsqueda exhaustiva sin solver (crédito × plazo × fecha ± días × promoción). Respeta las 3 restricciones duras: las que trae la petición sobreescriben solo para esta comparación las globales (K16). Si después de eso falta alguna (o el «± días»), responde 200 con status missing_constraints, sin escenarios ni recomendación, y la pantalla avisa «faltan restricciones». El tope por persona es objetivo, no restricción (K13). No guarda nada: «Usar escenario» abre la captura de compra (createCreditPurchase). Tiempo máximo 5 s (K43), el valor vigente de app_setting comparator.timeout_seconds (K44; se cambia con updateOptimizerSettings, N-321): si la búsqueda lo pasa, responde 503 `unavailable` sin escenarios. S3 lo mide (S3-12)."
       x-necesidades:
         - "N-226"
       x-tablas:
@@ -534,6 +533,8 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
         "422":
           $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        "503":
+          $ref: "componentes-comunes.yaml#/components/responses/ServiceUnavailable"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
 components:

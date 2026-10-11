@@ -4,6 +4,9 @@
 # Los metadatos de tabla (@table, @title, @entity, @desc, @used) y los comentarios de columna se leen de los archivos SQL:
 # cada columna se busca en todas las migraciones (CREATE TABLE y ALTER TABLE ... ADD COLUMN); manda la más reciente.
 # Ninguna ruta fija a una migración concreta (C1 v1.1).
+# C1 v1.2 (puerta 1b, K44): también lee el inventario de parámetros operativos (anotaciones @param y @param_sin_valor de
+# cualquier migración, cabecera incluida) y lo escribe en params.json; cada valor inicial se compara con la siembra real de
+# app_setting en la base temporal (si no coincide, se detiene). Las notas @col_note se suman a la descripción de su columna.
 import re, json, sqlite3, os, glob
 from c1paths import ROOT, WORK
 MIGDIR = os.path.join(ROOT, 'backend/db/migrations')
@@ -53,6 +56,28 @@ for path in MIGS:
     for t, name, rest, comment in re.findall(r'^ALTER TABLE (\w+) ADD COLUMN (\w+) (?:INTEGER|TEXT)\b(.*?);[ \t]*(?:--[ \t]*(.*))?$', up, re.M):
         colcomments[(t, name)] = NEW_PREFIX.sub('', comment.strip())
         enums[(t, name)] = enum_of(r"\b%s IN \(([^)]*)\)" % name, rest)
+# C1 v1.2 (K44): inventario de parámetros operativos y notas de columna de 1.3.
+params, params_sin_valor = [], []
+for path in MIGS:
+    head = open(path, encoding='utf-8').read().split('-- +goose Down')[0]
+    for line in re.findall(r'^-- @param (.*)$', head, re.M):
+        k, typ, unit, ini, dec, sec, mig = [x.strip() for x in line.split('|')]
+        params.append(dict(key=k, type=typ, unit=unit, initial_json=ini, decision=dec, section=sec, migration=mig))
+    for line in re.findall(r'^-- @param_sin_valor (.*)$', head, re.M):
+        k, why, who = [x.strip().replace('|', '/') for x in line.split('|', 2)]
+        params_sin_valor.append(dict(name=k, purpose=why, reason=who))
+    for tc, note in re.findall(r'^-- @col_note (\w+\.\w+) \| (.*)$', head, re.M):
+        t_, c_ = tc.split('.'); base, sep, rest = colcomments.get((t_, c_), '').partition('|')
+        colcomments[(t_, c_)] = (base.strip() + ' ' + note.strip()).strip() + ((' |' + rest) if sep else '')
+keys = [p['key'] for p in params]
+if len(keys) != len(set(keys)):
+    raise SystemExit('parse_schema: clave @param repetida')
+for p in params:
+    row = db.execute('SELECT value_json, description FROM app_setting WHERE setting_key = ? AND user_account_id IS NULL', (p['key'],)).fetchone()
+    if row is None or json.loads(row[0]) != json.loads(p['initial_json']):
+        raise SystemExit(f"parse_schema: {p['key']}: la siembra ({row and row[0]}) no coincide con @param ({p['initial_json']})")
+    p['initial'] = json.loads(row[0]); p['seed_description'] = (row[1] or '').strip()
+json.dump(dict(params=params, params_sin_valor=params_sin_valor), open(os.path.join(WORK, 'params.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 db.commit()
 names = [r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name <> 'goose_db_version' ORDER BY rowid")]
 tables = {}
@@ -64,4 +89,4 @@ for t in names:
 db.close()
 os.remove(dbpath)
 json.dump(tables, open(os.path.join(WORK, 'schema.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-print(len(tables), 'tablas de', len(MIGS), 'migraciones:', ', '.join(os.path.basename(p) for p in MIGS))
+print(len(tables), 'tablas y', len(params), 'parámetros (K44) de', len(MIGS), 'migraciones:', ', '.join(os.path.basename(p) for p in MIGS))

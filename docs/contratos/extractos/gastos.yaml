@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «gastos». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «gastos». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto gastos"
-  version: "1.1.0"
+  version: "1.2.0"
   description: "Extracto de la etiqueta «Gastos» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -606,8 +606,7 @@ paths:
       tags:
         - "Gastos"
       summary: "Adjuntar ticket"
-      description: "Imagen JPG, PNG o WebP, o PDF (U1 N-064). Tamaño máximo PROVISIONAL 10 MB: propuesta escrita en el bloqueo C1-valores-k31 (Axel la aprueba en la puerta 4). El archivo se guarda con nombre generado por el servidor, nunca el del usuario."
-      x-provisional: true
+      description: "Imagen JPG, PNG o WebP, o PDF (U1 N-064). Tamaño máximo 10 MB (K43), el valor vigente de app_setting attachment.max_size_mb (K44; se cambia con updateDataSettings, N-325): un archivo mayor responde 413 `payload_too_large` y el mensaje dice el máximo vigente. El archivo se guarda con nombre generado por el servidor, nunca el del usuario."
       x-necesidades:
         - "N-064"
       x-tablas:
@@ -1501,8 +1500,7 @@ components:
           description: "Promedio diario: total del periodo ÷ días reales del periodo, ROUND_HALF_UP (motor S2, K20)."
         weekly_average_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          x-provisional: true
-          description: "Promedio semanal = diario × 7 (motor S2, K20). PROVISIONAL si el diario se multiplica antes o después de redondear a centavos: bloqueo criterios-promedios-redondeo."
+          description: "Promedio semanal = promedio diario exacto (sin redondear) × 7, con un solo redondeo ROUND_HALF_UP al final (motor S2, K20, K39; RN-27)."
         monthly_average_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Promedio mensual: total ÷ meses del periodo (motor S2; canon R-56 y R-57)."

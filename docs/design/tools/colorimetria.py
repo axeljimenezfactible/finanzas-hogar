@@ -56,8 +56,9 @@ SALIDA = {
     "png": RAIZ / "docs" / "design" / "paleta.png",
 }
 FECHA = "2026-10-10"
-VERSION = "1.1"
+VERSION = "1.2"
 FECHA_11 = "2026-10-11"   # puerta 1: respuestas K26 y K27 de Axel y hallazgo R3-04 (sección «Cambios 1.1»)
+FECHA_12 = "2026-10-11"   # puerta 1b: respuestas K41 y K42 de Axel, sin cambiar valores (sección «Cambios 1.2»)
 SCRIPT_REL = "docs/design/tools/colorimetria.py"
 
 # =============================================================================
@@ -323,8 +324,8 @@ PERSONAS = [
      "la última que da 3:1) se separa de los roles por matiz, y sus ventanas factibles quedan entre deuda 310° y "
      "error 20°; 333° queda a 23° de deuda y de Bodega Aurrera, lo más lejos de Ximena (350°) que permite el "
      "reparto, y de ella se separa por ΔL ≥ 0.10. L en claro 0.642 (antes 0.640) para dar margen al escalonamiento. "
-     "PROVISIONAL (bloqueo `U2a-rosas-ximena-bodega`): frente a Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos temas "
-     "y se distingue por el refuerzo de §7.7 (Cambios 1.1, punto 2)."),
+     "Frente a Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos temas y se distingue por el refuerzo de §7.7; FIRME "
+     "por K41 (puerta 1b, bloqueo `U2a-rosas-ximena-bodega` resuelto; Cambios 1.1, punto 2, y Cambios 1.2)."),
     ("shared", "Conjunto", 280.0, 0.045, 0.42, 0.94,
      "Lo compartido lleva el matiz de la marca con croma bajo (casi neutro), como el croma 0.03 "
      "del plan; 280° queda a 30° de deuda y 40° de información. Es la única excepción deliberada al "
@@ -333,15 +334,15 @@ PERSONAS = [
 TIENDAS = [
     ("walmart", "Walmart", 262.0, 0.12, 0.515, 0.716,
      "220° del plan quedaba a 20.0° exactos de ahorro e información (frágil al cuantizar a 8 bits); "
-     "se mueve al azul de 262° (22° de información). PROVISIONAL en oscuro (bloqueo `U2a-walmart-oscuro`): "
-     "L 0.716 en vez de 0.720 para que Bodega Aurrera quepa en el escalonamiento de las tiendas (Cambios 1.1)."),
+     "se mueve al azul de 262° (22° de información). En oscuro, L 0.716 en vez de 0.720 para que Bodega Aurrera "
+     "quepa en el escalonamiento de las tiendas; FIRME por K42 (puerta 1b; Cambios 1.1 y 1.2)."),
     ("bodega-aurrera", "Bodega Aurrera", 356.0, 0.11, 0.41, 0.829,
      "Versión 1.1 (K26): el 50° de la 1.0 quedaba a 5° de gasto 45°. Con su L (entre Mercado y Walmart) se separa "
      "de los roles por matiz en ambos temas: 356° queda a 24° de error y a 23° de Karen, de la que en oscuro no se "
      "separa por luminosidad. Croma 0.11 y L 0.829 en oscuro: el rosa pierde luminancia en gris y con 0.12 no cabe "
-     "en el escalonamiento de las tiendas (Cambios 1.1). PROVISIONAL (bloqueo `U2a-rosas-ximena-bodega`): frente a "
-     "Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos temas (en oscuro, a simple vista el mismo color) y se distingue "
-     "solo por el refuerzo de §7.7 (Cambios 1.1, punto 2)."),
+     "en el escalonamiento de las tiendas (Cambios 1.1). Frente a Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos "
+     "temas (en oscuro, a simple vista el mismo color) y se distingue solo por el refuerzo de §7.7; FIRME por K41 "
+     "(puerta 1b; en una misma vista, persona y tienda nunca se distinguen solo por color; Cambios 1.2)."),
     ("sams-club", "Sam's Club", 175.0, 0.12, 0.62, 0.93,
      "Conserva 175° del plan (25° de éxito y de ahorro); va en la L más alta de cada tema, donde el "
      "verde azulado conserva croma ≥ 0.10."),
@@ -353,15 +354,36 @@ TIENDAS = [
 PLAN_CATEGORICAS = {"axel": ("#0F74C5", 250, 0.55), "ximena": ("#D375A4", 350, 0.68), "karen": ("#E0AE57", 80, 0.78),
                     "shared": ("#495766", 250, 0.45), "walmart": ("#2FB5D8", 220, 0.72),
                     "bodega-aurrera": ("#FFA658", 60, 0.80), "sams-club": ("#11957C", 175, 0.60), "market": ("#9C4438", 30, 0.50)}
-# Valores PROVISIONALES de la versión 1.1 (protocolo §2): token → nota que se agrega a su descripción.
-PROVISIONAL = {"color.store.walmart.dark": " · PROVISIONAL: bloqueo U2a-walmart-oscuro (L 0.720 → 0.716)"}
+# Valores PROVISIONALES (protocolo §2): token → nota « · PROVISIONAL: bloqueo <fase-tema> (...)» que se agrega a su
+# descripción en C2-colores.json. Vacío desde la versión 1.2: K41 y K42 (puerta 1b) resolvieron con la opción 1 los
+# dos bloqueos de la 1.1 y quitaron sus 5 marcas sin cambiar ningún valor (Cambios 1.2). La verificación final
+# comprueba que las marcas del JSON son exactamente las de este diccionario.
+PROVISIONAL = {}
 # Ronda 1 de revisión U2a (H-01): Karen y Bodega Aurrera quedan frente a Ximena bajo «≥ 20° o ΔL ≥ 0.15» y solo las
-# separa el refuerzo de §7.7; U2-02 admite dos lecturas. PROVISIONAL mientras Axel decide el bloqueo (opciones en
-# docs/estado/bloqueos/U2a-rosas-ximena-bodega.md). rosas_ximena() aborta si estas marcas no coinciden con el cálculo.
-BLOQUEO_ROSAS = "U2a-rosas-ximena-bodega"
+# separa el refuerzo de §7.7. K41 (puerta 1b) lo acepta: entre categóricas basta el refuerzo de U2-08, también entre
+# grupos, y DESIGN.md prohíbe distinguir una persona y una tienda solo por color en una misma vista.
+BLOQUEO_ROSAS = "U2a-rosas-ximena-bodega"   # resuelto por K41
+BLOQUEO_WALMART = "U2a-walmart-oscuro"      # resuelto por K42
 ROSAS_XIMENA = (("person", "karen"), ("store", "bodega-aurrera"))
-PROVISIONAL.update({"color.%s.%s.%s" % (g, c, s): " · PROVISIONAL: bloqueo %s (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)"
-                    % BLOQUEO_ROSAS for g, c in ROSAS_XIMENA for s in ("light", "dark")})
+# Tokens que K41 y K42 dejan FIRMES con el valor de la 1.1: token → (hex que se conserva, decisión). rosas_ximena()
+# aborta si los que quedan bajo la regla frente a Ximena no son exactamente los de K41; md_cambios_12() y la
+# verificación final abortan si algún hex cambia.
+FIRMES_12 = {"color.person.karen.light": ("#B870AC", "K41"), "color.person.karen.dark": ("#D389C6", "K41"),
+             "color.store.bodega-aurrera.light": ("#762C4C", "K41"), "color.store.bodega-aurrera.dark": ("#FFAAC9", "K41"),
+             "color.store.walmart.dark": ("#7AA3EE", "K42")}
+# §12 (M-01 de la revisión U2a-r1 de P1c): lo que K41 y K42 ya aceptaron no vuelve a la lista de propuestas de la
+# puerta 2; en el párrafo va después de esta marca y la verificación final falla si una persona o tienda con un
+# token en FIRMES_12 aparece antes de ella.
+MARCA_YA_DECIDIDAS = "**Ya no se proponen:**"
+
+
+def nombres_firmes_12():
+    """Nombre en pantalla de cada persona o tienda que tiene un token en FIRMES_12 (K41 y K42)."""
+    nombres = {("person", c): n for c, n, *_ in PERSONAS}
+    nombres.update({("store", c): n for c, n, *_ in TIENDAS})
+    return sorted({nombres[tuple(r.split(".")[1:3])] for r in FIRMES_12})
+
+
 ORDEN_PERSONAS = ["axel", "ximena", "karen", "shared"]
 ORDEN_TIENDAS = ["walmart", "bodega-aurrera", "sams-club", "market"]
 
@@ -741,9 +763,10 @@ def pares_cercanos(M):
             elif "rol" in (ga, gb):
                 ref = "SIN RESOLVER"
             else:
-                ref = "Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre."
+                ref = ("Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y "
+                       "con su nombre; en una misma vista nunca se distinguen solo por color (K41).")
             if "ximena" in (ca, cb) and {ca, cb} - {"ximena"} <= {c for _, c in ROSAS_XIMENA}:
-                ref += " **PROVISIONAL**: bloqueo `%s` (¿basta este refuerzo frente a «≥ 20° o ΔL ≥ 0.15» de K26?)." % BLOQUEO_ROSAS
+                ref += " Aceptado por K41 (puerta 1b): basta este refuerzo (U2-08), también entre grupos."
             filas.append({"tema": tema, "a": "%s (%s)" % (na, ga), "b": "%s (%s)" % (nb, gb), "dm": dm, "dl": dl, "refuerzo": ref})
     return filas
 
@@ -1061,7 +1084,8 @@ def base_rol(cod):
 def rosas_ximena(M):
     """Ronda 1 de revisión U2a (H-01): Karen y Bodega Aurrera frente a Ximena en cada tema, el par persona–tienda más
     parecido de la 1.0 y la comprobación de que ningún matiz de sus ventanas las separa de Ximena en ambos temas.
-    Aborta si los tokens marcados PROVISIONAL con BLOQUEO_ROSAS no son exactamente los que quedan bajo la regla."""
+    Desde la 1.2 el refuerzo de §7.7 basta (K41): aborta si los tokens que quedan bajo la regla no son exactamente los
+    que FIRMES_12 acepta por K41, si alguno sigue marcado PROVISIONAL o si un matiz de sus ventanas ya los separa."""
     if getattr(M, "_rosas", None):
         return M._rosas
     ex = M.cat["person"]["ximena"]
@@ -1081,10 +1105,11 @@ def rosas_ximena(M):
         v, _ = ventanas_matiz(M, g, c)
         sale = [h for h in v if all(lejos(Color(e[t].l, e["c"], float(h)).hex, ex[t].hex) for t in TEMAS)]
         if sale:
-            raise SystemExit("Bloqueo %s: %s se separa de Ximena en %s; revisar el texto y el bloqueo" % (BLOQUEO_ROSAS, e["nombre"], sale))
-    marcados = {r for r, nota in PROVISIONAL.items() if BLOQUEO_ROSAS in nota}
-    if R["bajo"] != marcados:
-        raise SystemExit("Bloqueo %s: bajo la regla frente a Ximena %s; marcados PROVISIONAL %s" % (BLOQUEO_ROSAS, sorted(R["bajo"]), sorted(marcados)))
+            raise SystemExit("K41: %s se separa de Ximena en %s; revisar Cambios 1.1 y 1.2 y la decisión" % (e["nombre"], sale))
+    aceptados = {r for r, (_, k) in FIRMES_12.items() if k == "K41"}
+    if R["bajo"] != aceptados or aceptados & set(PROVISIONAL):
+        raise SystemExit("K41: bajo la regla frente a Ximena %s; aceptados con refuerzo %s; marcados PROVISIONAL %s" % (
+            sorted(R["bajo"]), sorted(aceptados), sorted(PROVISIONAL)))
     antes = tokens_antes_11(M)
     h10 = lambda r: antes[r].hex if r in antes else M.hex(r)
     ref = []
@@ -1106,19 +1131,61 @@ def _rosas_cifras(M):
 
 
 def md_rosas_ximena(M):
-    """Párrafo de «Cambios 1.1», punto 2: Karen y Bodega Aurrera frente a Ximena (bloqueo BLOQUEO_ROSAS)."""
+    """Párrafo de «Cambios 1.1», punto 2: Karen y Bodega Aurrera frente a Ximena (bloqueo BLOQUEO_ROSAS, resuelto por K41)."""
     R, bo, bc, kc, ko = _rosas_cifras(M)
     de0, a0, b0, t0 = R["ref10"]
-    return ("**Frente a Ximena (ronda 1 de revisión, H-01; PROVISIONAL).** En oscuro, Bodega Aurrera (`%s`) y Ximena (`%s`) quedan a %.1f°, ΔL %.3f y **ΔE %.1f**: a simple vista son el mismo color. En claro quedan a %.1f°, ΔL %.3f y ΔE %.1f. Karen y Ximena quedan a %.1f° y %.1f°, con ΔL %.3f y %.3f y ΔE %.1f y %.1f (claro y oscuro). Bodega Aurrera–Ximena es una colisión nueva de la 1.1: en la 1.0, el par persona–tienda más parecido era %s–%s en %s, con ΔE %.1f. Con la L y el croma de cada una, ningún matiz de sus ventanas (tabla de arriba) separa a Karen ni a Bodega Aurrera de Ximena por ≥ 20° o ΔL ≥ 0.15 en ambos temas; el script lo comprueba. §7.7 declara el refuerzo, y U2-08 lo admite. Pero U2-02 y la respuesta de Axel en `U2-gasto-error` piden moverlas «para conservar separación ≥ 20° o ΔL ≥ 0.15» frente a las demás entradas. Como el criterio admite dos lecturas, el bloqueo `docs/estado/bloqueos/%s.md` lleva las opciones para Axel. Mientras decide, van **PROVISIONAL** los %d tokens que quedan bajo la regla frente a Ximena (%s), con la nota en su descripción en `C2-colores.json`.\n" % (
+    return ("**Frente a Ximena (ronda 1 de revisión, H-01; K41).** En oscuro, Bodega Aurrera (`%s`) y Ximena (`%s`) quedan a %.1f°, ΔL %.3f y **ΔE %.1f**: a simple vista son el mismo color. En claro quedan a %.1f°, ΔL %.3f y ΔE %.1f. Karen y Ximena quedan a %.1f° y %.1f°, con ΔL %.3f y %.3f y ΔE %.1f y %.1f (claro y oscuro). Bodega Aurrera–Ximena es una colisión nueva de la 1.1: en la 1.0, el par persona–tienda más parecido era %s–%s en %s, con ΔE %.1f. Con la L y el croma de cada una, ningún matiz de sus ventanas (tabla de arriba) separa a Karen ni a Bodega Aurrera de Ximena por ≥ 20° o ΔL ≥ 0.15 en ambos temas; el script lo comprueba. §7.7 declara el refuerzo y U2-08 lo admite, pero U2-02 y la respuesta de Axel en `U2-gasto-error` pedían moverlas «para conservar separación ≥ 20° o ΔL ≥ 0.15» frente a las demás entradas, y el criterio admitía dos lecturas (bloqueo `docs/estado/bloqueos/%s.md`). En la puerta 1b Axel eligió la opción 1 (**K41**): se aceptan con el refuerzo declarado, ningún valor cambia y los %d tokens que quedan bajo la regla frente a Ximena (%s) son FIRMES. Entre categóricas basta el refuerzo de U2-08, también entre grupos, y en una misma vista una persona y una tienda nunca se distinguen solo por color (regla para `DESIGN.md`, «Cambios 1.2»).\n" % (
         bo["hex"], bo["hx"], bo["dm"], bo["dl"], bo["de"], bc["dm"], bc["dl"], bc["de"], kc["dm"], ko["dm"], kc["dl"], ko["dl"],
         kc["de"], ko["de"], a0, b0, t0, de0, BLOQUEO_ROSAS, len(R["bajo"]), ", ".join("`%s`" % r for r in sorted(R["bajo"]))))
 
 
 def hallazgo_rosas_ximena(M):
-    """Hallazgo de §12 para el bloqueo BLOQUEO_ROSAS (ronda 1 de revisión U2a, H-01)."""
+    """Hallazgo de §12 para el bloqueo BLOQUEO_ROSAS (ronda 1 de revisión U2a, H-01), resuelto por K41."""
     R, bo, bc, kc, ko = _rosas_cifras(M)
-    return ("Ronda 1 de revisión U2a (H-01): en oscuro, Bodega Aurrera y Ximena quedan a %.1f°, ΔL %.3f y ΔE %.1f (a simple vista, el mismo color; en la 1.0, el par persona–tienda más parecido tenía ΔE %.1f), y en claro a %.1f°, ΔL %.3f y ΔE %.1f. Karen y Ximena quedan a %.1f° y %.1f°, con ΔL %.3f y %.3f. Con las L actuales, ningún matiz de sus ventanas las separa de Ximena por ≥ 20° o ΔL ≥ 0.15. §7.7 declara el refuerzo, pero U2-02 admite dos lecturas: bloqueo `%s`, con %d tokens PROVISIONALES (Cambios 1.1, punto 2)." % (
+    return ("Ronda 1 de revisión U2a (H-01): en oscuro, Bodega Aurrera y Ximena quedan a %.1f°, ΔL %.3f y ΔE %.1f (a simple vista, el mismo color; en la 1.0, el par persona–tienda más parecido tenía ΔE %.1f), y en claro a %.1f°, ΔL %.3f y ΔE %.1f. Karen y Ximena quedan a %.1f° y %.1f°, con ΔL %.3f y %.3f. Con las L actuales, ningún matiz de sus ventanas las separa de Ximena por ≥ 20° o ΔL ≥ 0.15. §7.7 declara el refuerzo y U2-02 admitía dos lecturas (bloqueo `%s`); K41 (puerta 1b) acepta el refuerzo: entre categóricas basta el de U2-08, también entre grupos, y en una misma vista una persona y una tienda nunca se distinguen solo por color. Los %d tokens quedan FIRMES sin cambiar de valor (Cambios 1.1, punto 2, y Cambios 1.2)." % (
         bo["dm"], bo["dl"], bo["de"], R["ref10"][0], bc["dm"], bc["dl"], bc["de"], kc["dm"], ko["dm"], kc["dl"], ko["dl"], BLOQUEO_ROSAS, len(R["bajo"])))
+
+
+def md_cambios_12(M):
+    """Sección «Cambios 1.2» (puerta 1b): K41 y K42 resuelven los dos bloqueos de la 1.1 sin cambiar ningún valor."""
+    o = []
+    ap = o.append
+    R, bo, bc, kc, ko = _rosas_cifras(M)
+    cambian = sorted(r for r, (v, _) in FIRMES_12.items() if M.hex(r) != v)
+    if cambian or set(FIRMES_12) & set(PROVISIONAL):
+        raise SystemExit("Cambios 1.2: cambió el hex de %s o quedan marcas PROVISIONAL %s; revisar FIRMES_12 y el texto" % (
+            cambian, sorted(PROVISIONAL)))
+    aw = ANTES_11[("store", "walmart")]
+    w0, ew = Color(aw[3], aw[1], aw[0]), M.cat["store"]["walmart"]["oscuro"]
+    so = [M.cat["store"][c]["oscuro"].hex for c in ORDEN_TIENDAS]
+    dl_ok = min(abs(hex_a_oklab(a)[0] - hex_a_oklab(b)[0]) for a, b in combinations(so, 2))
+    dl_gr = min(abs(l_gris(a) - l_gris(b)) for a, b in combinations(so, 2))
+    if min(dl_ok, dl_gr) < UMBRAL_DL or ew.hex != FIRMES_12["color.store.walmart.dark"][0]:
+        raise SystemExit("K42: Walmart en oscuro %s ya no da ΔL ≥ %.2f en las tiendas (%.3f / %.3f); revisar" % (ew.hex, UMBRAL_DL, dl_ok, dl_gr))
+    bloq = {"K41": BLOQUEO_ROSAS, "K42": BLOQUEO_WALMART}
+    nota = {"K41": "bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena",
+            "K42": "L %.3f → %.3f en oscuro" % (aw[3], ew.l)}
+
+    def fmt(hx):
+        L, C, H = hex_a_oklch(hx)
+        return "`%s` · %.1f° · L %.3f · C %.3f" % (hx, H, L, C)
+
+    ap("## Cambios 1.2 (puerta 1b, %s)\n" % FECHA_12)
+    ap("Aplica las respuestas de Axel en la puerta 1b (`docs/plan/decisiones.md` §K) a los dos bloqueos que dejó la 1.1, ambos con la opción 1: **K41** (`%s`: Karen y Bodega Aurrera se aceptan en el rosa con el refuerzo declarado) y **K42** (`%s`: Walmart en oscuro queda en L %.3f). **Ningún valor de color cambia** respecto a la 1.1 (%d tokens; el script se detiene si cambia el hex de alguno de estos cinco) y solo se quitan las 5 marcas de valor provisional que la 1.1 puso en su descripción en `C2-colores.json` y en este documento («Cambios 1.1», §7.1, §7.2, §7.5, §7.7 y §12). %s\n" % (
+        BLOQUEO_ROSAS, BLOQUEO_WALMART, ew.l, len(M.tokens), "La colorimetría no tiene bloqueos abiertos." if not PROVISIONAL else
+        "Siguen marcados por otros bloqueos: %s." % ", ".join("`%s`" % r for r in sorted(PROVISIONAL))))
+    ap("### Marcas que se quitan\n")
+    ap(tabla(["Token", "Valor sin cambio: hex · matiz · L · croma", "Marca de la 1.1", "Ahora"],
+             [["`%s`" % r, fmt(v), "bloqueo `%s` (%s)" % (bloq[k], nota[k]), "FIRME (%s)" % k] for r, (v, k) in FIRMES_12.items()]))
+    ap("\n### Lo que el script sigue comprobando\n")
+    ap("- **K41.** Karen y Bodega Aurrera siguen bajo «≥ 20° o ΔL ≥ 0.15» frente a Ximena y se distinguen por el refuerzo de §7.7, ahora aceptado: en oscuro, Bodega Aurrera y Ximena quedan a %.1f°, ΔL %.3f y ΔE %.1f; en claro, a %.1f°, ΔL %.3f y ΔE %.1f; Karen y Ximena, a %.1f° y %.1f°, con ΔL %.3f y %.3f (claro y oscuro). `rosas_ximena()` se detiene si los tokens bajo la regla dejan de ser exactamente los 4 que acepta K41 o si algún matiz de sus ventanas llega a separarlos de Ximena (el refuerzo dejaría de ser la única salida y habría que revisar la decisión).\n" % (
+        bo["dm"], bo["dl"], bo["de"], bc["dm"], bc["dl"], bc["de"], kc["dm"], ko["dm"], kc["dl"], ko["dl"]))
+    ap("- **K42.** Walmart en oscuro en L %.3f (`%s`; con la L %.3f de la 1.0 sería `%s`, ΔE %.1f): el escalonamiento de las tiendas en oscuro queda en ΔL mínimo %.3f (L OKLab) y %.3f (gris), ≥ %.2f.\n" % (
+        ew.l, ew.hex, aw[3], w0.hex, delta_e(w0.hex, ew.hex), dl_ok, dl_gr, UMBRAL_DL))
+    ap("### Regla nueva para `DESIGN.md` (K41)\n")
+    ap("`DESIGN.md` (U2, WF-1) recoge estas dos reglas:\n")
+    ap("1. **Una persona y una tienda nunca se distinguen solo por color en una misma vista.** Si una vista muestra a la vez colores de personas y de tiendas, cada color va con su nombre en texto y su forma (punto, anillo de avatar o marca de serie), nunca comparten gráfica ni leyenda y en tablas van en columnas distintas (§7.7). La regla cubre el par Bodega Aurrera–Ximena en oscuro (ΔE %.1f, a simple vista el mismo color).\n2. **U2-02: entre categóricas basta el refuerzo de U2-08**, también entre grupos distintos (persona frente a tienda). Un par de categóricas bajo «≥ 20° o ΔL ≥ 0.15» se lista en §7.7 con su refuerzo (orden fijo, forma y etiqueta directa). Frente a los roles y a acción crítica la separación sigue siendo obligatoria (§7.4) y el script la verifica.\n" % bo["de"])
+    return o
 
 
 def md_cambios_11(M, G):
@@ -1155,15 +1222,15 @@ def md_cambios_11(M, G):
         return "`%s` · %.1f° · L %.3f · C %.3f" % (hx, H, L, C)
 
     ap("## Cambios 1.1 (puerta 1, %s)\n" % FECHA_11)
-    ap("Aplica las respuestas de Axel en la puerta 1 (`docs/plan/decisiones.md` §K): **K26** (gasto pasa a terracota 40–45° y error se queda en 20°; Karen y Bodega Aurrera, que estaban en 50°, se mueven en la paleta categórica; la marca entra al barrido de pares cercanos, hallazgo R3-04 de la revisión 3) y **K27** (paleta de gráficas: ΔL ≥ 0.10 entre series consecutivas con forma, patrón y etiqueta de refuerzo; todos los pares se reportan como información). Quedan resueltos los bloqueos `U2-gasto-error` y `criterios-deltal`. No cambian el método (L por paso, perfil de croma, umbrales), la marca, el neutro, los demás roles ni las 8 series de gráficas. Todo lo regenera el script y su verificación final lo comprueba.\n")
+    ap("Aplica las respuestas de Axel en la puerta 1 (`docs/plan/decisiones.md` §K): **K26** (gasto pasa a terracota 40–45° y error se queda en 20°; Karen y Bodega Aurrera, que estaban en 50°, se mueven en la paleta categórica; la marca entra al barrido de pares cercanos, hallazgo R3-04 de la revisión 3) y **K27** (paleta de gráficas: ΔL ≥ 0.10 entre series consecutivas con forma, patrón y etiqueta de refuerzo; todos los pares se reportan como información). Quedan resueltos los bloqueos `U2-gasto-error` y `criterios-deltal`. No cambian el método (L por paso, perfil de croma, umbrales), la marca, el neutro, los demás roles ni las 8 series de gráficas. Todo lo regenera el script y su verificación final lo comprueba. Los dos bloqueos que abrió esta versión (`%s` y `%s`) los resolvió la 1.2 (K41 y K42) sin cambiar ningún valor; este apartado conserva las cifras y el porqué.\n" % (BLOQUEO_ROSAS, BLOQUEO_WALMART))
     ap("### Parámetros que cambian\n")
     filas = [["Gasto (`color.role.expense`)", "matiz %d°" % ANTES_11["expense"], "matiz %d°" % h_gasto, "K26"]]
     for clave, (h, c, lc, lo) in [(k, v) for k, v in ANTES_11.items() if k != "expense"]:
         e = M.cat[clave[0]][clave[1]]
         filas.append(["%s (`color.%s.%s`)" % ((e["nombre"],) + clave), "%d° · croma %.2f · L %.3f / %.3f" % (h, c, lc, lo),
                       "%d° · croma %.2f · L %.3f / %.3f" % (e["h"], e["c"], e["claro"].l, e["oscuro"].l),
-                      "**PROVISIONAL**, bloqueo `U2a-walmart-oscuro`" if clave == ("store", "walmart") else
-                      ("K26; **PROVISIONAL** frente a Ximena, bloqueo `%s`" % BLOQUEO_ROSAS) if clave in ROSAS_XIMENA else "K26"])
+                      ("K42 (bloqueo `%s`, resuelto en la puerta 1b)" % BLOQUEO_WALMART) if clave == ("store", "walmart") else
+                      ("K26; frente a Ximena, K41 (bloqueo `%s`, resuelto en la puerta 1b)" % BLOQUEO_ROSAS) if clave in ROSAS_XIMENA else "K26"])
     ap(tabla(["Elemento", "1.0: matiz · croma pedido · L claro / oscuro", "1.1", "Origen"], filas))
     ap("\n### Tokens que cambian (medidos en el hex)\n")
     ap(tabla(["Token", "1.0: hex · matiz · L · croma", "1.1: hex · matiz · L · croma"], [["`%s`" % r, fmt(col.hex), fmt(M.hex(r))] for r, col in antes.items()]))
@@ -1203,8 +1270,8 @@ def md_cambios_11(M, G):
     so = [M.cat["store"][c]["oscuro"].hex for c in ORDEN_TIENDAS]
     sup_o = (M.sup("oscuro", "fondo"), M.sup("oscuro", "tarjeta"))
     w0, mk_, sm_ = Color(aw[3], aw[1], aw[0]), M.cat["store"]["market"]["oscuro"], M.cat["store"]["sams-club"]["oscuro"]
-    ap("### 3. Walmart en oscuro (PROVISIONAL)\n")
-    ap("En oscuro las cuatro tiendas se escalonan con ΔL ≥ 0.10 en L OKLab y en gris entre Mercado (L %.3f, contraste %.2f, el mínimo del grupo) y Sam's Club (L %.3f, croma %.3f, cerca del piso de 0.10). El rosa pierde luminancia en gris (en Bodega Aurrera, gris = L − %.3f), y con Walmart en L %.3f ningún matiz entero cumple para Bodega Aurrera (última columna de la tabla del punto 2). Walmart baja a L %.3f (`%s` → `%s`, ΔE %.1f, imperceptible) y Bodega Aurrera usa croma %.2f y L %.3f en oscuro; el escalonamiento de las tiendas en oscuro queda en ΔL mínimo %.3f (OKLab) y %.3f (gris). Como es un token que K26 no nombra, va **PROVISIONAL** con el bloqueo `docs/estado/bloqueos/U2a-walmart-oscuro.md` (opciones para Axel) y la nota en la descripción del token en `C2-colores.json`.\n" % (
+    ap("### 3. Walmart en oscuro (K42)\n")
+    ap("En oscuro las cuatro tiendas se escalonan con ΔL ≥ 0.10 en L OKLab y en gris entre Mercado (L %.3f, contraste %.2f, el mínimo del grupo) y Sam's Club (L %.3f, croma %.3f, cerca del piso de 0.10). El rosa pierde luminancia en gris (en Bodega Aurrera, gris = L − %.3f), y con Walmart en L %.3f ningún matiz entero cumple para Bodega Aurrera (última columna de la tabla del punto 2). Walmart baja a L %.3f (`%s` → `%s`, ΔE %.1f, imperceptible) y Bodega Aurrera usa croma %.2f y L %.3f en oscuro; el escalonamiento de las tiendas en oscuro queda en ΔL mínimo %.3f (OKLab) y %.3f (gris). Es un token que K26 no nombra: el bloqueo `docs/estado/bloqueos/U2a-walmart-oscuro.md` llevó las opciones a Axel, que en la puerta 1b eligió la opción 1 (**K42**); Walmart en oscuro queda en esa L, FIRME («Cambios 1.2»).\n" % (
         mk_.l, min(contraste(mk_.hex, x) for x in sup_o), sm_.l, hex_a_oklch(sm_.hex)[1], eb["oscuro"].l - l_gris(eb["oscuro"].hex), aw[3],
         ew["oscuro"].l, w0.hex, ew["oscuro"].hex, delta_e(w0.hex, ew["oscuro"].hex), eb["c"], eb["oscuro"].l,
         min(abs(hex_a_oklab(a)[0] - hex_a_oklab(b)[0]) for a, b in combinations(so, 2)), min(abs(l_gris(a) - l_gris(b)) for a, b in combinations(so, 2))))
@@ -1236,10 +1303,11 @@ def generar_md(M, pares, G, Gg, C, V, I):
     cat_os = sum(1 for v in PLAN_CATEGORICAS.values() if min(contraste(v[0], n950), contraste(v[0], n900)) < UMBRAL_UI)
 
     ap("# Colorimetría · candidato C «Índigo 280°»\n")
-    ap("> Documento generado por `%s` (Python 3, solo biblioteca estándar). No se edita a mano: se cambia la regla en el script y se regenera. Fase U2a del flujo WF-0, %s. Es la base de color de `DESIGN.md` (U2, WF-1) y la parte de color del contrato C2 (`docs/contratos/C2-colores.json`); el resto de los tokens de C2 los hace U2b en WF-1. Queda sujeto a la puerta 2 de aprobación. Ronda 1 de revisión (2026-10-11): corrige el hallazgo H-03 (la serie 6 de gráficas usaba el matiz reservado del eje opuesto; §3 y §8.8). **Versión %s (puerta 1, %s):** aplica las respuestas K26 y K27 de Axel y el hallazgo R3-04; lo que cambia, con valores anteriores y nuevos, está en «Cambios 1.1».\n" % (SCRIPT_REL, FECHA, VERSION, FECHA_11))
+    ap("> Documento generado por `%s` (Python 3, solo biblioteca estándar). No se edita a mano: se cambia la regla en el script y se regenera. Fase U2a del flujo WF-0, %s. Es la base de color de `DESIGN.md` (U2, WF-1) y la parte de color del contrato C2 (`docs/contratos/C2-colores.json`); el resto de los tokens de C2 los hace U2b en WF-1. Queda sujeto a la puerta 2 de aprobación. Ronda 1 de revisión (2026-10-11): corrige el hallazgo H-03 (la serie 6 de gráficas usaba el matiz reservado del eje opuesto; §3 y §8.8). **Versión 1.1 (puerta 1, %s):** aplica las respuestas K26 y K27 de Axel y el hallazgo R3-04; lo que cambia, con valores anteriores y nuevos, está en «Cambios 1.1». **Versión %s (puerta 1b, %s):** aplica K41 y K42, que resuelven con la opción 1 los dos bloqueos de la 1.1 sin cambiar ningún valor; está en «Cambios 1.2».\n" % (SCRIPT_REL, FECHA, FECHA_11, VERSION, FECHA_12))
     ap("## Índice\n")
-    ap("0. Cambios 1.1 (puerta 1): gasto, Karen, Bodega Aurrera, marca en pares cercanos y paleta de gráficas\n1. Qué se genera y cómo regenerarlo\n2. Método\n3. Matiz base, eje opuesto y armonía complementaria dividida\n4. Regla 60-30-10\n5. Escalas de 11 pasos\n6. Roles semánticos\n7. Paleta categórica: personas y tiendas\n8. Paleta de gráficas (8 series)\n9. Reglas de uso por componente\n10. Contraste (resumen de `contraste.csv`)\n11. Tokens (`C2-colores.json`)\n12. Hallazgos, decisiones derivadas del cálculo y bloqueos\n\nAnexo A. Tokens: ruta → hex (lista que verifica el script)\n")
+    ap("0. Cambios 1.2 (puerta 1b: Karen, Bodega Aurrera y Walmart en oscuro pasan a FIRMES) y Cambios 1.1 (puerta 1: gasto, Karen, Bodega Aurrera, marca en pares cercanos y paleta de gráficas)\n1. Qué se genera y cómo regenerarlo\n2. Método\n3. Matiz base, eje opuesto y armonía complementaria dividida\n4. Regla 60-30-10\n5. Escalas de 11 pasos\n6. Roles semánticos\n7. Paleta categórica: personas y tiendas\n8. Paleta de gráficas (8 series)\n9. Reglas de uso por componente\n10. Contraste (resumen de `contraste.csv`)\n11. Tokens (`C2-colores.json`)\n12. Hallazgos, decisiones derivadas del cálculo y bloqueos\n\nAnexo A. Tokens: ruta → hex (lista que verifica el script)\n")
 
+    o.extend(md_cambios_12(M))
     o.extend(md_cambios_11(M, G))
 
     # 1 ------------------------------------------------------------------------------
@@ -1251,7 +1319,7 @@ def generar_md(M, pares, G, Gg, C, V, I):
         ["`docs/design/paleta.html`", "muestrario estático (sin CDN, sin fuentes externas, sin JavaScript)"],
         ["`docs/design/paleta.png`", "captura 1400×3000 con `chromium --headless=new`"],
     ]))
-    ap("\nComando: `python3 %s` (agrega `--sin-png` para omitir la captura y `--solo-verificar` para revisar los archivos existentes sin regenerarlos). La salida es determinista: dos ejecuciones dan archivos idénticos. Al final el script verifica, leyendo los archivos ya escritos, que ningún par del CSV quede bajo su umbral, que los hex del JSON coincidan con el Anexo A de este documento, que la paleta de gráficas mantenga ΔL ≥ %.2f entre series consecutivas en gris y en las tres simulaciones (con las dos variantes de §8.6) y que sus tres primeras series pasen la prueba de todos los pares (§8.5), que las categóricas cumplan su escalonamiento y su separación de los roles, que ningún token fuera de `color.critical` use la zona reservada del eje opuesto (§3), que marca y neutro reproduzcan los valores de partida del plan y, desde la versión 1.1, que gasto esté en 40–45° a ≥ 20° de error, que la marca no quede cerca de ningún rol y que Karen y Bodega Aurrera cumplan la regla de separación entre sí; si algo falla, termina con código 1.\n" % (SCRIPT_REL, UMBRAL_DL))
+    ap("\nComando: `python3 %s` (agrega `--sin-png` para omitir la captura y `--solo-verificar` para revisar los archivos existentes sin regenerarlos). La salida es determinista: dos ejecuciones dan archivos idénticos. Al final el script verifica, leyendo los archivos ya escritos, que ningún par del CSV quede bajo su umbral, que los hex del JSON coincidan con el Anexo A de este documento, que la paleta de gráficas mantenga ΔL ≥ %.2f entre series consecutivas en gris y en las tres simulaciones (con las dos variantes de §8.6) y que sus tres primeras series pasen la prueba de todos los pares (§8.5), que las categóricas cumplan su escalonamiento y su separación de los roles, que ningún token fuera de `color.critical` use la zona reservada del eje opuesto (§3), que marca y neutro reproduzcan los valores de partida del plan y, desde la versión 1.1, que gasto esté en 40–45° a ≥ 20° de error, que la marca no quede cerca de ningún rol y que Karen y Bodega Aurrera cumplan la regla de separación entre sí; desde la 1.2 verifica además que los 5 tokens que K41 y K42 dejan FIRMES conserven su hex y que las marcas de valor provisional de `C2-colores.json` sean exactamente las que declara el script (hoy ninguna); si algo falla, termina con código 1.\n" % (SCRIPT_REL, UMBRAL_DL))
 
     # 2 ------------------------------------------------------------------------------
     ap("## 2. Método\n")
@@ -1432,7 +1500,7 @@ def generar_md(M, pares, G, Gg, C, V, I):
             filas.append([d["nombre"], "`%s` %d° L %.2f" % (hx, h, L), "%s / %s" % (r2(min(contraste(hx, n50), contraste(hx, n100))), r2(min(contraste(hx, n950), contraste(hx, n900)))),
                           "%d° · `%s` / `%s`" % (d["h"], d["claro"].hex, d["oscuro"].hex)])
     ap(tabla(["Nombre", "Plan (valor único)", "Contraste del plan claro / oscuro", "Final: matiz · claro / oscuro"], filas))
-    ap("\nColisiones resueltas: las dos que lista decisiones §I (Karen 80° y Bodega 60° frente a advertencia 75°) y tres más que aparecen al aplicar la regla a todos los roles: Axel 250° frente a información 240°, Mercado 30° frente a gasto 25° y error 20°, y Walmart 220° justo en el límite de ahorro 200° e información 240°. Además, %d valores del plan no llegaban a 3:1 sobre las superficies claras y %d sobre las oscuras. En la versión 1.1 (K26) gasto pasa a terracota, Karen y Bodega Aurrera salen de 50° y Walmart ajusta su L en oscuro (PROVISIONAL); frente a Ximena, Karen y Bodega Aurrera quedan PROVISIONALES (bloqueo `U2a-rosas-ximena-bodega`). Detalle en «Cambios 1.1».\n" % (cat_cl, cat_os))
+    ap("\nColisiones resueltas: las dos que lista decisiones §I (Karen 80° y Bodega 60° frente a advertencia 75°) y tres más que aparecen al aplicar la regla a todos los roles: Axel 250° frente a información 240°, Mercado 30° frente a gasto 25° y error 20°, y Walmart 220° justo en el límite de ahorro 200° e información 240°. Además, %d valores del plan no llegaban a 3:1 sobre las superficies claras y %d sobre las oscuras. En la versión 1.1 (K26) gasto pasa a terracota, Karen y Bodega Aurrera salen de 50° y Walmart ajusta su L en oscuro (K42); frente a Ximena, Karen y Bodega Aurrera se distinguen por el refuerzo de §7.7, que K41 acepta. Detalle en «Cambios 1.1» y «Cambios 1.2».\n" % (cat_cl, cat_os))
     ap("### 7.6 Reglas de uso de las categóricas\n")
     ap("- Nunca llevan texto encima: el nombre va en texto neutro junto a un punto, anillo de avatar o marca de serie del color.\n- La misma persona o tienda conserva su matiz en ambos temas; solo cambia la luminosidad.\n- En gráficas por persona o por tienda se usan estos colores (el color sigue a la entidad) y no la paleta de series; con leyenda siempre y etiqueta directa cuando hay ≤ 4 elementos.\n- Mercados adicionales que Axel dé de alta usan el color de Mercado; si una gráfica necesita distinguir varios mercados, se usan las series de gráficas en su orden.\n")
 
@@ -1644,15 +1712,15 @@ def generar_md(M, pares, G, Gg, C, V, I):
     hallazgos += [
         "Versión 1.1 (K26): con gasto en %d° no queda hueco cálido a ≥ 20° de error, gasto y advertencia, y la L de Karen y de Bodega Aurrera las obliga a separarse de los roles por matiz; sus ventanas factibles quedan entre deuda y error y van a %d° y %d° (Cambios 1.1)." % (h_gasto, M.cat["person"]["karen"]["h"], M.cat["store"]["bodega-aurrera"]["h"]),
         "Versión 1.1 (R3-04): con la marca en el barrido de §7.7 quedan cerca %s; todos con refuerzo de forma y etiqueta, y ningún rol cerca de la marca." % "; ".join("%s y %s en %s (%.1f°, ΔL %.3f)" % (f["a"], f["b"], f["tema"], f["dm"], f["dl"]) for f in mp),
-        "Versión 1.1: en oscuro, Bodega Aurrera en rosa no cabe en el escalonamiento ΔL ≥ 0.10 de las tiendas con Walmart en L %.3f (ningún matiz entero cumple); Walmart pasa a L %.3f, PROVISIONAL con el bloqueo `U2a-walmart-oscuro`, y Bodega Aurrera usa croma %.2f (Cambios 1.1)." % (ANTES_11[("store", "walmart")][3], M.cat["store"]["walmart"]["oscuro"].l, M.cat["store"]["bodega-aurrera"]["c"]),
+        "Versión 1.1: en oscuro, Bodega Aurrera en rosa no cabe en el escalonamiento ΔL ≥ 0.10 de las tiendas con Walmart en L %.3f (ningún matiz entero cumple); Walmart pasa a L %.3f, FIRME por K42 (bloqueo `U2a-walmart-oscuro` resuelto en la puerta 1b), y Bodega Aurrera usa croma %.2f (Cambios 1.1 y 1.2)." % (ANTES_11[("store", "walmart")][3], M.cat["store"]["walmart"]["oscuro"].l, M.cat["store"]["bodega-aurrera"]["c"]),
         hallazgo_rosas_ximena(M),
     ]
     for i, h in enumerate(hallazgos, 1):
         ap("%d. %s" % (i, h))
     ap("\n**Decisiones derivadas del cálculo** (no son supuestos: las fuerza un requisito explícito)\n")
     ap("- Paso 700 en claro para los roles (el 600 incumple 4.5:1).\n- Variantes `light`/`dark` para personas, tiendas y series (un valor único no cumple 3:1 en ambos temas con escalonamiento).\n- Criterio de ΔL aplicado a series consecutivas, con umbral 0.10 (más estricto que el 0.08 del encargo).\n- Texto deshabilitado en claro con neutral 700 (el 600 incumple 4.5:1).\n- Versión 1.1: Bodega Aurrera con croma %.2f y Karen con L %.3f en claro (márgenes del escalonamiento de su grupo; Cambios 1.1).\n" % (M.cat["store"]["bodega-aurrera"]["c"], M.cat["person"]["karen"]["claro"].l))
-    ap("**Propuestas sujetas a la puerta 2:** ingreso 135° (§6.4, opción prevista en decisiones §I), la resolución de colisiones categóricas (§7.5; en la versión 1.1, gasto 45°, Karen y Bodega Aurrera en sus matices nuevos, «Cambios 1.1») y la paleta de gráficas corregida en la ronda 1 (serie %d en %d°%s; §8.2 y §8.8).\n" % (SERIE_CORREGIDA, M.graf[SERIE_CORREGIDA]["h"], (", con %s en la serie %d y %s en la %d" % (M.graf[cambio[0]]["nombre"], cambio[0], M.graf[cambio[1]]["nombre"], cambio[1])) if len(cambio) == 2 else ""))
-    ap("**Bloqueos:** `docs/estado/bloqueos/U2a-walmart-oscuro.md` (versión 1.1: Walmart en oscuro con L %.3f en vez de %.3f, PROVISIONAL; «Cambios 1.1») y `docs/estado/bloqueos/%s.md` (ronda 1 de revisión, H-01: Karen y Bodega Aurrera bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena; %d tokens PROVISIONALES; «Cambios 1.1», punto 2). Resueltos en la puerta 1: `U2-gasto-error` (K26) y `criterios-deltal` (K27).\n" % (M.cat["store"]["walmart"]["oscuro"].l, ANTES_11[("store", "walmart")][3], BLOQUEO_ROSAS, len(rosas_ximena(M)["bajo"])))
+    ap("**Propuestas sujetas a la puerta 2:** ingreso 135° (§6.4, opción prevista en decisiones §I), la resolución de colisiones categóricas (§7.5; en la versión 1.1, gasto 45°, «Cambios 1.1») y la paleta de gráficas corregida en la ronda 1 (serie %d en %d°%s; §8.2 y §8.8). %s Karen en %d° y Bodega Aurrera en %d°, aceptadas por K41 en la puerta 1b; son FIRMES («Cambios 1.2»).\n" % (SERIE_CORREGIDA, M.graf[SERIE_CORREGIDA]["h"], (", con %s en la serie %d y %s en la %d" % (M.graf[cambio[0]]["nombre"], cambio[0], M.graf[cambio[1]]["nombre"], cambio[1])) if len(cambio) == 2 else "", MARCA_YA_DECIDIDAS, M.cat["person"]["karen"]["h"], M.cat["store"]["bodega-aurrera"]["h"]))
+    ap("**Bloqueos:** ninguno abierto. Resueltos en la puerta 1b («Cambios 1.2»): `docs/estado/bloqueos/U2a-walmart-oscuro.md` (K42: Walmart en oscuro con L %.3f en vez de %.3f, FIRME) y `docs/estado/bloqueos/%s.md` (K41: Karen y Bodega Aurrera bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena, aceptadas con el refuerzo de §7.7; %d tokens FIRMES). Resueltos en la puerta 1: `U2-gasto-error` (K26) y `criterios-deltal` (K27).\n" % (M.cat["store"]["walmart"]["oscuro"].l, ANTES_11[("store", "walmart")][3], BLOQUEO_ROSAS, len(rosas_ximena(M)["bajo"])))
 
     # Anexo ---------------------------------------------------------------------------
     ap("## Anexo A. Tokens: ruta → hex\n")
@@ -2006,6 +2074,26 @@ def verificar():
             err.append("marca cerca de roles en %s: %s" % (tema, cerca))
         if dm_kb < SEPARACION_MATIZ and dl_kb < SEPARACION_L:
             err.append("Karen y Bodega Aurrera sin separación en %s" % tema)
+    # --- Versión 1.2 (K41 y K42): los 5 tokens FIRMES conservan su hex y las marcas PROVISIONAL del JSON son las del script
+    cambian = sorted(r for r, (v, _) in FIRMES_12.items() if hx.get(r) != v)
+    marcas = sorted(r for r, t in tok.items() if "PROVISIONAL" in t.get("$description", ""))
+    info.append("versión 1.2: %d tokens FIRMES por K41 y K42, %d con otro hex; marcas PROVISIONAL en el JSON: %d (en el script: %d)" % (
+        len(FIRMES_12), len(cambian), len(marcas), len(PROVISIONAL)))
+    if cambian:
+        err.append("K41/K42: cambió el hex de %s" % cambian)
+    if marcas != sorted(PROVISIONAL):
+        err.append("marcas PROVISIONAL del JSON %s distintas de las del script %s" % (marcas, sorted(PROVISIONAL)))
+    # --- §12 (K41/K42): ninguna persona o tienda con un token en FIRMES_12 aparece como propuesta de la puerta 2
+    prop = re.findall(r"^\*\*Propuestas sujetas a la puerta 2:\*\*(.*)$", md, re.M)
+    if len(prop) != 1 or prop[0].count(MARCA_YA_DECIDIDAS) != 1:
+        err.append("colorimetria.md §12: se esperaba un párrafo «Propuestas sujetas a la puerta 2» con la marca %s (hay %d)" % (
+            MARCA_YA_DECIDIDAS, len(prop)))
+    else:
+        repetidas = [n for n in nombres_firmes_12() if n in prop[0].split(MARCA_YA_DECIDIDAS)[0]]
+        info.append("§12: personas o tiendas FIRMES por K41/K42 entre las propuestas de la puerta 2: %d de %d revisadas" % (
+            len(repetidas), len(nombres_firmes_12())))
+        if repetidas:
+            err.append("§12: %s aparecen como propuesta de la puerta 2 pero sus tokens son FIRMES (FIRMES_12)" % repetidas)
     # --- HTML sin recursos externos
     h = SALIDA["html"].read_text(encoding="utf-8")
     externos = re.findall(r'(?:src|href)\s*=\s*"(?:https?:)?//', h) + re.findall(r"@import|url\(", h)

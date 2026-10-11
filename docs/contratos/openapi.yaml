@@ -4,9 +4,9 @@
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1)"
-  version: "1.1.0"
-  summary: "Contrato C1 v1.1 del backend Go local de Finanzas Hogar."
-  description: "Contrato C1 v1.1 (11-oct-2026, respuestas de la puerta 1). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto)."
+  version: "1.2.0"
+  summary: "Contrato C1 v1.2 del backend Go local de Finanzas Hogar."
+  description: "Contrato C1 v1.2 (11-oct-2026, respuestas de las puertas 1 y 1b). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura; parámetros operativos (K44) por clave de app_setting, con valor vigente, valor inicial y «restablecer», en las operaciones /api/v1/settings/*. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto)."
 servers:
   - url: "https://finanzas.local:8443"
     description: "Máquina de casa, solo red local (decisión H)."
@@ -90,7 +90,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Iniciar sesión"
-      description: "Público. Crea una sesión larga en este dispositivo y responde con la cookie `fh_session` (HttpOnly, Secure, SameSite=Strict). Credenciales incorrectas: 401 `invalid_credentials` con mensaje genérico «Usuario o contraseña incorrectos». Límite: tras 5 intentos fallidos en 15 minutos (app_setting auth.max_failed_attempts y auth.lockout_window_minutes, decisión A) responde 429 `too_many_attempts`, mensaje «Demasiados intentos. Vuelve a intentar a las 21:45.» y `retry_at` aunque la contraseña sea correcta (N-011). Conteo por usuario y por IP en ventana deslizante de 15 minutos (el bloqueo se levanta cuando en los últimos 15 minutos hay menos de 5 fallos); la sesión dura 90 días y se renueva con cada uso (K11)."
+      description: "Público. Crea una sesión larga en este dispositivo y responde con la cookie `fh_session` (HttpOnly, Secure, SameSite=Strict). Credenciales incorrectas: 401 `invalid_credentials` con mensaje genérico «Usuario o contraseña incorrectos». Límite: tras 5 intentos fallidos en 15 minutos (valores iniciales de app_setting auth.max_failed_attempts y auth.lockout_window_minutes, decisión A; se usan los vigentes, que se cambian con updateSecuritySettings, K44) responde 429 `too_many_attempts`, mensaje «Demasiados intentos. Vuelve a intentar a las 21:45.» y `retry_at` aunque la contraseña sea correcta (N-011). Conteo por usuario y por IP en ventana deslizante de 15 minutos (el bloqueo se levanta cuando en los últimos 15 minutos hay menos de 5 fallos); la sesión dura 90 días (session.max_age_days, valor vigente; K11, K44) y se renueva con cada uso."
       x-necesidades:
         - "N-010"
         - "N-011"
@@ -186,7 +186,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Cambiar la contraseña propia"
-      description: "Solo la propia. Contraseña actual incorrecta: 422 `invalid_current_password`. El hash nuevo es argon2id."
+      description: "Solo la propia. Contraseña actual incorrecta: 422 `invalid_current_password`. La nueva tiene al menos el mínimo vigente de app_setting auth.password_min_length (12 al sembrar; K6, K44); más corta: 422 `validation_failed` con el mínimo en el mensaje. El hash nuevo es argon2id."
       x-necesidades:
         - "N-273"
       x-tablas:
@@ -1497,8 +1497,7 @@ paths:
       tags:
         - "Gastos"
       summary: "Adjuntar ticket"
-      description: "Imagen JPG, PNG o WebP, o PDF (U1 N-064). Tamaño máximo PROVISIONAL 10 MB: propuesta escrita en el bloqueo C1-valores-k31 (Axel la aprueba en la puerta 4). El archivo se guarda con nombre generado por el servidor, nunca el del usuario."
-      x-provisional: true
+      description: "Imagen JPG, PNG o WebP, o PDF (U1 N-064). Tamaño máximo 10 MB (K43), el valor vigente de app_setting attachment.max_size_mb (K44; se cambia con updateDataSettings, N-325): un archivo mayor responde 413 `payload_too_large` y el mensaje dice el máximo vigente. El archivo se guarda con nombre generado por el servidor, nunca el del usuario."
       x-necesidades:
         - "N-064"
       x-tablas:
@@ -3588,7 +3587,6 @@ paths:
       description: "Nombre visible y tope de pago por quincena, opcional por persona (K13; objetivo del comparador; null lo quita). No se crean personas ni cuentas desde la API."
       x-necesidades:
         - "N-310"
-        - "N-289"
       x-tablas:
         - "audit_log"
         - "person"
@@ -3759,8 +3757,7 @@ paths:
       tags:
         - "Comidas"
       summary: "Plan de la semana"
-      description: "`period` en formato de semana (`2026-W42`, lunes a domingo, K8). Sin `period`, la semana en curso y, los domingos, la siguiente: es la semana por defecto de U1 §0.2, y la parte de los domingos es PROVISIONAL: bloqueo U1-lista-vigente-domingo (abierto)."
-      x-provisional: true
+      description: "`period` en formato de semana (`2026-W42`, lunes a domingo, K8). Sin `period`, la semana en curso y, los domingos, la siguiente (la que empieza el lunes): es la semana por defecto de U1 §0.2 (K38). La lista de compras y comparar canasta no tienen semana por omisión: llevan `week` (R3-01)."
       x-necesidades:
         - "N-120"
         - "N-121"
@@ -5624,9 +5621,10 @@ paths:
       tags:
         - "Ajustes"
       summary: "Ajustes de precios"
-      description: "Ajustes de precios."
+      description: "Interruptor general de lectura asistida y parámetros de frescura y de PROFECO (N-322; K6, K22, K40). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
       x-necesidades:
         - "N-291"
+        - "N-322"
       x-tablas:
         - "app_setting"
       responses:
@@ -5649,10 +5647,11 @@ paths:
       operationId: "updatePriceSettings"
       tags:
         - "Ajustes"
-      summary: "Interruptor de lectura asistida"
-      description: "Interruptor de lectura asistida."
+      summary: "Cambiar ajustes de precios"
+      description: "Cambia el interruptor general de lectura asistida (N-292) y los parámetros de precios (N-322). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
       x-necesidades:
         - "N-292"
+        - "N-322"
       x-tablas:
         - "app_setting"
         - "audit_log"
@@ -5688,7 +5687,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Importar corte PROFECO"
-      description: "Archivo de datos abiertos (RAR o CSV). Tamaño máximo 1 GB (K6)."
+      description: "Archivo de datos abiertos (RAR o CSV). Tamaño máximo 1 GB (K6), el valor vigente de app_setting price.profeco_import_max_gb (K44; se cambia con updatePriceSettings, N-322); mayor: 413 `payload_too_large`."
       x-necesidades:
         - "N-293"
       x-tablas:
@@ -7284,10 +7283,11 @@ paths:
       tags:
         - "Ajustes"
       summary: "Valores del comparador"
-      description: "Restricciones duras globales (claves optimizer.* que pueden venir vacías, K16) con missing_constraints, y pesos. El tope por persona se lee de person (listPersons, K13)."
+      description: "Restricciones duras globales (claves optimizer.* que pueden venir vacías, K16) con missing_constraints, y pesos. El tope por persona se lee de person (listPersons, K13). Además, el tiempo máximo del comparador (comparator.timeout_seconds, N-321; K43). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
       x-necesidades:
         - "N-225"
         - "N-288"
+        - "N-321"
       x-tablas:
         - "app_setting"
         - "person"
@@ -7312,9 +7312,10 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar valores del comparador"
-      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto."
+      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto. Además, el tiempo máximo del comparador (comparator.timeout_seconds, N-321; K43). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
       x-necesidades:
         - "N-289"
+        - "N-321"
       x-tablas:
         - "app_setting"
         - "audit_log"
@@ -7350,8 +7351,7 @@ paths:
       tags:
         - "Créditos"
       summary: "Comparador de escenarios"
-      description: "Búsqueda exhaustiva sin solver (crédito × plazo × fecha ± días × promoción). Respeta las 3 restricciones duras: las que trae la petición sobreescriben solo para esta comparación las globales (K16). Si después de eso falta alguna (o el «± días»), responde 200 con status missing_constraints, sin escenarios ni recomendación, y la pantalla avisa «faltan restricciones». El tope por persona es objetivo, no restricción (K13). No guarda nada: «Usar escenario» abre la captura de compra (createCreditPurchase). Tiempo máximo PROVISIONAL: propuesta escrita en el bloqueo C1-valores-k31 (Axel lo aprueba en la puerta 2)."
-      x-provisional: true
+      description: "Búsqueda exhaustiva sin solver (crédito × plazo × fecha ± días × promoción). Respeta las 3 restricciones duras: las que trae la petición sobreescriben solo para esta comparación las globales (K16). Si después de eso falta alguna (o el «± días»), responde 200 con status missing_constraints, sin escenarios ni recomendación, y la pantalla avisa «faltan restricciones». El tope por persona es objetivo, no restricción (K13). No guarda nada: «Usar escenario» abre la captura de compra (createCreditPurchase). Tiempo máximo 5 s (K43), el valor vigente de app_setting comparator.timeout_seconds (K44; se cambia con updateOptimizerSettings, N-321): si la búsqueda lo pasa, responde 503 `unavailable` sin escenarios. S3 lo mide (S3-12)."
       x-necesidades:
         - "N-226"
       x-tablas:
@@ -7387,6 +7387,8 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "422":
           $ref: "#/components/responses/UnprocessableEntity"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailable"
         default:
           $ref: "#/components/responses/Error"
   /api/v1/health-profiles:
@@ -7395,7 +7397,7 @@ paths:
       tags:
         - "Salud"
       summary: "Perfiles de salud"
-      description: "Cada perfil trae el objetivo (goal) y la meta sugerida suggested_kcal_target (K23), calculada al consultar; no se guarda."
+      description: "Cada perfil trae el objetivo (goal), el ajuste por objetivo de la persona (goal_adjust_lose_kcal y goal_adjust_gain_kcal; ausente = usa el de la casa), los valores de la casa para mostrar «El de la casa: n kcal» (household_goal_adjust_lose_kcal y household_goal_adjust_gain_kcal; K36) y la meta sugerida suggested_kcal_target (RN-17 1.3, K23, K36), calculada al consultar; no se guarda."
       x-necesidades:
         - "N-230"
         - "N-311"
@@ -7428,9 +7430,10 @@ paths:
       tags:
         - "Ajustes"
       summary: "Crear perfil de salud"
-      description: "Solo Axel y Ximena (una persona externa responde 422 `external_person`)."
+      description: "Solo Axel y Ximena (una persona externa responde 422 `external_person`). Acepta goal_adjust_lose_kcal y goal_adjust_gain_kcal (enteros ≥ 0; sin valor = usa el de la casa, K36; N-327)."
       x-necesidades:
         - "N-313"
+        - "N-327"
       x-tablas:
         - "audit_log"
         - "health_profile"
@@ -7472,9 +7475,10 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar perfil de salud"
-      description: "Edita el perfil, incluido el objetivo de peso (goal, K23). Confirmar la meta sugerida = mandar daily_kcal_target con el valor de suggested_kcal_target; escribir otra = mandar ese otro valor (N-313)."
+      description: "Edita el perfil, incluido el objetivo de peso (goal, K23). Confirmar la meta sugerida = mandar daily_kcal_target con el valor de suggested_kcal_target; escribir otra = mandar ese otro valor (N-313). goal_adjust_lose_kcal y goal_adjust_gain_kcal: entero ≥ 0, o null para volver al de la casa («Restablecer»; K36, N-327)."
       x-necesidades:
         - "N-313"
+        - "N-327"
       x-tablas:
         - "audit_log"
         - "health_profile"
@@ -8427,7 +8431,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Chats detectados por confirmar"
-      description: "Chats que el bot detectó cuando alguien le escribió y que esperan confirmación (confirmed_at ausente): nombre que da Telegram, fecha y hora de detección y chat_id enmascarado (chat_id_masked). El chat_id completo nunca se devuelve (K4). Orden: -detected_at."
+      description: "Chats que el bot detectó cuando alguien le escribió y que esperan confirmación (confirmed_at ausente): nombre que da Telegram, fecha y hora de detección y chat_id enmascarado (chat_id_masked). El chat_id completo nunca se devuelve (K4). Cada candidato trae su id, el que usan confirmTelegramChatCandidate (N-316) y dismissTelegramChatCandidate (N-324). Orden: -detected_at."
       x-necesidades:
         - "N-299"
       x-tablas:
@@ -8504,6 +8508,42 @@ paths:
           $ref: "#/components/responses/Conflict"
         "422":
           $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/telegram-chat-candidates/{candidate_id}:
+    delete:
+      operationId: "dismissTelegramChatCandidate"
+      tags:
+        - "Ajustes"
+      summary: "Descartar chat detectado"
+      description: "Descarta un chat detectado que nadie va a confirmar: borra su renglón de telegram_chat_candidate. No toca chats confirmados ni destinatarios (notification_recipient). Solo candidatos pendientes (confirmed_at ausente); uno ya confirmado o inexistente responde 404."
+      x-necesidades:
+        - "N-324"
+      x-tablas:
+        - "audit_log"
+        - "telegram_chat_candidate"
+      parameters:
+        - name: "candidate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (candidate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
         default:
           $ref: "#/components/responses/Error"
   /api/v1/notification-recipients/{recipient_id}:
@@ -8698,6 +8738,262 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/settings/security:
+    get:
+      operationId: "getSecuritySettings"
+      tags:
+        - "Ajustes"
+      summary: "Parámetros de acceso"
+      description: "Intentos fallidos, ventana del bloqueo, duración de la sesión y largo mínimo de la contraseña (K6, K11). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
+      x-necesidades:
+        - "N-320"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecuritySettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      operationId: "updateSecuritySettings"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar parámetros de acceso"
+      description: "login, changeOwnPassword y la renovación de la sesión usan el valor vigente desde el siguiente intento. Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      x-necesidades:
+        - "N-320"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SecuritySettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecuritySettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/settings/alerts:
+    get:
+      operationId: "getAlertSettings"
+      tags:
+        - "Ajustes"
+      summary: "Umbrales de avisos"
+      description: "Umbrales del aviso de presupuesto (80 % y 100 %) y días antes del pago próximo ([1, 0]) de la decisión F. Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
+      x-necesidades:
+        - "N-323"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlertSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      operationId: "updateAlertSettings"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar umbrales de avisos"
+      description: "Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      x-necesidades:
+        - "N-323"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlertSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlertSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/settings/data:
+    get:
+      operationId: "getDataSettings"
+      tags:
+        - "Ajustes"
+      summary: "Parámetros de datos"
+      description: "Tamaño máximo de un adjunto (K43) y retención de las claves Idempotency-Key (K6). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
+      x-necesidades:
+        - "N-325"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      operationId: "updateDataSettings"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar parámetros de datos"
+      description: "uploadExpenseAttachment y la purga de idempotency_key usan el valor vigente. Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      x-necesidades:
+        - "N-325"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DataSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/settings/health:
+    get:
+      operationId: "getHealthSettings"
+      tags:
+        - "Ajustes"
+      summary: "Ajuste de kcal de la casa"
+      description: "Ajuste de la meta de calorías por objetivo, valor de la casa (K36). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
+      x-necesidades:
+        - "N-326"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      operationId: "updateHealthSettings"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar ajuste de kcal de la casa"
+      description: "suggested_kcal_target usa el valor vigente en las personas sin ajuste propio (RN-17). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      x-necesidades:
+        - "N-326"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HealthSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
         default:
           $ref: "#/components/responses/Error"
   /api/v1/ai/providers:
@@ -8974,7 +9270,7 @@ components:
       name: "Idempotency-Key"
       in: "header"
       required: true
-      description: "Obligatorio en todo POST de captura. Clave única por intento (UUID v4 recomendado). Repetir la misma clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API la guarda por cuenta en la tabla idempotency_key de S1 (huella SHA-256 del cuerpo y respuesta); retención de 24 h (K6, app_setting idempotency.retention_hours). Gastos y pesos guardan además la clave en su propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9)."
+      description: "Obligatorio en todo POST de captura. Clave única por intento (UUID v4 recomendado). Repetir la misma clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API la guarda por cuenta en la tabla idempotency_key de S1 (huella SHA-256 del cuerpo y respuesta); retención de 24 h al sembrar (K6; valor vigente de app_setting idempotency.retention_hours, que se cambia con updateDataSettings, K44). Gastos y pesos guardan además la clave en su propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9)."
       schema:
         type: "string"
         minLength: 16
@@ -9041,6 +9337,15 @@ components:
             $ref: "#/components/schemas/Error"
     PayloadTooLarge:
       description: "Archivo demasiado grande (`payload_too_large`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    ServiceUnavailable:
+      description: "El cálculo pasó su tiempo máximo (`unavailable`); no se guardó nada."
       headers:
         X-Request-Id:
           $ref: "#/components/headers/RequestId"
@@ -9280,8 +9585,8 @@ components:
           x-entrada: true
         new_password:
           type: "string"
-          minLength: 12
-          description: "Contraseña nueva: mínimo 12 caracteres (K6)."
+          minLength: 1
+          description: "Contraseña nueva: al menos el mínimo vigente de app_setting auth.password_min_length (12 caracteres al sembrar; K6, K44; se cambia con updateSecuritySettings). Más corta: 422 validation_failed y el mensaje dice el mínimo vigente."
           writeOnly: true
           x-entrada: true
       required:
@@ -10109,8 +10414,7 @@ components:
           description: "Promedio diario: total del periodo ÷ días reales del periodo, ROUND_HALF_UP (motor S2, K20)."
         weekly_average_cents:
           $ref: "#/components/schemas/MoneyCents"
-          x-provisional: true
-          description: "Promedio semanal = diario × 7 (motor S2, K20). PROVISIONAL si el diario se multiplica antes o después de redondear a centavos: bloqueo criterios-promedios-redondeo."
+          description: "Promedio semanal = promedio diario exacto (sin redondear) × 7, con un solo redondeo ROUND_HALF_UP al final (motor S2, K20, K39; RN-27)."
         monthly_average_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Promedio mensual: total ÷ meses del periodo (motor S2; canon R-56 y R-57)."
@@ -11922,7 +12226,7 @@ components:
       x-calculado: true
     DashboardWeekMeals:
       type: "object"
-      description: "Tarjeta «Comidas de la semana» (N-023, métrica M-05, motor S4). Costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día de cada persona = Σ kcal asignadas ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna persona no tiene receta ni «fuera» (máx. 21; PROVISIONAL, bloqueo C1-valores-k31). Semana de lunes a domingo (K8)."
+      description: "Tarjeta «Comidas de la semana» (N-023, métrica M-05, motor S4). Costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día de cada persona = Σ kcal asignadas ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna persona no tiene receta ni «fuera» (máx. 21; K43). Semana de lunes a domingo (K8)."
       properties:
         week_start:
           $ref: "#/components/schemas/Date"
@@ -14340,33 +14644,163 @@ components:
         - "profeco_price_count"
         - "profeco_coverage"
       x-calculado: true
+    SettingParameterInteger:
+      type: "object"
+      x-calculado: true
+      description: "Parámetro operativo de tipo entero (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. Solo se valida tipo y signo, como los disparadores trg_app_setting_param_int* de 00003; sin topes mínimos ni máximos hasta la puerta 2."
+      required:
+        - "key"
+        - "value_type"
+        - "unit"
+        - "value"
+        - "initial_value"
+        - "is_initial"
+      properties:
+        key:
+          type: "string"
+          description: "Clave de app_setting (app_setting.setting_key)."
+        value_type:
+          type: "string"
+          enum:
+            - "integer"
+          description: "Tipo del valor."
+        unit:
+          type: "string"
+          description: "Unidad en español (intentos, minutos, días, MB…)."
+        value:
+          type:
+            - "integer"
+            - "null"
+          minimum: 0
+          description: "Valor vigente (app_setting.value_json del hogar). null = no hay valor guardado."
+        initial_value:
+          type:
+            - "integer"
+            - "null"
+          minimum: 0
+          description: "Valor inicial sembrado por la migración (el decidido en decisiones.md §A–§K; K44). «Restablecer» vuelve a él. null = no hay valor inicial."
+        is_initial:
+          type: "boolean"
+          description: "true si el valor vigente es igual al inicial."
+    SettingParameterIntegerList:
+      type: "object"
+      x-calculado: true
+      description: "Parámetro operativo de tipo lista de enteros (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. Solo se valida tipo y signo, como los disparadores trg_app_setting_param_int* de 00003; sin topes mínimos ni máximos hasta la puerta 2."
+      required:
+        - "key"
+        - "value_type"
+        - "unit"
+        - "value"
+        - "initial_value"
+        - "is_initial"
+      properties:
+        key:
+          type: "string"
+          description: "Clave de app_setting (app_setting.setting_key)."
+        value_type:
+          type: "string"
+          enum:
+            - "integer_list"
+          description: "Tipo del valor."
+        unit:
+          type: "string"
+          description: "Unidad en español (intentos, minutos, días, MB…)."
+        value:
+          type:
+            - "array"
+            - "null"
+          items:
+            type: "integer"
+            minimum: 0
+          description: "Valor vigente (app_setting.value_json del hogar). null = no hay valor guardado."
+        initial_value:
+          type:
+            - "array"
+            - "null"
+          items:
+            type: "integer"
+            minimum: 0
+          description: "Valor inicial sembrado por la migración (el decidido en decisiones.md §A–§K; K44). «Restablecer» vuelve a él. null = no hay valor inicial."
+        is_initial:
+          type: "boolean"
+          description: "true si el valor vigente es igual al inicial."
     PriceSettings:
       type: "object"
-      description: "Ajustes de precios (app_setting price.*)."
+      description: "Ajustes de precios (app_setting price.*; N-291, N-322). La frescura y el peso en la comparativa siguen RN-12 con los valores vigentes de price.stale_after_days y price.zero_weight_after_days (K22, K40, K44); PROFECO nunca compite: solo es referencia."
       properties:
-        stale_after_days:
-          type: "integer"
-          description: "Edad en días a partir de la cual un precio es viejo (price.stale_after_days = 30, decisión E y K22). Peso en la comparativa (K22): 1 hasta el día 29; de 30 a 90 días baja en línea recta de 1 a 0; después solo se muestra marcado y no compite. PROFECO nunca compite: solo es referencia."
-          x-app-setting: "price.stale_after_days"
         assisted_reading_enabled:
           type: "boolean"
           description: "Interruptor general de la lectura asistida (price.assisted_reading_enabled, false por defecto)."
           x-app-setting: "price.assisted_reading_enabled"
+        parameters:
+          type: "object"
+          additionalProperties: false
+          required:
+            - "price.stale_after_days"
+            - "price.zero_weight_after_days"
+            - "price.profeco_import_max_gb"
+          properties:
+            price.stale_after_days:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Un precio es viejo cuando tiene esta edad en días o más (decisión E). Valor inicial: 30 (días; Decisión E, K22; sembrado por 00001)."
+              x-app-setting: "price.stale_after_days"
+            price.zero_weight_after_days:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Días de edad desde los que un precio ya no compite en la comparativa: solo se muestra marcado. Entero en días. Entre price.stale_after_days y este valor el peso baja en línea recta (K22, K40, K44). Valor inicial: 90 (días; K22, K40; sembrado por 00003)."
+              x-app-setting: "price.zero_weight_after_days"
+            price.profeco_import_max_gb:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Tamaño máximo de un archivo de PROFECO al importarlo. Entero en GB (K6, K44). Valor inicial: 1 (GB; K6; sembrado por 00003)."
+              x-app-setting: "price.profeco_import_max_gb"
+          x-calculado: true
+          description: "Parámetros operativos de «Tiendas y precios» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
       required:
-        - "stale_after_days"
         - "assisted_reading_enabled"
+        - "parameters"
       x-calculado: true
     PriceSettingsUpdate:
       type: "object"
-      description: "Cambio del interruptor general de lectura asistida (N-292). Solo se acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed)."
+      description: "Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. El interruptor solo acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed)."
       properties:
         assisted_reading_enabled:
           type: "boolean"
           description: "Nuevo valor."
           x-app-setting: "price.assisted_reading_enabled"
-      required:
-        - "assisted_reading_enabled"
+        parameters:
+          type: "object"
+          additionalProperties: false
+          minProperties: 1
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          properties:
+            price.stale_after_days:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de price.stale_after_days (días)."
+              x-app-setting: "price.stale_after_days"
+            price.zero_weight_after_days:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de price.zero_weight_after_days (días)."
+              x-app-setting: "price.zero_weight_after_days"
+            price.profeco_import_max_gb:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de price.profeco_import_max_gb (GB)."
+              x-app-setting: "price.profeco_import_max_gb"
+        reset_parameters:
+          type: "array"
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: "string"
+            enum:
+              - "price.stale_after_days"
+              - "price.zero_weight_after_days"
+              - "price.profeco_import_max_gb"
+          x-entrada: true
+          description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
       additionalProperties: false
+      minProperties: 1
     ProfecoImportResult:
       type: "object"
       description: "Resultado de importar un corte PROFECO (N-293)."
@@ -16267,6 +16701,18 @@ components:
               - "date_window_days"
           description: "Valores sin capturar (K16). Vacío = completos; con alguno, la pantalla muestra «faltan restricciones» y el comparador no recomienda."
           x-calculado: true
+        parameters:
+          type: "object"
+          additionalProperties: false
+          required:
+            - "comparator.timeout_seconds"
+          properties:
+            comparator.timeout_seconds:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Tiempo máximo del comparador de escenarios; si se pasa, la API responde 503 unavailable. Entero en segundos (K43, K44). Valor inicial: 5 (segundos; K43; sembrado por 00003)."
+              x-app-setting: "comparator.timeout_seconds"
+          x-calculado: true
+          description: "Parámetros operativos de «Créditos y condiciones» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
         min_available_buffer_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
@@ -16288,10 +16734,11 @@ components:
           description: "Pesos."
       required:
         - "missing_constraints"
+        - "parameters"
         - "weights"
     OptimizerSettingsUpdate:
       type: "object"
-      description: "Cambio de los valores del comparador (N-289)."
+      description: "Cambio de los valores del comparador (N-289) y de su tiempo máximo (N-321; K43, K44)."
       properties:
         min_available_buffer_cents:
           $ref: "#/components/schemas/MoneyCents"
@@ -16312,6 +16759,286 @@ components:
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
+        parameters:
+          type: "object"
+          additionalProperties: false
+          minProperties: 1
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          properties:
+            comparator.timeout_seconds:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de comparator.timeout_seconds (segundos)."
+              x-app-setting: "comparator.timeout_seconds"
+        reset_parameters:
+          type: "array"
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: "string"
+            enum:
+              - "comparator.timeout_seconds"
+          x-entrada: true
+          description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
+      additionalProperties: false
+      minProperties: 1
+    SecuritySettings:
+      type: "object"
+      description: "Parámetros de acceso (N-320; K6, K11, K44): intentos fallidos y ventana del bloqueo de inicio de sesión, duración de la sesión y largo mínimo de una contraseña nueva. login, changeOwnPassword y la renovación de la sesión usan el valor vigente."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          required:
+            - "auth.max_failed_attempts"
+            - "auth.lockout_window_minutes"
+            - "auth.password_min_length"
+            - "session.max_age_days"
+          properties:
+            auth.max_failed_attempts:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Intentos fallidos permitidos dentro de la ventana antes de bloquear (decisión A). Valor inicial: 5 (intentos; Decisión A, K11; sembrado por 00001)."
+              x-app-setting: "auth.max_failed_attempts"
+            auth.lockout_window_minutes:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Ventana en minutos para contar intentos fallidos (decisión A). Valor inicial: 15 (minutos; Decisión A, K11; sembrado por 00001)."
+              x-app-setting: "auth.lockout_window_minutes"
+            auth.password_min_length:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Caracteres mínimos de una contraseña nueva. Entero en caracteres (K6, K44). Valor inicial: 12 (caracteres; K6; sembrado por 00003)."
+              x-app-setting: "auth.password_min_length"
+            session.max_age_days:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Días que dura la sesión de un dispositivo; se renueva con cada uso (K11). Valor inicial: 90 (días; K11; sembrado por 00002)."
+              x-app-setting: "session.max_age_days"
+          x-calculado: true
+          description: "Parámetros operativos de «Cuenta y roles» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
+      required:
+        - "parameters"
+    SecuritySettingsUpdate:
+      type: "object"
+      description: "Cambio o «restablecer» de los parámetros de «Cuenta y roles» (K44, C1 §11.7)."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          minProperties: 1
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          properties:
+            auth.max_failed_attempts:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de auth.max_failed_attempts (intentos)."
+              x-app-setting: "auth.max_failed_attempts"
+            auth.lockout_window_minutes:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de auth.lockout_window_minutes (minutos)."
+              x-app-setting: "auth.lockout_window_minutes"
+            auth.password_min_length:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de auth.password_min_length (caracteres)."
+              x-app-setting: "auth.password_min_length"
+            session.max_age_days:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de session.max_age_days (días)."
+              x-app-setting: "session.max_age_days"
+        reset_parameters:
+          type: "array"
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: "string"
+            enum:
+              - "auth.max_failed_attempts"
+              - "auth.lockout_window_minutes"
+              - "auth.password_min_length"
+              - "session.max_age_days"
+          x-entrada: true
+          description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
+      additionalProperties: false
+      minProperties: 1
+    DataSettings:
+      type: "object"
+      description: "Parámetros de datos (N-325; K6, K43, K44): tamaño máximo de un adjunto (uploadExpenseAttachment) y retención de las claves Idempotency-Key en la tabla idempotency_key."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          required:
+            - "attachment.max_size_mb"
+            - "idempotency.retention_hours"
+          properties:
+            attachment.max_size_mb:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Tamaño máximo de un ticket o adjunto. Entero en MB (K43, K44). Valor inicial: 10 (MB; K43; sembrado por 00003)."
+              x-app-setting: "attachment.max_size_mb"
+            idempotency.retention_hours:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Horas que se guarda una clave de idempotency_key antes de purgarla (K6). Valor inicial: 24 (horas; K6; sembrado por 00002)."
+              x-app-setting: "idempotency.retention_hours"
+          x-calculado: true
+          description: "Parámetros operativos de «Datos y respaldos» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
+      required:
+        - "parameters"
+    DataSettingsUpdate:
+      type: "object"
+      description: "Cambio o «restablecer» de los parámetros de «Datos y respaldos» (K44, C1 §11.7)."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          minProperties: 1
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          properties:
+            attachment.max_size_mb:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de attachment.max_size_mb (MB)."
+              x-app-setting: "attachment.max_size_mb"
+            idempotency.retention_hours:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de idempotency.retention_hours (horas)."
+              x-app-setting: "idempotency.retention_hours"
+        reset_parameters:
+          type: "array"
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: "string"
+            enum:
+              - "attachment.max_size_mb"
+              - "idempotency.retention_hours"
+          x-entrada: true
+          description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
+      additionalProperties: false
+      minProperties: 1
+    HealthSettings:
+      type: "object"
+      description: "Ajuste de la meta de calorías por objetivo, valor de la casa (N-326; K36, K44). Cada persona puede tener el suyo en su perfil de salud (health_profile.goal_adjust_lose_kcal y goal_adjust_gain_kcal; NULL = el de la casa)."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          required:
+            - "health.goal_adjust_lose_kcal"
+            - "health.goal_adjust_gain_kcal"
+          properties:
+            health.goal_adjust_lose_kcal:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Kilocalorías que se restan de la meta sugerida cuando el objetivo es bajar. Entero en kcal, 0 o más. Valor de la casa: cada persona puede tener el suyo en su perfil de salud (K36, K44). Valor inicial: 0 (kcal; K36; sembrado por 00003)."
+              x-app-setting: "health.goal_adjust_lose_kcal"
+            health.goal_adjust_gain_kcal:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Kilocalorías que se suman a la meta sugerida cuando el objetivo es subir. Entero en kcal, 0 o más. Valor de la casa: cada persona puede tener el suyo en su perfil de salud (K36, K44). Valor inicial: 0 (kcal; K36; sembrado por 00003)."
+              x-app-setting: "health.goal_adjust_gain_kcal"
+          x-calculado: true
+          description: "Parámetros operativos de «Salud y metas de ahorro» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
+      required:
+        - "parameters"
+    HealthSettingsUpdate:
+      type: "object"
+      description: "Cambio o «restablecer» de los parámetros de «Salud y metas de ahorro» (K44, C1 §11.7)."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          minProperties: 1
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          properties:
+            health.goal_adjust_lose_kcal:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de health.goal_adjust_lose_kcal (kcal)."
+              x-app-setting: "health.goal_adjust_lose_kcal"
+            health.goal_adjust_gain_kcal:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de health.goal_adjust_gain_kcal (kcal)."
+              x-app-setting: "health.goal_adjust_gain_kcal"
+        reset_parameters:
+          type: "array"
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: "string"
+            enum:
+              - "health.goal_adjust_lose_kcal"
+              - "health.goal_adjust_gain_kcal"
+          x-entrada: true
+          description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
+      additionalProperties: false
+      minProperties: 1
+    AlertSettings:
+      type: "object"
+      description: "Umbrales del aviso de presupuesto y días antes del pago próximo (N-323; decisión F, K44). Desde el esquema 1.3 viven en app_setting y ya no en notification.params_json (RN-29)."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          required:
+            - "alerts.budget_warning_pct"
+            - "alerts.budget_limit_pct"
+            - "alerts.payment_due_days_before"
+          properties:
+            alerts.budget_warning_pct:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Porcentaje del presupuesto, por categoría y en el total, en el que llega el primer aviso. Entero en por ciento (decisión F, K44). Valor inicial: 80 (% del presupuesto; Decisión F, K44; sembrado por 00003)."
+              x-app-setting: "alerts.budget_warning_pct"
+            alerts.budget_limit_pct:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Porcentaje del presupuesto, por categoría y en el total, en el que llega el aviso de tope. Entero en por ciento (decisión F, K44). Valor inicial: 100 (% del presupuesto; Decisión F, K44; sembrado por 00003)."
+              x-app-setting: "alerts.budget_limit_pct"
+            alerts.payment_due_days_before:
+              $ref: "#/components/schemas/SettingParameterIntegerList"
+              description: "Días antes de cada pago en que llega el aviso de pago próximo: 1 es el día anterior y 0 el mismo día. Lista de enteros en días (decisión F, K44). Valor inicial: [1, 0] (días antes del pago; Decisión F, K44; sembrado por 00003)."
+              x-app-setting: "alerts.payment_due_days_before"
+          x-calculado: true
+          description: "Parámetros operativos de «Notificaciones» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
+      required:
+        - "parameters"
+    AlertSettingsUpdate:
+      type: "object"
+      description: "Cambio o «restablecer» de los parámetros de «Notificaciones» (K44, C1 §11.7)."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          minProperties: 1
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          properties:
+            alerts.budget_warning_pct:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de alerts.budget_warning_pct (% del presupuesto)."
+              x-app-setting: "alerts.budget_warning_pct"
+            alerts.budget_limit_pct:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de alerts.budget_limit_pct (% del presupuesto)."
+              x-app-setting: "alerts.budget_limit_pct"
+            alerts.payment_due_days_before:
+              type: "array"
+              items:
+                type: "integer"
+                minimum: 0
+              description: "Valor nuevo de alerts.payment_due_days_before (días antes del pago)."
+              x-app-setting: "alerts.payment_due_days_before"
+        reset_parameters:
+          type: "array"
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: "string"
+            enum:
+              - "alerts.budget_warning_pct"
+              - "alerts.budget_limit_pct"
+              - "alerts.payment_due_days_before"
+          x-entrada: true
+          description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
       additionalProperties: false
       minProperties: 1
     ProjectionSettings:
@@ -16592,6 +17319,12 @@ components:
             - "maintain"
             - "gain"
           description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
+        goal_adjust_lose_kcal:
+          type: "integer"
+          description: "Cuántas kcal se restan de la meta sugerida cuando el objetivo (goal) es lose. Es una magnitud: siempre se resta. NULL = usa el valor de la casa (app_setting health.goal_adjust_lose_kcal, 0 al sembrar)"
+        goal_adjust_gain_kcal:
+          type: "integer"
+          description: "Cuántas kcal se suman a la meta sugerida cuando el objetivo (goal) es gain. Es una magnitud: siempre se suma. maintain no ajusta. NULL = usa el valor de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar)"
         current_weight_g:
           type: "integer"
           description: "Último peso (weight_entry.weight_g)."
@@ -16619,8 +17352,15 @@ components:
           x-calculado: true
         suggested_kcal_target:
           type: "integer"
-          x-provisional: true
-          description: "Meta diaria de kcal sugerida (motor S4, RN-17, K23): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9) con ajuste por objetivo (goal); la persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo). Magnitud del ajuste de bajar y subir: PROVISIONAL, bloqueo S1-ajuste-objetivo-kcal."
+          description: "Meta diaria de kcal sugerida (motor S4, RN-17 1.3, K23, K36): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9); con goal = lose se resta el ajuste de bajar y con gain se suma el de subir: el de la persona (goal_adjust_lose_kcal o goal_adjust_gain_kcal) o, si es NULL, el de la casa (app_setting health.goal_adjust_lose_kcal o health.goal_adjust_gain_kcal); maintain no ajusta; un solo redondeo ROUND_HALF_UP al final. Con los valores iniciales (0 y 0) los tres objetivos sugieren lo mismo. La persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo)."
+          x-calculado: true
+        household_goal_adjust_lose_kcal:
+          type: "integer"
+          description: "Ajuste de bajar de la casa (app_setting health.goal_adjust_lose_kcal, 0 al sembrar; K36, K44), para mostrar «El de la casa: n kcal»; se cambia con updateHealthSettings (N-326)."
+          x-calculado: true
+        household_goal_adjust_gain_kcal:
+          type: "integer"
+          description: "Ajuste de subir de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar; K36, K44), para mostrar «El de la casa: n kcal»; se cambia con updateHealthSettings (N-326)."
           x-calculado: true
     HealthProfileCreate:
       type: "object"
@@ -16668,6 +17408,12 @@ components:
             - "maintain"
             - "gain"
           description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
+        goal_adjust_lose_kcal:
+          type: "integer"
+          description: "Cuántas kcal se restan de la meta sugerida cuando el objetivo (goal) es lose. Es una magnitud: siempre se resta. NULL = usa el valor de la casa (app_setting health.goal_adjust_lose_kcal, 0 al sembrar)"
+        goal_adjust_gain_kcal:
+          type: "integer"
+          description: "Cuántas kcal se suman a la meta sugerida cuando el objetivo (goal) es gain. Es una magnitud: siempre se suma. maintain no ajusta. NULL = usa el valor de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar)"
       required:
         - "person_id"
     HealthProfileUpdate:
@@ -16732,6 +17478,16 @@ components:
             - "gain"
             - null
           description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige · null borra el valor"
+        goal_adjust_lose_kcal:
+          type:
+            - "integer"
+            - "null"
+          description: "Cuántas kcal se restan de la meta sugerida cuando el objetivo (goal) es lose. Es una magnitud: siempre se resta. NULL = usa el valor de la casa (app_setting health.goal_adjust_lose_kcal, 0 al sembrar) · null borra el valor"
+        goal_adjust_gain_kcal:
+          type:
+            - "integer"
+            - "null"
+          description: "Cuántas kcal se suman a la meta sugerida cuando el objetivo (goal) es gain. Es una magnitud: siempre se suma. maintain no ajusta. NULL = usa el valor de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar) · null borra el valor"
       minProperties: 1
     TodayKcal:
       type: "object"
@@ -17144,8 +17900,18 @@ components:
           description: "1 = activo"
         params_json:
           type: "object"
+          properties:
+            send_time:
+              type: "string"
+              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              description: "Hora local de envío en formato HH:MM de 24 horas, zona America/Mexico_City (K43), del resumen diario y de los avisos con hora. No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44)."
+            advance_days:
+              type: "integer"
+              minimum: 0
+              description: "Días de anticipación del aviso de precios viejos antes del día de despensa: entero mayor o igual a 0 (K43). No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44)."
           additionalProperties: true
-          description: "Parámetros del aviso (días antes 1 y 0, umbrales 80 y 100)"
+          description: "Parámetros del aviso (días antes 1 y 0, umbrales 80 y 100) Desde 1.3 (00003, K44) `payment_due` ya no lleva `days_before` ni `budget_threshold` lleva `thresholds_pct`: esos valores son las claves `alerts.payment_due_days_before`, `alerts.budget_warning_pct` y `alerts.budget_limit_pct` de `app_setting` (RN-29). El Down los repone aquí. `weekday` (7 en `weekly_summary` y `meal_plan_missing`) y `day_of_month` (1 en `monthly_report`) de la decisión F siguen aquí: dónde viven es PROVISIONAL, bloqueo S1-parametros-avisos"
+          x-provisional: true
         created_at:
           $ref: "#/components/schemas/DateTime"
           description: "created_at"
@@ -17165,7 +17931,7 @@ components:
     NotificationUpdate:
       type: "object"
       additionalProperties: false
-      description: "Activa o desactiva un aviso y sus parámetros (N-297, N-300). Claves de params_json (hora del resumen diario, anticipación de precios viejos): PROVISIONAL con la propuesta escrita en el bloqueo C1-valores-k31 (Axel las aprueba en la puerta 4)."
+      description: "Activa o desactiva un aviso y sus parámetros (N-297, N-298, N-300). Claves de params_json FIRMES (K43): send_time (hora local HH:MM, America/Mexico_City, del resumen diario y de los avisos con hora) y advance_days (entero ≥ 0: días de anticipación del aviso de precios viejos antes del día de despensa). Hoy no tienen valor sembrado (RN-29 1.3; lo propone S7), así que no hay «restablecer» para ellas; cuando una migración siembre su valor, será su valor inicial (K44). Los umbrales del presupuesto y los días antes del pago próximo ya no van aquí: son claves de app_setting (getAlertSettings, K44). Dónde viven send_time, advance_days, weekday y day_of_month (aquí o en app_setting) es PROVISIONAL: bloqueo S1-parametros-avisos."
       x-tabla: "notification"
       properties:
         is_enabled:
@@ -17173,9 +17939,20 @@ components:
           description: "1 = activo"
         params_json:
           type: "object"
+          properties:
+            send_time:
+              type: "string"
+              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              description: "Hora local de envío en formato HH:MM de 24 horas, zona America/Mexico_City (K43), del resumen diario y de los avisos con hora. No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44)."
+            advance_days:
+              type: "integer"
+              minimum: 0
+              description: "Días de anticipación del aviso de precios viejos antes del día de despensa: entero mayor o igual a 0 (K43). No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44)."
           additionalProperties: true
-          description: "Parámetros del aviso (días antes 1 y 0, umbrales 80 y 100)"
+          description: "Parámetros del aviso (días antes 1 y 0, umbrales 80 y 100) Desde 1.3 (00003, K44) `payment_due` ya no lleva `days_before` ni `budget_threshold` lleva `thresholds_pct`: esos valores son las claves `alerts.payment_due_days_before`, `alerts.budget_warning_pct` y `alerts.budget_limit_pct` de `app_setting` (RN-29). El Down los repone aquí. `weekday` (7 en `weekly_summary` y `meal_plan_missing`) y `day_of_month` (1 en `monthly_report`) de la decisión F siguen aquí: dónde viven es PROVISIONAL, bloqueo S1-parametros-avisos"
+          x-provisional: true
       minProperties: 1
+      x-provisional: true
     TestNotificationRequest:
       type: "object"
       description: "Enviar ahora un aviso de prueba a una persona (N-300); sirve para disparar a mano el resumen diario o una alerta."

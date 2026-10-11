@@ -11,6 +11,17 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 
 ## Resumen
 
+**Conteo al 11-oct-2026, cierre de P1c (integrador `integrador-p1c`):** esta carpeta tiene **43 archivos de bloqueo** (sin contar este índice): **42 resueltos y 1 abierto**.
+
+| Origen | Archivos | Resueltos | Abiertos | Cómo se resolvieron |
+|---|---|---|---|---|
+| WF-0 y puerta 1 (32 de WF-0 más los 2 que se crearon en la puerta 1 para A12 y A13) | 34 | 34 | 0 | 33 con «Respuesta de Axel» de la puerta 1 (K1 a K31); `criterios-nxx` con su «Resolución» de WF-0 |
+| Flujo P1 | 8 | 8 | 0 | «Respuesta de Axel (puerta 1b)», K36 a K43 |
+| Flujo P1c | 1 | 0 | 1 | `S1-parametros-avisos.md`, abierto (ver «Bloqueos nuevos de P1c» al final) |
+| **Total** | **43** | **42** | **1** | |
+
+Regla de conteo: un bloqueo está resuelto si su archivo trae la sección «Respuesta de Axel» (o, en el caso de `criterios-nxx`, su «Resolución»); sin ella sigue abierto y la marca PROVISIONAL que lo cita se conserva. Las marcas PROVISIONAL activas de los artefactos citan solo el bloqueo abierto (detalle por archivo en `docs/estado/p1c/INTEGRACION.md` §4). La tabla que sigue es la de la puerta 1 (sus 31 preguntas, todas resueltas); la columna «Lo que quedó mientras tanto» describe el estado anterior a las respuestas.
+
 | # | Tema | Archivo(s) | Fase que la usa | Lo que quedó mientras tanto |
 |---|---|---|---|---|
 | A1 | Lista de compras compartida, local o calculada | `C1-lista-compras` = `S1-lista-compras` | C1, S1, U1 (puerta 1) | opción A (compartida en el servidor), PROVISIONAL |
@@ -323,3 +334,11 @@ Detalle de dónde se cita cada uno y cuántas marcas PROVISIONAL hay por archivo
 | (regla general) | Todo parámetro numérico operativo nace con su valor decidido y es configurable en Ajustes | K44 |
 | (proceso) | La Pista 3 (Claude Design) la ejecuta Axel; el orquestador entrega `docs/design/entrada/` y revisa `docs/design/salida/` | K35 |
 
+## Bloqueos nuevos de P1c (11-oct-2026)
+Los dejaron los agentes del flujo «P1c · Aplicar respuestas de la puerta 1b» por un choque que §K no resuelve. Registrado por el integrador de P1c (`integrador-p1c`). No cambia cifras del oráculo; lo que depende de él lleva la marca PROVISIONAL y cita el archivo.
+
+| Archivo | Fase que lo dejó | Pregunta para Axel | Qué queda PROVISIONAL | Fase que lo usa |
+|---|---|---|---|---|
+| `S1-parametros-avisos.md` | S1 esquema 1.3 (reducido por `correccion-S1-r1` y ampliado por `correccion-S1-r2`) | Si `send_time`, `advance_days`, `weekday` (7) y `day_of_month` (1) viven en `notification.params_json` (opción A, K43 al pie de la letra), en claves de `app_setting` (opción B, K44, como ya quedaron los umbrales 80 y 100 % y los días antes del pago [1, 0]) o mixto (opción C) | Solo el **lugar** de esos cuatro parámetros (el valor de `weekday` y `day_of_month` es FIRME por la decisión F; `send_time` y `advance_days` no tienen valor: lo propone S7, K31). Marcas en `00003_puerta1b.sql`, `diccionario-datos.md`, `reglas-negocio.md` (RN-29), `openapi.yaml`, `C1-datos.md` y en los criterios C1-22, U4-12 y S7 | Puerta 2; C1, U4 y S7 |
+
+Recomendaciones de los agentes, que no coinciden: S1 recomienda la **opción B** (`docs/estado/p1c/correccion-S1-r2.md`, una sola fuente por valor, como los umbrales); la corrección de criterios recomendó la **opción A** (`docs/estado/p1c/correccion-criterios-r1.md`, sin cambio de esquema ni contrato). Ojo: los criterios 1.2 todavía describen los umbrales y los días antes del pago como si vivieran en `params_json` (hallazgo A, alto, de `docs/estado/p1c/REVISION-criterios-r3.md`); el esquema 1.3 ya los tiene en `app_setting`.

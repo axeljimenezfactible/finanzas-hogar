@@ -1,11 +1,12 @@
 # Makefile · Finanzas Hogar
-# Verificación reproducible de los cimientos (WF-0 «Cimientos») y de la puerta 1 (flujo P1). Detalle en README.md.
+# Verificación reproducible de los cimientos (WF-0 «Cimientos»), de la puerta 1 (flujo P1) y de la puerta 1b (flujo P1c).
+# Detalle en README.md. Las migraciones se toman por comodín (backend/db/migrations/*.sql, hoy 00001 a 00003).
 #
 #   make verify-wf0   SQL en base temporal, go build y go vet, colorimetría y validador OpenAPI
 #   make verify-c1    generador de C1 (build.py --check, incluidos los extractos) y verify_c1.py contra la base migrada
-#   make verify-s1    backend/db/tools/s1_verifica.py: esquema 1.2 (todas las migraciones), oráculo, negativas, Down y goose
-#   make verify-u1    docs/design/tools/verificar_u1.py: U1 1.1 contra model.json, data.json, C1 y las migraciones
-#   make verify-criterios  docs/criterios/tools/verif_final.sh: conteos, trazabilidad, citas y cifras canon (18 archivos)
+#   make verify-s1    backend/db/tools/s1_verifica.py: esquema 1.3 (todas las migraciones), oráculo, negativas, Down y goose
+#   make verify-u1    docs/design/tools/verificar_u1.py: U1 1.2 contra model.json, data.json, C1 y las migraciones
+#   make verify-criterios  docs/criterios/tools/verif_final.sh: conteos (y conteo.py contra INDICE.md), trazabilidad, citas y cifras canon (18 archivos)
 #   make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios
 #   make clean        borra los temporales de este Makefile
 #
@@ -52,8 +53,8 @@ help:
 	@echo "Finanzas Hogar · objetivos de make"
 	@echo "  make verify-wf0   SQL en base temporal, go build y go vet, colorimetría y validador OpenAPI"
 	@echo "  make verify-c1    generador de C1 (build.py --check, incluidos los extractos) y verify_c1.py contra la base migrada"
-	@echo "  make verify-s1    backend/db/tools/s1_verifica.py (esquema 1.2, oráculo, negativas, Down y goose)"
-	@echo "  make verify-u1    docs/design/tools/verificar_u1.py (U1 1.1)"
+	@echo "  make verify-s1    backend/db/tools/s1_verifica.py (esquema 1.3, oráculo, negativas, Down y goose)"
+	@echo "  make verify-u1    docs/design/tools/verificar_u1.py (U1 1.2)"
 	@echo "  make verify-criterios  docs/criterios/tools/verif_final.sh (18 archivos de criterios)"
 	@echo "  make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios"
 	@echo "  make clean        borra datos/tmp/verify-wf0, backend/bin y las carpetas __pycache__"
@@ -84,7 +85,7 @@ verify-sql:
 	  awk $(AWK_DOWN) "$$f" | $(SQLITE) -bail "$(TMP)/sql-down.db"; \
 	done; \
 	n=$$($(SQLITE) "$(TMP)/sql-down.db" "SELECT count(*) FROM sqlite_master WHERE name NOT LIKE 'sqlite_%'"); \
-	echo "   Down en orden inverso deja $$n objetos"; \
+	echo "   Down en orden inverso ($$(printf '%s\n' $(MIGRATIONS) | sort -r | sed 's#.*/##; s/_.*//' | paste -sd, -)) deja $$n objetos"; \
 	test "$$n" = 0 || { echo "   FALLA: Down no deja la base vacía"; exit 1; }; \
 	for f in $(MIGRATIONS); do awk $(AWK_UP) "$$f" | $(SQLITE) -bail "$(TMP)/sql-down.db"; done; \
 	a=$$($(SQLITE) "$(TMP)/sql-up.db" "SELECT count(*) FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"); \
@@ -130,14 +131,16 @@ verify-c1:
 	@$(RM_TMP)
 
 verify-s1:
-	@echo "== S1: backend/db/tools/s1_verifica.py (esquema 1.2: todas las migraciones, oráculo, negativas, Down y goose)"
+	@echo "== S1: backend/db/tools/s1_verifica.py (esquema 1.3: todas las migraciones, oráculo, negativas, Down y goose)"
 	@mkdir -p "$(TMP)"; \
 	cd "$(ROOT)" && GOOSE="$(GOOSE)" $(PYTHON) -I backend/db/tools/s1_verifica.py > "$(TMP)/s1_verifica.log" 2>&1 || { cat "$(TMP)/s1_verifica.log"; exit 1; }; \
-	cut -c1-110 "$(TMP)/s1_verifica.log" | sed 's/^/   /'
+	cut -c1-110 "$(TMP)/s1_verifica.log" | sed 's/^/   /'; \
+	for f in $(MIGRATIONS); do b=$${f##*/}; grep -qF "$$b" "$(TMP)/s1_verifica.log" || { echo "   FALLA: s1_verifica.py no aplicó $$b"; exit 1; }; done; \
+	echo "   s1_verifica.py aplicó las $(words $(MIGRATIONS)) migraciones del comodín"
 	@$(RM_TMP)
 
 verify-u1:
-	@echo "== U1: docs/design/tools/verificar_u1.py (U1 1.1 contra model.json, data.json, C1 y las migraciones)"
+	@echo "== U1: docs/design/tools/verificar_u1.py (U1 1.2 contra model.json, data.json, C1 y las migraciones)"
 	@mkdir -p "$(TMP)"; log="$(TMP)/verificar_u1.log"; \
 	cd "$(ROOT)" && $(PYTHON) -I docs/design/tools/verificar_u1.py > "$$log" 2>&1 || { cat "$$log"; exit 1; }; \
 	echo "   comprobaciones OK: $$(grep -cE '^OK ' "$$log") · INFO: $$(grep -cE '^INFO ' "$$log") · PENDIENTE: $$(grep -cE '^PENDIENTE' "$$log")"; \
@@ -150,12 +153,13 @@ verify-criterios:
 	@echo "== Criterios: docs/criterios/tools/verif_final.sh (18 archivos; escribe solo su base temporal bajo datos/tmp)"
 	@mkdir -p "$(TMP)"; log="$(TMP)/criterios.log"; \
 	cd "$(ROOT)" && bash "$(CRITERIOS_SH)" > "$$log" 2>&1 || { cat "$$log"; exit 1; }; \
-	grep -E '^TOTAL [0-9]+ \(|^archivos: |^criterios definidos: |^citas verificadas: |^TOTAL comprobadas: |^cifras comparadas: |^N-xxx sin operacion|^matriz C1' "$$log" | cut -c1-110 | sed 's/^/   /'; \
+	grep -E '^TOTAL [0-9]+ \(|^archivos: |^criterios definidos: |^citas verificadas: |^TOTAL comprobadas: |^cifras comparadas: |^N-xxx sin operacion|^matriz C1|^INDICE contra conteo propio' "$$log" | sed -E 's/^(TOTAL [0-9]+ \(alta [0-9]+ \/ media [0-9]+ \/ baja [0-9]+\))$$/\1 · paso 1, cuenta.py: S1 a S8 y WF4/' | cut -c1-110 | sed 's/^/   /'; \
 	falla=0; \
 	for e in 'incompletos: ninguno' 'secciones 1-5 faltantes: []' 'archivos con Verifica != criterios: [] | con Evidencia != criterios: []' \
 	  'criterios sin linea en su seccion 5 (con rangos expandidos): 0' 'citados que no existen: {}' '| con diferencias: 0' \
 	  'K-01..K-08 contra data.json: OK' 'UP OK' 'foreign_key_check filas: 0 | integrity_check: ok' 'cifras comparadas: 12 | diferencias: 0' \
-	  'N-xxx sin operacion ni Local: 0 []' 'P-xx (con secciones P-26.xx y Global) sin operacion ni Local: 0 []' 'N-xxx de U1 ausentes en la matriz C1: []'; do \
+	  'N-xxx sin operacion ni Local: 0 []' 'P-xx (con secciones P-26.xx y Global) sin operacion ni Local: 0 []' 'N-xxx de U1 ausentes en la matriz C1: []' \
+	  'INDICE contra conteo propio: 0 diferencias'; do \
 	  grep -qF -- "$$e" "$$log" || { echo "   FALLA, no aparece en la salida: $$e"; falla=1; }; \
 	done; \
 	for n in 5 10; do \
@@ -163,7 +167,7 @@ verify-criterios:
 	  test "$$v" = 0 || { echo "   FALLA, la comprobación $$n de verif_final.sh da «$$v» (se espera 0)"; falla=1; }; \
 	done; \
 	test "$$falla" = 0 || { cat "$$log"; exit 1; }; \
-	echo "   residuos «N-xx» y rutas /tmp en los criterios: 0 y 0; las 10 comprobaciones dan lo esperado"
+	echo "   residuos «N-xx» y rutas /tmp en los criterios: 0 y 0; las 11 comprobaciones dan lo esperado"
 	@$(RM_TMP)
 
 verify-all: verify-wf0 verify-c1 verify-s1 verify-u1 verify-criterios

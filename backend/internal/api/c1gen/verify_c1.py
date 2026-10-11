@@ -1,4 +1,4 @@
-# Verificación de C1 (criterios C1-01 a C1-15, consistencia de la matriz §10 y paridad de rutas S6-03).
+# Verificación de C1 (criterios C1-01 a C1-15, C1-23, consistencia de la matriz §10 y paridad de rutas S6-03).
 # Uso, desde cualquier carpeta (lee el repositorio que contiene este archivo):
 #   uv run --no-project --with pyyaml --with jsonschema python3 -I backend/internal/api/c1gen/verify_c1.py [--db BASE] [--root RAIZ]
 #   --db BASE   base SQLite ya migrada (p. ej. goose -dir backend/db/migrations sqlite3 BASE up) para C1-03, abierta solo lectura;
@@ -6,7 +6,7 @@
 #   --root RAIZ otra copia del repositorio (por defecto, cuatro niveles arriba de esta carpeta).
 # Código de salida: 0 si todo OK; 1 si hay alguna FALLA. Origen: anexo A del reporte S6a-contrato-c1 (corrección r1).
 import argparse, json, re, os, sqlite3, random, sys, yaml
-_ap = argparse.ArgumentParser(description='Verificación de C1 (C1-01 a C1-15, matriz §10 y S6-03)')
+_ap = argparse.ArgumentParser(description='Verificación de C1 (C1-01 a C1-15, C1-23, matriz §10 y S6-03)')
 _ap.add_argument('--root', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, os.pardir, os.pardir))
 _ap.add_argument('--db', default=None)
 ARGS = _ap.parse_args()
@@ -228,7 +228,9 @@ def walks(s, path):
     if not isinstance(s, dict) or id(s) in seen: return
     seen.add(id(s))
     for k, v in s.get('properties', {}).items():
-        if re.search(r'password|hash|token|secret', k): hits.append(path + '.' + k)
+        # C1 v1.2 (K44): una clave de app_setting expuesta como parámetro (x-app-setting = su nombre, p. ej. auth.password_min_length)
+        # es configuración (un entero), no un secreto.
+        if re.search(r'password|hash|token|secret', k) and not (isinstance(v, dict) and v.get('x-app-setting') == k): hits.append(path + '.' + k)
         walks(v, path + '.' + k)
     for key in ('items', 'allOf', 'anyOf', 'oneOf'):
         v = s.get(key)
@@ -246,7 +248,37 @@ ids = [o['operationId'] for _, _, o in OPS]
 TAGS9 = ['Inicio', 'Gastos', 'Presupuesto', 'Comidas', 'Compras y tiendas', 'Créditos', 'Salud', 'Reportes', 'Ajustes']
 badtag = [o['operationId'] for _, _, o in OPS if not o.get('tags') or not set(o['tags']) <= set(TAGS9)]
 print(f'C1-13 operationId duplicadas: {len(ids) - len(set(ids))} · sin etiqueta válida: {badtag} · etiquetas: {[t["name"] for t in d["tags"]]} · info.version: {d["info"]["version"]}')
-ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.1' in c1 and d['info']['version'] == '1.1.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.1')
+ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.2' in c1 and d['info']['version'] == '1.2.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.2')
+# K44 (C1 v1.2, puerta 1b): cada parámetro @param de las migraciones tiene una sola lectura (GET con parameters) y un solo cambio con
+# «restablecer» (PATCH con parameters y reset_parameters); la tabla de §11.7 da su valor inicial y la base sembró ese valor.
+PRM = []
+MD = os.path.join(ROOT, 'backend/db/migrations')
+for f in sorted(os.listdir(MD)):
+    if re.match(r'\d+.*\.sql$', f):
+        PRM += [[x.strip() for x in l.split('|')] for l in re.findall(r'^-- @param (.*)$', open(os.path.join(MD, f), encoding='utf-8').read().split('-- +goose Down')[0], re.M)]
+SCH = d['components']['schemas']
+def _pk(ref_, campo):
+    s = SCH.get((ref_ or '').split('/')[-1], {}).get('properties', {}).get(campo, {})
+    return set(s.get('properties', {})) if campo == 'parameters' else set(s.get('items', {}).get('enum', []))
+lee, cambia = {}, {}
+for m, p, o in OPS:
+    if not isinstance(o, dict): continue
+    rs = o.get('responses', {}).get('200', {}).get('content', {}).get('application/json', {}).get('schema', {}).get('$ref')
+    rq = o.get('requestBody', {}).get('content', {}).get('application/json', {}).get('schema', {}).get('$ref')
+    if m == 'GET':
+        for k in _pk(rs, 'parameters'): lee.setdefault(k, []).append(o['operationId'])
+    if m == 'PATCH':
+        for k in _pk(rq, 'parameters') & _pk(rq, 'reset_parameters'): cambia.setdefault(k, []).append(o['operationId'])
+s117 = c1.split('### 11.7', 1)[1].split('\n## ', 1)[0] if '### 11.7' in c1 else ''
+fila = {r[0]: next((l for l in s117.split('\n') if l.startswith(f'| `{r[0]}` |')), '') for r in PRM}
+pmal = [r[0] for r in PRM if len(lee.get(r[0], [])) != 1 or len(cambia.get(r[0], [])) != 1 or f'| `{r[3]}` |' not in fila[r[0]]]
+semb = {}
+for r in PRM:
+    v = db.execute('SELECT value_json FROM app_setting WHERE setting_key = ? AND user_account_id IS NULL', (r[0],)).fetchone()
+    semb[r[0]] = v is not None and json.loads(v[0]) == json.loads(r[3])
+sobra = sorted(set(lee) - {r[0] for r in PRM})
+print(f'K44 parámetros @param: {len(PRM)} · con una lectura y un cambio con restablecer, y en §11.7 con su valor inicial: {len(PRM) - len(pmal)} · fallan: {pmal} · sembrados con ese valor: {sum(semb.values())} · expuestos sin @param: {sobra}')
+ok(PRM and not pmal and all(semb.values()) and not sobra, 'K44 todo parámetro operativo se lee y se cambia o restablece por clave, con su valor inicial sembrado')
 # C1-14
 try:
     from jsonschema import Draft202012Validator
@@ -356,5 +388,33 @@ rr = set(re.findall(r'Method: "(\w+)", Pattern: "([^"]+)", OperationID: "(\w+)"'
 oa = {(m, p, o['operationId']) for m, p, o in OPS}
 print(f'S6-03 rutas en routes.go: {len(rr)} · en openapi.yaml: {len(oa)} · sobrantes: {sorted(rr - oa)[:3]} · faltantes: {sorted(oa - rr)[:3]}')
 ok(rr == oa, 'S6-03 conjunto de rutas del router idéntico al contrato')
+# C1-23 (C1 v1.2 · corrección r1, hallazgo A-01 de docs/estado/p1c/REVISION-C1-r1.md; K43): send_time (hora local HH:MM de 24 horas)
+# y advance_days (entero >= 0) son propiedades de params_json en Notification y NotificationUpdate, sin valor por omisión; weekday y
+# day_of_month entran por additionalProperties: true y la marca de lugar x-provisional cita S1-parametros-avisos. Se comprueba en
+# openapi.yaml, en el extracto que trae esos esquemas y en C1-datos.md, junto con el resto de C1-23 (10 MB y 413, 503, N-xxx, M-05).
+PAT_K43 = '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+def _k43(doc, n):
+    pj = (((doc.get('components') or {}).get('schemas') or {}).get(n) or {}).get('properties', {}).get('params_json', {})
+    pr = pj.get('properties', {}); st, ad = pr.get('send_time', {}), pr.get('advance_days', {}); m = []
+    if not (st.get('type') == 'string' and st.get('pattern') == PAT_K43 and 'default' not in st and 'K43' in st.get('description', '')): m.append('send_time')
+    if not (ad.get('type') == 'integer' and ad.get('minimum') == 0 and 'default' not in ad and 'K43' in ad.get('description', '')): m.append('advance_days')
+    if not (pj.get('additionalProperties') is True and pj.get('x-provisional') is True and 'S1-parametros-avisos' in pj.get('description', '')): m.append('lugar')
+    return m
+k43bad = {n: v for n in ('Notification', 'NotificationUpdate') for v in [_k43(d, n)] if v}
+k43ex = sorted(f for f, e in exdocs.items() if 'NotificationUpdate' in (((e or {}).get('components') or {}).get('schemas') or {}))
+k43exbad = {f: v for f in k43ex for v in [_k43(exdocs[f], 'Notification') + _k43(exdocs[f], 'NotificationUpdate')] if v}
+_rx = re.compile(PAT_K43)
+k43rx = all(_rx.fullmatch(v) for v in ('00:00', '07:30', '19:05', '23:59')) and not any(_rx.fullmatch(v) for v in ('24:00', '7:30', '12:60', '12:5', '1230', '08:00 '))
+k43c1 = [k for k, t in (('send_time', PAT_K43), ('advance_days', '`minimum: 0`')) if not re.search(r'^- `%s`: .*%s' % (k, re.escape(t)), c1, re.M)]
+_byid = {o['operationId']: o for _, _, o in OPS}
+_up, _cmp = _byid.get('uploadExpenseAttachment', {}), _byid.get('compareScenarios', {})
+k43ops = '413' in _up.get('responses', {}) and '10 MB' in json.dumps(_up, ensure_ascii=False) and '503' in _cmp.get('responses', {}) and 'unavailable' in json.dumps(deref(_cmp['responses']['503']) if '503' in _cmp.get('responses', {}) else {}, ensure_ascii=False) + json.dumps(_cmp, ensure_ascii=False)
+_nrow = {n: [l for l in c1.splitlines() if l.startswith('| P-') and f'| {n} |' in l] for n in ('N-023', 'N-064', 'N-226', 'N-297', 'N-300')}
+k43n = sorted(n for n, ls in _nrow.items() if not ls or any('FIRME (K43)' not in l or 'C1-valores-k31' in l for l in ls))
+k43m05 = bool(re.search(r'^\| M-05 \|.*\b21\b', c1, re.M)); k43grep = len(re.findall(r'PROVISIONAL.*C1-valores-k31', c1))
+print(f'C1-23 params_json (patrón {PAT_K43}, minimum 0) mal en openapi: {k43bad} · extractos con NotificationUpdate: {k43ex} mal: {k43exbad} · patrón acepta 00:00–23:59 y rechaza 24:00, 7:30, 12:60: {k43rx} · C1-datos.md sin la clave: {k43c1}')
+print(f'C1-23 10 MB y 413 en uploadExpenseAttachment, 503 unavailable en compareScenarios: {k43ops} · filas §10 sin FIRME (K43) o con C1-valores-k31: {k43n} · M-05 con 21: {k43m05} · grep PROVISIONAL.*C1-valores-k31: {k43grep}')
+ok(not k43bad and k43ex and not k43exbad and k43rx and not k43c1, 'C1-23 send_time con patrón HH:MM y advance_days con minimum: 0 en params_json (openapi.yaml, extracto y C1-datos.md), sin valor por omisión')
+ok(k43ops and not k43n and k43m05 and k43grep == 0, 'C1-23 adjunto 10 MB con 413, comparador 503 unavailable, N-023/N-064/N-226/N-297/N-300 FIRMES (K43) y M-05 con máximo 21')
 print('\nRESULTADO:', 'TODO OK' if not fails else f'{len(fails)} falla(s)')
 sys.exit(1 if fails else 0)
