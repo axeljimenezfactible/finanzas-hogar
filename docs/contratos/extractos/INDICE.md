@@ -13,10 +13,10 @@ Generado por `backend/internal/api/c1gen/build.py` (sin opciones o con `--extrac
 |---|---|---|---|---|---|
 | `inicio.yaml` | Inicio | 12 | 12 | 17 | 46.3 KB (47373 bytes) |
 | `gastos.yaml` | Gastos | 19 | 15 | 23 | 74.4 KB (76202 bytes) |
-| `presupuesto-a.yaml` | Presupuesto | 13 | 11 | 14 | 42.9 KB (43888 bytes) |
+| `presupuesto-a.yaml` | Presupuesto | 13 | 11 | 14 | 43.3 KB (44389 bytes) |
 | `presupuesto-b.yaml` | Presupuesto | 15 | 11 | 17 | 42.7 KB (43754 bytes) |
-| `comidas.yaml` | Comidas | 16 | 12 | 19 | 47.4 KB (48574 bytes) |
-| `compras-tiendas-a.yaml` | Compras y tiendas | 13 | 11 | 23 | 60.3 KB (61703 bytes) |
+| `comidas.yaml` | Comidas | 16 | 12 | 19 | 47.6 KB (48750 bytes) |
+| `compras-tiendas-a.yaml` | Compras y tiendas | 13 | 11 | 23 | 61.2 KB (62645 bytes) |
 | `compras-tiendas-b.yaml` | Compras y tiendas | 14 | 11 | 19 | 47.5 KB (48594 bytes) |
 | `creditos-a.yaml` | Créditos | 8 | 8 | 10 | 32.4 KB (33140 bytes) |
 | `creditos-b.yaml` | Créditos | 11 | 8 | 23 | 61.8 KB (63266 bytes) |

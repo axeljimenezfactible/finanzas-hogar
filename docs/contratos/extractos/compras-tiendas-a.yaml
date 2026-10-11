@@ -302,7 +302,7 @@ paths:
       tags:
         - "Compras y tiendas"
       summary: "Comparar canasta"
-      description: "Comparar canasta."
+      description: "Compara entre tiendas el costo de una canasta (N-161 a N-164; el segundo nivel de las tarjetas la reutiliza, N-027). Con `basket=shopping_list` (por defecto) la canasta es la lista de compras de la semana `week`, la que muestra la pantalla (R3-01, U1 §0.2). Con `basket=expense` la canasta son los renglones de la compra `expense_id` y `week` no cambia el resultado. `week` es obligatoria en las dos modalidades porque un parámetro por `$ref` no puede ser obligatorio solo en una (C1-06: un componente por nombre). Si falta `week`, o falta `expense_id` con `basket=expense`, responde 422 `validation_failed` con `fields` (esquema único `Error`). No recibe el filtro `period`: la semana de la lista es la llave `week` (C1-datos.md §6, «Llaves que no son filtros»)."
       x-necesidades:
         - "N-161"
         - "N-162"
@@ -326,7 +326,7 @@ paths:
         - name: "basket"
           in: "query"
           required: false
-          description: "shopping_list (por defecto) o expense."
+          description: "Canasta que se compara: shopping_list (por defecto) = la lista de compras de la semana `week`; expense = la compra `expense_id`."
           schema:
             type: "string"
             enum:
@@ -335,10 +335,10 @@ paths:
         - name: "expense_id"
           in: "query"
           required: false
-          description: "Compra a comparar (con basket = expense)."
+          description: "Compra a comparar: obligatoria con basket = expense (si falta, 422 `validation_failed` con `fields`); con basket = shopping_list no se usa."
           schema:
             type: "integer"
-        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/ListWeek"
       responses:
         "200":
           description: "Correcto."

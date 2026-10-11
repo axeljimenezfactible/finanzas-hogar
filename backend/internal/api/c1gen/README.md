@@ -85,3 +85,12 @@ Agente correccion-C1-r2 (flujo P1, 11-oct-2026), hallazgos H-r2-01 y H-r2-02 de 
 - `gen2_schemas.py`: `Budget.valid_to_date` completa el comentario de S1 («deja NULL») con la eliminación de los renglones posteriores; `BUDVIG` dice lo mismo en `BudgetCreate` y `BudgetUpdate`.
 - `gen6_c1.py` y `c1_plantilla.md`: la matriz recurso × filtro de §6 suma la columna de la llave `week` (entran `listBaskets`, `getDashboardBestBasket` y las escrituras de la lista); §6 trae la tabla «Llaves que no son filtros» (`week` y `month`); §7.1 dice qué hace `onward` con los renglones posteriores y trae el ejemplo; fila «C1 v1.1 · corrección r2» en Cambios.
 - `verify_c1.py` C1-06: regla nueva, cada nombre de parámetro tiene un solo componente, ningún otro componente usa el nombre de un filtro y toda llave con nombre de periodo (`month`, `week`…) está documentada en §6.
+
+### C1 v1.1 · corrección r4
+
+Agente correccion-C1-r4 (flujo P1b, 11-oct-2026), hallazgos H-r3-01, H-r3-02, H-r3-03 y H-r3-04 de `docs/estado/p1/REVISION-C1-r3.md`. Reporte: `docs/estado/p1/correccion-C1-r4.md`.
+
+- `gen3_ops.py`: `getBasketComparison` recibe `ListWeek` (`week`, obligatoria) en lugar de `Period` y su descripción dice qué compara con `basket=shopping_list` y con `basket=expense` (422 `validation_failed` si falta `week`, o `expense_id` con `basket=expense`). `getMealPlanWeek` marca su semana por omisión «PROVISIONAL: bloqueo U1-lista-vigente-domingo», y `gen4_build.py` le pone `x-provisional: true`.
+- `gen2_schemas.py`: sin el parche con `assert` de `Budget.valid_to_date`. El comentario de S1 en `00001_esquema.sql` ya trae el texto completo y nombra `onward` y `this_month`, así que `Budget`, `BudgetCreate` y `BudgetUpdate` lo toman igual.
+- `gen6_c1.py` y `c1_plantilla.md`: N-120 con cobertura PROVISIONAL `U1-lista-vigente-domingo` en §10, fila nueva en §13, `getBasketComparison` en la tabla «Llaves que no son filtros» y en §1, y fila «C1 v1.1 · corrección r4» en Cambios.
+- `verify_c1.py`: C1-06 exige `ListWeek` (obligatoria) y prohíbe `Period` en toda operación cuyo `x-tablas` tenga `shopping_list` o `shopping_list_item`. C1-15 marca toda descripción de `openapi.yaml` con «los domingos» que no tenga `x-provisional` (en su objeto o en su operación), la marca PROVISIONAL y el bloqueo, y toda línea de `C1-datos.md` con «los domingos» que no cite el bloqueo, mientras `U1-lista-vigente-domingo` siga abierto. Las dos reglas fallan contra el contrato de HEAD (b900420).

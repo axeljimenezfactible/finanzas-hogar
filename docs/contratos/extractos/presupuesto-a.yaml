@@ -596,7 +596,7 @@ components:
           description: "Primer día del primer mes en que rige"
         valid_to_date:
           $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2) con el alcance `scope` de updateBudget: «de este mes en adelante» (`onward`, preseleccionada y valor por omisión) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» (`this_month`) pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
         notes:
           type: "string"
           description: "notes"
@@ -631,7 +631,7 @@ components:
           description: "Primer día del primer mes en que rige"
         valid_to_date:
           $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL; «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2) con el alcance `scope` de updateBudget: «de este mes en adelante» (`onward`, preseleccionada y valor por omisión) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» (`this_month`) pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
         notes:
           type: "string"
           description: "notes"
@@ -651,7 +651,7 @@ components:
           anyOf:
             - $ref: "componentes-comunes.yaml#/components/schemas/Date"
             - type: "null"
-          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL; «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente · null borra el valor"
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2) con el alcance `scope` de updateBudget: «de este mes en adelante» (`onward`, preseleccionada y valor por omisión) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» (`this_month`) pone el último día de ese mes y el monto anterior sigue desde el mes siguiente · null borra el valor"
         notes:
           type:
             - "string"

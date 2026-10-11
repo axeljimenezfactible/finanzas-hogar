@@ -49,7 +49,8 @@ paths:
       tags:
         - "Comidas"
       summary: "Plan de la semana"
-      description: "`period` en formato de semana (2026-W42); por defecto la semana en curso y, los domingos, la siguiente."
+      description: "`period` en formato de semana (`2026-W42`, lunes a domingo, K8). Sin `period`, la semana en curso y, los domingos, la siguiente: es la semana por defecto de U1 §0.2, y la parte de los domingos es PROVISIONAL: bloqueo U1-lista-vigente-domingo (abierto)."
+      x-provisional: true
       x-necesidades:
         - "N-120"
         - "N-121"

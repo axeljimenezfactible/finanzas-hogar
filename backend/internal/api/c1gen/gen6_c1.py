@@ -40,8 +40,9 @@ LOCAL = {'N-003': 'Recientes en el dispositivo (U1: Local)', 'N-301': 'Tema por 
 # Corrección r2: con el esquema 1.1 de S1 ninguna necesidad queda sin endpoint por bloqueo. La lista de compras sigue la opción A
 # C1 v1.1 (puerta 1): K1 a K23 cerraron la lista de compras y los huecos U1 ↔ S1; quedan con cobertura parcial solo las necesidades que
 # dependen de un bloqueo abierto (valores operativos K31, redondeo del promedio semanal y ajuste por objetivo de la meta de kcal).
+# Corrección r4 (H-r3-02): N-120 por la semana por omisión de getMealPlanWeek (regla del domingo, bloqueo U1-lista-vigente-domingo).
 BLOCKED = {}
-PARTIAL = {'N-023': 'C1-valores-k31', 'N-064': 'C1-valores-k31', 'N-226': 'C1-valores-k31', 'N-297': 'C1-valores-k31', 'N-300': 'C1-valores-k31', 'N-042': 'criterios-promedios-redondeo', 'N-230': 'S1-ajuste-objetivo-kcal', 'N-311': 'S1-ajuste-objetivo-kcal', 'N-313': 'S1-ajuste-objetivo-kcal'}
+PARTIAL = {'N-023': 'C1-valores-k31', 'N-064': 'C1-valores-k31', 'N-226': 'C1-valores-k31', 'N-297': 'C1-valores-k31', 'N-300': 'C1-valores-k31', 'N-042': 'criterios-promedios-redondeo', 'N-230': 'S1-ajuste-objetivo-kcal', 'N-311': 'S1-ajuste-objetivo-kcal', 'N-313': 'S1-ajuste-objetivo-kcal', 'N-120': 'U1-lista-vigente-domingo'}
 def status(n):
     if n in LOCAL: return 'Local'
     if n in BLOCKED: return f'BLOQUEO `{BLOCKED[n]}`'

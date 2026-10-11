@@ -527,7 +527,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `category_id` | INTEGER | sí | Categoría. NULL = presupuesto total del mes | FK → `category.id` al borrar: RESTRICT |
 | `amount_cents` | INTEGER | no | Monto planeado por mes en centavos | centavos |
 | `valid_from_date` | TEXT | no | Primer día del primer mes en que rige | fecha válida, día 1 del mes |
-| `valid_to_date` | TEXT | sí | Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL; «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente | fecha válida, último día de un mes |
+| `valid_to_date` | TEXT | sí | Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2) con el alcance `scope` de updateBudget: «de este mes en adelante» (`onward`, preseleccionada y valor por omisión) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» (`this_month`) pone el último día de ese mes y el monto anterior sigue desde el mes siguiente | fecha válida, último día de un mes |
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
@@ -2035,7 +2035,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
 | `id` | INTEGER | no | Identificador interno (alias de rowid). | PK |
-| `chat_id` | TEXT | no | chat_id de Telegram del que llegó el mensaje | único; dígitos y signo menos |
+| `chat_id` | TEXT | no | chat_id de Telegram del que llegó el mensaje. La API nunca lo devuelve completo: lo muestra como el campo calculado chat_id_masked («•••» y sus últimos 4 caracteres; K4, C1-18) | único; dígitos y signo menos |
 | `telegram_name` | TEXT | no | Nombre que da Telegram para ese chat | no vacío |
 | `detected_at` | TEXT | no | Cuándo lo detectó el bot (UTC) | def: ahora (UTC); instante ISO 8601 con «Z» |
 | `confirmed_at` | TEXT | sí | Cuándo la persona lo confirmó en Ajustes (UTC). NULL = pendiente | instante ISO 8601 con «Z» |

@@ -108,10 +108,8 @@ S['TicketConfirmResult'] = O('Registros creados al confirmar.', expense_id='i:Ga
 # ---------- Presupuesto, ingresos, flujo ----------
 S['Budget'] = entity_read('budget', {'is_single_month': C('b:true si la vigencia es un solo mes («solo este mes», K2).'), 'following_month_amount_cents': C('r:MoneyCents:Monto de la misma categoría (o del total) que rige el mes siguiente: al último mes del periodo pedido en listBudgets, o al mes del cambio en las respuestas de alta y cambio; ausente = sin monto (N-275, K2).')})
 BUDVIG = 'Alcance de un cambio de monto (K2): «de este mes en adelante» (scope=onward, preseleccionado) o «solo este mes» (scope=this_month); lo aplica updateBudget partiendo los renglones sin traslapes; con onward el monto nuevo rige sin fin y reemplaza los renglones posteriores de la categoría (C1-datos.md §7.1).'
-# H-r2-02 (revisión C1-r2): el comentario de S1 dice que onward «deja NULL»; se completa con el efecto sobre los renglones posteriores.
-_vtd = S['Budget']['properties']['valid_to_date']
-assert _vtd['description'].count('deja NULL;') == 1, 'cambió el comentario de S1 de budget.valid_to_date'
-_vtd['description'] = _vtd['description'].replace('deja NULL;', 'deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1);')
+# H-r3-04 (revisión C1-r3): el comentario de S1 de budget.valid_to_date ya dice que onward elimina los renglones posteriores
+# y nombra los valores de scope; se quitó el parche con assert de la corrección r2.
 S['BudgetCreate'] = entity_write('budget', desc='Alta de un monto mensual con vigencia (N-087, N-278). category_id ausente = presupuesto total. valid_from_date = día 1 del primer mes en que rige; valid_to_date = último día del último mes, ausente = sin fin. Un monto de un solo mes empieza y termina en ese mes (RN-22). ' + BUDVIG)
 S['BudgetUpdate'] = entity_write('budget', include={'amount_cents', 'valid_to_date', 'notes'}, update=True, desc='Cambios parciales (JSON Merge Patch, RFC 7396) de un renglón de presupuesto: monto, fin de la vigencia (valid_to_date; null = sin fin) o notas. ' + BUDVIG)
 STATUS3 = 'e:normal,warning,exceeded:normal si % < 80; warning si ≥ 80; exceeded si ≥ 100 (decisión F).'

@@ -174,6 +174,13 @@ s6 = c1[c1.index('## 6. '):c1.index('## 7. ')]
 nodoc = [f'{k} → {n}' for k, n in llaves if f'`{n}`' not in s6 or k not in s6]
 print('C1-06 nombres con más de un componente:', dup, '· otros componentes con nombre de filtro:', otros, '· llaves que no son filtro:', [f'{k} → {n}' for k, n in llaves], '· sin documentar en §6:', nodoc)
 ok(not dup and not otros and not nodoc, f'C1-06 {len(PC)} componentes de parámetro, cada nombre con un solo componente; {len(llaves)} llaves documentadas en §6')
+# H-r3-01 (revisión C1-r3): toda operación que lee o escribe la lista de compras (x-tablas con shopping_list o shopping_list_item)
+# recibe la llave `week` por $ref a ListWeek, obligatoria, y no recibe el filtro `period`.
+lw = PC.get('ListWeek', {})
+sl_ops = [(o['operationId'], {x['$ref'].split('/')[-1] for x in o.get('parameters', []) if '$ref' in x}) for m, p, o in OPS if {'shopping_list', 'shopping_list_item'} & set(o.get('x-tablas', []))]
+sin_week = sorted(oid for oid, rs in sl_ops if 'ListWeek' not in rs or 'Period' in rs)
+print(f"C1-06 operaciones que leen o escriben shopping_list: {len(sl_ops)} · sin `week` o con `period`: {sin_week} · ListWeek = week obligatoria: {lw.get('name') == 'week' and lw.get('required') is True}")
+ok(bool(sl_ops) and not sin_week and lw.get('name') == 'week' and lw.get('required') is True, f'C1-06 las {len(sl_ops)} operaciones que leen shopping_list exigen la llave `week` (ListWeek)')
 # C1-07
 fmts = set(); exs = []
 def walk(o, path=''):
@@ -299,6 +306,22 @@ c1h = [l[:80] for l in lin if not any(b in l for b in abiertos) and not l.starts
 refs = sorted({r for l in c1.split('\n') for r in re.findall(r'`((?:C1|S1|S6|U1|criterios)-[a-z0-9-]+)`', l)})
 print(f'C1-15 marcas PROVISIONAL en openapi.yaml: {nprov} · bloqueos abiertos citados: {sorted(b for b in abiertos if b in str(d))} · sin bloqueo abierto: {huerf[:5]} · líneas PROVISIONAL en C1-datos.md: {len(lin)} · sin bloqueo: {c1h[:5]} · bloqueos citados en C1: {len(refs)} · citados que no existen: {[r for r in refs if r not in bl]}')
 ok(not huerf and not c1h and all(r in bl for r in refs), 'C1-15 toda marca PROVISIONAL remite a un bloqueo abierto (sin «Respuesta de Axel»)')
+# H-r3-02 (revisión C1-r3): mientras el bloqueo U1-lista-vigente-domingo siga abierto, toda descripción que aplique la regla del domingo
+# («los domingos»; «lunes a domingo» de K8 y «7 = domingo» no son la regla) lleva x-provisional en su objeto o en su operación y cita el
+# bloqueo; en C1-datos.md, la línea cita el bloqueo.
+DOM = 'U1-lista-vigente-domingo'; dsin = []
+def walkdom(o, path, prov=False):
+    if isinstance(o, dict):
+        prov = prov or bool(o.get('x-provisional'))
+        de = o['description'] if isinstance(o.get('description'), str) else ''
+        if re.search(r'(?i)\bdomingos\b', de) and not (prov and 'PROVISIONAL' in de and DOM in de): dsin.append(path)
+        for k, v in o.items(): walkdom(v, path + '/' + str(k), prov)
+    elif isinstance(o, list):
+        for i, v in enumerate(o): walkdom(v, f'{path}[{i}]', prov)
+if DOM in abiertos: walkdom(d, '')
+cdom = [l[:80] for l in c1.split('\n') if DOM in abiertos and re.search(r'(?i)\bdomingos\b', l) and DOM not in l]
+print(f'C1-15 regla del domingo ({DOM} abierto: {DOM in abiertos}) · en openapi sin marca: {dsin[:5]} · en C1-datos.md sin bloqueo: {cdom[:5]}')
+ok(not dsin and not cdom, 'C1-15 la regla del domingo («los domingos») va marcada PROVISIONAL con el bloqueo U1-lista-vigente-domingo')
 # EXT extractos (protocolo-agentes §4, K32): cada operación en un solo extracto, ≤ 80 KB y referencias resueltas
 EXD = os.path.join(ROOT, 'docs/contratos/extractos')
 exf = sorted(f for f in os.listdir(EXD) if f.endswith('.yaml')) if os.path.isdir(EXD) else []
