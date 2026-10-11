@@ -740,7 +740,7 @@ components:
           x-calculado: true
     CardStatus:
       type: "object"
-      description: "Estado de la tarjeta (N-205). Fórmulas de tarjeta: docs/estado/bloqueos/criterios-credito-formulas.md."
+      description: "Estado de la tarjeta (N-205). Fórmulas de tarjeta: RN-26 y criterio S3-08 (K18): el motor aplica la fórmula general con los datos que Axel captura por producto desde su estado de cuenta; sin esos datos muestra «falta capturar»."
       properties:
         credit_id:
           type: "integer"

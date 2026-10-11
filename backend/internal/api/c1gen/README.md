@@ -114,3 +114,12 @@ Agente correccion-C1-r1 (flujo P1c, 11-oct-2026). Hallazgo A-01 de `docs/estado/
 - `gen2_schemas.py`: `params_json` de `Notification` y de `NotificationUpdate` declara en `properties` las claves de K43: `send_time` (`type: string`, `pattern: ^([01][0-9]|2[0-3]):[0-5][0-9]$`) y `advance_days` (`type: integer`, `minimum: 0`), cada una con descripción que cita K43 y sin valor por omisión. Sigue `additionalProperties: true` (para `weekday` y `day_of_month`) y la marca de lugar `x-provisional` del bloqueo `S1-parametros-avisos`; el generador se detiene si falta alguna de las dos.
 - `gen6_c1.py` y `c1_plantilla.md`: al final de §11.7, la validación de `send_time` y `advance_days` sale de esas propiedades de openapi (el generador exige que `Notification` y `NotificationUpdate` traigan las mismas); fila «C1 v1.2 · corrección r1» en Cambios.
 - `verify_c1.py`: comprobación nueva **C1-23**: el patrón y el mínimo en openapi.yaml, en el extracto que trae `NotificationUpdate` y en C1-datos.md, sin `default`, con `additionalProperties: true` y la marca de lugar; el patrón acepta 00:00 a 23:59 y rechaza 24:00, 7:30 y 12:60; además, 10 MB con 413 en `uploadExpenseAttachment`, 503 `unavailable` en `compareScenarios`, N-023, N-064, N-226, N-297 y N-300 FIRMES (K43) en §10, M-05 con el máximo de 21 y 0 líneas `PROVISIONAL.*C1-valores-k31`.
+
+### C1 v1.2 · ronda 3 (P1d)
+
+Agente correccion-C1-r3 (flujo P1d, 11-oct-2026). Hallazgos bajos de `docs/estado/p1c/REVISION-C1-r2.md`. Reporte: `docs/estado/p1c/correccion-C1-r3.md`.
+
+- `gen4_build.py`: constante única `C1_VERSION` (1.2.0) para `info.version`; los encabezados de `openapi.yaml` y de `routes.go` (`gen5_go.py`) la leen de `info.version`, igual que los extractos (N-01).
+- `gen2_schemas.py`: `minimum: 0` en `goal_adjust_lose_kcal` y `goal_adjust_gain_kcal` de `HealthProfileCreate` y `HealthProfileUpdate` (N-02, K36); `CardStatus` cita RN-26 y S3-08 (K18) (N-03); `NotificationUpdate` sin `x-provisional` a nivel de esquema y `send_time` y `advance_days` con su propia marca de lugar (B-02); descripción nueva de `params_json` en `Notification` y `NotificationUpdate` (B-03).
+- `verify_c1.py`: el mensaje de la regla del domingo dice FIRME (K38) (B-04).
+- `c1_plantilla.md`: cabecera con puerta 1b aplicada, esquema 1.3 y U1 1.2 (I-01); fila «C1 v1.2, ronda 3 (P1d)» en Cambios.

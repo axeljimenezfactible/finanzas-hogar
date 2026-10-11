@@ -352,8 +352,8 @@ def walkdom(o, path, prov=False):
         for i, v in enumerate(o): walkdom(v, f'{path}[{i}]', prov)
 if DOM in abiertos: walkdom(d, '')
 cdom = [l[:80] for l in c1.split('\n') if DOM in abiertos and re.search(r'(?i)\bdomingos\b', l) and DOM not in l]
-print(f'C1-15 regla del domingo ({DOM} abierto: {DOM in abiertos}) · en openapi sin marca: {dsin[:5]} · en C1-datos.md sin bloqueo: {cdom[:5]}')
-ok(not dsin and not cdom, 'C1-15 la regla del domingo («los domingos») va marcada PROVISIONAL con el bloqueo U1-lista-vigente-domingo')
+print(f'C1-15 regla del domingo (FIRME por K38; bloqueo de origen abierto: {DOM in abiertos}) · en openapi sin marca: {dsin[:5]} · en C1-datos.md sin bloqueo: {cdom[:5]}')
+ok(not dsin and not cdom, 'C1-15 la regla del domingo («los domingos») es FIRME por K38 y no deja marcas pendientes')
 # EXT extractos (protocolo-agentes §4, K32): cada operación en un solo extracto, ≤ 80 KB y referencias resueltas
 EXD = os.path.join(ROOT, 'docs/contratos/extractos')
 exf = sorted(f for f in os.listdir(EXD) if f.endswith('.yaml')) if os.path.isdir(EXD) else []

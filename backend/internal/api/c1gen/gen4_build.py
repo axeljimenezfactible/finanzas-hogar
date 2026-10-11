@@ -1,6 +1,9 @@
 # Generador C1 · parte 4: arma el documento OpenAPI y lo escribe
 from gen3_ops import *
 from c1paths import OUT, WORK
+# Única constante de versión del contrato (C1 v1.2 · ronda 3, N-01 de docs/estado/p1c/REVISION-C1-r2.md): da info.version, y de
+# info.version salen los encabezados generados de openapi.yaml (abajo), routes.go (gen5_go.py) y los extractos (gen7_extractos.py).
+C1_VERSION = '1.2.0'
 VIEW_ENT = ['person', 'user_account', 'device_session', 'income', 'category', 'expense', 'savings_goal', 'savings_movement', 'credit', 'credit_term_rate', 'credit_purchase', 'scheduled_payment', 'promotion', 'store', 'product', 'price', 'recipe', 'meal_plan_entry', 'inventory_item', 'weight_entry', 'notification_delivery', 'job', 'backup']
 TAGS = [(I, 'Inicio: tarjetas del resumen, calendario del hogar, búsqueda y vistas de base de datos.'), (G, 'Gastos, adjuntos y captura de tickets con OCR.'), (P_, 'Presupuesto, flujo y proyección, ingresos y ahorro.'), (CO, 'Plan de comidas y recetario.'), (CT, 'Lista de compras, comparar canasta, productos, precios e inventario.'), (CR, 'Líneas, compras a crédito, pagos, promociones y comparador de escenarios.'), (SA, 'Perfil de salud, peso y calorías.'), (RE, 'Reportes, estado de cuenta de Karen, avisos enviados y jobs.'), (AJ, 'Las 14 secciones de Ajustes, sesiones y sistema.')]
 def arr_ids(name, desc): return {'name': name, 'in': 'query', 'required': False, 'description': desc, 'style': 'form', 'explode': False, 'schema': {'type': 'array', 'items': {'type': 'integer', 'minimum': 1}}}
@@ -95,7 +98,7 @@ def build():
         oper['responses'] = resps
         paths.setdefault(o['path'], {})[o['m']] = oper
     doc = {'openapi': '3.1.1',
-      'info': {'title': 'Finanzas Hogar · API (C1)', 'version': '1.2.0', 'summary': 'Contrato C1 v1.2 del backend Go local de Finanzas Hogar.',
+      'info': {'title': 'Finanzas Hogar · API (C1)', 'version': C1_VERSION, 'summary': 'Contrato C1 v1.2 del backend Go local de Finanzas Hogar.',
                'description': 'Contrato C1 v1.2 (11-oct-2026, respuestas de las puertas 1 y 1b). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura; parámetros operativos (K44) por clave de app_setting, con valor vigente, valor inicial y «restablecer», en las operaciones /api/v1/settings/*. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto).'},
       'servers': [{'url': 'https://finanzas.local:8443', 'description': 'Máquina de casa, solo red local (decisión H).'}],
       'security': [{'cookieAuth': []}],
@@ -108,7 +111,7 @@ if __name__ == '__main__':
     import sys
     doc = build()
     out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(OUT, 'docs/contratos/openapi.yaml')
-    head = ('# Finanzas Hogar · Contrato C1 v1.1 (OpenAPI 3.1). Archivo generado: no se edita a mano.\n'
+    head = ('# Finanzas Hogar · Contrato C1 v' + doc['info']['version'] + ' (OpenAPI 3.1). Archivo generado: no se edita a mano.\n'
             '# Generador: backend/internal/api/c1gen/ (agente S6a-contrato-c1, WF-0, 2026-10-10; v1.1: agente C1-v1.1, puerta 1, 2026-10-11). Regenerar: python3 -I backend/internal/api/c1gen/build.py (con --check compara sin escribir).\n'
             '# Fuente: esquema de S1 (backend/db/migrations/*.sql, aplicadas en orden) + necesidades de U1 (docs/design/U1-arquitectura.md). Ver docs/contratos/C1-datos.md.\n')
     open(out, 'w', encoding='utf-8').write(head + '\n'.join(emit(doc)) + '\n')

@@ -18,14 +18,14 @@ Generado por `backend/internal/api/c1gen/build.py` (sin opciones o con `--extrac
 | `comidas.yaml` | Comidas | 16 | 12 | 19 | 47.6 KB (48762 bytes) |
 | `compras-tiendas-a.yaml` | Compras y tiendas | 13 | 11 | 23 | 61.2 KB (62645 bytes) |
 | `compras-tiendas-b.yaml` | Compras y tiendas | 14 | 11 | 19 | 47.5 KB (48594 bytes) |
-| `creditos-a.yaml` | Créditos | 8 | 8 | 10 | 32.4 KB (33140 bytes) |
+| `creditos-a.yaml` | Créditos | 8 | 8 | 10 | 32.5 KB (33268 bytes) |
 | `creditos-b.yaml` | Créditos | 11 | 8 | 23 | 62.0 KB (63456 bytes) |
 | `salud.yaml` | Salud | 6 | 4 | 7 | 19.8 KB (20255 bytes) |
 | `reportes.yaml` | Reportes | 10 | 10 | 21 | 56.1 KB (57440 bytes) |
 | `ajustes-a.yaml` | Ajustes | 14 | 12 | 16 | 41.8 KB (42774 bytes) |
 | `ajustes-b.yaml` | Ajustes | 13 | 12 | 21 | 48.4 KB (49600 bytes) |
 | `ajustes-c.yaml` | Ajustes | 14 | 12 | 22 | 65.8 KB (67413 bytes) |
-| `ajustes-d.yaml` | Ajustes | 14 | 12 | 22 | 60.4 KB (61871 bytes) |
+| `ajustes-d.yaml` | Ajustes | 14 | 12 | 22 | 61.5 KB (62956 bytes) |
 | `ajustes-e.yaml` | Ajustes | 18 | 13 | 21 | 49.4 KB (50599 bytes) |
 | `componentes-comunes.yaml` | (comunes) | — | — | 7 esquemas, 14 parámetros, 3 encabezados, 11 respuestas | 14.4 KB (14703 bytes) |
 | **Total** | | **210** | | | |
