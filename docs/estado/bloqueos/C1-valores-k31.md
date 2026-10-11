@@ -11,3 +11,7 @@ Opciones:
 - C. Pasar la decisión del punto 2 a S3 tras su medición. Consecuencia: la marca del comparador sigue hasta la puerta 2.
 Impacto: solo descripciones del contrato (4 marcas en `openapi.yaml`: el alta de adjuntos, `compareScenarios`, `DashboardWeekMeals` y `NotificationUpdate`) y la columna «Estado» de N-023, N-064, N-226, N-297 y N-300 en la matriz §10 de `C1-datos.md`. Ningún esquema, ruta ni cifra.
 Cómo seguí: C1 v1.1 lleva las cuatro propuestas marcadas PROVISIONAL citando este bloqueo; nada provisional entra en cifras ni en esquema.
+
+## Respuesta de Axel (puerta 1b, 11-oct-2026)
+- **Decisión:** opción **A**: aprobadas las cuatro propuestas (adjunto 10 MB; comparador 5 s con 503 si se pasa; claves `send_time` y `advance_days`; «casillas sin armar» = pares día × tiempo obligatorio sin receta ni «fuera», máximo 21). Por K44, los valores numéricos (10 MB, 5 s, anticipación) nacen con esos valores y son configurables en Ajustes.
+- **Estado:** RESUELTO (K43 y K44). Se aplica en: C1 v1.2 (quitar las 4 marcas; N-023, N-064, N-226, N-297 y N-300 FIRMES en §10), esquema 1.3 (claves en `app_setting`), U4 (WF-1), S3 (mide el tiempo, S3-12).

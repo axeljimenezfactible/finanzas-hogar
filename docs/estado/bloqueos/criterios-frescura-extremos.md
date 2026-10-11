@@ -7,3 +7,7 @@ Opciones:
 - (c) Otra pendiente o escalones; Axel los indica.
 Impacto: solo el peso de los precios de 30 a 89 días en la comparativa de S5. Ninguna cifra canon cambia (la comparativa del 10-oct usa precios frescos). El peso de esos días queda PROVISIONAL.
 Cómo seguí: S5-04 prueba lo que ambas lecturas comparten (peso 1 hasta el día 29, 0 en el día 90, 91 días no compite, peso que no sube y recta lineal) y deja el valor de los días 30 a 89 PROVISIONAL citando este bloqueo, con la lectura (a).
+
+## Respuesta de Axel (puerta 1b, 11-oct-2026)
+- **Decisión:** opción **(b)**: peso = (90 − días) / 61 para 30 ≤ días ≤ 90 (día 30 = 0.9836; día 60 = 0.4918; día 90 = 0); peso 1 hasta el día 29; después del día 90 no compite, solo se marca.
+- **Estado:** RESUELTO (K40). Se aplica en: criterios S5-04 1.2, RN-12 1.3, S5 (WF-1).

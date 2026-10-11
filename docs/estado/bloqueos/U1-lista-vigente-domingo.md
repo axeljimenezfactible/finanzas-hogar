@@ -7,3 +7,7 @@ Opciones:
 3. Otro día de corte (por ejemplo, desde el sábado). Consecuencia: U1 cambia la definición de §0.2 y nada más.
 Impacto: solo la semana que se muestra por defecto. Toda lectura y escritura de la lista lleva la semana explícita que la pantalla muestra (R3-01), así que ninguna cifra, esquema ni operación depende de esta respuesta. Si C1 conserva un valor por omisión de `period`, debe ser esta misma regla.
 Cómo seguí: U1 1.1 usa la opción 1 marcada **PROVISIONAL** en §0.2 y en §7 (N-120, N-150 y N-160 remiten a §0.2). Nada provisional entra en cifras ni en esquema.
+
+## Respuesta de Axel (puerta 1b, 11-oct-2026)
+- **Decisión:** opción **1**: los domingos, el plan de comidas, la lista de compras y comparar canasta abren por defecto **la semana siguiente** (la que empieza el lunes); «Cambiar semana» siempre disponible.
+- **Estado:** RESUELTO (K38). Se aplica en: U1 1.2 §0.2 y §7 (quitar PROVISIONAL), C1 v1.2 (`getMealPlanWeek` sin marca), U3 (WF-1), WF-3.

@@ -8,3 +8,7 @@ Opciones:
 4. Intercambiar en oscuro la L de Walmart y de Bodega Aurrera (Walmart arriba, en L 0.825). Consecuencia: Walmart pierde croma (0.088, bajo el piso de 0.10) y queda a ΔL 0.04 de la marca 400. No se recomienda.
 Impacto: solo `color.store.walmart.dark`, marcado PROVISIONAL en la descripción del token en `docs/contratos/C2-colores.json` y en `docs/design/colorimetria.md` («Cambios 1.1», §7.2 y §12). No toca cifras ni esquema.
 Cómo seguí: Entregué la opción 1 marcada PROVISIONAL. El script verifica el escalonamiento, la separación de los roles y la regla Karen–Bodega Aurrera. Cambiar de opción es editar la L de Walmart o de Mercado (TIENDAS) y el diccionario PROVISIONAL en `docs/design/tools/colorimetria.py` y regenerar.
+
+## Respuesta de Axel (puerta 1b, 11-oct-2026)
+- **Decisión:** opción **1**: `color.store.walmart.dark` queda en L 0.716 (`#7AA3EE`), FIRME; se quita la marca.
+- **Estado:** RESUELTO (K42). Se aplica en: colorimetría 1.2, DESIGN.md (WF-1).

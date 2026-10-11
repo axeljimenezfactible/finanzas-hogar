@@ -8,3 +8,7 @@ C. Ajuste en porcentaje: −15 % para bajar y +10 % para subir. Consecuencia: es
 D. Cada persona escribe su ajuste en kcal en la pantalla Salud. Consecuencia: hace falta otra columna (migración nueva) y la sugerencia deja de ser automática.
 Impacto: S4 (meta sugerida) y la pantalla Salud. «Mantener» no ajusta. Ninguna cifra del oráculo depende de esto.
 Cómo seguí: RN-17 queda FIRME en la fórmula, los factores, el redondeo y «mantener»; la magnitud del ajuste de «bajar» y «subir» va marcada PROVISIONAL citando este bloqueo. El esquema 1.2 no cambia con las opciones A, B o C.
+
+## Respuesta de Axel (puerta 1b, 11-oct-2026)
+- **Decisión:** «Configurable. Todos los parámetros deben existir pero configurables». El ajuste **comienza en 0 kcal** para bajar y para subir («esas métricas son ajustables») y se configura **por persona, con el valor de la casa como inicial**. «Mantener» no ajusta.
+- **Estado:** RESUELTO (K36 y K44 en `docs/plan/decisiones.md`). Se aplica en: esquema 1.3 (migración 00003: columnas por persona y claves `health.goal_adjust_*` en `app_setting`), RN-17 1.3, C1 v1.2, U1 1.2 (Salud y Ajustes), S4 (WF-1), U4 (WF-1).

@@ -294,7 +294,7 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 | D4 | (a) cada agente propone; Axel aprueba en su puerta |
 
 ## Bloqueos nuevos de P1 (11-oct-2026)
-Los dejaron los agentes del flujo «P1 · Aplicar respuestas de la puerta 1» por ambigüedades que §K no resuelve. Los 8 están **abiertos** (sin «Respuesta de Axel»). Ninguno cambia cifras del oráculo ni el esquema; lo que depende de ellos lleva la marca PROVISIONAL y cita el archivo. Registrado por el integrador de P1 (`integrador-p1`).
+Los dejaron los agentes del flujo «P1 · Aplicar respuestas de la puerta 1» por ambigüedades que §K no resuelve. Los 8 quedaron **RESUELTOS** el 11-oct-2026 (puerta 1b, respuestas K36–K43 en `docs/plan/decisiones.md`; cada archivo lleva su «Respuesta de Axel (puerta 1b)»); el flujo P1c quita las marcas PROVISIONAL que los citan. Ninguno cambia cifras del oráculo ni el esquema; lo que depende de ellos lleva la marca PROVISIONAL y cita el archivo. Registrado por el integrador de P1 (`integrador-p1`).
 
 | Archivo | Fase que lo dejó | Pregunta para Axel | Qué queda PROVISIONAL | Fase que lo usa |
 |---|---|---|---|---|
@@ -308,4 +308,18 @@ Los dejaron los agentes del flujo «P1 · Aplicar respuestas de la puerta 1» po
 | `criterios-promedios-redondeo.md` | Criterios 1.1 | Si el promedio semanal multiplica por 7 el diario sin redondear o ya redondeado a centavos (K20) | Solo el promedio semanal (unos centavos por periodo) | S2 (WF-1) |
 
 Detalle de dónde se cita cada uno y cuántas marcas PROVISIONAL hay por archivo: `docs/estado/p1/INTEGRACION.md`.
+
+## Respuestas de la puerta 1b (11-oct-2026)
+| Bloqueo | Decisión de Axel | K |
+|---|---|---|
+| `S1-ajuste-objetivo-kcal.md` | Ajuste configurable; inicia en 0 para bajar y subir; por persona con el valor de la casa como inicial; «mantener» no ajusta | K36 |
+| `S1-fuentes-precio.md` | C: `manual` compite igual que el ticket; `site_assisted` solo referencia hasta veredicto de términos | K37 |
+| `U1-lista-vigente-domingo.md` | 1: los domingos abren la semana siguiente | K38 |
+| `criterios-promedios-redondeo.md` | (a): diario exacto × 7, un solo redondeo al final | K39 |
+| `criterios-frescura-extremos.md` | (b): peso = (90 − días) / 61; día 30 = 0.9836 | K40 |
+| `U2a-rosas-ximena-bodega.md` | 1: aceptar con refuerzo declarado; DESIGN.md prohíbe persona y tienda solo por color | K41 |
+| `U2a-walmart-oscuro.md` | 1: Walmart oscuro en L 0.716 | K42 |
+| `C1-valores-k31.md` | A: aprobadas las cuatro propuestas | K43 |
+| (regla general) | Todo parámetro numérico operativo nace con su valor decidido y es configurable en Ajustes | K44 |
+| (proceso) | La Pista 3 (Claude Design) la ejecuta Axel; el orquestador entrega `docs/design/entrada/` y revisa `docs/design/salida/` | K35 |
 
