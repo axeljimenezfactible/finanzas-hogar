@@ -1,12 +1,12 @@
-# Finanzas Hogar · Contrato C1 v1.0 (OpenAPI 3.1). Archivo generado: no se edita a mano.
-# Generador: backend/internal/api/c1gen/ (agente S6a-contrato-c1, WF-0, 2026-10-10). Regenerar: python3 -I backend/internal/api/c1gen/build.py (con --check compara sin escribir).
-# Fuente: esquema de S1 (backend/db/migrations/00001_esquema.sql) + necesidades de U1 (docs/design/U1-arquitectura.md). Ver docs/contratos/C1-datos.md.
+# Finanzas Hogar · Contrato C1 v1.1 (OpenAPI 3.1). Archivo generado: no se edita a mano.
+# Generador: backend/internal/api/c1gen/ (agente S6a-contrato-c1, WF-0, 2026-10-10; v1.1: agente C1-v1.1, puerta 1, 2026-10-11). Regenerar: python3 -I backend/internal/api/c1gen/build.py (con --check compara sin escribir).
+# Fuente: esquema de S1 (backend/db/migrations/*.sql, aplicadas en orden) + necesidades de U1 (docs/design/U1-arquitectura.md). Ver docs/contratos/C1-datos.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1)"
-  version: "1.0.0"
-  summary: "Contrato C1 v1.0 del backend Go local de Finanzas Hogar."
-  description: "Contrato C1 v1.0 (10-oct-2026). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto)."
+  version: "1.1.0"
+  summary: "Contrato C1 v1.1 del backend Go local de Finanzas Hogar."
+  description: "Contrato C1 v1.1 (11-oct-2026, respuestas de la puerta 1). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto)."
 servers:
   - url: "https://finanzas.local:8443"
     description: "Máquina de casa, solo red local (decisión H)."
@@ -90,8 +90,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Iniciar sesión"
-      description: "Público. Crea una sesión larga en este dispositivo y responde con la cookie `fh_session` (HttpOnly, Secure, SameSite=Strict). Credenciales incorrectas: 401 `invalid_credentials` con mensaje genérico «Usuario o contraseña incorrectos». Límite: tras 5 intentos fallidos en 15 minutos (app_setting auth.max_failed_attempts y auth.lockout_window_minutes, decisión A) responde 429 `too_many_attempts`, mensaje «Demasiados intentos. Vuelve a intentar a las 21:45.» y `retry_at` aunque la contraseña sea correcta (N-011). Conteo por usuario y por IP, ventana deslizante, duración de sesión 90 días renovable: PROVISIONAL (docs/estado/bloqueos/criterios-login-bloqueo.md)."
-      x-provisional: true
+      description: "Público. Crea una sesión larga en este dispositivo y responde con la cookie `fh_session` (HttpOnly, Secure, SameSite=Strict). Credenciales incorrectas: 401 `invalid_credentials` con mensaje genérico «Usuario o contraseña incorrectos». Límite: tras 5 intentos fallidos en 15 minutos (app_setting auth.max_failed_attempts y auth.lockout_window_minutes, decisión A) responde 429 `too_many_attempts`, mensaje «Demasiados intentos. Vuelve a intentar a las 21:45.» y `retry_at` aunque la contraseña sea correcta (N-011). Conteo por usuario y por IP en ventana deslizante de 15 minutos (el bloqueo se levanta cuando en los últimos 15 minutos hay menos de 5 fallos); la sesión dura 90 días y se renueva con cada uso (K11)."
       x-necesidades:
         - "N-010"
         - "N-011"
@@ -794,7 +793,7 @@ paths:
       tags:
         - "Inicio"
       summary: "Tarjeta «Mejor canasta»"
-      description: "Tarjeta «Mejor canasta»."
+      description: "Mejor canasta de la lista de la semana `week`, la que muestra la pantalla (R3-01)."
       x-necesidades:
         - "N-024"
       x-tablas:
@@ -810,6 +809,8 @@ paths:
         - "shopping_list"
         - "shopping_list_item"
         - "store"
+      parameters:
+        - $ref: "#/components/parameters/ListWeek"
       responses:
         "200":
           description: "Correcto."
@@ -824,6 +825,8 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
         default:
           $ref: "#/components/responses/Error"
   /api/v1/dashboard/savings:
@@ -989,7 +992,7 @@ paths:
       tags:
         - "Gastos"
       summary: "Registrar gasto"
-      description: "Devuelve el gasto con sus partes calculadas (expense_share; el resto y los centavos van a la persona del resto de la regla)."
+      description: "Devuelve el gasto con sus partes calculadas (expense_share; el resto y los centavos van a la persona del resto de la regla). Captura sin conexión (K9): la cola del teléfono manda cada gasto con su Idempotency-Key y su captured_at. La clave queda también en expense.idempotency_key, sin purga: un reintento con la misma clave responde 200 con el mismo gasto e Idempotent-Replayed: true, sin crear otro, aunque hayan pasado más de 24 h (pasadas las 24 h solo se compara la clave). Con la misma clave y otro cuerpo dentro de las 24 h, 409 `idempotency_key_reused`."
       x-necesidades:
         - "N-054"
       x-tablas:
@@ -1014,6 +1017,17 @@ paths:
             schema:
               $ref: "#/components/schemas/ExpenseCreate"
       responses:
+        "200":
+          description: "Reintento de una captura ya registrada con la misma Idempotency-Key (K9): devuelve el mismo recurso, sin crear otro, con Idempotent-Replayed: true."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Expense"
         "201":
           description: "Creado."
           headers:
@@ -1483,7 +1497,7 @@ paths:
       tags:
         - "Gastos"
       summary: "Adjuntar ticket"
-      description: "Imagen JPG, PNG o WebP, o PDF (U1 N-064). Tamaño máximo PROVISIONAL 10 MB (criterios-umbrales-ausentes punto 5). El archivo se guarda con nombre generado por el servidor, nunca el del usuario."
+      description: "Imagen JPG, PNG o WebP, o PDF (U1 N-064). Tamaño máximo PROVISIONAL 10 MB: propuesta escrita en el bloqueo C1-valores-k31 (Axel la aprueba en la puerta 4). El archivo se guarda con nombre generado por el servidor, nunca el del usuario."
       x-provisional: true
       x-necesidades:
         - "N-064"
@@ -1638,11 +1652,9 @@ paths:
       tags:
         - "Gastos"
       summary: "Leer ticket con OCR"
-      description: "Sube la foto y lanza el OCR local (Tesseract, spa). La lectura queda guardada sin confirmar (attachment con expense_id NULL), por eso «Guardar para después» (N-075) no necesita otra operación; guardar correcciones a medias: PROVISIONAL (bloqueo C1-huecos-u1-s1, el mismo de S1-huecos-negocio punto 2)."
-      x-provisional: true
+      description: "Sube la foto y lanza el OCR local (Tesseract, spa). La lectura queda guardada sin confirmar (attachment con expense_id NULL), y «Guardar para después» guarda las correcciones como borrador con saveTicketScanDraft (N-075, K3)."
       x-necesidades:
         - "N-070"
-        - "N-075"
       x-tablas:
         - "attachment"
         - "idempotency_key"
@@ -1696,7 +1708,7 @@ paths:
       tags:
         - "Gastos"
       summary: "Tickets por confirmar"
-      description: "Lecturas sin confirmar (ocr_status pending, done o failed). Orden: -created_at."
+      description: "Lecturas sin confirmar (ocr_status pending, done o failed). Cada una dice si tiene borrador (has_draft) y trae display_store_id y display_total_cents, que toman tienda y total del borrador cuando existe (N-076, K3). Orden: -created_at."
       x-necesidades:
         - "N-076"
       x-tablas:
@@ -1728,7 +1740,7 @@ paths:
       tags:
         - "Gastos"
       summary: "Resultado de la lectura"
-      description: "Resultado de la lectura."
+      description: "Propuesta del OCR y, si existe, el borrador de correcciones guardado (draft, K3): la pantalla abre el borrador en lugar de la propuesta (N-071)."
       x-necesidades:
         - "N-071"
       x-tablas:
@@ -1764,6 +1776,54 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/ticket-scans/{attachment_id}/draft:
+    put:
+      operationId: "saveTicketScanDraft"
+      tags:
+        - "Gastos"
+      summary: "Guardar correcciones para después"
+      description: "«Guardar para después» (K3): guarda como borrador las correcciones de encabezado y renglones de una lectura sin confirmar en attachment.ocr_draft_json y ocr_draft_saved_at, y reemplaza el borrador anterior. No crea gasto, precio ni inventario y no toca la lectura cruda. confirmTicketScan vacía el borrador. Una lectura ya confirmada responde 409 `conflict`."
+      x-necesidades:
+        - "N-075"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+      parameters:
+        - name: "attachment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (attachment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketScanDraft"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketScan"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
         default:
           $ref: "#/components/responses/Error"
   /api/v1/ticket-scans/{attachment_id}/confirm:
@@ -1878,7 +1938,7 @@ paths:
       tags:
         - "Presupuesto"
       summary: "Presupuesto mensual por categoría"
-      description: "Renglones cuya vigencia toca el periodo `period` (por defecto el mes en curso). El monto de un mes es el del renglón cuya vigencia lo contiene (RN-22). Orden por defecto: category_id y valid_from_date."
+      description: "Renglones cuya vigencia toca el periodo `period` (por defecto el mes en curso). El monto de un mes es el del renglón cuya vigencia lo contiene (RN-22). Cada renglón trae is_single_month («solo este mes») y following_month_amount_cents, el monto que rige el mes siguiente (N-275, K2). Orden por defecto: category_id y valid_from_date."
       x-necesidades:
         - "N-275"
       x-tablas:
@@ -1913,8 +1973,7 @@ paths:
       tags:
         - "Presupuesto"
       summary: "Fijar monto de una categoría"
-      description: "Si la vigencia se traslapa con la de otro renglón de la misma categoría (o del total) responde 409 `budget_overlap` (invariante 7 de S1). Para que un monto nuevo rija desde un mes, primero se cierra el renglón vigente con updateBudget (valid_to_date = último día del mes anterior). Qué vigencia manda la pantalla es PROVISIONAL: bloqueo S1-huecos-negocio punto 1 (el mismo de C1-huecos-u1-s1)."
-      x-provisional: true
+      description: "Si la vigencia se traslapa con la de otro renglón de la misma categoría (o del total) responde 409 `budget_overlap` (invariante 7 de S1). Sirve cuando la categoría no tiene monto que rija ese mes: «solo este mes» (K2) = valid_from_date y valid_to_date del mismo mes; «de este mes en adelante» = sin valid_to_date. El alta solo llena meses sin monto y nunca cambia ni elimina otros renglones: si la categoría ya tiene un renglón posterior, una vigencia sin fin se traslapa (409) y el alta llega hasta el día anterior a ese renglón; reemplazar los renglones posteriores es el efecto de updateBudget con scope=onward (C1-datos.md §7.1). Cambiar un monto que ya rige se hace con updateBudget y su alcance (scope)."
       x-necesidades:
         - "N-087"
         - "N-278"
@@ -1959,8 +2018,7 @@ paths:
       tags:
         - "Presupuesto"
       summary: "Ajustar presupuesto"
-      description: "Cambia el monto, cierra o reabre la vigencia (valid_to_date) o las notas. Una vigencia que se traslapa con otro renglón de la misma categoría responde 409 `budget_overlap`. Qué vigencia manda la pantalla es PROVISIONAL: bloqueo S1-huecos-negocio punto 1 (el mismo de C1-huecos-u1-s1)."
-      x-provisional: true
+      description: "Cambia el monto, cierra o reabre la vigencia (valid_to_date) o las notas. Un cambio de amount_cents aplica el alcance de K2 sobre el mes `month` (el que muestra la pantalla: en P-06 el elegido, en P-26.02 el mes en curso), que debe caer en la vigencia del renglón. Con `scope=onward` (por omisión) el monto nuevo rige desde `month` sin fin (valid_to_date NULL): el renglón termina el último día del mes anterior, otro renglón con el monto nuevo rige desde `month` y los renglones posteriores de la misma categoría (o del total) se eliminan, con su registro en audit_log, porque el monto nuevo los reemplaza (C1-datos.md §7.1). Con `scope=this_month` el monto nuevo rige solo ese mes, el anterior sigue desde el mes siguiente hasta el fin original y los renglones posteriores no cambian. Si el renglón empieza en `month`, el monto cambia en ese renglón (con onward queda sin fin y también se eliminan los posteriores; con this_month el resto de la vigencia queda en otro renglón con el monto anterior). Responde el renglón que rige en `month`. Los cambios de valid_to_date o notes no usan scope ni month. Una vigencia que se traslapa con otro renglón de la misma categoría responde 409 `budget_overlap`; `month` fuera de la vigencia, 422 `out_of_range`."
       x-necesidades:
         - "N-087"
         - "N-278"
@@ -1975,6 +2033,8 @@ paths:
           schema:
             type: "integer"
             minimum: 1
+        - $ref: "#/components/parameters/BudgetScope"
+        - $ref: "#/components/parameters/BudgetMonth"
       requestBody:
         required: true
         content:
@@ -2261,7 +2321,7 @@ paths:
       tags:
         - "Presupuesto"
       summary: "Flujo por quincena"
-      description: "Flujo por quincena."
+      description: "Los meses 7 a 12 siguen el interruptor projection.repeat_cadence_enabled (getProjectionSettings, N-318; K21) y la respuesta dice el modo usado en projection_mode."
       x-necesidades:
         - "N-090"
         - "N-027"
@@ -2300,7 +2360,7 @@ paths:
       tags:
         - "Presupuesto"
       summary: "Devengado contra efectivo, 12 meses"
-      description: "Devengado contra efectivo, 12 meses."
+      description: "Los meses 7 a 12 siguen el interruptor projection.repeat_cadence_enabled (getProjectionSettings, N-318; K21) y la respuesta dice el modo usado en projection_mode."
       x-necesidades:
         - "N-091"
         - "N-028"
@@ -2337,7 +2397,7 @@ paths:
       tags:
         - "Presupuesto"
       summary: "Supuestos de la proyección"
-      description: "Supuestos de la proyección."
+      description: "Los meses 7 a 12 siguen el interruptor projection.repeat_cadence_enabled (getProjectionSettings, N-318; K21) y la respuesta dice el modo usado en projection_mode."
       x-necesidades:
         - "N-093"
       x-tablas:
@@ -2357,6 +2417,70 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/settings/projection:
+    get:
+      operationId: "getProjectionSettings"
+      tags:
+        - "Ajustes"
+      summary: "Interruptor de proyección"
+      description: "Lee projection.repeat_cadence_enabled (apagado por defecto, K21)."
+      x-necesidades:
+        - "N-318"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectionSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      operationId: "updateProjectionSettings"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar el interruptor de proyección"
+      description: "Cambia projection.repeat_cadence_enabled (K21); afecta solo los meses 7 a 12 de la proyección."
+      x-necesidades:
+        - "N-319"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectionSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectionSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
         default:
           $ref: "#/components/responses/Error"
   /api/v1/debt/live:
@@ -3461,7 +3585,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar persona"
-      description: "Nombre visible y tope de pago por quincena (objetivo del comparador). No se crean personas ni cuentas desde la API."
+      description: "Nombre visible y tope de pago por quincena, opcional por persona (K13; objetivo del comparador; null lo quita). No se crean personas ni cuentas desde la API."
       x-necesidades:
         - "N-310"
         - "N-289"
@@ -4293,8 +4417,7 @@ paths:
       tags:
         - "Compras y tiendas"
       summary: "Lista de compras de la semana"
-      description: "Lista guardada de la semana (shopping_list y shopping_list_item) con lo que calculan S4 y S5 al consultar: piezas, tienda y presentación recomendadas, precio estimado y frescura (N-150). Semana de la lista: `period` con una semana (`2026-W42`, lunes a domingo, PROVISIONAL U1-periodos-semana-quincena); sin valor, la semana en curso. Si la semana todavía no tiene lista responde la lista vacía, sin shopping_list_id. «Terminar compra» (N-073) pide is_bought=true y abre la captura del ticket con esos artículos como renglones propuestos. PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras), pendiente de la puerta 1."
-      x-provisional: true
+      description: "Lista guardada de la semana (shopping_list y shopping_list_item) con lo que calculan S4 y S5 al consultar: piezas, tienda y presentación recomendadas, precio estimado y frescura (N-150). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Si la semana todavía no tiene lista responde la lista vacía, sin shopping_list_id. «Terminar compra» (N-073) pide is_bought=true y abre la captura del ticket con esos artículos como renglones propuestos. Lista compartida en el servidor (K1)."
       x-necesidades:
         - "N-150"
         - "N-073"
@@ -4311,7 +4434,7 @@ paths:
         - "store"
         - "store_product_group"
       parameters:
-        - $ref: "#/components/parameters/Period"
+        - $ref: "#/components/parameters/ListWeek"
         - $ref: "#/components/parameters/StoreId"
         - name: "is_bought"
           in: "query"
@@ -4343,8 +4466,7 @@ paths:
       tags:
         - "Compras y tiendas"
       summary: "Generar lista de compras"
-      description: "Produce o actualiza la lista de la semana desde el plan de comidas (motor S4: ingredientes del plan escalados − existencia + reposición por ritmo). Crea shopping_list si falta, pone generated_at y guarda la necesidad (needed_milli) en un artículo calculated por producto; conserva lo que eligió una persona (cantidad, tienda, presentación, comprado) y los artículos a mano (invariante 13 de S1). Semana de la lista: `period` con una semana (`2026-W42`, lunes a domingo, PROVISIONAL U1-periodos-semana-quincena); sin valor, la semana en curso. PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras), pendiente de la puerta 1."
-      x-provisional: true
+      description: "Produce o actualiza la lista de la semana desde el plan de comidas (motor S4: ingredientes del plan escalados − existencia + reposición por ritmo). Crea shopping_list si falta, pone generated_at y guarda la necesidad (needed_milli) en un artículo calculated por producto; conserva lo que eligió una persona (cantidad, tienda, presentación, comprado) y los artículos a mano (invariante 13 de S1). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Lista compartida en el servidor (K1)."
       x-necesidades:
         - "N-127"
       x-tablas:
@@ -4362,7 +4484,7 @@ paths:
         - "store"
         - "store_product_group"
       parameters:
-        - $ref: "#/components/parameters/Period"
+        - $ref: "#/components/parameters/ListWeek"
         - $ref: "#/components/parameters/IdempotencyKey"
       responses:
         "200":
@@ -4390,8 +4512,7 @@ paths:
       tags:
         - "Compras y tiendas"
       summary: "Agregar artículo a la lista"
-      description: "Agrega un artículo a mano (origin = manual) a la lista de la semana. Si esa semana todavía no tiene lista, la crea sin generarla (generated_at ausente). Semana de la lista: `period` con una semana (`2026-W42`, lunes a domingo, PROVISIONAL U1-periodos-semana-quincena); sin valor, la semana en curso. PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras), pendiente de la puerta 1."
-      x-provisional: true
+      description: "Agrega un artículo a mano (origin = manual) a la lista de la semana. Si esa semana todavía no tiene lista, la crea sin generarla (generated_at ausente). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Lista compartida en el servidor (K1)."
       x-necesidades:
         - "N-152"
       x-tablas:
@@ -4403,7 +4524,7 @@ paths:
         - "shopping_list_item"
         - "store"
       parameters:
-        - $ref: "#/components/parameters/Period"
+        - $ref: "#/components/parameters/ListWeek"
         - $ref: "#/components/parameters/IdempotencyKey"
       requestBody:
         required: true
@@ -4439,8 +4560,7 @@ paths:
       tags:
         - "Compras y tiendas"
       summary: "Marcar comprado o cambiar tienda o cantidad"
-      description: "Marca o desmarca comprado (N-151) y cambia tienda, presentación o cantidad (N-153). Marcar comprado no crea gasto ni precio: eso pasa al confirmar el ticket (N-073 → confirmTicketScan o createExpense). PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras), pendiente de la puerta 1."
-      x-provisional: true
+      description: "Marca o desmarca comprado (N-151) y cambia tienda, presentación o cantidad (N-153). Marcar comprado no crea gasto ni precio: eso pasa al confirmar el ticket (N-073 → confirmTicketScan o createExpense). Si el artículo no es de la semana `week` responde 422 `out_of_range` (R3-01). Lista compartida en el servidor (K1)."
       x-necesidades:
         - "N-151"
         - "N-153"
@@ -4458,6 +4578,7 @@ paths:
           schema:
             type: "integer"
             minimum: 1
+        - $ref: "#/components/parameters/ListWeek"
       requestBody:
         required: true
         content:
@@ -4492,8 +4613,7 @@ paths:
       tags:
         - "Compras y tiendas"
       summary: "Usar esta tienda"
-      description: "«Usar esta tienda» desde la comparativa (N-165; F-3 ruta A, paso 3): pone store_id en los artículos de la lista de la semana que tienen precio en esa tienda; los demás conservan su tienda (invariante 13 de S1). Si la semana no tiene lista responde 404 `not_found`. Después la pantalla abre la lista agrupada por esa tienda (getShoppingList con store_id). Semana de la lista: `period` con una semana (`2026-W42`, lunes a domingo, PROVISIONAL U1-periodos-semana-quincena); sin valor, la semana en curso. PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras), pendiente de la puerta 1."
-      x-provisional: true
+      description: "«Usar esta tienda» desde la comparativa (N-165; F-3 ruta A, paso 3): pone store_id en los artículos de la lista de la semana que tienen precio en esa tienda; los demás conservan su tienda (invariante 13 de S1). Si la semana no tiene lista responde 404 `not_found`. Después la pantalla abre la lista agrupada por esa tienda (getShoppingList con store_id). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Lista compartida en el servidor (K1)."
       x-necesidades:
         - "N-165"
       x-tablas:
@@ -4505,7 +4625,7 @@ paths:
         - "shopping_list_item"
         - "store"
       parameters:
-        - $ref: "#/components/parameters/Period"
+        - $ref: "#/components/parameters/ListWeek"
         - $ref: "#/components/parameters/IdempotencyKey"
       requestBody:
         required: true
@@ -4543,7 +4663,7 @@ paths:
       tags:
         - "Compras y tiendas"
       summary: "Canastas disponibles"
-      description: "La lista vigente y las compras con renglones, por fecha descendente."
+      description: "La lista de la semana `week` (R3-01) y las compras con renglones, por fecha descendente."
       x-necesidades:
         - "N-160"
       x-tablas:
@@ -4554,6 +4674,7 @@ paths:
         - "shopping_list_item"
         - "store"
       parameters:
+        - $ref: "#/components/parameters/ListWeek"
         - $ref: "#/components/parameters/Cursor"
         - $ref: "#/components/parameters/Limit"
         - $ref: "#/components/parameters/Sort"
@@ -4571,6 +4692,8 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
         default:
           $ref: "#/components/responses/Error"
   /api/v1/basket-comparison:
@@ -5564,8 +5687,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Importar corte PROFECO"
-      description: "Archivo de datos abiertos (RAR o CSV). Tamaño máximo PROVISIONAL de 1 GB (bloqueo C1-parametros-tecnicos)."
-      x-provisional: true
+      description: "Archivo de datos abiertos (RAR o CSV). Tamaño máximo 1 GB (K6)."
       x-necesidades:
         - "N-293"
       x-tablas:
@@ -6381,7 +6503,7 @@ paths:
       tags:
         - "Créditos"
       summary: "Tasas por plazo"
-      description: "Orden: term_count. Conocidas: 2 quincenas 17.27 %, 4 quincenas 25.8685 % (decisión C)."
+      description: "Orden: term_count. Conocidas: 2 quincenas 17.27 %, 4 quincenas 25.8685 % (decisión C); rate_pct las muestra como se capturaron, con rate_decimals (K12)."
       x-necesidades:
         - "N-204"
         - "N-286"
@@ -7161,7 +7283,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Valores del comparador"
-      description: "Valores del comparador."
+      description: "Restricciones duras globales (claves optimizer.* que pueden venir vacías, K16) con missing_constraints, y pesos. El tope por persona se lee de person (listPersons, K13)."
       x-necesidades:
         - "N-225"
         - "N-288"
@@ -7189,7 +7311,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar valores del comparador"
-      description: "Editar valores del comparador."
+      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto."
       x-necesidades:
         - "N-289"
       x-tablas:
@@ -7227,7 +7349,7 @@ paths:
       tags:
         - "Créditos"
       summary: "Comparador de escenarios"
-      description: "Búsqueda exhaustiva sin solver (crédito × plazo × fecha ± días × promoción). Respeta las 3 restricciones duras; el tope por persona es objetivo, no restricción. No guarda nada: «Usar escenario» abre la captura de compra (createCreditPurchase). Tiempo máximo PROVISIONAL (criterios-umbrales-ausentes punto 7)."
+      description: "Búsqueda exhaustiva sin solver (crédito × plazo × fecha ± días × promoción). Respeta las 3 restricciones duras: las que trae la petición sobreescriben solo para esta comparación las globales (K16). Si después de eso falta alguna (o el «± días»), responde 200 con status missing_constraints, sin escenarios ni recomendación, y la pantalla avisa «faltan restricciones». El tope por persona es objetivo, no restricción (K13). No guarda nada: «Usar escenario» abre la captura de compra (createCreditPurchase). Tiempo máximo PROVISIONAL: propuesta escrita en el bloqueo C1-valores-k31 (Axel lo aprueba en la puerta 2)."
       x-provisional: true
       x-necesidades:
         - "N-226"
@@ -7272,7 +7394,7 @@ paths:
       tags:
         - "Salud"
       summary: "Perfiles de salud"
-      description: "Perfiles de salud."
+      description: "Cada perfil trae el objetivo (goal) y la meta sugerida suggested_kcal_target (K23), calculada al consultar; no se guarda."
       x-necesidades:
         - "N-230"
         - "N-311"
@@ -7349,7 +7471,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar perfil de salud"
-      description: "Editar perfil de salud."
+      description: "Edita el perfil, incluido el objetivo de peso (goal, K23). Confirmar la meta sugerida = mandar daily_kcal_target con el valor de suggested_kcal_target; escribir otra = mandar ese otro valor (N-313)."
       x-necesidades:
         - "N-313"
       x-tablas:
@@ -7465,7 +7587,7 @@ paths:
       tags:
         - "Salud"
       summary: "Registrar peso"
-      description: "Registrar peso."
+      description: "Captura sin conexión (K9): la cola del teléfono manda cada peso con su Idempotency-Key y su captured_at. La clave queda también en weight_entry.idempotency_key, sin purga: un reintento con la misma clave responde 200 con el mismo peso e Idempotent-Replayed: true, sin crear otro (pasadas las 24 h solo se compara la clave). Con la misma clave y otro cuerpo dentro de las 24 h, 409 `idempotency_key_reused`."
       x-necesidades:
         - "N-240"
       x-tablas:
@@ -7482,6 +7604,17 @@ paths:
             schema:
               $ref: "#/components/schemas/WeightEntryCreate"
       responses:
+        "200":
+          description: "Reintento de una captura ya registrada con la misma Idempotency-Key (K9): devuelve el mismo recurso, sin crear otro, con Idempotent-Replayed: true."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeightEntry"
         "201":
           description: "Creado."
           headers:
@@ -8261,7 +8394,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Registro de chat"
-      description: "Nunca devuelve chat_id ni el token del bot."
+      description: "Chats confirmados por persona. Nunca devuelve chat_id ni el token del bot. Los chats detectados pendientes están en listTelegramChatCandidates (N-299, K4)."
       x-necesidades:
         - "N-299"
       x-tablas:
@@ -8287,28 +8420,67 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         default:
           $ref: "#/components/responses/Error"
-    post:
-      operationId: "createNotificationRecipient"
+  /api/v1/telegram-chat-candidates:
+    get:
+      operationId: "listTelegramChatCandidates"
       tags:
         - "Ajustes"
-      summary: "Registrar chat"
-      description: "PROVISIONAL: mecanismo de registro con el bot (bloqueo C1-huecos-u1-s1)."
-      x-provisional: true
+      summary: "Chats detectados por confirmar"
+      description: "Chats que el bot detectó cuando alguien le escribió y que esperan confirmación (confirmed_at ausente): nombre que da Telegram, fecha y hora de detección y chat_id enmascarado (chat_id_masked). El chat_id completo nunca se devuelve (K4). Orden: -detected_at."
       x-necesidades:
         - "N-299"
+      x-tablas:
+        - "telegram_chat_candidate"
+      parameters:
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TelegramChatCandidatePage"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/telegram-chat-candidates/{candidate_id}/confirm:
+    post:
+      operationId: "confirmTelegramChatCandidate"
+      tags:
+        - "Ajustes"
+      summary: "Confirmar chat detectado"
+      description: "Liga el chat detectado a una persona (por omisión, la del usuario de la sesión): pone person_id y confirmed_at y crea su notification_recipient en la misma transacción (K4). Un chat ya confirmado responde 409 `conflict`."
+      x-necesidades:
+        - "N-316"
       x-tablas:
         - "audit_log"
         - "idempotency_key"
         - "notification_recipient"
         - "person"
+        - "telegram_chat_candidate"
       parameters:
+        - name: "candidate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (candidate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
         - $ref: "#/components/parameters/IdempotencyKey"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NotificationRecipientCreate"
+              $ref: "#/components/schemas/TelegramChatCandidateConfirm"
       responses:
         "201":
           description: "Creado."
@@ -8325,6 +8497,8 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
         "409":
           $ref: "#/components/responses/Conflict"
         "422":
@@ -8662,7 +8836,7 @@ components:
       type: "apiKey"
       in: "cookie"
       name: "fh_session"
-      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso: PROVISIONAL (criterios-login-bloqueo)."
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
   parameters:
     PersonId:
       name: "person_id"
@@ -8680,8 +8854,7 @@ components:
       name: "family"
       in: "query"
       required: false
-      description: "Filtro global «familia» (U1 §0.2): household = registros con parte a nombre del titular (hogar Axel y Ximena); external = con parte de una persona externa (Karen); joint = con ambas partes. Semántica incluyente PROVISIONAL (bloqueo C1-filtro-familia)."
-      x-provisional: true
+      description: "Filtro global «familia» (U1 §0.2, K5), tres valores incluyentes: household = Hogar, registros con reparto Hogar o Conjunto (incluye lo conjunto); external = Karen, registros con reparto Karen o Conjunto (incluye lo conjunto); joint = Conjunto, solo los registros con reparto Conjunto. Sin valor: todos."
       schema:
         type: "string"
         enum:
@@ -8716,8 +8889,7 @@ components:
       name: "period"
       in: "query"
       required: false
-      description: "Filtro global «periodo», una sola sintaxis: `2026-10` mes calendario (periodo base); `2026-10-q1` / `2026-10-q2` quincena (q1 del 1 al 15, q2 del 16 al último día; días de pago 15 y 30, y en febrero el último día, p. ej. 2027-02-28); `2026-W42` semana ISO de lunes a domingo; `2026` año calendario; `2026-10-10..2026-11-09` rango inclusivo. Rangos de quincena y semana PROVISIONALES (bloqueo U1-periodos-semana-quincena). Sin valor: el periodo por defecto de cada operación."
-      x-provisional: true
+      description: "Filtro global «periodo», una sola sintaxis: `2026-10` mes calendario (periodo base); `2026-10-q1` / `2026-10-q2` quincena (q1 del 1 al 15, q2 del 16 al último día; días de pago 15 y 30, y en febrero el último día, p. ej. 2027-02-28); `2026-W42` semana ISO de lunes a domingo; `2026` año calendario; `2026-10-10..2026-11-09` rango inclusivo. Quincenas y semanas según K8 (el 31 cae en q2). Sin valor: el periodo por defecto de cada operación."
       schema:
         type: "string"
         pattern: "^([0-9]{4}|[0-9]{4}-(0[1-9]|1[0-2])|[0-9]{4}-(0[1-9]|1[0-2])-q[12]|[0-9]{4}-W(0[1-9]|[1-4][0-9]|5[0-3])|[0-9]{4}-[0-9]{2}-[0-9]{2}\\.\\.[0-9]{4}-[0-9]{2}-[0-9]{2})$"
@@ -8747,8 +8919,7 @@ components:
       name: "limit"
       in: "query"
       required: false
-      description: "Registros por página: 50 por defecto (U1); máximo 200 (PROVISIONAL, bloqueo C1-parametros-tecnicos)."
-      x-provisional: true
+      description: "Registros por página: 50 por defecto (U1); máximo 200 (K6)."
       schema:
         type: "integer"
         minimum: 1
@@ -8762,6 +8933,34 @@ components:
       schema:
         type: "string"
         pattern: "^-?[a-z][a-z0-9_]*(,-?[a-z][a-z0-9_]*)*$"
+    BudgetScope:
+      name: "scope"
+      in: "query"
+      required: false
+      description: "Alcance de un cambio de monto (K2): this_month = «solo este mes»; onward = «de este mes en adelante» (por omisión; preseleccionado en pantalla)."
+      schema:
+        type: "string"
+        enum:
+          - "this_month"
+          - "onward"
+        default: "onward"
+    BudgetMonth:
+      name: "month"
+      in: "query"
+      required: false
+      description: "Mes al que aplica el cambio de monto (AAAA-MM): el que muestra la pantalla. Sin valor, el mes en curso."
+      schema:
+        $ref: "#/components/schemas/Month"
+    ListWeek:
+      name: "week"
+      in: "query"
+      required: true
+      description: "Llave de la lista de compras semanal (R3-01): dice qué lista se lee o se escribe. No es un filtro ni sustituye al filtro global `period` (C1-datos.md §6, «Llaves que no son filtros»). Semana ISO `2026-W42`, de lunes a domingo (K8). Obligatoria: la pantalla manda la semana que muestra; el contrato no tiene semana por omisión (la regla de la lista vigente vive en la PWA, U1 §0.2)."
+      schema:
+        type: "string"
+        pattern: "^[0-9]{4}-W(0[1-9]|[1-4][0-9]|5[0-3])$"
+        examples:
+          - "2026-W42"
     Q:
       name: "q"
       in: "query"
@@ -8774,8 +8973,7 @@ components:
       name: "Idempotency-Key"
       in: "header"
       required: true
-      description: "Obligatorio en todo POST de captura. Clave única por intento (UUID v4 recomendado). Repetir la misma clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API la guarda por cuenta en la tabla idempotency_key de S1 (huella SHA-256 del cuerpo y respuesta); retención de 24 h PROVISIONAL (bloqueo C1-parametros-tecnicos)."
-      x-provisional: true
+      description: "Obligatorio en todo POST de captura. Clave única por intento (UUID v4 recomendado). Repetir la misma clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API la guarda por cuenta en la tabla idempotency_key de S1 (huella SHA-256 del cuerpo y respuesta); retención de 24 h (K6, app_setting idempotency.retention_hours). Gastos y pesos guardan además la clave en su propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9)."
       schema:
         type: "string"
         minLength: 16
@@ -8791,7 +8989,7 @@ components:
       schema:
         type: "boolean"
     SetCookie:
-      description: "Cookie de sesión `fh_session`: HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age de la sesión larga (90 días PROVISIONAL, criterios-login-bloqueo)."
+      description: "Cookie de sesión `fh_session`: HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age de la sesión larga (90 días renovables con el uso, K11)."
       schema:
         type: "string"
   responses:
@@ -8902,7 +9100,7 @@ components:
       type: "string"
       format: "date-time"
       pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?(Z|[+-][0-9]{2}:[0-9]{2})$"
-      description: "Instante ISO 8601 con desplazamiento explícito de America/Mexico_City (hoy -06:00). La base lo guarda en UTC con «Z» y la API lo convierte al responder."
+      description: "Instante ISO 8601 con desplazamiento explícito de America/Mexico_City (hoy -06:00). La base lo guarda en UTC con «Z» y la API lo convierte al responder. El sufijo «Z» (UTC) solo se acepta en las entradas; las respuestas siempre llevan el desplazamiento (K12, R2-06)."
       examples:
         - "2026-10-10T21:30:00-06:00"
     BasisPoints:
@@ -9081,8 +9279,8 @@ components:
           x-entrada: true
         new_password:
           type: "string"
-          x-provisional: true
-          description: "Contraseña nueva (PROVISIONAL: longitud mínima en docs/estado/bloqueos/C1-parametros-tecnicos.md)."
+          minLength: 12
+          description: "Contraseña nueva: mínimo 12 caracteres (K6)."
           writeOnly: true
           x-entrada: true
       required:
@@ -9141,7 +9339,7 @@ components:
           description: "0 = cuenta deshabilitada (no puede iniciar sesión)"
         last_login_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Último inicio de sesión correcto (UTC)"
+          description: "Último inicio de sesión correcto"
         created_at:
           $ref: "#/components/schemas/DateTime"
           description: "created_at"
@@ -9185,13 +9383,13 @@ components:
           description: "Agente de usuario reportado por el navegador"
         last_seen_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Último uso (UTC)"
+          description: "Último uso"
         expires_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Vencimiento de la sesión (UTC)"
+          description: "Vencimiento de la sesión"
         revoked_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Cierre manual desde Ajustes (UTC). NULL = vigente"
+          description: "Cierre manual desde Ajustes. NULL = vigente"
         created_at:
           $ref: "#/components/schemas/DateTime"
           description: "created_at"
@@ -9241,7 +9439,7 @@ components:
           description: "1 = paga su parte directo al acreedor (Karen con Kueski). Su parte es informativa para el flujo de efectivo del titular y repone la línea cuando ella paga"
         fortnight_payment_cap_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Tope de pago por quincena de la persona que el optimizador usa como objetivo, nunca como restricción dura (decisión C). Ausente (NULL) = sin tope. El contrato no fija ninguna cifra: el valor se captura en Ajustes «Créditos y condiciones»."
+          description: "Tope de pago por quincena de la persona, opcional (K13): no hay tope fijo; Axel lo captura por persona en Ajustes «Personas y reparto» cuando quiera. El comparador lo usa como objetivo (pago parejo y bajo el tope, K17), nunca como restricción dura (K16). Ausente (NULL) = sin tope. El contrato no fija ninguna cifra."
         is_active:
           type: "boolean"
           description: "is_active"
@@ -9271,7 +9469,7 @@ components:
           anyOf:
             - $ref: "#/components/schemas/MoneyCents"
             - type: "null"
-          description: "Tope de pago por quincena de la persona que el optimizador usa como objetivo, nunca como restricción dura (decisión C). Ausente (NULL) = sin tope. El contrato no fija ninguna cifra: el valor se captura en Ajustes «Créditos y condiciones». · null borra el valor"
+          description: "Tope de pago por quincena de la persona, opcional (K13): no hay tope fijo; Axel lo captura por persona en Ajustes «Personas y reparto» cuando quiera. El comparador lo usa como objetivo (pago parejo y bajo el tope, K17), nunca como restricción dura (K16). Ausente (NULL) = sin tope. El contrato no fija ninguna cifra. · null borra el valor"
         notes:
           type:
             - "string"
@@ -9395,7 +9593,7 @@ components:
       minProperties: 1
     Period:
       type: "object"
-      description: "Periodo (tabla `period`). Mes calendario (periodo base del presupuesto) y sus dos quincenas (subperiodos). Los días de pago (15, y 30 o último día) son FIRMES (oráculo). Los rangos de la quincena (1 a 15 y 16 a fin de mes) son PROVISIONALES: bloqueo U1-periodos-semana-quincena, opción C. Ambos se validan en la propia tabla. Campos ausentes = sin valor (NULL)."
+      description: "Periodo (tabla `period`). Mes calendario (periodo base del presupuesto) y sus dos quincenas (subperiodos). Los días de pago (15, y 30 o último día) son FIRMES (oráculo). Los rangos de la quincena (1 a 15 y 16 a fin de mes) son FIRMES (K8). Ambos se validan en la propia tabla. Campos ausentes = sin valor (NULL)."
       x-tabla: "period"
       required:
         - "id"
@@ -9430,8 +9628,7 @@ components:
           enum:
             - 1
             - 2
-          description: "Quincena 1 (días 1 a 15) o 2 (día 16 a fin de mes). NULL en meses (PROVISIONAL: ver docs/estado/bloqueos/U1-periodos-semana-quincena.md)"
-          x-provisional: true
+          description: "Quincena 1 (días 1 a 15) o 2 (día 16 a fin de mes). NULL en meses"
         start_date:
           $ref: "#/components/schemas/Date"
           description: "Primer día (ISO)"
@@ -9537,6 +9734,9 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        captured_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el gasto en el teléfono. En una captura atrasada es anterior a created_at. NULL = captura en línea: la hora de captura es created_at"
         shares:
           type: "array"
           items:
@@ -9698,7 +9898,7 @@ components:
     ExpenseCreate:
       type: "object"
       additionalProperties: false
-      description: "Alta de un gasto (N-054). payment_method = credit no se acepta aquí: la compra a crédito crea su gasto (POST /api/v1/credit-purchases). kind por defecto: variable, o upcoming si la fecha es posterior a hoy. description es opcional: si falta, el gasto queda sin descripción (NULL) y la pantalla muestra la categoría; la API no inventa un texto de relleno (S1 C-16)."
+      description: "Alta de un gasto (N-054). payment_method = credit no se acepta aquí: la compra a crédito crea su gasto (POST /api/v1/credit-purchases). kind por defecto: variable, o upcoming si la fecha es posterior a hoy. description es opcional: si falta, el gasto queda sin descripción (NULL) y la pantalla muestra la categoría; la API no inventa un texto de relleno (S1 C-16). captured_at (opcional) es el instante en que se capturó en el teléfono: una captura atrasada de la cola sin conexión lo manda junto con su Idempotency-Key (K9); sin valor, la hora de captura es la del alta."
       x-tabla: "expense"
       properties:
         kind:
@@ -9750,6 +9950,9 @@ components:
         notes:
           type: "string"
           description: "notes"
+        captured_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el gasto en el teléfono. En una captura atrasada es anterior a created_at. NULL = captura en línea: la hora de captura es created_at"
         cost_share_rule_parts:
           type: "array"
           items:
@@ -9883,7 +10086,7 @@ components:
       x-calculado: true
     ExpenseSummary:
       type: "object"
-      description: "Resumen del periodo con los filtros (N-042). Promedios PROVISIONALES (docs/estado/bloqueos/criterios-promedios.md)."
+      description: "Resumen del periodo con los filtros (N-042). Promedios de K20: diario = total del periodo ÷ días reales del periodo; semanal = diario × 7."
       properties:
         period_start:
           $ref: "#/components/schemas/Date"
@@ -9902,16 +10105,14 @@ components:
           description: "household_share_cents − previous_household_share_cents."
         daily_average_cents:
           $ref: "#/components/schemas/MoneyCents"
-          x-provisional: true
-          description: "Promedio diario (motor S2; PROVISIONAL, criterios-promedios)."
+          description: "Promedio diario: total del periodo ÷ días reales del periodo, ROUND_HALF_UP (motor S2, K20)."
         weekly_average_cents:
           $ref: "#/components/schemas/MoneyCents"
           x-provisional: true
-          description: "Promedio semanal (motor S2; PROVISIONAL, criterios-promedios)."
+          description: "Promedio semanal = diario × 7 (motor S2, K20). PROVISIONAL si el diario se multiplica antes o después de redondear a centavos: bloqueo criterios-promedios-redondeo."
         monthly_average_cents:
           $ref: "#/components/schemas/MoneyCents"
-          x-provisional: true
-          description: "Promedio mensual (motor S2; PROVISIONAL, criterios-promedios)."
+          description: "Promedio mensual: total ÷ meses del periodo (motor S2; canon R-56 y R-57)."
         top_category_id:
           type: "integer"
           description: "Categoría con mayor gasto."
@@ -10026,12 +10227,27 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        ocr_draft_saved_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Cuándo se guardó el borrador por última vez"
     TicketScan:
       allOf:
         - $ref: "#/components/schemas/Attachment"
         - type: "object"
-          description: "Lectura de ticket (N-071, N-076)."
+          description: "Lectura de ticket (N-071, N-076). Si la persona guardó correcciones con «Guardar para después», las trae en draft (K3)."
           properties:
+            has_draft:
+              type: "boolean"
+              description: "true si hay borrador de correcciones (attachment.ocr_draft_json)."
+            draft:
+              $ref: "#/components/schemas/TicketScanDraft"
+              description: "Borrador de correcciones guardado (K3); ausente si no hay."
+            display_store_id:
+              type: "integer"
+              description: "Tienda que muestra la lista de tickets por confirmar: la del borrador si existe; si no, la propuesta (N-076)."
+            display_total_cents:
+              $ref: "#/components/schemas/MoneyCents"
+              description: "Total que muestra la lista de tickets por confirmar: el del borrador si existe; si no, el propuesto (N-076)."
             proposed_store_id:
               type: "integer"
               description: "Tienda propuesta."
@@ -10085,9 +10301,74 @@ components:
                 x-calculado: true
               description: "Renglones propuestos en el orden del ticket."
           required:
+            - "has_draft"
             - "lines"
           x-calculado: true
       description: "Adjunto de ticket con su propuesta de OCR (ocr_status pending, done o failed)."
+    TicketScanDraft:
+      type: "object"
+      description: "Borrador de correcciones de una lectura de ticket (K3): encabezado y renglones como la persona los dejó con «Guardar para después». Se guarda en attachment.ocr_draft_json (objeto JSON) con su hora en ocr_draft_saved_at; guardar otro reemplaza el anterior y confirmar el ticket lo vacía. La lectura cruda (ocr_text) no cambia."
+      properties:
+        store_id:
+          type: "integer"
+          description: "Tienda."
+        expense_date:
+          $ref: "#/components/schemas/Date"
+          description: "Fecha del gasto."
+        total_cents:
+          $ref: "#/components/schemas/MoneyCents"
+          description: "Total del ticket."
+        category_id:
+          type: "integer"
+          description: "Categoría del gasto."
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Medio de pago. credit = el efectivo sale según los pagos programados de su credit_purchase"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto (regla)."
+        lines:
+          type: "array"
+          items:
+            type: "object"
+            description: "Renglón del borrador tal como lo dejó la persona (K3). Nada crea gasto, precio ni inventario hasta confirmar; un renglón que la persona quitó no aparece."
+            properties:
+              line_no:
+                type: "integer"
+                description: "Orden en el ticket."
+              text:
+                type: "string"
+                description: "Texto leído o corregido."
+              product_id:
+                type: "integer"
+                description: "Producto."
+              presentation_id:
+                type: "integer"
+                description: "Presentación."
+              quantity_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Cantidad."
+              unit_price_cents:
+                $ref: "#/components/schemas/MoneyCents"
+                description: "Precio unitario."
+              line_total_cents:
+                $ref: "#/components/schemas/MoneyCents"
+                description: "Importe."
+              cost_share_rule_id:
+                type: "integer"
+                description: "Cuenta (regla de reparto)."
+            required:
+              - "line_no"
+            additionalProperties: false
+          description: "Renglones en el orden del ticket (puede ir vacía)."
+      required:
+        - "lines"
+      additionalProperties: false
     TicketConfirmRequest:
       type: "object"
       description: "Confirmación humana de un ticket (N-074): crea el gasto con renglones, los precios (fuente ticket_ocr) y las entradas de inventario; si la forma de pago es crédito, crea la compra (N-218)."
@@ -10150,8 +10431,7 @@ components:
           description: "Primer día del primer mes en que rige"
         valid_to_date:
           $ref: "#/components/schemas/Date"
-          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Qué vigencia pone un cambio hecho en Ajustes (solo ese mes o los siguientes) es PROVISIONAL: bloqueo S1-huecos-negocio"
-          x-provisional: true
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
         notes:
           type: "string"
           description: "notes"
@@ -10161,10 +10441,18 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        is_single_month:
+          type: "boolean"
+          description: "true si la vigencia es un solo mes («solo este mes», K2)."
+          x-calculado: true
+        following_month_amount_cents:
+          $ref: "#/components/schemas/MoneyCents"
+          description: "Monto de la misma categoría (o del total) que rige el mes siguiente: al último mes del periodo pedido en listBudgets, o al mes del cambio en las respuestas de alta y cambio; ausente = sin monto (N-275, K2)."
+          x-calculado: true
     BudgetCreate:
       type: "object"
       additionalProperties: false
-      description: "Alta de un monto mensual con vigencia (N-087, N-278). category_id ausente = presupuesto total. valid_from_date = día 1 del primer mes en que rige; valid_to_date = último día del último mes, ausente = sin fin. Un monto de un solo mes empieza y termina en ese mes (RN-22). Qué vigencia manda la pantalla al cambiar un monto en Ajustes o en Presupuesto (solo ese mes, o ese mes y los siguientes hasta otro cambio) es PROVISIONAL: bloqueo S1-huecos-negocio punto 1 (el mismo de C1-huecos-u1-s1)."
+      description: "Alta de un monto mensual con vigencia (N-087, N-278). category_id ausente = presupuesto total. valid_from_date = día 1 del primer mes en que rige; valid_to_date = último día del último mes, ausente = sin fin. Un monto de un solo mes empieza y termina en ese mes (RN-22). Alcance de un cambio de monto (K2): «de este mes en adelante» (scope=onward, preseleccionado) o «solo este mes» (scope=this_month); lo aplica updateBudget partiendo los renglones sin traslapes; con onward el monto nuevo rige sin fin y reemplaza los renglones posteriores de la categoría (C1-datos.md §7.1)."
       x-tabla: "budget"
       properties:
         category_id:
@@ -10178,8 +10466,7 @@ components:
           description: "Primer día del primer mes en que rige"
         valid_to_date:
           $ref: "#/components/schemas/Date"
-          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Qué vigencia pone un cambio hecho en Ajustes (solo ese mes o los siguientes) es PROVISIONAL: bloqueo S1-huecos-negocio"
-          x-provisional: true
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL; «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
         notes:
           type: "string"
           description: "notes"
@@ -10189,7 +10476,7 @@ components:
     BudgetUpdate:
       type: "object"
       additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de un renglón de presupuesto: monto, fin de la vigencia (valid_to_date; null = sin fin) o notas. Qué vigencia manda la pantalla al cambiar un monto en Ajustes o en Presupuesto (solo ese mes, o ese mes y los siguientes hasta otro cambio) es PROVISIONAL: bloqueo S1-huecos-negocio punto 1 (el mismo de C1-huecos-u1-s1)."
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de un renglón de presupuesto: monto, fin de la vigencia (valid_to_date; null = sin fin) o notas. Alcance de un cambio de monto (K2): «de este mes en adelante» (scope=onward, preseleccionado) o «solo este mes» (scope=this_month); lo aplica updateBudget partiendo los renglones sin traslapes; con onward el monto nuevo rige sin fin y reemplaza los renglones posteriores de la categoría (C1-datos.md §7.1)."
       x-tabla: "budget"
       properties:
         amount_cents:
@@ -10199,8 +10486,7 @@ components:
           anyOf:
             - $ref: "#/components/schemas/Date"
             - type: "null"
-          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Qué vigencia pone un cambio hecho en Ajustes (solo ese mes o los siguientes) es PROVISIONAL: bloqueo S1-huecos-negocio · null borra el valor"
-          x-provisional: true
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL; «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente · null borra el valor"
         notes:
           type:
             - "string"
@@ -10305,7 +10591,7 @@ components:
       x-calculado: true
     BudgetFortnights:
       type: "object"
-      description: "Quincenas del mes (N-082). Rangos PROVISIONALES (U1-periodos-semana-quincena)."
+      description: "Quincenas del mes (N-082). Q1 del 1 al 15 y Q2 del 16 al último día (K8)."
       properties:
         month:
           $ref: "#/components/schemas/Month"
@@ -10462,6 +10748,12 @@ components:
       type: "object"
       description: "Flujo por quincena en efectivo, parte del hogar (N-090, motor S2)."
       properties:
+        projection_mode:
+          type: "string"
+          enum:
+            - "contracted_only"
+            - "with_repeat_cadence"
+          description: "Modo de los meses 7 a 12 (K21; ajuste projection.repeat_cadence_enabled): contracted_only = solo compromisos contratados, gastos fijos e ingresos del CSV (por defecto); with_repeat_cadence = además la cadencia bimestral de despensa a crédito y el papel alterno de $199."
         rows:
           type: "array"
           items:
@@ -10491,8 +10783,7 @@ components:
                 description: "Gastos fijos y venideros."
               variable_estimate_cents:
                 $ref: "#/components/schemas/MoneyCents"
-                x-provisional: true
-                description: "Gasto variable estimado (método en /cash-flow/assumptions; PROVISIONAL, criterios-promedios)."
+                description: "Gasto variable estimado (método en /cash-flow/assumptions)."
               planned_savings_cents:
                 $ref: "#/components/schemas/MoneyCents"
                 description: "Aportación planificada a ahorro."
@@ -10521,12 +10812,19 @@ components:
             x-calculado: true
           description: "Desde la Q1 del mes en curso, 24 quincenas."
       required:
+        - "projection_mode"
         - "rows"
       x-calculado: true
     AccrualVsCash:
       type: "object"
       description: "Devengado contra efectivo por mes (N-091, motor S2). cumulative_difference_cents = devengado acumulado − efectivo acumulado (periodos[i].diferencia_acumulada de model.json); no se rotula deuda viva."
       properties:
+        projection_mode:
+          type: "string"
+          enum:
+            - "contracted_only"
+            - "with_repeat_cadence"
+          description: "Modo de los meses 7 a 12 (K21; ajuste projection.repeat_cadence_enabled): contracted_only = solo compromisos contratados, gastos fijos e ingresos del CSV (por defecto); with_repeat_cadence = además la cadencia bimestral de despensa a crédito y el papel alterno de $199."
         months:
           type: "array"
           items:
@@ -10559,7 +10857,7 @@ components:
                 description: "Devengado acumulado − efectivo acumulado."
               is_canonical:
                 type: "boolean"
-                description: "true si el mes tiene cifra canon en model.json (oct-2026 a mar-2027); la marca de los demás la fija S2 (criterios-proyeccion-12m)."
+                description: "true si el mes tiene cifra canon en model.json (oct-2026 a mar-2027); los demás siguen el modo de projection_mode (K21)."
             required:
               - "month"
               - "accrued_cents"
@@ -10573,6 +10871,7 @@ components:
             x-calculado: true
           description: "Del mes en curso a 11 meses después."
       required:
+        - "projection_mode"
         - "months"
       x-calculado: true
     LiveDebt:
@@ -10633,6 +10932,12 @@ components:
       type: "object"
       description: "Supuestos de la proyección (N-093)."
       properties:
+        projection_mode:
+          type: "string"
+          enum:
+            - "contracted_only"
+            - "with_repeat_cadence"
+          description: "Modo de los meses 7 a 12 (K21; ajuste projection.repeat_cadence_enabled): contracted_only = solo compromisos contratados, gastos fijos e ingresos del CSV (por defecto); with_repeat_cadence = además la cadencia bimestral de despensa a crédito y el papel alterno de $199."
         planned_items:
           type: "array"
           items:
@@ -10640,12 +10945,12 @@ components:
           description: "Ingreso esperado, gastos fijos y despensas programadas (planned_item activos)."
         variable_estimate_method:
           type: "string"
-          x-provisional: true
-          description: "Método del gasto variable estimado (lo fija S2; PROVISIONAL, criterios-promedios)."
+          description: "Método del gasto variable estimado (lo fija S2 y lo informa aquí)."
         variable_estimate_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Monto estimado por quincena."
       required:
+        - "projection_mode"
         - "planned_items"
         - "variable_estimate_method"
       x-calculado: true
@@ -11509,7 +11814,7 @@ components:
       x-calculado: true
     DashboardFortnightFlow:
       type: "object"
-      description: "Tarjeta «Flujo quincenal» (N-021, métrica M-02), efectivo y parte del hogar (motor S2). Fórmulas: ingresos = quincena capturada (o esperada, con income_is_expected) + extras con fecha en la quincena; egresos hechos = salidas de efectivo hasta hoy (contado + partes del hogar pagadas); comprometido = partes del hogar de pagos pendientes de la quincena + fijos y venideros sin pagar; saldo al cierre = ingresos − egresos hechos − comprometido. Rango de quincena PROVISIONAL (U1-periodos-semana-quincena)."
+      description: "Tarjeta «Flujo quincenal» (N-021, métrica M-02), efectivo y parte del hogar (motor S2). Fórmulas: ingresos = quincena capturada (o esperada, con income_is_expected) + extras con fecha en la quincena; egresos hechos = salidas de efectivo hasta hoy (contado + partes del hogar pagadas); comprometido = partes del hogar de pagos pendientes de la quincena + fijos y venideros sin pagar; saldo al cierre = ingresos − egresos hechos − comprometido. Quincena del 1 al 15 o del 16 al último día (K8)."
       properties:
         start_date:
           $ref: "#/components/schemas/Date"
@@ -11616,7 +11921,7 @@ components:
       x-calculado: true
     DashboardWeekMeals:
       type: "object"
-      description: "Tarjeta «Comidas de la semana» (N-023, métrica M-05, motor S4). Costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día de cada persona = Σ kcal asignadas ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna persona no tiene receta ni «fuera» (máx. 21; PROVISIONAL, criterios-umbrales-ausentes). Semana lunes a domingo PROVISIONAL."
+      description: "Tarjeta «Comidas de la semana» (N-023, métrica M-05, motor S4). Costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día de cada persona = Σ kcal asignadas ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio (desayuno, comida, cena) en que alguna persona no tiene receta ni «fuera» (máx. 21; PROVISIONAL, bloqueo C1-valores-k31). Semana de lunes a domingo (K8)."
       properties:
         week_start:
           $ref: "#/components/schemas/Date"
@@ -12149,7 +12454,7 @@ components:
       x-calculado: true
     MealPlanWeek:
       type: "object"
-      description: "Plan de la semana con totales (N-120, N-121). Semana lunes a domingo PROVISIONAL (U1-periodos-semana-quincena)."
+      description: "Plan de la semana con totales (N-120, N-121). Semana de lunes a domingo (K8)."
       properties:
         week_start:
           $ref: "#/components/schemas/Date"
@@ -12672,7 +12977,7 @@ components:
         - "description"
     ShoppingListItem:
       type: "object"
-      description: "Artículo de la lista de compras (tabla `shopping_list_item`). Un artículo de la lista: un producto que calculó S4 al generar la lista o un artículo agregado a mano (producto del catálogo o texto libre). Guarda la tienda o mercado elegido, la cantidad elegida y si ya se compró. PROVISIONAL: bloqueo C1-lista-compras, opción A. Campos ausentes = sin valor (NULL)."
+      description: "Artículo de la lista de compras (tabla `shopping_list_item`). Un artículo de la lista: un producto que calculó S4 al generar la lista o un artículo agregado a mano (producto del catálogo o texto libre). Guarda la tienda o mercado elegido, la cantidad elegida y si ya se compró. Se comparte en el servidor entre los dos teléfonos (K1). Campos ausentes = sin valor (NULL)."
       x-tabla: "shopping_list_item"
       required:
         - "id"
@@ -12724,7 +13029,7 @@ components:
           description: "1 = comprado (N-151). No crea gasto ni precio hasta confirmar el ticket"
         bought_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Cuándo se marcó como comprado (UTC)"
+          description: "Cuándo se marcó como comprado"
         notes:
           type: "string"
           description: "notes"
@@ -12756,8 +13061,7 @@ components:
           x-calculado: true
         is_stale_price:
           type: "boolean"
-          x-provisional: true
-          description: "Precio viejo (≥ 30 días, frontera PROVISIONAL, criterios-frescura-peso)."
+          description: "Precio viejo: 30 días o más (K22)."
           x-calculado: true
         reasons:
           type: "array"
@@ -12777,15 +13081,14 @@ components:
           x-calculado: true
     ShoppingList:
       type: "object"
-      description: "Lista de compras de la semana (N-150). Guarda lo que no se calcula (artículos a mano, tienda, presentación o cantidad elegidas y marcas de comprado; shopping_list y shopping_list_item) y añade al consultar lo que calculan S4 y S5 (piezas, tienda recomendada, precio y frescura). Agrupada por vertical y tienda, luego categoría de producto, orden alfabético. PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras): marcas y artículos compartidos en el servidor, pendiente de la puerta 1."
+      description: "Lista de compras de la semana (N-150). Guarda lo que no se calcula (artículos a mano, tienda, presentación o cantidad elegidas y marcas de comprado; shopping_list y shopping_list_item) y añade al consultar lo que calculan S4 y S5 (piezas, tienda recomendada, precio y frescura). Agrupada por vertical y tienda, luego categoría de producto, orden alfabético. Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
       properties:
         shopping_list_id:
           type: "integer"
           description: "Lista guardada de la semana (shopping_list.id). Ausente = la semana todavía no tiene lista: se crea al generarla (N-127) o al agregar un artículo (N-152)."
         start_date:
           $ref: "#/components/schemas/Date"
-          x-provisional: true
-          description: "Primer día de la semana (shopping_list.start_date; lunes, PROVISIONAL U1-periodos-semana-quincena)."
+          description: "Primer día de la semana (shopping_list.start_date; lunes, K8)."
         end_date:
           $ref: "#/components/schemas/Date"
           description: "Último día de la semana, inclusive (shopping_list.end_date)."
@@ -12836,7 +13139,7 @@ components:
     ShoppingListItemCreate:
       type: "object"
       additionalProperties: false
-      description: "Artículo agregado a mano (N-152): producto del catálogo (product_id) o texto libre (free_text con free_text_unit), nunca ambos; cantidad a comprar; tienda y presentación opcionales (ausentes = las que recomienda S5). origin = manual lo pone la API. PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras): marcas y artículos compartidos en el servidor, pendiente de la puerta 1."
+      description: "Artículo agregado a mano (N-152): producto del catálogo (product_id) o texto libre (free_text con free_text_unit), nunca ambos; cantidad a comprar; tienda y presentación opcionales (ausentes = las que recomienda S5). origin = manual lo pone la API. Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
       x-tabla: "shopping_list_item"
       properties:
         product_id:
@@ -12869,7 +13172,7 @@ components:
     ShoppingListItemUpdate:
       type: "object"
       additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de un artículo: marcar o desmarcar comprado (is_bought, N-151; bought_at lo pone o lo quita la API) y cambiar tienda, presentación o cantidad (N-153). null en store_id, presentation_id o quantity_milli vuelve a lo que recomienda o calcula el sistema (en un artículo manual la cantidad no se puede borrar). PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras): marcas y artículos compartidos en el servidor, pendiente de la puerta 1."
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de un artículo: marcar o desmarcar comprado (is_bought, N-151; bought_at lo pone o lo quita la API) y cambiar tienda, presentación o cantidad (N-153). null en store_id, presentation_id o quantity_milli vuelve a lo que recomienda o calcula el sistema (en un artículo manual la cantidad no se puede borrar). Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
       x-tabla: "shopping_list_item"
       properties:
         presentation_id:
@@ -12898,7 +13201,7 @@ components:
       minProperties: 1
     ShoppingListStoreAssignment:
       type: "object"
-      description: "«Usar esta tienda» (N-165). PROVISIONAL: opción A del bloqueo C1-lista-compras (el mismo de S1-lista-compras): marcas y artículos compartidos en el servidor, pendiente de la puerta 1."
+      description: "«Usar esta tienda» (N-165). Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
       properties:
         store_id:
           type: "integer"
@@ -13038,8 +13341,7 @@ components:
                       description: "Precio."
                     base_unit_price_cents:
                       $ref: "#/components/schemas/MoneyCents"
-                      x-provisional: true
-                      description: "Precio por 1 kg, 1 l o 1 pieza según la unidad base, ROUND_HALF_UP (PROVISIONAL, bloqueo C1-campos-calculados)."
+                      description: "Precio por 1 kg, 1 l o 1 pieza según la unidad base, ROUND_HALF_UP (K7)."
                     observed_date:
                       $ref: "#/components/schemas/Date"
                       description: "Fecha."
@@ -13106,7 +13408,7 @@ components:
           description: "Empates."
         membership:
           type: "object"
-          description: "Membresía Sam's (N-164, motor S5). Punto de equilibrio y frecuencia de compra PROVISIONALES (bloqueo C1-campos-calculados)."
+          description: "Membresía Sam's (N-164, motor S5). Punto de equilibrio = compras al año que cubren la membresía (K7)."
           properties:
             store_id:
               type: "integer"
@@ -13464,8 +13766,7 @@ components:
             - "fresh"
             - "stale"
             - "no_price"
-          x-provisional: true
-          description: "Frescura del último precio (viejo ≥ 30 días, frontera PROVISIONAL criterios-frescura-peso)."
+          description: "Frescura del último precio (viejo a los 30 días o más, K22)."
           x-calculado: true
     PriceAt:
       type: "object"
@@ -13482,8 +13783,7 @@ components:
           description: "Precio."
         base_unit_price_cents:
           $ref: "#/components/schemas/MoneyCents"
-          x-provisional: true
-          description: "Precio por 1 kg, 1 l o 1 pieza según la unidad base, ROUND_HALF_UP (PROVISIONAL, bloqueo C1-campos-calculados)."
+          description: "Precio por 1 kg, 1 l o 1 pieza según la unidad base, ROUND_HALF_UP (K7)."
         observed_date:
           $ref: "#/components/schemas/Date"
           description: "Fecha."
@@ -13875,8 +14175,7 @@ components:
           description: "updated_at"
         base_unit_price_cents:
           $ref: "#/components/schemas/MoneyCents"
-          x-provisional: true
-          description: "Precio por 1 kg, 1 l o 1 pieza (PROVISIONAL, bloqueo C1-campos-calculados)."
+          description: "Precio por 1 kg, 1 l o 1 pieza (K7)."
           x-calculado: true
         age_days:
           type: "integer"
@@ -13884,8 +14183,7 @@ components:
           x-calculado: true
         is_stale:
           type: "boolean"
-          x-provisional: true
-          description: "Viejo (≥ 30 días, frontera PROVISIONAL, criterios-frescura-peso)."
+          description: "Viejo: 30 días o más (K22)."
           x-calculado: true
     PriceCreate:
       type: "object"
@@ -14047,13 +14345,8 @@ components:
       properties:
         stale_after_days:
           type: "integer"
-          description: "Edad en días a partir de la cual un precio es viejo (price.stale_after_days = 30, decisión E)."
+          description: "Edad en días a partir de la cual un precio es viejo (price.stale_after_days = 30, decisión E y K22). Peso en la comparativa (K22): 1 hasta el día 29; de 30 a 90 días baja en línea recta de 1 a 0; después solo se muestra marcado y no compite. PROFECO nunca compite: solo es referencia."
           x-app-setting: "price.stale_after_days"
-        stale_weight:
-          type: "string"
-          description: "Peso de un precio viejo (price.stale_weight). PROVISIONAL sin valor: docs/estado/bloqueos/S1-frescura-peso.md."
-          x-app-setting: "price.stale_weight"
-          x-provisional: true
         assisted_reading_enabled:
           type: "boolean"
           description: "Interruptor general de la lectura asistida (price.assisted_reading_enabled, false por defecto)."
@@ -14259,8 +14552,7 @@ components:
             - "sufficient"
             - "reorder"
             - "out"
-          x-provisional: true
-          description: "Suficiente, reponer o agotado (motor S4; PROVISIONAL, bloqueo C1-campos-calculados)."
+          description: "Suficiente, reponer o agotado (motor S4, K7: reponer si la existencia ≤ nivel de reposición; agotado si es 0)."
           x-calculado: true
         estimated_quantity_milli:
           $ref: "#/components/schemas/Milli"
@@ -14559,6 +14851,21 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        rate_base:
+          type: "string"
+          enum:
+            - "daily"
+            - "monthly"
+          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar"
+        min_payment_pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar"
+        min_payment_fixed_cents:
+          $ref: "#/components/schemas/MoneyCents"
+          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar"
+        annual_rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
         live_debt_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Deuda viva = capital + intereses por pagar (motor S3)."
@@ -14578,6 +14885,21 @@ components:
         live_purchase_count:
           type: "integer"
           description: "Compras vivas (status active)."
+          x-calculado: true
+        annual_rate_pct:
+          type: "string"
+          description: "Tasa anual en porcentaje como se capturó: annual_rate_num/annual_rate_den redondeada ROUND_HALF_UP a annual_rate_decimals decimales (K12); ausente sin tasa o sin decimales."
+          x-calculado: true
+        missing_terms:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+              - "annual_rate"
+              - "rate_base"
+              - "min_payment_pct_bp"
+              - "min_payment_fixed_cents"
+          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18); vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar»."
           x-calculado: true
     CreditCreate:
       type: "object"
@@ -14657,6 +14979,21 @@ components:
         notes:
           type: "string"
           description: "notes"
+        rate_base:
+          type: "string"
+          enum:
+            - "daily"
+            - "monthly"
+          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar"
+        min_payment_pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar"
+        min_payment_fixed_cents:
+          $ref: "#/components/schemas/MoneyCents"
+          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar"
+        annual_rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
       required:
         - "name"
         - "kind"
@@ -14766,6 +15103,30 @@ components:
             - "string"
             - "null"
           description: "notes · null borra el valor"
+        rate_base:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "daily"
+            - "monthly"
+            - null
+          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar · null borra el valor"
+        min_payment_pct_bp:
+          anyOf:
+            - $ref: "#/components/schemas/BasisPoints"
+            - type: "null"
+          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar · null borra el valor"
+        min_payment_fixed_cents:
+          anyOf:
+            - $ref: "#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar · null borra el valor"
+        annual_rate_decimals:
+          type:
+            - "integer"
+            - "null"
+          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato · null borra el valor"
       minProperties: 1
     CreditTotals:
       type: "object"
@@ -14971,9 +15332,12 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato"
         rate_pct:
           type: "string"
-          description: "Tasa en porcentaje con 4 decimales para mostrar (25.8685); el cálculo usa rate_num/rate_den."
+          description: "Tasa en porcentaje como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales (17.27 con 2; 25.8685 con 4); ausente si falta rate_decimals. El cálculo usa siempre la fracción rate_num/rate_den."
           x-calculado: true
     CreditTermRateCreate:
       type: "object"
@@ -15002,6 +15366,9 @@ components:
         notes:
           type: "string"
           description: "notes"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato"
       required:
         - "term_count"
         - "rate_num"
@@ -15038,6 +15405,11 @@ components:
             - "string"
             - "null"
           description: "notes · null borra el valor"
+        rate_decimals:
+          type:
+            - "integer"
+            - "null"
+          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato · null borra el valor"
       minProperties: 1
     CardStatus:
       type: "object"
@@ -15292,6 +15664,9 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se muestra la tasa de esta compra, los mismos con que se capturó o cotizó. NULL = sin tasa o sin dato"
         shares:
           type: "array"
           items:
@@ -15312,7 +15687,7 @@ components:
           x-calculado: true
         rate_pct:
           type: "string"
-          description: "Tasa para mostrar con 4 decimales."
+          description: "Tasa de la compra como se capturó o cotizó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; ausente sin tasa o sin decimales."
           x-calculado: true
     CreditPurchaseShareInput:
       type: "object"
@@ -15398,6 +15773,9 @@ components:
         notes:
           type: "string"
           description: "notes"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se muestra la tasa de esta compra, los mismos con que se capturó o cotizó. NULL = sin tasa o sin dato"
         expense_id:
           type: "integer"
           description: "Gasto existente que origina la compra (credit_purchase.expense_id)."
@@ -15663,7 +16041,7 @@ components:
     CreditPaymentCreate:
       type: "object"
       additionalProperties: false
-      description: "Marca como pagada la parte de una persona de un pago programado (N-210). El capital que repone una parte por separado: PROVISIONAL (docs/estado/bloqueos/S1-reposicion-parte-externa.md)."
+      description: "Marca como pagada la parte de una persona de un pago programado (N-210). El capital de una parte pagada por separado se repone solo cuando el pago se completa (K15)."
       x-tabla: "credit_payment"
       properties:
         payer_person_id:
@@ -15741,13 +16119,16 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
         is_current:
           type: "boolean"
           description: "Vigente hoy."
           x-calculado: true
         rate_pct:
           type: "string"
-          description: "Tasa para mostrar."
+          description: "Tasa promocional como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; con tasa 0 la pantalla muestra «sin intereses» (N-287)."
           x-calculado: true
     PromotionCreate:
       type: "object"
@@ -15788,6 +16169,9 @@ components:
         is_active:
           type: "boolean"
           description: "is_active"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
       required:
         - "merchant_name"
         - "term_count"
@@ -15838,6 +16222,11 @@ components:
         is_active:
           type: "boolean"
           description: "is_active"
+        rate_decimals:
+          type:
+            - "integer"
+            - "null"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato · null borra el valor"
       minProperties: 1
     OptimizerWeights:
       type: "object"
@@ -15863,32 +16252,41 @@ components:
       x-app-setting: "optimizer.weights"
     OptimizerSettings:
       type: "object"
-      description: "Valores por defecto del comparador (N-225, N-288). El tope por quincena es person.fortnight_payment_cap_cents (objetivo, no restricción dura) y se edita en /persons."
+      description: "Restricciones duras globales y pesos del comparador (N-225, N-288; K16). Las restricciones pueden venir vacías: missing_constraints dice cuáles faltan. El tope por persona es person.fortnight_payment_cap_cents (objetivo, no restricción dura; K13) y se lee y edita en /persons."
       properties:
+        missing_constraints:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "string"
+            enum:
+              - "min_available_buffer_cents"
+              - "max_live_purchases"
+              - "zero_debt_by_date"
+              - "date_window_days"
+          description: "Valores sin capturar (K16). Vacío = completos; con alguno, la pantalla muestra «faltan restricciones» y el comparador no recomienda."
+          x-calculado: true
         min_available_buffer_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Colchón mínimo de disponible (optimizer.min_available_buffer_cents). PROVISIONAL sin valor: S1-restricciones-optimizador."
+          description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.min_available_buffer_cents"
-          x-provisional: true
         max_live_purchases:
           type: "integer"
-          description: "Máximo de compras vivas a la vez (optimizer.max_live_purchases). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.max_live_purchases"
-          x-provisional: true
         zero_debt_by_date:
           $ref: "#/components/schemas/Date"
-          description: "Deuda en cero antes de esta fecha (optimizer.zero_debt_by_date). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.zero_debt_by_date"
-          x-provisional: true
         date_window_days:
           type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.date_window_days"
-          x-provisional: true
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
       required:
+        - "missing_constraints"
         - "weights"
     OptimizerSettingsUpdate:
       type: "object"
@@ -15896,32 +16294,49 @@ components:
       properties:
         min_available_buffer_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Colchón mínimo de disponible (optimizer.min_available_buffer_cents). PROVISIONAL sin valor: S1-restricciones-optimizador."
+          description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.min_available_buffer_cents"
-          x-provisional: true
         max_live_purchases:
           type: "integer"
-          description: "Máximo de compras vivas a la vez (optimizer.max_live_purchases). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.max_live_purchases"
-          x-provisional: true
         zero_debt_by_date:
           $ref: "#/components/schemas/Date"
-          description: "Deuda en cero antes de esta fecha (optimizer.zero_debt_by_date). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.zero_debt_by_date"
-          x-provisional: true
         date_window_days:
           type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.date_window_days"
-          x-provisional: true
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
       additionalProperties: false
       minProperties: 1
+    ProjectionSettings:
+      type: "object"
+      description: "Ajuste de la proyección de los meses 7 a 12 (N-318, K21)."
+      properties:
+        repeat_cadence_enabled:
+          type: "boolean"
+          description: "Interruptor de la proyección de los meses 7 a 12 (app_setting projection.repeat_cadence_enabled, K21): false (por defecto) = solo compromisos contratados, gastos fijos e ingresos del CSV; true = agrega la cadencia bimestral de despensa a crédito y el papel alterno de $199."
+          x-app-setting: "projection.repeat_cadence_enabled"
+      required:
+        - "repeat_cadence_enabled"
+    ProjectionSettingsUpdate:
+      type: "object"
+      description: "Cambio del interruptor de proyección (N-319, K21)."
+      properties:
+        repeat_cadence_enabled:
+          type: "boolean"
+          description: "Interruptor de la proyección de los meses 7 a 12 (app_setting projection.repeat_cadence_enabled, K21): false (por defecto) = solo compromisos contratados, gastos fijos e ingresos del CSV; true = agrega la cadencia bimestral de despensa a crédito y el papel alterno de $199."
+          x-app-setting: "projection.repeat_cadence_enabled"
+      required:
+        - "repeat_cadence_enabled"
+      additionalProperties: false
     ScenarioRequest:
       type: "object"
-      description: "Compra planeada y restricciones (N-226). Lo que no se mande toma el valor por defecto de /settings/optimizer."
+      description: "Compra planeada y restricciones (N-226). Las restricciones que se manden sobreescriben, solo para esta comparación, las globales de /settings/optimizer (K16); las que no se manden toman la global. Si alguna queda sin valor, el resultado avisa «faltan restricciones» y no recomienda."
       properties:
         amount_cents:
           $ref: "#/components/schemas/MoneyCents"
@@ -15945,24 +16360,20 @@ components:
           description: "Quién compra: capital por persona."
         min_available_buffer_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Colchón mínimo de disponible (optimizer.min_available_buffer_cents). PROVISIONAL sin valor: S1-restricciones-optimizador."
+          description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.min_available_buffer_cents"
-          x-provisional: true
         max_live_purchases:
           type: "integer"
-          description: "Máximo de compras vivas a la vez (optimizer.max_live_purchases). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.max_live_purchases"
-          x-provisional: true
         zero_debt_by_date:
           $ref: "#/components/schemas/Date"
-          description: "Deuda en cero antes de esta fecha (optimizer.zero_debt_by_date). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.zero_debt_by_date"
-          x-provisional: true
         date_window_days:
           type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days). PROVISIONAL sin valor (S1-restricciones-optimizador)."
+          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.date_window_days"
-          x-provisional: true
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
@@ -16006,12 +16417,10 @@ components:
           description: "Fecha en que la deuda queda en cero."
         value_per_peso_milli:
           type: "integer"
-          x-provisional: true
-          description: "Rendimiento de compra por peso ×1000 (PROVISIONAL, criterios-optimizador)."
+          description: "Rendimiento por peso ×1000: unidades base de la canasta por peso gastado con los precios vigentes de cada tienda (K17)."
         score_bp:
           $ref: "#/components/schemas/BasisPoints"
-          x-provisional: true
-          description: "Puntaje ponderado normalizado (PROVISIONAL, criterios-optimizador)."
+          description: "Puntaje ponderado con normalización mín-máx entre los escenarios generados (K17)."
       required:
         - "credit_id"
         - "term_count"
@@ -16025,8 +16434,47 @@ components:
       x-calculado: true
     ScenarioResult:
       type: "object"
-      description: "Resultado del comparador (N-226): los 4 óptimos lado a lado y la recomendación ponderada (pesos iguales normalizados por defecto)."
+      description: "Resultado del comparador (N-226): los 4 óptimos lado a lado y la recomendación ponderada (pesos iguales normalizados por defecto). Si faltan restricciones (K16) no evalúa ni recomienda: status = missing_constraints, listas vacías y missing_constraints dice cuáles faltan."
       properties:
+        status:
+          type: "string"
+          enum:
+            - "ok"
+            - "missing_constraints"
+            - "no_valid_scenario"
+          description: "ok = hay recomendación; missing_constraints = faltan restricciones (K16); no_valid_scenario = ningún escenario respeta las restricciones."
+        missing_constraints:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "string"
+            enum:
+              - "min_available_buffer_cents"
+              - "max_live_purchases"
+              - "zero_debt_by_date"
+              - "date_window_days"
+          description: "Valores sin capturar (K16). Vacío = completos; con alguno, la pantalla muestra «faltan restricciones» y el comparador no recomienda."
+          x-calculado: true
+        constraints_used:
+          type: "object"
+          description: "Restricciones con que se evaluó: las de la petición o, si no vinieron, las globales (K16)."
+          properties:
+            min_available_buffer_cents:
+              $ref: "#/components/schemas/MoneyCents"
+              description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.min_available_buffer_cents"
+            max_live_purchases:
+              type: "integer"
+              description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.max_live_purchases"
+            zero_debt_by_date:
+              $ref: "#/components/schemas/Date"
+              description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.zero_debt_by_date"
+            date_window_days:
+              type: "integer"
+              description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.date_window_days"
         evaluated_count:
           type: "integer"
           description: "Escenarios evaluados."
@@ -16054,7 +16502,7 @@ components:
           x-calculado: true
         recommendation:
           $ref: "#/components/schemas/Scenario"
-          description: "Recomendación por puntaje ponderado."
+          description: "Recomendación por puntaje ponderado; ausente si status no es ok."
         rejected:
           type: "array"
           items:
@@ -16077,6 +16525,8 @@ components:
             x-calculado: true
           description: "Descartados."
       required:
+        - "status"
+        - "missing_constraints"
         - "evaluated_count"
         - "valid"
         - "optima"
@@ -16118,8 +16568,7 @@ components:
             - "moderate"
             - "active"
             - "very_active"
-          description: "PROVISIONAL: escala de actividad de 5 niveles, pendiente de la fórmula de meta kcal (bloqueo S1-meta-kcal)"
-          x-provisional: true
+          description: "Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23)"
         daily_kcal_target:
           type: "integer"
           description: "Meta de kilocalorías por día"
@@ -16135,6 +16584,13 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        goal:
+          type: "string"
+          enum:
+            - "lose"
+            - "maintain"
+            - "gain"
+          description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
         current_weight_g:
           type: "integer"
           description: "Último peso (weight_entry.weight_g)."
@@ -16158,8 +16614,12 @@ components:
             - "normal"
             - "overweight"
             - "obesity"
+          description: "Clasificación del IMC (motor S4; OMS 18.5 / 25 / 30, K7)."
+          x-calculado: true
+        suggested_kcal_target:
+          type: "integer"
           x-provisional: true
-          description: "Clasificación del IMC (motor S4; PROVISIONAL, bloqueo C1-campos-calculados)."
+          description: "Meta diaria de kcal sugerida (motor S4, RN-17, K23): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9) con ajuste por objetivo (goal); la persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo). Magnitud del ajuste de bajar y subir: PROVISIONAL, bloqueo S1-ajuste-objetivo-kcal."
           x-calculado: true
     HealthProfileCreate:
       type: "object"
@@ -16190,8 +16650,7 @@ components:
             - "moderate"
             - "active"
             - "very_active"
-          description: "PROVISIONAL: escala de actividad de 5 niveles, pendiente de la fórmula de meta kcal (bloqueo S1-meta-kcal)"
-          x-provisional: true
+          description: "Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23)"
         daily_kcal_target:
           type: "integer"
           description: "Meta de kilocalorías por día"
@@ -16201,6 +16660,13 @@ components:
         notes:
           type: "string"
           description: "notes"
+        goal:
+          type: "string"
+          enum:
+            - "lose"
+            - "maintain"
+            - "gain"
+          description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
       required:
         - "person_id"
     HealthProfileUpdate:
@@ -16239,8 +16705,7 @@ components:
             - "active"
             - "very_active"
             - null
-          description: "PROVISIONAL: escala de actividad de 5 niveles, pendiente de la fórmula de meta kcal (bloqueo S1-meta-kcal) · null borra el valor"
-          x-provisional: true
+          description: "Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23) · null borra el valor"
         daily_kcal_target:
           type:
             - "integer"
@@ -16256,6 +16721,16 @@ components:
             - "string"
             - "null"
           description: "notes · null borra el valor"
+        goal:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "lose"
+            - "maintain"
+            - "gain"
+            - null
+          description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige · null borra el valor"
       minProperties: 1
     TodayKcal:
       type: "object"
@@ -16328,6 +16803,9 @@ components:
         updated_at:
           $ref: "#/components/schemas/DateTime"
           description: "updated_at"
+        captured_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el peso en el teléfono. NULL = captura en línea: la hora de captura es created_at"
         bmi_tenths:
           type: "integer"
           description: "IMC × 10 a esa fecha."
@@ -16335,7 +16813,7 @@ components:
     WeightEntryCreate:
       type: "object"
       additionalProperties: false
-      description: "Alta de peso histórico (tabla `weight_entry`)."
+      description: "Alta de un peso (N-240). captured_at (opcional) es el instante en que se capturó en el teléfono: una captura atrasada de la cola sin conexión lo manda junto con su Idempotency-Key (K9); sin valor, la hora de captura es la del alta."
       x-tabla: "weight_entry"
       properties:
         person_id:
@@ -16350,6 +16828,9 @@ components:
         notes:
           type: "string"
           description: "notes"
+        captured_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el peso en el teléfono. NULL = captura en línea: la hora de captura es created_at"
       required:
         - "person_id"
         - "measured_date"
@@ -16413,10 +16894,10 @@ components:
           description: "Tamaño en bytes"
         generated_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Momento de generación (UTC)"
+          description: "Momento de generación"
         sent_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Envío por Telegram (reporte mensual) (UTC)"
+          description: "Envío por Telegram (reporte mensual)"
         created_at:
           $ref: "#/components/schemas/DateTime"
           description: "created_at"
@@ -16683,7 +17164,7 @@ components:
     NotificationUpdate:
       type: "object"
       additionalProperties: false
-      description: "Activa o desactiva un aviso y sus parámetros (N-297, N-300). Claves de params_json sin decidir (hora del resumen diario, anticipación de precios viejos): PROVISIONAL, criterios-umbrales-ausentes."
+      description: "Activa o desactiva un aviso y sus parámetros (N-297, N-300). Claves de params_json (hora del resumen diario, anticipación de precios viejos): PROVISIONAL con la propuesta escrita en el bloqueo C1-valores-k31 (Axel las aprueba en la puerta 4)."
       x-tabla: "notification"
       properties:
         is_enabled:
@@ -16747,7 +17228,7 @@ components:
           description: "Error resumido, sin token ni datos sensibles"
         sent_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Momento del envío (UTC)"
+          description: "Momento del envío"
         created_at:
           $ref: "#/components/schemas/DateTime"
           description: "created_at"
@@ -16786,7 +17267,7 @@ components:
           description: "Etiqueta (Celular de Ximena)"
         verified_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Cuándo se comprobó con un mensaje de prueba (UTC)"
+          description: "Cuándo se comprobó con un mensaje de prueba"
         is_active:
           type: "boolean"
           description: "is_active"
@@ -16800,32 +17281,50 @@ components:
           type: "boolean"
           description: "true si tiene chat registrado y verificado."
           x-calculado: true
-    NotificationRecipientCreate:
+    TelegramChatCandidate:
       type: "object"
-      additionalProperties: false
-      description: "Registro del chat de una persona (N-299). chat_id es solo de entrada y nunca se devuelve. Mecanismo de registro con el bot: PROVISIONAL (bloqueo C1-huecos-u1-s1)."
-      x-tabla: "notification_recipient"
+      description: "Chat de Telegram por confirmar (tabla `telegram_chat_candidate`). Chat que el bot detectó cuando alguien le escribió y que espera confirmación en Ajustes «Notificaciones». Guarda solo el chat_id y el nombre que da Telegram. Al confirmarlo se liga a la persona y la API crea su notification_recipient en la misma transacción; descartarlo borra el renglón. Campos ausentes = sin valor (NULL)."
+      x-tabla: "telegram_chat_candidate"
+      required:
+        - "id"
+        - "telegram_name"
+        - "detected_at"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        telegram_name:
+          type: "string"
+          description: "Nombre que da Telegram para ese chat"
+        detected_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Cuándo lo detectó el bot"
+        confirmed_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Cuándo la persona lo confirmó en Ajustes. NULL = pendiente"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se ligó al confirmar"
+        created_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "updated_at"
+        chat_id_masked:
+          type: "string"
+          description: "chat_id enmascarado: «•••» y sus últimos 4 caracteres (p. ej. «•••4821»), para distinguir dos chats con el mismo nombre. El chat_id completo nunca se devuelve (C1-12, K4)."
+          x-calculado: true
+    TelegramChatCandidateConfirm:
+      type: "object"
+      description: "Confirmación de un chat detectado (N-316, K4)."
       properties:
         person_id:
           type: "integer"
-          description: "Persona destinataria"
-        channel:
-          type: "string"
-          enum:
-            - "telegram"
-          description: "Canal (bot MultiX)"
-        chat_id:
-          type: "string"
-          description: "chat_id de Telegram"
-        label:
-          type: "string"
-          description: "Etiqueta (Celular de Ximena)"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-      required:
-        - "person_id"
-        - "chat_id"
+          description: "Persona a quien se liga el chat; sin valor, la persona del usuario de la sesión."
+      additionalProperties: false
     NotificationRecipientUpdate:
       type: "object"
       additionalProperties: false
@@ -16874,7 +17373,7 @@ components:
           description: "Aviso que manda, si manda alguno"
         last_run_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Inicio de la última corrida (UTC)"
+          description: "Inicio de la última corrida"
         last_status:
           type: "string"
           enum:
@@ -16888,7 +17387,7 @@ components:
           description: "Error resumido de la última corrida"
         next_run_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Próxima corrida calculada (UTC)"
+          description: "Próxima corrida calculada"
         created_at:
           $ref: "#/components/schemas/DateTime"
           description: "created_at"
@@ -16939,10 +17438,10 @@ components:
           description: "Estado"
         started_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Inicio (UTC)"
+          description: "Inicio"
         finished_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Fin (UTC)"
+          description: "Fin"
         file_path:
           type: "string"
           description: "Ruta del archivo en la carpeta o disco de respaldos"
@@ -16957,13 +17456,13 @@ components:
           description: "Resultado de PRAGMA integrity_check sobre la copia (ok o el error)"
         restore_tested_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Última restauración de prueba (UTC)"
+          description: "Última restauración de prueba"
         restore_test_result:
           type: "string"
           description: "Resultado de esa restauración"
         pruned_at:
           $ref: "#/components/schemas/DateTime"
-          description: "Cuándo se borró el archivo por la política de retención (UTC)"
+          description: "Cuándo se borró el archivo por la política de retención"
         error:
           type: "string"
           description: "Error resumido"
@@ -17630,6 +18129,16 @@ components:
               items:
                 $ref: "#/components/schemas/NotificationRecipient"
       description: "Página de NotificationRecipient con la envoltura única (Page)."
+    TelegramChatCandidatePage:
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/TelegramChatCandidate"
+      description: "Página de TelegramChatCandidate con la envoltura única (Page)."
     BackupPage:
       allOf:
         - $ref: "#/components/schemas/Page"

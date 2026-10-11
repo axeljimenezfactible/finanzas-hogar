@@ -36,11 +36,12 @@ BYN = {}
 for o in OPS:
     for n in o['needs']: BYN.setdefault(n, []).append(o)
 def opstr(o): return f"{o['m']} `{o['path']}`"
-LOCAL = {'N-003': 'Recientes en el dispositivo (U1: Local)', 'N-301': 'Tema por dispositivo (U1: Local)'}
+LOCAL = {'N-003': 'Recientes en el dispositivo (U1: Local)', 'N-301': 'Tema por dispositivo (U1: Local)', 'N-317': 'Cola sin conexión en el teléfono (U1: Local; envía con N-054 y N-240, K9)'}
 # Corrección r2: con el esquema 1.1 de S1 ninguna necesidad queda sin endpoint por bloqueo. La lista de compras sigue la opción A
-# (PROVISIONAL hasta la puerta 1); de los huecos U1 ↔ S1 quedan los 3 de S1-huecos-negocio (vigencia del presupuesto, N-075, N-299).
+# C1 v1.1 (puerta 1): K1 a K23 cerraron la lista de compras y los huecos U1 ↔ S1; quedan con cobertura parcial solo las necesidades que
+# dependen de un bloqueo abierto (valores operativos K31, redondeo del promedio semanal y ajuste por objetivo de la meta de kcal).
 BLOCKED = {}
-PARTIAL = {**{n: 'C1-lista-compras' for n in ('N-150', 'N-151', 'N-152', 'N-153', 'N-165', 'N-127', 'N-073')}, 'N-075': 'C1-huecos-u1-s1', 'N-299': 'C1-huecos-u1-s1', 'N-087': 'C1-huecos-u1-s1', 'N-278': 'C1-huecos-u1-s1', 'N-010': 'criterios-login-bloqueo', 'N-011': 'criterios-login-bloqueo', 'N-040': 'C1-filtro-familia', 'N-226': 'S1-restricciones-optimizador', 'N-225': 'S1-restricciones-optimizador', 'N-288': 'S1-restricciones-optimizador', 'N-064': 'criterios-umbrales-ausentes', 'N-210': 'S1-reposicion-parte-externa'}
+PARTIAL = {'N-023': 'C1-valores-k31', 'N-064': 'C1-valores-k31', 'N-226': 'C1-valores-k31', 'N-297': 'C1-valores-k31', 'N-300': 'C1-valores-k31', 'N-042': 'criterios-promedios-redondeo', 'N-230': 'S1-ajuste-objetivo-kcal', 'N-311': 'S1-ajuste-objetivo-kcal', 'N-313': 'S1-ajuste-objetivo-kcal'}
 def status(n):
     if n in LOCAL: return 'Local'
     if n in BLOCKED: return f'BLOQUEO `{BLOCKED[n]}`'
@@ -60,7 +61,7 @@ sin_ep = sorted(nset - mapped)
 sin_n = [o for o in OPS if not o['needs']]
 unknown_n = sorted({n for o in OPS for n in o['needs']} - nset)
 RESUMEN = '\n'.join([
- f'- Necesidades de U1: **{len(nset)}** (N-001 a N-315). Con operación: **{len(mapped)}**. Locales sin API (U1): **{len(set(LOCAL) & nset)}** (N-003, N-301). Sin endpoint por bloqueo: **{len(set(BLOCKED) & nset)}**{(" (" + ", ".join(sorted(BLOCKED)) + ")") if BLOCKED else ""}. Con cobertura PROVISIONAL (bloqueos de §13, p. ej. `C1-huecos-u1-s1`): **{len(set(PARTIAL) & mapped)}**.',
+ f'- Necesidades de U1: **{len(nset)}** (N-001 a N-319). Con operación: **{len(mapped)}**. Locales sin API (U1): **{len(set(LOCAL) & nset)}** ({", ".join(sorted(set(LOCAL) & nset))}). Sin endpoint por bloqueo: **{len(set(BLOCKED) & nset)}**{(" (" + ", ".join(sorted(BLOCKED)) + ")") if BLOCKED else ""}. Con cobertura PROVISIONAL (bloqueos de §13, p. ej. `C1-valores-k31`): **{len(set(PARTIAL) & mapped)}**.',
  f'- Operaciones del contrato: **{len(OPS)}** en **{len(d["paths"])}** rutas. Con al menos una N-xxx: **{len(OPS) - len(sin_n)}**. Excepciones técnicas sin N-xxx: **{len(sin_n)}** (§11.2). N-xxx citadas por el contrato que no existen en U1: **{len(unknown_n)}**.',
  f'- Pantallas de la matriz de U1 §3.29: **{len(SCREENS)}** (Global, P-00 a P-25 y P-26.01 a P-26.14); filas de la matriz: **{len(rows) - 2}**.',
  f'- Tablas de S1: **{len(schema)}**; con al menos una operación: **{sum(1 for t in schema if any(t in o["tables"] for o in OPS))}** (§11.4). `idempotency_key` es infraestructura de S6: la declaran en `x-tablas` las **{sum(o["idem"] for o in OPS)}** operaciones con `Idempotency-Key` (§1 punto 8).'])
@@ -69,10 +70,12 @@ N_SIN_EP = '\n'.join(['| Necesidad | Qué es | Motivo |', '|---|---|---|'] + [f'
 # --- filtros ---
 FN = {'person_id': 'persona', 'family': 'familia', 'category_id': 'categoría', 'store_id': 'tienda', 'period': 'periodo', 'credit_id': 'crédito'}
 REFN = {'PersonId': 'person_id', 'Family': 'family', 'CategoryId': 'category_id', 'StoreId': 'store_id', 'Period': 'period', 'CreditId': 'credit_id'}
-fr = ['| Operación | Ruta | persona | familia | categoría | tienda | periodo | crédito |', '|---|---|---|---|---|---|---|---|']
+# H-r2-01 (revisión C1-r2): la última columna marca la llave `week` de la lista de compras (ListWeek), que no es filtro.
+fr = ['| Operación | Ruta | persona | familia | categoría | tienda | periodo | crédito | semana de lista (`week`, llave) |', '|---|---|---|---|---|---|---|---|---|']
 for o in OPS:
-    have = {REFN[p['$ref'].split('/')[-1]] for p in o['params'] if '$ref' in p and p['$ref'].split('/')[-1] in REFN}
-    if have: fr.append(f"| `{o['oid']}` | {o['m']} `{o['path']}` | " + ' | '.join('✓' if k in have else '' for k in FN) + ' |')
+    refs = {p['$ref'].split('/')[-1] for p in o['params'] if '$ref' in p}
+    have = {REFN[r] for r in refs if r in REFN}
+    if have or 'ListWeek' in refs: fr.append(f"| `{o['oid']}` | {o['m']} `{o['path']}` | " + ' | '.join('✓' if k in have else '' for k in FN) + ' | ' + ('✓' if 'ListWeek' in refs else '') + ' |')
 FILTROS = '\n'.join(fr)
 # --- entidades (31) ---
 ENT = [('persona', 'person', 'listPersons, updatePerson, getPersonParticipation', 'Tabla* (P-26.12)'),
@@ -103,7 +106,7 @@ ENT = [('persona', 'person', 'listPersons, updatePerson, getPersonParticipation'
  ('peso_historico', 'weight_entry', 'listWeightEntries, createWeightEntry, updateWeightEntry, deleteWeightEntry', 'Tabla*'),
  ('nutricion_ingrediente', 'nutrition_fact', 'listNutritionFacts, createNutritionFact, reloadNutritionBase, getRecipeSettings', 'Sin lista: propiedad del producto (U1)'),
  ('notificacion', 'notification + notification_delivery', 'listNotifications, updateNotification, sendTestNotification, listNotificationDeliveries', 'Tabla*, tablero (notification_id), calendario (sent_at) en avisos enviados'),
- ('destinatario', 'notification_recipient + notification_subscription', 'listNotificationRecipients, createNotificationRecipient, updateNotificationRecipient, setNotificationRecipients', 'Sin lista: se elige dentro de cada aviso (U1)'),
+ ('destinatario', 'notification_recipient + notification_subscription + telegram_chat_candidate', 'listNotificationRecipients, listTelegramChatCandidates, confirmTelegramChatCandidate, updateNotificationRecipient, setNotificationRecipients', 'Sin lista: se elige dentro de cada aviso (U1)'),
  ('job', 'job', 'listJobs, updateJob', 'Tabla*, tablero (code), calendario (next_run_at)'),
  ('respaldo', 'backup', 'listBackups, createBackup, restoreBackup', 'Tabla*')]
 ENTIDADES = '\n'.join(['| # | Entidad (§3.4.1) | Tabla(s) S1 | Operaciones | Vistas (U1 §2.5.a; * = por defecto) |', '|---|---|---|---|---|'] + [f'| {i} | {e} | `{t}` | {ops} | {v} |' for i, (e, t, ops, v) in enumerate(ENT, 1)])
@@ -147,12 +150,12 @@ AJUSTES = '\n'.join(aj)
 CAP = [('Las 14 secciones de Ajustes', '§11.5'), ('Sesiones por dispositivo y su cierre', 'listSessions, revokeSession, revokeSessions, logout'), ('Interruptor A/B y su vista previa', 'getCredit, updateCredit, previewAvailability'),
  ('Comparador de escenarios: 4 objetivos, restricciones, pesos y recomendación', 'compareScenarios, getOptimizerSettings, updateOptimizerSettings'), ('Promociones', 'listPromotions, createPromotion, updatePromotion, deletePromotion'), ('Tasa por plazo', 'listCreditTermRates, createCreditTermRate, updateCreditTermRate, deleteCreditTermRate'),
  ('Calendario unificado de pagos', 'listScheduledPayments, listCalendarEvents'), ('Créditos de los 4 tipos y sus condiciones', 'listCredits, createCredit, updateCredit, getCardStatus, listScheduledPayments (amortización y abonos)'), ('Compras a crédito con partes por persona', 'createCreditPurchase, previewCreditPurchase, getCreditPurchase, markScheduledPaymentPaid, deleteCreditPayment'),
- ('Plan de comidas', 'getMealPlanWeek, createMealPlanEntries, updateMealPlanEntry, deleteMealPlanEntry, copyPreviousWeek, getMealPlanMonth, getMealPlanTrends'), ('Lista de compras', 'getShoppingList, generateShoppingList, createShoppingListItem, updateShoppingListItem, assignShoppingListStore (PROVISIONAL: opción A de `C1-lista-compras`)'), ('Recetas e ingredientes', 'listRecipes, getRecipe, createRecipe, updateRecipe, duplicateRecipe, deleteRecipe, getRecipeUsage, suggestRecipeWithAi'),
+ ('Plan de comidas', 'getMealPlanWeek, createMealPlanEntries, updateMealPlanEntry, deleteMealPlanEntry, copyPreviousWeek, getMealPlanMonth, getMealPlanTrends'), ('Lista de compras', 'getShoppingList, generateShoppingList, createShoppingListItem, updateShoppingListItem, assignShoppingListStore (compartida en el servidor, K1)'), ('Recetas e ingredientes', 'listRecipes, getRecipe, createRecipe, updateRecipe, duplicateRecipe, deleteRecipe, getRecipeUsage, suggestRecipeWithAi'),
  ('Perfil de salud y peso', 'listHealthProfiles, createHealthProfile, updateHealthProfile, getTodayKcal, listWeightEntries, createWeightEntry, updateWeightEntry, deleteWeightEntry'), ('Precios con fuente y frescura', 'listProductPrices, createPrice, updatePrice, deletePrice, getPriceSummary, getPriceSettings, getPriceSources'),
  ('OCR con confirmación humana', 'createTicketScan, listTicketScans, getTicketScan, confirmTicketScan'), ('Mercados con día de visita', 'listStores (kind=market), createStore, updateStore, setStoreProductGroups'), ("Membresía de Sam's (punto de equilibrio)", 'getBasketComparison (membership), updateStore (membership_annual_fee_cents)'),
  ('Gastos con reparto y adjuntos', 'createExpense, updateExpense, listCostShareRules, uploadExpenseAttachment, downloadAttachment, deleteAttachment'), ('Ingresos fijos y extra', 'createIncome, listIncomes, getIncomeMonth, updateIncome, deleteIncome, listPlannedItems'), ('Categorías', 'listCategories, createCategory, updateCategory, reorderCategories'),
  ('Metas y fondo de ahorro', 'listSavingsGoals, createSavingsGoal, updateSavingsGoal, getSavingsSummary, createSavingsMovement'), ('Tiendas, productos, presentaciones y equivalencias', 'listStores, listProducts, createProduct, getProduct, createPresentation, updatePresentation'), ('Comparador de canasta', 'listBaskets, getBasketComparison, assignShoppingListStore'),
- ('Inventario', 'listInventoryItems, createInventoryItem, updateInventoryItem, adjustInventoryItem, listInventoryMovements, getInventorySummary'), ('Nutrición por ingrediente', 'listNutritionFacts, createNutritionFact, reloadNutritionBase'), ('Notificaciones y destinatarios', 'listNotifications, updateNotification, setNotificationRecipients, listNotificationRecipients, createNotificationRecipient, listNotificationDeliveries'),
+ ('Inventario', 'listInventoryItems, createInventoryItem, updateInventoryItem, adjustInventoryItem, listInventoryMovements, getInventorySummary'), ('Nutrición por ingrediente', 'listNutritionFacts, createNutritionFact, reloadNutritionBase'), ('Notificaciones y destinatarios', 'listNotifications, updateNotification, setNotificationRecipients, listNotificationRecipients, listTelegramChatCandidates, confirmTelegramChatCandidate, listNotificationDeliveries'),
  ('Disparo manual del resumen diario y de una alerta', 'sendTestNotification'), ('Reporte mensual PDF (generar, listar, descargar, reenviar)', 'generateMonthlyReport, listReports, downloadReportFile, sendReport'), ('Estado de cuenta de Karen bajo demanda', 'getExternalStatement, generateExternalStatement'), ('Vista web mensual', 'getMonthlyReport, listMonthlyReportMonths'),
  ('Jobs', 'listJobs, updateJob'), ('Respaldos (listar, ejecutar, restaurar)', 'listBackups, createBackup, restoreBackup'), ('IA opcional apagada por defecto', 'listAiProviders, updateAiProvider'), ('Vistas de base de datos genéricas', 'queryView'), ('Métricas del dashboard', 'getDashboardMonthVsPlan, getDashboardFortnightFlow, getDashboardNextPayment, getDashboardWeekMeals, getDashboardBestBasket, getDashboardSavings')]
 allids = {o['oid'] for o in OPS}

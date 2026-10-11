@@ -1,0 +1,1544 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «reportes». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto reportes"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Reportes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Reportes"
+    description: "Reportes, estado de cuenta de Karen, avisos enviados y jobs."
+paths:
+  /api/v1/reports:
+    get:
+      operationId: "listReports"
+      tags:
+        - "Reportes"
+      summary: "Reportes generados"
+      description: "Orden por defecto: -generated_at."
+      x-necesidades:
+        - "N-245"
+        - "N-257"
+        - "N-262"
+      x-tablas:
+        - "generated_report"
+        - "notification"
+        - "notification_delivery"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - name: "kind"
+          in: "query"
+          required: false
+          description: "monthly_pdf o external_statement_pdf."
+          schema:
+            type: "string"
+            enum:
+              - "monthly_pdf"
+              - "external_statement_pdf"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedReportPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/reports/monthly:
+    post:
+      operationId: "generateMonthlyReport"
+      tags:
+        - "Reportes"
+      summary: "Generar reporte mensual PDF"
+      description: "LaTeX (lualatex) local. El resultado aparece en listReports."
+      x-necesidades:
+        - "N-248"
+      x-tablas:
+        - "audit_log"
+        - "budget"
+        - "category"
+        - "credit_purchase"
+        - "expense"
+        - "expense_share"
+        - "generated_report"
+        - "idempotency_key"
+        - "job"
+        - "notification"
+        - "notification_delivery"
+        - "notification_recipient"
+        - "notification_subscription"
+        - "period"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonthlyReportRequest"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedReport"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/reports/external-statements:
+    post:
+      operationId: "generateExternalStatement"
+      tags:
+        - "Reportes"
+      summary: "Generar estado de cuenta de Karen"
+      description: "Generar estado de cuenta de Karen."
+      x-necesidades:
+        - "N-261"
+      x-tablas:
+        - "audit_log"
+        - "credit"
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "generated_report"
+        - "idempotency_key"
+        - "person"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalStatementRequest"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedReport"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/reports/{report_id}/file:
+    get:
+      operationId: "downloadReportFile"
+      tags:
+        - "Reportes"
+      summary: "Descargar PDF"
+      description: "Solo con sesión válida."
+      x-necesidades:
+        - "N-249"
+      x-tablas:
+        - "generated_report"
+      parameters:
+        - name: "report_id"
+          in: "path"
+          required: true
+          description: "Id del registro (report_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/pdf:
+              schema:
+                type: "string"
+                contentMediaType: "application/pdf"
+                description: "PDF guardado."
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/reports/{report_id}/send:
+    post:
+      operationId: "sendReport"
+      tags:
+        - "Reportes"
+      summary: "Reintentar envío por Telegram"
+      description: "Reintentar envío por Telegram."
+      x-necesidades:
+        - "N-250"
+      x-tablas:
+        - "generated_report"
+        - "idempotency_key"
+        - "notification_delivery"
+        - "notification_recipient"
+        - "notification_subscription"
+      parameters:
+        - name: "report_id"
+          in: "path"
+          required: true
+          description: "Id del registro (report_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedReport"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/monthly-report/months:
+    get:
+      operationId: "listMonthlyReportMonths"
+      tags:
+        - "Reportes"
+      summary: "Meses disponibles"
+      description: "Meses disponibles."
+      x-necesidades:
+        - "N-255"
+      x-tablas:
+        - "expense"
+        - "generated_report"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportMonths"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/monthly-report:
+    get:
+      operationId: "getMonthlyReport"
+      tags:
+        - "Reportes"
+      summary: "Reporte del mes (vista web)"
+      description: "Por defecto el último mes cerrado. Mismas cifras que el PDF."
+      x-necesidades:
+        - "N-256"
+        - "N-257"
+      x-tablas:
+        - "budget"
+        - "category"
+        - "credit"
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "expense_share"
+        - "generated_report"
+        - "income"
+        - "meal_plan_entry"
+        - "period"
+        - "person"
+        - "planned_item"
+        - "price"
+        - "savings_goal"
+        - "savings_movement"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+        - "weight_entry"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MonthlyReport"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/persons/{person_id}/statement:
+    get:
+      operationId: "getExternalStatement"
+      tags:
+        - "Reportes"
+      summary: "Estado de cuenta de Karen"
+      description: "Solo personas externas. Por defecto el mes en curso."
+      x-necesidades:
+        - "N-260"
+      x-tablas:
+        - "credit"
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "expense_share"
+        - "person"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      parameters:
+        - name: "person_id"
+          in: "path"
+          required: true
+          description: "Id del registro (person_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalStatement"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notification-deliveries:
+    get:
+      operationId: "listNotificationDeliveries"
+      tags:
+        - "Reportes"
+      summary: "Avisos enviados"
+      description: "Orden por defecto: -created_at. Texto plano tal como se envió."
+      x-necesidades:
+        - "N-247"
+        - "N-245"
+      x-tablas:
+        - "notification"
+        - "notification_delivery"
+        - "notification_recipient"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - name: "notification_id"
+          in: "query"
+          required: false
+          description: "Tipo de aviso."
+          schema:
+            type: "integer"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationDeliveryPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/jobs:
+    get:
+      operationId: "listJobs"
+      tags:
+        - "Reportes"
+      summary: "Jobs programados"
+      description: "Próximo envío de cada resumen (next_run_at) y próximo respaldo diario."
+      x-necesidades:
+        - "N-246"
+        - "N-302"
+        - "N-296"
+        - "N-291"
+      x-tablas:
+        - "job"
+        - "notification"
+        - "notification_subscription"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    BudgetMonth:
+      type: "object"
+      description: "Resumen del mes (N-080). Real = Σ parte del hogar devengada (motor S2)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        income_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Quincenas capturadas o esperadas + extras."
+        planned_spending_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ presupuesto de las categorías."
+        planned_savings_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ aportaciones mensuales planificadas."
+        unassigned_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "income − planned_spending − planned_savings."
+        actual_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ parte del hogar devengada en el mes."
+        remaining_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "planned_spending − actual (negativo si se rebasó)."
+        used_pct:
+          type: "integer"
+          description: "actual ÷ planned_spending × 100, entero ROUND_HALF_UP; ausente sin plan."
+        status:
+          type: "string"
+          enum:
+            - "normal"
+            - "warning"
+            - "exceeded"
+          description: "normal si % < 80; warning si ≥ 80; exceeded si ≥ 100 (decisión F)."
+        days_left:
+          type: "integer"
+          description: "Días que faltan para terminar el mes, contando hoy (0 en meses pasados)."
+      required:
+        - "month"
+        - "income_cents"
+        - "planned_spending_cents"
+        - "planned_savings_cents"
+        - "unassigned_cents"
+        - "actual_cents"
+        - "remaining_cents"
+        - "days_left"
+      x-calculado: true
+    BudgetCategoryRows:
+      type: "object"
+      description: "Presupuesto por categoría activa (N-081)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Categoría."
+            properties:
+              category_id:
+                type: "integer"
+                description: "Categoría."
+              planned_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Plan del mes."
+              actual_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte del hogar devengada."
+              difference_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "plan − real."
+              used_pct:
+                type: "integer"
+                description: "% usado entero."
+              status:
+                type: "string"
+                enum:
+                  - "normal"
+                  - "warning"
+                  - "exceeded"
+                description: "normal si % < 80; warning si ≥ 80; exceeded si ≥ 100 (decisión F)."
+              expense_count:
+                type: "integer"
+                description: "Número de gastos."
+            required:
+              - "category_id"
+              - "actual_cents"
+              - "expense_count"
+            x-calculado: true
+          description: "Orden por defecto: used_pct descendente."
+      required:
+        - "month"
+        - "rows"
+      x-calculado: true
+    BudgetFortnights:
+      type: "object"
+      description: "Quincenas del mes (N-082). Q1 del 1 al 15 y Q2 del 16 al último día (K8)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        fortnights:
+          type: "array"
+          items:
+            type: "object"
+            description: "Quincena."
+            properties:
+              half:
+                type: "integer"
+                enum:
+                  - 1
+                  - 2
+                description: "Q1 (1) o Q2 (2)."
+              start_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Inicio."
+              end_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fin."
+              pay_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Día de pago (15, o 30/último día)."
+              actual_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte del hogar por fecha del gasto."
+              planned_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte del plan de la quincena (motor S2)."
+            required:
+              - "half"
+              - "start_date"
+              - "end_date"
+              - "pay_date"
+              - "actual_cents"
+              - "planned_cents"
+            x-calculado: true
+          description: "Q1 y Q2."
+      required:
+        - "month"
+        - "fortnights"
+      x-calculado: true
+    PersonParticipation:
+      type: "object"
+      description: "Participación de una persona externa (Karen) (N-026): solo despensa común y su línea revolvente. Nota fija: «Karen paga directo a Kueski su parte; su parte es informativa y repone la línea cuando paga»."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona externa."
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes en curso."
+        accrued_groceries_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Su parte devengada de la despensa en el mes (motor S2)."
+        purchases:
+          type: "array"
+          items:
+            type: "object"
+            description: "Compra particular viva."
+            properties:
+              credit_purchase_id:
+                type: "integer"
+                description: "Compra."
+              description:
+                type: "string"
+                description: "Comercio o descripción."
+              purchase_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total."
+              payments_made:
+                type: "integer"
+                description: "Pagos hechos."
+              payments_total:
+                type: "integer"
+                description: "Pagos de la serie."
+              balance_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Saldo."
+            required:
+              - "credit_purchase_id"
+              - "purchase_date"
+              - "total_cents"
+              - "payments_made"
+              - "payments_total"
+              - "balance_cents"
+            x-calculado: true
+          description: "Sus compras a crédito vivas."
+        payment_shares:
+          type: "array"
+          items:
+            type: "object"
+            description: "Su parte de un pago."
+            properties:
+              scheduled_payment_id:
+                type: "integer"
+                description: "Pago."
+              due_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha."
+              amount_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto de su parte."
+              status:
+                type: "string"
+                enum:
+                  - "paid"
+                  - "pending"
+                description: "Pagada o pendiente."
+            required:
+              - "scheduled_payment_id"
+              - "due_date"
+              - "amount_cents"
+              - "status"
+            x-calculado: true
+          description: "Con fecha en el mes."
+        live_debt_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ de sus partes pendientes."
+      required:
+        - "person_id"
+        - "month"
+        - "accrued_groceries_cents"
+        - "purchases"
+        - "payment_shares"
+        - "live_debt_cents"
+      x-calculado: true
+    MealPlanTrends:
+      type: "object"
+      description: "Tendencias de comidas (N-129, N-233): últimas 12 semanas con plan."
+      properties:
+        weeks:
+          type: "array"
+          items:
+            type: "object"
+            description: "Semana."
+            properties:
+              week_start:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Lunes."
+              cost_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Costo semanal."
+              persons:
+                type: "array"
+                items:
+                  type: "object"
+                  description: "Persona."
+                  properties:
+                    person_id:
+                      type: "integer"
+                      description: "Persona."
+                    avg_kcal_per_day:
+                      type: "integer"
+                      description: "kcal promedio por día."
+                    daily_kcal_target:
+                      type: "integer"
+                      description: "Meta."
+                  required:
+                    - "person_id"
+                  x-calculado: true
+                description: "Axel y Ximena."
+            required:
+              - "week_start"
+              - "cost_cents"
+              - "persons"
+            x-calculado: true
+          description: "Máximo 12."
+      required:
+        - "weeks"
+      x-calculado: true
+    BasketComparison:
+      type: "object"
+      description: "Comparativa de canasta (N-161 a N-164, motor S5). Sam's Club se compara como si tuvieran membresía. Canon semilla 10-oct-2026: Bodega Aurrera 309450 contra Walmart 323300 (+13850); idénticos 277350 contra 287400 (+10050); 33 idénticos, 3 sustitutos; Bodega gana 22, empates 8, Walmart 3."
+      properties:
+        basket:
+          type: "string"
+          enum:
+            - "shopping_list"
+            - "expense"
+          description: "Canasta comparada."
+        expense_id:
+          type: "integer"
+          description: "Compra comparada."
+        stores:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por tienda."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Tienda."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total."
+              identical_count:
+                type: "integer"
+                description: "Artículos idénticos."
+              identical_total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total de idénticos."
+              substitute_count:
+                type: "integer"
+                description: "Sustitutos."
+              missing_count:
+                type: "integer"
+                description: "Sin precio."
+              stale_count:
+                type: "integer"
+                description: "Precios viejos."
+              difference_vs_cheapest_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Diferencia contra la más barata."
+              assumes_membership:
+                type: "boolean"
+                description: "Comparada como si tuvieran membresía."
+            required:
+              - "store_id"
+              - "total_cents"
+              - "identical_count"
+              - "identical_total_cents"
+              - "substitute_count"
+              - "missing_count"
+              - "stale_count"
+              - "difference_vs_cheapest_cents"
+              - "assumes_membership"
+            x-calculado: true
+          description: "Orden por total ascendente."
+        items:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por artículo."
+            properties:
+              product_id:
+                type: "integer"
+                description: "Producto."
+              quantity_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Cantidad."
+              prices:
+                type: "array"
+                items:
+                  type: "object"
+                  description: "Precio de un artículo en una tienda."
+                  properties:
+                    store_id:
+                      type: "integer"
+                      description: "Tienda."
+                    presentation_id:
+                      type: "integer"
+                      description: "Presentación."
+                    price_cents:
+                      $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                      description: "Precio."
+                    base_unit_price_cents:
+                      $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                      description: "Precio por 1 kg, 1 l o 1 pieza según la unidad base, ROUND_HALF_UP (K7)."
+                    observed_date:
+                      $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                      description: "Fecha."
+                    source:
+                      type: "string"
+                      enum:
+                        - "ticket_manual"
+                        - "ticket_ocr"
+                        - "site_assisted"
+                        - "profeco"
+                        - "manual"
+                      description: "Fuente."
+                    is_stale:
+                      type: "boolean"
+                      description: "Viejo."
+                  required:
+                    - "store_id"
+                    - "presentation_id"
+                    - "price_cents"
+                    - "base_unit_price_cents"
+                    - "observed_date"
+                    - "source"
+                    - "is_stale"
+                  x-calculado: true
+                description: "Precio en cada tienda."
+              winner_store_id:
+                type: "integer"
+                description: "Tienda ganadora; ausente si empate."
+              difference_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Diferencia entre la más cara y la más barata."
+              is_substitute:
+                type: "boolean"
+                description: "Presentación distinta comparada por unidad base."
+              substitute_note:
+                type: "string"
+                description: "Nota del sustituto."
+            required:
+              - "product_id"
+              - "quantity_milli"
+              - "prices"
+              - "is_substitute"
+            x-calculado: true
+          description: "Orden por diferencia descendente."
+        winners:
+          type: "array"
+          items:
+            type: "object"
+            description: "Ganadores."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Tienda."
+              wins:
+                type: "integer"
+                description: "Artículos en que gana."
+            required:
+              - "store_id"
+              - "wins"
+            x-calculado: true
+          description: "Por tienda."
+        ties:
+          type: "integer"
+          description: "Empates."
+        membership:
+          type: "object"
+          description: "Membresía Sam's (N-164, motor S5). Punto de equilibrio = compras al año que cubren la membresía (K7)."
+          properties:
+            store_id:
+              type: "integer"
+              description: "Tienda con membresía."
+            basket_savings_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Ahorro de la canasta contra la mejor tienda sin membresía."
+            annual_savings_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Ahorro anual estimado."
+            annual_fee_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Costo anual (store.membership_annual_fee_cents); ausente si no se ha capturado."
+            break_even_purchases:
+              type: "integer"
+              description: "Compras al año para cubrir la membresía."
+            verdict:
+              type: "string"
+              enum:
+                - "worth_it"
+                - "not_worth_it"
+                - "missing_fee"
+              description: "Veredicto."
+          required:
+            - "store_id"
+            - "basket_savings_cents"
+            - "verdict"
+          x-calculado: true
+      required:
+        - "basket"
+        - "stores"
+        - "items"
+        - "winners"
+        - "ties"
+      x-calculado: true
+    CreditTotals:
+      type: "object"
+      description: "Totales de créditos (N-191)."
+      properties:
+        live_debt_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Deuda viva total."
+        fortnight_total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Pagos con fecha en la quincena en curso."
+        fortnight_household_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte del hogar."
+        fortnight_external_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte de Karen."
+        month_total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Pagos del mes en curso."
+        month_household_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte del hogar."
+        month_external_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte de Karen."
+        interest_paid_month_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses pagados en el mes."
+        interest_paid_year_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses pagados en el año calendario."
+      required:
+        - "live_debt_cents"
+        - "fortnight_total_cents"
+        - "fortnight_household_cents"
+        - "fortnight_external_cents"
+        - "month_total_cents"
+        - "month_household_cents"
+        - "month_external_cents"
+        - "interest_paid_month_cents"
+        - "interest_paid_year_cents"
+      x-calculado: true
+    CreditPurchaseShare:
+      type: "object"
+      description: "Parte de una compra a crédito (tabla `credit_purchase_share`). Capital, intereses y total de cada persona en una compra a crédito. El capital sale de lo que cada quien compró y los intereses se reparten en proporción al capital, con el resto para el titular. Campos ausentes = sin valor (NULL)."
+      x-tabla: "credit_purchase_share"
+      required:
+        - "id"
+        - "credit_purchase_id"
+        - "person_id"
+        - "principal_cents"
+        - "interest_cents"
+        - "total_cents"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_purchase_id:
+          type: "integer"
+          description: "Compra"
+        person_id:
+          type: "integer"
+          description: "Persona"
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital de la persona (Axel 190300, Karen 119150)"
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses de la persona (Axel 49228, Karen 30822)"
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total de la persona (Axel 239528, Karen 149972)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        fortnight_payment_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Pago por quincena de la persona (primero de la serie)."
+          x-calculado: true
+    CreditPurchase:
+      type: "object"
+      description: "Compra a crédito (tabla `credit_purchase`). Compra o disposición con un crédito: capital, intereses cotizados (IVA incluido), plazo, primer pago y promoción. Solo el capital usa y repone la línea. Campos ausentes = sin valor (NULL)."
+      x-tabla: "credit_purchase"
+      required:
+        - "id"
+        - "credit_id"
+        - "kind"
+        - "purchase_date"
+        - "principal_cents"
+        - "interest_cents"
+        - "total_cents"
+        - "term_count"
+        - "payment_frequency"
+        - "first_payment_date"
+        - "interest_source"
+        - "interest_includes_vat"
+        - "status"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_id:
+          type: "integer"
+          description: "Crédito usado"
+        expense_id:
+          type: "integer"
+          description: "Gasto que originó la compra (despensa 1). NULL en disposiciones sin gasto (desembolso de préstamo)"
+        kind:
+          type: "string"
+          enum:
+            - "installment_plan"
+            - "single_charge"
+            - "loan_disbursement"
+          description: "installment_plan = pagos fijos (Kueski, meses sin intereses, abonos de tienda), single_charge = cargo normal de tarjeta, loan_disbursement = préstamo con tabla de amortización"
+        description:
+          type: "string"
+          description: "Descripción corta"
+        purchase_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra (2026-10-10)"
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital: lo que usa la línea (309450)"
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses de todo el plazo, IVA incluido, tal como los cotizó el acreedor (80050). Nunca reponen la línea"
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total a pagar (389500)"
+        term_count:
+          type: "integer"
+          description: "Número de pagos (4)"
+        payment_frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+          description: "Frecuencia de los pagos (quincenal)"
+        first_payment_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer pago (2026-10-30)"
+        interest_source:
+          type: "string"
+          enum:
+            - "quoted"
+            - "term_table"
+            - "promotion"
+            - "amortization"
+          description: "Origen de los intereses: quoted = cotización del acreedor al pagar, term_table = tabla por plazo, promotion = promoción, amortization = tabla de amortización"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa de esta compra (cotización: intereses/capital = 80050/309450)"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa"
+        rate_basis:
+          type: "string"
+          enum:
+            - "term_total"
+            - "annual"
+          description: "term_total = sobre el capital por todo el plazo (Kueski), annual = tasa anual (préstamo)"
+        interest_includes_vat:
+          type: "boolean"
+          description: "1 = los intereses ya traen IVA (Kueski)"
+        promotion_id:
+          type: "integer"
+          description: "Promoción aplicada"
+        status:
+          type: "string"
+          enum:
+            - "active"
+            - "paid_off"
+            - "cancelled"
+          description: "active = con pagos pendientes (compra viva), paid_off = liquidada, cancelled = cancelada"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se muestra la tasa de esta compra, los mismos con que se capturó o cotizó. NULL = sin tasa o sin dato"
+        shares:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CreditPurchaseShare"
+          description: "Partes por persona (credit_purchase_share)."
+          x-calculado: true
+        payments_made:
+          type: "integer"
+          description: "Pagos programados completos."
+          x-calculado: true
+        payments_total:
+          type: "integer"
+          description: "Pagos de la serie."
+          x-calculado: true
+        balance_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Saldo por pagar."
+          x-calculado: true
+        rate_pct:
+          type: "string"
+          description: "Tasa de la compra como se capturó o cotizó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; ausente sin tasa o sin decimales."
+          x-calculado: true
+    GeneratedReport:
+      type: "object"
+      description: "Reporte generado (tabla `generated_report`). PDF generado por el sistema: reporte mensual LaTeX o estado de cuenta de la participante externa (Karen), con su archivo y huella. Campos ausentes = sin valor (NULL)."
+      x-tabla: "generated_report"
+      required:
+        - "id"
+        - "kind"
+        - "period_start_date"
+        - "period_end_date"
+        - "sha256"
+        - "size_bytes"
+        - "generated_at"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "monthly_pdf"
+            - "external_statement_pdf"
+          description: "monthly_pdf = reporte mensual, external_statement_pdf = estado de cuenta de la participante externa"
+        period_start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio del periodo que cubre"
+        period_end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin del periodo que cubre, inclusive"
+        person_id:
+          type: "integer"
+          description: "Persona del estado de cuenta (Karen)"
+        sha256:
+          type: "string"
+          description: "Huella del PDF"
+        size_bytes:
+          type: "integer"
+          description: "Tamaño en bytes"
+        generated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Momento de generación"
+        sent_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Envío por Telegram (reporte mensual)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        delivery_status:
+          type: "string"
+          enum:
+            - "not_sent"
+            - "sent"
+            - "failed"
+          description: "Envío por Telegram (notification_delivery)."
+          x-calculado: true
+    MonthlyReportRequest:
+      type: "object"
+      description: "Generar el reporte mensual PDF (N-248)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes (generated_report.period_start_date a period_end_date)."
+        send_telegram:
+          type: "boolean"
+          description: "true = enviarlo a los destinatarios del aviso monthly_report."
+          x-entrada: true
+      required:
+        - "month"
+        - "send_telegram"
+    ExternalStatementRequest:
+      type: "object"
+      description: "Generar el estado de cuenta PDF de una persona externa (N-261)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona externa (Karen) (generated_report.person_id)."
+        period_start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio del periodo."
+        period_end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin del periodo."
+      required:
+        - "person_id"
+        - "period_start_date"
+        - "period_end_date"
+    ReportMonths:
+      type: "object"
+      description: "Meses disponibles (N-255)."
+      properties:
+        months:
+          type: "array"
+          items:
+            type: "object"
+            description: "Mes."
+            properties:
+              month:
+                $ref: "componentes-comunes.yaml#/components/schemas/Month"
+                description: "Mes."
+              is_partial:
+                type: "boolean"
+                description: "Mes en curso (parcial)."
+              generated_report_id:
+                type: "integer"
+                description: "PDF guardado del mes."
+            required:
+              - "month"
+              - "is_partial"
+            x-calculado: true
+          description: "Del primer mes con datos al mes en curso."
+      required:
+        - "months"
+      x-calculado: true
+    MonthlyReport:
+      type: "object"
+      description: "Reporte del mes con las mismas cifras que el PDF (N-256, N-257; S7 cruza PDF contra API)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        budget:
+          $ref: "#/components/schemas/BudgetMonth"
+          description: "Resumen."
+        categories:
+          $ref: "#/components/schemas/BudgetCategoryRows"
+          description: "Presupuesto por categoría."
+        fortnights:
+          $ref: "#/components/schemas/BudgetFortnights"
+          description: "Quincenas."
+        credits:
+          $ref: "#/components/schemas/CreditTotals"
+          description: "Créditos del mes."
+        live_debt_end_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Deuda viva al cierre."
+        basket:
+          $ref: "#/components/schemas/BasketComparison"
+          description: "Despensa y precios del mes."
+        meals:
+          $ref: "#/components/schemas/MealPlanTrends"
+          description: "Comidas y kcal."
+        external_participation:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PersonParticipation"
+          description: "Participación de Karen."
+        pdf:
+          $ref: "#/components/schemas/GeneratedReport"
+          description: "PDF guardado, si existe."
+      required:
+        - "month"
+        - "budget"
+        - "categories"
+        - "fortnights"
+        - "credits"
+        - "live_debt_end_cents"
+        - "meals"
+        - "external_participation"
+      x-calculado: true
+    ExternalStatement:
+      type: "object"
+      description: "Estado de cuenta de una persona externa (N-260). Nota fija sobre el pago directo a Kueski."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona externa."
+        period_start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio."
+        period_end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin."
+        purchases:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CreditPurchase"
+          description: "Sus compras particulares a crédito."
+        grocery_shares:
+          type: "array"
+          items:
+            type: "object"
+            description: "Su parte de una despensa."
+            properties:
+              credit_purchase_id:
+                type: "integer"
+                description: "Compra."
+              purchase_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha."
+              principal_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Su capital."
+              interest_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Intereses."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total."
+            required:
+              - "credit_purchase_id"
+              - "purchase_date"
+              - "principal_cents"
+              - "interest_cents"
+              - "total_cents"
+            x-calculado: true
+          description: "Despensas comunes."
+        payment_shares:
+          type: "array"
+          items:
+            type: "object"
+            description: "Parte de un pago."
+            properties:
+              person_id:
+                type: "integer"
+                description: "Persona."
+              amount_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto programado (scheduled_payment_share)."
+              paid_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Pagado (Σ credit_payment de la persona)."
+              status:
+                type: "string"
+                enum:
+                  - "paid"
+                  - "pending"
+                  - "overdue"
+                description: "Pagada, pendiente o sin marcar con fecha pasada."
+            required:
+              - "person_id"
+              - "amount_cents"
+              - "paid_cents"
+              - "status"
+            x-calculado: true
+          description: "Sus partes de pagos del periodo y pendientes posteriores."
+        paid_in_period_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Pagado en el periodo."
+        pending_total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Saldo pendiente total."
+      required:
+        - "person_id"
+        - "period_start_date"
+        - "period_end_date"
+        - "purchases"
+        - "grocery_shares"
+        - "payment_shares"
+        - "paid_in_period_cents"
+        - "pending_total_cents"
+      x-calculado: true
+    NotificationDelivery:
+      type: "object"
+      description: "Envío de aviso (tabla `notification_delivery`). Cada envío de un aviso a un destinatario, con clave para no mandar dos veces lo mismo y el resultado HTTP. Campos ausentes = sin valor (NULL)."
+      x-tabla: "notification_delivery"
+      required:
+        - "id"
+        - "notification_id"
+        - "recipient_id"
+        - "dedupe_key"
+        - "status"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        notification_id:
+          type: "integer"
+          description: "Aviso"
+        recipient_id:
+          type: "integer"
+          description: "Destinatario"
+        dedupe_key:
+          type: "string"
+          description: "Clave que evita repetir el mismo aviso (payment_due:42:2026-10-29)"
+        status:
+          type: "string"
+          enum:
+            - "pending"
+            - "sent"
+            - "failed"
+            - "skipped"
+          description: "Estado del envío"
+        message_text:
+          type: "string"
+          description: "Texto plano enviado (sin parse_mode)"
+        http_status:
+          type: "integer"
+          description: "Código HTTP de la API de Telegram"
+        error:
+          type: "string"
+          description: "Error resumido, sin token ni datos sensibles"
+        sent_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Momento del envío"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        notification_code:
+          type: "string"
+          description: "Clave del aviso."
+          x-calculado: true
+    Job:
+      type: "object"
+      description: "Job programado (tabla `job`). Tarea programada del servicio (respaldos, resúmenes, alertas, purgas) con su horario y su último resultado. Campos ausentes = sin valor (NULL)."
+      x-tabla: "job"
+      required:
+        - "id"
+        - "code"
+        - "name"
+        - "schedule"
+        - "is_enabled"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        code:
+          type: "string"
+          description: "Clave del job (backup_daily, daily_summary)"
+        name:
+          type: "string"
+          description: "Nombre visible"
+        schedule:
+          type: "string"
+          description: "Expresión cron de 5 campos en hora de America/Mexico_City"
+        is_enabled:
+          type: "boolean"
+          description: "1 = activo"
+        notification_id:
+          type: "integer"
+          description: "Aviso que manda, si manda alguno"
+        last_run_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Inicio de la última corrida"
+        last_status:
+          type: "string"
+          enum:
+            - "running"
+            - "ok"
+            - "error"
+            - "skipped"
+          description: "Resultado de la última corrida"
+        last_error:
+          type: "string"
+          description: "Error resumido de la última corrida"
+        next_run_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Próxima corrida calculada"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    GeneratedReportPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/GeneratedReport"
+      description: "Página de GeneratedReport con la envoltura única (Page)."
+    NotificationDeliveryPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/NotificationDelivery"
+      description: "Página de NotificationDelivery con la envoltura única (Page)."
+    JobPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Job"
+      description: "Página de Job con la envoltura única (Page)."

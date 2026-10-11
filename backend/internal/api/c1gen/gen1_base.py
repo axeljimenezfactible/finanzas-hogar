@@ -39,7 +39,7 @@ def ref(name, kind='schemas'): return {'$ref': f'#/components/{kind}/{name}'}
 BASE = {
  'MoneyCents': {'type': 'integer', 'description': 'Importe exacto en centavos de MXN (entero, nunca punto flotante). 97375 = $973.75. Redondeo ROUND_HALF_UP; en una serie de pagos el último ajusta centavos. En pantalla: `$` y dos decimales.', 'examples': [97375]},
  'Date': {'type': 'string', 'format': 'date', 'pattern': '^[0-9]{4}-[0-9]{2}-[0-9]{2}$', 'description': 'Fecha de negocio ISO 8601 (AAAA-MM-DD) del calendario de America/Mexico_City. En pantalla se muestra 10-oct-2026.', 'examples': ['2026-10-30']},
- 'DateTime': {'type': 'string', 'format': 'date-time', 'pattern': '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?(Z|[+-][0-9]{2}:[0-9]{2})$', 'description': 'Instante ISO 8601 con desplazamiento explícito de America/Mexico_City (hoy -06:00). La base lo guarda en UTC con «Z» y la API lo convierte al responder.', 'examples': ['2026-10-10T21:30:00-06:00']},
+ 'DateTime': {'type': 'string', 'format': 'date-time', 'pattern': '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?(Z|[+-][0-9]{2}:[0-9]{2})$', 'description': 'Instante ISO 8601 con desplazamiento explícito de America/Mexico_City (hoy -06:00). La base lo guarda en UTC con «Z» y la API lo convierte al responder. El sufijo «Z» (UTC) solo se acepta en las entradas; las respuestas siempre llevan el desplazamiento (K12, R2-06).', 'examples': ['2026-10-10T21:30:00-06:00']},
  'BasisPoints': {'type': 'integer', 'minimum': 0, 'maximum': 10000, 'description': 'Porcentaje en puntos base: 10000 = 100 %, 5000 = 50 %.', 'examples': [5000]},
  'Milli': {'type': 'integer', 'description': 'Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción.', 'examples': [1000]},
  'Month': {'type': 'string', 'pattern': '^[0-9]{4}-(0[1-9]|1[0-2])$', 'description': 'Mes calendario AAAA-MM.', 'examples': ['2026-10']},
@@ -75,6 +75,9 @@ def col_schema(t, c, nullable_ok=False):
         else: s = {'type': 'string', 'enum': c['enum']}
     elif c['type'] == 'INTEGER': s = {'type': 'integer'}
     else: s = {'type': 'string'}
+    # R2-06/K12 (revisión C1-r1, H4): «(UTC)» en el comentario de S1 dice cómo guarda la base; la API responde
+    # con el desplazamiento de America/Mexico_City (ver DateTime), así que no se copia a la descripción.
+    if s.get('$ref', '').endswith('/DateTime'): desc = re.sub(r'\s*\(UTC\)', '', desc).strip() or n
     if n == 'params_json': s = {'type': 'object', 'additionalProperties': True}
     if n == 'value_json': s = {}
     s = dict(s); s['description'] = desc
@@ -93,8 +96,9 @@ def col_schema(t, c, nullable_ok=False):
         if 'enum' in s and isinstance(s.get('type'), list): s['enum'] = list(s['enum']) + [None]
     return s
 
-HIDDEN = {'user_account': {'password_hash', 'password_changed_at'}, 'device_session': {'token_hash', 'ip_address'}, 'attachment': {'file_path'},
-          'generated_report': {'file_path'}, 'notification_recipient': {'chat_id'}}
+HIDDEN = {'user_account': {'password_hash', 'password_changed_at'}, 'device_session': {'token_hash', 'ip_address'}, 'attachment': {'file_path', 'ocr_draft_json'},
+          'generated_report': {'file_path'}, 'notification_recipient': {'chat_id'},
+          'telegram_chat_candidate': {'chat_id'}, 'expense': {'idempotency_key'}, 'weight_entry': {'idempotency_key'}}
 SYSTEM_MANAGED = {'id', 'created_at', 'updated_at'}
 def pascal(t): return ''.join(p.capitalize() for p in t.split('_'))
 def cols(t): return [c for c in SCHEMA[t]['cols']]

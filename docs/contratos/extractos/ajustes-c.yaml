@@ -1,0 +1,1517 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «ajustes-c». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto ajustes-c"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Ajustes"
+    description: "Las 14 secciones de Ajustes, sesiones y sistema."
+paths:
+  /api/v1/stores:
+    post:
+      operationId: "createStore"
+      tags:
+        - "Ajustes"
+      summary: "Nueva tienda o mercado"
+      description: "Mercado: visit_weekday obligatorio. La lectura asistida nace desactivada."
+      x-necesidades:
+        - "N-292"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Store"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/stores/{store_id}:
+    patch:
+      operationId: "updateStore"
+      tags:
+        - "Ajustes"
+      summary: "Editar tienda"
+      description: "assisted_reading_enabled = true solo con veredicto favorable en docs/estado/S5-terminos.md; si no, 409 `assisted_reading_not_allowed`."
+      x-necesidades:
+        - "N-292"
+      x-tablas:
+        - "audit_log"
+        - "store"
+      parameters:
+        - name: "store_id"
+          in: "path"
+          required: true
+          description: "Id del registro (store_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Store"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/stores/{store_id}/product-groups:
+    put:
+      operationId: "setStoreProductGroups"
+      tags:
+        - "Ajustes"
+      summary: "Qué se compra en la tienda"
+      description: "Qué se compra en la tienda."
+      x-necesidades:
+        - "N-292"
+      x-tablas:
+        - "audit_log"
+        - "product_group"
+        - "store_product_group"
+      parameters:
+        - name: "store_id"
+          in: "path"
+          required: true
+          description: "Id del registro (store_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdList"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/price-sources:
+    get:
+      operationId: "getPriceSources"
+      tags:
+        - "Ajustes"
+      summary: "Fuentes de precio"
+      description: "Fuentes de precio."
+      x-necesidades:
+        - "N-291"
+      x-tablas:
+        - "app_setting"
+        - "job"
+        - "price"
+        - "store"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceSources"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/settings/prices:
+    get:
+      operationId: "getPriceSettings"
+      tags:
+        - "Ajustes"
+      summary: "Ajustes de precios"
+      description: "Ajustes de precios."
+      x-necesidades:
+        - "N-291"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceSettings"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    patch:
+      operationId: "updatePriceSettings"
+      tags:
+        - "Ajustes"
+      summary: "Interruptor de lectura asistida"
+      description: "Interruptor de lectura asistida."
+      x-necesidades:
+        - "N-292"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PriceSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceSettings"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/profeco-imports:
+    post:
+      operationId: "importProfeco"
+      tags:
+        - "Ajustes"
+      summary: "Importar corte PROFECO"
+      description: "Archivo de datos abiertos (RAR o CSV). Tamaño máximo 1 GB (K6)."
+      x-necesidades:
+        - "N-293"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "job"
+        - "presentation"
+        - "price"
+        - "product"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              required:
+                - "file"
+              properties:
+                file:
+                  type: "string"
+                  contentMediaType: "application/octet-stream"
+                  description: "Corte de datos abiertos PROFECO (RAR o CSV). Tipos admitidos: application/vnd.rar, text/csv."
+            encoding:
+              file:
+                contentType: "application/vnd.rar, text/csv"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfecoImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "413":
+          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
+        "415":
+          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/settings/recipes:
+    get:
+      operationId: "getRecipeSettings"
+      tags:
+        - "Ajustes"
+      summary: "Recetario y nutrición"
+      description: "Recetario y nutrición."
+      x-necesidades:
+        - "N-294"
+      x-tablas:
+        - "meal_slot"
+        - "nutrition_fact"
+        - "recipe"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeSettings"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/nutrition-facts/reload:
+    post:
+      operationId: "reloadNutritionBase"
+      tags:
+        - "Ajustes"
+      summary: "Recargar base nutricional"
+      description: "Recargar base nutricional."
+      x-necesidades:
+        - "N-295"
+      x-tablas:
+        - "idempotency_key"
+        - "job"
+        - "nutrition_fact"
+        - "product"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NutritionReloadRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NutritionReloadResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory-items/{inventory_item_id}:
+    patch:
+      operationId: "updateInventoryItem"
+      tags:
+        - "Ajustes"
+      summary: "Editar configuración de inventario"
+      description: "Editar configuración de inventario."
+      x-necesidades:
+        - "N-315"
+      x-tablas:
+        - "audit_log"
+        - "inventory_item"
+      parameters:
+        - name: "inventory_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (inventory_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryItemUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/credits:
+    post:
+      operationId: "createCredit"
+      tags:
+        - "Ajustes"
+      summary: "Nuevo crédito"
+      description: "Nuevo crédito."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "credit"
+        - "idempotency_key"
+        - "person"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Credit"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/credits/{credit_id}:
+    patch:
+      operationId: "updateCredit"
+      tags:
+        - "Ajustes"
+      summary: "Editar crédito o interruptor A/B"
+      description: "Incluye availability_reading (A/B, B por defecto). Antes de cambiarlo la pantalla muestra previewAvailability."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "credit"
+      parameters:
+        - name: "credit_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Credit"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    BasisPoints:
+      type: "integer"
+      minimum: 0
+      maximum: 10000
+      description: "Porcentaje en puntos base: 10000 = 100 %, 5000 = 50 %."
+      examples:
+        - 5000
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    MealSlot:
+      type: "object"
+      description: "Tiempo de comida (tabla `meal_slot`). Los cuatro tiempos del día: desayuno, comida, cena y colación (cuarto tiempo opcional con costo y calorías). Datos de referencia que crea esta migración. Campos ausentes = sin valor (NULL)."
+      x-tabla: "meal_slot"
+      required:
+        - "id"
+        - "code"
+        - "name"
+        - "sort_order"
+        - "is_optional"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        code:
+          type: "string"
+          enum:
+            - "breakfast"
+            - "lunch"
+            - "dinner"
+            - "snack"
+          description: "breakfast = desayuno, lunch = comida, dinner = cena, snack = colación"
+        name:
+          type: "string"
+          description: "Nombre en pantalla"
+        sort_order:
+          type: "integer"
+          description: "Orden en el día"
+        is_optional:
+          type: "boolean"
+          description: "1 = tiempo opcional (colación)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    Store:
+      type: "object"
+      description: "Tienda (tabla `store`). Cadena (Walmart, Bodega Aurrera, Sam's Club), sucursal de una cadena, o mercado o tianguis con su día de visita. La membresía y el permiso de lectura asistida viven en la cadena. Campos ausentes = sin valor (NULL)."
+      x-tabla: "store"
+      required:
+        - "id"
+        - "kind"
+        - "name"
+        - "assisted_reading_enabled"
+        - "requires_membership"
+        - "has_membership"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "chain"
+            - "branch"
+            - "market"
+          description: "chain = cadena, branch = sucursal de una cadena, market = mercado o tianguis"
+        parent_id:
+          type: "integer"
+          description: "Cadena de la sucursal. Solo en branch"
+        name:
+          type: "string"
+          description: "Nombre: cadena (Bodega Aurrera), sucursal (Vallejo) o mercado"
+        profeco_name:
+          type: "string"
+          description: "Nombre en PROFECO para cruzar precios: cadena_comercial en cadenas, nombre_comercial en sucursales"
+        website_url:
+          type: "string"
+          description: "Sitio de la cadena. Solo en chain"
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Lectura asistida del sitio de la cadena. Queda en 0 hasta que docs/estado/S5-terminos.md tenga veredicto para ese sitio"
+        address:
+          type: "string"
+          description: "Dirección (sucursal o mercado)"
+        municipality:
+          type: "string"
+          description: "Municipio o alcaldía, para cruzar con PROFECO"
+        state:
+          type: "string"
+          description: "Entidad federativa"
+        visit_weekday:
+          type: "integer"
+          description: "Día de visita del mercado: 1 = lunes … 7 = domingo (ISO 8601)"
+        requires_membership:
+          type: "boolean"
+          description: "1 = la cadena exige membresía (Sam's Club)"
+        has_membership:
+          type: "boolean"
+          description: "1 = la casa ya tiene la membresía (hoy Sam's = 0 y se evalúa)"
+        membership_annual_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo anual de la membresía en centavos (lo captura Axel en Ajustes)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        product_group_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Qué se compra ahí (store_product_group)."
+          x-calculado: true
+        assisted_reading_verdict:
+          type: "string"
+          enum:
+            - "allowed"
+            - "denied"
+            - "missing"
+          description: "Veredicto de términos del sitio en docs/estado/S5-terminos.md."
+          x-calculado: true
+    StoreCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de tienda (tabla `store`)."
+      x-tabla: "store"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "chain"
+            - "branch"
+            - "market"
+          description: "chain = cadena, branch = sucursal de una cadena, market = mercado o tianguis"
+        parent_id:
+          type: "integer"
+          description: "Cadena de la sucursal. Solo en branch"
+        name:
+          type: "string"
+          description: "Nombre: cadena (Bodega Aurrera), sucursal (Vallejo) o mercado"
+        profeco_name:
+          type: "string"
+          description: "Nombre en PROFECO para cruzar precios: cadena_comercial en cadenas, nombre_comercial en sucursales"
+        website_url:
+          type: "string"
+          description: "Sitio de la cadena. Solo en chain"
+        address:
+          type: "string"
+          description: "Dirección (sucursal o mercado)"
+        municipality:
+          type: "string"
+          description: "Municipio o alcaldía, para cruzar con PROFECO"
+        state:
+          type: "string"
+          description: "Entidad federativa"
+        visit_weekday:
+          type: "integer"
+          description: "Día de visita del mercado: 1 = lunes … 7 = domingo (ISO 8601)"
+        requires_membership:
+          type: "boolean"
+          description: "1 = la cadena exige membresía (Sam's Club)"
+        has_membership:
+          type: "boolean"
+          description: "1 = la casa ya tiene la membresía (hoy Sam's = 0 y se evalúa)"
+        membership_annual_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo anual de la membresía en centavos (lo captura Axel en Ajustes)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "kind"
+        - "name"
+    StoreUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de tienda (tabla `store`)."
+      x-tabla: "store"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "chain"
+            - "branch"
+            - "market"
+          description: "chain = cadena, branch = sucursal de una cadena, market = mercado o tianguis"
+        parent_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Cadena de la sucursal. Solo en branch · null borra el valor"
+        name:
+          type: "string"
+          description: "Nombre: cadena (Bodega Aurrera), sucursal (Vallejo) o mercado"
+        profeco_name:
+          type:
+            - "string"
+            - "null"
+          description: "Nombre en PROFECO para cruzar precios: cadena_comercial en cadenas, nombre_comercial en sucursales · null borra el valor"
+        website_url:
+          type:
+            - "string"
+            - "null"
+          description: "Sitio de la cadena. Solo en chain · null borra el valor"
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Lectura asistida del sitio de la cadena. Queda en 0 hasta que docs/estado/S5-terminos.md tenga veredicto para ese sitio"
+        address:
+          type:
+            - "string"
+            - "null"
+          description: "Dirección (sucursal o mercado) · null borra el valor"
+        municipality:
+          type:
+            - "string"
+            - "null"
+          description: "Municipio o alcaldía, para cruzar con PROFECO · null borra el valor"
+        state:
+          type:
+            - "string"
+            - "null"
+          description: "Entidad federativa · null borra el valor"
+        visit_weekday:
+          type:
+            - "integer"
+            - "null"
+          description: "Día de visita del mercado: 1 = lunes … 7 = domingo (ISO 8601) · null borra el valor"
+        requires_membership:
+          type: "boolean"
+          description: "1 = la cadena exige membresía (Sam's Club)"
+        has_membership:
+          type: "boolean"
+          description: "1 = la casa ya tiene la membresía (hoy Sam's = 0 y se evalúa)"
+        membership_annual_fee_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Costo anual de la membresía en centavos (lo captura Axel en Ajustes) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    IdList:
+      type: "object"
+      description: "Lista de ids (reemplazo completo)."
+      properties:
+        ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Ids en el orden deseado."
+          x-entrada: true
+      required:
+        - "ids"
+    PriceSources:
+      type: "object"
+      description: "Fuentes de precio (N-291)."
+      properties:
+        manual_enabled:
+          type: "boolean"
+          description: "Siempre true."
+        ocr_engine:
+          type: "string"
+          description: "Motor OCR local (Tesseract 5.5.3, spa)."
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Interruptor general (app_setting price.assisted_reading_enabled)."
+        sites:
+          type: "array"
+          items:
+            type: "object"
+            description: "Sitio."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Cadena."
+              website_url:
+                type: "string"
+                description: "Sitio."
+              verdict:
+                type: "string"
+                enum:
+                  - "allowed"
+                  - "denied"
+                  - "missing"
+                description: "Veredicto en docs/estado/S5-terminos.md."
+              assisted_reading_enabled:
+                type: "boolean"
+                description: "Activada para esa cadena."
+            required:
+              - "store_id"
+              - "verdict"
+              - "assisted_reading_enabled"
+            x-calculado: true
+          description: "Cadenas con sitio."
+        profeco_last_import_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Último corte importado (job)."
+        profeco_price_count:
+          type: "integer"
+          description: "Precios PROFECO cargados."
+        profeco_coverage:
+          type: "array"
+          items:
+            type: "object"
+            description: "Cobertura."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Cadena ligada."
+              municipality:
+                type: "string"
+                description: "Municipio."
+              price_count:
+                type: "integer"
+                description: "Precios."
+            required:
+              - "price_count"
+            x-calculado: true
+          description: "Por cadena y municipio."
+      required:
+        - "manual_enabled"
+        - "ocr_engine"
+        - "assisted_reading_enabled"
+        - "sites"
+        - "profeco_price_count"
+        - "profeco_coverage"
+      x-calculado: true
+    PriceSettings:
+      type: "object"
+      description: "Ajustes de precios (app_setting price.*)."
+      properties:
+        stale_after_days:
+          type: "integer"
+          description: "Edad en días a partir de la cual un precio es viejo (price.stale_after_days = 30, decisión E y K22). Peso en la comparativa (K22): 1 hasta el día 29; de 30 a 90 días baja en línea recta de 1 a 0; después solo se muestra marcado y no compite. PROFECO nunca compite: solo es referencia."
+          x-app-setting: "price.stale_after_days"
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Interruptor general de la lectura asistida (price.assisted_reading_enabled, false por defecto)."
+          x-app-setting: "price.assisted_reading_enabled"
+      required:
+        - "stale_after_days"
+        - "assisted_reading_enabled"
+      x-calculado: true
+    PriceSettingsUpdate:
+      type: "object"
+      description: "Cambio del interruptor general de lectura asistida (N-292). Solo se acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed)."
+      properties:
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Nuevo valor."
+          x-app-setting: "price.assisted_reading_enabled"
+      required:
+        - "assisted_reading_enabled"
+      additionalProperties: false
+    ProfecoImportResult:
+      type: "object"
+      description: "Resultado de importar un corte PROFECO (N-293)."
+      properties:
+        loaded_count:
+          type: "integer"
+          description: "Precios cargados."
+        skipped_count:
+          type: "integer"
+          description: "Registros sin presentación ligada."
+        coverage:
+          type: "array"
+          items:
+            type: "object"
+            description: "Cobertura."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Cadena."
+              municipality:
+                type: "string"
+                description: "Municipio."
+              price_count:
+                type: "integer"
+                description: "Precios."
+            required:
+              - "price_count"
+            x-calculado: true
+          description: "Por cadena y municipio."
+      required:
+        - "loaded_count"
+        - "skipped_count"
+        - "coverage"
+      x-calculado: true
+    RecipeSettings:
+      type: "object"
+      description: "Recetario y nutrición (N-294)."
+      properties:
+        default_base_servings:
+          type: "integer"
+          description: "Porciones base por defecto (recipe.base_servings = 2)."
+        meal_slots:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/MealSlot"
+          description: "Los 4 tiempos."
+        recipe_counts:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por origen."
+            properties:
+              origin:
+                type: "string"
+                enum:
+                  - "claude_seed"
+                  - "household"
+                description: "Origen."
+              count:
+                type: "integer"
+                description: "Recetas."
+            required:
+              - "origin"
+              - "count"
+            x-calculado: true
+          description: "Por origen."
+        nutrition_sources:
+          type: "array"
+          items:
+            type: "object"
+            description: "Base nutricional local."
+            properties:
+              source:
+                type: "string"
+                enum:
+                  - "usda_fdc"
+                  - "open_food_facts"
+                  - "mx_table"
+                  - "store_label"
+                  - "manual"
+                description: "Fuente."
+              food_count:
+                type: "integer"
+                description: "Alimentos."
+              loaded_at:
+                $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+                description: "Fecha de carga."
+            required:
+              - "source"
+              - "food_count"
+            x-calculado: true
+          description: "Por fuente."
+      required:
+        - "default_base_servings"
+        - "meal_slots"
+        - "recipe_counts"
+        - "nutrition_sources"
+      x-calculado: true
+    NutritionReloadRequest:
+      type: "object"
+      description: "Recarga de una base nutricional local (N-295)."
+      properties:
+        source:
+          type: "string"
+          enum:
+            - "usda_fdc"
+            - "open_food_facts"
+          description: "Base que se recarga desde el archivo local."
+      required:
+        - "source"
+    NutritionReloadResult:
+      type: "object"
+      description: "Resultado de la recarga."
+      properties:
+        source:
+          type: "string"
+          enum:
+            - "usda_fdc"
+            - "open_food_facts"
+          description: "Base."
+        loaded_count:
+          type: "integer"
+          description: "Alimentos cargados."
+      required:
+        - "source"
+        - "loaded_count"
+      x-calculado: true
+    InventoryItem:
+      type: "object"
+      description: "Renglón de inventario (tabla `inventory_item`). Inventario híbrido: existencia por unidad (básicos, no perecederos y sobrantes de recetas) o ritmo de consumo (el resto). Campos ausentes = sin valor (NULL)."
+      x-tabla: "inventory_item"
+      required:
+        - "id"
+        - "tracking_mode"
+        - "quantity_milli"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto en existencia"
+        recipe_id:
+          type: "integer"
+          description: "Sobrante de una receta (en porciones)"
+        tracking_mode:
+          type: "string"
+          enum:
+            - "stock"
+            - "consumption_rate"
+          description: "stock = existencia por unidad, consumption_rate = ritmo de consumo"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia en milésimas de la unidad base (en sobrantes, porciones ×1000): la vigente en stock y la del último conteo en ritmo de consumo. Cada cambio deja su inventory_movement"
+        counted_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último conteo, base de la estimación por ritmo"
+        rate_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Ritmo: cantidad que se consume (milésimas de la unidad base)"
+        rate_period_days:
+          type: "integer"
+          description: "Ritmo: en cuántos días se consume esa cantidad"
+        reorder_level_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Nivel que pone el producto en la lista de compras. NULL = sin aviso"
+        expires_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Caducidad (sobrantes y perecederos)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        status:
+          type: "string"
+          enum:
+            - "sufficient"
+            - "reorder"
+            - "out"
+          description: "Suficiente, reponer o agotado (motor S4, K7: reponer si la existencia ≤ nivel de reposición; agotado si es 0)."
+          x-calculado: true
+        estimated_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia estimada hoy (ritmo de consumo, motor S4)."
+          x-calculado: true
+        weekly_consumption_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Consumo estimado por semana."
+          x-calculado: true
+        days_left:
+          type: "integer"
+          description: "Días restantes estimados."
+          x-calculado: true
+    InventoryItemUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de renglón de inventario (tabla `inventory_item`)."
+      x-tabla: "inventory_item"
+      properties:
+        tracking_mode:
+          type: "string"
+          enum:
+            - "stock"
+            - "consumption_rate"
+          description: "stock = existencia por unidad, consumption_rate = ritmo de consumo"
+        rate_quantity_milli:
+          anyOf:
+            - $ref: "#/components/schemas/Milli"
+            - type: "null"
+          description: "Ritmo: cantidad que se consume (milésimas de la unidad base) · null borra el valor"
+        rate_period_days:
+          type:
+            - "integer"
+            - "null"
+          description: "Ritmo: en cuántos días se consume esa cantidad · null borra el valor"
+        reorder_level_milli:
+          anyOf:
+            - $ref: "#/components/schemas/Milli"
+            - type: "null"
+          description: "Nivel que pone el producto en la lista de compras. NULL = sin aviso · null borra el valor"
+        expires_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Caducidad (sobrantes y perecederos) · null borra el valor"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    Credit:
+      type: "object"
+      description: "Crédito (tabla `credit`). Crédito del titular: línea revolvente tipo Kueski, tarjeta bancaria, préstamo personal a plazo fijo o crédito de tienda con abonos. Guarda el límite, la lectura A/B, las fechas de corte y pago y las comisiones. Campos ausentes = sin valor (NULL)."
+      x-tabla: "credit"
+      required:
+        - "id"
+        - "name"
+        - "kind"
+        - "holder_person_id"
+        - "payment_frequency"
+        - "availability_reading"
+        - "availability_confirmed"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        name:
+          type: "string"
+          description: "Nombre visible (Kueski Pay)"
+        kind:
+          type: "string"
+          enum:
+            - "revolving_line"
+            - "bank_card"
+            - "term_loan"
+            - "store_credit"
+          description: "revolving_line = línea revolvente tipo Kueski, bank_card = tarjeta bancaria, term_loan = préstamo personal a plazo fijo, store_credit = crédito de tienda con abonos"
+        lender:
+          type: "string"
+          description: "Institución que otorga el crédito"
+        holder_person_id:
+          type: "integer"
+          description: "Titular del crédito (Axel)"
+        credit_limit_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Límite de la línea (Kueski 1000000)"
+        payment_frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+          description: "Frecuencia de los pagos. fortnightly cae en los días 15 y 30 (o último día)"
+        first_payment_min_days:
+          type: "integer"
+          description: "Días mínimos entre la compra y el primer pago (Kueski 15, oráculo)"
+        availability_reading:
+          type: "string"
+          enum:
+            - "A"
+            - "B"
+          description: "Lectura del disponible (interruptor de Ajustes, solo aplica en revolving_line): B = el límite es el tope total (por defecto), A = el límite está libre en la fecha ancla y los pagos suman encima"
+        availability_confirmed:
+          type: "boolean"
+          description: "0 = mostrar el aviso «pendiente confirmar» con el acreedor"
+        reading_a_anchor_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha «hoy» de la lectura A: lo comprado hasta ese día ya está dentro del límite libre (Kueski 2026-10-10)"
+        statement_day:
+          type: "integer"
+          description: "Día de corte de la tarjeta"
+        payment_due_day:
+          type: "integer"
+          description: "Día límite de pago de la tarjeta"
+        annual_rate_num:
+          type: "integer"
+          description: "Numerador de la tasa anual ordinaria (tarjeta, préstamo)"
+        annual_rate_den:
+          type: "integer"
+          description: "Denominador de la tasa anual ordinaria"
+        vat_on_interest_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski)"
+        annual_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Comisión anual"
+        late_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Comisión por pago tardío"
+        opening_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Comisión por apertura"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        rate_base:
+          type: "string"
+          enum:
+            - "daily"
+            - "monthly"
+          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar"
+        min_payment_pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar"
+        min_payment_fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar"
+        annual_rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
+        live_debt_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Deuda viva = capital + intereses por pagar (motor S3)."
+          x-calculado: true
+        available_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Disponible hoy: revolvente con la lectura activa; tarjeta = límite − saldo; préstamo y tienda: ausente."
+          x-calculado: true
+        next_payment_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Próximo pago con alguna parte pendiente."
+          x-calculado: true
+        next_payment_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto del próximo pago."
+          x-calculado: true
+        live_purchase_count:
+          type: "integer"
+          description: "Compras vivas (status active)."
+          x-calculado: true
+        annual_rate_pct:
+          type: "string"
+          description: "Tasa anual en porcentaje como se capturó: annual_rate_num/annual_rate_den redondeada ROUND_HALF_UP a annual_rate_decimals decimales (K12); ausente sin tasa o sin decimales."
+          x-calculado: true
+        missing_terms:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+              - "annual_rate"
+              - "rate_base"
+              - "min_payment_pct_bp"
+              - "min_payment_fixed_cents"
+          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18); vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar»."
+          x-calculado: true
+    CreditCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de crédito (tabla `credit`)."
+      x-tabla: "credit"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre visible (Kueski Pay)"
+        kind:
+          type: "string"
+          enum:
+            - "revolving_line"
+            - "bank_card"
+            - "term_loan"
+            - "store_credit"
+          description: "revolving_line = línea revolvente tipo Kueski, bank_card = tarjeta bancaria, term_loan = préstamo personal a plazo fijo, store_credit = crédito de tienda con abonos"
+        lender:
+          type: "string"
+          description: "Institución que otorga el crédito"
+        holder_person_id:
+          type: "integer"
+          description: "Titular del crédito (Axel)"
+        credit_limit_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Límite de la línea (Kueski 1000000)"
+        payment_frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+          description: "Frecuencia de los pagos. fortnightly cae en los días 15 y 30 (o último día)"
+        first_payment_min_days:
+          type: "integer"
+          description: "Días mínimos entre la compra y el primer pago (Kueski 15, oráculo)"
+        availability_reading:
+          type: "string"
+          enum:
+            - "A"
+            - "B"
+          description: "Lectura del disponible (interruptor de Ajustes, solo aplica en revolving_line): B = el límite es el tope total (por defecto), A = el límite está libre en la fecha ancla y los pagos suman encima"
+        availability_confirmed:
+          type: "boolean"
+          description: "0 = mostrar el aviso «pendiente confirmar» con el acreedor"
+        reading_a_anchor_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha «hoy» de la lectura A: lo comprado hasta ese día ya está dentro del límite libre (Kueski 2026-10-10)"
+        statement_day:
+          type: "integer"
+          description: "Día de corte de la tarjeta"
+        payment_due_day:
+          type: "integer"
+          description: "Día límite de pago de la tarjeta"
+        annual_rate_num:
+          type: "integer"
+          description: "Numerador de la tasa anual ordinaria (tarjeta, préstamo)"
+        annual_rate_den:
+          type: "integer"
+          description: "Denominador de la tasa anual ordinaria"
+        vat_on_interest_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski)"
+        annual_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Comisión anual"
+        late_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Comisión por pago tardío"
+        opening_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Comisión por apertura"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        rate_base:
+          type: "string"
+          enum:
+            - "daily"
+            - "monthly"
+          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar"
+        min_payment_pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar"
+        min_payment_fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar"
+        annual_rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
+      required:
+        - "name"
+        - "kind"
+        - "holder_person_id"
+        - "payment_frequency"
+    CreditUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de crédito (tabla `credit`)."
+      x-tabla: "credit"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre visible (Kueski Pay)"
+        kind:
+          type: "string"
+          enum:
+            - "revolving_line"
+            - "bank_card"
+            - "term_loan"
+            - "store_credit"
+          description: "revolving_line = línea revolvente tipo Kueski, bank_card = tarjeta bancaria, term_loan = préstamo personal a plazo fijo, store_credit = crédito de tienda con abonos"
+        lender:
+          type:
+            - "string"
+            - "null"
+          description: "Institución que otorga el crédito · null borra el valor"
+        holder_person_id:
+          type: "integer"
+          description: "Titular del crédito (Axel)"
+        credit_limit_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Límite de la línea (Kueski 1000000) · null borra el valor"
+        payment_frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+          description: "Frecuencia de los pagos. fortnightly cae en los días 15 y 30 (o último día)"
+        first_payment_min_days:
+          type:
+            - "integer"
+            - "null"
+          description: "Días mínimos entre la compra y el primer pago (Kueski 15, oráculo) · null borra el valor"
+        availability_reading:
+          type: "string"
+          enum:
+            - "A"
+            - "B"
+          description: "Lectura del disponible (interruptor de Ajustes, solo aplica en revolving_line): B = el límite es el tope total (por defecto), A = el límite está libre en la fecha ancla y los pagos suman encima"
+        availability_confirmed:
+          type: "boolean"
+          description: "0 = mostrar el aviso «pendiente confirmar» con el acreedor"
+        reading_a_anchor_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Fecha «hoy» de la lectura A: lo comprado hasta ese día ya está dentro del límite libre (Kueski 2026-10-10) · null borra el valor"
+        statement_day:
+          type:
+            - "integer"
+            - "null"
+          description: "Día de corte de la tarjeta · null borra el valor"
+        payment_due_day:
+          type:
+            - "integer"
+            - "null"
+          description: "Día límite de pago de la tarjeta · null borra el valor"
+        annual_rate_num:
+          type:
+            - "integer"
+            - "null"
+          description: "Numerador de la tasa anual ordinaria (tarjeta, préstamo) · null borra el valor"
+        annual_rate_den:
+          type:
+            - "integer"
+            - "null"
+          description: "Denominador de la tasa anual ordinaria · null borra el valor"
+        vat_on_interest_bp:
+          anyOf:
+            - $ref: "#/components/schemas/BasisPoints"
+            - type: "null"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) · null borra el valor"
+        annual_fee_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Comisión anual · null borra el valor"
+        late_fee_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Comisión por pago tardío · null borra el valor"
+        opening_fee_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Comisión por apertura · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+        rate_base:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "daily"
+            - "monthly"
+            - null
+          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar · null borra el valor"
+        min_payment_pct_bp:
+          anyOf:
+            - $ref: "#/components/schemas/BasisPoints"
+            - type: "null"
+          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar · null borra el valor"
+        min_payment_fixed_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar · null borra el valor"
+        annual_rate_decimals:
+          type:
+            - "integer"
+            - "null"
+          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato · null borra el valor"
+      minProperties: 1

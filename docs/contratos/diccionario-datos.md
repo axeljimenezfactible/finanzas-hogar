@@ -1,12 +1,14 @@
 # Diccionario de datos · Finanzas Hogar
 
-**Versión:** 1.1 · migración `backend/db/migrations/00001_esquema.sql` · 10-oct-2026 (corrección de la ronda 1 de revisión)
-**Autor:** agente S1-modelo-datos (WF-0, fase S1 «Dominio y modelo de datos»)
-**Fuente de verdad:** la migración. Este documento se generó con los comentarios estructurados de la migración (`-- @table`, `-- @idx`, comentario por columna) y con la introspección de la base ya migrada (`PRAGMA table_xinfo`, `foreign_key_list`, `index_list`). Si la migración cambia, el diccionario se regenera. No se edita a mano por separado.
+**Versión:** 1.2 · migraciones `backend/db/migrations/00001_esquema.sql` y `backend/db/migrations/00002_puerta1.sql` · 11-oct-2026 (respuestas de la puerta 1, `docs/plan/decisiones.md` §K)
+**Autor:** agente S1-modelo-datos (WF-0, fase S1 «Dominio y modelo de datos»); versión 1.2: agente S1-esquema-1.2 (flujo P1)
+**Fuente de verdad:** las migraciones, en orden. Este documento se genera con `python3 -I backend/db/tools/gen_dict.py` a partir de los comentarios estructurados de las migraciones (`-- @table`, `-- @idx`, comentario por columna; desde 1.2 también `-- @alter`, `-- @used_new` y `-- @after`) y con la introspección de la base ya migrada (`PRAGMA table_xinfo`, `foreign_key_list`, `index_list`). Si una migración cambia o se agrega otra, el diccionario se regenera con ese comando. No se edita a mano por separado.
 **Reglas de negocio con ejemplos numéricos:** `docs/contratos/reglas-negocio.md`.
-**Cambios en 1.1** (hallazgos H-01, H-02, H-04 y H-11 de `docs/estado/wf0/REVISION-r1.md`): tablas nuevas `shopping_list` y `shopping_list_item` (PROVISIONAL, bloqueo `C1-lista-compras`, opción A), `recipe_meal_slot` (sustituye a `recipe.default_meal_slot_id`), `inventory_movement` e `idempotency_key`; `expense.description` admite NULL; `budget` cambia `period_id` por la vigencia `valid_from_date`/`valid_to_date`; columnas nuevas `planned_item.second_half_amount_cents` y `category.kind`; una sola co-titular (`ux_person_single_co_holder`) y disparador `trg_person_external_without_access`; sección «Ajustes: 14 secciones → tabla.columna»; Apariencia queda local por dispositivo, como en U1 y C1.
+**Cambios en 1.1** (hallazgos H-01, H-02, H-04 y H-11 de `docs/estado/wf0/REVISION-r1.md`): tablas nuevas `shopping_list` y `shopping_list_item` (provisionales en 1.1; firmes desde 1.2 por K1), `recipe_meal_slot` (sustituye a `recipe.default_meal_slot_id`), `inventory_movement` e `idempotency_key`; `expense.description` admite NULL; `budget` cambia `period_id` por la vigencia `valid_from_date`/`valid_to_date`; columnas nuevas `planned_item.second_half_amount_cents` y `category.kind`; una sola co-titular (`ux_person_single_co_holder`) y disparador `trg_person_external_without_access`; sección «Ajustes: 14 secciones → tabla.columna»; Apariencia queda local por dispositivo, como en U1 y C1.
+**Cambios en 1.2** (migración `00002_puerta1.sql`, respuestas de Axel de `docs/plan/decisiones.md` §K): columnas nuevas `attachment.ocr_draft_json` y `.ocr_draft_saved_at` (K3, borrador de «Guardar para después»); tabla nueva `telegram_chat_candidate` (K4, chats que el bot detecta y la persona confirma); `expense.idempotency_key` y `.captured_at`, y `weight_entry.idempotency_key` y `.captured_at`, con sus índices únicos (K9, cola del teléfono); `credit_term_rate.rate_decimals`, `credit_purchase.rate_decimals`, `promotion.rate_decimals` y `credit.annual_rate_decimals` (K12, tasas como se capturaron); `credit.rate_base`, `.min_payment_pct_bp` y `.min_payment_fixed_cents` (K18, tarjeta bancaria y crédito de tienda); `health_profile.goal` (K23); ajustes sembrados `projection.repeat_cadence_enabled` = false (K21), `session.max_age_days` = 90 (K11) e `idempotency.retention_hours` = 24 (K6); las restricciones `optimizer.*` siguen sin valor (K16). Quedan FIRMES la lista de compras (K1), la retención de idempotencia (K6), los rangos de `period` (K8), la vigencia de `budget` (K2) y la escala de actividad (K23). Redacción neutral de `person.fortnight_payment_cap_cents` (K13, hallazgo R2-03). El generador vive en `backend/db/tools/gen_dict.py` y la verificación en `backend/db/tools/s1_verifica.py` (hallazgo R2-08).
+**Correcciones de la revisión S1-r1** (11-oct-2026, agente correccion-S1-r1; hallazgos H-02 y H-03 de `docs/estado/p1/REVISION-S1-r1.md`): `shopping_list.start_date` es el lunes que abre la semana del plan (K8) y la base lo exige con los disparadores `trg_shopping_list_monday_ins` y `trg_shopping_list_monday_upd` de la 00002; las columnas del borrador de `attachment` citan a U1 P-05 (N-071, N-075 y N-076) y `telegram_chat_candidate` suma N-316 «Confirmar chat detectado».
 
-Resumen: **54 tablas STRICT**, 147 índices (incluye los automáticos de UNIQUE) y 68 disparadores (15 de reglas de negocio y 53 de `updated_at`).
+Resumen: **55 tablas STRICT**, 152 índices (incluye los automáticos de UNIQUE) y 71 disparadores (17 de reglas de negocio y 54 de `updated_at`).
 
 ## Cómo leer este documento
 - **nombre_codigo**: nombre en el código (SQL, Go, TypeScript). Los términos de dominio del plan se traducen aquí una sola vez (ver «Glosario de nombre_codigo»).
@@ -77,8 +79,9 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `idempotency_key` | Clave de idempotencia | encabezado Idempotency-Key de los POST de captura (C1 §1 punto 8): una captura repetida no se duplica |
 | `budget` | Presupuesto | presupuesto mensual por categoría y total (S2, alertas 80/100 %) |
 | `product_group` | Grupo de producto | decisión D: dos verticales de compra (mercados para verduras y carne no especializada, cadenas para el resto) |
-| `shopping_list` | Lista de compras | lista de compras de la semana con marcas de comprado y artículos a mano (U1 N-150 a N-153 y N-165). PROVISIONAL: opción A del bloqueo C1-lista-compras (marcas compartidas entre los dos teléfonos) hasta la puerta 1 |
-| `shopping_list_item` | Artículo de la lista de compras | artículos de la lista de compras, calculados por S4 o agregados a mano, con tienda, cantidad y marca de comprado. PROVISIONAL: opción A del bloqueo C1-lista-compras hasta la puerta 1 |
+| `shopping_list` | Lista de compras | lista de compras de la semana con marcas de comprado y artículos a mano (U1 N-150 a N-153 y N-165), compartida en el servidor entre los dos teléfonos (K1) |
+| `shopping_list_item` | Artículo de la lista de compras | artículos de la lista de compras, calculados por S4 o agregados a mano, con tienda, cantidad y marca de comprado, compartidos en el servidor (K1) |
+| `telegram_chat_candidate` | Chat de Telegram por confirmar | chats que el bot detecta cuando alguien le escribe y que la persona confirma en Ajustes (K4) |
 | `generated_report` | Reporte generado | decisión F: el reporte mensual PDF se envía y se guarda; estado de cuenta de Karen en PDF bajo demanda |
 
 ## Glosario de nombre_codigo
@@ -114,6 +117,12 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | meta kcal · IMC | `health_profile.daily_kcal_target` · se calcula con `health_profile.height_mm` y el último `weight_entry.weight_g` |
 | fondo de ahorro / meta con fecha | `savings_goal.kind` = `fund` / `goal` |
 | aviso / destinatario / suscripción | `notification` / `notification_recipient` / `notification_subscription` |
+| chat de Telegram por confirmar | `telegram_chat_candidate`; al confirmarlo se crea su `notification_recipient` |
+| borrador del ticket («Guardar para después») | `attachment.ocr_draft_json` y `attachment.ocr_draft_saved_at` |
+| captura sin conexión (cola del teléfono) | `idempotency_key` y `captured_at` en `expense` y `weight_entry` |
+| decimales capturados de una tasa | `rate_decimals` en `credit_term_rate`, `credit_purchase` y `promotion`; `credit.annual_rate_decimals` |
+| base de la tasa · pago mínimo | `credit.rate_base` (`daily` / `monthly`) · `credit.min_payment_pct_bp` y `credit.min_payment_fixed_cents` |
+| objetivo de peso (bajar / mantener / subir) | `health_profile.goal` = `lose` / `maintain` / `gain` |
 | respaldo · reporte guardado | `backup` · `generated_report` |
 
 ## A. Personas y acceso
@@ -131,7 +140,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `display_name` | TEXT | no | Nombre que se muestra en pantallas y reportes | no vacío |
 | `participation` | TEXT | no | Papel: holder = titular (Axel), co_holder = co-titular con los mismos permisos (Ximena), external = participante externa sin cuenta (Karen) | enumerado, un solo holder |
 | `pays_share_directly` | INTEGER | no | 1 = paga su parte directo al acreedor (Karen con Kueski). Su parte es informativa para el flujo de efectivo del titular y repone la línea cuando ella paga | def: 0; booleano |
-| `fortnight_payment_cap_cents` | INTEGER | sí | Tope de pago por quincena que el optimizador usa como objetivo, nunca como restricción dura. El valor lo da Axel en Ajustes: el oráculo no trae un tope (374.93 de `karen_fija.pago` es la parte de Karen por pago, no un tope) | centavos, NULL = sin tope |
+| `fortnight_payment_cap_cents` | INTEGER | sí | Tope de pago por quincena de la persona, opcional. El comparador lo usa como objetivo (pago parejo y bajo el tope), nunca como restricción dura. No hay un tope fijo: Axel lo captura por persona en Ajustes «Personas y reparto» cuando quiera (K13) | centavos, NULL = sin tope |
 | `is_active` | INTEGER | no | 0 = archivado: deja de ofrecerse en capturas nuevas y se conserva para la historia. | def: 1 |
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
@@ -139,7 +148,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 
 **Relaciones:**
 - Sin llaves foráneas salientes.
-- La referencian: `cost_share_rule.remainder_person_id`, `cost_share_rule_part.person_id`, `credit.holder_person_id`, `credit_payment.payer_person_id`, `credit_purchase_share.person_id`, `expense.paid_by_person_id`, `expense.person_id`, `expense_share.person_id`, `generated_report.person_id`, `health_profile.person_id`, `income.person_id`, `meal_plan_entry.person_id`, `notification_recipient.person_id`, `planned_item.person_id`, `recipe.author_person_id`, `scheduled_payment_share.person_id`, `user_account.person_id`, `weight_entry.person_id`
+- La referencian: `cost_share_rule.remainder_person_id`, `cost_share_rule_part.person_id`, `credit.holder_person_id`, `credit_payment.payer_person_id`, `credit_purchase_share.person_id`, `expense.paid_by_person_id`, `expense.person_id`, `expense_share.person_id`, `generated_report.person_id`, `health_profile.person_id`, `income.person_id`, `meal_plan_entry.person_id`, `notification_recipient.person_id`, `planned_item.person_id`, `recipe.author_person_id`, `scheduled_payment_share.person_id`, `telegram_chat_candidate.person_id`, `user_account.person_id`, `weight_entry.person_id`
 
 **Índices:**
 
@@ -325,7 +334,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 ### `idempotency_key` · Clave de idempotencia
 
 - **Entidad del plan (§3.4.1):** (complementaria) encabezado Idempotency-Key de los POST de captura (C1 §1 punto 8): una captura repetida no se duplica
-- **Descripción:** Clave que manda el cliente en cada POST de captura. Si la misma cuenta repite la clave con el mismo cuerpo, la API devuelve la respuesta guardada; con otro cuerpo responde 409 idempotency_key_reused. La retención (24 h propuestas) es PROVISIONAL, bloqueo C1-parametros-tecnicos; la purga la hace un job.
+- **Descripción:** Clave que manda el cliente en cada POST de captura. Si la misma cuenta repite la clave con el mismo cuerpo, la API devuelve la respuesta guardada; con otro cuerpo responde 409 idempotency_key_reused. La retención es de 24 h (K6, app_setting idempotency.retention_hours de la migración 00002); la purga la hace un job. Las capturas de la cola del teléfono guardan además su clave en expense y weight_entry, sin purga (K9).
 - **Usado por:** S6 (API: los POST de captura de C1, entre ellos «Registrar gasto» del flujo F-1 de U1) y jobs de S6 (purga por antigüedad).
 
 | nombre_codigo | tipo | nulo | descripción | regla |
@@ -351,7 +360,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 
 | índice | definición | propósito |
 |---|---|---|
-| `ix_idempotency_key_created` | `idempotency_key (created_at)` | Purga de claves por antigüedad (retención PROVISIONAL). |
+| `ix_idempotency_key_created` | `idempotency_key (created_at)` | Purga de claves por antigüedad (retención de 24 h, K6). |
 | `sqlite_autoindex_idempotency_key_1` | UNIQUE (user_account_id, idempotency_key) automático | Lo crea SQLite por la restricción UNIQUE o la columna única. |
 
 **Disparadores:**
@@ -362,7 +371,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 ### `period` · Periodo
 
 - **Entidad del plan (§3.4.1):** periodo
-- **Descripción:** Mes calendario (periodo base del presupuesto) y sus dos quincenas (subperiodos). Los días de pago (15, y 30 o último día) son FIRMES (oráculo). Los rangos de la quincena (1 a 15 y 16 a fin de mes) son PROVISIONALES: bloqueo U1-periodos-semana-quincena, opción C. Ambos se validan en la propia tabla.
+- **Descripción:** Mes calendario (periodo base del presupuesto) y sus dos quincenas (subperiodos). Los días de pago (15, y 30 o último día) son FIRMES (oráculo). Los rangos de la quincena (1 a 15 y 16 a fin de mes) son FIRMES (K8). Ambos se validan en la propia tabla.
 - **Usado por:** S2 (presupuesto mensual, flujo por quincena, proyección). Pantallas Presupuesto e Inicio. Filtro «periodo» de C1.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
@@ -372,7 +381,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `parent_id` | INTEGER | sí | Mes al que pertenece la quincena. NULL en meses | FK → `period.id` al borrar: CASCADE |
 | `year` | INTEGER | no | Año | 2000 a 2100 |
 | `month` | INTEGER | no | Mes | 1 a 12 |
-| `half` | INTEGER | sí | Quincena 1 (días 1 a 15) o 2 (día 16 a fin de mes). NULL en meses | 1 o 2. Rangos PROVISIONALES (bloqueo U1-periodos-semana-quincena) |
+| `half` | INTEGER | sí | Quincena 1 (días 1 a 15) o 2 (día 16 a fin de mes). NULL en meses | 1 o 2. Rangos FIRMES (K8) |
 | `start_date` | TEXT | no | Primer día (ISO) | fecha válida |
 | `end_date` | TEXT | no | Último día, inclusive (ISO) | fecha válida |
 | `pay_date` | TEXT | sí | Día de pago de la quincena: 15, o 30 o el último día si el mes es más corto (28-feb-2027). NULL en meses | fecha válida |
@@ -380,7 +389,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
 
 **Reglas de tabla (CHECK / UNIQUE):**
-- Mes: del día 1 al último. Quincena 1: del 1 al 15, paga el 15. Quincena 2: del 16 al último, paga el 30 o el último día si es menor (febrero). Rangos de quincena PROVISIONALES (U1-periodos-semana-quincena).
+- Mes: del día 1 al último. Quincena 1: del 1 al 15, paga el 15. Quincena 2: del 16 al último, paga el 30 o el último día si es menor (febrero). Rangos de quincena FIRMES (K8).
 
 **Relaciones:**
 - `parent_id` → `period.id` · al borrar la madre: CASCADE (se borra con la madre)
@@ -518,7 +527,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `category_id` | INTEGER | sí | Categoría. NULL = presupuesto total del mes | FK → `category.id` al borrar: RESTRICT |
 | `amount_cents` | INTEGER | no | Monto planeado por mes en centavos | centavos |
 | `valid_from_date` | TEXT | no | Primer día del primer mes en que rige | fecha válida, día 1 del mes |
-| `valid_to_date` | TEXT | sí | Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Qué vigencia pone un cambio hecho en Ajustes (solo ese mes o los siguientes) es PROVISIONAL: bloqueo S1-huecos-negocio | fecha válida, último día de un mes |
+| `valid_to_date` | TEXT | sí | Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL; «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente | fecha válida, último día de un mes |
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
@@ -728,6 +737,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** credito
 - **Descripción:** Crédito del titular: línea revolvente tipo Kueski, tarjeta bancaria, préstamo personal a plazo fijo o crédito de tienda con abonos. Guarda el límite, la lectura A/B, las fechas de corte y pago y las comisiones.
 - **Usado por:** Ajustes «Créditos y condiciones». S3 (calendario unificado, disponible A/B, optimizador). Pantalla Créditos. Filtro «crédito» de C1.
+- **Usado por las columnas nuevas de 1.2:** Ajustes «Créditos y condiciones» (Axel los captura de su estado de cuenta, K18). S3 (fórmula general; sin datos muestra «falta capturar»). C1 v1.1. U4. Reglas RN-25 y RN-26.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -754,6 +764,10 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `rate_base` | TEXT | sí | Nueva en 1.2 (K18). Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar | enumerado, solo bank_card y store_credit |
+| `min_payment_pct_bp` | INTEGER | sí | Nueva en 1.2 (K18). Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar | 0 a 10000, solo bank_card y store_credit |
+| `min_payment_fixed_cents` | INTEGER | sí | Nueva en 1.2 (K18). Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar | centavos, solo bank_card y store_credit |
+| `annual_rate_decimals` | INTEGER | sí | Nueva en 1.2 (K12). Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato | entero mayor o igual a 0, solo con tasa anual |
 
 **Reglas de tabla (CHECK / UNIQUE):**
 - Línea revolvente y tarjeta tienen límite.
@@ -783,6 +797,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** tasa_por_plazo
 - **Descripción:** Tabla editable de tasas por plazo de un crédito, como fracción exacta del capital por todo el plazo con IVA incluido. Kueski: 2 quincenas = 53450/309450 (17.27 %), 4 quincenas = 80050/309450 (25.8685 %).
 - **Usado por:** Ajustes «Créditos y condiciones». S3 (estimar intereses de compras planeadas, escenarios del optimizador).
+- **Usado por las columnas nuevas de 1.2:** C1 v1.1 (CreditTermRate muestra la tasa con los decimales capturados). U4 (tabla de tasas por plazo). Regla RN-25.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -796,6 +811,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `rate_decimals` | INTEGER | sí | Nueva en 1.2 (K12). Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato | entero mayor o igual a 0 |
 
 **Reglas de tabla (CHECK / UNIQUE):**
 - Una tasa vigente por plazo y crédito.
@@ -818,6 +834,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** promocion
 - **Descripción:** Calendario de promociones capturado a mano: comercio, plazo, tasa (0 % casi siempre), compra mínima y vigencia.
 - **Usado por:** Ajustes «Créditos y condiciones» (promociones). S3 (escenarios con promoción), S5 (comprar más por peso).
+- **Usado por las columnas nuevas de 1.2:** C1 v1.1 (tasa promocional como se capturó). U4. Regla RN-25.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -835,6 +852,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `is_active` | INTEGER | no | 0 = archivado: deja de ofrecerse en capturas nuevas y se conserva para la historia. | def: 1 |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `rate_decimals` | INTEGER | sí | Nueva en 1.2 (K12). Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato | entero mayor o igual a 0 |
 
 **Reglas de tabla (CHECK / UNIQUE):**
 - La vigencia termina el mismo día o después de empezar.
@@ -958,6 +976,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** gasto
 - **Descripción:** Gasto real: fijo, variable o venidero. Guarda la fecha que inicia el devengo, los meses de devengo, el medio de pago (si es crédito el efectivo sale por los pagos programados), quién pagó, a quién se atribuye y su reparto.
 - **Usado por:** Pantallas Gastos (registro en 3 toques), Inicio y Presupuesto. S2 (devengado contra efectivo, real contra plan), S3 (compras a crédito), S7 (reportes).
+- **Usado por las columnas nuevas de 1.2:** C1 v1.1 (capturas atrasadas con Idempotency-Key y fecha de captura). S6 (busca la clave antes de insertar). PWA en WF-3 (cola del teléfono, estado «Sin conexión»). Regla RN-24.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -977,6 +996,8 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `idempotency_key` | TEXT | sí | Nueva en 1.2 (K9). Clave que el teléfono genera para cada captura de su cola, igual al encabezado Idempotency-Key. Si llega otra vez, la API devuelve este gasto y no crea otro. A diferencia de la tabla idempotency_key (24 h), no se purga | 16 a 128 caracteres: letras sin acento, dígitos, guion y guion bajo; única (ux_expense_idempotency_key); NULL = sin clave |
+| `captured_at` | TEXT | sí | Nueva en 1.2 (K9). Instante en que la persona capturó el gasto en el teléfono (UTC). En una captura atrasada es anterior a created_at. NULL = captura en línea: la hora de captura es created_at | instante ISO 8601 con «Z» |
 
 **Reglas de tabla (CHECK / UNIQUE):**
 - En compras a crédito quién paga lo dicen las partes de cada pago programado.
@@ -1001,6 +1022,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `ix_expense_planned` | `expense (planned_item_id)` | Gastos que cumplen una partida planificada. |
 | `ix_expense_rule` | `expense (cost_share_rule_id)` | Llave foránea hacia la regla de reparto. |
 | `ix_expense_store_date` | `expense (store_id, expense_date)` | Gastos por tienda y periodo. |
+| `ux_expense_idempotency_key` | UNIQUE `expense (idempotency_key)` | Una captura de la cola no se duplica: un solo gasto por clave. |
 
 **Disparadores:**
 - `trg_expense_updated_at`: pone updated_at en el instante actual si el UPDATE no lo trae.
@@ -1082,6 +1104,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** gasto (adjunto)
 - **Descripción:** Archivo adjunto: foto de ticket (con su OCR local), factura o estado de cuenta del banco. Ninguna cifra del OCR entra al sistema sin confirmación humana.
 - **Usado por:** Pantalla Gastos (adjuntar ticket). S5 (OCR Tesseract con confirmación), S6 (almacenamiento de adjuntos).
+- **Usado por las columnas nuevas de 1.2:** C1 v1.1 (guardar y leer el borrador del ticket). S5 (lectura de tickets). U1 P-05 (N-071, N-075 y N-076). Regla RN-23.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -1099,6 +1122,8 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `uploaded_by_user_id` | INTEGER | sí | Cuenta que lo subió | FK → `user_account.id` al borrar: SET NULL |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `ocr_draft_json` | TEXT | sí | Nueva en 1.2 (K3). Borrador de las correcciones del ticket que la persona guardó con «Guardar para después», en JSON con la forma que define C1 v1.1. La lectura cruda (ocr_text) no se toca. Se vacía al confirmar el ticket | objeto JSON válido; NULL = sin borrador |
+| `ocr_draft_saved_at` | TEXT | sí | Nueva en 1.2 (K3). Cuándo se guardó el borrador por última vez (UTC) | instante ISO 8601 con «Z»; va junto con ocr_draft_json |
 
 **Relaciones:**
 - `uploaded_by_user_id` → `user_account.id` · al borrar la madre: SET NULL (queda sin liga)
@@ -1169,6 +1194,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** compra_credito
 - **Descripción:** Compra o disposición con un crédito: capital, intereses cotizados (IVA incluido), plazo, primer pago y promoción. Solo el capital usa y repone la línea.
 - **Usado por:** S3 (calendario, disponible A/B, compras vivas, regresión Kueski), S2 (devengado incluye intereses), S7 (estado de cuenta de Karen). Pantalla Créditos.
+- **Usado por las columnas nuevas de 1.2:** C1 v1.1 (tasa de la compra como se capturó o cotizó). U4. Regla RN-25.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -1194,6 +1220,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `rate_decimals` | INTEGER | sí | Nueva en 1.2 (K12). Decimales con que se muestra la tasa de esta compra, los mismos con que se capturó o cotizó. NULL = sin tasa o sin dato | entero mayor o igual a 0, solo si la compra lleva tasa |
 
 **Reglas de tabla (CHECK / UNIQUE):**
 - Total = capital + intereses.
@@ -1737,14 +1764,14 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 
 ### `shopping_list` · Lista de compras
 
-- **Entidad del plan (§3.4.1):** (complementaria) lista de compras de la semana con marcas de comprado y artículos a mano (U1 N-150 a N-153 y N-165). PROVISIONAL: opción A del bloqueo C1-lista-compras (marcas compartidas entre los dos teléfonos) hasta la puerta 1
-- **Descripción:** Lista de compras de una semana del plan de comidas. Guarda lo que no se puede calcular: los artículos agregados a mano, la tienda o cantidad elegida, las marcas de comprado y cuándo se generó. Lo calculado (necesidad del plan − existencia + reposición, precios y frescura) lo dan S4 y S5. PROVISIONAL: bloqueo C1-lista-compras, opción A.
+- **Entidad del plan (§3.4.1):** (complementaria) lista de compras de la semana con marcas de comprado y artículos a mano (U1 N-150 a N-153 y N-165), compartida en el servidor entre los dos teléfonos (K1)
+- **Descripción:** Lista de compras de una semana del plan de comidas. Guarda lo que no se puede calcular: los artículos agregados a mano, la tienda o cantidad elegida, las marcas de comprado y cuándo se generó. Lo calculado (necesidad del plan − existencia + reposición, precios y frescura) lo dan S4 y S5. Se comparte en el servidor entre los dos teléfonos (K1).
 - **Usado por:** Pantalla Compras y tiendas › Lista de compras (N-150 a N-153) y comparativa (N-165 «Usar esta tienda»). Comidas (N-127 «Generar lista de compras»). Gastos (N-073 «Terminar compra»). S4 (lista neteada), S5 (tienda recomendada).
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
 | `id` | INTEGER | no | Identificador interno (alias de rowid). | PK |
-| `start_date` | TEXT | no | Primer día de la semana del plan. Qué día empieza la semana lo fija U1 (bloqueo U1-periodos-semana-quincena) | único; fecha válida, una lista por semana |
+| `start_date` | TEXT | no | Lunes que abre la semana del plan (K8: semana de lunes a domingo) | único; fecha válida y en lunes (lo exigen trg_shopping_list_monday_ins y trg_shopping_list_monday_upd, de la 00002), una lista por semana |
 | `end_date` | TEXT | no | Último día de la semana, inclusive | fecha válida, start_date + 6 días |
 | `generated_at` | TEXT | sí | Última vez que S4 la generó o actualizó desde el plan (N-127), UTC. NULL = todavía no se genera |  |
 | `notes` | TEXT | sí | Notas libres. |  |
@@ -1765,12 +1792,14 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `sqlite_autoindex_shopping_list_1` | UNIQUE (start_date) automático | Lo crea SQLite por la restricción UNIQUE o la columna única. |
 
 **Disparadores:**
+- `trg_shopping_list_monday_ins`: rechaza con «shopping_list: la semana de la lista empieza en lunes (K8)».
+- `trg_shopping_list_monday_upd`: rechaza con «shopping_list: la semana de la lista empieza en lunes (K8)».
 - `trg_shopping_list_updated_at`: pone updated_at en el instante actual si el UPDATE no lo trae.
 
 ### `shopping_list_item` · Artículo de la lista de compras
 
-- **Entidad del plan (§3.4.1):** (complementaria) artículos de la lista de compras, calculados por S4 o agregados a mano, con tienda, cantidad y marca de comprado. PROVISIONAL: opción A del bloqueo C1-lista-compras hasta la puerta 1
-- **Descripción:** Un artículo de la lista: un producto que calculó S4 al generar la lista o un artículo agregado a mano (producto del catálogo o texto libre). Guarda la tienda o mercado elegido, la cantidad elegida y si ya se compró. PROVISIONAL: bloqueo C1-lista-compras, opción A.
+- **Entidad del plan (§3.4.1):** (complementaria) artículos de la lista de compras, calculados por S4 o agregados a mano, con tienda, cantidad y marca de comprado, compartidos en el servidor (K1)
+- **Descripción:** Un artículo de la lista: un producto que calculó S4 al generar la lista o un artículo agregado a mano (producto del catálogo o texto libre). Guarda la tienda o mercado elegido, la cantidad elegida y si ya se compró. Se comparte en el servidor entre los dos teléfonos (K1).
 - **Usado por:** Pantalla Compras y tiendas › Lista de compras (marcar comprado N-151, agregar artículo N-152, cambiar tienda o cantidad N-153) y comparativa (N-165). Gastos (prellenado N-073). S4 (lista neteada), S5 (mejor tienda y canasta, N-024).
 
 | nombre_codigo | tipo | nulo | descripción | regla |
@@ -1822,6 +1851,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** perfil_salud
 - **Descripción:** Perfil de salud por persona (solo Axel y Ximena): estatura, nacimiento, sexo, actividad, meta de calorías y restricciones (vacías por decisión). El peso vive en weight_entry.
 - **Usado por:** Ajustes «Salud y metas de ahorro». S4 (IMC, kcal por día contra la meta). Pantalla Salud.
+- **Usado por las columnas nuevas de 1.2:** Pantalla Salud y Ajustes «Salud y metas de ahorro». S4 (meta sugerida con Mifflin-St Jeor, actividad y objetivo; regla RN-17). U4.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -1830,12 +1860,13 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `height_mm` | INTEGER | sí | Estatura en milímetros (1.75 m = 1750) | 500 a 2500 |
 | `birth_date` | TEXT | sí | Fecha de nacimiento. La edad se calcula | fecha válida |
 | `sex` | TEXT | sí | Sexo para fórmulas de requerimiento | enumerado |
-| `activity_level` | TEXT | sí | PROVISIONAL: escala de actividad de 5 niveles, pendiente de la fórmula de meta kcal (bloqueo S1-meta-kcal) | enumerado PROVISIONAL |
+| `activity_level` | TEXT | sí | Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23) | enumerado |
 | `daily_kcal_target` | INTEGER | sí | Meta de kilocalorías por día | 500 a 10000 |
 | `dietary_restrictions` | TEXT | sí | Restricciones alimentarias (el campo existe y hoy va vacío) |  |
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `goal` | TEXT | sí | Nueva en 1.2 (K23). Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige | enumerado |
 
 **Relaciones:**
 - `person_id` → `person.id` · al borrar la madre: RESTRICT (no se puede borrar la madre)
@@ -1856,6 +1887,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - **Entidad del plan (§3.4.1):** peso_historico
 - **Descripción:** Historial de peso por persona. El más reciente alimenta el IMC.
 - **Usado por:** S4 (IMC), Pantalla Salud (tendencia).
+- **Usado por las columnas nuevas de 1.2:** C1 v1.1 (pesos capturados sin conexión). S6 (busca la clave antes de insertar). PWA en WF-3 (cola del teléfono). Regla RN-24.
 
 | nombre_codigo | tipo | nulo | descripción | regla |
 |---|---|---|---|---|
@@ -1866,6 +1898,8 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | `notes` | TEXT | sí | Notas libres. |  |
 | `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
 | `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+| `idempotency_key` | TEXT | sí | Nueva en 1.2 (K9). Clave de la captura en la cola del teléfono. Si llega otra vez, la API devuelve este peso y no crea otro. No se purga | 16 a 128 caracteres: letras sin acento, dígitos, guion y guion bajo; única (ux_weight_entry_idempotency_key); NULL = sin clave |
+| `captured_at` | TEXT | sí | Nueva en 1.2 (K9). Instante en que la persona capturó el peso en el teléfono (UTC). NULL = captura en línea: la hora de captura es created_at | instante ISO 8601 con «Z» |
 
 **Reglas de tabla (CHECK / UNIQUE):**
 - Una medición por persona y día.
@@ -1878,6 +1912,7 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 | índice | definición | propósito |
 |---|---|---|
 | `sqlite_autoindex_weight_entry_1` | UNIQUE (person_id, measured_date) automático | Lo crea SQLite por la restricción UNIQUE o la columna única. |
+| `ux_weight_entry_idempotency_key` | UNIQUE `weight_entry (idempotency_key)` | Una captura de la cola no se duplica: un solo peso por clave. |
 
 **Disparadores:**
 - `trg_weight_entry_not_external_ins`: rechaza con «weight_entry: salud solo para Axel y Ximena (decisión A)».
@@ -1990,6 +2025,40 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 
 **Disparadores:**
 - `trg_notification_recipient_updated_at`: pone updated_at en el instante actual si el UPDATE no lo trae.
+
+### `telegram_chat_candidate` · Chat de Telegram por confirmar
+
+- **Entidad del plan (§3.4.1):** (complementaria) chats que el bot detecta cuando alguien le escribe y que la persona confirma en Ajustes (K4)
+- **Descripción:** Chat que el bot detectó cuando alguien le escribió y que espera confirmación en Ajustes «Notificaciones». Guarda solo el chat_id y el nombre que da Telegram. Al confirmarlo se liga a la persona y la API crea su notification_recipient en la misma transacción; descartarlo borra el renglón.
+- **Usado por:** Ajustes «Notificaciones» (candidatos pendientes y confirmación, C1 v1.1). S7 (detección cuando la persona escribe al bot, K4). U1 P-26.09: N-299 (chats detectados) y N-316 (Confirmar chat detectado).
+
+| nombre_codigo | tipo | nulo | descripción | regla |
+|---|---|---|---|---|
+| `id` | INTEGER | no | Identificador interno (alias de rowid). | PK |
+| `chat_id` | TEXT | no | chat_id de Telegram del que llegó el mensaje | único; dígitos y signo menos |
+| `telegram_name` | TEXT | no | Nombre que da Telegram para ese chat | no vacío |
+| `detected_at` | TEXT | no | Cuándo lo detectó el bot (UTC) | def: ahora (UTC); instante ISO 8601 con «Z» |
+| `confirmed_at` | TEXT | sí | Cuándo la persona lo confirmó en Ajustes (UTC). NULL = pendiente | instante ISO 8601 con «Z» |
+| `person_id` | INTEGER | sí | Persona a quien se ligó al confirmar | FK → `person.id` al borrar: RESTRICT; obligatoria si está confirmado |
+| `created_at` | TEXT | no | Alta del registro, instante UTC ISO 8601 con «Z». | def: ahora (UTC); ISO 8601 UTC |
+| `updated_at` | TEXT | no | Última modificación, instante UTC ISO 8601. La mantiene el disparador `trg_<tabla>_updated_at`. | def: ahora (UTC); ISO 8601 UTC |
+
+**Reglas de tabla (CHECK / UNIQUE):**
+- Un chat confirmado dice de quién es; uno pendiente todavía no tiene persona.
+
+**Relaciones:**
+- `person_id` → `person.id` · al borrar la madre: RESTRICT (no se puede borrar la madre)
+
+**Índices:**
+
+| índice | definición | propósito |
+|---|---|---|
+| `ix_telegram_chat_candidate_pending` | `telegram_chat_candidate (detected_at) WHERE confirmed_at IS NULL` | Candidatos pendientes de confirmar. |
+| `ix_telegram_chat_candidate_person` | `telegram_chat_candidate (person_id)` | Llave foránea hacia la persona. |
+| `sqlite_autoindex_telegram_chat_candidate_1` | UNIQUE (chat_id) automático | Lo crea SQLite por la restricción UNIQUE o la columna única. |
+
+**Disparadores:**
+- `trg_telegram_chat_candidate_updated_at`: pone updated_at en el instante actual si el UPDATE no lo trae.
 
 ### `notification_subscription` · Suscripción a un aviso
 
@@ -2179,38 +2248,38 @@ Tablas complementarias: no son entidades de §3.4.1, pero cada una sale de una d
 - `meal_slot`: 4 renglones fijos: 1 desayuno, 2 comida, 3 cena, 4 colación (opcional).
 - `notification`: los 7 avisos de la decisión F, activos y solo con parámetros ya decididos: `weekly_summary` y `meal_plan_missing` el domingo (`weekday` 7), `monthly_report` el día 1, `payment_due` el día anterior y el mismo día (`days_before` [1, 0]), `budget_threshold` al 80 y 100 % por categoría y total. `daily_summary` («noche») y `stale_prices` («antes del día de despensa») quedan con `{}` porque la hora y los días exactos no están decididos.
 - `app_setting`: `price.stale_after_days` = 30, `auth.max_failed_attempts` = 5, `auth.lockout_window_minutes` = 15, `optimizer.weights` (4 pesos iguales), `ai.local_model_enabled` = false, `ai.claude_api_enabled` = false, `price.assisted_reading_enabled` = false.
+- `app_setting` sembrado por la migración 00002 (puerta 1): `projection.repeat_cadence_enabled` = false (K21), `session.max_age_days` = 90 (K11), `idempotency.retention_hours` = 24 (K6).
 
 No se siembran personas, cuentas, reglas de reparto, categorías, tiendas ni créditos. Esa semilla la carga S8 (WF-4) desde `datos/semilla/data.json` y `oraculo/model.json`.
 
 ## Claves de app_setting previstas sin valor
 | clave | para qué | por qué no se siembra |
 |---|---|---|
-| `optimizer.min_available_buffer_cents` | colchón mínimo de disponible (restricción dura) | Axel no dio el valor. Alcance global o por crédito: bloqueo `S1-restricciones-optimizador` |
-| `optimizer.max_live_purchases` | máximo de compras vivas a la vez (restricción dura) | igual que la anterior |
-| `optimizer.zero_debt_by_date` | deuda en cero antes de una fecha (restricción dura) | igual que la anterior |
+| `optimizer.min_available_buffer_cents` | colchón mínimo de disponible en la línea que se usa (restricción dura) | lo captura Axel en Ajustes «Créditos y condiciones» (K16); global y ajustable en cada comparación. Sin valor por defecto: mientras falte, el comparador avisa «faltan restricciones» y no recomienda |
+| `optimizer.max_live_purchases` | máximo de compras vivas a la vez en el crédito que se usa (restricción dura) | igual que la anterior (K16) |
+| `optimizer.zero_debt_by_date` | deuda en cero antes de una fecha en el crédito que se usa (restricción dura) | igual que la anterior (K16) |
 | `optimizer.date_window_days` | «fecha ± días» de los escenarios | valor no dado (lo define S3 con Axel) |
-| `price.stale_weight` | cuánto menos pesa un precio viejo | PROVISIONAL, bloqueo `S1-frescura-peso` |
-| `session.max_age_days` | duración de la sesión larga («meses») | la fija S6 |
-| `idempotency.retention_hours` | horas que se guarda una `idempotency_key` antes de purgarla | la fija S6: 24 h propuestas en C1, PROVISIONAL, bloqueo `C1-parametros-tecnicos` |
+
+Desde 1.2 ya no están en esta lista: `price.stale_weight` (el peso de un precio viejo es la regla RN-12, K22), `session.max_age_days` (90, K11) e `idempotency.retention_hours` (24, K6), que siembra la migración 00002.
 
 ## Ajustes: 14 secciones → campos → tabla.columna (criterio S1-13)
 Campos tomados de U1 §2 (P-26.01 a P-26.14) y §3 (N-270 a N-315). «Sin dato en la base» quiere decir que el campo no se guarda en SQLite y se dice dónde vive.
 
 | # | Sección | Campos | Destino (tabla.columna) |
 |---|---|---|---|
-| 1 | Cuenta y roles | usuarios Axel y Ximena con los mismos permisos (nombre, usuario, papel, último acceso) · cambio de la contraseña propia · sesiones por dispositivo y su cierre · límite de intentos · «Este dispositivo» | `person.display_name`, `person.participation`, `user_account.username`, `user_account.is_active`, `user_account.last_login_at` (no hay columna de rol) · `user_account.password_hash`, `user_account.password_changed_at` · `device_session.device_label`, `.user_agent`, `.ip_address`, `.created_at`, `.last_seen_at`, `.expires_at`, `.revoked_at` · `login_attempt` + `app_setting` `auth.max_failed_attempts` (5), `auth.lockout_window_minutes` (15) · sin dato en la base: si la app está instalada lo sabe el navegador (Local) y el certificado de la CA lo sirve S6 como archivo |
-| 2 | Presupuesto | monto mensual por categoría y total, con vigencia · gastos fijos recurrentes (concepto, categoría, monto, día, reparto, activo) · despensa bimestral programada (monto base, día, frecuencia, línea y plazo) | `budget.category_id`, `.amount_cents`, `.valid_from_date`, `.valid_to_date` · `planned_item.kind` = `fixed_expense`, `.description`, `.category_id`, `.amount_cents`, `.frequency`, `.start_date` (día ancla), `.cost_share_rule_id`, `.is_active` · `planned_item.amount_cents`, `.frequency` = `monthly` con `.interval_count` = 2, `.start_date`, `.credit_id`, `.term_count`, `.accrual_months` = 2 (la próxima fecha la calcula S2) |
+| 1 | Cuenta y roles | usuarios Axel y Ximena con los mismos permisos (nombre, usuario, papel, último acceso) · cambio de la contraseña propia · sesiones por dispositivo y su cierre · límite de intentos · «Este dispositivo» | `person.display_name`, `person.participation`, `user_account.username`, `user_account.is_active`, `user_account.last_login_at` (no hay columna de rol) · `user_account.password_hash`, `user_account.password_changed_at` · `device_session.device_label`, `.user_agent`, `.ip_address`, `.created_at`, `.last_seen_at`, `.expires_at`, `.revoked_at` · `login_attempt` + `app_setting` `auth.max_failed_attempts` (5), `auth.lockout_window_minutes` (15, ventana deslizante por usuario e IP, K11) y `session.max_age_days` (90, se renueva con el uso, K11) · sin dato en la base: si la app está instalada lo sabe el navegador (Local) y el certificado de la CA lo sirve S6 como archivo |
+| 2 | Presupuesto | monto mensual por categoría y total, con vigencia · gastos fijos recurrentes (concepto, categoría, monto, día, reparto, activo) · despensa bimestral programada (monto base, día, frecuencia, línea y plazo) · proyección de los meses 7 a 12 con o sin la cadencia bimestral y el papel (K21) | `budget.category_id`, `.amount_cents`, `.valid_from_date`, `.valid_to_date` · `planned_item.kind` = `fixed_expense`, `.description`, `.category_id`, `.amount_cents`, `.frequency`, `.start_date` (día ancla), `.cost_share_rule_id`, `.is_active` · `planned_item.amount_cents`, `.frequency` = `monthly` con `.interval_count` = 2, `.start_date`, `.credit_id`, `.term_count`, `.accrual_months` = 2 (la próxima fecha la calcula S2) · `app_setting` `projection.repeat_cadence_enabled` (false; en qué pantalla de Ajustes va el interruptor lo decide U4) |
 | 3 | Ingresos | ingreso quincenal esperado de Axel: monto de la quincena del 15, de la del 30 y desde cuándo rige | `planned_item.kind` = `income`, `.frequency` = `fortnightly`, `.amount_cents` (15), `.second_half_amount_cents` (30, si difiere), `.start_date`, `.end_date`, `.person_id` (solo el titular, disparador) |
 | 4 | Categorías | nombre, tipo (fijo o variable), reparto por defecto, orden, activa | `category.name`, `category.kind`, `category.default_cost_share_rule_id`, `category.sort_order`, `category.is_active` (número de gastos: se cuenta en `expense`) |
-| 5 | Créditos y condiciones (incluye promociones) | líneas por tipo y sus condiciones · interruptor A/B con aviso «pendiente confirmar» · tasas por plazo · promociones · valores del comparador (colchón, compras vivas, deuda en cero, tope por persona, pesos) | `credit.kind`, `.credit_limit_cents`, `.annual_rate_num`/`.annual_rate_den`, `.statement_day`, `.payment_due_day`, `.payment_frequency`, `.first_payment_min_days`, comisiones `*_fee_cents`, `.vat_on_interest_bp`, `.is_active` · `credit.availability_reading` (def. B), `.availability_confirmed`, `.reading_a_anchor_date` · `credit_term_rate.term_count`, `.rate_num`/`.rate_den` · `promotion` · `app_setting` `optimizer.min_available_buffer_cents`, `optimizer.max_live_purchases`, `optimizer.zero_debt_by_date` (sin valor, PROVISIONAL), `person.fortnight_payment_cap_cents`, `app_setting` `optimizer.weights` |
+| 5 | Créditos y condiciones (incluye promociones) | líneas por tipo y sus condiciones (tarjeta y crédito de tienda con los datos de su estado de cuenta, K18) · interruptor A/B con aviso «pendiente confirmar» · tasas por plazo · promociones · valores del comparador (colchón, compras vivas, deuda en cero, tope por persona, pesos) | `credit.kind`, `.credit_limit_cents`, `.annual_rate_num`/`.annual_rate_den`, `.statement_day`, `.payment_due_day`, `.payment_frequency`, `.first_payment_min_days`, comisiones `*_fee_cents`, `.vat_on_interest_bp`, `.rate_base`, `.min_payment_pct_bp`, `.min_payment_fixed_cents`, `.annual_rate_decimals` (K18 y K12), `.is_active` · `credit.availability_reading` (def. B), `.availability_confirmed`, `.reading_a_anchor_date` · `credit_term_rate.term_count`, `.rate_num`/`.rate_den`, `.rate_decimals` · `promotion` (con `.rate_decimals`) · `app_setting` `optimizer.min_available_buffer_cents`, `optimizer.max_live_purchases`, `optimizer.zero_debt_by_date` (sin valor por defecto: las captura Axel, K16), `person.fortnight_payment_cap_cents` (se captura en «Personas y reparto», K13), `app_setting` `optimizer.weights` |
 | 6 | Tiendas y precios (incluye mercados y membresía Sam's) | cadenas y sucursales · mercados y tianguis (días de visita, qué se compra ahí) · membresía de Sam's (costo anual) · fuentes de precio y lectura asistida | `store.kind`, `.parent_id`, `.name`, `.address`, `.municipality`, `.state`, `.profeco_name` · `store.visit_weekday`, `store_product_group.product_group_id` · `store.requires_membership`, `.has_membership`, `.membership_annual_fee_cents` · `price.source`, `store.assisted_reading_enabled` + `app_setting` `price.assisted_reading_enabled` (ambos apagados), `app_setting` `price.stale_after_days` (30) |
 | 7 | Recetas | porciones base, tiempos de comida, recetario inicial, bases nutricionales locales | `recipe.base_servings` (def. 2) · `meal_slot` (4 tiempos) y `recipe_meal_slot` · `recipe.origin` = `claude_seed` · `nutrition_fact.source`, `.source_ref`, `.source_license` (fecha de carga: `nutrition_fact.created_at`) |
 | 8 | Reportes y frecuencias | resumen diario, semanal y mensual PDF (activo, día, hora), vista web mensual, destinatarios | `notification.is_enabled`, `notification.params_json` (`weekday`, `day_of_month`; la hora no está decidida), `job.schedule`, `job.next_run_at` · la vista web mensual no tiene ajuste propio (se calcula al consultar; los PDF quedan en `generated_report`) · `notification_subscription.notification_id`, `.recipient_id` |
-| 9 | Notificaciones | 4 alertas (activa, destinatarios, anticipación) · registro del chat de Axel y de Ximena | `notification.is_enabled`, `notification.params_json` (`days_before`, `thresholds_pct`, `scopes`, `weekday`), `notification_subscription` · `notification_recipient.person_id`, `.chat_id`, `.verified_at`, `.is_active` (cómo se registra el chat: PROVISIONAL, bloqueo `S1-huecos-negocio`) |
+| 9 | Notificaciones | 4 alertas (activa, destinatarios, anticipación) · registro del chat de Axel y de Ximena | `notification.is_enabled`, `notification.params_json` (`days_before`, `thresholds_pct`, `scopes`, `weekday`), `notification_subscription` · `notification_recipient.person_id`, `.chat_id`, `.verified_at`, `.is_active` · chats que detecta el bot y la persona confirma (K4): `telegram_chat_candidate.chat_id`, `.telegram_name`, `.detected_at`, `.confirmed_at`, `.person_id` |
 | 10 | Apariencia | tema: sistema (por defecto), claro u oscuro | sin dato en la base: el tema vive en cada dispositivo (U1 N-301 «Local», C1 §11.3). Saturación apagada y densidad cómoda son decisiones fijas del diseño (C2), no ajustes |
 | 11 | Datos y respaldos | respaldos (lista, integridad, restauración) · importar `gastos_fijos_ingresos.csv` · estado de la semilla · IA opcional · estado del servicio | `backup.kind`, `.status`, `.started_at`, `.finished_at`, `.file_path`, `.size_bytes`, `.integrity_check`, `.restore_tested_at`, `.restore_test_result` y `job.next_run_at` · el CSV se importa a `planned_item` · la semilla se deduce de lo cargado (`expense`, `credit_purchase`, `planned_item`) · `app_setting` `ai.local_model_enabled` y `ai.claude_api_enabled` (false) · sin dato en la base: versión y tiempo en marcha los da S6; la llave de Claude nunca se guarda en la base |
-| 12 | Personas y reparto | Axel, Ximena y Karen (nombre, papel, paga directo) · reparto por defecto del conjunto (50/50) | `person.display_name`, `.participation`, `.pays_share_directly` · `cost_share_rule.is_default`, `.is_template`, `.remainder_person_id`, `cost_share_rule_part.person_id`, `.pct_bp` |
-| 13 | Salud y metas de ahorro | perfiles de Axel y Ximena · metas con fecha · aportación planificada al fondo | `health_profile.height_mm`, `.birth_date`, `.sex`, `.activity_level`, `.daily_kcal_target`, `.dietary_restrictions` y `weight_entry` · `savings_goal.kind` = `goal`, `.name`, `.target_cents`, `.target_date`, `.planned_monthly_cents`, `.is_active` · `savings_goal.kind` = `fund`, `.planned_monthly_cents` |
+| 12 | Personas y reparto | Axel, Ximena y Karen (nombre, papel, paga directo, tope por quincena opcional) · reparto por defecto del conjunto (50/50) | `person.display_name`, `.participation`, `.pays_share_directly`, `.fortnight_payment_cap_cents` (opcional, K13) · `cost_share_rule.is_default`, `.is_template`, `.remainder_person_id`, `cost_share_rule_part.person_id`, `.pct_bp` |
+| 13 | Salud y metas de ahorro | perfiles de Axel y Ximena (con objetivo de peso, K23) · metas con fecha · aportación planificada al fondo | `health_profile.height_mm`, `.birth_date`, `.sex`, `.activity_level`, `.goal`, `.daily_kcal_target`, `.dietary_restrictions` y `weight_entry` · `savings_goal.kind` = `goal`, `.name`, `.target_cents`, `.target_date`, `.planned_monthly_cents`, `.is_active` · `savings_goal.kind` = `fund`, `.planned_monthly_cents` |
 | 14 | Inventario | modo por producto, unidad, umbral de reposición o ritmo inicial · regla de sobrantes | `inventory_item.tracking_mode`, `product.base_unit`, `inventory_item.reorder_level_milli`, `.rate_quantity_milli`, `.rate_period_days` · regla fija de la decisión D: un sobrante es un `inventory_item` con `recipe_id` y `tracking_mode = 'stock'` |
 
 ## Invariantes que SQLite no puede expresar (las validan la API y los motores)
@@ -2227,11 +2296,16 @@ Campos tomados de U1 §2 (P-26.01 a P-26.14) y §3 (N-270 a N-315). «Sin dato e
 11. Las fechas de `scheduled_payment` siguen el calendario del crédito (Kueski: días de pago de quincena y primer pago al menos 15 días después de la compra).
 12. En `inventory_item` con `tracking_mode = 'stock'`, `quantity_milli` es la existencia vigente y cada cambio escribe su `inventory_movement` en la misma transacción. Desde 1.1 el paso de una persona a `external` con cuenta, salud o plan de comidas lo rechaza el disparador `trg_person_external_without_access`.
 13. En `shopping_list_item`, la regeneración de la lista (N-127) actualiza `needed_milli` de los artículos calculados y conserva lo que eligió una persona (`quantity_milli`, `store_id`, `presentation_id`, `is_bought`). «Usar esta tienda» (N-165) pone `store_id` en los artículos de la lista vigente que tienen precio en esa tienda.
+14. (1.2) Un `telegram_chat_candidate` confirmado tiene su `notification_recipient` con el mismo `chat_id` y la misma persona; la API hace los dos cambios en una transacción (K4).
+15. (1.2) `expense.idempotency_key` y `weight_entry.idempotency_key` llevan el valor del encabezado `Idempotency-Key` de la captura; una captura repetida devuelve el registro que ya existe aunque su renglón de `idempotency_key` ya se haya purgado (K9).
+16. (1.2) En `credit` de tipo `bank_card` o `store_credit`, la API guarda juntos los datos de K18 (tasa anual con sus decimales, `rate_base`, si incluye IVA en `vat_on_interest_bp`, `min_payment_pct_bp` y `min_payment_fixed_cents`); si falta alguno, S3 muestra «falta capturar» y no inventa tasa ni mínimo.
 
 ## Notas para otras fases
 - **S6:** activar `foreign_keys`, `journal_mode=WAL` y `busy_timeout` en cada conexión (DSN de modernc `_pragma=...`). Dentro de la transacción de goose el `PRAGMA foreign_keys` de la migración no tiene efecto. Escribir `audit_log` en la misma transacción de cada cambio.
 - **S3/S2:** `credit_purchase`, `scheduled_payment` y sus partes se guardan ya calculadas al centavo con las reglas de `reglas-negocio.md`. Los motores las generan, la base no las recalcula.
-- **U1/S6:** la tabla `idempotency_key` ya guarda las claves del encabezado `Idempotency-Key` (C1 §1 punto 8). Si se elige la captura sin conexión (bloqueo `U1-captura-fuera-de-casa`, opciones 2 o 3), solo faltaría la hora de captura en `expense` (y en `weight_entry`).
-- **S4/C1:** la lista de compras guarda solo lo que no se calcula (artículos a mano, tienda y cantidad elegidas, marcas de comprado). Si Axel elige en la puerta 1 la opción B (marcas solo en el dispositivo) o la C (lista solo calculada) del bloqueo `C1-lista-compras`, `shopping_list` y `shopping_list_item` salen del esquema.
-- **U1/S2:** si el bloqueo `U1-periodos-semana-quincena` se resuelve «de pago a pago», cambia el CHECK de `period` (migración nueva). Los días de pago no cambian.
+- **U1/S6:** la tabla `idempotency_key` guarda 24 h las claves del encabezado `Idempotency-Key` (C1 §1 punto 8, K6). Para la captura sin conexión (K9) la 00002 agrega `idempotency_key` (única, sin purga) y `captured_at` a `expense` y `weight_entry`: la API busca la clave antes de insertar y responde con el registro que ya existe.
+- **S4/C1:** la lista de compras se comparte en el servidor (K1) y guarda solo lo que no se calcula (artículos a mano, tienda y cantidad elegidas, marcas de comprado).
+- **U1/S2:** semana de lunes a domingo y quincenas del 1 al 15 y del 16 al último día (K8): el CHECK de `period` queda como está.
 - **S5:** si PROFECO necesita una tabla cruda de carga, va en una migración nueva. Aquí solo entran precios ya ligados a una `presentation`.
+- **S7:** `telegram_chat_candidate` guarda solo el `chat_id` y el nombre que da Telegram (K4). Cómo convive la detección con MultiX, que ya consume las actualizaciones del bot, lo verifica S7; si no hay forma limpia deja bloqueo (K4).
+- **S3:** una tarjeta o un crédito de tienda sin los datos de K18 muestra «falta capturar»; sin las tres restricciones `optimizer.*`, el comparador avisa «faltan restricciones» y no recomienda (K16).

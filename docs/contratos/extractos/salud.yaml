@@ -1,0 +1,491 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «salud». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto salud"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Salud» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Salud"
+    description: "Perfil de salud, peso y calorías."
+paths:
+  /api/v1/health-profiles:
+    get:
+      operationId: "listHealthProfiles"
+      tags:
+        - "Salud"
+      summary: "Perfiles de salud"
+      description: "Cada perfil trae el objetivo (goal) y la meta sugerida suggested_kcal_target (K23), calculada al consultar; no se guarda."
+      x-necesidades:
+        - "N-230"
+        - "N-311"
+      x-tablas:
+        - "health_profile"
+        - "person"
+        - "weight_entry"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthProfilePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/health/today-kcal:
+    get:
+      operationId: "getTodayKcal"
+      tags:
+        - "Salud"
+      summary: "Calorías de hoy"
+      description: "Calorías de hoy."
+      x-necesidades:
+        - "N-231"
+      x-tablas:
+        - "health_profile"
+        - "meal_plan_entry"
+        - "nutrition_fact"
+        - "recipe"
+        - "recipe_ingredient"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodayKcal"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/weight-entries:
+    get:
+      operationId: "listWeightEntries"
+      tags:
+        - "Salud"
+      summary: "Historial de peso"
+      description: "Orden por defecto: -measured_date. Último peso (N-241): `person_id=…&limit=1`."
+      x-necesidades:
+        - "N-232"
+        - "N-241"
+      x-tablas:
+        - "health_profile"
+        - "person"
+        - "weight_entry"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeightEntryPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createWeightEntry"
+      tags:
+        - "Salud"
+      summary: "Registrar peso"
+      description: "Captura sin conexión (K9): la cola del teléfono manda cada peso con su Idempotency-Key y su captured_at. La clave queda también en weight_entry.idempotency_key, sin purga: un reintento con la misma clave responde 200 con el mismo peso e Idempotent-Replayed: true, sin crear otro (pasadas las 24 h solo se compara la clave). Con la misma clave y otro cuerpo dentro de las 24 h, 409 `idempotency_key_reused`."
+      x-necesidades:
+        - "N-240"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "person"
+        - "weight_entry"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WeightEntryCreate"
+      responses:
+        "200":
+          description: "Reintento de una captura ya registrada con la misma Idempotency-Key (K9): devuelve el mismo recurso, sin crear otro, con Idempotent-Replayed: true."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeightEntry"
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeightEntry"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/weight-entries/{weight_entry_id}:
+    patch:
+      operationId: "updateWeightEntry"
+      tags:
+        - "Salud"
+      summary: "Corregir peso"
+      description: "Corregir peso."
+      x-necesidades:
+        - "N-242"
+      x-tablas:
+        - "audit_log"
+        - "weight_entry"
+      parameters:
+        - name: "weight_entry_id"
+          in: "path"
+          required: true
+          description: "Id del registro (weight_entry_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WeightEntryUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeightEntry"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteWeightEntry"
+      tags:
+        - "Salud"
+      summary: "Eliminar peso"
+      description: "Eliminar peso."
+      x-necesidades:
+        - "N-242"
+      x-tablas:
+        - "audit_log"
+        - "weight_entry"
+      parameters:
+        - name: "weight_entry_id"
+          in: "path"
+          required: true
+          description: "Id del registro (weight_entry_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    HealthProfile:
+      type: "object"
+      description: "Perfil de salud (tabla `health_profile`). Perfil de salud por persona (solo Axel y Ximena): estatura, nacimiento, sexo, actividad, meta de calorías y restricciones (vacías por decisión). El peso vive en weight_entry. Campos ausentes = sin valor (NULL)."
+      x-tabla: "health_profile"
+      required:
+        - "id"
+        - "person_id"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        person_id:
+          type: "integer"
+          description: "Persona"
+        height_mm:
+          type: "integer"
+          description: "Estatura en milímetros (1.75 m = 1750)"
+        birth_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de nacimiento. La edad se calcula"
+        sex:
+          type: "string"
+          enum:
+            - "female"
+            - "male"
+          description: "Sexo para fórmulas de requerimiento"
+        activity_level:
+          type: "string"
+          enum:
+            - "sedentary"
+            - "light"
+            - "moderate"
+            - "active"
+            - "very_active"
+          description: "Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23)"
+        daily_kcal_target:
+          type: "integer"
+          description: "Meta de kilocalorías por día"
+        dietary_restrictions:
+          type: "string"
+          description: "Restricciones alimentarias (el campo existe y hoy va vacío)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        goal:
+          type: "string"
+          enum:
+            - "lose"
+            - "maintain"
+            - "gain"
+          description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
+        current_weight_g:
+          type: "integer"
+          description: "Último peso (weight_entry.weight_g)."
+          x-calculado: true
+        current_weight_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último peso."
+          x-calculado: true
+        age_years:
+          type: "integer"
+          description: "Edad en años cumplidos a hoy."
+          x-calculado: true
+        bmi_tenths:
+          type: "integer"
+          description: "IMC × 10, ROUND_HALF_UP (peso kg ÷ estatura m²)."
+          x-calculado: true
+        bmi_class:
+          type: "string"
+          enum:
+            - "underweight"
+            - "normal"
+            - "overweight"
+            - "obesity"
+          description: "Clasificación del IMC (motor S4; OMS 18.5 / 25 / 30, K7)."
+          x-calculado: true
+        suggested_kcal_target:
+          type: "integer"
+          x-provisional: true
+          description: "Meta diaria de kcal sugerida (motor S4, RN-17, K23): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9) con ajuste por objetivo (goal); la persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo). Magnitud del ajuste de bajar y subir: PROVISIONAL, bloqueo S1-ajuste-objetivo-kcal."
+          x-calculado: true
+    TodayKcal:
+      type: "object"
+      description: "Calorías de hoy (N-231)."
+      properties:
+        date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Hoy."
+        persons:
+          type: "array"
+          items:
+            type: "object"
+            description: "Persona."
+            properties:
+              person_id:
+                type: "integer"
+                description: "Persona."
+              planned_kcal:
+                type: "integer"
+                description: "kcal planeadas hoy."
+              daily_kcal_target:
+                type: "integer"
+                description: "Meta."
+              difference_kcal:
+                type: "integer"
+                description: "kcal − meta."
+              eating_out_slots:
+                type: "integer"
+                description: "Tiempos «fuera» (sin kcal)."
+            required:
+              - "person_id"
+              - "planned_kcal"
+              - "eating_out_slots"
+            x-calculado: true
+          description: "Axel y Ximena."
+      required:
+        - "date"
+        - "persons"
+      x-calculado: true
+    WeightEntry:
+      type: "object"
+      description: "Peso histórico (tabla `weight_entry`). Historial de peso por persona. El más reciente alimenta el IMC. Campos ausentes = sin valor (NULL)."
+      x-tabla: "weight_entry"
+      required:
+        - "id"
+        - "person_id"
+        - "measured_date"
+        - "weight_g"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        person_id:
+          type: "integer"
+          description: "Persona"
+        measured_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la medición"
+        weight_g:
+          type: "integer"
+          description: "Peso en gramos (72.5 kg = 72500)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        captured_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el peso en el teléfono. NULL = captura en línea: la hora de captura es created_at"
+        bmi_tenths:
+          type: "integer"
+          description: "IMC × 10 a esa fecha."
+          x-calculado: true
+    WeightEntryCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de un peso (N-240). captured_at (opcional) es el instante en que se capturó en el teléfono: una captura atrasada de la cola sin conexión lo manda junto con su Idempotency-Key (K9); sin valor, la hora de captura es la del alta."
+      x-tabla: "weight_entry"
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona"
+        measured_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la medición"
+        weight_g:
+          type: "integer"
+          description: "Peso en gramos (72.5 kg = 72500)"
+        notes:
+          type: "string"
+          description: "notes"
+        captured_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el peso en el teléfono. NULL = captura en línea: la hora de captura es created_at"
+      required:
+        - "person_id"
+        - "measured_date"
+        - "weight_g"
+    WeightEntryUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de peso histórico (tabla `weight_entry`)."
+      x-tabla: "weight_entry"
+      properties:
+        measured_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la medición"
+        weight_g:
+          type: "integer"
+          description: "Peso en gramos (72.5 kg = 72500)"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    HealthProfilePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/HealthProfile"
+      description: "Página de HealthProfile con la envoltura única (Page)."
+    WeightEntryPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/WeightEntry"
+      description: "Página de WeightEntry con la envoltura única (Page)."

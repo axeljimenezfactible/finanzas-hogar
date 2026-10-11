@@ -44,9 +44,9 @@ color.brand.700,color.brand.100,claro,Elemento activo: etiqueta e icono de marca
 color.role.income.light,color.role.income.surface-light,claro,Insignia de ingreso: texto sobre su fondo,4.84,4.5,true,#457723,#E9F8E1
 color.role.income.light,color.neutral.50,claro,Cifra o texto de ingreso sobre fondo,5.14,4.5,true,#457723,#FAFAFB
 color.role.income.light,color.neutral.100,claro,Cifra o texto de ingreso sobre tarjeta,4.79,4.5,true,#457723,#F2F2F4
-color.role.expense.light,color.role.expense.surface-light,claro,Insignia de gasto: texto sobre su fondo,5.33,4.5,true,#A44541,#FFEEEC
-color.role.expense.light,color.neutral.50,claro,Cifra o texto de gasto sobre fondo,5.74,4.5,true,#A44541,#FAFAFB
-color.role.expense.light,color.neutral.100,claro,Cifra o texto de gasto sobre tarjeta,5.35,4.5,true,#A44541,#F2F2F4
+color.role.expense.light,color.role.expense.surface-light,claro,Insignia de gasto: texto sobre su fondo,5.32,4.5,true,#A04B20,#FFEFE8
+color.role.expense.light,color.neutral.50,claro,Cifra o texto de gasto sobre fondo,5.71,4.5,true,#A04B20,#FAFAFB
+color.role.expense.light,color.neutral.100,claro,Cifra o texto de gasto sobre tarjeta,5.33,4.5,true,#A04B20,#F2F2F4
 color.role.savings.light,color.role.savings.surface-light,claro,Insignia de ahorro: texto sobre su fondo,4.90,4.5,true,#00767B,#D8FAFC
 color.role.savings.light,color.neutral.50,claro,Cifra o texto de ahorro sobre fondo,5.19,4.5,true,#00767B,#FAFAFB
 color.role.savings.light,color.neutral.100,claro,Cifra o texto de ahorro sobre tarjeta,4.84,4.5,true,#00767B,#F2F2F4
@@ -88,14 +88,14 @@ color.person.axel.light,color.neutral.50,claro,"Persona Axel (punto, anillo o se
 color.person.axel.light,color.neutral.100,claro,"Persona Axel (punto, anillo o serie) contra tarjeta",11.92,3.0,true,#002E64,#F2F2F4
 color.person.ximena.light,color.neutral.50,claro,"Persona Ximena (punto, anillo o serie) contra fondo",5.19,3.0,true,#A14E78,#FAFAFB
 color.person.ximena.light,color.neutral.100,claro,"Persona Ximena (punto, anillo o serie) contra tarjeta",4.84,3.0,true,#A14E78,#F2F2F4
-color.person.karen.light,color.neutral.50,claro,"Persona Karen (punto, anillo o serie) contra fondo",3.33,3.0,true,#C67544,#FAFAFB
-color.person.karen.light,color.neutral.100,claro,"Persona Karen (punto, anillo o serie) contra tarjeta",3.11,3.0,true,#C67544,#F2F2F4
+color.person.karen.light,color.neutral.50,claro,"Persona Karen (punto, anillo o serie) contra fondo",3.38,3.0,true,#B870AC,#FAFAFB
+color.person.karen.light,color.neutral.100,claro,"Persona Karen (punto, anillo o serie) contra tarjeta",3.15,3.0,true,#B870AC,#F2F2F4
 color.person.shared.light,color.neutral.50,claro,"Persona Conjunto (punto, anillo o serie) contra fondo",8.13,3.0,true,#484B66,#FAFAFB
 color.person.shared.light,color.neutral.100,claro,"Persona Conjunto (punto, anillo o serie) contra tarjeta",7.59,3.0,true,#484B66,#F2F2F4
 color.store.walmart.light,color.neutral.50,claro,"Tienda Walmart (punto, anillo o serie) contra fondo",5.47,3.0,true,#4065AC,#FAFAFB
 color.store.walmart.light,color.neutral.100,claro,"Tienda Walmart (punto, anillo o serie) contra tarjeta",5.11,3.0,true,#4065AC,#F2F2F4
-color.store.bodega-aurrera.light,color.neutral.50,claro,"Tienda Bodega Aurrera (punto, anillo o serie) contra fondo",8.84,3.0,true,#773400,#FAFAFB
-color.store.bodega-aurrera.light,color.neutral.100,claro,"Tienda Bodega Aurrera (punto, anillo o serie) contra tarjeta",8.25,3.0,true,#773400,#F2F2F4
+color.store.bodega-aurrera.light,color.neutral.50,claro,"Tienda Bodega Aurrera (punto, anillo o serie) contra fondo",9.00,3.0,true,#762C4C,#FAFAFB
+color.store.bodega-aurrera.light,color.neutral.100,claro,"Tienda Bodega Aurrera (punto, anillo o serie) contra tarjeta",8.40,3.0,true,#762C4C,#F2F2F4
 color.store.sams-club.light,color.neutral.50,claro,"Tienda Sam's Club (punto, anillo o serie) contra fondo",3.27,3.0,true,#009D82,#FAFAFB
 color.store.sams-club.light,color.neutral.100,claro,"Tienda Sam's Club (punto, anillo o serie) contra tarjeta",3.05,3.0,true,#009D82,#F2F2F4
 color.store.market.light,color.neutral.50,claro,"Tienda Mercado (punto, anillo o serie) contra fondo",13.73,3.0,true,#5C0204,#FAFAFB
@@ -145,9 +145,9 @@ color.brand.300,color.brand.900,oscuro,Elemento activo: etiqueta e icono de marc
 color.role.income.dark,color.role.income.surface-dark,oscuro,Insignia de ingreso: texto sobre su fondo,6.12,4.5,true,#98CA7B,#22400D
 color.role.income.dark,color.neutral.950,oscuro,Cifra o texto de ingreso sobre fondo,8.29,4.5,true,#98CA7B,#222325
 color.role.income.dark,color.neutral.900,oscuro,Cifra o texto de ingreso sobre tarjeta,6.34,4.5,true,#98CA7B,#36363A
-color.role.expense.dark,color.role.expense.surface-dark,oscuro,Insignia de gasto: texto sobre su fondo,6.04,4.5,true,#FC9A92,#5A2220
-color.role.expense.dark,color.neutral.950,oscuro,Cifra o texto de gasto sobre fondo,7.62,4.5,true,#FC9A92,#222325
-color.role.expense.dark,color.neutral.900,oscuro,Cifra o texto de gasto sobre tarjeta,5.82,4.5,true,#FC9A92,#36363A
+color.role.expense.dark,color.role.expense.surface-dark,oscuro,Insignia de gasto: texto sobre su fondo,6.02,4.5,true,#F8A078,#59260B
+color.role.expense.dark,color.neutral.950,oscuro,Cifra o texto de gasto sobre fondo,7.70,4.5,true,#F8A078,#222325
+color.role.expense.dark,color.neutral.900,oscuro,Cifra o texto de gasto sobre tarjeta,5.89,4.5,true,#F8A078,#36363A
 color.role.savings.dark,color.role.savings.surface-dark,oscuro,Insignia de ahorro: texto sobre su fondo,6.26,4.5,true,#3FD0D7,#003F42
 color.role.savings.dark,color.neutral.950,oscuro,Cifra o texto de ahorro sobre fondo,8.39,4.5,true,#3FD0D7,#222325
 color.role.savings.dark,color.neutral.900,oscuro,Cifra o texto de ahorro sobre tarjeta,6.42,4.5,true,#3FD0D7,#36363A
@@ -189,14 +189,14 @@ color.person.axel.dark,color.neutral.950,oscuro,"Persona Axel (punto, anillo o s
 color.person.axel.dark,color.neutral.900,oscuro,"Persona Axel (punto, anillo o serie) contra tarjeta",3.10,3.0,true,#4F83C8,#36363A
 color.person.ximena.dark,color.neutral.950,oscuro,"Persona Ximena (punto, anillo o serie) contra fondo",9.05,3.0,true,#FFACD3,#222325
 color.person.ximena.dark,color.neutral.900,oscuro,"Persona Ximena (punto, anillo o serie) contra tarjeta",6.92,3.0,true,#FFACD3,#36363A
-color.person.karen.dark,color.neutral.950,oscuro,"Persona Karen (punto, anillo o serie) contra fondo",6.23,3.0,true,#E28F5E,#222325
-color.person.karen.dark,color.neutral.900,oscuro,"Persona Karen (punto, anillo o serie) contra tarjeta",4.76,3.0,true,#E28F5E,#36363A
+color.person.karen.dark,color.neutral.950,oscuro,"Persona Karen (punto, anillo o serie) contra fondo",6.11,3.0,true,#D389C6,#222325
+color.person.karen.dark,color.neutral.900,oscuro,"Persona Karen (punto, anillo o serie) contra tarjeta",4.67,3.0,true,#D389C6,#36363A
 color.person.shared.dark,color.neutral.950,oscuro,"Persona Conjunto (punto, anillo o serie) contra fondo",13.19,3.0,true,#E7EAFF,#222325
 color.person.shared.dark,color.neutral.900,oscuro,"Persona Conjunto (punto, anillo o serie) contra tarjeta",10.08,3.0,true,#E7EAFF,#36363A
-color.store.walmart.dark,color.neutral.950,oscuro,"Tienda Walmart (punto, anillo o serie) contra fondo",6.29,3.0,true,#7BA4F0,#222325
-color.store.walmart.dark,color.neutral.900,oscuro,"Tienda Walmart (punto, anillo o serie) contra tarjeta",4.81,3.0,true,#7BA4F0,#36363A
-color.store.bodega-aurrera.dark,color.neutral.950,oscuro,"Tienda Bodega Aurrera (punto, anillo o serie) contra fondo",9.03,3.0,true,#FFB389,#222325
-color.store.bodega-aurrera.dark,color.neutral.900,oscuro,"Tienda Bodega Aurrera (punto, anillo o serie) contra tarjeta",6.90,3.0,true,#FFB389,#36363A
+color.store.walmart.dark,color.neutral.950,oscuro,"Tienda Walmart (punto, anillo o serie) contra fondo",6.21,3.0,true,#7AA3EE,#222325
+color.store.walmart.dark,color.neutral.900,oscuro,"Tienda Walmart (punto, anillo o serie) contra tarjeta",4.75,3.0,true,#7AA3EE,#36363A
+color.store.bodega-aurrera.dark,color.neutral.950,oscuro,"Tienda Bodega Aurrera (punto, anillo o serie) contra fondo",8.87,3.0,true,#FFAAC9,#222325
+color.store.bodega-aurrera.dark,color.neutral.900,oscuro,"Tienda Bodega Aurrera (punto, anillo o serie) contra tarjeta",6.78,3.0,true,#FFAAC9,#36363A
 color.store.sams-club.dark,color.neutral.950,oscuro,"Tienda Sam's Club (punto, anillo o serie) contra fondo",13.31,3.0,true,#99FFE4,#222325
 color.store.sams-club.dark,color.neutral.900,oscuro,"Tienda Sam's Club (punto, anillo o serie) contra tarjeta",10.18,3.0,true,#99FFE4,#36363A
 color.store.market.dark,color.neutral.950,oscuro,"Tienda Mercado (punto, anillo o serie) contra fondo",4.00,3.0,true,#C2665B,#222325

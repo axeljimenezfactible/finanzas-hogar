@@ -1,0 +1,1223 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «presupuesto-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto presupuesto-b"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Presupuesto» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Presupuesto"
+    description: "Presupuesto, flujo y proyección, ingresos y ahorro."
+paths:
+  /api/v1/cash-flow/assumptions:
+    get:
+      operationId: "getCashFlowAssumptions"
+      tags:
+        - "Presupuesto"
+      summary: "Supuestos de la proyección"
+      description: "Los meses 7 a 12 siguen el interruptor projection.repeat_cadence_enabled (getProjectionSettings, N-318; K21) y la respuesta dice el modo usado en projection_mode."
+      x-necesidades:
+        - "N-093"
+      x-tablas:
+        - "expense"
+        - "planned_item"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CashFlowAssumptions"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/debt/live:
+    get:
+      operationId: "getLiveDebt"
+      tags:
+        - "Presupuesto"
+      summary: "Deuda viva a una fecha"
+      description: "Deuda viva a una fecha."
+      x-necesidades:
+        - "N-092"
+      x-tablas:
+        - "credit"
+        - "credit_purchase"
+        - "scheduled_payment"
+      parameters:
+        - name: "date"
+          in: "query"
+          required: false
+          description: "Fecha de corte (por defecto, fin del horizonte proyectado). Canon: 2027-04-10 → 629344."
+          schema:
+            $ref: "componentes-comunes.yaml#/components/schemas/Date"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LiveDebt"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/incomes:
+    get:
+      operationId: "listIncomes"
+      tags:
+        - "Presupuesto"
+      summary: "Ingresos"
+      description: "Ingresos."
+      x-necesidades:
+        - "N-100"
+        - "N-105"
+      x-tablas:
+        - "income"
+        - "planned_item"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - name: "kind"
+          in: "query"
+          required: false
+          description: "fixed (quincena) o extra."
+          schema:
+            type: "string"
+            enum:
+              - "fixed"
+              - "extra"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncomePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createIncome"
+      tags:
+        - "Presupuesto"
+      summary: "Capturar quincena o ingreso extra"
+      description: "Capturar quincena o ingreso extra."
+      x-necesidades:
+        - "N-101"
+        - "N-102"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "income"
+        - "person"
+        - "planned_item"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IncomeCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Income"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/incomes/month:
+    get:
+      operationId: "getIncomeMonth"
+      tags:
+        - "Presupuesto"
+      summary: "Ingresos del mes"
+      description: "Ingresos del mes."
+      x-necesidades:
+        - "N-100"
+      x-tablas:
+        - "audit_log"
+        - "income"
+        - "period"
+        - "planned_item"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncomeMonth"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/incomes/monthly-trend:
+    get:
+      operationId: "getIncomeMonthlyTrend"
+      tags:
+        - "Presupuesto"
+      summary: "Ingreso por mes"
+      description: "Ingreso por mes."
+      x-necesidades:
+        - "N-103"
+      x-tablas:
+        - "income"
+        - "planned_item"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncomeMonthlyTrend"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/incomes/{income_id}:
+    patch:
+      operationId: "updateIncome"
+      tags:
+        - "Presupuesto"
+      summary: "Corregir ingreso"
+      description: "Corregir ingreso."
+      x-necesidades:
+        - "N-105"
+      x-tablas:
+        - "audit_log"
+        - "income"
+      parameters:
+        - name: "income_id"
+          in: "path"
+          required: true
+          description: "Id del registro (income_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IncomeUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Income"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteIncome"
+      tags:
+        - "Presupuesto"
+      summary: "Eliminar ingreso"
+      description: "Una quincena eliminada vuelve a «esperada»."
+      x-necesidades:
+        - "N-105"
+      x-tablas:
+        - "audit_log"
+        - "income"
+      parameters:
+        - name: "income_id"
+          in: "path"
+          required: true
+          description: "Id del registro (income_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/savings/summary:
+    get:
+      operationId: "getSavingsSummary"
+      tags:
+        - "Presupuesto"
+      summary: "Fondo y totales"
+      description: "Fondo y totales."
+      x-necesidades:
+        - "N-110"
+      x-tablas:
+        - "savings_goal"
+        - "savings_movement"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsSummary"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/savings/monthly-trend:
+    get:
+      operationId: "getSavingsMonthlyTrend"
+      tags:
+        - "Presupuesto"
+      summary: "Tendencia de ahorro"
+      description: "Tendencia de ahorro."
+      x-necesidades:
+        - "N-114"
+      x-tablas:
+        - "savings_goal"
+        - "savings_movement"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsMonthlyTrend"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/savings-goals:
+    get:
+      operationId: "listSavingsGoals"
+      tags:
+        - "Presupuesto"
+      summary: "Metas y fondo"
+      description: "Orden por defecto: target_date."
+      x-necesidades:
+        - "N-111"
+        - "N-312"
+        - "N-027"
+      x-tablas:
+        - "savings_goal"
+        - "savings_movement"
+      parameters:
+        - name: "status"
+          in: "query"
+          required: false
+          description: "active (por defecto) o archived."
+          schema:
+            type: "string"
+            enum:
+              - "active"
+              - "archived"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsGoalPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/savings-movements:
+    get:
+      operationId: "listSavingsMovements"
+      tags:
+        - "Presupuesto"
+      summary: "Movimientos de ahorro"
+      description: "Orden por defecto: -movement_date."
+      x-necesidades:
+        - "N-112"
+        - "N-116"
+      x-tablas:
+        - "savings_goal"
+        - "savings_movement"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - name: "savings_goal_id"
+          in: "query"
+          required: false
+          description: "Destino (fondo o meta)."
+          schema:
+            type: "integer"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsMovementPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createSavingsMovement"
+      tags:
+        - "Presupuesto"
+      summary: "Registrar movimiento de ahorro"
+      description: "Registrar movimiento de ahorro."
+      x-necesidades:
+        - "N-113"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "savings_goal"
+        - "savings_movement"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavingsMovementCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsMovement"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/savings-movements/{savings_movement_id}:
+    patch:
+      operationId: "updateSavingsMovement"
+      tags:
+        - "Presupuesto"
+      summary: "Corregir movimiento"
+      description: "Corregir movimiento."
+      x-necesidades:
+        - "N-116"
+      x-tablas:
+        - "audit_log"
+        - "savings_movement"
+      parameters:
+        - name: "savings_movement_id"
+          in: "path"
+          required: true
+          description: "Id del registro (savings_movement_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavingsMovementUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsMovement"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteSavingsMovement"
+      tags:
+        - "Presupuesto"
+      summary: "Eliminar movimiento"
+      description: "Eliminar movimiento."
+      x-necesidades:
+        - "N-116"
+      x-tablas:
+        - "audit_log"
+        - "savings_movement"
+      parameters:
+        - name: "savings_movement_id"
+          in: "path"
+          required: true
+          description: "Id del registro (savings_movement_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    LiveDebt:
+      type: "object"
+      description: "Deuda viva a una fecha (N-092, motor S3): lo que queda por pagar después de la fecha de las compras hechas hasta esa fecha."
+      properties:
+        date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de corte."
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Deuda viva total (capital + intereses)."
+        credits:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por línea."
+            properties:
+              credit_id:
+                type: "integer"
+                description: "Crédito."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Deuda viva."
+            required:
+              - "credit_id"
+              - "total_cents"
+            x-calculado: true
+          description: "Por línea."
+        purchases:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por compra."
+            properties:
+              credit_purchase_id:
+                type: "integer"
+                description: "Compra."
+              credit_id:
+                type: "integer"
+                description: "Crédito."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Deuda viva."
+            required:
+              - "credit_purchase_id"
+              - "credit_id"
+              - "total_cents"
+            x-calculado: true
+          description: "Por compra."
+      required:
+        - "date"
+        - "total_cents"
+        - "credits"
+        - "purchases"
+      x-calculado: true
+    CashFlowAssumptions:
+      type: "object"
+      description: "Supuestos de la proyección (N-093)."
+      properties:
+        projection_mode:
+          type: "string"
+          enum:
+            - "contracted_only"
+            - "with_repeat_cadence"
+          description: "Modo de los meses 7 a 12 (K21; ajuste projection.repeat_cadence_enabled): contracted_only = solo compromisos contratados, gastos fijos e ingresos del CSV (por defecto); with_repeat_cadence = además la cadencia bimestral de despensa a crédito y el papel alterno de $199."
+        planned_items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PlannedItem"
+          description: "Ingreso esperado, gastos fijos y despensas programadas (planned_item activos)."
+        variable_estimate_method:
+          type: "string"
+          description: "Método del gasto variable estimado (lo fija S2 y lo informa aquí)."
+        variable_estimate_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto estimado por quincena."
+      required:
+        - "projection_mode"
+        - "planned_items"
+        - "variable_estimate_method"
+      x-calculado: true
+    Income:
+      type: "object"
+      description: "Ingreso (tabla `income`). Ingreso recibido por el titular: fijo quincenal (lo captura Axel cada quincena) o extra capturado a mano. Ximena no aporta ingresos al modelo. Campos ausentes = sin valor (NULL)."
+      x-tabla: "income"
+      required:
+        - "id"
+        - "person_id"
+        - "kind"
+        - "description"
+        - "amount_cents"
+        - "income_date"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        person_id:
+          type: "integer"
+          description: "Quién recibe el ingreso"
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "extra"
+          description: "fixed = ingreso fijo quincenal, extra = ingreso extra"
+        planned_item_id:
+          type: "integer"
+          description: "Partida planificada que cumple (sueldo quincenal). NULL en extras sin plan"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto recibido en centavos"
+        income_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha en que se recibió (calendario de America/Mexico_City)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        created_by_user_account_id:
+          type: "integer"
+          description: "Cuenta que la capturó (audit_log)."
+          x-calculado: true
+    IncomeCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Captura de una quincena (kind fixed, N-101) o de un ingreso extra (kind extra, N-102). person_id lo pone la API: siempre el titular (decisión B)."
+      x-tabla: "income"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "extra"
+          description: "fixed = ingreso fijo quincenal, extra = ingreso extra"
+        planned_item_id:
+          type: "integer"
+          description: "Partida planificada que cumple (sueldo quincenal). NULL en extras sin plan"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto recibido en centavos"
+        income_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha en que se recibió (calendario de America/Mexico_City)"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "kind"
+        - "description"
+        - "amount_cents"
+        - "income_date"
+    IncomeUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de ingreso (tabla `income`)."
+      x-tabla: "income"
+      properties:
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto recibido en centavos"
+        income_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha en que se recibió (calendario de America/Mexico_City)"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    IncomeMonth:
+      type: "object"
+      description: "Ingresos del mes (N-100)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        fortnights:
+          type: "array"
+          items:
+            type: "object"
+            description: "Quincena."
+            properties:
+              pay_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "15, o 30/último día."
+              status:
+                type: "string"
+                enum:
+                  - "expected"
+                  - "captured"
+                description: "esperada (sin capturar) o capturada."
+              expected_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto esperado (planned_item: amount_cents en la quincena del 15; second_half_amount_cents en la del 30 si difiere, si no amount_cents)."
+              income_id:
+                type: "integer"
+                description: "Ingreso capturado."
+              amount_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto capturado."
+            required:
+              - "pay_date"
+              - "status"
+              - "expected_cents"
+            x-calculado: true
+          description: "Quincena del 15 y del 30."
+        extras:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Income"
+          description: "Ingresos extra del mes por fecha."
+        captured_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ capturado."
+        expected_pending_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ esperado sin capturar."
+        extras_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ extras."
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "captured + expected_pending + extras."
+      required:
+        - "month"
+        - "fortnights"
+        - "extras"
+        - "captured_cents"
+        - "expected_pending_cents"
+        - "extras_cents"
+        - "total_cents"
+      x-calculado: true
+    IncomeMonthlyTrend:
+      type: "object"
+      description: "Ingreso por mes (N-103)."
+      properties:
+        months:
+          type: "array"
+          items:
+            type: "object"
+            description: "Mes."
+            properties:
+              month:
+                $ref: "componentes-comunes.yaml#/components/schemas/Month"
+                description: "Mes."
+              fixed_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Quincenas."
+              extra_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Extras."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total."
+            required:
+              - "month"
+              - "fixed_cents"
+              - "extra_cents"
+              - "total_cents"
+            x-calculado: true
+          description: "Máximo 12 meses."
+      required:
+        - "months"
+      x-calculado: true
+    PlannedItem:
+      type: "object"
+      description: "Partida planificada (tabla `planned_item`). Ingreso o gasto esperado con su periodicidad: sueldo quincenal, renta, despensa bimestral con Kueski, gastos venideros. Los motores proyectan sus ocurrencias, no se guardan una por una. Campos ausentes = sin valor (NULL)."
+      x-tabla: "planned_item"
+      required:
+        - "id"
+        - "kind"
+        - "description"
+        - "amount_cents"
+        - "frequency"
+        - "interval_count"
+        - "start_date"
+        - "accrual_months"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "income"
+            - "fixed_expense"
+            - "upcoming_expense"
+          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
+        second_half_amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales"
+        frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+            - "yearly"
+            - "once"
+          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
+        interval_count:
+          type: "integer"
+          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
+        end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Última fecha posible, inclusive. NULL = sin fin"
+        category_id:
+          type: "integer"
+          description: "Categoría del gasto"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Cómo se pagará cada ocurrencia. NULL = sin definir"
+        credit_id:
+          type: "integer"
+          description: "Crédito con que se planea pagar (despensa con Kueski)"
+        term_count:
+          type: "integer"
+          description: "Plazo planeado en pagos (4 quincenas)"
+        accrual_months:
+          type: "integer"
+          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        next_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Próxima ocurrencia desde hoy."
+          x-calculado: true
+    SavingsGoal:
+      type: "object"
+      description: "Meta de ahorro (tabla `savings_goal`). Fondo de ahorro o meta con monto y fecha, con su aportación mensual planificada. El avance se calcula con sus movimientos. Campos ausentes = sin valor (NULL)."
+      x-tabla: "savings_goal"
+      required:
+        - "id"
+        - "name"
+        - "kind"
+        - "start_date"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        name:
+          type: "string"
+          description: "Nombre (Fondo de emergencia)"
+        kind:
+          type: "string"
+          enum:
+            - "fund"
+            - "goal"
+          description: "fund = fondo de ahorro, goal = meta con monto y fecha"
+        target_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto objetivo en centavos"
+        target_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha objetivo"
+        planned_monthly_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Aportación mensual planificada en centavos"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio del fondo o meta"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        saved_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Ahorrado = Σ aportaciones − Σ retiros."
+          x-calculado: true
+        progress_pct:
+          type: "integer"
+          description: "saved ÷ target × 100, entero ROUND_HALF_UP (solo metas)."
+          x-calculado: true
+        required_monthly_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Aportación mensual necesaria para llegar a target_date (motor S2)."
+          x-calculado: true
+        status:
+          type: "string"
+          enum:
+            - "on_track"
+            - "behind"
+            - "achieved"
+          description: "en ruta, atrasada o cumplida (motor S2)."
+          x-calculado: true
+    SavingsMovement:
+      type: "object"
+      description: "Movimiento de ahorro (tabla `savings_movement`). Aportación o retiro de un fondo o meta. Campos ausentes = sin valor (NULL)."
+      x-tabla: "savings_movement"
+      required:
+        - "id"
+        - "savings_goal_id"
+        - "movement_date"
+        - "kind"
+        - "amount_cents"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        savings_goal_id:
+          type: "integer"
+          description: "Fondo o meta"
+        movement_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha"
+        kind:
+          type: "string"
+          enum:
+            - "deposit"
+            - "withdrawal"
+          description: "deposit = aportación, withdrawal = retiro"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto en centavos"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    SavingsMovementCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de movimiento de ahorro (tabla `savings_movement`)."
+      x-tabla: "savings_movement"
+      properties:
+        savings_goal_id:
+          type: "integer"
+          description: "Fondo o meta"
+        movement_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha"
+        kind:
+          type: "string"
+          enum:
+            - "deposit"
+            - "withdrawal"
+          description: "deposit = aportación, withdrawal = retiro"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto en centavos"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "savings_goal_id"
+        - "movement_date"
+        - "kind"
+        - "amount_cents"
+    SavingsMovementUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de movimiento de ahorro (tabla `savings_movement`)."
+      x-tabla: "savings_movement"
+      properties:
+        savings_goal_id:
+          type: "integer"
+          description: "Fondo o meta"
+        movement_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto en centavos"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    SavingsSummary:
+      type: "object"
+      description: "Fondo y totales (N-110)."
+      properties:
+        saved_total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ aportaciones − Σ retiros de fondo y metas."
+        goals:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por destino."
+            properties:
+              savings_goal_id:
+                type: "integer"
+                description: "Fondo o meta."
+              saved_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Ahorrado."
+            required:
+              - "savings_goal_id"
+              - "saved_cents"
+            x-calculado: true
+          description: "Por destino."
+        contributed_month_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Aportado en el mes en curso."
+        planned_month_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ planned_monthly_cents de fondo y metas activas."
+      required:
+        - "saved_total_cents"
+        - "goals"
+        - "contributed_month_cents"
+        - "planned_month_cents"
+      x-calculado: true
+    SavingsMonthlyTrend:
+      type: "object"
+      description: "Tendencia de ahorro (N-114)."
+      properties:
+        months:
+          type: "array"
+          items:
+            type: "object"
+            description: "Mes."
+            properties:
+              month:
+                $ref: "componentes-comunes.yaml#/components/schemas/Month"
+                description: "Mes."
+              saved_end_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Ahorrado al cierre."
+              contributed_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Aportado."
+              planned_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Planificado."
+            required:
+              - "month"
+              - "saved_end_cents"
+              - "contributed_cents"
+              - "planned_cents"
+            x-calculado: true
+          description: "Máximo 12 meses."
+      required:
+        - "months"
+      x-calculado: true
+    IncomePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Income"
+      description: "Página de Income con la envoltura única (Page)."
+    SavingsGoalPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/SavingsGoal"
+      description: "Página de SavingsGoal con la envoltura única (Page)."
+    SavingsMovementPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/SavingsMovement"
+      description: "Página de SavingsMovement con la envoltura única (Page)."

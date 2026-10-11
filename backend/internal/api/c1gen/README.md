@@ -1,14 +1,15 @@
 # c1gen · Generador y verificador del contrato C1
 
-Esta carpeta es la **fuente** del contrato C1. De aquí salen tres archivos que **no se editan a mano**:
+Esta carpeta es la **fuente** del contrato C1. De aquí salen estos archivos, que **no se editan a mano**:
 
 | Salida | Etapa que la escribe | Qué es |
 |---|---|---|
 | `docs/contratos/openapi.yaml` | `gen4_build.py` (con `gen1_base.py`, `gen2_schemas.py` y `gen3_ops.py`) | OpenAPI 3.1.1, contrato C1 |
 | `backend/internal/api/routes.go` | `gen5_go.py` | Rutas del enrutador `net/http`, idénticas a las del contrato (S6-03) |
 | `docs/contratos/C1-datos.md` | `gen6_c1.py` (texto de `c1_plantilla.md` y `c1_inconsistencias.md`) | Documento de C1, con la matriz §10 pantalla → necesidad → endpoint |
+| `docs/contratos/extractos/` | `gen7_extractos.py` | Un extracto por etiqueta, `componentes-comunes.yaml` e `INDICE.md` (lo único del contrato que leen los agentes de WF-1 y WF-3) |
 
-Entradas que se leen del repositorio: el esquema de S1 (`backend/db/migrations/00001_esquema.sql`) y las necesidades de U1 (`docs/design/U1-arquitectura.md`).
+Entradas que se leen del repositorio: el esquema de S1 (todas las migraciones de `backend/db/migrations/`, aplicadas en orden) y las necesidades de U1 (`docs/design/U1-arquitectura.md`).
 
 ## Uso
 
@@ -17,6 +18,7 @@ Desde la raíz del repositorio (da igual la carpeta; las rutas se resuelven desd
 ```sh
 python3 -I backend/internal/api/c1gen/build.py            # regenera los tres archivos en el repositorio
 python3 -I backend/internal/api/c1gen/build.py --check    # regenera en una carpeta temporal y compara byte a byte; no escribe
+python3 -I backend/internal/api/c1gen/build.py --extractos  # regenera en una carpeta temporal y solo escribe docs/contratos/extractos/
 python3 -I backend/internal/api/c1gen/build.py --out DIR  # escribe los tres archivos bajo DIR (árbol espejo)
 cd backend && go generate ./internal/api                  # lo mismo que la primera línea (generate.go)
 ```
@@ -62,3 +64,24 @@ Corrección r2 (hallazgos R2-01 y R2-02 de `docs/estado/wf0/REVISION-r2.md`): re
 - `gen4_build.py`: `idempotency_key` en `x-tablas` de toda operación con `Idempotency-Key`; código 409 `budget_overlap`.
 - `gen1_base.py`: la marca PROVISIONAL de una columna cita el bloqueo que trae el comentario de S1 (antes citaba siempre `S1-meta-kcal`) y se conserva en los campos que admiten null.
 - `gen6_c1.py`, `c1_plantilla.md` y `c1_inconsistencias.md`: estados de la matriz §10, conteos de tablas, §11.4, §13 y §14 al día con el esquema 1.1.
+
+## C1 v1.1 (puerta 1)
+
+Agente C1-v1.1 (flujo P1, 11-oct-2026). Aplica las respuestas de Axel (`docs/plan/decisiones.md` §K) y la sección «Para C1» de `docs/estado/p1/U1-1.1.md` contra el esquema 1.2 de S1. Reporte: `docs/estado/p1/C1-v1.1.md`.
+
+- `parse_schema.py`: aplica **todas** las migraciones de `backend/db/migrations/` en orden (hoy `00001_esquema.sql` y `00002_puerta1.sql`) en una base temporal bajo `datos/tmp/` y lee `sqlite_master`, `PRAGMA table_info` y `PRAGMA foreign_key_list`; los comentarios de columna se buscan en todos los archivos (`CREATE TABLE` y `ALTER TABLE … ADD COLUMN`). Ninguna ruta fija a `00001`; `build.py` y `verify_c1.py` (sin `--db`) hacen lo mismo.
+- `gen7_extractos.py` (etapa nueva): `docs/contratos/extractos/`, un archivo por etiqueta (≤ 80 KB; si no cabe, partes `-a`, `-b`…), `componentes-comunes.yaml` e `INDICE.md`. `build.py --extractos` solo escribe esa carpeta; `build.py` la regenera con lo demás y `--check` la compara.
+- `gen2_schemas.py`, `gen3_ops.py` y `gen4_build.py`: K2 (`scope` y `month` en `updateBudget`), K3 (`saveTicketScanDraft`, `TicketScanDraft`, borrador en `TicketScan`), K4 (`listTelegramChatCandidates`, `confirmTelegramChatCandidate`; sale `createNotificationRecipient`), K5 (`family`), K9 (`captured_at` y 200 al reintento en `createExpense` y `createWeightEntry`), K12 (`rate_decimals`, `rate_pct`, `annual_rate_pct`), K13 (tope por persona), K16 (restricciones vacías con `missing_constraints` y `status` del comparador), K18 (campos de tarjeta y crédito de tienda, `missing_terms`), K21 (`getProjectionSettings`, `updateProjectionSettings`, `projection_mode`), K23 (`goal`, `suggested_kcal_target`) y R3-01 (`period` de semana obligatorio en la lista de compras). `info.version` = 1.1.0.
+- `gen6_c1.py`, `c1_plantilla.md` y `c1_inconsistencias.md`: fila «C1 v1.1 (puerta 1)» en Cambios y su detalle, convenciones de K6 en §1, «Z» solo en entradas en §4, §13 y §14 al día; §10 se regenera con N-316, N-318 y N-319 (con operación) y N-317 (Local).
+- `verify_c1.py`: sin `--db` aplica todas las migraciones, exige `info.version` 1.1.0, C1-15 exige que toda marca PROVISIONAL cite un bloqueo **abierto** (sin «Respuesta de Axel») y la comprobación nueva EXT revisa los extractos (cada operación en uno solo, ≤ 80 KB, referencias resueltas).
+- Marcas PROVISIONAL que quedan: solo las de los bloqueos abiertos `C1-valores-k31` (valores operativos de K31), `criterios-promedios-redondeo` y `S1-ajuste-objetivo-kcal`.
+
+### C1 v1.1 · corrección r2
+
+Agente correccion-C1-r2 (flujo P1, 11-oct-2026), hallazgos H-r2-01 y H-r2-02 de `docs/estado/p1/REVISION-C1-r2.md`. Reporte: `docs/estado/p1/correccion-C1-r2.md`.
+
+- `gen4_build.py`: `components/parameters/ListWeek` se llama `week` (semana ISO, obligatoria, sin valor por omisión). Es la llave de la lista de compras semanal, no un filtro: el filtro `period` vuelve a tener un solo componente (`Period`).
+- `gen3_ops.py`: las descripciones de la lista, `listBaskets` y `getDashboardBestBasket` dicen `week`; `updateBudget` con `scope=onward` deja el monto nuevo sin fin y elimina los renglones posteriores de la categoría; `createBudget` aclara que el alta no elimina renglones.
+- `gen2_schemas.py`: `Budget.valid_to_date` completa el comentario de S1 («deja NULL») con la eliminación de los renglones posteriores; `BUDVIG` dice lo mismo en `BudgetCreate` y `BudgetUpdate`.
+- `gen6_c1.py` y `c1_plantilla.md`: la matriz recurso × filtro de §6 suma la columna de la llave `week` (entran `listBaskets`, `getDashboardBestBasket` y las escrituras de la lista); §6 trae la tabla «Llaves que no son filtros» (`week` y `month`); §7.1 dice qué hace `onward` con los renglones posteriores y trae el ejemplo; fila «C1 v1.1 · corrección r2» en Cambios.
+- `verify_c1.py` C1-06: regla nueva, cada nombre de parámetro tiene un solo componente, ningún otro componente usa el nombre de un filtro y toda llave con nombre de periodo (`month`, `week`…) está documentada en §6.

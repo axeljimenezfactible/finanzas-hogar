@@ -1,0 +1,1352 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «ajustes-d». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto ajustes-d"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Ajustes"
+    description: "Las 14 secciones de Ajustes, sesiones y sistema."
+paths:
+  /api/v1/credits/{credit_id}/term-rates:
+    post:
+      operationId: "createCreditTermRate"
+      tags:
+        - "Ajustes"
+      summary: "Nueva tasa por plazo"
+      description: "Nueva tasa por plazo."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "credit_term_rate"
+        - "idempotency_key"
+      parameters:
+        - name: "credit_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditTermRateCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditTermRate"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/credit-term-rates/{credit_term_rate_id}:
+    patch:
+      operationId: "updateCreditTermRate"
+      tags:
+        - "Ajustes"
+      summary: "Editar tasa"
+      description: "Editar tasa."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "credit_term_rate"
+      parameters:
+        - name: "credit_term_rate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_term_rate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditTermRateUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditTermRate"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteCreditTermRate"
+      tags:
+        - "Ajustes"
+      summary: "Eliminar tasa"
+      description: "Eliminar tasa."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "credit_term_rate"
+      parameters:
+        - name: "credit_term_rate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_term_rate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/promotions:
+    post:
+      operationId: "createPromotion"
+      tags:
+        - "Ajustes"
+      summary: "Nueva promoción"
+      description: "Nueva promoción."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "promotion"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromotionCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Promotion"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/promotions/{promotion_id}:
+    patch:
+      operationId: "updatePromotion"
+      tags:
+        - "Ajustes"
+      summary: "Editar promoción"
+      description: "Editar promoción."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "promotion"
+      parameters:
+        - name: "promotion_id"
+          in: "path"
+          required: true
+          description: "Id del registro (promotion_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromotionUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Promotion"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deletePromotion"
+      tags:
+        - "Ajustes"
+      summary: "Eliminar promoción"
+      description: "Con compras que la usan responde 409 `in_use` (desactivar con is_active = false)."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "promotion"
+      parameters:
+        - name: "promotion_id"
+          in: "path"
+          required: true
+          description: "Id del registro (promotion_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/settings/optimizer:
+    get:
+      operationId: "getOptimizerSettings"
+      tags:
+        - "Ajustes"
+      summary: "Valores del comparador"
+      description: "Restricciones duras globales (claves optimizer.* que pueden venir vacías, K16) con missing_constraints, y pesos. El tope por persona se lee de person (listPersons, K13)."
+      x-necesidades:
+        - "N-225"
+        - "N-288"
+      x-tablas:
+        - "app_setting"
+        - "person"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OptimizerSettings"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    patch:
+      operationId: "updateOptimizerSettings"
+      tags:
+        - "Ajustes"
+      summary: "Editar valores del comparador"
+      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OptimizerSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OptimizerSettings"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/health-profiles:
+    post:
+      operationId: "createHealthProfile"
+      tags:
+        - "Ajustes"
+      summary: "Crear perfil de salud"
+      description: "Solo Axel y Ximena (una persona externa responde 422 `external_person`)."
+      x-necesidades:
+        - "N-313"
+      x-tablas:
+        - "audit_log"
+        - "health_profile"
+        - "idempotency_key"
+        - "person"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HealthProfileCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthProfile"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/health-profiles/{health_profile_id}:
+    patch:
+      operationId: "updateHealthProfile"
+      tags:
+        - "Ajustes"
+      summary: "Editar perfil de salud"
+      description: "Edita el perfil, incluido el objetivo de peso (goal, K23). Confirmar la meta sugerida = mandar daily_kcal_target con el valor de suggested_kcal_target; escribir otra = mandar ese otro valor (N-313)."
+      x-necesidades:
+        - "N-313"
+      x-tablas:
+        - "audit_log"
+        - "health_profile"
+      parameters:
+        - name: "health_profile_id"
+          in: "path"
+          required: true
+          description: "Id del registro (health_profile_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HealthProfileUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthProfile"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/jobs/{job_id}:
+    patch:
+      operationId: "updateJob"
+      tags:
+        - "Ajustes"
+      summary: "Editar hora y activo de un job"
+      description: "Editar hora y activo de un job."
+      x-necesidades:
+        - "N-297"
+      x-tablas:
+        - "audit_log"
+        - "job"
+      parameters:
+        - name: "job_id"
+          in: "path"
+          required: true
+          description: "Id del registro (job_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notifications:
+    get:
+      operationId: "listNotifications"
+      tags:
+        - "Ajustes"
+      summary: "Avisos y su configuración"
+      description: "Avisos y su configuración."
+      x-necesidades:
+        - "N-296"
+        - "N-298"
+      x-tablas:
+        - "job"
+        - "notification"
+        - "notification_subscription"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notifications/{notification_id}:
+    patch:
+      operationId: "updateNotification"
+      tags:
+        - "Ajustes"
+      summary: "Editar aviso"
+      description: "Editar aviso."
+      x-necesidades:
+        - "N-297"
+        - "N-300"
+      x-tablas:
+        - "audit_log"
+        - "notification"
+      parameters:
+        - name: "notification_id"
+          in: "path"
+          required: true
+          description: "Id del registro (notification_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notifications/{notification_id}/recipients:
+    put:
+      operationId: "setNotificationRecipients"
+      tags:
+        - "Ajustes"
+      summary: "Destinatarios de un aviso"
+      description: "Lista completa de ids de destinatario (notification_recipient)."
+      x-necesidades:
+        - "N-297"
+        - "N-300"
+      x-tablas:
+        - "audit_log"
+        - "notification_recipient"
+        - "notification_subscription"
+      parameters:
+        - name: "notification_id"
+          in: "path"
+          required: true
+          description: "Id del registro (notification_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdList"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    IdList:
+      type: "object"
+      description: "Lista de ids (reemplazo completo)."
+      properties:
+        ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Ids en el orden deseado."
+          x-entrada: true
+      required:
+        - "ids"
+    CreditTermRate:
+      type: "object"
+      description: "Tasa por plazo (tabla `credit_term_rate`). Tabla editable de tasas por plazo de un crédito, como fracción exacta del capital por todo el plazo con IVA incluido. Kueski: 2 quincenas = 53450/309450 (17.27 %), 4 quincenas = 80050/309450 (25.8685 %). Campos ausentes = sin valor (NULL)."
+      x-tabla: "credit_term_rate"
+      required:
+        - "id"
+        - "credit_id"
+        - "term_count"
+        - "rate_num"
+        - "rate_den"
+        - "source"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_id:
+          type: "integer"
+          description: "Crédito"
+        term_count:
+          type: "integer"
+          description: "Plazo en número de pagos (2, 4, 6, 8, 10 o 12 quincenas en Kueski)"
+        rate_num:
+          type: "integer"
+          description: "Numerador: si viene de una cotización, los intereses en centavos (80050)"
+        rate_den:
+          type: "integer"
+          description: "Denominador: si viene de una cotización, el capital en centavos (309450). Una tasa tecleada como 25.8685 % se guarda 258685/1000000"
+        source:
+          type: "string"
+          enum:
+            - "quote"
+            - "manual"
+          description: "quote = sale de una cotización real, manual = tecleada en la tabla editable"
+        quote_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la cotización (2026-10-10)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato"
+        rate_pct:
+          type: "string"
+          description: "Tasa en porcentaje como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales (17.27 con 2; 25.8685 con 4); ausente si falta rate_decimals. El cálculo usa siempre la fracción rate_num/rate_den."
+          x-calculado: true
+    CreditTermRateCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de tasa por plazo (tabla `credit_term_rate`)."
+      x-tabla: "credit_term_rate"
+      properties:
+        term_count:
+          type: "integer"
+          description: "Plazo en número de pagos (2, 4, 6, 8, 10 o 12 quincenas en Kueski)"
+        rate_num:
+          type: "integer"
+          description: "Numerador: si viene de una cotización, los intereses en centavos (80050)"
+        rate_den:
+          type: "integer"
+          description: "Denominador: si viene de una cotización, el capital en centavos (309450). Una tasa tecleada como 25.8685 % se guarda 258685/1000000"
+        source:
+          type: "string"
+          enum:
+            - "quote"
+            - "manual"
+          description: "quote = sale de una cotización real, manual = tecleada en la tabla editable"
+        quote_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la cotización (2026-10-10)"
+        notes:
+          type: "string"
+          description: "notes"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato"
+      required:
+        - "term_count"
+        - "rate_num"
+        - "rate_den"
+        - "source"
+    CreditTermRateUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de tasa por plazo (tabla `credit_term_rate`)."
+      x-tabla: "credit_term_rate"
+      properties:
+        term_count:
+          type: "integer"
+          description: "Plazo en número de pagos (2, 4, 6, 8, 10 o 12 quincenas en Kueski)"
+        rate_num:
+          type: "integer"
+          description: "Numerador: si viene de una cotización, los intereses en centavos (80050)"
+        rate_den:
+          type: "integer"
+          description: "Denominador: si viene de una cotización, el capital en centavos (309450). Una tasa tecleada como 25.8685 % se guarda 258685/1000000"
+        source:
+          type: "string"
+          enum:
+            - "quote"
+            - "manual"
+          description: "quote = sale de una cotización real, manual = tecleada en la tabla editable"
+        quote_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Fecha de la cotización (2026-10-10) · null borra el valor"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+        rate_decimals:
+          type:
+            - "integer"
+            - "null"
+          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato · null borra el valor"
+      minProperties: 1
+    Promotion:
+      type: "object"
+      description: "Promoción (tabla `promotion`). Calendario de promociones capturado a mano: comercio, plazo, tasa (0 % casi siempre), compra mínima y vigencia. Campos ausentes = sin valor (NULL)."
+      x-tabla: "promotion"
+      required:
+        - "id"
+        - "merchant_name"
+        - "term_count"
+        - "rate_num"
+        - "rate_den"
+        - "min_purchase_cents"
+        - "valid_from"
+        - "valid_to"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_id:
+          type: "integer"
+          description: "Crédito al que aplica (Kueski). NULL = cualquiera"
+        merchant_name:
+          type: "string"
+          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
+        store_id:
+          type: "integer"
+          description: "Tienda registrada que corresponde al comercio, si existe"
+        term_count:
+          type: "integer"
+          description: "Plazo en pagos (4 quincenas)"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa promocional"
+        min_purchase_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
+        valid_from:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio de vigencia, inclusive"
+        valid_to:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
+        source_note:
+          type: "string"
+          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
+        is_current:
+          type: "boolean"
+          description: "Vigente hoy."
+          x-calculado: true
+        rate_pct:
+          type: "string"
+          description: "Tasa promocional como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; con tasa 0 la pantalla muestra «sin intereses» (N-287)."
+          x-calculado: true
+    PromotionCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de promoción (tabla `promotion`)."
+      x-tabla: "promotion"
+      properties:
+        credit_id:
+          type: "integer"
+          description: "Crédito al que aplica (Kueski). NULL = cualquiera"
+        merchant_name:
+          type: "string"
+          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
+        store_id:
+          type: "integer"
+          description: "Tienda registrada que corresponde al comercio, si existe"
+        term_count:
+          type: "integer"
+          description: "Plazo en pagos (4 quincenas)"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa promocional"
+        min_purchase_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
+        valid_from:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio de vigencia, inclusive"
+        valid_to:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
+        source_note:
+          type: "string"
+          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
+      required:
+        - "merchant_name"
+        - "term_count"
+        - "valid_from"
+        - "valid_to"
+    PromotionUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de promoción (tabla `promotion`)."
+      x-tabla: "promotion"
+      properties:
+        credit_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Crédito al que aplica (Kueski). NULL = cualquiera · null borra el valor"
+        merchant_name:
+          type: "string"
+          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
+        store_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Tienda registrada que corresponde al comercio, si existe · null borra el valor"
+        term_count:
+          type: "integer"
+          description: "Plazo en pagos (4 quincenas)"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa promocional"
+        min_purchase_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
+        valid_from:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio de vigencia, inclusive"
+        valid_to:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
+        source_note:
+          type:
+            - "string"
+            - "null"
+          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        rate_decimals:
+          type:
+            - "integer"
+            - "null"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato · null borra el valor"
+      minProperties: 1
+    OptimizerWeights:
+      type: "object"
+      description: "Pesos de los 4 objetivos (app_setting optimizer.weights; iguales y normalizados, decisión C)."
+      properties:
+        lowest_interest:
+          type: "integer"
+          description: "Menores intereses."
+        even_low_payment:
+          type: "integer"
+          description: "Pago por quincena parejo y bajo tope."
+        max_available:
+          type: "integer"
+          description: "Máximo disponible."
+        most_value_per_peso:
+          type: "integer"
+          description: "Comprar más por peso."
+      required:
+        - "lowest_interest"
+        - "even_low_payment"
+        - "max_available"
+        - "most_value_per_peso"
+      x-app-setting: "optimizer.weights"
+    OptimizerSettings:
+      type: "object"
+      description: "Restricciones duras globales y pesos del comparador (N-225, N-288; K16). Las restricciones pueden venir vacías: missing_constraints dice cuáles faltan. El tope por persona es person.fortnight_payment_cap_cents (objetivo, no restricción dura; K13) y se lee y edita en /persons."
+      properties:
+        missing_constraints:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "string"
+            enum:
+              - "min_available_buffer_cents"
+              - "max_live_purchases"
+              - "zero_debt_by_date"
+              - "date_window_days"
+          description: "Valores sin capturar (K16). Vacío = completos; con alguno, la pantalla muestra «faltan restricciones» y el comparador no recomienda."
+          x-calculado: true
+        min_available_buffer_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.min_available_buffer_cents"
+        max_live_purchases:
+          type: "integer"
+          description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.max_live_purchases"
+        zero_debt_by_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.zero_debt_by_date"
+        date_window_days:
+          type: "integer"
+          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.date_window_days"
+        weights:
+          $ref: "#/components/schemas/OptimizerWeights"
+          description: "Pesos."
+      required:
+        - "missing_constraints"
+        - "weights"
+    OptimizerSettingsUpdate:
+      type: "object"
+      description: "Cambio de los valores del comparador (N-289)."
+      properties:
+        min_available_buffer_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.min_available_buffer_cents"
+        max_live_purchases:
+          type: "integer"
+          description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.max_live_purchases"
+        zero_debt_by_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.zero_debt_by_date"
+        date_window_days:
+          type: "integer"
+          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.date_window_days"
+        weights:
+          $ref: "#/components/schemas/OptimizerWeights"
+          description: "Pesos."
+      additionalProperties: false
+      minProperties: 1
+    HealthProfile:
+      type: "object"
+      description: "Perfil de salud (tabla `health_profile`). Perfil de salud por persona (solo Axel y Ximena): estatura, nacimiento, sexo, actividad, meta de calorías y restricciones (vacías por decisión). El peso vive en weight_entry. Campos ausentes = sin valor (NULL)."
+      x-tabla: "health_profile"
+      required:
+        - "id"
+        - "person_id"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        person_id:
+          type: "integer"
+          description: "Persona"
+        height_mm:
+          type: "integer"
+          description: "Estatura en milímetros (1.75 m = 1750)"
+        birth_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de nacimiento. La edad se calcula"
+        sex:
+          type: "string"
+          enum:
+            - "female"
+            - "male"
+          description: "Sexo para fórmulas de requerimiento"
+        activity_level:
+          type: "string"
+          enum:
+            - "sedentary"
+            - "light"
+            - "moderate"
+            - "active"
+            - "very_active"
+          description: "Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23)"
+        daily_kcal_target:
+          type: "integer"
+          description: "Meta de kilocalorías por día"
+        dietary_restrictions:
+          type: "string"
+          description: "Restricciones alimentarias (el campo existe y hoy va vacío)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        goal:
+          type: "string"
+          enum:
+            - "lose"
+            - "maintain"
+            - "gain"
+          description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
+        current_weight_g:
+          type: "integer"
+          description: "Último peso (weight_entry.weight_g)."
+          x-calculado: true
+        current_weight_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último peso."
+          x-calculado: true
+        age_years:
+          type: "integer"
+          description: "Edad en años cumplidos a hoy."
+          x-calculado: true
+        bmi_tenths:
+          type: "integer"
+          description: "IMC × 10, ROUND_HALF_UP (peso kg ÷ estatura m²)."
+          x-calculado: true
+        bmi_class:
+          type: "string"
+          enum:
+            - "underweight"
+            - "normal"
+            - "overweight"
+            - "obesity"
+          description: "Clasificación del IMC (motor S4; OMS 18.5 / 25 / 30, K7)."
+          x-calculado: true
+        suggested_kcal_target:
+          type: "integer"
+          x-provisional: true
+          description: "Meta diaria de kcal sugerida (motor S4, RN-17, K23): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9) con ajuste por objetivo (goal); la persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo). Magnitud del ajuste de bajar y subir: PROVISIONAL, bloqueo S1-ajuste-objetivo-kcal."
+          x-calculado: true
+    HealthProfileCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de perfil de salud (tabla `health_profile`)."
+      x-tabla: "health_profile"
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona"
+        height_mm:
+          type: "integer"
+          description: "Estatura en milímetros (1.75 m = 1750)"
+        birth_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de nacimiento. La edad se calcula"
+        sex:
+          type: "string"
+          enum:
+            - "female"
+            - "male"
+          description: "Sexo para fórmulas de requerimiento"
+        activity_level:
+          type: "string"
+          enum:
+            - "sedentary"
+            - "light"
+            - "moderate"
+            - "active"
+            - "very_active"
+          description: "Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23)"
+        daily_kcal_target:
+          type: "integer"
+          description: "Meta de kilocalorías por día"
+        dietary_restrictions:
+          type: "string"
+          description: "Restricciones alimentarias (el campo existe y hoy va vacío)"
+        notes:
+          type: "string"
+          description: "notes"
+        goal:
+          type: "string"
+          enum:
+            - "lose"
+            - "maintain"
+            - "gain"
+          description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige"
+      required:
+        - "person_id"
+    HealthProfileUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de perfil de salud (tabla `health_profile`)."
+      x-tabla: "health_profile"
+      properties:
+        height_mm:
+          type:
+            - "integer"
+            - "null"
+          description: "Estatura en milímetros (1.75 m = 1750) · null borra el valor"
+        birth_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Fecha de nacimiento. La edad se calcula · null borra el valor"
+        sex:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "female"
+            - "male"
+            - null
+          description: "Sexo para fórmulas de requerimiento · null borra el valor"
+        activity_level:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "sedentary"
+            - "light"
+            - "moderate"
+            - "active"
+            - "very_active"
+            - null
+          description: "Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23) · null borra el valor"
+        daily_kcal_target:
+          type:
+            - "integer"
+            - "null"
+          description: "Meta de kilocalorías por día · null borra el valor"
+        dietary_restrictions:
+          type:
+            - "string"
+            - "null"
+          description: "Restricciones alimentarias (el campo existe y hoy va vacío) · null borra el valor"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+        goal:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "lose"
+            - "maintain"
+            - "gain"
+            - null
+          description: "Objetivo que ajusta la meta sugerida de kilocalorías: lose = bajar de peso, maintain = mantener, gain = subir. NULL = todavía no lo elige · null borra el valor"
+      minProperties: 1
+    Notification:
+      type: "object"
+      description: "Aviso (tabla `notification`). Cada aviso o reporte configurable: resúmenes diario y semanal, reporte mensual, pago próximo, presupuesto 80/100 %, precios viejos y plan sin armar. Esta migración crea los siete con los parámetros que ya decidió Axel. Campos ausentes = sin valor (NULL)."
+      x-tabla: "notification"
+      required:
+        - "id"
+        - "code"
+        - "name"
+        - "is_enabled"
+        - "params_json"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        code:
+          type: "string"
+          enum:
+            - "daily_summary"
+            - "weekly_summary"
+            - "monthly_report"
+            - "payment_due"
+            - "budget_threshold"
+            - "stale_prices"
+            - "meal_plan_missing"
+          description: "Clave del aviso"
+        name:
+          type: "string"
+          description: "Nombre en Ajustes"
+        is_enabled:
+          type: "boolean"
+          description: "1 = activo"
+        params_json:
+          type: "object"
+          additionalProperties: true
+          description: "Parámetros del aviso (días antes 1 y 0, umbrales 80 y 100)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        recipient_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Destinatarios suscritos (notification_subscription)."
+          x-calculado: true
+        job_id:
+          type: "integer"
+          description: "Job que lo programa."
+          x-calculado: true
+    NotificationUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Activa o desactiva un aviso y sus parámetros (N-297, N-300). Claves de params_json (hora del resumen diario, anticipación de precios viejos): PROVISIONAL con la propuesta escrita en el bloqueo C1-valores-k31 (Axel las aprueba en la puerta 4)."
+      x-tabla: "notification"
+      properties:
+        is_enabled:
+          type: "boolean"
+          description: "1 = activo"
+        params_json:
+          type: "object"
+          additionalProperties: true
+          description: "Parámetros del aviso (días antes 1 y 0, umbrales 80 y 100)"
+      minProperties: 1
+    Job:
+      type: "object"
+      description: "Job programado (tabla `job`). Tarea programada del servicio (respaldos, resúmenes, alertas, purgas) con su horario y su último resultado. Campos ausentes = sin valor (NULL)."
+      x-tabla: "job"
+      required:
+        - "id"
+        - "code"
+        - "name"
+        - "schedule"
+        - "is_enabled"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        code:
+          type: "string"
+          description: "Clave del job (backup_daily, daily_summary)"
+        name:
+          type: "string"
+          description: "Nombre visible"
+        schedule:
+          type: "string"
+          description: "Expresión cron de 5 campos en hora de America/Mexico_City"
+        is_enabled:
+          type: "boolean"
+          description: "1 = activo"
+        notification_id:
+          type: "integer"
+          description: "Aviso que manda, si manda alguno"
+        last_run_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Inicio de la última corrida"
+        last_status:
+          type: "string"
+          enum:
+            - "running"
+            - "ok"
+            - "error"
+            - "skipped"
+          description: "Resultado de la última corrida"
+        last_error:
+          type: "string"
+          description: "Error resumido de la última corrida"
+        next_run_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Próxima corrida calculada"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    JobUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Hora (schedule, cron de 5 campos en America/Mexico_City) y activo de un job (N-297)."
+      x-tabla: "job"
+      properties:
+        schedule:
+          type: "string"
+          description: "Expresión cron de 5 campos en hora de America/Mexico_City"
+        is_enabled:
+          type: "boolean"
+          description: "1 = activo"
+      minProperties: 1
+    NotificationPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Notification"
+      description: "Página de Notification con la envoltura única (Page)."

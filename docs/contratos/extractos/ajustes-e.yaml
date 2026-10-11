@@ -1,0 +1,908 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «ajustes-e». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto ajustes-e"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Ajustes"
+    description: "Las 14 secciones de Ajustes, sesiones y sistema."
+paths:
+  /api/v1/notifications/{notification_id}/test:
+    post:
+      operationId: "sendTestNotification"
+      tags:
+        - "Ajustes"
+      summary: "Enviar aviso de prueba"
+      description: "Envía ahora el aviso (p. ej. resumen diario o una alerta) a una persona: sirve de disparo manual. Texto plano, sin parse_mode."
+      x-necesidades:
+        - "N-300"
+      x-tablas:
+        - "notification"
+        - "notification_delivery"
+        - "notification_recipient"
+      parameters:
+        - name: "notification_id"
+          in: "path"
+          required: true
+          description: "Id del registro (notification_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestNotificationRequest"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationDelivery"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notification-recipients:
+    get:
+      operationId: "listNotificationRecipients"
+      tags:
+        - "Ajustes"
+      summary: "Registro de chat"
+      description: "Chats confirmados por persona. Nunca devuelve chat_id ni el token del bot. Los chats detectados pendientes están en listTelegramChatCandidates (N-299, K4)."
+      x-necesidades:
+        - "N-299"
+      x-tablas:
+        - "notification_recipient"
+        - "person"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRecipientPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/telegram-chat-candidates:
+    get:
+      operationId: "listTelegramChatCandidates"
+      tags:
+        - "Ajustes"
+      summary: "Chats detectados por confirmar"
+      description: "Chats que el bot detectó cuando alguien le escribió y que esperan confirmación (confirmed_at ausente): nombre que da Telegram, fecha y hora de detección y chat_id enmascarado (chat_id_masked). El chat_id completo nunca se devuelve (K4). Orden: -detected_at."
+      x-necesidades:
+        - "N-299"
+      x-tablas:
+        - "telegram_chat_candidate"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TelegramChatCandidatePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/telegram-chat-candidates/{candidate_id}/confirm:
+    post:
+      operationId: "confirmTelegramChatCandidate"
+      tags:
+        - "Ajustes"
+      summary: "Confirmar chat detectado"
+      description: "Liga el chat detectado a una persona (por omisión, la del usuario de la sesión): pone person_id y confirmed_at y crea su notification_recipient en la misma transacción (K4). Un chat ya confirmado responde 409 `conflict`."
+      x-necesidades:
+        - "N-316"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "notification_recipient"
+        - "person"
+        - "telegram_chat_candidate"
+      parameters:
+        - name: "candidate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (candidate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TelegramChatCandidateConfirm"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRecipient"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notification-recipients/{recipient_id}:
+    patch:
+      operationId: "updateNotificationRecipient"
+      tags:
+        - "Ajustes"
+      summary: "Editar destinatario"
+      description: "Editar destinatario."
+      x-necesidades:
+        - "N-299"
+      x-tablas:
+        - "audit_log"
+        - "notification_recipient"
+      parameters:
+        - name: "recipient_id"
+          in: "path"
+          required: true
+          description: "Id del registro (recipient_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationRecipientUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRecipient"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/backups:
+    get:
+      operationId: "listBackups"
+      tags:
+        - "Ajustes"
+      summary: "Respaldos"
+      description: "Orden por defecto: -started_at."
+      x-necesidades:
+        - "N-302"
+      x-tablas:
+        - "backup"
+        - "job"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackupPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createBackup"
+      tags:
+        - "Ajustes"
+      summary: "Respaldar ahora"
+      description: "VACUUM INTO a la carpeta de respaldos local + PRAGMA integrity_check."
+      x-necesidades:
+        - "N-303"
+      x-tablas:
+        - "backup"
+        - "idempotency_key"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Backup"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/backups/{backup_id}/restore:
+    post:
+      operationId: "restoreBackup"
+      tags:
+        - "Ajustes"
+      summary: "Restaurar respaldo"
+      description: "Acción crítica: doble confirmación en pantalla y `confirmation` = RESTAURAR; antes toma un respaldo pre_migration."
+      x-necesidades:
+        - "N-303"
+      x-tablas:
+        - "backup"
+      parameters:
+        - name: "backup_id"
+          in: "path"
+          required: true
+          description: "Id del registro (backup_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BackupRestoreRequest"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RestoreResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/system/seed-status:
+    get:
+      operationId: "getSeedStatus"
+      tags:
+        - "Ajustes"
+      summary: "Datos semilla"
+      description: "Datos semilla."
+      x-necesidades:
+        - "N-305"
+      x-tablas:
+        - "audit_log"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "planned_item"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SeedStatus"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/ai/providers:
+    get:
+      operationId: "listAiProviders"
+      tags:
+        - "Ajustes"
+      summary: "IA opcional"
+      description: "IA opcional."
+      x-necesidades:
+        - "N-306"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiProviders"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/ai/providers/{provider}:
+    patch:
+      operationId: "updateAiProvider"
+      tags:
+        - "Ajustes"
+      summary: "Activar o desactivar IA"
+      description: "Activar o desactivar IA."
+      x-necesidades:
+        - "N-307"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      parameters:
+        - name: "provider"
+          in: "path"
+          required: true
+          description: "Proveedor de IA."
+          schema:
+            type: "string"
+            enum:
+              - "local_model"
+              - "claude_api"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AiProviderUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiProvider"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/system/status:
+    get:
+      operationId: "getSystemStatus"
+      tags:
+        - "Ajustes"
+      summary: "Estado del servicio"
+      description: "Lee el archivo de la base (tamaño) y el proceso; no consulta tablas."
+      x-necesidades:
+        - "N-308"
+      x-tablas: []
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SystemStatus"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/system/ca-certificate:
+    get:
+      operationId: "getCaCertificate"
+      tags:
+        - "Ajustes"
+      summary: "Certificado raíz de la CA local"
+      description: "Archivo de la CA local (no la base)."
+      x-necesidades:
+        - "N-274"
+      x-tablas: []
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/x-pem-file:
+              schema:
+                type: "string"
+                contentMediaType: "application/x-pem-file"
+                description: "Certificado raíz público de mkcert (rootCA.pem). Nunca la llave."
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    TestNotificationRequest:
+      type: "object"
+      description: "Enviar ahora un aviso de prueba a una persona (N-300); sirve para disparar a mano el resumen diario o una alerta."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Destinataria (Axel o Ximena)."
+      required:
+        - "person_id"
+    NotificationDelivery:
+      type: "object"
+      description: "Envío de aviso (tabla `notification_delivery`). Cada envío de un aviso a un destinatario, con clave para no mandar dos veces lo mismo y el resultado HTTP. Campos ausentes = sin valor (NULL)."
+      x-tabla: "notification_delivery"
+      required:
+        - "id"
+        - "notification_id"
+        - "recipient_id"
+        - "dedupe_key"
+        - "status"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        notification_id:
+          type: "integer"
+          description: "Aviso"
+        recipient_id:
+          type: "integer"
+          description: "Destinatario"
+        dedupe_key:
+          type: "string"
+          description: "Clave que evita repetir el mismo aviso (payment_due:42:2026-10-29)"
+        status:
+          type: "string"
+          enum:
+            - "pending"
+            - "sent"
+            - "failed"
+            - "skipped"
+          description: "Estado del envío"
+        message_text:
+          type: "string"
+          description: "Texto plano enviado (sin parse_mode)"
+        http_status:
+          type: "integer"
+          description: "Código HTTP de la API de Telegram"
+        error:
+          type: "string"
+          description: "Error resumido, sin token ni datos sensibles"
+        sent_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Momento del envío"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        notification_code:
+          type: "string"
+          description: "Clave del aviso."
+          x-calculado: true
+    NotificationRecipient:
+      type: "object"
+      description: "Destinatario (tabla `notification_recipient`). Destino de avisos de una persona: su chat de Telegram en el bot MultiX. El chat_id no es credencial. El token del bot nunca se guarda en la base. Campos ausentes = sin valor (NULL)."
+      x-tabla: "notification_recipient"
+      required:
+        - "id"
+        - "person_id"
+        - "channel"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        person_id:
+          type: "integer"
+          description: "Persona destinataria"
+        channel:
+          type: "string"
+          enum:
+            - "telegram"
+          description: "Canal (bot MultiX)"
+        label:
+          type: "string"
+          description: "Etiqueta (Celular de Ximena)"
+        verified_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo se comprobó con un mensaje de prueba"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        is_registered:
+          type: "boolean"
+          description: "true si tiene chat registrado y verificado."
+          x-calculado: true
+    TelegramChatCandidate:
+      type: "object"
+      description: "Chat de Telegram por confirmar (tabla `telegram_chat_candidate`). Chat que el bot detectó cuando alguien le escribió y que espera confirmación en Ajustes «Notificaciones». Guarda solo el chat_id y el nombre que da Telegram. Al confirmarlo se liga a la persona y la API crea su notification_recipient en la misma transacción; descartarlo borra el renglón. Campos ausentes = sin valor (NULL)."
+      x-tabla: "telegram_chat_candidate"
+      required:
+        - "id"
+        - "telegram_name"
+        - "detected_at"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        telegram_name:
+          type: "string"
+          description: "Nombre que da Telegram para ese chat"
+        detected_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo lo detectó el bot"
+        confirmed_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo la persona lo confirmó en Ajustes. NULL = pendiente"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se ligó al confirmar"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        chat_id_masked:
+          type: "string"
+          description: "chat_id enmascarado: «•••» y sus últimos 4 caracteres (p. ej. «•••4821»), para distinguir dos chats con el mismo nombre. El chat_id completo nunca se devuelve (C1-12, K4)."
+          x-calculado: true
+    TelegramChatCandidateConfirm:
+      type: "object"
+      description: "Confirmación de un chat detectado (N-316, K4)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona a quien se liga el chat; sin valor, la persona del usuario de la sesión."
+      additionalProperties: false
+    NotificationRecipientUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de destinatario (tabla `notification_recipient`)."
+      x-tabla: "notification_recipient"
+      properties:
+        label:
+          type:
+            - "string"
+            - "null"
+          description: "Etiqueta (Celular de Ximena) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+      minProperties: 1
+    Backup:
+      type: "object"
+      description: "Respaldo (tabla `backup`). Respaldo local de la base (VACUUM INTO) con huella, resultado de integrity_check y prueba de restauración. Campos ausentes = sin valor (NULL)."
+      x-tabla: "backup"
+      required:
+        - "id"
+        - "kind"
+        - "status"
+        - "started_at"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "scheduled"
+            - "manual"
+            - "pre_migration"
+          description: "Diario programado, manual o previo a una migración"
+        status:
+          type: "string"
+          enum:
+            - "running"
+            - "ok"
+            - "failed"
+          description: "Estado"
+        started_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Inicio"
+        finished_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Fin"
+        file_path:
+          type: "string"
+          description: "Ruta del archivo en la carpeta o disco de respaldos"
+        size_bytes:
+          type: "integer"
+          description: "Tamaño en bytes"
+        sha256:
+          type: "string"
+          description: "Huella del archivo"
+        integrity_check:
+          type: "string"
+          description: "Resultado de PRAGMA integrity_check sobre la copia (ok o el error)"
+        restore_tested_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Última restauración de prueba"
+        restore_test_result:
+          type: "string"
+          description: "Resultado de esa restauración"
+        pruned_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo se borró el archivo por la política de retención"
+        error:
+          type: "string"
+          description: "Error resumido"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    BackupRestoreRequest:
+      type: "object"
+      description: "Restaurar un respaldo (N-303). Acción crítica con doble confirmación."
+      properties:
+        confirmation:
+          type: "string"
+          const: "RESTAURAR"
+          description: "Texto de confirmación escrito por la persona."
+          x-entrada: true
+      required:
+        - "confirmation"
+    RestoreResult:
+      type: "object"
+      description: "Resultado de la restauración."
+      properties:
+        backup_id:
+          type: "integer"
+          description: "Respaldo restaurado."
+        integrity_check:
+          type: "string"
+          description: "Resultado de PRAGMA integrity_check (ok)."
+        pre_restore_backup_id:
+          type: "integer"
+          description: "Respaldo pre_migration tomado antes de restaurar."
+      required:
+        - "backup_id"
+        - "integrity_check"
+        - "pre_restore_backup_id"
+      x-calculado: true
+    SeedStatus:
+      type: "object"
+      description: "Estado de los datos semilla (N-305)."
+      properties:
+        items:
+          type: "array"
+          items:
+            type: "object"
+            description: "Semilla."
+            properties:
+              code:
+                type: "string"
+                enum:
+                  - "purchase_2026_10_10"
+                  - "kueski_credit"
+                  - "fixed_items_csv"
+                description: "Semilla."
+              is_loaded:
+                type: "boolean"
+                description: "Cargada."
+              row_count:
+                type: "integer"
+                description: "Registros."
+            required:
+              - "code"
+              - "is_loaded"
+              - "row_count"
+            x-calculado: true
+          description: "Las 3 semillas."
+      required:
+        - "items"
+      x-calculado: true
+    AiProvider:
+      type: "object"
+      description: "Proveedor de IA opcional (N-306)."
+      properties:
+        provider:
+          type: "string"
+          enum:
+            - "local_model"
+            - "claude_api"
+          description: "Ollama local o API de Claude."
+        is_enabled:
+          type: "boolean"
+          description: "Activo (app_setting ai.*_enabled; false por defecto)."
+        allowed_uses:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+              - "ticket_ocr"
+              - "recipe_suggestions"
+          description: "Usos permitidos (decisión H)."
+        is_available:
+          type: "boolean"
+          description: "Responde (solo se consulta si está activo)."
+        is_configured:
+          type: "boolean"
+          description: "Llave configurada (solo API de Claude). La llave nunca se muestra."
+      required:
+        - "provider"
+        - "is_enabled"
+        - "allowed_uses"
+        - "is_available"
+        - "is_configured"
+      x-calculado: true
+    AiProviders:
+      type: "object"
+      description: "Proveedores de IA (N-306)."
+      properties:
+        providers:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/AiProvider"
+          description: "Los 2 proveedores."
+      required:
+        - "providers"
+      x-calculado: true
+    AiProviderUpdate:
+      type: "object"
+      description: "Activar o desactivar un proveedor (N-307)."
+      properties:
+        is_enabled:
+          type: "boolean"
+          description: "Nuevo valor (app_setting ai.local_model_enabled o ai.claude_api_enabled)."
+          x-app-setting: "ai.local_model_enabled | ai.claude_api_enabled"
+      required:
+        - "is_enabled"
+      additionalProperties: false
+    SystemStatus:
+      type: "object"
+      description: "Estado del servicio (N-308)."
+      properties:
+        version:
+          type: "string"
+          description: "Versión del binario."
+        started_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "En marcha desde."
+        database_size_bytes:
+          type: "integer"
+          description: "Tamaño de la base de datos."
+      required:
+        - "version"
+        - "started_at"
+        - "database_size_bytes"
+      x-calculado: true
+    NotificationRecipientPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/NotificationRecipient"
+      description: "Página de NotificationRecipient con la envoltura única (Page)."
+    TelegramChatCandidatePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/TelegramChatCandidate"
+      description: "Página de TelegramChatCandidate con la envoltura única (Page)."
+    BackupPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Backup"
+      description: "Página de Backup con la envoltura única (Page)."

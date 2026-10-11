@@ -1,0 +1,1615 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «compras-tiendas-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto compras-tiendas-a"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Compras y tiendas» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Compras y tiendas"
+    description: "Lista de compras, comparar canasta, productos, precios e inventario."
+paths:
+  /api/v1/shopping-list:
+    get:
+      operationId: "getShoppingList"
+      tags:
+        - "Compras y tiendas"
+      summary: "Lista de compras de la semana"
+      description: "Lista guardada de la semana (shopping_list y shopping_list_item) con lo que calculan S4 y S5 al consultar: piezas, tienda y presentación recomendadas, precio estimado y frescura (N-150). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Si la semana todavía no tiene lista responde la lista vacía, sin shopping_list_id. «Terminar compra» (N-073) pide is_bought=true y abre la captura del ticket con esos artículos como renglones propuestos. Lista compartida en el servidor (K1)."
+      x-necesidades:
+        - "N-150"
+        - "N-073"
+      x-tablas:
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "presentation"
+        - "price"
+        - "product"
+        - "product_group"
+        - "recipe_ingredient"
+        - "shopping_list"
+        - "shopping_list_item"
+        - "store"
+        - "store_product_group"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/ListWeek"
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - name: "is_bought"
+          in: "query"
+          required: false
+          description: "true = solo los artículos marcados como comprados (prellenado de «Terminar compra», N-073); false = solo los pendientes."
+          schema:
+            type: "boolean"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingList"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/shopping-list/generate:
+    post:
+      operationId: "generateShoppingList"
+      tags:
+        - "Compras y tiendas"
+      summary: "Generar lista de compras"
+      description: "Produce o actualiza la lista de la semana desde el plan de comidas (motor S4: ingredientes del plan escalados − existencia + reposición por ritmo). Crea shopping_list si falta, pone generated_at y guarda la necesidad (needed_milli) en un artículo calculated por producto; conserva lo que eligió una persona (cantidad, tienda, presentación, comprado) y los artículos a mano (invariante 13 de S1). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Lista compartida en el servidor (K1)."
+      x-necesidades:
+        - "N-127"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "presentation"
+        - "price"
+        - "product"
+        - "product_group"
+        - "recipe_ingredient"
+        - "shopping_list"
+        - "shopping_list_item"
+        - "store"
+        - "store_product_group"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/ListWeek"
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingList"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/shopping-list/items:
+    post:
+      operationId: "createShoppingListItem"
+      tags:
+        - "Compras y tiendas"
+      summary: "Agregar artículo a la lista"
+      description: "Agrega un artículo a mano (origin = manual) a la lista de la semana. Si esa semana todavía no tiene lista, la crea sin generarla (generated_at ausente). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Lista compartida en el servidor (K1)."
+      x-necesidades:
+        - "N-152"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "product"
+        - "shopping_list"
+        - "shopping_list_item"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/ListWeek"
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingListItemCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingListItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/shopping-list/items/{shopping_list_item_id}:
+    patch:
+      operationId: "updateShoppingListItem"
+      tags:
+        - "Compras y tiendas"
+      summary: "Marcar comprado o cambiar tienda o cantidad"
+      description: "Marca o desmarca comprado (N-151) y cambia tienda, presentación o cantidad (N-153). Marcar comprado no crea gasto ni precio: eso pasa al confirmar el ticket (N-073 → confirmTicketScan o createExpense). Si el artículo no es de la semana `week` responde 422 `out_of_range` (R3-01). Lista compartida en el servidor (K1)."
+      x-necesidades:
+        - "N-151"
+        - "N-153"
+      x-tablas:
+        - "audit_log"
+        - "presentation"
+        - "shopping_list"
+        - "shopping_list_item"
+        - "store"
+      parameters:
+        - name: "shopping_list_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (shopping_list_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/ListWeek"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingListItemUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingListItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/shopping-list/assign-store:
+    post:
+      operationId: "assignShoppingListStore"
+      tags:
+        - "Compras y tiendas"
+      summary: "Usar esta tienda"
+      description: "«Usar esta tienda» desde la comparativa (N-165; F-3 ruta A, paso 3): pone store_id en los artículos de la lista de la semana que tienen precio en esa tienda; los demás conservan su tienda (invariante 13 de S1). Si la semana no tiene lista responde 404 `not_found`. Después la pantalla abre la lista agrupada por esa tienda (getShoppingList con store_id). Semana de la lista: `week` obligatorio con una semana (`2026-W42`, lunes a domingo, K8), la que muestra la pantalla (R3-01); el contrato no tiene semana por omisión. Lista compartida en el servidor (K1)."
+      x-necesidades:
+        - "N-165"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "price"
+        - "shopping_list"
+        - "shopping_list_item"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/ListWeek"
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingListStoreAssignment"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingListStoreAssignmentResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/baskets:
+    get:
+      operationId: "listBaskets"
+      tags:
+        - "Compras y tiendas"
+      summary: "Canastas disponibles"
+      description: "La lista de la semana `week` (R3-01) y las compras con renglones, por fecha descendente."
+      x-necesidades:
+        - "N-160"
+      x-tablas:
+        - "expense"
+        - "expense_item"
+        - "meal_plan_entry"
+        - "shopping_list"
+        - "shopping_list_item"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/ListWeek"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BasketPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/basket-comparison:
+    get:
+      operationId: "getBasketComparison"
+      tags:
+        - "Compras y tiendas"
+      summary: "Comparar canasta"
+      description: "Comparar canasta."
+      x-necesidades:
+        - "N-161"
+        - "N-162"
+        - "N-163"
+        - "N-164"
+        - "N-027"
+      x-tablas:
+        - "app_setting"
+        - "expense"
+        - "expense_item"
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "presentation"
+        - "price"
+        - "product"
+        - "recipe_ingredient"
+        - "shopping_list"
+        - "shopping_list_item"
+        - "store"
+      parameters:
+        - name: "basket"
+          in: "query"
+          required: false
+          description: "shopping_list (por defecto) o expense."
+          schema:
+            type: "string"
+            enum:
+              - "shopping_list"
+              - "expense"
+        - name: "expense_id"
+          in: "query"
+          required: false
+          description: "Compra a comparar (con basket = expense)."
+          schema:
+            type: "integer"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BasketComparison"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/stores:
+    get:
+      operationId: "listStores"
+      tags:
+        - "Compras y tiendas"
+      summary: "Tiendas y mercados"
+      description: "Tiendas y mercados."
+      x-necesidades:
+        - "N-290"
+      x-tablas:
+        - "product_group"
+        - "store"
+        - "store_product_group"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+        - name: "kind"
+          in: "query"
+          required: false
+          description: "chain, branch o market."
+          schema:
+            type: "string"
+            enum:
+              - "chain"
+              - "branch"
+              - "market"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StorePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/product-groups:
+    get:
+      operationId: "listProductGroups"
+      tags:
+        - "Compras y tiendas"
+      summary: "Grupos de producto"
+      description: "Grupos de producto."
+      x-necesidades:
+        - "N-290"
+        - "N-150"
+      x-tablas:
+        - "product_group"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductGroupPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/products:
+    get:
+      operationId: "listProducts"
+      tags:
+        - "Compras y tiendas"
+      summary: "Catálogo de productos"
+      description: "Orden: name."
+      x-necesidades:
+        - "N-170"
+        - "N-072"
+        - "N-314"
+      x-tablas:
+        - "app_setting"
+        - "presentation"
+        - "price"
+        - "product"
+        - "product_group"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - name: "product_group_id"
+          in: "query"
+          required: false
+          description: "Grupo (categoría de producto)."
+          schema:
+            type: "integer"
+        - name: "freshness"
+          in: "query"
+          required: false
+          description: "fresh, stale o no_price."
+          schema:
+            type: "string"
+            enum:
+              - "fresh"
+              - "stale"
+              - "no_price"
+        - name: "source"
+          in: "query"
+          required: false
+          description: "Fuente del precio."
+          schema:
+            type: "string"
+            enum:
+              - "ticket_manual"
+              - "ticket_ocr"
+              - "site_assisted"
+              - "profeco"
+              - "manual"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createProduct"
+      tags:
+        - "Compras y tiendas"
+      summary: "Crear producto"
+      description: "Crear producto."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "product"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductDetail"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/products/{product_id}:
+    get:
+      operationId: "getProduct"
+      tags:
+        - "Compras y tiendas"
+      summary: "Producto"
+      description: "Producto."
+      x-necesidades:
+        - "N-171"
+        - "N-173"
+      x-tablas:
+        - "app_setting"
+        - "nutrition_fact"
+        - "presentation"
+        - "price"
+        - "product"
+        - "product_group"
+        - "store"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductDetail"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    patch:
+      operationId: "updateProduct"
+      tags:
+        - "Compras y tiendas"
+      summary: "Editar producto"
+      description: "Editar producto."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "product"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductDetail"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    ShoppingListItem:
+      type: "object"
+      description: "Artículo de la lista de compras (tabla `shopping_list_item`). Un artículo de la lista: un producto que calculó S4 al generar la lista o un artículo agregado a mano (producto del catálogo o texto libre). Guarda la tienda o mercado elegido, la cantidad elegida y si ya se compró. Se comparte en el servidor entre los dos teléfonos (K1). Campos ausentes = sin valor (NULL)."
+      x-tabla: "shopping_list_item"
+      required:
+        - "id"
+        - "shopping_list_id"
+        - "origin"
+        - "is_bought"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        shopping_list_id:
+          type: "integer"
+          description: "Lista a la que pertenece"
+        origin:
+          type: "string"
+          enum:
+            - "calculated"
+            - "manual"
+          description: "calculated = lo calculó S4 (recetas del plan o reposición por ritmo), manual = lo agregó una persona (N-152)"
+        product_id:
+          type: "integer"
+          description: "Producto del catálogo"
+        free_text:
+          type: "string"
+          description: "Artículo escrito a mano que no está en el catálogo"
+        free_text_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad de la cantidad de un artículo en texto libre (un producto usa su product.base_unit)"
+        presentation_id:
+          type: "integer"
+          description: "Presentación elegida para comprar. NULL = la que recomienda S5"
+        needed_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Necesidad que calculó S4 en la última generación (plan − existencia + reposición), en milésimas de la unidad base"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad a comprar que fijó una persona (N-152, N-153), en milésimas de la unidad base. NULL en calculated = comprar la necesidad"
+        store_id:
+          type: "integer"
+          description: "Tienda o mercado elegido (N-153, N-165). NULL = el que recomienda S5"
+        is_bought:
+          type: "boolean"
+          description: "1 = comprado (N-151). No crea gasto ni precio hasta confirmar el ticket"
+        bought_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo se marcó como comprado"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        packages_to_buy:
+          type: "integer"
+          description: "Piezas a comprar de la presentación (motor S4)."
+          x-calculado: true
+        recommended_store_id:
+          type: "integer"
+          description: "Tienda o mercado que recomienda S5; rige mientras store_id esté ausente."
+          x-calculado: true
+        recommended_presentation_id:
+          type: "integer"
+          description: "Presentación que recomienda S5; rige mientras presentation_id esté ausente."
+          x-calculado: true
+        estimated_price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio estimado en la tienda asignada (motor S5)."
+          x-calculado: true
+        price_observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del precio usado."
+          x-calculado: true
+        is_stale_price:
+          type: "boolean"
+          description: "Precio viejo: 30 días o más (K22)."
+          x-calculado: true
+        reasons:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+              - "recipe"
+              - "replenishment"
+              - "manual"
+          description: "Motivo: recetas del plan, reposición por ritmo de consumo o manual (origin = manual)."
+          x-calculado: true
+        recipe_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Recetas del plan que lo piden."
+          x-calculado: true
+    ShoppingList:
+      type: "object"
+      description: "Lista de compras de la semana (N-150). Guarda lo que no se calcula (artículos a mano, tienda, presentación o cantidad elegidas y marcas de comprado; shopping_list y shopping_list_item) y añade al consultar lo que calculan S4 y S5 (piezas, tienda recomendada, precio y frescura). Agrupada por vertical y tienda, luego categoría de producto, orden alfabético. Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
+      properties:
+        shopping_list_id:
+          type: "integer"
+          description: "Lista guardada de la semana (shopping_list.id). Ausente = la semana todavía no tiene lista: se crea al generarla (N-127) o al agregar un artículo (N-152)."
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer día de la semana (shopping_list.start_date; lunes, K8)."
+        end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Último día de la semana, inclusive (shopping_list.end_date)."
+        generated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Última generación desde el plan (shopping_list.generated_at). Ausente = no se ha generado."
+        groups:
+          type: "array"
+          items:
+            type: "object"
+            description: "Grupo."
+            properties:
+              purchase_channel:
+                type: "string"
+                enum:
+                  - "market"
+                  - "chain"
+                description: "Vertical (product_group.purchase_channel)."
+              store_id:
+                type: "integer"
+                description: "Tienda o mercado (el elegido o el recomendado)."
+              visit_weekday:
+                type: "integer"
+                description: "Día de visita del mercado (1 = lunes … 7 = domingo)."
+              items:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ShoppingListItem"
+                description: "Artículos."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total estimado del grupo."
+            required:
+              - "purchase_channel"
+              - "items"
+              - "total_cents"
+            x-calculado: true
+          description: "Grupos."
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total estimado."
+      required:
+        - "start_date"
+        - "end_date"
+        - "groups"
+        - "total_cents"
+      x-calculado: true
+    ShoppingListItemCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Artículo agregado a mano (N-152): producto del catálogo (product_id) o texto libre (free_text con free_text_unit), nunca ambos; cantidad a comprar; tienda y presentación opcionales (ausentes = las que recomienda S5). origin = manual lo pone la API. Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
+      x-tabla: "shopping_list_item"
+      properties:
+        product_id:
+          type: "integer"
+          description: "Producto del catálogo"
+        free_text:
+          type: "string"
+          description: "Artículo escrito a mano que no está en el catálogo"
+        free_text_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad de la cantidad de un artículo en texto libre (un producto usa su product.base_unit)"
+        presentation_id:
+          type: "integer"
+          description: "Presentación elegida para comprar. NULL = la que recomienda S5"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad a comprar que fijó una persona (N-152, N-153), en milésimas de la unidad base. NULL en calculated = comprar la necesidad"
+        store_id:
+          type: "integer"
+          description: "Tienda o mercado elegido (N-153, N-165). NULL = el que recomienda S5"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "quantity_milli"
+    ShoppingListItemUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de un artículo: marcar o desmarcar comprado (is_bought, N-151; bought_at lo pone o lo quita la API) y cambiar tienda, presentación o cantidad (N-153). null en store_id, presentation_id o quantity_milli vuelve a lo que recomienda o calcula el sistema (en un artículo manual la cantidad no se puede borrar). Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
+      x-tabla: "shopping_list_item"
+      properties:
+        presentation_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Presentación elegida para comprar. NULL = la que recomienda S5 · null borra el valor"
+        quantity_milli:
+          anyOf:
+            - $ref: "#/components/schemas/Milli"
+            - type: "null"
+          description: "Cantidad a comprar que fijó una persona (N-152, N-153), en milésimas de la unidad base. NULL en calculated = comprar la necesidad · null borra el valor"
+        store_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Tienda o mercado elegido (N-153, N-165). NULL = el que recomienda S5 · null borra el valor"
+        is_bought:
+          type: "boolean"
+          description: "1 = comprado (N-151). No crea gasto ni precio hasta confirmar el ticket"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    ShoppingListStoreAssignment:
+      type: "object"
+      description: "«Usar esta tienda» (N-165). Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
+      properties:
+        store_id:
+          type: "integer"
+          minimum: 1
+          description: "Tienda o mercado elegido en la comparativa (shopping_list_item.store_id)."
+          x-columna: "shopping_list_item.store_id"
+      required:
+        - "store_id"
+      additionalProperties: false
+    ShoppingListStoreAssignmentResult:
+      type: "object"
+      description: "Resultado de «Usar esta tienda»."
+      properties:
+        assigned_count:
+          type: "integer"
+          description: "Artículos que quedaron con esa tienda (tienen precio en ella)."
+        without_price_count:
+          type: "integer"
+          description: "Artículos sin precio en esa tienda; conservan su tienda."
+      required:
+        - "assigned_count"
+        - "without_price_count"
+      x-calculado: true
+    Basket:
+      type: "object"
+      description: "Canasta disponible para comparar (N-160)."
+      properties:
+        basket:
+          type: "string"
+          enum:
+            - "shopping_list"
+            - "expense"
+          description: "Lista vigente o compra registrada."
+        expense_id:
+          type: "integer"
+          description: "Gasto con renglones."
+        expense_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha."
+        store_id:
+          type: "integer"
+          description: "Tienda de la compra."
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total."
+        item_count:
+          type: "integer"
+          description: "Artículos."
+      required:
+        - "basket"
+        - "item_count"
+      x-calculado: true
+    BasketComparison:
+      type: "object"
+      description: "Comparativa de canasta (N-161 a N-164, motor S5). Sam's Club se compara como si tuvieran membresía. Canon semilla 10-oct-2026: Bodega Aurrera 309450 contra Walmart 323300 (+13850); idénticos 277350 contra 287400 (+10050); 33 idénticos, 3 sustitutos; Bodega gana 22, empates 8, Walmart 3."
+      properties:
+        basket:
+          type: "string"
+          enum:
+            - "shopping_list"
+            - "expense"
+          description: "Canasta comparada."
+        expense_id:
+          type: "integer"
+          description: "Compra comparada."
+        stores:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por tienda."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Tienda."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total."
+              identical_count:
+                type: "integer"
+                description: "Artículos idénticos."
+              identical_total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total de idénticos."
+              substitute_count:
+                type: "integer"
+                description: "Sustitutos."
+              missing_count:
+                type: "integer"
+                description: "Sin precio."
+              stale_count:
+                type: "integer"
+                description: "Precios viejos."
+              difference_vs_cheapest_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Diferencia contra la más barata."
+              assumes_membership:
+                type: "boolean"
+                description: "Comparada como si tuvieran membresía."
+            required:
+              - "store_id"
+              - "total_cents"
+              - "identical_count"
+              - "identical_total_cents"
+              - "substitute_count"
+              - "missing_count"
+              - "stale_count"
+              - "difference_vs_cheapest_cents"
+              - "assumes_membership"
+            x-calculado: true
+          description: "Orden por total ascendente."
+        items:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por artículo."
+            properties:
+              product_id:
+                type: "integer"
+                description: "Producto."
+              quantity_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Cantidad."
+              prices:
+                type: "array"
+                items:
+                  type: "object"
+                  description: "Precio de un artículo en una tienda."
+                  properties:
+                    store_id:
+                      type: "integer"
+                      description: "Tienda."
+                    presentation_id:
+                      type: "integer"
+                      description: "Presentación."
+                    price_cents:
+                      $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                      description: "Precio."
+                    base_unit_price_cents:
+                      $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                      description: "Precio por 1 kg, 1 l o 1 pieza según la unidad base, ROUND_HALF_UP (K7)."
+                    observed_date:
+                      $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                      description: "Fecha."
+                    source:
+                      type: "string"
+                      enum:
+                        - "ticket_manual"
+                        - "ticket_ocr"
+                        - "site_assisted"
+                        - "profeco"
+                        - "manual"
+                      description: "Fuente."
+                    is_stale:
+                      type: "boolean"
+                      description: "Viejo."
+                  required:
+                    - "store_id"
+                    - "presentation_id"
+                    - "price_cents"
+                    - "base_unit_price_cents"
+                    - "observed_date"
+                    - "source"
+                    - "is_stale"
+                  x-calculado: true
+                description: "Precio en cada tienda."
+              winner_store_id:
+                type: "integer"
+                description: "Tienda ganadora; ausente si empate."
+              difference_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Diferencia entre la más cara y la más barata."
+              is_substitute:
+                type: "boolean"
+                description: "Presentación distinta comparada por unidad base."
+              substitute_note:
+                type: "string"
+                description: "Nota del sustituto."
+            required:
+              - "product_id"
+              - "quantity_milli"
+              - "prices"
+              - "is_substitute"
+            x-calculado: true
+          description: "Orden por diferencia descendente."
+        winners:
+          type: "array"
+          items:
+            type: "object"
+            description: "Ganadores."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Tienda."
+              wins:
+                type: "integer"
+                description: "Artículos en que gana."
+            required:
+              - "store_id"
+              - "wins"
+            x-calculado: true
+          description: "Por tienda."
+        ties:
+          type: "integer"
+          description: "Empates."
+        membership:
+          type: "object"
+          description: "Membresía Sam's (N-164, motor S5). Punto de equilibrio = compras al año que cubren la membresía (K7)."
+          properties:
+            store_id:
+              type: "integer"
+              description: "Tienda con membresía."
+            basket_savings_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Ahorro de la canasta contra la mejor tienda sin membresía."
+            annual_savings_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Ahorro anual estimado."
+            annual_fee_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Costo anual (store.membership_annual_fee_cents); ausente si no se ha capturado."
+            break_even_purchases:
+              type: "integer"
+              description: "Compras al año para cubrir la membresía."
+            verdict:
+              type: "string"
+              enum:
+                - "worth_it"
+                - "not_worth_it"
+                - "missing_fee"
+              description: "Veredicto."
+          required:
+            - "store_id"
+            - "basket_savings_cents"
+            - "verdict"
+          x-calculado: true
+      required:
+        - "basket"
+        - "stores"
+        - "items"
+        - "winners"
+        - "ties"
+      x-calculado: true
+    Store:
+      type: "object"
+      description: "Tienda (tabla `store`). Cadena (Walmart, Bodega Aurrera, Sam's Club), sucursal de una cadena, o mercado o tianguis con su día de visita. La membresía y el permiso de lectura asistida viven en la cadena. Campos ausentes = sin valor (NULL)."
+      x-tabla: "store"
+      required:
+        - "id"
+        - "kind"
+        - "name"
+        - "assisted_reading_enabled"
+        - "requires_membership"
+        - "has_membership"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "chain"
+            - "branch"
+            - "market"
+          description: "chain = cadena, branch = sucursal de una cadena, market = mercado o tianguis"
+        parent_id:
+          type: "integer"
+          description: "Cadena de la sucursal. Solo en branch"
+        name:
+          type: "string"
+          description: "Nombre: cadena (Bodega Aurrera), sucursal (Vallejo) o mercado"
+        profeco_name:
+          type: "string"
+          description: "Nombre en PROFECO para cruzar precios: cadena_comercial en cadenas, nombre_comercial en sucursales"
+        website_url:
+          type: "string"
+          description: "Sitio de la cadena. Solo en chain"
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Lectura asistida del sitio de la cadena. Queda en 0 hasta que docs/estado/S5-terminos.md tenga veredicto para ese sitio"
+        address:
+          type: "string"
+          description: "Dirección (sucursal o mercado)"
+        municipality:
+          type: "string"
+          description: "Municipio o alcaldía, para cruzar con PROFECO"
+        state:
+          type: "string"
+          description: "Entidad federativa"
+        visit_weekday:
+          type: "integer"
+          description: "Día de visita del mercado: 1 = lunes … 7 = domingo (ISO 8601)"
+        requires_membership:
+          type: "boolean"
+          description: "1 = la cadena exige membresía (Sam's Club)"
+        has_membership:
+          type: "boolean"
+          description: "1 = la casa ya tiene la membresía (hoy Sam's = 0 y se evalúa)"
+        membership_annual_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo anual de la membresía en centavos (lo captura Axel en Ajustes)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        product_group_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Qué se compra ahí (store_product_group)."
+          x-calculado: true
+        assisted_reading_verdict:
+          type: "string"
+          enum:
+            - "allowed"
+            - "denied"
+            - "missing"
+          description: "Veredicto de términos del sitio en docs/estado/S5-terminos.md."
+          x-calculado: true
+    ProductGroup:
+      type: "object"
+      description: "Grupo de producto (tabla `product_group`). Grupo de compra con su vertical: mercado o cadena. Permite repartir la lista de compras por mercado y por día de visita. Campos ausentes = sin valor (NULL)."
+      x-tabla: "product_group"
+      required:
+        - "id"
+        - "name"
+        - "purchase_channel"
+        - "sort_order"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        name:
+          type: "string"
+          description: "Grupo (Verduras, Carne no especializada, Abarrotes)"
+        purchase_channel:
+          type: "string"
+          enum:
+            - "market"
+            - "chain"
+          description: "Vertical: market = mercado o tianguis, chain = Walmart, Bodega Aurrera o Sam's Club"
+        sort_order:
+          type: "integer"
+          description: "Orden en la lista de compras"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    Product:
+      type: "object"
+      description: "Producto (tabla `product`). Producto genérico (ingrediente): Aceite de oliva, Arroz grano largo. Todas sus presentaciones son sustitutas entre sí. Define la unidad base de equivalencia. Campos ausentes = sin valor (NULL)."
+      x-tabla: "product"
+      required:
+        - "id"
+        - "name"
+        - "base_unit"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        name:
+          type: "string"
+          description: "Nombre genérico en español"
+        product_group_id:
+          type: "integer"
+          description: "Grupo y vertical de compra"
+        base_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad base para equivalencias: g, ml o pieza"
+        grams_per_unit_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Gramos por unidad base ×1000 para calcular kcal: pieza = peso promedio, ml = densidad. NULL si base_unit = g"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        best_price:
+          $ref: "#/components/schemas/PriceAt"
+          description: "Mejor precio fresco por unidad base y su tienda."
+          x-calculado: true
+        last_observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último precio."
+          x-calculado: true
+        freshness:
+          type: "string"
+          enum:
+            - "fresh"
+            - "stale"
+            - "no_price"
+          description: "Frescura del último precio (viejo a los 30 días o más, K22)."
+          x-calculado: true
+    PriceAt:
+      type: "object"
+      description: "Precio de un artículo en una tienda."
+      properties:
+        store_id:
+          type: "integer"
+          description: "Tienda."
+        presentation_id:
+          type: "integer"
+          description: "Presentación."
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio."
+        base_unit_price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio por 1 kg, 1 l o 1 pieza según la unidad base, ROUND_HALF_UP (K7)."
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha."
+        source:
+          type: "string"
+          enum:
+            - "ticket_manual"
+            - "ticket_ocr"
+            - "site_assisted"
+            - "profeco"
+            - "manual"
+          description: "Fuente."
+        is_stale:
+          type: "boolean"
+          description: "Viejo."
+      required:
+        - "store_id"
+        - "presentation_id"
+        - "price_cents"
+        - "base_unit_price_cents"
+        - "observed_date"
+        - "source"
+        - "is_stale"
+      x-calculado: true
+    Presentation:
+      type: "object"
+      description: "Presentación (tabla `presentation`). Presentación comprable de un producto (marca y contenido), con su factor de equivalencia a la unidad base. Campos ausentes = sin valor (NULL)."
+      x-tabla: "presentation"
+      required:
+        - "id"
+        - "product_id"
+        - "name"
+        - "size_milli"
+        - "is_bulk"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto genérico"
+        name:
+          type: "string"
+          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
+        brand:
+          type: "string"
+          description: "Marca"
+        size_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
+        is_bulk:
+          type: "boolean"
+          description: "1 = a granel: se vende por kilo o por unidad base"
+        barcode:
+          type: "string"
+          description: "Código de barras EAN o UPC (cruce con Open Food Facts)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    PresentationCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de presentación (tabla `presentation`)."
+      x-tabla: "presentation"
+      properties:
+        name:
+          type: "string"
+          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
+        brand:
+          type: "string"
+          description: "Marca"
+        size_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
+        is_bulk:
+          type: "boolean"
+          description: "1 = a granel: se vende por kilo o por unidad base"
+        barcode:
+          type: "string"
+          description: "Código de barras EAN o UPC (cruce con Open Food Facts)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "name"
+        - "size_milli"
+    NutritionFact:
+      type: "object"
+      description: "Dato nutricional (tabla `nutrition_fact`). Kilocalorías por 100 g de un producto (o de una presentación específica) con fuente citada. Macronutrientes previstos, se llenan después. Campos ausentes = sin valor (NULL)."
+      x-tabla: "nutrition_fact"
+      required:
+        - "id"
+        - "product_id"
+        - "kcal_milli_per_100g"
+        - "source"
+        - "is_preferred"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto"
+        presentation_id:
+          type: "integer"
+          description: "Presentación específica (etiqueta, Open Food Facts). NULL = valor genérico del producto"
+        kcal_milli_per_100g:
+          type: "integer"
+          description: "Milésimas de kilocaloría por 100 g (884 kcal = 884000)"
+        protein_mg_per_100g:
+          type: "integer"
+          description: "Proteína en mg por 100 g (previsto)"
+        fat_mg_per_100g:
+          type: "integer"
+          description: "Grasa en mg por 100 g (previsto)"
+        carbs_mg_per_100g:
+          type: "integer"
+          description: "Carbohidratos en mg por 100 g (previsto)"
+        fiber_mg_per_100g:
+          type: "integer"
+          description: "Fibra en mg por 100 g (previsto)"
+        source:
+          type: "string"
+          enum:
+            - "usda_fdc"
+            - "open_food_facts"
+            - "mx_table"
+            - "store_label"
+            - "manual"
+          description: "Fuente: USDA FoodData Central, Open Food Facts, tabla mexicana citada, etiqueta de tienda o captura manual"
+        source_ref:
+          type: "string"
+          description: "Cita: fdc_id, código de barras, tabla y página o URL de la etiqueta"
+        source_license:
+          type: "string"
+          description: "Licencia de la fuente (CC0, ODbL)"
+        is_preferred:
+          type: "boolean"
+          description: "1 = valor que usan los cálculos"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    ProductDetail:
+      allOf:
+        - $ref: "#/components/schemas/Product"
+        - type: "object"
+          description: "Producto con detalle (N-171, N-173)."
+          properties:
+            presentations:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Presentation"
+              description: "Presentaciones."
+            nutrition_facts:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/NutritionFact"
+              description: "Datos nutricionales con fuente."
+          required:
+            - "presentations"
+            - "nutrition_facts"
+          x-calculado: true
+    ProductCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de producto (tabla `product`)."
+      x-tabla: "product"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre genérico en español"
+        product_group_id:
+          type: "integer"
+          description: "Grupo y vertical de compra"
+        base_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad base para equivalencias: g, ml o pieza"
+        grams_per_unit_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Gramos por unidad base ×1000 para calcular kcal: pieza = peso promedio, ml = densidad. NULL si base_unit = g"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        presentations:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PresentationCreate"
+          description: "Presentaciones iniciales."
+      required:
+        - "name"
+        - "base_unit"
+    ProductUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de producto (tabla `product`)."
+      x-tabla: "product"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre genérico en español"
+        product_group_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Grupo y vertical de compra · null borra el valor"
+        base_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad base para equivalencias: g, ml o pieza"
+        grams_per_unit_milli:
+          anyOf:
+            - $ref: "#/components/schemas/Milli"
+            - type: "null"
+          description: "Gramos por unidad base ×1000 para calcular kcal: pieza = peso promedio, ml = densidad. NULL si base_unit = g · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    BasketPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Basket"
+      description: "Página de Basket con la envoltura única (Page)."
+    StorePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Store"
+      description: "Página de Store con la envoltura única (Page)."
+    ProductGroupPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/ProductGroup"
+      description: "Página de ProductGroup con la envoltura única (Page)."
+    ProductPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Product"
+      description: "Página de Product con la envoltura única (Page)."

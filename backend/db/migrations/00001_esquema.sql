@@ -1,6 +1,7 @@
 -- =====================================================================
 -- Finanzas Hogar · Migración 00001 · Esquema base (S1 «Dominio y modelo de datos», WF-0)
 -- Contrato: docs/contratos/diccionario-datos.md y docs/contratos/reglas-negocio.md
+-- Versión del esquema: 1.1. La migración 00002_puerta1.sql lo lleva a 1.2 (puerta 1, decisiones §K).
 -- Convenciones (detalle en reglas-negocio.md, sección «Convenciones»):
 --   * Dinero en enteros de centavos MXN con sufijo _cents. Sin REAL para dinero.
 --   * Fechas de negocio TEXT ISO AAAA-MM-DD (calendario America/Mexico_City), sufijo _date.
@@ -35,7 +36,7 @@ CREATE TABLE person (
     display_name TEXT NOT NULL CHECK (length(trim(display_name)) > 0), -- Nombre que se muestra en pantallas y reportes | no vacío
     participation TEXT NOT NULL CHECK (participation IN ('holder', 'co_holder', 'external')), -- Papel: holder = titular (Axel), co_holder = co-titular con los mismos permisos (Ximena), external = participante externa sin cuenta (Karen) | enumerado, un solo holder
     pays_share_directly INTEGER NOT NULL DEFAULT 0 CHECK (pays_share_directly IN (0, 1)), -- 1 = paga su parte directo al acreedor (Karen con Kueski). Su parte es informativa para el flujo de efectivo del titular y repone la línea cuando ella paga | booleano
-    fortnight_payment_cap_cents INTEGER CHECK (fortnight_payment_cap_cents >= 0), -- Tope de pago por quincena que el optimizador usa como objetivo, nunca como restricción dura. El valor lo da Axel en Ajustes: el oráculo no trae un tope (374.93 de `karen_fija.pago` es la parte de Karen por pago, no un tope) | centavos, NULL = sin tope
+    fortnight_payment_cap_cents INTEGER CHECK (fortnight_payment_cap_cents >= 0), -- Tope de pago por quincena de la persona, opcional. El comparador lo usa como objetivo (pago parejo y bajo el tope), nunca como restricción dura. No hay un tope fijo: Axel lo captura por persona en Ajustes «Personas y reparto» cuando quiera (K13) | centavos, NULL = sin tope
     is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
     notes TEXT,
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
@@ -157,7 +158,7 @@ CREATE INDEX ix_audit_log_user ON audit_log (user_account_id, occurred_at);
 -- @table idempotency_key
 -- @title Clave de idempotencia
 -- @entity (complementaria) encabezado Idempotency-Key de los POST de captura (C1 §1 punto 8): una captura repetida no se duplica
--- @desc Clave que manda el cliente en cada POST de captura. Si la misma cuenta repite la clave con el mismo cuerpo, la API devuelve la respuesta guardada; con otro cuerpo responde 409 idempotency_key_reused. La retención (24 h propuestas) es PROVISIONAL, bloqueo C1-parametros-tecnicos; la purga la hace un job.
+-- @desc Clave que manda el cliente en cada POST de captura. Si la misma cuenta repite la clave con el mismo cuerpo, la API devuelve la respuesta guardada; con otro cuerpo responde 409 idempotency_key_reused. La retención es de 24 h (K6, app_setting idempotency.retention_hours de la migración 00002); la purga la hace un job. Las capturas de la cola del teléfono guardan además su clave en expense y weight_entry, sin purga (K9).
 -- @used S6 (API: los POST de captura de C1, entre ellos «Registrar gasto» del flujo F-1 de U1) y jobs de S6 (purga por antigüedad).
 CREATE TABLE idempotency_key (
     id INTEGER PRIMARY KEY,
@@ -172,7 +173,7 @@ CREATE TABLE idempotency_key (
     updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
     UNIQUE (user_account_id, idempotency_key) -- @rule Una clave se usa una sola vez por cuenta.
 ) STRICT;
--- @idx Purga de claves por antigüedad (retención PROVISIONAL).
+-- @idx Purga de claves por antigüedad (retención de 24 h, K6).
 CREATE INDEX ix_idempotency_key_created ON idempotency_key (created_at);
 
 -- ---------------------------------------------------------------------
@@ -182,7 +183,7 @@ CREATE INDEX ix_idempotency_key_created ON idempotency_key (created_at);
 -- @table period
 -- @title Periodo
 -- @entity periodo
--- @desc Mes calendario (periodo base del presupuesto) y sus dos quincenas (subperiodos). Los días de pago (15, y 30 o último día) son FIRMES (oráculo). Los rangos de la quincena (1 a 15 y 16 a fin de mes) son PROVISIONALES: bloqueo U1-periodos-semana-quincena, opción C. Ambos se validan en la propia tabla.
+-- @desc Mes calendario (periodo base del presupuesto) y sus dos quincenas (subperiodos). Los días de pago (15, y 30 o último día) son FIRMES (oráculo). Los rangos de la quincena (1 a 15 y 16 a fin de mes) son FIRMES (K8). Ambos se validan en la propia tabla.
 -- @used S2 (presupuesto mensual, flujo por quincena, proyección). Pantallas Presupuesto e Inicio. Filtro «periodo» de C1.
 CREATE TABLE period (
     id INTEGER PRIMARY KEY,
@@ -190,13 +191,13 @@ CREATE TABLE period (
     parent_id INTEGER REFERENCES period (id) ON DELETE CASCADE, -- Mes al que pertenece la quincena. NULL en meses
     year INTEGER NOT NULL CHECK (year BETWEEN 2000 AND 2100), -- Año | 2000 a 2100
     month INTEGER NOT NULL CHECK (month BETWEEN 1 AND 12), -- Mes | 1 a 12
-    half INTEGER CHECK (half IN (1, 2)), -- Quincena 1 (días 1 a 15) o 2 (día 16 a fin de mes). NULL en meses | 1 o 2. Rangos PROVISIONALES (bloqueo U1-periodos-semana-quincena)
+    half INTEGER CHECK (half IN (1, 2)), -- Quincena 1 (días 1 a 15) o 2 (día 16 a fin de mes). NULL en meses | 1 o 2. Rangos FIRMES (K8)
     start_date TEXT NOT NULL CHECK (date(start_date) IS start_date), -- Primer día (ISO) | fecha válida
     end_date TEXT NOT NULL CHECK (date(end_date) IS end_date), -- Último día, inclusive (ISO) | fecha válida
     pay_date TEXT CHECK (date(pay_date) IS pay_date), -- Día de pago de la quincena: 15, o 30 o el último día si el mes es más corto (28-feb-2027). NULL en meses | fecha válida
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
     updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
-    CHECK ( -- @rule Mes: del día 1 al último. Quincena 1: del 1 al 15, paga el 15. Quincena 2: del 16 al último, paga el 30 o el último día si es menor (febrero). Rangos de quincena PROVISIONALES (U1-periodos-semana-quincena).
+    CHECK ( -- @rule Mes: del día 1 al último. Quincena 1: del 1 al 15, paga el 15. Quincena 2: del 16 al último, paga el 30 o el último día si es menor (febrero). Rangos de quincena FIRMES (K8).
         (kind = 'month' AND half IS NULL AND parent_id IS NULL AND pay_date IS NULL
             AND start_date = printf('%04d-%02d-01', year, month)
             AND end_date = date(start_date, '+1 month', '-1 day'))
@@ -295,7 +296,7 @@ CREATE TABLE budget (
     category_id INTEGER REFERENCES category (id) ON DELETE RESTRICT, -- Categoría. NULL = presupuesto total del mes
     amount_cents INTEGER NOT NULL CHECK (amount_cents >= 0), -- Monto planeado por mes en centavos | centavos
     valid_from_date TEXT NOT NULL CHECK (date(valid_from_date) IS valid_from_date AND strftime('%d', valid_from_date) = '01'), -- Primer día del primer mes en que rige | fecha válida, día 1 del mes
-    valid_to_date TEXT CHECK (date(valid_to_date) IS valid_to_date AND date(valid_to_date, '+1 day') = date(valid_to_date, '+1 day', 'start of month')), -- Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Qué vigencia pone un cambio hecho en Ajustes (solo ese mes o los siguientes) es PROVISIONAL: bloqueo S1-huecos-negocio | fecha válida, último día de un mes
+    valid_to_date TEXT CHECK (date(valid_to_date) IS valid_to_date AND date(valid_to_date, '+1 day') = date(valid_to_date, '+1 day', 'start of month')), -- Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2): «de este mes en adelante» (preseleccionada) deja NULL; «solo este mes» pone el último día de ese mes y el monto anterior sigue desde el mes siguiente | fecha válida, último día de un mes
     notes TEXT,
     created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
     updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
@@ -1102,12 +1103,12 @@ CREATE INDEX ix_inventory_movement_meal_plan ON inventory_movement (meal_plan_en
 
 -- @table shopping_list
 -- @title Lista de compras
--- @entity (complementaria) lista de compras de la semana con marcas de comprado y artículos a mano (U1 N-150 a N-153 y N-165). PROVISIONAL: opción A del bloqueo C1-lista-compras (marcas compartidas entre los dos teléfonos) hasta la puerta 1
--- @desc Lista de compras de una semana del plan de comidas. Guarda lo que no se puede calcular: los artículos agregados a mano, la tienda o cantidad elegida, las marcas de comprado y cuándo se generó. Lo calculado (necesidad del plan − existencia + reposición, precios y frescura) lo dan S4 y S5. PROVISIONAL: bloqueo C1-lista-compras, opción A.
+-- @entity (complementaria) lista de compras de la semana con marcas de comprado y artículos a mano (U1 N-150 a N-153 y N-165), compartida en el servidor entre los dos teléfonos (K1)
+-- @desc Lista de compras de una semana del plan de comidas. Guarda lo que no se puede calcular: los artículos agregados a mano, la tienda o cantidad elegida, las marcas de comprado y cuándo se generó. Lo calculado (necesidad del plan − existencia + reposición, precios y frescura) lo dan S4 y S5. Se comparte en el servidor entre los dos teléfonos (K1).
 -- @used Pantalla Compras y tiendas › Lista de compras (N-150 a N-153) y comparativa (N-165 «Usar esta tienda»). Comidas (N-127 «Generar lista de compras»). Gastos (N-073 «Terminar compra»). S4 (lista neteada), S5 (tienda recomendada).
 CREATE TABLE shopping_list (
     id INTEGER PRIMARY KEY,
-    start_date TEXT NOT NULL UNIQUE CHECK (date(start_date) IS start_date), -- Primer día de la semana del plan. Qué día empieza la semana lo fija U1 (bloqueo U1-periodos-semana-quincena) | fecha válida, una lista por semana
+    start_date TEXT NOT NULL UNIQUE CHECK (date(start_date) IS start_date), -- Lunes que abre la semana del plan (K8: semana de lunes a domingo) | fecha válida y en lunes (lo exigen trg_shopping_list_monday_ins y trg_shopping_list_monday_upd, de la 00002), una lista por semana
     end_date TEXT NOT NULL CHECK (date(end_date) IS end_date), -- Último día de la semana, inclusive | fecha válida, start_date + 6 días
     generated_at TEXT, -- Última vez que S4 la generó o actualizó desde el plan (N-127), UTC. NULL = todavía no se genera
     notes TEXT,
@@ -1118,8 +1119,8 @@ CREATE TABLE shopping_list (
 
 -- @table shopping_list_item
 -- @title Artículo de la lista de compras
--- @entity (complementaria) artículos de la lista de compras, calculados por S4 o agregados a mano, con tienda, cantidad y marca de comprado. PROVISIONAL: opción A del bloqueo C1-lista-compras hasta la puerta 1
--- @desc Un artículo de la lista: un producto que calculó S4 al generar la lista o un artículo agregado a mano (producto del catálogo o texto libre). Guarda la tienda o mercado elegido, la cantidad elegida y si ya se compró. PROVISIONAL: bloqueo C1-lista-compras, opción A.
+-- @entity (complementaria) artículos de la lista de compras, calculados por S4 o agregados a mano, con tienda, cantidad y marca de comprado, compartidos en el servidor (K1)
+-- @desc Un artículo de la lista: un producto que calculó S4 al generar la lista o un artículo agregado a mano (producto del catálogo o texto libre). Guarda la tienda o mercado elegido, la cantidad elegida y si ya se compró. Se comparte en el servidor entre los dos teléfonos (K1).
 -- @used Pantalla Compras y tiendas › Lista de compras (marcar comprado N-151, agregar artículo N-152, cambiar tienda o cantidad N-153) y comparativa (N-165). Gastos (prellenado N-073). S4 (lista neteada), S5 (mejor tienda y canasta, N-024).
 CREATE TABLE shopping_list_item (
     id INTEGER PRIMARY KEY,
@@ -1165,7 +1166,7 @@ CREATE TABLE health_profile (
     height_mm INTEGER CHECK (height_mm BETWEEN 500 AND 2500), -- Estatura en milímetros (1.75 m = 1750) | 500 a 2500
     birth_date TEXT CHECK (date(birth_date) IS birth_date), -- Fecha de nacimiento. La edad se calcula | fecha válida
     sex TEXT CHECK (sex IN ('female', 'male')), -- Sexo para fórmulas de requerimiento | enumerado
-    activity_level TEXT CHECK (activity_level IN ('sedentary', 'light', 'moderate', 'active', 'very_active')), -- PROVISIONAL: escala de actividad de 5 niveles, pendiente de la fórmula de meta kcal (bloqueo S1-meta-kcal) | enumerado PROVISIONAL
+    activity_level TEXT CHECK (activity_level IN ('sedentary', 'light', 'moderate', 'active', 'very_active')), -- Nivel de actividad de la escala de 5 niveles que multiplica a Mifflin-St Jeor: sedentary 1.2, light 1.375, moderate 1.55, active 1.725, very_active 1.9 (K23) | enumerado
     daily_kcal_target INTEGER CHECK (daily_kcal_target BETWEEN 500 AND 10000), -- Meta de kilocalorías por día | 500 a 10000
     dietary_restrictions TEXT, -- Restricciones alimentarias (el campo existe y hoy va vacío)
     notes TEXT,

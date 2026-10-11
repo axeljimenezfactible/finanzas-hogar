@@ -1,0 +1,1214 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «ajustes-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto ajustes-b"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Ajustes"
+    description: "Las 14 secciones de Ajustes, sesiones y sistema."
+paths:
+  /api/v1/imports/planned-items/preview:
+    post:
+      operationId: "previewPlannedItemsImport"
+      tags:
+        - "Ajustes"
+      summary: "Vista previa de gastos_fijos_ingresos.csv"
+      description: "No escribe nada."
+      x-necesidades:
+        - "N-304"
+      x-tablas:
+        - "category"
+        - "cost_share_rule"
+        - "credit"
+        - "person"
+        - "planned_item"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              required:
+                - "file"
+              properties:
+                file:
+                  type: "string"
+                  contentMediaType: "application/octet-stream"
+                  description: "Archivo gastos_fijos_ingresos.csv (plantilla de plan.md §8.2). Tipos admitidos: text/csv."
+            encoding:
+              file:
+                contentType: "text/csv"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportPreview"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "413":
+          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
+        "415":
+          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/imports/planned-items:
+    post:
+      operationId: "importPlannedItems"
+      tags:
+        - "Ajustes"
+      summary: "Importar gastos_fijos_ingresos.csv"
+      description: "Mismo archivo que la vista previa; si algún renglón tiene error no se importa nada (422)."
+      x-necesidades:
+        - "N-304"
+      x-tablas:
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "credit"
+        - "idempotency_key"
+        - "person"
+        - "planned_item"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              required:
+                - "file"
+              properties:
+                file:
+                  type: "string"
+                  contentMediaType: "application/octet-stream"
+                  description: "Archivo gastos_fijos_ingresos.csv (plantilla de plan.md §8.2). Tipos admitidos: text/csv."
+            encoding:
+              file:
+                contentType: "text/csv"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "413":
+          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
+        "415":
+          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/savings-goals:
+    post:
+      operationId: "createSavingsGoal"
+      tags:
+        - "Ajustes"
+      summary: "Nueva meta o fondo"
+      description: "Nueva meta o fondo."
+      x-necesidades:
+        - "N-313"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "savings_goal"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavingsGoalCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsGoal"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/savings-goals/{savings_goal_id}:
+    patch:
+      operationId: "updateSavingsGoal"
+      tags:
+        - "Ajustes"
+      summary: "Editar o desactivar meta"
+      description: "Editar o desactivar meta."
+      x-necesidades:
+        - "N-313"
+      x-tablas:
+        - "audit_log"
+        - "savings_goal"
+      parameters:
+        - name: "savings_goal_id"
+          in: "path"
+          required: true
+          description: "Id del registro (savings_goal_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavingsGoalUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SavingsGoal"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/categories:
+    get:
+      operationId: "listCategories"
+      tags:
+        - "Ajustes"
+      summary: "Categorías"
+      description: "Orden por defecto: sort_order (el de P-26.04). N-050: `sort=-recent_usage_count,sort_order&limit=6` (las 6 con más gastos en 90 días; empates y faltantes por sort_order)."
+      x-necesidades:
+        - "N-050"
+        - "N-051"
+        - "N-281"
+      x-tablas:
+        - "category"
+        - "cost_share_rule"
+        - "expense"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+        - name: "status"
+          in: "query"
+          required: false
+          description: "active (por defecto) o archived."
+          schema:
+            type: "string"
+            enum:
+              - "active"
+              - "archived"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createCategory"
+      tags:
+        - "Ajustes"
+      summary: "Nueva categoría"
+      description: "Nueva categoría."
+      x-necesidades:
+        - "N-282"
+      x-tablas:
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "idempotency_key"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/categories/{category_id}:
+    patch:
+      operationId: "updateCategory"
+      tags:
+        - "Ajustes"
+      summary: "Editar o archivar categoría"
+      description: "Una categoría con gastos no se borra: se archiva (is_active = false). No hay operación de borrado."
+      x-necesidades:
+        - "N-282"
+      x-tablas:
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+      parameters:
+        - name: "category_id"
+          in: "path"
+          required: true
+          description: "Id del registro (category_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/categories/order:
+    put:
+      operationId: "reorderCategories"
+      tags:
+        - "Ajustes"
+      summary: "Reordenar categorías"
+      description: "Lista completa de ids de categoría en el orden nuevo (sort_order)."
+      x-necesidades:
+        - "N-282"
+      x-tablas:
+        - "audit_log"
+        - "category"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdList"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/persons:
+    get:
+      operationId: "listPersons"
+      tags:
+        - "Ajustes"
+      summary: "Personas"
+      description: "Axel (titular), Ximena (co-titular) y Karen (externa, sin cuenta). Orden: holder, co_holder, external."
+      x-necesidades:
+        - "N-309"
+        - "N-040"
+      x-tablas:
+        - "person"
+        - "user_account"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/persons/{person_id}:
+    patch:
+      operationId: "updatePerson"
+      tags:
+        - "Ajustes"
+      summary: "Editar persona"
+      description: "Nombre visible y tope de pago por quincena, opcional por persona (K13; objetivo del comparador; null lo quita). No se crean personas ni cuentas desde la API."
+      x-necesidades:
+        - "N-310"
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "person"
+      parameters:
+        - name: "person_id"
+          in: "path"
+          required: true
+          description: "Id del registro (person_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PersonUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Person"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/cost-share-rules:
+    get:
+      operationId: "listCostShareRules"
+      tags:
+        - "Ajustes"
+      summary: "Reglas de reparto"
+      description: "Reglas de reparto."
+      x-necesidades:
+        - "N-309"
+        - "N-051"
+        - "N-052"
+        - "N-281"
+      x-tablas:
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "person"
+      parameters:
+        - name: "is_template"
+          in: "query"
+          required: false
+          description: "true (por defecto) = reglas reutilizables (Hogar, Karen, Conjunto 50/50)."
+          schema:
+            type: "boolean"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CostShareRulePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/cost-share-rules/{cost_share_rule_id}:
+    patch:
+      operationId: "updateCostShareRule"
+      tags:
+        - "Ajustes"
+      summary: "Editar reparto por defecto"
+      description: "P. ej. el % del Conjunto (50/50 por defecto, decisión B). No cambia gastos ya guardados (sus partes están congeladas en expense_share)."
+      x-necesidades:
+        - "N-310"
+      x-tablas:
+        - "audit_log"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+      parameters:
+        - name: "cost_share_rule_id"
+          in: "path"
+          required: true
+          description: "Id del registro (cost_share_rule_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CostShareRuleUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CostShareRule"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    BasisPoints:
+      type: "integer"
+      minimum: 0
+      maximum: 10000
+      description: "Porcentaje en puntos base: 10000 = 100 %, 5000 = 50 %."
+      examples:
+        - 5000
+    Person:
+      type: "object"
+      description: "Persona (tabla `person`). Persona que participa en el dinero del hogar: el titular (Axel), la co-titular (Ximena) o una participante externa sin cuenta (Karen). Campos ausentes = sin valor (NULL)."
+      x-tabla: "person"
+      required:
+        - "id"
+        - "code"
+        - "display_name"
+        - "participation"
+        - "pays_share_directly"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        code:
+          type: "string"
+          description: "Clave estable para semilla e importadores (axel, ximena, karen)"
+        display_name:
+          type: "string"
+          description: "Nombre que se muestra en pantallas y reportes"
+        participation:
+          type: "string"
+          enum:
+            - "holder"
+            - "co_holder"
+            - "external"
+          description: "Papel: holder = titular (Axel), co_holder = co-titular con los mismos permisos (Ximena), external = participante externa sin cuenta (Karen)"
+        pays_share_directly:
+          type: "boolean"
+          description: "1 = paga su parte directo al acreedor (Karen con Kueski). Su parte es informativa para el flujo de efectivo del titular y repone la línea cuando ella paga"
+        fortnight_payment_cap_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Tope de pago por quincena de la persona, opcional (K13): no hay tope fijo; Axel lo captura por persona en Ajustes «Personas y reparto» cuando quiera. El comparador lo usa como objetivo (pago parejo y bajo el tope, K17), nunca como restricción dura (K16). Ausente (NULL) = sin tope. El contrato no fija ninguna cifra."
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        has_account:
+          type: "boolean"
+          description: "true si tiene cuenta de usuario (Karen nunca)."
+          x-calculado: true
+    PersonUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de persona (tabla `person`)."
+      x-tabla: "person"
+      properties:
+        display_name:
+          type: "string"
+          description: "Nombre que se muestra en pantallas y reportes"
+        fortnight_payment_cap_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Tope de pago por quincena de la persona, opcional (K13): no hay tope fijo; Axel lo captura por persona en Ajustes «Personas y reparto» cuando quiera. El comparador lo usa como objetivo (pago parejo y bajo el tope, K17), nunca como restricción dura (K16). Ausente (NULL) = sin tope. El contrato no fija ninguna cifra. · null borra el valor"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    CostShareRulePart:
+      type: "object"
+      description: "Parte de una regla de reparto (tabla `cost_share_rule_part`). Parte de una persona dentro de una regla: un porcentaje o un monto fijo. Lo que no se asigna aquí va a la persona del resto. Campos ausentes = sin valor (NULL)."
+      x-tabla: "cost_share_rule_part"
+      required:
+        - "id"
+        - "rule_id"
+        - "person_id"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        rule_id:
+          type: "integer"
+          description: "Regla a la que pertenece"
+        person_id:
+          type: "integer"
+          description: "Persona de la parte"
+        pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje en puntos base: 5000 = 50.00 % (Conjunto 50/50: Karen 5000)"
+        fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto fijo en centavos (parte fija de Karen en despensas futuras: 119150)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    CostShareRule:
+      type: "object"
+      description: "Regla de reparto (tabla `cost_share_rule`). Cómo se divide un monto entre el hogar Axel–Ximena (a nombre del titular) y la participante externa: hogar, Karen o conjunto con su porcentaje. Las partes con porcentaje o monto fijo van en cost_share_rule_part y el resto cae en remainder_person_id. Campos ausentes = sin valor (NULL)."
+      x-tabla: "cost_share_rule"
+      required:
+        - "id"
+        - "name"
+        - "remainder_person_id"
+        - "is_template"
+        - "is_default"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        name:
+          type: "string"
+          description: "Nombre visible (Hogar, Karen, Conjunto 50/50)"
+        remainder_person_id:
+          type: "integer"
+          description: "Persona que recibe el resto del monto y absorbe los centavos de redondeo (en el hogar, el titular)"
+        is_template:
+          type: "boolean"
+          description: "1 = regla reutilizable que se ofrece en capturas. 0 = regla de un solo uso (renglón «mixto» por cantidad)"
+        is_default:
+          type: "boolean"
+          description: "1 = regla que aplica cuando ni el gasto ni su categoría traen regla (Hogar)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePart"
+          description: "Partes de la regla (cost_share_rule_part)."
+          x-calculado: true
+    CostShareRulePartInput:
+      type: "object"
+      description: "Parte de una regla de reparto (entrada)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona (cost_share_rule_part.person_id)."
+        pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje (cost_share_rule_part.pct_bp)."
+        fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto fijo (cost_share_rule_part.fixed_cents)."
+      required:
+        - "person_id"
+      additionalProperties: false
+    CostShareRuleUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de regla de reparto (tabla `cost_share_rule`)."
+      x-tabla: "cost_share_rule"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre visible (Hogar, Karen, Conjunto 50/50)"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+        parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePartInput"
+          description: "Reemplaza las partes de la regla (cost_share_rule_part). El resto y los centavos van a remainder_person_id."
+      minProperties: 1
+    PlannedItemCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de partida planificada (tabla `planned_item`)."
+      x-tabla: "planned_item"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "income"
+            - "fixed_expense"
+            - "upcoming_expense"
+          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
+        second_half_amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales"
+        frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+            - "yearly"
+            - "once"
+          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
+        interval_count:
+          type: "integer"
+          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
+        end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Última fecha posible, inclusive. NULL = sin fin"
+        category_id:
+          type: "integer"
+          description: "Categoría del gasto"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Cómo se pagará cada ocurrencia. NULL = sin definir"
+        credit_id:
+          type: "integer"
+          description: "Crédito con que se planea pagar (despensa con Kueski)"
+        term_count:
+          type: "integer"
+          description: "Plazo planeado en pagos (4 quincenas)"
+        accrual_months:
+          type: "integer"
+          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "kind"
+        - "description"
+        - "amount_cents"
+        - "frequency"
+        - "start_date"
+    ImportPreview:
+      type: "object"
+      description: "Vista previa de la importación de gastos_fijos_ingresos.csv (N-304)."
+      properties:
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Renglón del CSV."
+            properties:
+              line_no:
+                type: "integer"
+                description: "Renglón."
+              planned_item:
+                $ref: "#/components/schemas/PlannedItemCreate"
+                description: "Partida que se crearía."
+              errors:
+                type: "array"
+                items:
+                  $ref: "componentes-comunes.yaml#/components/schemas/FieldError"
+                description: "Errores del renglón."
+            required:
+              - "line_no"
+              - "errors"
+            x-calculado: true
+          description: "Uno por renglón."
+        valid_count:
+          type: "integer"
+          description: "Renglones válidos."
+        error_count:
+          type: "integer"
+          description: "Renglones con error."
+      required:
+        - "rows"
+        - "valid_count"
+        - "error_count"
+      x-calculado: true
+    ImportResult:
+      type: "object"
+      description: "Resultado de la importación."
+      properties:
+        created_count:
+          type: "integer"
+          description: "Partidas creadas."
+        planned_item_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Ids creados."
+      required:
+        - "created_count"
+        - "planned_item_ids"
+      x-calculado: true
+    SavingsGoal:
+      type: "object"
+      description: "Meta de ahorro (tabla `savings_goal`). Fondo de ahorro o meta con monto y fecha, con su aportación mensual planificada. El avance se calcula con sus movimientos. Campos ausentes = sin valor (NULL)."
+      x-tabla: "savings_goal"
+      required:
+        - "id"
+        - "name"
+        - "kind"
+        - "start_date"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        name:
+          type: "string"
+          description: "Nombre (Fondo de emergencia)"
+        kind:
+          type: "string"
+          enum:
+            - "fund"
+            - "goal"
+          description: "fund = fondo de ahorro, goal = meta con monto y fecha"
+        target_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto objetivo en centavos"
+        target_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha objetivo"
+        planned_monthly_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Aportación mensual planificada en centavos"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio del fondo o meta"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        saved_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Ahorrado = Σ aportaciones − Σ retiros."
+          x-calculado: true
+        progress_pct:
+          type: "integer"
+          description: "saved ÷ target × 100, entero ROUND_HALF_UP (solo metas)."
+          x-calculado: true
+        required_monthly_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Aportación mensual necesaria para llegar a target_date (motor S2)."
+          x-calculado: true
+        status:
+          type: "string"
+          enum:
+            - "on_track"
+            - "behind"
+            - "achieved"
+          description: "en ruta, atrasada o cumplida (motor S2)."
+          x-calculado: true
+    SavingsGoalCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de meta de ahorro (tabla `savings_goal`)."
+      x-tabla: "savings_goal"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre (Fondo de emergencia)"
+        kind:
+          type: "string"
+          enum:
+            - "fund"
+            - "goal"
+          description: "fund = fondo de ahorro, goal = meta con monto y fecha"
+        target_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto objetivo en centavos"
+        target_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha objetivo"
+        planned_monthly_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Aportación mensual planificada en centavos"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio del fondo o meta"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "name"
+        - "kind"
+        - "start_date"
+    SavingsGoalUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de meta de ahorro (tabla `savings_goal`)."
+      x-tabla: "savings_goal"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre (Fondo de emergencia)"
+        kind:
+          type: "string"
+          enum:
+            - "fund"
+            - "goal"
+          description: "fund = fondo de ahorro, goal = meta con monto y fecha"
+        target_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Monto objetivo en centavos · null borra el valor"
+        target_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Fecha objetivo · null borra el valor"
+        planned_monthly_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Aportación mensual planificada en centavos · null borra el valor"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio del fondo o meta"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    IdList:
+      type: "object"
+      description: "Lista de ids (reemplazo completo)."
+      properties:
+        ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Ids en el orden deseado."
+          x-entrada: true
+      required:
+        - "ids"
+    Category:
+      type: "object"
+      description: "Categoría (tabla `category`). Categoría de gasto con jerarquía. Puede traer su regla de reparto por defecto (la despensa es Conjunto 50/50). Campos ausentes = sin valor (NULL)."
+      x-tabla: "category"
+      required:
+        - "id"
+        - "name"
+        - "sort_order"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        parent_id:
+          type: "integer"
+          description: "Categoría padre. NULL = raíz"
+        code:
+          type: "string"
+          description: "Clave estable para categorías que usan los motores (groceries, eating_out). NULL en las del usuario"
+        name:
+          type: "string"
+          description: "Nombre visible (Despensa, Comida fuera)"
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "variable"
+          description: "Tipo de la categoría: fijo o variable (U1 N-281). Propone el tipo del gasto al registrarlo. NULL = sin clasificar"
+        default_cost_share_rule_id:
+          type: "integer"
+          description: "Reparto por categoría. NULL = la regla por defecto"
+        sort_order:
+          type: "integer"
+          description: "Orden entre hermanas"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        expense_count:
+          type: "integer"
+          description: "Número de gastos con esta categoría."
+          x-calculado: true
+        recent_usage_count:
+          type: "integer"
+          description: "Gastos de los últimos 90 días contando hoy (N-050)."
+          x-calculado: true
+    CategoryCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de categoría (tabla `category`)."
+      x-tabla: "category"
+      properties:
+        parent_id:
+          type: "integer"
+          description: "Categoría padre. NULL = raíz"
+        code:
+          type: "string"
+          description: "Clave estable para categorías que usan los motores (groceries, eating_out). NULL en las del usuario"
+        name:
+          type: "string"
+          description: "Nombre visible (Despensa, Comida fuera)"
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "variable"
+          description: "Tipo de la categoría: fijo o variable (U1 N-281). Propone el tipo del gasto al registrarlo. NULL = sin clasificar"
+        default_cost_share_rule_id:
+          type: "integer"
+          description: "Reparto por categoría. NULL = la regla por defecto"
+        sort_order:
+          type: "integer"
+          description: "Orden entre hermanas"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+      required:
+        - "name"
+    CategoryUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de categoría (tabla `category`)."
+      x-tabla: "category"
+      properties:
+        parent_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Categoría padre. NULL = raíz · null borra el valor"
+        code:
+          type:
+            - "string"
+            - "null"
+          description: "Clave estable para categorías que usan los motores (groceries, eating_out). NULL en las del usuario · null borra el valor"
+        name:
+          type: "string"
+          description: "Nombre visible (Despensa, Comida fuera)"
+        kind:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "fixed"
+            - "variable"
+            - null
+          description: "Tipo de la categoría: fijo o variable (U1 N-281). Propone el tipo del gasto al registrarlo. NULL = sin clasificar · null borra el valor"
+        default_cost_share_rule_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Reparto por categoría. NULL = la regla por defecto · null borra el valor"
+        sort_order:
+          type: "integer"
+          description: "Orden entre hermanas"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+      minProperties: 1
+    CategoryPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Category"
+      description: "Página de Category con la envoltura única (Page)."
+    PersonPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Person"
+      description: "Página de Person con la envoltura única (Page)."
+    CostShareRulePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/CostShareRule"
+      description: "Página de CostShareRule con la envoltura única (Page)."

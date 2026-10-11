@@ -1,9 +1,10 @@
 # Colorimetría · candidato C «Índigo 280°»
 
-> Documento generado por `docs/design/tools/colorimetria.py` (Python 3, solo biblioteca estándar). No se edita a mano: se cambia la regla en el script y se regenera. Fase U2a del flujo WF-0, 2026-10-10. Es la base de color de `DESIGN.md` (U2, WF-1) y la parte de color del contrato C2 (`docs/contratos/C2-colores.json`); el resto de los tokens de C2 los hace U2b en WF-1. Queda sujeto a la puerta 2 de aprobación. Ronda 1 de revisión (2026-10-11): corrige el hallazgo H-03 (la serie 6 de gráficas usaba el matiz reservado del eje opuesto; §3 y §8.8).
+> Documento generado por `docs/design/tools/colorimetria.py` (Python 3, solo biblioteca estándar). No se edita a mano: se cambia la regla en el script y se regenera. Fase U2a del flujo WF-0, 2026-10-10. Es la base de color de `DESIGN.md` (U2, WF-1) y la parte de color del contrato C2 (`docs/contratos/C2-colores.json`); el resto de los tokens de C2 los hace U2b en WF-1. Queda sujeto a la puerta 2 de aprobación. Ronda 1 de revisión (2026-10-11): corrige el hallazgo H-03 (la serie 6 de gráficas usaba el matiz reservado del eje opuesto; §3 y §8.8). **Versión 1.1 (puerta 1, 2026-10-11):** aplica las respuestas K26 y K27 de Axel y el hallazgo R3-04; lo que cambia, con valores anteriores y nuevos, está en «Cambios 1.1».
 
 ## Índice
 
+0. Cambios 1.1 (puerta 1): gasto, Karen, Bodega Aurrera, marca en pares cercanos y paleta de gráficas
 1. Qué se genera y cómo regenerarlo
 2. Método
 3. Matiz base, eje opuesto y armonía complementaria dividida
@@ -19,6 +20,102 @@
 
 Anexo A. Tokens: ruta → hex (lista que verifica el script)
 
+## Cambios 1.1 (puerta 1, 2026-10-11)
+
+Aplica las respuestas de Axel en la puerta 1 (`docs/plan/decisiones.md` §K): **K26** (gasto pasa a terracota 40–45° y error se queda en 20°; Karen y Bodega Aurrera, que estaban en 50°, se mueven en la paleta categórica; la marca entra al barrido de pares cercanos, hallazgo R3-04 de la revisión 3) y **K27** (paleta de gráficas: ΔL ≥ 0.10 entre series consecutivas con forma, patrón y etiqueta de refuerzo; todos los pares se reportan como información). Quedan resueltos los bloqueos `U2-gasto-error` y `criterios-deltal`. No cambian el método (L por paso, perfil de croma, umbrales), la marca, el neutro, los demás roles ni las 8 series de gráficas. Todo lo regenera el script y su verificación final lo comprueba.
+
+### Parámetros que cambian
+
+| Elemento | 1.0: matiz · croma pedido · L claro / oscuro | 1.1 | Origen |
+|---|---|---|---|
+| Gasto (`color.role.expense`) | matiz 25° | matiz 45° | K26 |
+| Karen (`color.person.karen`) | 50° · croma 0.12 · L 0.640 / 0.725 | 333° · croma 0.12 · L 0.642 / 0.725 | K26; **PROVISIONAL** frente a Ximena, bloqueo `U2a-rosas-ximena-bodega` |
+| Bodega Aurrera (`color.store.bodega-aurrera`) | 50° · croma 0.12 · L 0.410 / 0.830 | 356° · croma 0.11 · L 0.410 / 0.829 | K26; **PROVISIONAL** frente a Ximena, bloqueo `U2a-rosas-ximena-bodega` |
+| Walmart (`color.store.walmart`) | 262° · croma 0.12 · L 0.515 / 0.720 | 262° · croma 0.12 · L 0.515 / 0.716 | **PROVISIONAL**, bloqueo `U2a-walmart-oscuro` |
+
+### Tokens que cambian (medidos en el hex)
+
+| Token | 1.0: hex · matiz · L · croma | 1.1: hex · matiz · L · croma |
+|---|---|---|
+| `color.role.expense.light` | `#A44541` · 24.9° · L 0.515 · C 0.127 | `#A04B20` · 44.7° · L 0.514 · C 0.126 |
+| `color.role.expense.dark` | `#FC9A92` · 25.1° · L 0.785 · C 0.119 | `#F8A078` · 45.0° · L 0.785 · C 0.118 |
+| `color.role.expense.surface-light` | `#FFEEEC` · 25.6° · L 0.962 · C 0.019 | `#FFEFE8` · 45.3° · L 0.963 · C 0.020 |
+| `color.role.expense.surface-dark` | `#5A2220` · 24.7° · L 0.334 · C 0.083 | `#59260B` · 45.2° · L 0.336 · C 0.084 |
+| `color.role.expense.50` | `#FFF8F8` · 17.3° · L 0.985 · C 0.007 | `#FFF9F6` · 48.7° · L 0.986 · C 0.008 |
+| `color.role.expense.100` | `#FFEEEC` · 25.6° · L 0.962 · C 0.019 | `#FFEFE8` · 45.3° · L 0.963 · C 0.020 |
+| `color.role.expense.200` | `#FFDDDA` · 23.8° · L 0.925 · C 0.038 | `#FFDED0` · 44.4° · L 0.924 · C 0.041 |
+| `color.role.expense.300` | `#FFC1BB` · 25.0° · L 0.865 · C 0.072 | `#FFC3A9` · 44.5° · L 0.865 · C 0.078 |
+| `color.role.expense.400` | `#FC9A92` · 25.1° · L 0.785 · C 0.119 | `#F8A078` · 45.0° · L 0.785 · C 0.118 |
+| `color.role.expense.500` | `#E77770` · 25.0° · L 0.696 · C 0.140 | `#E37E4E` · 45.1° · L 0.696 · C 0.140 |
+| `color.role.expense.600` | `#C85B56` · 24.8° · L 0.605 · C 0.140 | `#C46231` · 45.1° · L 0.605 · C 0.140 |
+| `color.role.expense.700` | `#A44541` · 24.9° · L 0.515 · C 0.127 | `#A04B20` · 44.7° · L 0.514 · C 0.126 |
+| `color.role.expense.800` | `#7E3330` · 24.9° · L 0.425 · C 0.105 | `#7C3815` · 44.9° · L 0.426 · C 0.105 |
+| `color.role.expense.900` | `#5A2220` · 24.7° · L 0.334 · C 0.083 | `#59260B` · 45.2° · L 0.336 · C 0.084 |
+| `color.role.expense.950` | `#3C1413` · 24.1° · L 0.255 · C 0.064 | `#3B1705` · 45.2° · L 0.256 · C 0.064 |
+| `color.person.karen.light` | `#C67544` · 50.4° · L 0.641 · C 0.120 | `#B870AC` · 333.2° · L 0.643 · C 0.120 |
+| `color.person.karen.dark` | `#E28F5E` · 50.5° · L 0.725 · C 0.120 | `#D389C6` · 333.3° · L 0.725 · C 0.120 |
+| `color.store.bodega-aurrera.light` | `#773400` · 49.6° · L 0.410 · C 0.109 | `#762C4C` · 356.1° · L 0.410 · C 0.110 |
+| `color.store.bodega-aurrera.dark` | `#FFB389` · 49.7° · L 0.829 · C 0.105 | `#FFAAC9` · 356.2° · L 0.829 · C 0.106 |
+| `color.store.walmart.dark` | `#7BA4F0` · 262.1° · L 0.720 · C 0.120 | `#7AA3EE` · 261.9° · L 0.717 · C 0.119 |
+
+Los otros 170 tokens no cambian de valor. Tablas regeneradas: §5.3 (escala de gasto), §6.1, §6.5, §6.6, §7.1 a §7.5, §7.7, §10, §12 y el Anexo A, además de `contraste.csv`, `C2-colores.json`, `paleta.html` y `paleta.png`.
+
+### 1. Gasto: el grado de 40° a 45° más separado (K26)
+
+Para cada grado entero del rango el script construye la escala de gasto con el mismo método (L por paso, perfil de croma, croma máx. 0.14), elige el paso de texto con la misma regla de 4.5:1 y mide en el hex el Δ matiz a error (20°) y a advertencia (75°), el ΔE normal y el ΔE mínimo con las tres simulaciones de daltonismo frente a esos dos roles, y la holgura mínima frente a las 8 categóricas (máx(Δ matiz / 20°, ΔL / 0.15); cumple con ≥ 1). Gana el mayor Δ matiz mínimo; a igualdad, el mayor ΔE normal y después el mayor ΔE con daltonismo.
+
+| Matiz | Claro: paso · hex · matiz medido | Oscuro: paso · hex · matiz medido | Δ matiz a error (mín.) | Δ matiz a advertencia (mín.) | ΔE normal mín. | ΔE daltonismo mín. | Holgura frente a categóricas |
+|---|---|---|---|---|---|---|---|
+| 40° | 700 · `#A24A29` · 40.3° | 400 · `#FA9E7E` · 39.9° | 19.8° | 35.1° | 4.1 | 0.7 | 1.14 (Mercado) |
+| 41° | 700 · `#A24A27` · 41.1° | 400 · `#FA9E7D` · 40.4° | 20.4° | 34.3° | 4.2 | 0.8 | 1.14 (Mercado) |
+| 42° | 700 · `#A14A25` · 42.1° | 400 · `#F99F7B` · 42.5° | 22.4° | 33.3° | 4.6 | 0.9 | 1.14 (Mercado) |
+| 43° | 700 · `#A14B24` · 43.1° | 400 · `#F99F7A` · 43.0° | 22.9° | 32.3° | 4.7 | 0.9 | 1.14 (Mercado) |
+| 44° | 700 · `#A14B22` · 43.8° | 400 · `#F99F79` · 43.5° | 23.4° | 31.6° | 4.8 | 0.9 | 1.13 (Mercado) |
+| **45°** | 700 · `#A04B20` · 44.7° | 400 · `#F8A078` · 45.0° | 24.9° | 30.7° | 5.1 | 1.0 | 1.14 (Mercado) |
+
+**Se elige 45°.** Dentro del rango, subir el matiz aleja a gasto de error y lo acerca a advertencia, pero advertencia queda siempre más lejos que error, así que el Δ matiz mínimo crece con el matiz y el mejor grado es el extremo. En 45° gasto queda a 24.9° de error y a 30.7° de advertencia, con ΔE normal mínimo 5.1 y ΔE mínimo con daltonismo 1.0, los mayores del rango. Frente a las categóricas la holgura va de 1.13 a 1.14 en todo el rango y la fija Mercado, así que no decide. El paso de texto sigue siendo 700 en claro y 400 en oscuro, con 4.5:1 (§6.1).
+
+### 2. Karen y Bodega Aurrera (K26)
+
+Con gasto en 45° el rango cálido queda cerrado: entre error 20°, gasto 45° y advertencia 75° no hay ningún matiz a ≥ 20° de los tres, y de 80° a 120° está la zona reservada de acción crítica. Karen ocupa la L más alta de las personas en claro (la última que da 3:1) y Bodega Aurrera la L entre Mercado y Walmart; con esas L no llegan a ΔL 0.15 frente al texto de los roles (L 0.515 en claro y 0.785 en oscuro) en ningún tema, así que tienen que separarse por matiz de todos los roles, de acción crítica y de la marca. El script recorre los 360 matices enteros con la L y el croma finales de cada una y conserva los que cumplen todas las reglas de §7 (≥ 20° o ΔL ≥ 0.15 frente a roles, acción crítica y marca; contraste ≥ 3:1 sobre fondo y tarjeta; croma ≥ 0.10; fuera de la zona reservada; ΔL ≥ 0.10 en L OKLab y en gris frente a su grupo):
+
+| Color | L claro / oscuro · croma pedido | Matices que cumplen todo | Con Walmart en L 0.720 (1.0) |
+|---|---|---|---|
+| Karen | 0.642 / 0.725 · 0.12 | 331°–359° | igual (otro grupo) |
+| Bodega Aurrera | 0.410 / 0.829 · 0.11 | 331°–335°, 338°–341°, 344°–348°, 352°, 355°–359° | ninguna; con L 0.830 y croma 0.12 de la 1.0: ninguna |
+
+Todas las ventanas quedan entre deuda (310°) y error (20° = 380°), y en oscuro Karen y Bodega Aurrera tienen ΔL 0.104 (< 0.15), así que también necesitan ≥ 20° de matiz entre sí. Se reparten los 70° que hay de deuda a error en tres huecos con el mayor hueco mínimo; a igualdad, Karen lo más lejos posible de Ximena (350°, su mismo grupo) y después la mayor holgura frente a roles, acción crítica y marca. Resultado: **Karen 333° y Bodega Aurrera 356°** (huecos de 23°, 23° y 24°). Los cinco mejores repartos:
+
+| Karen | Bodega Aurrera | Huecos deuda → · → · → error | Hueco mínimo | Δ Karen–Ximena | Holgura mín. frente a roles y marca |
+|---|---|---|---|---|---|
+| 333° | 356° | 23° · 23° · 24° | 23° | 17° | 1.15 |
+| 333° | 357° | 23° · 24° · 23° | 23° | 17° | 1.11 |
+| 334° | 357° | 24° · 23° · 23° | 23° | 16° | 1.11 |
+| 357° | 334° | 24° · 23° · 23° | 23° | 7° | 1.12 |
+| 357° | 333° | 23° · 24° · 23° | 23° | 7° | 1.12 |
+
+Karen queda a 17° de Ximena: dentro de las personas se distinguen por ΔL ≥ 0.10 en ambos temas (§7.3), por el orden fijo de la leyenda y por la etiqueta directa. Bodega Aurrera queda cerca de Ximena, pero son de grupos distintos y nunca comparten gráfica ni leyenda (§7.7).
+
+**Frente a Ximena (ronda 1 de revisión, H-01; PROVISIONAL).** En oscuro, Bodega Aurrera (`#FFAAC9`) y Ximena (`#FFACD3`) quedan a 6.2°, ΔL 0.006 y **ΔE 1.3**: a simple vista son el mismo color. En claro quedan a 5.8°, ΔL 0.130 y ΔE 13.1. Karen y Ximena quedan a 17.1° y 16.7°, con ΔL 0.103 y 0.111 y ΔE 10.9 y 11.6 (claro y oscuro). Bodega Aurrera–Ximena es una colisión nueva de la 1.1: en la 1.0, el par persona–tienda más parecido era Karen–Bodega Aurrera en oscuro, con ΔE 10.5. Con la L y el croma de cada una, ningún matiz de sus ventanas (tabla de arriba) separa a Karen ni a Bodega Aurrera de Ximena por ≥ 20° o ΔL ≥ 0.15 en ambos temas; el script lo comprueba. §7.7 declara el refuerzo, y U2-08 lo admite. Pero U2-02 y la respuesta de Axel en `U2-gasto-error` piden moverlas «para conservar separación ≥ 20° o ΔL ≥ 0.15» frente a las demás entradas. Como el criterio admite dos lecturas, el bloqueo `docs/estado/bloqueos/U2a-rosas-ximena-bodega.md` lleva las opciones para Axel. Mientras decide, van **PROVISIONAL** los 4 tokens que quedan bajo la regla frente a Ximena (`color.person.karen.dark`, `color.person.karen.light`, `color.store.bodega-aurrera.dark`, `color.store.bodega-aurrera.light`), con la nota en su descripción en `C2-colores.json`.
+
+### 3. Walmart en oscuro (PROVISIONAL)
+
+En oscuro las cuatro tiendas se escalonan con ΔL ≥ 0.10 en L OKLab y en gris entre Mercado (L 0.615, contraste 3.06, el mínimo del grupo) y Sam's Club (L 0.930, croma 0.103, cerca del piso de 0.10). El rosa pierde luminancia en gris (en Bodega Aurrera, gris = L − 0.014), y con Walmart en L 0.720 ningún matiz entero cumple para Bodega Aurrera (última columna de la tabla del punto 2). Walmart baja a L 0.716 (`#7BA4F0` → `#7AA3EE`, ΔE 0.4, imperceptible) y Bodega Aurrera usa croma 0.11 y L 0.829 en oscuro; el escalonamiento de las tiendas en oscuro queda en ΔL mínimo 0.101 (OKLab) y 0.101 (gris). Como es un token que K26 no nombra, va **PROVISIONAL** con el bloqueo `docs/estado/bloqueos/U2a-walmart-oscuro.md` (opciones para Axel) y la nota en la descripción del token en `C2-colores.json`.
+
+### 4. La marca en el barrido de pares cercanos (R3-04)
+
+§7.7 incluye ahora la marca en su paso de texto (700 en claro, 400 en oscuro). Ningún rol ni acción crítica queda cerca de la marca (el script lo verifica); quedan cerca estas categóricas, que se refuerzan con forma y etiqueta: la marca solo vive en controles (botón primario, enlace subrayado, anillo de foco, elemento activo) y la categórica siempre va como punto, anillo de avatar o marca de serie junto a su nombre en texto neutro.
+
+| Tema | Color A | Color B | Δ matiz | ΔL |
+|---|---|---|---|---|
+| claro | Conjunto (persona) | Marca 700 (marca) | 0.9° | 0.094 |
+| claro | Walmart (tienda) | Marca 700 (marca) | 18.0° | 0.000 |
+| oscuro | Walmart (tienda) | Marca 400 (marca) | 18.0° | 0.069 |
+
+### 5. Paleta de gráficas (K27)
+
+No cambia ningún valor de las 8 series. K27 fija la lectura del criterio: el umbral duro es ΔL ≥ 0.10 entre series consecutivas en el orden de uso (mínimo en gris y en las tres simulaciones: 0.162 en claro y 0.198 en oscuro, §8.3) y los 28 pares se reportan como información (ΔL mínimo en gris 0.002 en claro y 0.001 en oscuro, §8.5). El color nunca va solo: cada serie lleva forma de marcador, patrón de trazo o relleno y etiqueta directa. Las tablas de simulación de daltonismo de las series (§8.4) no cambian porque las series no cambian; los ΔE con daltonismo de las categóricas (§7.3) se recalculan con Karen y Bodega Aurrera nuevas.
+
 ## 1. Qué se genera y cómo regenerarlo
 
 | Archivo | Contenido |
@@ -29,7 +126,7 @@ Anexo A. Tokens: ruta → hex (lista que verifica el script)
 | `docs/design/paleta.html` | muestrario estático (sin CDN, sin fuentes externas, sin JavaScript) |
 | `docs/design/paleta.png` | captura 1400×3000 con `chromium --headless=new` |
 
-Comando: `python3 docs/design/tools/colorimetria.py` (agrega `--sin-png` para omitir la captura y `--solo-verificar` para revisar los archivos existentes sin regenerarlos). La salida es determinista: dos ejecuciones dan archivos idénticos. Al final el script verifica, leyendo los archivos ya escritos, que ningún par del CSV quede bajo su umbral, que los hex del JSON coincidan con el Anexo A de este documento, que la paleta de gráficas mantenga ΔL ≥ 0.10 entre series consecutivas en gris y en las tres simulaciones (con las dos variantes de §8.6) y que sus tres primeras series pasen la prueba de todos los pares (§8.5), que las categóricas cumplan su escalonamiento y su separación de los roles, que ningún token fuera de `color.critical` use la zona reservada del eje opuesto (§3) y que marca y neutro reproduzcan los valores de partida del plan; si algo falla, termina con código 1.
+Comando: `python3 docs/design/tools/colorimetria.py` (agrega `--sin-png` para omitir la captura y `--solo-verificar` para revisar los archivos existentes sin regenerarlos). La salida es determinista: dos ejecuciones dan archivos idénticos. Al final el script verifica, leyendo los archivos ya escritos, que ningún par del CSV quede bajo su umbral, que los hex del JSON coincidan con el Anexo A de este documento, que la paleta de gráficas mantenga ΔL ≥ 0.10 entre series consecutivas en gris y en las tres simulaciones (con las dos variantes de §8.6) y que sus tres primeras series pasen la prueba de todos los pares (§8.5), que las categóricas cumplan su escalonamiento y su separación de los roles, que ningún token fuera de `color.critical` use la zona reservada del eje opuesto (§3), que marca y neutro reproduzcan los valores de partida del plan y, desde la versión 1.1, que gasto esté en 40–45° a ≥ 20° de error, que la marca no quede cerca de ningún rol y que Karen y Bodega Aurrera cumplan la regla de separación entre sí; si algo falla, termina con código 1.
 
 ## 2. Método
 
@@ -84,14 +181,14 @@ El gris equivalente de un color es el gris de igual luminancia relativa Y; su lu
 
 - **Matiz base 280° (índigo)**, aprobado por Axel (decisiones §I). Lleva la marca, las superficies tintadas (neutro con croma 0.012, apenas perceptible) y el acento principal. Lectura sobria y moderna, tipo Notion/Linear.
 - **Eje opuesto 100° (oliva amarillo)** = 280° − 180°. Es el matiz de mayor contraste frente a la marca, por eso se **reserva para «acción crítica» de confirmación** (decisiones §I): un diálogo que pide confirmar algo irreversible es lo único que debe interrumpir. No se usa para error, que conserva la convención del rojo (20°).
-- **Zona reservada 80°–120°.** Ningún otro token con croma visible (≥ 0.02; el neutro llega a 0.012) usa un matiz a menos de 20° del opuesto: ni roles, ni personas y tiendas, ni series de gráficas. El ancho es la separación mínima entre matices distintos que decisiones §I fija para roles y categóricas, y no puede ser mayor: advertencia (75°, también decidida) queda a 25° del opuesto (24.3° medidos en el hex). El script lo verifica en cada token, con el matiz de diseño y con el medido en el hex. Colores de identidad más cercanos al opuesto: advertencia (rol) a 24.3°; ingreso (rol) a 34.7°; verde (serie 8) a 40.1°; naranja (serie 4) a 44.7°; Karen (persona) a 49.5°. Hasta la ronda 1 de revisión la serie 6 de gráficas usaba 100° (hallazgo H-03); ahora usa 225° (§8.8).
+- **Zona reservada 80°–120°.** Ningún otro token con croma visible (≥ 0.02; el neutro llega a 0.012) usa un matiz a menos de 20° del opuesto: ni roles, ni personas y tiendas, ni series de gráficas. El ancho es la separación mínima entre matices distintos que decisiones §I fija para roles y categóricas, y no puede ser mayor: advertencia (75°, también decidida) queda a 25° del opuesto (24.3° medidos en el hex). El script lo verifica en cada token, con el matiz de diseño y con el medido en el hex. Colores de identidad más cercanos al opuesto: advertencia (rol) a 24.3°; ingreso (rol) a 34.7°; verde (serie 8) a 40.1°; naranja (serie 4) a 44.7°; éxito (rol) a 50.0°. Hasta la ronda 1 de revisión la serie 6 de gráficas usaba 100° (hallazgo H-03); ahora usa 225° (§8.8).
 - **Complementario dividido:** los dos vecinos del opuesto a ±30°, 70° y 130°, son los acentos que acompañan a la marca sin chocar con ella. Se asignan a los dos estados que más se ven en una app de finanzas además del gasto: **advertencia 75°** (decidida; 5° por encima del vecino exacto 70°) e **ingreso 135°** (la opción que decisiones §I prevé para U2; 5° por encima del vecino exacto 130°, el mismo desplazamiento que advertencia, §6.4). Así la armonía queda base 280° + acentos 75°/135° + opuesto 100° en reserva, y se evita el choque directo rojo/verde porque gasto y error (rojos) y éxito (verde) no forman parte de la armonía: son convenciones semánticas, con su propio matiz y siempre con icono y texto.
 
 | Familia | Matiz | Distancia a la base | Distancia al opuesto | Origen |
 |---|---|---|---|---|
 | Marca | 280° | 0° | 180° | decisiones §I |
 | Ingreso | 135° | 145° | 35° | Propuesta U2a con la opción que prevé decisiones §I (135°): a 15° de éxito y a 5° del acento dividido 130° |
-| Gasto | 25° | 105° | 75° | decisiones §I |
+| Gasto | 45° | 125° | 55° | K26 (puerta 1): terracota 40–45°; 45° es el grado del rango más separado de error y advertencia (Cambios 1.1) |
 | Ahorro | 200° | 80° | 100° | decisiones §I |
 | Deuda / crédito | 310° | 30° | 150° | decisiones §I |
 | Advertencia | 75° | 155° | 25° | decisiones §I |
@@ -151,7 +248,7 @@ El neutro está tintado con el matiz base (croma ≤ 0.012), así que el 90 % de
 | Familia | 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Ingreso (135°) | `#F6FCF3` | `#E9F8E1` | `#D7EFCA` | `#B9E1A4` | `#98CA7B` | `#75B052` | `#5B9335` | `#457723` | `#335A18` | `#22400D` | `#142907` |
-| Gasto (25°) | `#FFF8F8` | `#FFEEEC` | `#FFDDDA` | `#FFC1BB` | `#FC9A92` | `#E77770` | `#C85B56` | `#A44541` | `#7E3330` | `#5A2220` | `#3C1413` |
+| Gasto (45°) | `#FFF9F6` | `#FFEFE8` | `#FFDED0` | `#FFC3A9` | `#F8A078` | `#E37E4E` | `#C46231` | `#A04B20` | `#7C3815` | `#59260B` | `#3B1705` |
 | Ahorro (200°) | `#F0FDFE` | `#D8FAFC` | `#BBF2F5` | `#85E5EA` | `#3FD0D7` | `#00B2BA` | `#00949A` | `#00767B` | `#005A5E` | `#003F42` | `#00292B` |
 | Deuda / crédito (310°) | `#FCF8FF` | `#F7EEFF` | `#F0DEFF` | `#E5C3FF` | `#D0A3F2` | `#B782DD` | `#9B67C0` | `#7E509D` | `#603C79` | `#442857` | `#2C1939` |
 | Advertencia (75°) | `#FFF9F1` | `#FFF0DC` | `#FDE2BD` | `#F6CB8F` | `#E5AE5B` | `#CF8E1B` | `#AD7500` | `#8B5D00` | `#6B4600` | `#4C3000` | `#321E00` |
@@ -171,7 +268,7 @@ Texto e icono del rol: paso 700 en claro y paso 400 en oscuro. Fondo de insignia
 | Rol | Token | Matiz | Claro: paso · hex | Contraste fondo 50 / tarjeta 100 / insignia | Oscuro: paso · hex | Contraste fondo 950 / tarjeta 900 / insignia |
 |---|---|---|---|---|---|---|
 | Ingreso | `color.role.income` | 135° | 700 · `#457723` | 5.14 / 4.79 / 4.84 | 400 · `#98CA7B` | 8.29 / 6.34 / 6.12 |
-| Gasto | `color.role.expense` | 25° | 700 · `#A44541` | 5.74 / 5.35 / 5.33 | 400 · `#FC9A92` | 7.62 / 5.82 / 6.04 |
+| Gasto | `color.role.expense` | 45° | 700 · `#A04B20` | 5.71 / 5.33 / 5.32 | 400 · `#F8A078` | 7.70 / 5.89 / 6.02 |
 | Ahorro | `color.role.savings` | 200° | 700 · `#00767B` | 5.19 / 4.84 / 4.90 | 400 · `#3FD0D7` | 8.39 / 6.42 / 6.26 |
 | Deuda / crédito | `color.role.debt` | 310° | 700 · `#7E509D` | 5.71 / 5.33 / 5.29 | 400 · `#D0A3F2` | 7.64 / 5.84 / 6.04 |
 | Advertencia | `color.role.warning` | 75° | 700 · `#8B5D00` | 5.49 / 5.12 / 5.11 | 400 · `#E5AE5B` | 7.89 / 6.03 / 6.09 |
@@ -189,7 +286,7 @@ El encargo pide el paso 600 sobre fondo 50 en claro. Con la L fija del paso 600 
 | Rol | Paso 600 | Contraste mínimo (fondo, tarjeta, insignia) | Paso elegido | Contraste mínimo | Cambio |
 |---|---|---|---|---|---|
 | Ingreso | `#5B9335` | 3.31 | `#457723` | 4.79 | 600 → 700 |
-| Gasto | `#C85B56` | 3.67 | `#A44541` | 5.33 | 600 → 700 |
+| Gasto | `#C46231` | 3.65 | `#A04B20` | 5.32 | 600 → 700 |
 | Ahorro | `#00949A` | 3.29 | `#00767B` | 4.84 | 600 → 700 |
 | Deuda / crédito | `#9B67C0` | 3.65 | `#7E509D` | 5.29 | 600 → 700 |
 | Advertencia | `#AD7500` | 3.52 | `#8B5D00` | 5.11 | 600 → 700 |
@@ -219,7 +316,7 @@ Decisiones §I deja ingreso en 150° (misma familia que éxito, distinguido por 
 
 ### 6.5 Gasto frente a error
 
-Ambos matices están decididos (gasto 25°, error 20°) y quedan a 5°: ΔE normal 1.2 en claro y 1.0 en oscuro, por debajo de lo que el ojo separa con seguridad. No se reabre la decisión; se dejan los valores decididos y se registra el bloqueo `docs/estado/bloqueos/U2-gasto-error.md` con opciones para Axel. Mientras tanto la regla de uso es: el **gasto** aparece como cifra con signo «−» en listas y tablas; el **error** solo como mensaje de validación o aviso con icono de alerta y texto. Nunca comparten componente.
+Versión 1.1 (K26; bloqueo `U2-gasto-error` resuelto con la opción 2): gasto pasa de 25° a 45° (terracota) y error se queda en 20°. Medidos en el hex quedan a 25.3° de matiz en claro y 24.9° en oscuro, con ΔE normal 5.5 y 5.1 (en la 1.0, con gasto en 25°, eran 1.2 y 1.0); el grado sale del barrido de «Cambios 1.1». Con daltonismo rojo-verde siguen cerca (ΔE protanopia 5.9 / 5.0, deuteranopia 4.4 / 4.1), así que se conserva la regla de uso: el **gasto** aparece como cifra con signo «−» en listas y tablas; el **error** solo como mensaje de validación o aviso con icono de alerta y texto. Nunca comparten componente.
 
 ### 6.6 Pares de roles cercanos (ΔE normal < 10)
 
@@ -227,16 +324,18 @@ Todos los roles comparten L y croma, así que la distancia depende solo del áng
 
 | Tema | Par | Δ matiz | ΔE normal | ΔE protanopia | ΔE deuteranopia | ΔE tritanopia |
 |---|---|---|---|---|---|---|
-| claro | Gasto – Error | 5° | 1.2 | 1.3 | 1.1 | 0.4 |
 | claro | Ingreso – Éxito | 15° | 3.3 | 2.8 | 2.8 | 3.8 |
 | claro | Advertencia – Acción crítica | 25° | 4.6 | 1.9 | 0.4 | 5.2 |
+| claro | Gasto – Error | 25° | 5.5 | 5.9 | 4.4 | 1.0 |
+| claro | Gasto – Advertencia | 30° | 6.4 | 3.4 | 1.1 | 5.9 |
 | claro | Ingreso – Acción crítica | 35° | 7.3 | 2.9 | 2.1 | 9.5 |
 | claro | Ahorro – Información | 40° | 7.6 | 7.3 | 7.4 | 1.6 |
 | claro | Ahorro – Éxito | 50° | 9.7 | 9.4 | 9.3 | 1.7 |
 | claro | Éxito – Acción crítica | 50° | 10.0 | 4.8 | 4.9 | 13.3 |
-| oscuro | Gasto – Error | 5° | 1.0 | 1.1 | 0.9 | 0.2 |
 | oscuro | Ingreso – Éxito | 15° | 3.2 | 2.6 | 2.6 | 4.1 |
 | oscuro | Advertencia – Acción crítica | 25° | 5.0 | 2.2 | 0.2 | 5.7 |
+| oscuro | Gasto – Error | 25° | 5.1 | 5.0 | 4.1 | 1.1 |
+| oscuro | Gasto – Advertencia | 30° | 6.3 | 4.6 | 2.8 | 3.4 |
 | oscuro | Ingreso – Acción crítica | 35° | 7.1 | 3.9 | 3.8 | 9.6 |
 | oscuro | Ahorro – Información | 40° | 8.1 | 6.7 | 6.1 | 2.0 |
 
@@ -252,15 +351,15 @@ Reglas (plan §4.2–4.3 y encargo): luminosidad escalonada con ΔL ≥ 0.10 ent
 |---|---|---|---|---|---|---|
 | Axel | `color.person.axel` | 256° | 0.120 | `#002E64` · L 0.310 · gris 0.306 · 11.92 | `#4F83C8` · L 0.605 · gris 0.604 · 3.10 | Azul a 256° (6° más violeta que el 250° del plan para conservar croma ≥ 0.10 en L 0.31); como queda a 16° de información, se separa por luminosidad (ΔL ≥ 0.15 frente al rol en ambos temas). |
 | Ximena | `color.person.ximena` | 350° | 0.120 | `#A14E78` · L 0.540 · gris 0.524 · 4.84 | `#FFACD3` · L 0.835 · gris 0.822 · 6.92 | Conserva 350° del plan (30° de error, 40° de deuda). |
-| Karen | `color.person.karen` | 50° | 0.120 | `#C67544` · L 0.640 · gris 0.631 · 3.11 | `#E28F5E` · L 0.725 · gris 0.715 · 4.76 | Colisión del plan (80° vs advertencia 75°) resuelta moviéndola a 50°: 25° de gasto y de advertencia y 50° del opuesto 100° (no se usa 95°, que se confundiría con acción crítica). |
+| Karen | `color.person.karen` | 333° | 0.120 | `#B870AC` · L 0.642 · gris 0.628 · 3.15 | `#D389C6` · L 0.725 · gris 0.710 · 4.67 | Versión 1.1 (K26): el 50° de la 1.0 quedaba a 5° de gasto 45°. Con su L (la más alta del grupo en claro, la última que da 3:1) se separa de los roles por matiz, y sus ventanas factibles quedan entre deuda 310° y error 20°; 333° queda a 23° de deuda y de Bodega Aurrera, lo más lejos de Ximena (350°) que permite el reparto, y de ella se separa por ΔL ≥ 0.10. L en claro 0.642 (antes 0.640) para dar margen al escalonamiento. PROVISIONAL (bloqueo `U2a-rosas-ximena-bodega`): frente a Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos temas y se distingue por el refuerzo de §7.7 (Cambios 1.1, punto 2). |
 | Conjunto | `color.person.shared` | 280° | 0.045 | `#484B66` · L 0.420 · gris 0.419 · 7.59 | `#E7EAFF` · L 0.940 · gris 0.940 · 10.08 | Lo compartido lleva el matiz de la marca con croma bajo (casi neutro), como el croma 0.03 del plan; 280° queda a 30° de deuda y 40° de información. Es la única excepción deliberada al piso de croma 0.10: se lee como «de ambos», no como una persona más. |
 
 ### 7.2 Tiendas
 
 | Nombre | Token | Matiz | Croma pedido | Claro: hex · L · L gris · contraste mín. | Oscuro: hex · L · L gris · contraste mín. | Motivo |
 |---|---|---|---|---|---|---|
-| Walmart | `color.store.walmart` | 262° | 0.120 | `#4065AC` · L 0.515 · gris 0.511 · 5.11 | `#7BA4F0` · L 0.720 · gris 0.718 · 4.81 | 220° del plan quedaba a 20.0° exactos de ahorro e información (frágil al cuantizar a 8 bits); se mueve al azul de 262° (22° de información). |
-| Bodega Aurrera | `color.store.bodega-aurrera` | 50° | 0.120 | `#773400` · L 0.410 · gris 0.400 · 8.25 | `#FFB389` · L 0.830 · gris 0.821 · 6.90 | Colisión del plan (60° vs advertencia 75°) resuelta en 50°; comparte matiz con Karen y se separa de ella por luminosidad en ambos temas (claro 0.41 frente a 0.64; oscuro 0.83 frente a 0.725). |
+| Walmart | `color.store.walmart` | 262° | 0.120 | `#4065AC` · L 0.515 · gris 0.511 · 5.11 | `#7AA3EE` · L 0.716 · gris 0.715 · 4.75 | 220° del plan quedaba a 20.0° exactos de ahorro e información (frágil al cuantizar a 8 bits); se mueve al azul de 262° (22° de información). PROVISIONAL en oscuro (bloqueo `U2a-walmart-oscuro`): L 0.716 en vez de 0.720 para que Bodega Aurrera quepa en el escalonamiento de las tiendas (Cambios 1.1). |
+| Bodega Aurrera | `color.store.bodega-aurrera` | 356° | 0.110 | `#762C4C` · L 0.410 · gris 0.395 · 8.40 | `#FFAAC9` · L 0.829 · gris 0.815 · 6.78 | Versión 1.1 (K26): el 50° de la 1.0 quedaba a 5° de gasto 45°. Con su L (entre Mercado y Walmart) se separa de los roles por matiz en ambos temas: 356° queda a 24° de error y a 23° de Karen, de la que en oscuro no se separa por luminosidad. Croma 0.11 y L 0.829 en oscuro: el rosa pierde luminancia en gris y con 0.12 no cabe en el escalonamiento de las tiendas (Cambios 1.1). PROVISIONAL (bloqueo `U2a-rosas-ximena-bodega`): frente a Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos temas (en oscuro, a simple vista el mismo color) y se distingue solo por el refuerzo de §7.7 (Cambios 1.1, punto 2). |
 | Sam's Club | `color.store.sams-club` | 175° | 0.120 | `#009D82` · L 0.620 · gris 0.636 · 3.05 | `#99FFE4` · L 0.930 · gris 0.943 · 10.18 | Conserva 175° del plan (25° de éxito y de ahorro); va en la L más alta de cada tema, donde el verde azulado conserva croma ≥ 0.10. |
 | Mercado | `color.store.market` | 28° | 0.120 | `#5C0204` · L 0.300 · gris 0.286 · 12.81 | `#C2665B` · L 0.615 · gris 0.601 · 3.06 | Terracota a 28° (2° menos que el plan, para quedar a más de 20° de Bodega Aurrera); como queda a 3° de gasto y 8° de error, se separa por luminosidad (ΔL ≥ 0.15 frente a los roles en ambos temas). |
 
@@ -268,10 +367,10 @@ Reglas (plan §4.2–4.3 y encargo): luminosidad escalonada con ΔL ≥ 0.10 ent
 
 | Grupo | Tema | ΔL mín. (OKLab, todos los pares) | ΔL mín. (gris, todos los pares) | ΔE vecinos normal | ΔE vecinos protan/deutan | ΔE vecinos tritan | Contraste mín. | Croma mín. (sin Conjunto) |
 |---|---|---|---|---|---|---|---|---|
-| Personas | claro | 0.102 | 0.105 | 15.8 | 15.4 | 10.8 | 3.11 | 0.106 |
-| Personas | oscuro | 0.105 | 0.106 | 16.0 | 15.0 | 10.6 | 3.10 | 0.108 |
-| Tiendas | claro | 0.105 | 0.112 | 24.4 | 21.7 | 23.9 | 3.05 | 0.109 |
-| Tiendas | oscuro | 0.101 | 0.103 | 21.1 | 12.3 | 22.8 | 3.06 | 0.103 |
+| Personas | claro | 0.103 | 0.104 | 10.9 | 10.5 | 10.7 | 3.15 | 0.106 |
+| Personas | oscuro | 0.105 | 0.106 | 11.6 | 11.1 | 9.9 | 3.10 | 0.108 |
+| Tiendas | claro | 0.105 | 0.110 | 19.8 | 15.5 | 23.2 | 3.05 | 0.110 |
+| Tiendas | oscuro | 0.101 | 0.101 | 20.0 | 9.5 | 22.9 | 3.06 | 0.103 |
 
 Orden fijo de leyenda y apilado: personas Axel, Ximena, Karen, Conjunto; tiendas Walmart, Bodega Aurrera, Sam's Club, Mercado (los «vecinos» de la tabla son los contiguos en ese orden). Con cuatro niveles separados ≥ 0.10 no cabe la banda de L de la skill dataviz (§8.7): el escalonamiento ocupa casi todo el rango que permite el contraste, así que algunos colores quedan muy oscuros en claro (L 0.30–0.31) o muy claros en oscuro (L 0.93–0.94). El piso de croma 0.10 se cumple en todos salvo Conjunto, que es bajo a propósito.
 
@@ -285,17 +384,17 @@ Para cada color, el rol más exigente (menor holgura) y la regla con la que cump
 | Axel | oscuro | Información | 16.5° | 0.180 | ΔL ≥ 0.15 | sí |
 | Ximena | claro | Error | 29.2° | 0.026 | Δ matiz ≥ 20° | sí |
 | Ximena | oscuro | Error | 30.1° | 0.051 | Δ matiz ≥ 20° | sí |
-| Karen | claro | Advertencia | 25.0° | 0.126 | Δ matiz ≥ 20° | sí |
-| Karen | oscuro | Advertencia | 25.2° | 0.060 | Δ matiz ≥ 20° | sí |
+| Karen | claro | Deuda / crédito | 22.9° | 0.127 | Δ matiz ≥ 20° | sí |
+| Karen | oscuro | Deuda / crédito | 23.4° | 0.059 | Δ matiz ≥ 20° | sí |
 | Conjunto | claro | Deuda / crédito | 30.9° | 0.094 | Δ matiz ≥ 20° | sí |
 | Conjunto | oscuro | Deuda / crédito | 30.5° | 0.157 | Δ matiz ≥ 20° | sí |
 | Walmart | claro | Información | 22.4° | 0.002 | Δ matiz ≥ 20° | sí |
-| Walmart | oscuro | Información | 22.6° | 0.065 | Δ matiz ≥ 20° | sí |
-| Bodega Aurrera | claro | Gasto | 24.6° | 0.106 | Δ matiz ≥ 20° | sí |
-| Bodega Aurrera | oscuro | Gasto | 24.6° | 0.045 | Δ matiz ≥ 20° | sí |
+| Walmart | oscuro | Información | 22.3° | 0.069 | Δ matiz ≥ 20° | sí |
+| Bodega Aurrera | claro | Error | 23.4° | 0.104 | Δ matiz ≥ 20° | sí |
+| Bodega Aurrera | oscuro | Error | 23.9° | 0.044 | Δ matiz ≥ 20° | sí |
 | Sam's Club | claro | Éxito | 24.7° | 0.106 | Δ matiz ≥ 20° | sí |
 | Sam's Club | oscuro | Ahorro | 24.7° | 0.144 | Δ matiz ≥ 20° | sí |
-| Mercado | claro | Error | 8.3° | 0.214 | ΔL ≥ 0.15 | sí |
+| Mercado | claro | Gasto | 16.9° | 0.214 | ΔL ≥ 0.15 | sí |
 | Mercado | oscuro | Error | 8.0° | 0.170 | ΔL ≥ 0.15 | sí |
 
 ### 7.5 De la propuesta del plan a los valores finales
@@ -304,14 +403,14 @@ Para cada color, el rol más exigente (menor holgura) y la regla con la que cump
 |---|---|---|---|
 | Axel | `#0F74C5` 250° L 0.55 | 4.34 / 2.47 | 256° · `#002E64` / `#4F83C8` |
 | Ximena | `#D375A4` 350° L 0.68 | 2.74 / 3.92 | 350° · `#A14E78` / `#FFACD3` |
-| Karen | `#E0AE57` 80° L 0.78 | 1.81 / 5.93 | 50° · `#C67544` / `#E28F5E` |
+| Karen | `#E0AE57` 80° L 0.78 | 1.81 / 5.93 | 333° · `#B870AC` / `#D389C6` |
 | Conjunto | `#495766` 250° L 0.45 | 6.61 / 1.62 | 280° · `#484B66` / `#E7EAFF` |
-| Walmart | `#2FB5D8` 220° L 0.72 | 2.15 / 4.99 | 262° · `#4065AC` / `#7BA4F0` |
-| Bodega Aurrera | `#FFA658` 60° L 0.80 | 1.73 / 6.21 | 50° · `#773400` / `#FFB389` |
+| Walmart | `#2FB5D8` 220° L 0.72 | 2.15 / 4.99 | 262° · `#4065AC` / `#7AA3EE` |
+| Bodega Aurrera | `#FFA658` 60° L 0.80 | 1.73 / 6.21 | 356° · `#762C4C` / `#FFAAC9` |
 | Sam's Club | `#11957C` 175° L 0.60 | 3.34 / 3.21 | 175° · `#009D82` / `#99FFE4` |
 | Mercado | `#9C4438` 30° L 0.50 | 5.69 / 1.88 | 28° · `#5C0204` / `#C2665B` |
 
-Colisiones resueltas: las dos que lista decisiones §I (Karen 80° y Bodega 60° frente a advertencia 75°) y tres más que aparecen al aplicar la regla a todos los roles: Axel 250° frente a información 240°, Mercado 30° frente a gasto 25° y error 20°, y Walmart 220° justo en el límite de ahorro 200° e información 240°. Además, 4 valores del plan no llegaban a 3:1 sobre las superficies claras y 3 sobre las oscuras.
+Colisiones resueltas: las dos que lista decisiones §I (Karen 80° y Bodega 60° frente a advertencia 75°) y tres más que aparecen al aplicar la regla a todos los roles: Axel 250° frente a información 240°, Mercado 30° frente a gasto 25° y error 20°, y Walmart 220° justo en el límite de ahorro 200° e información 240°. Además, 4 valores del plan no llegaban a 3:1 sobre las superficies claras y 3 sobre las oscuras. En la versión 1.1 (K26) gasto pasa a terracota, Karen y Bodega Aurrera salen de 50° y Walmart ajusta su L en oscuro (PROVISIONAL); frente a Ximena, Karen y Bodega Aurrera quedan PROVISIONALES (bloqueo `U2a-rosas-ximena-bodega`). Detalle en «Cambios 1.1».
 
 ### 7.6 Reglas de uso de las categóricas
 
@@ -322,17 +421,21 @@ Colisiones resueltas: las dos que lista decisiones §I (Karen 80° y Bodega 60°
 
 ### 7.7 Pares cercanos en todo el sistema y su refuerzo
 
-Revisión de todos los pares entre los 8 roles, acción crítica, las 4 personas y las 4 tiendas, en cada tema, con matiz y L medidos en el hex final. Se listan los que quedan con Δ matiz < 20° **y** ΔL < 0.15, con el refuerzo que evita confundirlos (ninguno es categórica frente a rol):
+Revisión de todos los pares entre los 8 roles, acción crítica, las 4 personas, las 4 tiendas y la marca (paso 700 en claro y 400 en oscuro; hallazgo R3-04, versión 1.1), en cada tema, con matiz y L medidos en el hex final. Se listan los que quedan con Δ matiz < 20° **y** ΔL < 0.15, con el refuerzo que evita confundirlos (ninguno es categórica ni marca frente a rol):
 
 | Tema | Color A | Color B | Δ matiz | ΔL | Refuerzo |
 |---|---|---|---|---|---|
 | claro | Ingreso (rol) | Éxito (rol) | 14.9° | 0.000 | Ingreso siempre con «+» y flecha de entrada en cifras; éxito siempre con palomita y texto en avisos. |
-| claro | Gasto (rol) | Error (rol) | 5.5° | 0.001 | Contexto y forma: gasto solo como cifra con signo «−»; error solo como mensaje con icono de alerta y texto. Bloqueo U2-gasto-error. |
+| claro | Ximena (persona) | Karen (persona) | 17.1° | 0.103 | Mismo grupo: orden fijo, etiqueta directa y ΔL ≥ 0.10 dentro del grupo. **PROVISIONAL**: bloqueo `U2a-rosas-ximena-bodega` (¿basta este refuerzo frente a «≥ 20° o ΔL ≥ 0.15» de K26?). |
+| claro | Ximena (persona) | Bodega Aurrera (tienda) | 5.8° | 0.130 | Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre. **PROVISIONAL**: bloqueo `U2a-rosas-ximena-bodega` (¿basta este refuerzo frente a «≥ 20° o ΔL ≥ 0.15» de K26?). |
 | claro | Conjunto (persona) | Walmart (tienda) | 17.1° | 0.093 | Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre. |
+| claro | Conjunto (persona) | Marca 700 (marca) | 0.9° | 0.094 | Marca frente a categórica (R3-04): la marca solo vive en controles (botón primario, enlace subrayado, anillo de foco, elemento activo) y nunca marca a una persona o tienda; la categórica siempre va como punto, anillo de avatar o marca de serie junto a su nombre en texto neutro (forma y etiqueta). |
+| claro | Walmart (tienda) | Marca 700 (marca) | 18.0° | 0.000 | Marca frente a categórica (R3-04): la marca solo vive en controles (botón primario, enlace subrayado, anillo de foco, elemento activo) y nunca marca a una persona o tienda; la categórica siempre va como punto, anillo de avatar o marca de serie junto a su nombre en texto neutro (forma y etiqueta). |
 | oscuro | Ingreso (rol) | Éxito (rol) | 15.3° | 0.001 | Ingreso siempre con «+» y flecha de entrada en cifras; éxito siempre con palomita y texto en avisos. |
-| oscuro | Gasto (rol) | Error (rol) | 5.0° | 0.000 | Contexto y forma: gasto solo como cifra con signo «−»; error solo como mensaje con icono de alerta y texto. Bloqueo U2-gasto-error. |
-| oscuro | Axel (persona) | Walmart (tienda) | 6.1° | 0.115 | Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre. |
-| oscuro | Karen (persona) | Bodega Aurrera (tienda) | 0.8° | 0.104 | Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre. |
+| oscuro | Axel (persona) | Walmart (tienda) | 5.9° | 0.112 | Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre. |
+| oscuro | Ximena (persona) | Karen (persona) | 16.7° | 0.111 | Mismo grupo: orden fijo, etiqueta directa y ΔL ≥ 0.10 dentro del grupo. **PROVISIONAL**: bloqueo `U2a-rosas-ximena-bodega` (¿basta este refuerzo frente a «≥ 20° o ΔL ≥ 0.15» de K26?). |
+| oscuro | Ximena (persona) | Bodega Aurrera (tienda) | 6.2° | 0.006 | Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre. **PROVISIONAL**: bloqueo `U2a-rosas-ximena-bodega` (¿basta este refuerzo frente a «≥ 20° o ΔL ≥ 0.15» de K26?). |
+| oscuro | Walmart (tienda) | Marca 400 (marca) | 18.0° | 0.069 | Marca frente a categórica (R3-04): la marca solo vive en controles (botón primario, enlace subrayado, anillo de foco, elemento activo) y nunca marca a una persona o tienda; la categórica siempre va como punto, anillo de avatar o marca de serie junto a su nombre en texto neutro (forma y etiqueta). |
 
 ## 8. Paleta de gráficas (8 series)
 
@@ -422,7 +525,7 @@ Mínimo ΔL consecutivo en gris y simulaciones: **0.198** (umbral 0.10; el encar
 | 7 | `#9C70BC` · 0.619 | `#828282` · 0.606 | `#6080BF` · 0.603 | `#6B83BA` · 0.613 | `#987B8D` · 0.617 |
 | 8 | `#A0DE93` · 0.840 | `#CECECE` · 0.852 | `#E2D28E` · 0.861 | `#D9CC97` · 0.843 | `#9CD9CB` · 0.840 |
 
-ΔL en gris entre los 28 pares (informativo; la lectura estricta es el bloqueo `criterios-deltal`):
+ΔL en gris entre los 28 pares (informativo por K27: el umbral duro es ΔL ≥ 0.10 entre series consecutivas, §8.3, con forma del marcador, patrón de trazo o relleno y etiqueta directa como refuerzo; bloqueo `criterios-deltal` resuelto):
 
 **Tema claro**
 
@@ -503,7 +606,7 @@ Se usa el puesto 1, 225° («azul cielo»): queda a 45.3° de la serie más cerc
 | Borde de campo | neutral 600 | neutral 400 | 3.46 / 6.08 |
 | Anillo de foco (2 px, separación 2 px) | brand 600 | brand 400 | 3.56 / 6.03 |
 | Elemento activo, fila seleccionada | relleno brand 100, texto neutral 900, icono brand 700 | relleno brand 900, texto neutral 100, icono brand 300 | 5.14 / 8.04 |
-| Insignia de rol | texto rol 700 sobre rol 100 | texto rol 400 sobre rol 900 | 4.81 / 6.04 |
+| Insignia de rol | texto rol 700 sobre rol 100 | texto rol 400 sobre rol 900 | 4.81 / 6.02 |
 | Cifra de rol (con signo e icono) | rol 700 | rol 400 | 4.73 / 5.81 |
 | Series de gráficas | `color.chart.<n>.light` | `color.chart.<n>.dark` | 3.14 / 3.10 |
 | Personas y tiendas | `color.person|store.*.light` | `color.person|store.*.dark` | 3.05 / 3.06 |
@@ -566,14 +669,18 @@ Formato DTCG con `$value` en hex sRGB, como pide el encargo. Cada token lleva `$
 
 1. Los 22 valores de partida del plan §4.3 (marca y neutro) se reproducen exactamente con la tabla de perfil de §2.3; el plan no la explicitaba.
 2. Los valores de rol del plan (L 0.56) quedan entre 3.92 y 4.47:1 sobre las superficies claras; 7 de 7 quedan bajo 4.5:1 en al menos una de las dos. Se usan pasos de escala (claro 700, oscuro 400); el paso 600 que pedía el encargo da 3.26–3.70:1 (§6.2).
-3. Gasto (25°) y error (20°), ambos decididos, son indistinguibles por color (ΔE 1.2 / 1.0). Bloqueo `U2-gasto-error`.
+3. Versión 1.1 (K26): gasto pasa de 25° a 45° y deja de confundirse con error 20° (ΔE normal 5.5 en claro y 5.1 en oscuro; en la 1.0 eran 1.2 y 1.0). Bloqueo `U2-gasto-error` resuelto (opción 2).
 4. Además de las dos colisiones listadas en decisiones §I, la regla de separación detecta tres más en la propuesta categórica del plan: Axel–información, Mercado–gasto/error y Walmart en el límite exacto de 20°. Las cinco quedan resueltas (§7.5).
 5. 4 colores categóricos del plan no llegaban a 3:1 sobre las superficies claras y 3 sobre las oscuras; no existe un valor único que cumpla 3:1 en ambos temas y además se escalone (ventana L_gris [0.596, 0.641]). Personas, tiendas y series tienen variante por tema (§7, §8).
-6. «ΔL ≥ 0.10 entre series» (plan §3.5) solo es alcanzable entre series consecutivas; entre todos los pares es matemáticamente imposible con 8 series (§8.5).
+6. «ΔL ≥ 0.10 entre series» (plan §3.5) solo es alcanzable entre series consecutivas; entre todos los pares es matemáticamente imposible con 8 series (§8.5). K27 fija esa lectura: umbral duro entre series consecutivas y los 28 pares como información (bloqueo `criterios-deltal` resuelto).
 7. culori 4.0.2 aplica las matrices de Machado sobre sRGB codificado, no lineal; la paleta pasa con ambas variantes (§8.6).
 8. Pares de roles con ΔE normal < 15 (ingreso–éxito, advertencia–acción crítica, entre otros, §6.6): ninguno comparte componente y todos llevan icono y texto.
 9. Ronda 1 de revisión (H-03): la serie 6 de gráficas («mostaza», 100°) usaba el matiz que decisiones §I reserva para acción crítica y el documento no declaraba la excepción. Pasa a «azul cielo» 225° (§8.8); con ese matiz, la búsqueda de orden de §8.2 pone óxido en la serie 3 y magenta en la 5. El script verifica la zona reservada 80°–120° en todos los tokens (§3).
 10. Encontrado al corregir H-03: con el orden de la ronda 0, las tres primeras series (índigo, verde azulado, magenta), que §8.5 reserva para dispersión, mapas y pequeños múltiplos, no llegaban al piso de ΔE 15 entre todos sus pares en visión normal (13.9 en claro y 12.8 en oscuro, entre índigo y magenta, ambas de clase B y con la misma luminosidad). Con el orden vigente dan 22.7 y 21.3, y el script lo verifica (§8.5).
+11. Versión 1.1 (K26): con gasto en 45° no queda hueco cálido a ≥ 20° de error, gasto y advertencia, y la L de Karen y de Bodega Aurrera las obliga a separarse de los roles por matiz; sus ventanas factibles quedan entre deuda y error y van a 333° y 356° (Cambios 1.1).
+12. Versión 1.1 (R3-04): con la marca en el barrido de §7.7 quedan cerca Conjunto (persona) y Marca 700 (marca) en claro (0.9°, ΔL 0.094); Walmart (tienda) y Marca 700 (marca) en claro (18.0°, ΔL 0.000); Walmart (tienda) y Marca 400 (marca) en oscuro (18.0°, ΔL 0.069); todos con refuerzo de forma y etiqueta, y ningún rol cerca de la marca.
+13. Versión 1.1: en oscuro, Bodega Aurrera en rosa no cabe en el escalonamiento ΔL ≥ 0.10 de las tiendas con Walmart en L 0.720 (ningún matiz entero cumple); Walmart pasa a L 0.716, PROVISIONAL con el bloqueo `U2a-walmart-oscuro`, y Bodega Aurrera usa croma 0.11 (Cambios 1.1).
+14. Ronda 1 de revisión U2a (H-01): en oscuro, Bodega Aurrera y Ximena quedan a 6.2°, ΔL 0.006 y ΔE 1.3 (a simple vista, el mismo color; en la 1.0, el par persona–tienda más parecido tenía ΔE 10.5), y en claro a 5.8°, ΔL 0.130 y ΔE 13.1. Karen y Ximena quedan a 17.1° y 16.7°, con ΔL 0.103 y 0.111. Con las L actuales, ningún matiz de sus ventanas las separa de Ximena por ≥ 20° o ΔL ≥ 0.15. §7.7 declara el refuerzo, pero U2-02 admite dos lecturas: bloqueo `U2a-rosas-ximena-bodega`, con 4 tokens PROVISIONALES (Cambios 1.1, punto 2).
 
 **Decisiones derivadas del cálculo** (no son supuestos: las fuerza un requisito explícito)
 
@@ -581,10 +688,11 @@ Formato DTCG con `$value` en hex sRGB, como pide el encargo. Cada token lleva `$
 - Variantes `light`/`dark` para personas, tiendas y series (un valor único no cumple 3:1 en ambos temas con escalonamiento).
 - Criterio de ΔL aplicado a series consecutivas, con umbral 0.10 (más estricto que el 0.08 del encargo).
 - Texto deshabilitado en claro con neutral 700 (el 600 incumple 4.5:1).
+- Versión 1.1: Bodega Aurrera con croma 0.11 y Karen con L 0.642 en claro (márgenes del escalonamiento de su grupo; Cambios 1.1).
 
-**Propuestas sujetas a la puerta 2:** ingreso 135° (§6.4, opción prevista en decisiones §I), la resolución de colisiones categóricas (§7.5) y la paleta de gráficas corregida en la ronda 1 (serie 6 en 225°, con óxido en la serie 3 y magenta en la 5; §8.2 y §8.8).
+**Propuestas sujetas a la puerta 2:** ingreso 135° (§6.4, opción prevista en decisiones §I), la resolución de colisiones categóricas (§7.5; en la versión 1.1, gasto 45°, Karen y Bodega Aurrera en sus matices nuevos, «Cambios 1.1») y la paleta de gráficas corregida en la ronda 1 (serie 6 en 225°, con óxido en la serie 3 y magenta en la 5; §8.2 y §8.8).
 
-**Bloqueos:** `docs/estado/bloqueos/U2-gasto-error.md` (gasto y error a 5°). No impide nada: se entregó con los valores decididos.
+**Bloqueos:** `docs/estado/bloqueos/U2a-walmart-oscuro.md` (versión 1.1: Walmart en oscuro con L 0.716 en vez de 0.720, PROVISIONAL; «Cambios 1.1») y `docs/estado/bloqueos/U2a-rosas-ximena-bodega.md` (ronda 1 de revisión, H-01: Karen y Bodega Aurrera bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena; 4 tokens PROVISIONALES; «Cambios 1.1», punto 2). Resueltos en la puerta 1: `U2-gasto-error` (K26) y `criterios-deltal` (K27).
 
 ## Anexo A. Tokens: ruta → hex
 
@@ -630,21 +738,21 @@ Lista completa y verificable de `C2-colores.json` (el script compara esta tabla 
 | `color.role.income.800` | `#335A18` | 0.425000 | 0.105000 | 135.00 |
 | `color.role.income.900` | `#22400D` | 0.335000 | 0.084000 | 135.00 |
 | `color.role.income.950` | `#142907` | 0.255000 | 0.063000 | 135.00 |
-| `color.role.expense.light` | `#A44541` | 0.515000 | 0.126000 | 25.00 |
-| `color.role.expense.dark` | `#FC9A92` | 0.785000 | 0.119000 | 25.00 |
-| `color.role.expense.surface-light` | `#FFEEEC` | 0.962000 | 0.018695 | 25.00 |
-| `color.role.expense.surface-dark` | `#5A2220` | 0.335000 | 0.084000 | 25.00 |
-| `color.role.expense.50` | `#FFF8F8` | 0.985000 | 0.007240 | 25.00 |
-| `color.role.expense.100` | `#FFEEEC` | 0.962000 | 0.018695 | 25.00 |
-| `color.role.expense.200` | `#FFDDDA` | 0.925000 | 0.038089 | 25.00 |
-| `color.role.expense.300` | `#FFC1BB` | 0.865000 | 0.072409 | 25.00 |
-| `color.role.expense.400` | `#FC9A92` | 0.785000 | 0.119000 | 25.00 |
-| `color.role.expense.500` | `#E77770` | 0.695000 | 0.140000 | 25.00 |
-| `color.role.expense.600` | `#C85B56` | 0.605000 | 0.140000 | 25.00 |
-| `color.role.expense.700` | `#A44541` | 0.515000 | 0.126000 | 25.00 |
-| `color.role.expense.800` | `#7E3330` | 0.425000 | 0.105000 | 25.00 |
-| `color.role.expense.900` | `#5A2220` | 0.335000 | 0.084000 | 25.00 |
-| `color.role.expense.950` | `#3C1413` | 0.255000 | 0.063000 | 25.00 |
+| `color.role.expense.light` | `#A04B20` | 0.515000 | 0.126000 | 45.00 |
+| `color.role.expense.dark` | `#F8A078` | 0.785000 | 0.119000 | 45.00 |
+| `color.role.expense.surface-light` | `#FFEFE8` | 0.962000 | 0.020215 | 45.00 |
+| `color.role.expense.surface-dark` | `#59260B` | 0.335000 | 0.084000 | 45.00 |
+| `color.role.expense.50` | `#FFF9F6` | 0.985000 | 0.007839 | 45.00 |
+| `color.role.expense.100` | `#FFEFE8` | 0.962000 | 0.020215 | 45.00 |
+| `color.role.expense.200` | `#FFDED0` | 0.925000 | 0.041095 | 45.00 |
+| `color.role.expense.300` | `#FFC3A9` | 0.865000 | 0.077809 | 45.00 |
+| `color.role.expense.400` | `#F8A078` | 0.785000 | 0.119000 | 45.00 |
+| `color.role.expense.500` | `#E37E4E` | 0.695000 | 0.140000 | 45.00 |
+| `color.role.expense.600` | `#C46231` | 0.605000 | 0.140000 | 45.00 |
+| `color.role.expense.700` | `#A04B20` | 0.515000 | 0.126000 | 45.00 |
+| `color.role.expense.800` | `#7C3815` | 0.425000 | 0.105000 | 45.00 |
+| `color.role.expense.900` | `#59260B` | 0.335000 | 0.084000 | 45.00 |
+| `color.role.expense.950` | `#3B1705` | 0.255000 | 0.063000 | 45.00 |
 | `color.role.savings.light` | `#00767B` | 0.515000 | 0.087553 | 200.00 |
 | `color.role.savings.dark` | `#3FD0D7` | 0.785000 | 0.119000 | 200.00 |
 | `color.role.savings.surface-light` | `#D8FAFC` | 0.962000 | 0.035000 | 200.00 |
@@ -754,14 +862,14 @@ Lista completa y verificable de `C2-colores.json` (el script compara esta tabla 
 | `color.person.axel.dark` | `#4F83C8` | 0.605000 | 0.120000 | 256.00 |
 | `color.person.ximena.light` | `#A14E78` | 0.540000 | 0.120000 | 350.00 |
 | `color.person.ximena.dark` | `#FFACD3` | 0.835000 | 0.108508 | 350.00 |
-| `color.person.karen.light` | `#C67544` | 0.640000 | 0.120000 | 50.00 |
-| `color.person.karen.dark` | `#E28F5E` | 0.725000 | 0.120000 | 50.00 |
+| `color.person.karen.light` | `#B870AC` | 0.642000 | 0.120000 | 333.00 |
+| `color.person.karen.dark` | `#D389C6` | 0.725000 | 0.120000 | 333.00 |
 | `color.person.shared.light` | `#484B66` | 0.420000 | 0.045000 | 280.00 |
 | `color.person.shared.dark` | `#E7EAFF` | 0.940000 | 0.029064 | 280.00 |
 | `color.store.walmart.light` | `#4065AC` | 0.515000 | 0.120000 | 262.00 |
-| `color.store.walmart.dark` | `#7BA4F0` | 0.720000 | 0.120000 | 262.00 |
-| `color.store.bodega-aurrera.light` | `#773400` | 0.410000 | 0.108391 | 50.00 |
-| `color.store.bodega-aurrera.dark` | `#FFB389` | 0.830000 | 0.104938 | 50.00 |
+| `color.store.walmart.dark` | `#7AA3EE` | 0.716000 | 0.120000 | 262.00 |
+| `color.store.bodega-aurrera.light` | `#762C4C` | 0.410000 | 0.110000 | 356.00 |
+| `color.store.bodega-aurrera.dark` | `#FFAAC9` | 0.829000 | 0.106641 | 356.00 |
 | `color.store.sams-club.light` | `#009D82` | 0.620000 | 0.116902 | 175.00 |
 | `color.store.sams-club.dark` | `#99FFE4` | 0.930000 | 0.103566 | 175.00 |
 | `color.store.market.light` | `#5C0204` | 0.300000 | 0.120000 | 28.00 |

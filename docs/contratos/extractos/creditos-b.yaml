@@ -1,0 +1,1563 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «creditos-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto creditos-b"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Créditos» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Créditos"
+    description: "Líneas, compras a crédito, pagos, promociones y comparador de escenarios."
+paths:
+  /api/v1/credit-purchases:
+    get:
+      operationId: "listCreditPurchases"
+      tags:
+        - "Créditos"
+      summary: "Compras a crédito"
+      description: "Orden por defecto: -purchase_date."
+      x-necesidades:
+        - "N-202"
+        - "N-215"
+      x-tablas:
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "promotion"
+        - "scheduled_payment"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Family"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - name: "status"
+          in: "query"
+          required: false
+          description: "active (vivas, por defecto), paid_off o cancelled."
+          schema:
+            type: "string"
+            enum:
+              - "active"
+              - "paid_off"
+              - "cancelled"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditPurchasePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createCreditPurchase"
+      tags:
+        - "Créditos"
+      summary: "Crear compra a crédito"
+      description: "Crear compra a crédito."
+      x-necesidades:
+        - "N-218"
+      x-tablas:
+        - "audit_log"
+        - "credit"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "credit_term_rate"
+        - "expense"
+        - "expense_share"
+        - "idempotency_key"
+        - "person"
+        - "promotion"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditPurchaseCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditPurchase"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/credit-purchases/preview:
+    post:
+      operationId: "previewCreditPurchase"
+      tags:
+        - "Créditos"
+      summary: "Vista previa del cálculo"
+      description: "No guarda nada (no necesita Idempotency-Key)."
+      x-necesidades:
+        - "N-216"
+        - "N-217"
+      x-tablas:
+        - "credit"
+        - "credit_term_rate"
+        - "person"
+        - "promotion"
+        - "scheduled_payment"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditPurchaseCreate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditPurchasePreview"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/credit-purchases/{credit_purchase_id}:
+    get:
+      operationId: "getCreditPurchase"
+      tags:
+        - "Créditos"
+      summary: "Compra a crédito"
+      description: "Compra a crédito."
+      x-necesidades:
+        - "N-215"
+      x-tablas:
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "promotion"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      parameters:
+        - name: "credit_purchase_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_purchase_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditPurchase"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    patch:
+      operationId: "updateCreditPurchase"
+      tags:
+        - "Créditos"
+      summary: "Editar compra"
+      description: "Editar compra."
+      x-necesidades:
+        - "N-219"
+      x-tablas:
+        - "audit_log"
+        - "credit_purchase"
+      parameters:
+        - name: "credit_purchase_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_purchase_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditPurchaseUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditPurchase"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteCreditPurchase"
+      tags:
+        - "Créditos"
+      summary: "Eliminar compra"
+      description: "Quita sus pagos programados. Con pagos hechos responde 409 `has_payments`."
+      x-necesidades:
+        - "N-219"
+      x-tablas:
+        - "audit_log"
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      parameters:
+        - name: "credit_purchase_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_purchase_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/scheduled-payments:
+    get:
+      operationId: "listScheduledPayments"
+      tags:
+        - "Créditos"
+      summary: "Pagos programados"
+      description: "Orden por defecto: due_date. Por defecto: con alguna parte pendiente, de hoy en adelante."
+      x-necesidades:
+        - "N-192"
+        - "N-206"
+        - "N-207"
+        - "N-215"
+        - "N-260"
+      x-tablas:
+        - "credit"
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "person"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Family"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - name: "credit_purchase_id"
+          in: "query"
+          required: false
+          description: "Pagos de una compra (amortización N-206, abonos N-207)."
+          schema:
+            type: "integer"
+        - name: "status"
+          in: "query"
+          required: false
+          description: "pending (alguna parte sin pagar), paid u overdue."
+          schema:
+            type: "string"
+            enum:
+              - "pending"
+              - "paid"
+              - "overdue"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScheduledPaymentPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/scheduled-payments/{scheduled_payment_id}/payments:
+    post:
+      operationId: "markScheduledPaymentPaid"
+      tags:
+        - "Créditos"
+      summary: "Marcar parte como pagada"
+      description: "Cada parte (hogar o Karen) se marca por separado; fecha real (hoy por defecto) y monto (el programado por defecto). La reposición de capital la calcula S3."
+      x-necesidades:
+        - "N-210"
+      x-tablas:
+        - "audit_log"
+        - "credit"
+        - "credit_payment"
+        - "idempotency_key"
+        - "person"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      parameters:
+        - name: "scheduled_payment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (scheduled_payment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditPaymentCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditPayment"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/credit-payments/{credit_payment_id}:
+    delete:
+      operationId: "deleteCreditPayment"
+      tags:
+        - "Créditos"
+      summary: "Desmarcar pago"
+      description: "Desmarcar pago."
+      x-necesidades:
+        - "N-210"
+      x-tablas:
+        - "audit_log"
+        - "credit_payment"
+      parameters:
+        - name: "credit_payment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (credit_payment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/promotions:
+    get:
+      operationId: "listPromotions"
+      tags:
+        - "Créditos"
+      summary: "Promociones"
+      description: "Por defecto: vigentes y futuras. Orden: valid_from."
+      x-necesidades:
+        - "N-217"
+        - "N-287"
+      x-tablas:
+        - "credit"
+        - "promotion"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - name: "merchant_name"
+          in: "query"
+          required: false
+          description: "Comercio."
+          schema:
+            type: "string"
+        - name: "valid_on"
+          in: "query"
+          required: false
+          description: "Vigentes en esta fecha (N-217: fecha de compra)."
+          schema:
+            $ref: "componentes-comunes.yaml#/components/schemas/Date"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromotionPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/scenario-comparisons:
+    post:
+      operationId: "compareScenarios"
+      tags:
+        - "Créditos"
+      summary: "Comparador de escenarios"
+      description: "Búsqueda exhaustiva sin solver (crédito × plazo × fecha ± días × promoción). Respeta las 3 restricciones duras: las que trae la petición sobreescriben solo para esta comparación las globales (K16). Si después de eso falta alguna (o el «± días»), responde 200 con status missing_constraints, sin escenarios ni recomendación, y la pantalla avisa «faltan restricciones». El tope por persona es objetivo, no restricción (K13). No guarda nada: «Usar escenario» abre la captura de compra (createCreditPurchase). Tiempo máximo PROVISIONAL: propuesta escrita en el bloqueo C1-valores-k31 (Axel lo aprueba en la puerta 2)."
+      x-provisional: true
+      x-necesidades:
+        - "N-226"
+      x-tablas:
+        - "app_setting"
+        - "credit"
+        - "credit_purchase"
+        - "credit_term_rate"
+        - "person"
+        - "price"
+        - "promotion"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+        - "store"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScenarioRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScenarioResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    BasisPoints:
+      type: "integer"
+      minimum: 0
+      maximum: 10000
+      description: "Porcentaje en puntos base: 10000 = 100 %, 5000 = 50 %."
+      examples:
+        - 5000
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    CostShareRulePartInput:
+      type: "object"
+      description: "Parte de una regla de reparto (entrada)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona (cost_share_rule_part.person_id)."
+        pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje (cost_share_rule_part.pct_bp)."
+        fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto fijo (cost_share_rule_part.fixed_cents)."
+      required:
+        - "person_id"
+      additionalProperties: false
+    ShareLine:
+      type: "object"
+      description: "Parte de dinero de una persona."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona (expense_share.person_id): el titular representa al hogar."
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de la parte (expense_share.amount_cents)."
+      required:
+        - "person_id"
+        - "amount_cents"
+      x-calculado: true
+    ExpenseItemInput:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de renglón de gasto (tabla `expense_item`)."
+      x-tabla: "expense_item"
+      properties:
+        line_no:
+          type: "integer"
+          description: "Orden del renglón en el ticket"
+        description:
+          type: "string"
+          description: "Texto del renglón como viene en el ticket"
+        presentation_id:
+          type: "integer"
+          description: "Presentación del catálogo. NULL mientras no se liga"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad de presentaciones ×1000: 3 piezas = 3000, 1.250 kg a granel = 1250"
+        unit_price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio por presentación en centavos"
+        line_total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Importe del renglón con descuentos e IVA. La suma de renglones es el importe del gasto"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del renglón (Hogar, Karen, Conjunto 50/50 o una regla de un solo uso para «mixto»). NULL = el del gasto"
+        cost_share_rule_parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePartInput"
+          description: "Reparto «mixto» del renglón: crea una regla de un solo uso (cost_share_rule.is_template = 0)."
+      required:
+        - "line_no"
+        - "description"
+        - "quantity_milli"
+        - "line_total_cents"
+    ExpenseCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de un gasto (N-054). payment_method = credit no se acepta aquí: la compra a crédito crea su gasto (POST /api/v1/credit-purchases). kind por defecto: variable, o upcoming si la fecha es posterior a hoy. description es opcional: si falta, el gasto queda sin descripción (NULL) y la pantalla muestra la categoría; la API no inventa un texto de relleno (S1 C-16). captured_at (opcional) es el instante en que se capturó en el teléfono: una captura atrasada de la cola sin conexión lo manda junto con su Idempotency-Key (K9); sin valor, la hora de captura es la del alta."
+      x-tabla: "expense"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "variable"
+            - "upcoming"
+          description: "fixed = gasto fijo, variable = gasto del día a día, upcoming = gasto venidero que ya ocurrió o quedó comprometido"
+        description:
+          type: "string"
+          description: "Concepto o comercio. NULL = sin descripción: el registro en 3 toques no la pide (N-054) y la pantalla muestra la categoría"
+        category_id:
+          type: "integer"
+          description: "Categoría"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          minimum: 1
+          description: "Monto total en centavos, mayor que 0."
+        expense_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra o consumo. El devengo empieza en su mes"
+        accrual_months:
+          type: "integer"
+          description: "Meses calendario en que se devenga desde el mes de expense_date (despensa bimestral = 2, mitad por mes)"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Medio de pago. credit = el efectivo sale según los pagos programados de su credit_purchase"
+        paid_by_person_id:
+          type: "integer"
+          description: "Quién pagó de su bolsillo (papel de contado de Karen). NULL = el titular"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se atribuye (comida fuera de Ximena). NULL = hogar en general"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto. NULL = la regla de la categoría o la de por defecto"
+        store_id:
+          type: "integer"
+          description: "Tienda donde se compró"
+        planned_item_id:
+          type: "integer"
+          description: "Partida planificada que cumple (gasto fijo o venidero)"
+        notes:
+          type: "string"
+          description: "notes"
+        captured_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el gasto en el teléfono. En una captura atrasada es anterior a created_at. NULL = captura en línea: la hora de captura es created_at"
+        cost_share_rule_parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePartInput"
+          description: "Reparto propio del gasto («Conjunto con %»): crea una regla de un solo uso. Excluye cost_share_rule_id."
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExpenseItemInput"
+          description: "Renglones del ticket (expense_item). Σ line_total_cents = amount_cents."
+      required:
+        - "category_id"
+        - "amount_cents"
+        - "expense_date"
+        - "payment_method"
+    CreditPurchaseShare:
+      type: "object"
+      description: "Parte de una compra a crédito (tabla `credit_purchase_share`). Capital, intereses y total de cada persona en una compra a crédito. El capital sale de lo que cada quien compró y los intereses se reparten en proporción al capital, con el resto para el titular. Campos ausentes = sin valor (NULL)."
+      x-tabla: "credit_purchase_share"
+      required:
+        - "id"
+        - "credit_purchase_id"
+        - "person_id"
+        - "principal_cents"
+        - "interest_cents"
+        - "total_cents"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_purchase_id:
+          type: "integer"
+          description: "Compra"
+        person_id:
+          type: "integer"
+          description: "Persona"
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital de la persona (Axel 190300, Karen 119150)"
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses de la persona (Axel 49228, Karen 30822)"
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total de la persona (Axel 239528, Karen 149972)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        fortnight_payment_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Pago por quincena de la persona (primero de la serie)."
+          x-calculado: true
+    CreditPurchase:
+      type: "object"
+      description: "Compra a crédito (tabla `credit_purchase`). Compra o disposición con un crédito: capital, intereses cotizados (IVA incluido), plazo, primer pago y promoción. Solo el capital usa y repone la línea. Campos ausentes = sin valor (NULL)."
+      x-tabla: "credit_purchase"
+      required:
+        - "id"
+        - "credit_id"
+        - "kind"
+        - "purchase_date"
+        - "principal_cents"
+        - "interest_cents"
+        - "total_cents"
+        - "term_count"
+        - "payment_frequency"
+        - "first_payment_date"
+        - "interest_source"
+        - "interest_includes_vat"
+        - "status"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_id:
+          type: "integer"
+          description: "Crédito usado"
+        expense_id:
+          type: "integer"
+          description: "Gasto que originó la compra (despensa 1). NULL en disposiciones sin gasto (desembolso de préstamo)"
+        kind:
+          type: "string"
+          enum:
+            - "installment_plan"
+            - "single_charge"
+            - "loan_disbursement"
+          description: "installment_plan = pagos fijos (Kueski, meses sin intereses, abonos de tienda), single_charge = cargo normal de tarjeta, loan_disbursement = préstamo con tabla de amortización"
+        description:
+          type: "string"
+          description: "Descripción corta"
+        purchase_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra (2026-10-10)"
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital: lo que usa la línea (309450)"
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses de todo el plazo, IVA incluido, tal como los cotizó el acreedor (80050). Nunca reponen la línea"
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total a pagar (389500)"
+        term_count:
+          type: "integer"
+          description: "Número de pagos (4)"
+        payment_frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+          description: "Frecuencia de los pagos (quincenal)"
+        first_payment_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer pago (2026-10-30)"
+        interest_source:
+          type: "string"
+          enum:
+            - "quoted"
+            - "term_table"
+            - "promotion"
+            - "amortization"
+          description: "Origen de los intereses: quoted = cotización del acreedor al pagar, term_table = tabla por plazo, promotion = promoción, amortization = tabla de amortización"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa de esta compra (cotización: intereses/capital = 80050/309450)"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa"
+        rate_basis:
+          type: "string"
+          enum:
+            - "term_total"
+            - "annual"
+          description: "term_total = sobre el capital por todo el plazo (Kueski), annual = tasa anual (préstamo)"
+        interest_includes_vat:
+          type: "boolean"
+          description: "1 = los intereses ya traen IVA (Kueski)"
+        promotion_id:
+          type: "integer"
+          description: "Promoción aplicada"
+        status:
+          type: "string"
+          enum:
+            - "active"
+            - "paid_off"
+            - "cancelled"
+          description: "active = con pagos pendientes (compra viva), paid_off = liquidada, cancelled = cancelada"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se muestra la tasa de esta compra, los mismos con que se capturó o cotizó. NULL = sin tasa o sin dato"
+        shares:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CreditPurchaseShare"
+          description: "Partes por persona (credit_purchase_share)."
+          x-calculado: true
+        payments_made:
+          type: "integer"
+          description: "Pagos programados completos."
+          x-calculado: true
+        payments_total:
+          type: "integer"
+          description: "Pagos de la serie."
+          x-calculado: true
+        balance_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Saldo por pagar."
+          x-calculado: true
+        rate_pct:
+          type: "string"
+          description: "Tasa de la compra como se capturó o cotizó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; ausente sin tasa o sin decimales."
+          x-calculado: true
+    CreditPurchaseShareInput:
+      type: "object"
+      description: "Capital por persona (credit_purchase_share.principal_cents)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona (titular u externa)."
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital que compró esa persona."
+      required:
+        - "person_id"
+        - "principal_cents"
+      additionalProperties: false
+    CreditPurchaseCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de una compra a crédito (N-218). interest_cents de la cotización (interest_source quoted) o, sin cotización, del plazo con la tasa de la tabla (term_table); el motor S3 genera las partes y los pagos programados con el último ajustando centavos. Canon despensa 1: principal 309450, interest 80050, total 389500, 4 pagos de 97375."
+      x-tabla: "credit_purchase"
+      properties:
+        credit_id:
+          type: "integer"
+          description: "Crédito usado"
+        kind:
+          type: "string"
+          enum:
+            - "installment_plan"
+            - "single_charge"
+            - "loan_disbursement"
+          description: "installment_plan = pagos fijos (Kueski, meses sin intereses, abonos de tienda), single_charge = cargo normal de tarjeta, loan_disbursement = préstamo con tabla de amortización"
+        description:
+          type: "string"
+          description: "Descripción corta"
+        purchase_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra (2026-10-10)"
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital: lo que usa la línea (309450)"
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses de todo el plazo, IVA incluido, tal como los cotizó el acreedor (80050). Nunca reponen la línea"
+        term_count:
+          type: "integer"
+          description: "Número de pagos (4)"
+        payment_frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+          description: "Frecuencia de los pagos (quincenal)"
+        first_payment_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer pago (2026-10-30)"
+        interest_source:
+          type: "string"
+          enum:
+            - "quoted"
+            - "term_table"
+            - "promotion"
+            - "amortization"
+          description: "Origen de los intereses: quoted = cotización del acreedor al pagar, term_table = tabla por plazo, promotion = promoción, amortization = tabla de amortización"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa de esta compra (cotización: intereses/capital = 80050/309450)"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa"
+        rate_basis:
+          type: "string"
+          enum:
+            - "term_total"
+            - "annual"
+          description: "term_total = sobre el capital por todo el plazo (Kueski), annual = tasa anual (préstamo)"
+        interest_includes_vat:
+          type: "boolean"
+          description: "1 = los intereses ya traen IVA (Kueski)"
+        promotion_id:
+          type: "integer"
+          description: "Promoción aplicada"
+        notes:
+          type: "string"
+          description: "notes"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se muestra la tasa de esta compra, los mismos con que se capturó o cotizó. NULL = sin tasa o sin dato"
+        expense_id:
+          type: "integer"
+          description: "Gasto existente que origina la compra (credit_purchase.expense_id)."
+        expense:
+          $ref: "#/components/schemas/ExpenseCreate"
+          description: "Gasto vinculado que se crea si no existe (payment_method = credit lo pone la API)."
+        shares:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CreditPurchaseShareInput"
+          description: "Capital por persona (desde los renglones del ticket o capturado). Sin partes: todo al titular."
+      required:
+        - "credit_id"
+        - "kind"
+        - "purchase_date"
+        - "principal_cents"
+        - "term_count"
+    CreditPurchaseUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios de una compra (N-219): descripción, notas o cancelación (status cancelled). Los montos no se editan: se elimina y se crea de nuevo."
+      x-tabla: "credit_purchase"
+      properties:
+        description:
+          type:
+            - "string"
+            - "null"
+          description: "Descripción corta · null borra el valor"
+        status:
+          type: "string"
+          enum:
+            - "active"
+            - "paid_off"
+            - "cancelled"
+          description: "active = con pagos pendientes (compra viva), paid_off = liquidada, cancelled = cancelada"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    ScheduledPayment:
+      type: "object"
+      description: "Pago programado (tabla `scheduled_payment`). Cada pago de la serie de una compra: fecha, monto, capital que repone e intereses. Se guarda ya calculado al centavo (el último de la serie ajusta centavos). Campos ausentes = sin valor (NULL)."
+      x-tabla: "scheduled_payment"
+      required:
+        - "id"
+        - "credit_purchase_id"
+        - "seq"
+        - "due_date"
+        - "amount_cents"
+        - "principal_cents"
+        - "interest_cents"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_purchase_id:
+          type: "integer"
+          description: "Compra a la que pertenece"
+        seq:
+          type: "integer"
+          description: "Número de pago dentro de la serie (1 a term_count)"
+        due_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de pago (2026-10-30, 2026-11-15, 2026-11-30, 2026-12-15)"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto del pago (97375)"
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital que repone la línea al pagarse (77363, el último 77361)"
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses del pago, no reponen la línea (20012, el último 20014)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        credit_id:
+          type: "integer"
+          description: "Línea."
+          x-calculado: true
+        shares:
+          type: "array"
+          items:
+            type: "object"
+            description: "Parte de un pago."
+            properties:
+              person_id:
+                type: "integer"
+                description: "Persona."
+              amount_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto programado (scheduled_payment_share)."
+              paid_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Pagado (Σ credit_payment de la persona)."
+              status:
+                type: "string"
+                enum:
+                  - "paid"
+                  - "pending"
+                  - "overdue"
+                description: "Pagada, pendiente o sin marcar con fecha pasada."
+            required:
+              - "person_id"
+              - "amount_cents"
+              - "paid_cents"
+              - "status"
+            x-calculado: true
+          description: "Partes por persona y su estado."
+          x-calculado: true
+        status:
+          type: "string"
+          enum:
+            - "paid"
+            - "pending"
+            - "overdue"
+          description: "Estado del pago completo."
+          x-calculado: true
+        balance_after_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Saldo de la compra después de este pago (amortización y abonos)."
+          x-calculado: true
+    CreditPurchasePreview:
+      type: "object"
+      description: "Vista previa sin guardar (N-216, motor S3)."
+      properties:
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital."
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses."
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total."
+        shares:
+          type: "array"
+          items:
+            type: "object"
+            description: "Parte."
+            properties:
+              person_id:
+                type: "integer"
+                description: "Persona."
+              principal_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Capital."
+              interest_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Intereses."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total."
+              fortnight_payment_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Pago por quincena."
+            required:
+              - "person_id"
+              - "principal_cents"
+              - "interest_cents"
+              - "total_cents"
+              - "fortnight_payment_cents"
+            x-calculado: true
+          description: "Partes."
+        schedule:
+          type: "array"
+          items:
+            type: "object"
+            description: "Pago."
+            properties:
+              seq:
+                type: "integer"
+                description: "Número."
+              due_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha."
+              amount_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto."
+              principal_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Capital."
+              interest_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Interés."
+              shares:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ShareLine"
+                description: "Partes del pago."
+            required:
+              - "seq"
+              - "due_date"
+              - "amount_cents"
+              - "principal_cents"
+              - "interest_cents"
+              - "shares"
+            x-calculado: true
+          description: "Serie; el último ajusta centavos."
+        promotion_applies:
+          type: "boolean"
+          description: "true si la promoción aplica (comercio, compra mínima, vigencia)."
+        promotion_issue:
+          type: "string"
+          description: "Motivo si no aplica."
+      required:
+        - "principal_cents"
+        - "interest_cents"
+        - "total_cents"
+        - "shares"
+        - "schedule"
+      x-calculado: true
+    CreditPayment:
+      type: "object"
+      description: "Pago hecho (tabla `credit_payment`). Pago realmente hecho a un crédito: quién pagó, cuándo y cuánto, y qué pago programado o corte cubre. Con esto se sabe si Karen ya pagó su parte. Campos ausentes = sin valor (NULL)."
+      x-tabla: "credit_payment"
+      required:
+        - "id"
+        - "credit_id"
+        - "payer_person_id"
+        - "paid_date"
+        - "amount_cents"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_id:
+          type: "integer"
+          description: "Crédito pagado"
+        scheduled_payment_id:
+          type: "integer"
+          description: "Pago programado que cubre. NULL = abono libre (tarjeta)"
+        credit_statement_id:
+          type: "integer"
+          description: "Corte de tarjeta que paga"
+        payer_person_id:
+          type: "integer"
+          description: "Quién pagó (Karen paga directo su parte)"
+        paid_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del pago"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto pagado en centavos"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    CreditPaymentCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Marca como pagada la parte de una persona de un pago programado (N-210). El capital de una parte pagada por separado se repone solo cuando el pago se completa (K15)."
+      x-tabla: "credit_payment"
+      properties:
+        payer_person_id:
+          type: "integer"
+          description: "Quién pagó (Karen paga directo su parte)"
+        paid_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del pago"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto pagado en centavos"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "payer_person_id"
+        - "paid_date"
+        - "amount_cents"
+    Promotion:
+      type: "object"
+      description: "Promoción (tabla `promotion`). Calendario de promociones capturado a mano: comercio, plazo, tasa (0 % casi siempre), compra mínima y vigencia. Campos ausentes = sin valor (NULL)."
+      x-tabla: "promotion"
+      required:
+        - "id"
+        - "merchant_name"
+        - "term_count"
+        - "rate_num"
+        - "rate_den"
+        - "min_purchase_cents"
+        - "valid_from"
+        - "valid_to"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        credit_id:
+          type: "integer"
+          description: "Crédito al que aplica (Kueski). NULL = cualquiera"
+        merchant_name:
+          type: "string"
+          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
+        store_id:
+          type: "integer"
+          description: "Tienda registrada que corresponde al comercio, si existe"
+        term_count:
+          type: "integer"
+          description: "Plazo en pagos (4 quincenas)"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa promocional"
+        min_purchase_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
+        valid_from:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio de vigencia, inclusive"
+        valid_to:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
+        source_note:
+          type: "string"
+          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
+        is_current:
+          type: "boolean"
+          description: "Vigente hoy."
+          x-calculado: true
+        rate_pct:
+          type: "string"
+          description: "Tasa promocional como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; con tasa 0 la pantalla muestra «sin intereses» (N-287)."
+          x-calculado: true
+    OptimizerWeights:
+      type: "object"
+      description: "Pesos de los 4 objetivos (app_setting optimizer.weights; iguales y normalizados, decisión C)."
+      properties:
+        lowest_interest:
+          type: "integer"
+          description: "Menores intereses."
+        even_low_payment:
+          type: "integer"
+          description: "Pago por quincena parejo y bajo tope."
+        max_available:
+          type: "integer"
+          description: "Máximo disponible."
+        most_value_per_peso:
+          type: "integer"
+          description: "Comprar más por peso."
+      required:
+        - "lowest_interest"
+        - "even_low_payment"
+        - "max_available"
+        - "most_value_per_peso"
+      x-app-setting: "optimizer.weights"
+    ScenarioRequest:
+      type: "object"
+      description: "Compra planeada y restricciones (N-226). Las restricciones que se manden sobreescriben, solo para esta comparación, las globales de /settings/optimizer (K16); las que no se manden toman la global. Si alguna queda sin valor, el resultado avisa «faltan restricciones» y no recomienda."
+      properties:
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          minimum: 1
+          description: "Monto de la compra (planned_item.amount_cents)."
+          x-columna: "planned_item.amount_cents"
+        desired_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha deseada (planned_item.start_date)."
+          x-columna: "planned_item.start_date"
+        store_id:
+          type: "integer"
+          description: "Tienda o comercio (promotion.store_id)."
+        merchant_name:
+          type: "string"
+          description: "Comercio (promotion.merchant_name)."
+        shares:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CreditPurchaseShareInput"
+          description: "Quién compra: capital por persona."
+        min_available_buffer_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.min_available_buffer_cents"
+        max_live_purchases:
+          type: "integer"
+          description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.max_live_purchases"
+        zero_debt_by_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.zero_debt_by_date"
+        date_window_days:
+          type: "integer"
+          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          x-app-setting: "optimizer.date_window_days"
+        weights:
+          $ref: "#/components/schemas/OptimizerWeights"
+          description: "Pesos."
+      required:
+        - "amount_cents"
+        - "desired_date"
+      additionalProperties: false
+    Scenario:
+      type: "object"
+      description: "Escenario evaluado (motor S3, búsqueda exhaustiva)."
+      properties:
+        credit_id:
+          type: "integer"
+          description: "Línea."
+        term_count:
+          type: "integer"
+          description: "Plazo en pagos."
+        purchase_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de compra."
+        promotion_id:
+          type: "integer"
+          description: "Promoción aplicada."
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses totales."
+        max_fortnight_payment_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Pago máximo por quincena."
+        fortnight_payment_spread_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Diferencia entre la quincena más alta y la más baja."
+        min_available_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Disponible mínimo resultante."
+        max_live_purchases:
+          type: "integer"
+          description: "Compras vivas máximas."
+        zero_debt_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha en que la deuda queda en cero."
+        value_per_peso_milli:
+          type: "integer"
+          description: "Rendimiento por peso ×1000: unidades base de la canasta por peso gastado con los precios vigentes de cada tienda (K17)."
+        score_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Puntaje ponderado con normalización mín-máx entre los escenarios generados (K17)."
+      required:
+        - "credit_id"
+        - "term_count"
+        - "purchase_date"
+        - "interest_cents"
+        - "max_fortnight_payment_cents"
+        - "fortnight_payment_spread_cents"
+        - "min_available_cents"
+        - "max_live_purchases"
+        - "zero_debt_date"
+      x-calculado: true
+    ScenarioResult:
+      type: "object"
+      description: "Resultado del comparador (N-226): los 4 óptimos lado a lado y la recomendación ponderada (pesos iguales normalizados por defecto). Si faltan restricciones (K16) no evalúa ni recomienda: status = missing_constraints, listas vacías y missing_constraints dice cuáles faltan."
+      properties:
+        status:
+          type: "string"
+          enum:
+            - "ok"
+            - "missing_constraints"
+            - "no_valid_scenario"
+          description: "ok = hay recomendación; missing_constraints = faltan restricciones (K16); no_valid_scenario = ningún escenario respeta las restricciones."
+        missing_constraints:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "string"
+            enum:
+              - "min_available_buffer_cents"
+              - "max_live_purchases"
+              - "zero_debt_by_date"
+              - "date_window_days"
+          description: "Valores sin capturar (K16). Vacío = completos; con alguno, la pantalla muestra «faltan restricciones» y el comparador no recomienda."
+          x-calculado: true
+        constraints_used:
+          type: "object"
+          description: "Restricciones con que se evaluó: las de la petición o, si no vinieron, las globales (K16)."
+          properties:
+            min_available_buffer_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Colchón mínimo de disponible, medido en la línea que se usa (optimizer.min_available_buffer_cents, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.min_available_buffer_cents"
+            max_live_purchases:
+              type: "integer"
+              description: "Máximo de compras vivas a la vez en el crédito que se usa (optimizer.max_live_purchases, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.max_live_purchases"
+            zero_debt_by_date:
+              $ref: "componentes-comunes.yaml#/components/schemas/Date"
+              description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.zero_debt_by_date"
+            date_window_days:
+              type: "integer"
+              description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              x-app-setting: "optimizer.date_window_days"
+        evaluated_count:
+          type: "integer"
+          description: "Escenarios evaluados."
+        valid:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Scenario"
+          description: "Escenarios que respetan las 3 restricciones duras."
+        optima:
+          type: "object"
+          description: "Óptimo por objetivo."
+          properties:
+            lowest_interest:
+              $ref: "#/components/schemas/Scenario"
+              description: "Menores intereses."
+            even_low_payment:
+              $ref: "#/components/schemas/Scenario"
+              description: "Pago por quincena parejo y bajo tope."
+            max_available:
+              $ref: "#/components/schemas/Scenario"
+              description: "Máximo disponible."
+            most_value_per_peso:
+              $ref: "#/components/schemas/Scenario"
+              description: "Comprar más por peso."
+          x-calculado: true
+        recommendation:
+          $ref: "#/components/schemas/Scenario"
+          description: "Recomendación por puntaje ponderado; ausente si status no es ok."
+        rejected:
+          type: "array"
+          items:
+            type: "object"
+            description: "Descartado."
+            properties:
+              scenario:
+                $ref: "#/components/schemas/Scenario"
+                description: "Escenario."
+              violated_constraint:
+                type: "string"
+                enum:
+                  - "min_available_buffer"
+                  - "max_live_purchases"
+                  - "zero_debt_by_date"
+                description: "Restricción que viola."
+            required:
+              - "scenario"
+              - "violated_constraint"
+            x-calculado: true
+          description: "Descartados."
+      required:
+        - "status"
+        - "missing_constraints"
+        - "evaluated_count"
+        - "valid"
+        - "optima"
+        - "rejected"
+      x-calculado: true
+    CreditPurchasePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/CreditPurchase"
+      description: "Página de CreditPurchase con la envoltura única (Page)."
+    ScheduledPaymentPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/ScheduledPayment"
+      description: "Página de ScheduledPayment con la envoltura única (Page)."
+    PromotionPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Promotion"
+      description: "Página de Promotion con la envoltura única (Page)."

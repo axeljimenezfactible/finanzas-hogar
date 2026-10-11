@@ -1,15 +1,17 @@
 # Makefile · Finanzas Hogar
-# Verificación reproducible de los cimientos (WF-0 «Cimientos»). Detalle en README.md.
+# Verificación reproducible de los cimientos (WF-0 «Cimientos») y de la puerta 1 (flujo P1). Detalle en README.md.
 #
 #   make verify-wf0   SQL en base temporal, go build y go vet, colorimetría y validador OpenAPI
-#   make verify-c1    generador de C1 (build.py --check) y verify_c1.py contra la base migrada
-#   make verify-s1    s1_verifica.py (Anexo B del reporte de S1): ida y vuelta del oráculo y negativas
-#   make verify-all   verify-wf0 + verify-c1 + verify-s1
+#   make verify-c1    generador de C1 (build.py --check, incluidos los extractos) y verify_c1.py contra la base migrada
+#   make verify-s1    backend/db/tools/s1_verifica.py: esquema 1.2 (todas las migraciones), oráculo, negativas, Down y goose
+#   make verify-u1    docs/design/tools/verificar_u1.py: U1 1.1 contra model.json, data.json, C1 y las migraciones
+#   make verify-criterios  docs/criterios/tools/verif_final.sh: conteos, trazabilidad, citas y cifras canon (18 archivos)
+#   make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios
 #   make clean        borra los temporales de este Makefile
 #
-# Requisitos: GNU Make y bash; sqlite3 >= 3.37 (tablas STRICT); Go 1.26 o posterior;
+# Requisitos: GNU Make y bash; sqlite3 >= 3.37 (tablas STRICT); Go 1.27 o posterior (go.mod: go 1.27);
 # Python 3.11 o posterior; uv y uvx con openapi-spec-validator 0.9.0 (y pyyaml y jsonschema
-# para verify-c1) en su caché. Sin caché, la primera vez: make verify-wf0 UVX_FLAGS= UV_FLAGS=
+# para verify-c1 y verify-criterios) en su caché. Sin caché, la primera vez: make verify-wf0 UVX_FLAGS= UV_FLAGS=
 # Opcional: goose v3.28.0 en el PATH o con GOOSE=/ruta/a/goose para el ciclo up/down/up.
 # Los temporales van a datos/tmp/verify-wf0 y se borran al terminar bien; si algo falla,
 # quedan para revisarlos y «make clean» los quita.
@@ -26,6 +28,7 @@ MIGRATIONS := $(sort $(wildcard $(ROOT)/backend/db/migrations/*.sql))
 COLOR_PY   := $(ROOT)/docs/design/tools/colorimetria.py
 COLOR_OUT  := docs/design/colorimetria.md docs/design/contraste.csv docs/contratos/C2-colores.json docs/design/paleta.html
 C1GEN      := $(ROOT)/backend/internal/api/c1gen
+CRITERIOS_SH ?= $(ROOT)/docs/criterios/tools/verif_final.sh
 
 PYTHON     ?= python3
 SQLITE     ?= sqlite3
@@ -43,14 +46,16 @@ AWK_UP     := '/^-- \+goose Up/{s=1;next} /^-- \+goose Down/{s=0} s'
 AWK_DOWN   := '/^-- \+goose Down/{s=1;next} /^-- \+goose Up/{s=0} s'
 RM_TMP     := rm -rf "$(TMP)"; rmdir "$(TMP_ROOT)" 2>/dev/null || true
 
-.PHONY: help verify-wf0 verify-sql verify-go verify-color verify-openapi verify-c1 verify-s1 verify-all clean
+.PHONY: help verify-wf0 verify-sql verify-go verify-color verify-openapi verify-c1 verify-s1 verify-u1 verify-criterios verify-all clean
 
 help:
 	@echo "Finanzas Hogar · objetivos de make"
 	@echo "  make verify-wf0   SQL en base temporal, go build y go vet, colorimetría y validador OpenAPI"
-	@echo "  make verify-c1    generador de C1 (build.py --check) y verify_c1.py contra la base migrada"
-	@echo "  make verify-s1    s1_verifica.py del reporte de S1 (ida y vuelta del oráculo y negativas)"
-	@echo "  make verify-all   verify-wf0 + verify-c1 + verify-s1"
+	@echo "  make verify-c1    generador de C1 (build.py --check, incluidos los extractos) y verify_c1.py contra la base migrada"
+	@echo "  make verify-s1    backend/db/tools/s1_verifica.py (esquema 1.2, oráculo, negativas, Down y goose)"
+	@echo "  make verify-u1    docs/design/tools/verificar_u1.py (U1 1.1)"
+	@echo "  make verify-criterios  docs/criterios/tools/verif_final.sh (18 archivos de criterios)"
+	@echo "  make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios"
 	@echo "  make clean        borra datos/tmp/verify-wf0, backend/bin y las carpetas __pycache__"
 
 verify-wf0: verify-sql verify-go verify-color verify-openapi
@@ -124,26 +129,46 @@ verify-c1:
 	grep -E '^FALLA|RESULTADO' "$(TMP)/verify_c1.log" | sed 's/^/   /'
 	@$(RM_TMP)
 
-# Código que extrae y ejecuta s1_verifica.py desde su anexo (mientras no viva en una ruta propia).
-define S1_VERIFICA_PY
-import re
-t = open('docs/estado/wf0/S1-modelo-datos.md', encoding='utf-8').read()
-m = re.search(r'<!-- inicio s1_verifica.py -->\n```python\n(.*?)\n```\n<!-- fin s1_verifica.py -->', t, re.S)
-exec(compile(m.group(1), 's1_verifica.py', 'exec'))
-endef
-export S1_VERIFICA_PY
-
 verify-s1:
-	@echo "== S1: s1_verifica.py (Anexo B de docs/estado/wf0/S1-modelo-datos.md)"
+	@echo "== S1: backend/db/tools/s1_verifica.py (esquema 1.2: todas las migraciones, oráculo, negativas, Down y goose)"
 	@mkdir -p "$(TMP)"; \
-	cd "$(ROOT)" && GOOSE="$(GOOSE)" $(PYTHON) -I -c "$$S1_VERIFICA_PY" > "$(TMP)/s1_verifica.log" 2>&1 || { cat "$(TMP)/s1_verifica.log"; exit 1; }; \
-	cut -c1-110 "$(TMP)/s1_verifica.log" | sed 's/^/   /'; \
-	grep -oE 'suma pagos d1=[0-9]+ · parte Axel d1=[0-9]+' "$(TMP)/s1_verifica.log" | sed 's/^/   regresión Kueski (centavos): /' || true
+	cd "$(ROOT)" && GOOSE="$(GOOSE)" $(PYTHON) -I backend/db/tools/s1_verifica.py > "$(TMP)/s1_verifica.log" 2>&1 || { cat "$(TMP)/s1_verifica.log"; exit 1; }; \
+	cut -c1-110 "$(TMP)/s1_verifica.log" | sed 's/^/   /'
 	@$(RM_TMP)
 
-verify-all: verify-wf0 verify-c1 verify-s1
+verify-u1:
+	@echo "== U1: docs/design/tools/verificar_u1.py (U1 1.1 contra model.json, data.json, C1 y las migraciones)"
+	@mkdir -p "$(TMP)"; log="$(TMP)/verificar_u1.log"; \
+	cd "$(ROOT)" && $(PYTHON) -I docs/design/tools/verificar_u1.py > "$$log" 2>&1 || { cat "$$log"; exit 1; }; \
+	echo "   comprobaciones OK: $$(grep -cE '^OK ' "$$log") · INFO: $$(grep -cE '^INFO ' "$$log") · PENDIENTE: $$(grep -cE '^PENDIENTE' "$$log")"; \
+	grep -E '^(FALLA|PENDIENTE)|PROVISIONAL línea|^RESULTADO' "$$log" | cut -c1-110 | sed 's/^/   /'
 	@$(RM_TMP)
-	@echo "== Verificación ampliada OK (WF-0, C1 y S1)"
+
+# Salidas de verif_final.sh que deben aparecer tal cual; «sin fuente» de citas.py es informativo
+# (hallazgo bajo B-04 de docs/estado/p1/REVISION-criterios-r3.md: fragmentos citados en otro orden).
+verify-criterios:
+	@echo "== Criterios: docs/criterios/tools/verif_final.sh (18 archivos; escribe solo su base temporal bajo datos/tmp)"
+	@mkdir -p "$(TMP)"; log="$(TMP)/criterios.log"; \
+	cd "$(ROOT)" && bash "$(CRITERIOS_SH)" > "$$log" 2>&1 || { cat "$$log"; exit 1; }; \
+	grep -E '^TOTAL [0-9]+ \(|^archivos: |^criterios definidos: |^citas verificadas: |^TOTAL comprobadas: |^cifras comparadas: |^N-xxx sin operacion|^matriz C1' "$$log" | cut -c1-110 | sed 's/^/   /'; \
+	falla=0; \
+	for e in 'incompletos: ninguno' 'secciones 1-5 faltantes: []' 'archivos con Verifica != criterios: [] | con Evidencia != criterios: []' \
+	  'criterios sin linea en su seccion 5 (con rangos expandidos): 0' 'citados que no existen: {}' '| con diferencias: 0' \
+	  'K-01..K-08 contra data.json: OK' 'UP OK' 'foreign_key_check filas: 0 | integrity_check: ok' 'cifras comparadas: 12 | diferencias: 0' \
+	  'N-xxx sin operacion ni Local: 0 []' 'P-xx (con secciones P-26.xx y Global) sin operacion ni Local: 0 []' 'N-xxx de U1 ausentes en la matriz C1: []'; do \
+	  grep -qF -- "$$e" "$$log" || { echo "   FALLA, no aparece en la salida: $$e"; falla=1; }; \
+	done; \
+	for n in 5 10; do \
+	  v=$$(awk -v s="== $$n. " 'index($$0, s) == 1 { getline; print; exit }' "$$log"); \
+	  test "$$v" = 0 || { echo "   FALLA, la comprobación $$n de verif_final.sh da «$$v» (se espera 0)"; falla=1; }; \
+	done; \
+	test "$$falla" = 0 || { cat "$$log"; exit 1; }; \
+	echo "   residuos «N-xx» y rutas /tmp en los criterios: 0 y 0; las 10 comprobaciones dan lo esperado"
+	@$(RM_TMP)
+
+verify-all: verify-wf0 verify-c1 verify-s1 verify-u1 verify-criterios
+	@$(RM_TMP)
+	@echo "== Verificación ampliada OK (WF-0, C1, S1, U1 y criterios)"
 
 clean:
 	@rm -rf "$(TMP)" "$(ROOT)/backend/bin"

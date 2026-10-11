@@ -56,6 +56,8 @@ SALIDA = {
     "png": RAIZ / "docs" / "design" / "paleta.png",
 }
 FECHA = "2026-10-10"
+VERSION = "1.1"
+FECHA_11 = "2026-10-11"   # puerta 1: respuestas K26 y K27 de Axel y hallazgo R3-04 (sección «Cambios 1.1»)
 SCRIPT_REL = "docs/design/tools/colorimetria.py"
 
 # =============================================================================
@@ -289,7 +291,8 @@ PLAN_C = {
 ROLES = [
     {"codigo": "income", "nombre": "Ingreso", "matiz": 135.0,
      "origen": "Propuesta U2a con la opción que prevé decisiones §I (135°): a 15° de éxito y a 5° del acento dividido 130°"},
-    {"codigo": "expense", "nombre": "Gasto", "matiz": 25.0, "origen": "decisiones §I"},
+    {"codigo": "expense", "nombre": "Gasto", "matiz": 45.0,
+     "origen": "K26 (puerta 1): terracota 40–45°; 45° es el grado del rango más separado de error y advertencia (Cambios 1.1)"},
     {"codigo": "savings", "nombre": "Ahorro", "matiz": 200.0, "origen": "decisiones §I"},
     {"codigo": "debt", "nombre": "Deuda / crédito", "matiz": 310.0, "origen": "decisiones §I"},
     {"codigo": "warning", "nombre": "Advertencia", "matiz": 75.0, "origen": "decisiones §I"},
@@ -315,21 +318,30 @@ PERSONAS = [
      "queda a 16° de información, se separa por luminosidad (ΔL ≥ 0.15 frente al rol en ambos temas)."),
     ("ximena", "Ximena", 350.0, 0.12, 0.54, 0.835,
      "Conserva 350° del plan (30° de error, 40° de deuda)."),
-    ("karen", "Karen", 50.0, 0.12, 0.64, 0.725,
-     "Colisión del plan (80° vs advertencia 75°) resuelta moviéndola a 50°: 25° de gasto y de "
-     "advertencia y 50° del opuesto 100° (no se usa 95°, que se confundiría con acción crítica)."),
+    ("karen", "Karen", 333.0, 0.12, 0.642, 0.725,
+     "Versión 1.1 (K26): el 50° de la 1.0 quedaba a 5° de gasto 45°. Con su L (la más alta del grupo en claro, "
+     "la última que da 3:1) se separa de los roles por matiz, y sus ventanas factibles quedan entre deuda 310° y "
+     "error 20°; 333° queda a 23° de deuda y de Bodega Aurrera, lo más lejos de Ximena (350°) que permite el "
+     "reparto, y de ella se separa por ΔL ≥ 0.10. L en claro 0.642 (antes 0.640) para dar margen al escalonamiento. "
+     "PROVISIONAL (bloqueo `U2a-rosas-ximena-bodega`): frente a Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos temas "
+     "y se distingue por el refuerzo de §7.7 (Cambios 1.1, punto 2)."),
     ("shared", "Conjunto", 280.0, 0.045, 0.42, 0.94,
      "Lo compartido lleva el matiz de la marca con croma bajo (casi neutro), como el croma 0.03 "
      "del plan; 280° queda a 30° de deuda y 40° de información. Es la única excepción deliberada al "
      "piso de croma 0.10: se lee como «de ambos», no como una persona más."),
 ]
 TIENDAS = [
-    ("walmart", "Walmart", 262.0, 0.12, 0.515, 0.72,
+    ("walmart", "Walmart", 262.0, 0.12, 0.515, 0.716,
      "220° del plan quedaba a 20.0° exactos de ahorro e información (frágil al cuantizar a 8 bits); "
-     "se mueve al azul de 262° (22° de información)."),
-    ("bodega-aurrera", "Bodega Aurrera", 50.0, 0.12, 0.41, 0.83,
-     "Colisión del plan (60° vs advertencia 75°) resuelta en 50°; comparte matiz con Karen y se "
-     "separa de ella por luminosidad en ambos temas (claro 0.41 frente a 0.64; oscuro 0.83 frente a 0.725)."),
+     "se mueve al azul de 262° (22° de información). PROVISIONAL en oscuro (bloqueo `U2a-walmart-oscuro`): "
+     "L 0.716 en vez de 0.720 para que Bodega Aurrera quepa en el escalonamiento de las tiendas (Cambios 1.1)."),
+    ("bodega-aurrera", "Bodega Aurrera", 356.0, 0.11, 0.41, 0.829,
+     "Versión 1.1 (K26): el 50° de la 1.0 quedaba a 5° de gasto 45°. Con su L (entre Mercado y Walmart) se separa "
+     "de los roles por matiz en ambos temas: 356° queda a 24° de error y a 23° de Karen, de la que en oscuro no se "
+     "separa por luminosidad. Croma 0.11 y L 0.829 en oscuro: el rosa pierde luminancia en gris y con 0.12 no cabe "
+     "en el escalonamiento de las tiendas (Cambios 1.1). PROVISIONAL (bloqueo `U2a-rosas-ximena-bodega`): frente a "
+     "Ximena queda bajo ≥ 20° o ΔL ≥ 0.15 en ambos temas (en oscuro, a simple vista el mismo color) y se distingue "
+     "solo por el refuerzo de §7.7 (Cambios 1.1, punto 2)."),
     ("sams-club", "Sam's Club", 175.0, 0.12, 0.62, 0.93,
      "Conserva 175° del plan (25° de éxito y de ahorro); va en la L más alta de cada tema, donde el "
      "verde azulado conserva croma ≥ 0.10."),
@@ -341,6 +353,15 @@ TIENDAS = [
 PLAN_CATEGORICAS = {"axel": ("#0F74C5", 250, 0.55), "ximena": ("#D375A4", 350, 0.68), "karen": ("#E0AE57", 80, 0.78),
                     "shared": ("#495766", 250, 0.45), "walmart": ("#2FB5D8", 220, 0.72),
                     "bodega-aurrera": ("#FFA658", 60, 0.80), "sams-club": ("#11957C", 175, 0.60), "market": ("#9C4438", 30, 0.50)}
+# Valores PROVISIONALES de la versión 1.1 (protocolo §2): token → nota que se agrega a su descripción.
+PROVISIONAL = {"color.store.walmart.dark": " · PROVISIONAL: bloqueo U2a-walmart-oscuro (L 0.720 → 0.716)"}
+# Ronda 1 de revisión U2a (H-01): Karen y Bodega Aurrera quedan frente a Ximena bajo «≥ 20° o ΔL ≥ 0.15» y solo las
+# separa el refuerzo de §7.7; U2-02 admite dos lecturas. PROVISIONAL mientras Axel decide el bloqueo (opciones en
+# docs/estado/bloqueos/U2a-rosas-ximena-bodega.md). rosas_ximena() aborta si estas marcas no coinciden con el cálculo.
+BLOQUEO_ROSAS = "U2a-rosas-ximena-bodega"
+ROSAS_XIMENA = (("person", "karen"), ("store", "bodega-aurrera"))
+PROVISIONAL.update({"color.%s.%s.%s" % (g, c, s): " · PROVISIONAL: bloqueo %s (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)"
+                    % BLOQUEO_ROSAS for g, c in ROSAS_XIMENA for s in ("light", "dark")})
 ORDEN_PERSONAS = ["axel", "ximena", "karen", "shared"]
 ORDEN_TIENDAS = ["walmart", "bodega-aurrera", "sams-club", "market"]
 
@@ -400,8 +421,8 @@ class Modelo:
     def sup(self, tema, cual):
         return self.hex(SUPERFICIE[tema][cual])
 
-    def _elegir_paso(self, codigo, tema):
-        esc = self.esc_rol[codigo]
+    def _elegir_paso(self, codigo, tema, esc=None):
+        esc = self.esc_rol[codigo] if esc is None else esc
         if tema == "claro":
             candidatos = (600, 700, 800, 900)
             fondos = (self.neutro[50].hex, self.neutro[100].hex, esc[100].hex)
@@ -446,8 +467,10 @@ class Modelo:
                 cc, co = Color(lc, c, h), Color(lo, c, h)
                 self.cat[grupo][cod] = {"nombre": nombre, "h": h, "c": c, "claro": cc, "oscuro": co, "motivo": motivo}
                 self.grupos["color.%s.%s" % (grupo, cod)] = "%s · matiz %d°" % (nombre, h)
-                self.reg("color.%s.%s.light" % (grupo, cod), cc, "%s en claro (L %.3f)" % (nombre, lc))
-                self.reg("color.%s.%s.dark" % (grupo, cod), co, "%s en oscuro (L %.3f)" % (nombre, lo))
+                self.reg("color.%s.%s.light" % (grupo, cod), cc, "%s en claro (L %.3f)%s" % (
+                    nombre, lc, PROVISIONAL.get("color.%s.%s.light" % (grupo, cod), "")))
+                self.reg("color.%s.%s.dark" % (grupo, cod), co, "%s en oscuro (L %.3f)%s" % (
+                    nombre, lo, PROVISIONAL.get("color.%s.%s.dark" % (grupo, cod), "")))
         self.grupos["color.chart"] = "Series de gráficas en orden fijo de uso (1 a 8); variante por tema"
         for n, h, clase, nombre in GRAFICAS:
             self.graf[n] = {"h": h, "clase": clase, "nombre": nombre}
@@ -653,9 +676,20 @@ def distancias_roles(M, tema):
 
 
 REFUERZO_ROLES = {
-    frozenset(("expense", "error")): "Contexto y forma: gasto solo como cifra con signo «−»; error solo como mensaje con icono de alerta y texto. Bloqueo U2-gasto-error.",
+    frozenset(("expense", "error")): "Contexto y forma: gasto solo como cifra con signo «−»; error solo como mensaje con icono de alerta y texto (K26).",
     frozenset(("income", "success")): "Ingreso siempre con «+» y flecha de entrada en cifras; éxito siempre con palomita y texto en avisos.",
 }
+# Hallazgo R3-04 (versión 1.1): la marca entra al barrido de pares cercanos de §7.7 con el paso de texto de cada tema.
+PASO_MARCA = {"claro": 700, "oscuro": 400}
+REFUERZO_MARCA = ("Marca frente a categórica (R3-04): la marca solo vive en controles (botón primario, enlace subrayado, anillo "
+                  "de foco, elemento activo) y nunca marca a una persona o tienda; la categórica siempre va como punto, anillo de "
+                  "avatar o marca de serie junto a su nombre en texto neutro (forma y etiqueta).")
+# Versión 1.0 de lo que cambia en la 1.1 (K26 y bloqueo U2a-walmart-oscuro): matiz de gasto; matiz, croma, L claro, L oscuro.
+ANTES_11 = {"expense": 25.0,
+            ("person", "karen"): (50.0, 0.12, 0.64, 0.725),
+            ("store", "bodega-aurrera"): (50.0, 0.12, 0.41, 0.83),
+            ("store", "walmart"): (262.0, 0.12, 0.515, 0.72)}
+GASTO_RANGO = range(40, 46)   # K26: terracota 40–45°, grados enteros
 
 ESTRUCTURALES = [  # descripción, primer plano, fondo, (mín, máx) del plan, texto del plan
     ("Texto 900 / fondo 50", "color.neutral.900", "color.neutral.50", (11.4, 11.4), "11.4"),
@@ -682,17 +716,25 @@ def entidades(M, tema):
     return out
 
 
+def entidades_con_marca(M, tema):
+    """Entidades de §7.7 más la marca en su paso de texto (700 en claro, 400 en oscuro; hallazgo R3-04)."""
+    p = PASO_MARCA[tema]
+    return entidades(M, tema) + [("marca", "brand", "Marca %d" % p, M.hex("color.brand.%d" % p))]
+
+
 def pares_cercanos(M):
-    """Pares (roles, acción crítica, personas y tiendas) con Δ matiz < 20° y ΔL < 0.15, con su refuerzo."""
+    """Pares (roles, acción crítica, personas, tiendas y marca) con Δ matiz < 20° y ΔL < 0.15, con su refuerzo."""
     filas = []
     for tema in TEMAS:
-        for (ga, ca, na, ha), (gb, cb, nb, hb) in combinations(entidades(M, tema), 2):
+        for (ga, ca, na, ha), (gb, cb, nb, hb) in combinations(entidades_con_marca(M, tema), 2):
             La, _, Ha = hex_a_oklch(ha)
             Lb, _, Hb = hex_a_oklch(hb)
             dm, dl = dif_matiz(Ha, Hb), abs(La - Lb)
             if dm >= SEPARACION_MATIZ or dl >= SEPARACION_L:
                 continue
-            if ga == "rol" and gb == "rol":
+            if "marca" in (ga, gb):
+                ref = "SIN RESOLVER" if "rol" in (ga, gb) else REFUERZO_MARCA
+            elif ga == "rol" and gb == "rol":
                 ref = REFUERZO_ROLES.get(frozenset((ca, cb)), "Icono y texto propios de cada rol; nunca comparten componente.")
             elif ga == gb:
                 ref = "Mismo grupo: orden fijo, etiqueta directa y ΔL ≥ 0.10 dentro del grupo."
@@ -700,8 +742,135 @@ def pares_cercanos(M):
                 ref = "SIN RESOLVER"
             else:
                 ref = "Grupos distintos (persona y tienda): nunca comparten gráfica ni leyenda; en tablas van en columnas distintas y con su nombre."
+            if "ximena" in (ca, cb) and {ca, cb} - {"ximena"} <= {c for _, c in ROSAS_XIMENA}:
+                ref += " **PROVISIONAL**: bloqueo `%s` (¿basta este refuerzo frente a «≥ 20° o ΔL ≥ 0.15» de K26?)." % BLOQUEO_ROSAS
             filas.append({"tema": tema, "a": "%s (%s)" % (na, ga), "b": "%s (%s)" % (nb, gb), "dm": dm, "dl": dl, "refuerzo": ref})
     return filas
+
+
+def _refs_roles_marca(M, tema):
+    """(L, h) medidos del texto de los 8 roles, acción crítica y la marca (paso de texto) en un tema."""
+    hexes = [M.hex("%s.%s" % (base_rol(r["codigo"]), SUFIJO[tema])) for r in ROLES + [CRITICO]]
+    hexes.append(M.hex("color.brand.%d" % PASO_MARCA[tema]))
+    return [hex_a_oklch(hx)[0::2] for hx in hexes]
+
+
+def _holgura(L, H, refs):
+    """Holgura mínima de la regla ≥ 20° o ΔL ≥ 0.15 frente a una lista de (L, h); ≥ 1 cumple."""
+    return min(max(dif_matiz(H, rh) / SEPARACION_MATIZ, abs(L - rl) / SEPARACION_L) for rl, rh in refs)
+
+
+def barrido_gasto(M):
+    """K26: para cada grado entero de 40° a 45°, distancias medidas del texto de gasto a error, advertencia y categóricas.
+    Gana el mayor Δ matiz mínimo a error y advertencia (ambos temas); empates, por ΔE normal y luego por ΔE con daltonismo."""
+    filas = []
+    for h in GASTO_RANGO:
+        esc = escala(float(h), CROMA_ROL)
+        f = {"h": h, "temas": {}}
+        for tema in TEMAS:
+            p, _ = M._elegir_paso("expense", tema, esc)
+            hx = esc[p].hex
+            L, _, H = hex_a_oklch(hx)
+            d = {}
+            for cod in ("error", "warning"):
+                ref = M.hex("color.role.%s.%s" % (cod, SUFIJO[tema]))
+                d[cod] = (dif_matiz(H, hex_a_oklch(ref)[2]), delta_e(hx, ref), min(delta_e(hx, ref, t) for t in TIPOS_CVD))
+            cat = min((_holgura(L, H, [hex_a_oklch(c)[0::2]]), n) for g, _, n, c in entidades(M, tema) if g != "rol")
+            f["temas"][tema] = {"paso": p, "hex": hx, "h": H, "d": d, "cat": cat}
+        for k, i in (("dm", 0), ("de", 1), ("cvd", 2)):
+            f[k] = min(f["temas"][t]["d"][c][i] for t in TEMAS for c in ("error", "warning"))
+        f["dm_error"] = min(f["temas"][t]["d"]["error"][0] for t in TEMAS)
+        f["dm_warning"] = min(f["temas"][t]["d"]["warning"][0] for t in TEMAS)
+        f["cat"] = min(f["temas"][t]["cat"] for t in TEMAS)
+        filas.append(f)
+    mejor = max(filas, key=lambda f: (round(f["dm"], 6), round(f["de"], 6), round(f["cvd"], 6)))
+    return filas, mejor
+
+
+def ventanas_matiz(M, grupo, cod, otros=None, propio=None):
+    """Matices enteros en los que la categórica `cod`, con su croma y sus L finales (o `propio` = (croma, {tema: L})),
+    cumple las reglas de §7: ≥ 20° o ΔL ≥ 0.15 frente a roles, acción crítica y marca; contraste ≥ 3:1 sobre fondo y
+    tarjeta; croma ≥ 0.10; fuera de la zona reservada; ΔL ≥ 0.10 (OKLab y gris) frente a su grupo. `otros` =
+    {tema: {código: hex}} sustituye el color de otros miembros. Devuelve los matices y sus ventanas contiguas."""
+    e = M.cat[grupo][cod]
+    c_ped, ls = propio if propio else (e["c"], {t: e[t].l for t in TEMAS})
+    orden = ORDEN_PERSONAS if grupo == "person" else ORDEN_TIENDAS
+    refs = {t: _refs_roles_marca(M, t) for t in TEMAS}
+    vecinos = {t: [((otros or {}).get(t) or {}).get(o, M.cat[grupo][o][t].hex) for o in orden if o != cod] for t in TEMAS}
+    vecinos = {t: [(hex_a_oklab(v)[0], l_gris(v)) for v in vs] for t, vs in vecinos.items()}
+    sup = {t: (M.sup(t, "fondo"), M.sup(t, "tarjeta")) for t in TEMAS}
+    ok = []
+    for h in range(360):
+        bien = True
+        for t in TEMAS:
+            hx = Color(ls[t], c_ped, float(h)).hex
+            L, C, H = hex_a_oklch(hx)
+            g = l_gris(hx)
+            if not (dist_reserva(hx, float(h)) >= ZONA_RESERVADA and C >= CROMA_PISO_GRAFICAS
+                    and min(contraste(hx, x) for x in sup[t]) >= UMBRAL_UI and _holgura(L, H, refs[t]) >= 1.0
+                    and all(abs(L - vl) >= UMBRAL_DL and abs(g - vg) >= UMBRAL_DL for vl, vg in vecinos[t])):
+                bien = False
+                break
+        if bien:
+            ok.append(h)
+    vent = []
+    for h in ok:
+        if vent and h == vent[-1][1] + 1:
+            vent[-1][1] = h
+        else:
+            vent.append([h, h])
+    return ok, vent
+
+
+def eleccion_karen_bodega(M, vk, vb):
+    """K26: reparto de Karen y Bodega Aurrera en sus ventanas, entre deuda y error. Criterios, en orden: (1) el mayor
+    hueco mínimo de matiz entre deuda, las dos y error; (2) Karen lo más lejos posible de Ximena (su grupo); (3) la mayor
+    holgura mínima de las dos frente a roles, acción crítica y marca. El par cumple la regla entre sí en ambos temas."""
+    hd = next(r["matiz"] for r in ROLES if r["codigo"] == "debt")
+    he = next(r["matiz"] for r in ROLES if r["codigo"] == "error") + 360.0
+    ek, eb = M.cat["person"]["karen"], M.cat["store"]["bodega-aurrera"]
+    refs = {t: _refs_roles_marca(M, t) for t in TEMAS}
+
+    def medir(e, h):
+        out = {}
+        for t in TEMAS:
+            L, _, H = hex_a_oklch(Color(e[t].l, e["c"], float(h)).hex)
+            out[t] = (L, H, _holgura(L, H, refs[t]))
+        return out
+    mk, mb = {a: medir(ek, a) for a in vk}, {b: medir(eb, b) for b in vb}
+    desp = lambda h: h + 360.0 if h < 180 else float(h)
+    cands = []
+    for a in vk:
+        for b in vb:
+            pa, pb = desp(a), desp(b)
+            if not (hd < pa < he and hd < pb < he):
+                continue
+            if any(dif_matiz(mk[a][t][1], mb[b][t][1]) < SEPARACION_MATIZ and abs(mk[a][t][0] - mb[b][t][0]) < SEPARACION_L for t in TEMAS):
+                continue
+            lo, hi = sorted((pa, pb))
+            huecos = (lo - hd, hi - lo, he - hi)
+            cands.append({"a": a, "b": b, "huecos": huecos, "min": min(huecos), "xim": dif_matiz(a, M.cat["person"]["ximena"]["h"]),
+                          "hol": min(min(mk[a][t][2], mb[b][t][2]) for t in TEMAS)})
+    cands.sort(key=lambda c: (-c["min"], -c["xim"], -round(c["hol"], 9), c["a"], c["b"]))
+    return cands
+
+
+def tokens_antes_11(M):
+    """Tokens de la versión 1.0 que cambian en la 1.1, recalculados con el mismo método a partir de ANTES_11."""
+    antes = {}
+    esc = escala(ANTES_11["expense"], CROMA_ROL)
+    base = "color.role.expense"
+    antes[base + ".light"] = esc[M._elegir_paso("expense", "claro", esc)[0]]
+    antes[base + ".dark"] = esc[M._elegir_paso("expense", "oscuro", esc)[0]]
+    antes[base + ".surface-light"], antes[base + ".surface-dark"] = esc[100], esc[900]
+    for p in PASOS:
+        antes["%s.%d" % (base, p)] = esc[p]
+    for clave, v in ANTES_11.items():
+        if clave != "expense":
+            h, c, lc, lo = v
+            antes["color.%s.%s.light" % clave] = Color(lc, c, h)
+            antes["color.%s.%s.dark" % clave] = Color(lo, c, h)
+    return {r: col for r, col in antes.items() if col.hex != M.hex(r)}
 
 
 def dist_reserva(hx, h_diseno=None):
@@ -889,6 +1058,166 @@ def base_rol(cod):
     return "color.critical" if cod == "critical" else "color.role.%s" % cod
 
 
+def rosas_ximena(M):
+    """Ronda 1 de revisión U2a (H-01): Karen y Bodega Aurrera frente a Ximena en cada tema, el par persona–tienda más
+    parecido de la 1.0 y la comprobación de que ningún matiz de sus ventanas las separa de Ximena en ambos temas.
+    Aborta si los tokens marcados PROVISIONAL con BLOQUEO_ROSAS no son exactamente los que quedan bajo la regla."""
+    if getattr(M, "_rosas", None):
+        return M._rosas
+    ex = M.cat["person"]["ximena"]
+
+    def lejos(a, b):
+        (La, _, Ha), (Lb, _, Hb) = hex_a_oklch(a), hex_a_oklch(b)
+        return dif_matiz(Ha, Hb) >= SEPARACION_MATIZ or abs(La - Lb) >= SEPARACION_L
+    R = {"pares": {}, "bajo": set()}
+    for g, c in ROSAS_XIMENA:
+        e = M.cat[g][c]
+        for t in TEMAS:
+            (La, _, Ha), (Lx, _, Hx) = hex_a_oklch(e[t].hex), hex_a_oklch(ex[t].hex)
+            R["pares"][(c, t)] = {"hex": e[t].hex, "hx": ex[t].hex, "dm": dif_matiz(Ha, Hx), "dl": abs(La - Lx),
+                                  "de": delta_e(e[t].hex, ex[t].hex)}
+            if not lejos(e[t].hex, ex[t].hex):
+                R["bajo"].add("color.%s.%s.%s" % (g, c, SUFIJO[t]))
+        v, _ = ventanas_matiz(M, g, c)
+        sale = [h for h in v if all(lejos(Color(e[t].l, e["c"], float(h)).hex, ex[t].hex) for t in TEMAS)]
+        if sale:
+            raise SystemExit("Bloqueo %s: %s se separa de Ximena en %s; revisar el texto y el bloqueo" % (BLOQUEO_ROSAS, e["nombre"], sale))
+    marcados = {r for r, nota in PROVISIONAL.items() if BLOQUEO_ROSAS in nota}
+    if R["bajo"] != marcados:
+        raise SystemExit("Bloqueo %s: bajo la regla frente a Ximena %s; marcados PROVISIONAL %s" % (BLOQUEO_ROSAS, sorted(R["bajo"]), sorted(marcados)))
+    antes = tokens_antes_11(M)
+    h10 = lambda r: antes[r].hex if r in antes else M.hex(r)
+    ref = []
+    for t in TEMAS:
+        for a in ORDEN_PERSONAS:
+            for b in ORDEN_TIENDAS:
+                ha, hb = h10("color.person.%s.%s" % (a, SUFIJO[t])), h10("color.store.%s.%s" % (b, SUFIJO[t]))
+                if not lejos(ha, hb):
+                    ref.append((delta_e(ha, hb), M.cat["person"][a]["nombre"], M.cat["store"][b]["nombre"], t))
+    R["ref10"] = min(ref)
+    M._rosas = R
+    return R
+
+
+def _rosas_cifras(M):
+    R = rosas_ximena(M)
+    p = R["pares"]
+    return R, p[("bodega-aurrera", "oscuro")], p[("bodega-aurrera", "claro")], p[("karen", "claro")], p[("karen", "oscuro")]
+
+
+def md_rosas_ximena(M):
+    """Párrafo de «Cambios 1.1», punto 2: Karen y Bodega Aurrera frente a Ximena (bloqueo BLOQUEO_ROSAS)."""
+    R, bo, bc, kc, ko = _rosas_cifras(M)
+    de0, a0, b0, t0 = R["ref10"]
+    return ("**Frente a Ximena (ronda 1 de revisión, H-01; PROVISIONAL).** En oscuro, Bodega Aurrera (`%s`) y Ximena (`%s`) quedan a %.1f°, ΔL %.3f y **ΔE %.1f**: a simple vista son el mismo color. En claro quedan a %.1f°, ΔL %.3f y ΔE %.1f. Karen y Ximena quedan a %.1f° y %.1f°, con ΔL %.3f y %.3f y ΔE %.1f y %.1f (claro y oscuro). Bodega Aurrera–Ximena es una colisión nueva de la 1.1: en la 1.0, el par persona–tienda más parecido era %s–%s en %s, con ΔE %.1f. Con la L y el croma de cada una, ningún matiz de sus ventanas (tabla de arriba) separa a Karen ni a Bodega Aurrera de Ximena por ≥ 20° o ΔL ≥ 0.15 en ambos temas; el script lo comprueba. §7.7 declara el refuerzo, y U2-08 lo admite. Pero U2-02 y la respuesta de Axel en `U2-gasto-error` piden moverlas «para conservar separación ≥ 20° o ΔL ≥ 0.15» frente a las demás entradas. Como el criterio admite dos lecturas, el bloqueo `docs/estado/bloqueos/%s.md` lleva las opciones para Axel. Mientras decide, van **PROVISIONAL** los %d tokens que quedan bajo la regla frente a Ximena (%s), con la nota en su descripción en `C2-colores.json`.\n" % (
+        bo["hex"], bo["hx"], bo["dm"], bo["dl"], bo["de"], bc["dm"], bc["dl"], bc["de"], kc["dm"], ko["dm"], kc["dl"], ko["dl"],
+        kc["de"], ko["de"], a0, b0, t0, de0, BLOQUEO_ROSAS, len(R["bajo"]), ", ".join("`%s`" % r for r in sorted(R["bajo"]))))
+
+
+def hallazgo_rosas_ximena(M):
+    """Hallazgo de §12 para el bloqueo BLOQUEO_ROSAS (ronda 1 de revisión U2a, H-01)."""
+    R, bo, bc, kc, ko = _rosas_cifras(M)
+    return ("Ronda 1 de revisión U2a (H-01): en oscuro, Bodega Aurrera y Ximena quedan a %.1f°, ΔL %.3f y ΔE %.1f (a simple vista, el mismo color; en la 1.0, el par persona–tienda más parecido tenía ΔE %.1f), y en claro a %.1f°, ΔL %.3f y ΔE %.1f. Karen y Ximena quedan a %.1f° y %.1f°, con ΔL %.3f y %.3f. Con las L actuales, ningún matiz de sus ventanas las separa de Ximena por ≥ 20° o ΔL ≥ 0.15. §7.7 declara el refuerzo, pero U2-02 admite dos lecturas: bloqueo `%s`, con %d tokens PROVISIONALES (Cambios 1.1, punto 2)." % (
+        bo["dm"], bo["dl"], bo["de"], R["ref10"][0], bc["dm"], bc["dl"], bc["de"], kc["dm"], ko["dm"], kc["dl"], ko["dl"], BLOQUEO_ROSAS, len(R["bajo"])))
+
+
+def md_cambios_11(M, G):
+    """Sección «Cambios 1.1» (puerta 1): K26, K27 y hallazgo R3-04, con valores anteriores y nuevos y el porqué."""
+    o = []
+    ap = o.append
+    h_gasto = next(r["matiz"] for r in ROLES if r["codigo"] == "expense")
+    filas_g, mejor = barrido_gasto(M)
+    if mejor["h"] != h_gasto:
+        raise SystemExit("K26: el barrido de gasto elige %d° y ROLES tiene %s°" % (mejor["h"], h_gasto))
+    ek, eb, ew = M.cat["person"]["karen"], M.cat["store"]["bodega-aurrera"], M.cat["store"]["walmart"]
+    vk, wk = ventanas_matiz(M, "person", "karen")
+    vb, wb = ventanas_matiz(M, "store", "bodega-aurrera")
+    aw, ab = ANTES_11[("store", "walmart")], ANTES_11[("store", "bodega-aurrera")]
+    w_antes = {"oscuro": {"walmart": Color(aw[3], aw[1], aw[0]).hex}}
+    _, wb0 = ventanas_matiz(M, "store", "bodega-aurrera", w_antes)
+    _, wb00 = ventanas_matiz(M, "store", "bodega-aurrera", w_antes, (ab[1], {"claro": ab[2], "oscuro": ab[3]}))
+    cands = eleccion_karen_bodega(M, vk, vb)
+    if not cands or (cands[0]["a"], cands[0]["b"]) != (ek["h"], eb["h"]):
+        raise SystemExit("K26: el reparto de Karen y Bodega Aurrera no coincide con PERSONAS/TIENDAS")
+    desp = lambda h: h + 360 if h < 180 else h
+    hd = next(r["matiz"] for r in ROLES if r["codigo"] == "debt")
+    he = next(r["matiz"] for r in ROLES if r["codigo"] == "error")
+    if any(not (hd < desp(h) < he + 360) for h in vk + vb) or wb0 or wb00:
+        raise SystemExit("Cambios 1.1: las ventanas cambiaron; revisar el texto de la sección")
+    l_rol = {t: L_PASO[M.paso_rol["expense"][t]] for t in TEMAS}
+    if any(abs(e[t].l - l_rol[t]) >= SEPARACION_L for e in (ek, eb) for t in TEMAS):
+        raise SystemExit("Cambios 1.1: Karen o Bodega Aurrera ya se separan de los roles por luminosidad; revisar el texto")
+    antes = tokens_antes_11(M)
+    vtxt = lambda w: ", ".join(("%d°" % a) if a == b else "%d°–%d°" % (a, b) for a, b in w) or "ninguna"
+
+    def fmt(hx):
+        L, C, H = hex_a_oklch(hx)
+        return "`%s` · %.1f° · L %.3f · C %.3f" % (hx, H, L, C)
+
+    ap("## Cambios 1.1 (puerta 1, %s)\n" % FECHA_11)
+    ap("Aplica las respuestas de Axel en la puerta 1 (`docs/plan/decisiones.md` §K): **K26** (gasto pasa a terracota 40–45° y error se queda en 20°; Karen y Bodega Aurrera, que estaban en 50°, se mueven en la paleta categórica; la marca entra al barrido de pares cercanos, hallazgo R3-04 de la revisión 3) y **K27** (paleta de gráficas: ΔL ≥ 0.10 entre series consecutivas con forma, patrón y etiqueta de refuerzo; todos los pares se reportan como información). Quedan resueltos los bloqueos `U2-gasto-error` y `criterios-deltal`. No cambian el método (L por paso, perfil de croma, umbrales), la marca, el neutro, los demás roles ni las 8 series de gráficas. Todo lo regenera el script y su verificación final lo comprueba.\n")
+    ap("### Parámetros que cambian\n")
+    filas = [["Gasto (`color.role.expense`)", "matiz %d°" % ANTES_11["expense"], "matiz %d°" % h_gasto, "K26"]]
+    for clave, (h, c, lc, lo) in [(k, v) for k, v in ANTES_11.items() if k != "expense"]:
+        e = M.cat[clave[0]][clave[1]]
+        filas.append(["%s (`color.%s.%s`)" % ((e["nombre"],) + clave), "%d° · croma %.2f · L %.3f / %.3f" % (h, c, lc, lo),
+                      "%d° · croma %.2f · L %.3f / %.3f" % (e["h"], e["c"], e["claro"].l, e["oscuro"].l),
+                      "**PROVISIONAL**, bloqueo `U2a-walmart-oscuro`" if clave == ("store", "walmart") else
+                      ("K26; **PROVISIONAL** frente a Ximena, bloqueo `%s`" % BLOQUEO_ROSAS) if clave in ROSAS_XIMENA else "K26"])
+    ap(tabla(["Elemento", "1.0: matiz · croma pedido · L claro / oscuro", "1.1", "Origen"], filas))
+    ap("\n### Tokens que cambian (medidos en el hex)\n")
+    ap(tabla(["Token", "1.0: hex · matiz · L · croma", "1.1: hex · matiz · L · croma"], [["`%s`" % r, fmt(col.hex), fmt(M.hex(r))] for r, col in antes.items()]))
+    ap("\nLos otros %d tokens no cambian de valor. Tablas regeneradas: §5.3 (escala de gasto), §6.1, §6.5, §6.6, §7.1 a §7.5, §7.7, §10, §12 y el Anexo A, además de `contraste.csv`, `C2-colores.json`, `paleta.html` y `paleta.png`.\n" % (len(M.tokens) - len(antes)))
+
+    ap("### 1. Gasto: el grado de 40° a 45° más separado (K26)\n")
+    ap("Para cada grado entero del rango el script construye la escala de gasto con el mismo método (L por paso, perfil de croma, croma máx. %.2f), elige el paso de texto con la misma regla de 4.5:1 y mide en el hex el Δ matiz a error (20°) y a advertencia (75°), el ΔE normal y el ΔE mínimo con las tres simulaciones de daltonismo frente a esos dos roles, y la holgura mínima frente a las 8 categóricas (máx(Δ matiz / 20°, ΔL / 0.15); cumple con ≥ 1). Gana el mayor Δ matiz mínimo; a igualdad, el mayor ΔE normal y después el mayor ΔE con daltonismo.\n" % CROMA_ROL)
+    filas = []
+    for f in filas_g:
+        tc, to = f["temas"]["claro"], f["temas"]["oscuro"]
+        filas.append([("**%d°**" if f is mejor else "%d°") % f["h"], "%d · `%s` · %.1f°" % (tc["paso"], tc["hex"], tc["h"]),
+                      "%d · `%s` · %.1f°" % (to["paso"], to["hex"], to["h"]), "%.1f°" % f["dm_error"], "%.1f°" % f["dm_warning"],
+                      "%.1f" % f["de"], "%.1f" % f["cvd"], "%.2f (%s)" % f["cat"]])
+    ap(tabla(["Matiz", "Claro: paso · hex · matiz medido", "Oscuro: paso · hex · matiz medido", "Δ matiz a error (mín.)", "Δ matiz a advertencia (mín.)", "ΔE normal mín.", "ΔE daltonismo mín.", "Holgura frente a categóricas"], filas))
+    adv_lejos = all(f["dm_warning"] > f["dm_error"] for f in filas_g)
+    ap("\n**Se elige %d°.** %sEn %d° gasto queda a %.1f° de error y a %.1f° de advertencia, con ΔE normal mínimo %.1f y ΔE mínimo con daltonismo %.1f, los mayores del rango. Frente a las categóricas la holgura va de %.2f a %.2f en todo el rango y la fija %s, así que no decide. El paso de texto sigue siendo 700 en claro y 400 en oscuro, con 4.5:1 (§6.1).\n" % (
+        mejor["h"], "Dentro del rango, subir el matiz aleja a gasto de error y lo acerca a advertencia, pero advertencia queda siempre más lejos que error, así que el Δ matiz mínimo crece con el matiz y el mejor grado es el extremo. " if adv_lejos else "",
+        mejor["h"], mejor["dm_error"], mejor["dm_warning"], mejor["de"], mejor["cvd"], min(f["cat"][0] for f in filas_g), max(f["cat"][0] for f in filas_g), mejor["cat"][1]))
+
+    ap("### 2. Karen y Bodega Aurrera (K26)\n")
+    ap("Con gasto en %d° el rango cálido queda cerrado: entre error 20°, gasto %d° y advertencia 75° no hay ningún matiz a ≥ 20° de los tres, y de %d° a %d° está la zona reservada de acción crítica. Karen ocupa la L más alta de las personas en claro (la última que da 3:1) y Bodega Aurrera la L entre Mercado y Walmart; con esas L no llegan a ΔL 0.15 frente al texto de los roles (L %.3f en claro y %.3f en oscuro) en ningún tema, así que tienen que separarse por matiz de todos los roles, de acción crítica y de la marca. El script recorre los 360 matices enteros con la L y el croma finales de cada una y conserva los que cumplen todas las reglas de §7 (≥ 20° o ΔL ≥ 0.15 frente a roles, acción crítica y marca; contraste ≥ 3:1 sobre fondo y tarjeta; croma ≥ 0.10; fuera de la zona reservada; ΔL ≥ 0.10 en L OKLab y en gris frente a su grupo):\n" % (
+        h_gasto, h_gasto, MATIZ_OPUESTO - ZONA_RESERVADA, MATIZ_OPUESTO + ZONA_RESERVADA, l_rol["claro"], l_rol["oscuro"]))
+    ap(tabla(["Color", "L claro / oscuro · croma pedido", "Matices que cumplen todo", "Con Walmart en L %.3f (1.0)" % aw[3]], [
+        ["Karen", "%.3f / %.3f · %.2f" % (ek["claro"].l, ek["oscuro"].l, ek["c"]), vtxt(wk), "igual (otro grupo)"],
+        ["Bodega Aurrera", "%.3f / %.3f · %.2f" % (eb["claro"].l, eb["oscuro"].l, eb["c"]), vtxt(wb),
+         "%s; con L %.3f y croma %.2f de la 1.0: %s" % (vtxt(wb0), ab[3], ab[1], vtxt(wb00))]]))
+    dl_kb = abs(hex_a_oklab(ek["oscuro"].hex)[0] - hex_a_oklab(eb["oscuro"].hex)[0])
+    if dl_kb >= SEPARACION_L:
+        raise SystemExit("Cambios 1.1: Karen y Bodega Aurrera ya se separan por luminosidad en oscuro; revisar el texto")
+    c0 = cands[0]
+    ap("\nTodas las ventanas quedan entre deuda (%d°) y error (%d° = %d°), y en oscuro Karen y Bodega Aurrera tienen ΔL %.3f (< 0.15), así que también necesitan ≥ 20° de matiz entre sí. Se reparten los %d° que hay de deuda a error en tres huecos con el mayor hueco mínimo; a igualdad, Karen lo más lejos posible de Ximena (%d°, su mismo grupo) y después la mayor holgura frente a roles, acción crítica y marca. Resultado: **Karen %d° y Bodega Aurrera %d°** (huecos de %d°, %d° y %d°). Los cinco mejores repartos:\n" % (
+        hd, he, he + 360, dl_kb, he + 360 - hd, M.cat["person"]["ximena"]["h"], c0["a"], c0["b"], c0["huecos"][0], c0["huecos"][1], c0["huecos"][2]))
+    ap(tabla(["Karen", "Bodega Aurrera", "Huecos deuda → · → · → error", "Hueco mínimo", "Δ Karen–Ximena", "Holgura mín. frente a roles y marca"],
+             [["%d°" % c["a"], "%d°" % c["b"], "%d° · %d° · %d°" % c["huecos"], "%d°" % c["min"], "%d°" % c["xim"], "%.2f" % c["hol"]] for c in cands[:5]]))
+    ap("\nKaren queda a %d° de Ximena: dentro de las personas se distinguen por ΔL ≥ 0.10 en ambos temas (§7.3), por el orden fijo de la leyenda y por la etiqueta directa. Bodega Aurrera queda cerca de Ximena, pero son de grupos distintos y nunca comparten gráfica ni leyenda (§7.7).\n" % c0["xim"])
+    ap(md_rosas_ximena(M))
+    so = [M.cat["store"][c]["oscuro"].hex for c in ORDEN_TIENDAS]
+    sup_o = (M.sup("oscuro", "fondo"), M.sup("oscuro", "tarjeta"))
+    w0, mk_, sm_ = Color(aw[3], aw[1], aw[0]), M.cat["store"]["market"]["oscuro"], M.cat["store"]["sams-club"]["oscuro"]
+    ap("### 3. Walmart en oscuro (PROVISIONAL)\n")
+    ap("En oscuro las cuatro tiendas se escalonan con ΔL ≥ 0.10 en L OKLab y en gris entre Mercado (L %.3f, contraste %.2f, el mínimo del grupo) y Sam's Club (L %.3f, croma %.3f, cerca del piso de 0.10). El rosa pierde luminancia en gris (en Bodega Aurrera, gris = L − %.3f), y con Walmart en L %.3f ningún matiz entero cumple para Bodega Aurrera (última columna de la tabla del punto 2). Walmart baja a L %.3f (`%s` → `%s`, ΔE %.1f, imperceptible) y Bodega Aurrera usa croma %.2f y L %.3f en oscuro; el escalonamiento de las tiendas en oscuro queda en ΔL mínimo %.3f (OKLab) y %.3f (gris). Como es un token que K26 no nombra, va **PROVISIONAL** con el bloqueo `docs/estado/bloqueos/U2a-walmart-oscuro.md` (opciones para Axel) y la nota en la descripción del token en `C2-colores.json`.\n" % (
+        mk_.l, min(contraste(mk_.hex, x) for x in sup_o), sm_.l, hex_a_oklch(sm_.hex)[1], eb["oscuro"].l - l_gris(eb["oscuro"].hex), aw[3],
+        ew["oscuro"].l, w0.hex, ew["oscuro"].hex, delta_e(w0.hex, ew["oscuro"].hex), eb["c"], eb["oscuro"].l,
+        min(abs(hex_a_oklab(a)[0] - hex_a_oklab(b)[0]) for a, b in combinations(so, 2)), min(abs(l_gris(a) - l_gris(b)) for a, b in combinations(so, 2))))
+    mp = [f for f in pares_cercanos(M) if "(marca)" in f["a"] + f["b"]]
+    ap("### 4. La marca en el barrido de pares cercanos (R3-04)\n")
+    ap("§7.7 incluye ahora la marca en su paso de texto (%d en claro, %d en oscuro). Ningún rol ni acción crítica queda cerca de la marca (el script lo verifica); quedan cerca estas categóricas, que se refuerzan con forma y etiqueta: la marca solo vive en controles (botón primario, enlace subrayado, anillo de foco, elemento activo) y la categórica siempre va como punto, anillo de avatar o marca de serie junto a su nombre en texto neutro.\n" % (PASO_MARCA["claro"], PASO_MARCA["oscuro"]))
+    ap(tabla(["Tema", "Color A", "Color B", "Δ matiz", "ΔL"], [[f["tema"], f["a"], f["b"], "%.1f°" % f["dm"], "%.3f" % f["dl"]] for f in mp]))
+    ap("\n### 5. Paleta de gráficas (K27)\n")
+    ap("No cambia ningún valor de las 8 series. K27 fija la lectura del criterio: el umbral duro es ΔL ≥ 0.10 entre series consecutivas en el orden de uso (mínimo en gris y en las tres simulaciones: %.3f en claro y %.3f en oscuro, §8.3) y los 28 pares se reportan como información (ΔL mínimo en gris %.3f en claro y %.3f en oscuro, §8.5). El color nunca va solo: cada serie lleva forma de marcador, patrón de trazo o relleno y etiqueta directa. Las tablas de simulación de daltonismo de las series (§8.4) no cambian porque las series no cambian; los ΔE con daltonismo de las categóricas (§7.3) se recalculan con Karen y Bodega Aurrera nuevas.\n" % (
+        G["claro"]["min_dl"], G["oscuro"]["min_dl"], G["claro"]["dl_todos_gris"], G["oscuro"]["dl_todos_gris"]))
+    return o
+
+
 def generar_md(M, pares, G, Gg, C, V, I):
     o = []
     ap = o.append
@@ -907,9 +1236,11 @@ def generar_md(M, pares, G, Gg, C, V, I):
     cat_os = sum(1 for v in PLAN_CATEGORICAS.values() if min(contraste(v[0], n950), contraste(v[0], n900)) < UMBRAL_UI)
 
     ap("# Colorimetría · candidato C «Índigo 280°»\n")
-    ap("> Documento generado por `%s` (Python 3, solo biblioteca estándar). No se edita a mano: se cambia la regla en el script y se regenera. Fase U2a del flujo WF-0, %s. Es la base de color de `DESIGN.md` (U2, WF-1) y la parte de color del contrato C2 (`docs/contratos/C2-colores.json`); el resto de los tokens de C2 los hace U2b en WF-1. Queda sujeto a la puerta 2 de aprobación. Ronda 1 de revisión (2026-10-11): corrige el hallazgo H-03 (la serie 6 de gráficas usaba el matiz reservado del eje opuesto; §3 y §8.8).\n" % (SCRIPT_REL, FECHA))
+    ap("> Documento generado por `%s` (Python 3, solo biblioteca estándar). No se edita a mano: se cambia la regla en el script y se regenera. Fase U2a del flujo WF-0, %s. Es la base de color de `DESIGN.md` (U2, WF-1) y la parte de color del contrato C2 (`docs/contratos/C2-colores.json`); el resto de los tokens de C2 los hace U2b en WF-1. Queda sujeto a la puerta 2 de aprobación. Ronda 1 de revisión (2026-10-11): corrige el hallazgo H-03 (la serie 6 de gráficas usaba el matiz reservado del eje opuesto; §3 y §8.8). **Versión %s (puerta 1, %s):** aplica las respuestas K26 y K27 de Axel y el hallazgo R3-04; lo que cambia, con valores anteriores y nuevos, está en «Cambios 1.1».\n" % (SCRIPT_REL, FECHA, VERSION, FECHA_11))
     ap("## Índice\n")
-    ap("1. Qué se genera y cómo regenerarlo\n2. Método\n3. Matiz base, eje opuesto y armonía complementaria dividida\n4. Regla 60-30-10\n5. Escalas de 11 pasos\n6. Roles semánticos\n7. Paleta categórica: personas y tiendas\n8. Paleta de gráficas (8 series)\n9. Reglas de uso por componente\n10. Contraste (resumen de `contraste.csv`)\n11. Tokens (`C2-colores.json`)\n12. Hallazgos, decisiones derivadas del cálculo y bloqueos\n\nAnexo A. Tokens: ruta → hex (lista que verifica el script)\n")
+    ap("0. Cambios 1.1 (puerta 1): gasto, Karen, Bodega Aurrera, marca en pares cercanos y paleta de gráficas\n1. Qué se genera y cómo regenerarlo\n2. Método\n3. Matiz base, eje opuesto y armonía complementaria dividida\n4. Regla 60-30-10\n5. Escalas de 11 pasos\n6. Roles semánticos\n7. Paleta categórica: personas y tiendas\n8. Paleta de gráficas (8 series)\n9. Reglas de uso por componente\n10. Contraste (resumen de `contraste.csv`)\n11. Tokens (`C2-colores.json`)\n12. Hallazgos, decisiones derivadas del cálculo y bloqueos\n\nAnexo A. Tokens: ruta → hex (lista que verifica el script)\n")
+
+    o.extend(md_cambios_11(M, G))
 
     # 1 ------------------------------------------------------------------------------
     ap("## 1. Qué se genera y cómo regenerarlo\n")
@@ -920,7 +1251,7 @@ def generar_md(M, pares, G, Gg, C, V, I):
         ["`docs/design/paleta.html`", "muestrario estático (sin CDN, sin fuentes externas, sin JavaScript)"],
         ["`docs/design/paleta.png`", "captura 1400×3000 con `chromium --headless=new`"],
     ]))
-    ap("\nComando: `python3 %s` (agrega `--sin-png` para omitir la captura y `--solo-verificar` para revisar los archivos existentes sin regenerarlos). La salida es determinista: dos ejecuciones dan archivos idénticos. Al final el script verifica, leyendo los archivos ya escritos, que ningún par del CSV quede bajo su umbral, que los hex del JSON coincidan con el Anexo A de este documento, que la paleta de gráficas mantenga ΔL ≥ %.2f entre series consecutivas en gris y en las tres simulaciones (con las dos variantes de §8.6) y que sus tres primeras series pasen la prueba de todos los pares (§8.5), que las categóricas cumplan su escalonamiento y su separación de los roles, que ningún token fuera de `color.critical` use la zona reservada del eje opuesto (§3) y que marca y neutro reproduzcan los valores de partida del plan; si algo falla, termina con código 1.\n" % (SCRIPT_REL, UMBRAL_DL))
+    ap("\nComando: `python3 %s` (agrega `--sin-png` para omitir la captura y `--solo-verificar` para revisar los archivos existentes sin regenerarlos). La salida es determinista: dos ejecuciones dan archivos idénticos. Al final el script verifica, leyendo los archivos ya escritos, que ningún par del CSV quede bajo su umbral, que los hex del JSON coincidan con el Anexo A de este documento, que la paleta de gráficas mantenga ΔL ≥ %.2f entre series consecutivas en gris y en las tres simulaciones (con las dos variantes de §8.6) y que sus tres primeras series pasen la prueba de todos los pares (§8.5), que las categóricas cumplan su escalonamiento y su separación de los roles, que ningún token fuera de `color.critical` use la zona reservada del eje opuesto (§3), que marca y neutro reproduzcan los valores de partida del plan y, desde la versión 1.1, que gasto esté en 40–45° a ≥ 20° de error, que la marca no quede cerca de ningún rol y que Karen y Bodega Aurrera cumplan la regla de separación entre sí; si algo falla, termina con código 1.\n" % (SCRIPT_REL, UMBRAL_DL))
 
     # 2 ------------------------------------------------------------------------------
     ap("## 2. Método\n")
@@ -1036,10 +1367,16 @@ def generar_md(M, pares, G, Gg, C, V, I):
     dist_o = {(f["a"], f["b"]): f for f in distancias_roles(M, "oscuro")}
     ie_c, ie_o = dist_c[("Ingreso", "Éxito")], dist_o[("Ingreso", "Éxito")]
     ge_c, ge_o = dist_c[("Gasto", "Error")], dist_o[("Gasto", "Error")]
+    h_gasto = next(r["matiz"] for r in ROLES if r["codigo"] == "expense")
+    antes11 = tokens_antes_11(M)
+    ge0_c = delta_e(antes11["color.role.expense.light"].hex, M.hex("color.role.error.light"))
+    ge0_o = delta_e(antes11["color.role.expense.dark"].hex, M.hex("color.role.error.dark"))
+    gm_c, gm_o = (dif_matiz(hex_a_oklch(M.hex("color.role.expense.%s" % x))[2], hex_a_oklch(M.hex("color.role.error.%s" % x))[2]) for x in ("light", "dark"))
     ap("### 6.4 Ingreso frente a éxito (propuesta)\n")
     ap("Decisiones §I deja ingreso en 150° (misma familia que éxito, distinguido por icono y contexto) «o U2 propone 135°». **Propuesta U2a: ingreso 135°**, la opción ya prevista, así que no se reabre nada. Razones: (1) separa ingreso de éxito 15° en vez de 0°; (2) queda a 5° del acento dividido 130° (100° + 30°), el mismo desplazamiento que advertencia tiene respecto a 70°, de modo que ingreso y advertencia forman el par de acentos de la armonía (§3); (3) queda a 35° del opuesto 100° (acción crítica) y a 60° de advertencia. Distancias calculadas entre ingreso y éxito (texto de rol): claro ΔE normal %.1f, protanopia %.1f, deuteranopia %.1f, tritanopia %.1f; oscuro %.1f, %.1f, %.1f, %.1f. Lado a lado apenas se distinguen en visión normal (ΔE ≈ 3, cerca del umbral de percepción) y no se distinguen con daltonismo, por eso el color nunca va solo: **ingreso** siempre lleva signo «+» y flecha de entrada en cifras y listas; **éxito** siempre lleva palomita y texto («Guardado», «Pagado»), y vive en avisos y estados, no en cifras.\n" % (ie_c["normal"], ie_c["protanopia"], ie_c["deuteranopia"], ie_c["tritanopia"], ie_o["normal"], ie_o["protanopia"], ie_o["deuteranopia"], ie_o["tritanopia"]))
     ap("### 6.5 Gasto frente a error\n")
-    ap("Ambos matices están decididos (gasto 25°, error 20°) y quedan a 5°: ΔE normal %.1f en claro y %.1f en oscuro, por debajo de lo que el ojo separa con seguridad. No se reabre la decisión; se dejan los valores decididos y se registra el bloqueo `docs/estado/bloqueos/U2-gasto-error.md` con opciones para Axel. Mientras tanto la regla de uso es: el **gasto** aparece como cifra con signo «−» en listas y tablas; el **error** solo como mensaje de validación o aviso con icono de alerta y texto. Nunca comparten componente.\n" % (ge_c["normal"], ge_o["normal"]))
+    ap("Versión 1.1 (K26; bloqueo `U2-gasto-error` resuelto con la opción 2): gasto pasa de %d° a %d° (terracota) y error se queda en 20°. Medidos en el hex quedan a %.1f° de matiz en claro y %.1f° en oscuro, con ΔE normal %.1f y %.1f (en la 1.0, con gasto en %d°, eran %.1f y %.1f); el grado sale del barrido de «Cambios 1.1». Con daltonismo rojo-verde siguen cerca (ΔE protanopia %.1f / %.1f, deuteranopia %.1f / %.1f), así que se conserva la regla de uso: el **gasto** aparece como cifra con signo «−» en listas y tablas; el **error** solo como mensaje de validación o aviso con icono de alerta y texto. Nunca comparten componente.\n" % (
+        ANTES_11["expense"], h_gasto, gm_c, gm_o, ge_c["normal"], ge_o["normal"], ANTES_11["expense"], ge0_c, ge0_o, ge_c["protanopia"], ge_o["protanopia"], ge_c["deuteranopia"], ge_o["deuteranopia"]))
     ap("### 6.6 Pares de roles cercanos (ΔE normal < 10)\n")
     ap("Todos los roles comparten L y croma, así que la distancia depende solo del ángulo de matiz. Se listan los pares con ΔE normal < 10 (los que pueden confundirse a simple vista):\n")
     filas = []
@@ -1095,13 +1432,16 @@ def generar_md(M, pares, G, Gg, C, V, I):
             filas.append([d["nombre"], "`%s` %d° L %.2f" % (hx, h, L), "%s / %s" % (r2(min(contraste(hx, n50), contraste(hx, n100))), r2(min(contraste(hx, n950), contraste(hx, n900)))),
                           "%d° · `%s` / `%s`" % (d["h"], d["claro"].hex, d["oscuro"].hex)])
     ap(tabla(["Nombre", "Plan (valor único)", "Contraste del plan claro / oscuro", "Final: matiz · claro / oscuro"], filas))
-    ap("\nColisiones resueltas: las dos que lista decisiones §I (Karen 80° y Bodega 60° frente a advertencia 75°) y tres más que aparecen al aplicar la regla a todos los roles: Axel 250° frente a información 240°, Mercado 30° frente a gasto 25° y error 20°, y Walmart 220° justo en el límite de ahorro 200° e información 240°. Además, %d valores del plan no llegaban a 3:1 sobre las superficies claras y %d sobre las oscuras.\n" % (cat_cl, cat_os))
+    ap("\nColisiones resueltas: las dos que lista decisiones §I (Karen 80° y Bodega 60° frente a advertencia 75°) y tres más que aparecen al aplicar la regla a todos los roles: Axel 250° frente a información 240°, Mercado 30° frente a gasto 25° y error 20°, y Walmart 220° justo en el límite de ahorro 200° e información 240°. Además, %d valores del plan no llegaban a 3:1 sobre las superficies claras y %d sobre las oscuras. En la versión 1.1 (K26) gasto pasa a terracota, Karen y Bodega Aurrera salen de 50° y Walmart ajusta su L en oscuro (PROVISIONAL); frente a Ximena, Karen y Bodega Aurrera quedan PROVISIONALES (bloqueo `U2a-rosas-ximena-bodega`). Detalle en «Cambios 1.1».\n" % (cat_cl, cat_os))
     ap("### 7.6 Reglas de uso de las categóricas\n")
     ap("- Nunca llevan texto encima: el nombre va en texto neutro junto a un punto, anillo de avatar o marca de serie del color.\n- La misma persona o tienda conserva su matiz en ambos temas; solo cambia la luminosidad.\n- En gráficas por persona o por tienda se usan estos colores (el color sigue a la entidad) y no la paleta de series; con leyenda siempre y etiqueta directa cuando hay ≤ 4 elementos.\n- Mercados adicionales que Axel dé de alta usan el color de Mercado; si una gráfica necesita distinguir varios mercados, se usan las series de gráficas en su orden.\n")
 
     ap("### 7.7 Pares cercanos en todo el sistema y su refuerzo\n")
-    ap("Revisión de todos los pares entre los 8 roles, acción crítica, las 4 personas y las 4 tiendas, en cada tema, con matiz y L medidos en el hex final. Se listan los que quedan con Δ matiz < 20° **y** ΔL < 0.15, con el refuerzo que evita confundirlos (ninguno es categórica frente a rol):\n")
-    filas = [[f["tema"], f["a"], f["b"], "%.1f°" % f["dm"], "%.3f" % f["dl"], f["refuerzo"]] for f in pares_cercanos(M)]
+    cercanos = pares_cercanos(M)
+    if any(f["refuerzo"] == "SIN RESOLVER" for f in cercanos):
+        raise SystemExit("§7.7: hay pares sin refuerzo (categórica o marca frente a rol)")
+    ap("Revisión de todos los pares entre los 8 roles, acción crítica, las 4 personas, las 4 tiendas y la marca (paso %d en claro y %d en oscuro; hallazgo R3-04, versión 1.1), en cada tema, con matiz y L medidos en el hex final. Se listan los que quedan con Δ matiz < 20° **y** ΔL < 0.15, con el refuerzo que evita confundirlos (ninguno es categórica ni marca frente a rol):\n" % (PASO_MARCA["claro"], PASO_MARCA["oscuro"]))
+    filas = [[f["tema"], f["a"], f["b"], "%.1f°" % f["dm"], "%.3f" % f["dl"], f["refuerzo"]] for f in cercanos]
     ap(tabla(["Tema", "Color A", "Color B", "Δ matiz", "ΔL", "Refuerzo"], filas))
     ap("")
 
@@ -1161,7 +1501,7 @@ def generar_md(M, pares, G, Gg, C, V, I):
                          ["`%s` · %.3f" % (hex_simulado(hx, t), l_vista(hx, t)) for t in TIPOS_CVD])
         ap(tabla(["Serie", "Normal", "Gris", "Protanopia", "Deuteranopia", "Tritanopia"], filas))
         ap("")
-    ap("ΔL en gris entre los 28 pares (informativo; la lectura estricta es el bloqueo `criterios-deltal`):\n")
+    ap("ΔL en gris entre los 28 pares (informativo por K27: el umbral duro es ΔL ≥ 0.10 entre series consecutivas, §8.3, con forma del marcador, patrón de trazo o relleno y etiqueta directa como refuerzo; bloqueo `criterios-deltal` resuelto):\n")
     for tema in TEMAS:
         cols = G[tema]["cols"]
         filas = []
@@ -1285,10 +1625,10 @@ def generar_md(M, pares, G, Gg, C, V, I):
     hallazgos = [
         "Los 22 valores de partida del plan §4.3 (marca y neutro) se reproducen exactamente con la tabla de perfil de §2.3; el plan no la explicitaba.",
         "Los valores de rol del plan (L 0.56) quedan entre %s y %s:1 sobre las superficies claras; %d de %d quedan bajo 4.5:1 en al menos una de las dos. Se usan pasos de escala (claro 700, oscuro 400); el paso 600 que pedía el encargo da %s–%s:1 (§6.2)." % (r2(min(plan_rol_cr)), r2(max(plan_rol_cr)), plan_rol_bajo, len(plan_rol_cr), r2(min(p600)), r2(max(p600))),
-        "Gasto (25°) y error (20°), ambos decididos, son indistinguibles por color (ΔE %.1f / %.1f). Bloqueo `U2-gasto-error`." % (ge_c["normal"], ge_o["normal"]),
+        "Versión 1.1 (K26): gasto pasa de %d° a %d° y deja de confundirse con error 20° (ΔE normal %.1f en claro y %.1f en oscuro; en la 1.0 eran %.1f y %.1f). Bloqueo `U2-gasto-error` resuelto (opción 2)." % (ANTES_11["expense"], h_gasto, ge_c["normal"], ge_o["normal"], ge0_c, ge0_o),
         "Además de las dos colisiones listadas en decisiones §I, la regla de separación detecta tres más en la propuesta categórica del plan: Axel–información, Mercado–gasto/error y Walmart en el límite exacto de 20°. Las cinco quedan resueltas (§7.5).",
         "%d colores categóricos del plan no llegaban a 3:1 sobre las superficies claras y %d sobre las oscuras; no existe un valor único que cumpla 3:1 en ambos temas y además se escalone (ventana L_gris [%.3f, %.3f]). Personas, tiendas y series tienen variante por tema (§7, §8)." % (cat_cl, cat_os, V["l_min"], V["l_max"]),
-        "«ΔL ≥ 0.10 entre series» (plan §3.5) solo es alcanzable entre series consecutivas; entre todos los pares es matemáticamente imposible con 8 series (§8.5).",
+        "«ΔL ≥ 0.10 entre series» (plan §3.5) solo es alcanzable entre series consecutivas; entre todos los pares es matemáticamente imposible con 8 series (§8.5). K27 fija esa lectura: umbral duro entre series consecutivas y los 28 pares como información (bloqueo `criterios-deltal` resuelto).",
         "culori 4.0.2 aplica las matrices de Machado sobre sRGB codificado, no lineal; la paleta pasa con ambas variantes (§8.6).",
         "Pares de roles con ΔE normal < 15 (ingreso–éxito, advertencia–acción crítica, entre otros, §6.6): ninguno comparte componente y todos llevan icono y texto.",
         "Ronda 1 de revisión (H-03): la serie %d de gráficas («mostaza», 100°) usaba el matiz que decisiones §I reserva para acción crítica y el documento no declaraba la excepción. Pasa a «%s» %d° (§8.8); con ese matiz, la búsqueda de orden de §8.2 %s. El script verifica la zona reservada %d°–%d° en todos los tokens (§3)." % (
@@ -1300,12 +1640,19 @@ def generar_md(M, pares, G, Gg, C, V, I):
         par_txt = "entre %s y %s%s" % (a_["nombre"], b_["nombre"], (", ambas de clase %s y con la misma luminosidad" % a_["clase"]) if a_["clase"] == b_["clase"] else "")
         hallazgos.append("Encontrado al corregir H-03: con el orden de la ronda 0, las tres primeras series (%s), que §8.5 reserva para dispersión, mapas y pequeños múltiplos, no llegaban al piso de ΔE %.0f entre todos sus pares en visión normal (%.1f en claro y %.1f en oscuro, %s). Con el orden vigente dan %.1f y %.1f, y el script lo verifica (§8.5)." % (
             nom_orden(r0["orden"][:3]), NORMAL_PISO, r0["tres"]["claro"][0], r0["tres"]["oscuro"][0], par_txt, act["tres"]["claro"][0], act["tres"]["oscuro"][0]))
+    mp = [f for f in cercanos if "(marca)" in f["a"] + f["b"]]
+    hallazgos += [
+        "Versión 1.1 (K26): con gasto en %d° no queda hueco cálido a ≥ 20° de error, gasto y advertencia, y la L de Karen y de Bodega Aurrera las obliga a separarse de los roles por matiz; sus ventanas factibles quedan entre deuda y error y van a %d° y %d° (Cambios 1.1)." % (h_gasto, M.cat["person"]["karen"]["h"], M.cat["store"]["bodega-aurrera"]["h"]),
+        "Versión 1.1 (R3-04): con la marca en el barrido de §7.7 quedan cerca %s; todos con refuerzo de forma y etiqueta, y ningún rol cerca de la marca." % "; ".join("%s y %s en %s (%.1f°, ΔL %.3f)" % (f["a"], f["b"], f["tema"], f["dm"], f["dl"]) for f in mp),
+        "Versión 1.1: en oscuro, Bodega Aurrera en rosa no cabe en el escalonamiento ΔL ≥ 0.10 de las tiendas con Walmart en L %.3f (ningún matiz entero cumple); Walmart pasa a L %.3f, PROVISIONAL con el bloqueo `U2a-walmart-oscuro`, y Bodega Aurrera usa croma %.2f (Cambios 1.1)." % (ANTES_11[("store", "walmart")][3], M.cat["store"]["walmart"]["oscuro"].l, M.cat["store"]["bodega-aurrera"]["c"]),
+        hallazgo_rosas_ximena(M),
+    ]
     for i, h in enumerate(hallazgos, 1):
         ap("%d. %s" % (i, h))
     ap("\n**Decisiones derivadas del cálculo** (no son supuestos: las fuerza un requisito explícito)\n")
-    ap("- Paso 700 en claro para los roles (el 600 incumple 4.5:1).\n- Variantes `light`/`dark` para personas, tiendas y series (un valor único no cumple 3:1 en ambos temas con escalonamiento).\n- Criterio de ΔL aplicado a series consecutivas, con umbral 0.10 (más estricto que el 0.08 del encargo).\n- Texto deshabilitado en claro con neutral 700 (el 600 incumple 4.5:1).\n")
-    ap("**Propuestas sujetas a la puerta 2:** ingreso 135° (§6.4, opción prevista en decisiones §I), la resolución de colisiones categóricas (§7.5) y la paleta de gráficas corregida en la ronda 1 (serie %d en %d°%s; §8.2 y §8.8).\n" % (SERIE_CORREGIDA, M.graf[SERIE_CORREGIDA]["h"], (", con %s en la serie %d y %s en la %d" % (M.graf[cambio[0]]["nombre"], cambio[0], M.graf[cambio[1]]["nombre"], cambio[1])) if len(cambio) == 2 else ""))
-    ap("**Bloqueos:** `docs/estado/bloqueos/U2-gasto-error.md` (gasto y error a 5°). No impide nada: se entregó con los valores decididos.\n")
+    ap("- Paso 700 en claro para los roles (el 600 incumple 4.5:1).\n- Variantes `light`/`dark` para personas, tiendas y series (un valor único no cumple 3:1 en ambos temas con escalonamiento).\n- Criterio de ΔL aplicado a series consecutivas, con umbral 0.10 (más estricto que el 0.08 del encargo).\n- Texto deshabilitado en claro con neutral 700 (el 600 incumple 4.5:1).\n- Versión 1.1: Bodega Aurrera con croma %.2f y Karen con L %.3f en claro (márgenes del escalonamiento de su grupo; Cambios 1.1).\n" % (M.cat["store"]["bodega-aurrera"]["c"], M.cat["person"]["karen"]["claro"].l))
+    ap("**Propuestas sujetas a la puerta 2:** ingreso 135° (§6.4, opción prevista en decisiones §I), la resolución de colisiones categóricas (§7.5; en la versión 1.1, gasto 45°, Karen y Bodega Aurrera en sus matices nuevos, «Cambios 1.1») y la paleta de gráficas corregida en la ronda 1 (serie %d en %d°%s; §8.2 y §8.8).\n" % (SERIE_CORREGIDA, M.graf[SERIE_CORREGIDA]["h"], (", con %s en la serie %d y %s en la %d" % (M.graf[cambio[0]]["nombre"], cambio[0], M.graf[cambio[1]]["nombre"], cambio[1])) if len(cambio) == 2 else ""))
+    ap("**Bloqueos:** `docs/estado/bloqueos/U2a-walmart-oscuro.md` (versión 1.1: Walmart en oscuro con L %.3f en vez de %.3f, PROVISIONAL; «Cambios 1.1») y `docs/estado/bloqueos/%s.md` (ronda 1 de revisión, H-01: Karen y Bodega Aurrera bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena; %d tokens PROVISIONALES; «Cambios 1.1», punto 2). Resueltos en la puerta 1: `U2-gasto-error` (K26) y `criterios-deltal` (K27).\n" % (M.cat["store"]["walmart"]["oscuro"].l, ANTES_11[("store", "walmart")][3], BLOQUEO_ROSAS, len(rosas_ximena(M)["bajo"])))
 
     # Anexo ---------------------------------------------------------------------------
     ap("## Anexo A. Tokens: ruta → hex\n")
@@ -1638,6 +1985,27 @@ def verificar():
         MATIZ_OPUESTO - ZONA_RESERVADA, MATIZ_OPUESTO + ZONA_RESERVADA, revisados, len(dentro), cercano[1], cercano[0]))
     if dentro:
         err.append("zona reservada del eje opuesto usada fuera de color.critical: %s" % dentro)
+    # --- Versión 1.1 (K26 y R3-04): gasto en 40–45° y lejos de error, marca lejos de los roles, Karen frente a Bodega Aurrera
+    h_gasto = next(r["matiz"] for r in ROLES if r["codigo"] == "expense")
+    if not GASTO_RANGO[0] <= h_gasto <= GASTO_RANGO[-1]:
+        err.append("gasto fuera de 40–45° (K26): %s°" % h_gasto)
+    for tema in TEMAS:
+        s = SUFIJO[tema]
+        lch = {r: hex_a_oklch(hx[r]) for r in hx}
+        ge = dif_matiz(lch["color.role.expense.%s" % s][2], lch["color.role.error.%s" % s][2])
+        mk = lch["color.brand.%d" % PASO_MARCA[tema]]
+        cerca = [r["codigo"] for r in ROLES + [CRITICO] if dif_matiz(mk[2], lch["%s.%s" % (base_rol(r["codigo"]), s)][2]) < SEPARACION_MATIZ
+                 and abs(mk[0] - lch["%s.%s" % (base_rol(r["codigo"]), s)][0]) < SEPARACION_L]
+        ka, kb = lch["color.person.karen.%s" % s], lch["color.store.bodega-aurrera.%s" % s]
+        dm_kb, dl_kb = dif_matiz(ka[2], kb[2]), abs(ka[0] - kb[0])
+        info.append("versión 1.1 %s: gasto–error %.1f°; marca %d cerca de roles: %d; Karen–Bodega Aurrera Δ matiz %.1f°, ΔL %.3f" % (
+            tema, ge, PASO_MARCA[tema], len(cerca), dm_kb, dl_kb))
+        if ge < SEPARACION_MATIZ:
+            err.append("gasto y error a menos de %d° en %s" % (SEPARACION_MATIZ, tema))
+        if cerca:
+            err.append("marca cerca de roles en %s: %s" % (tema, cerca))
+        if dm_kb < SEPARACION_MATIZ and dl_kb < SEPARACION_L:
+            err.append("Karen y Bodega Aurrera sin separación en %s" % tema)
     # --- HTML sin recursos externos
     h = SALIDA["html"].read_text(encoding="utf-8")
     externos = re.findall(r'(?:src|href)\s*=\s*"(?:https?:)?//', h) + re.findall(r"@import|url\(", h)

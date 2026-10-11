@@ -1,0 +1,359 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · componentes comunes. Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · componentes comunes"
+  version: "1.1.0"
+  description: "Componentes que comparten todos los extractos: parámetros, encabezados, respuestas, seguridad y los esquemas base (Error, Page, MoneyCents, Date, DateTime y los que ellos referencian)."
+paths: {}
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  parameters:
+    PersonId:
+      name: "person_id"
+      in: "query"
+      required: false
+      description: "Filtro global «persona»: ids de persona separados por coma (person.id). En gastos filtra expense.person_id; en partes de dinero, la persona de la parte."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "integer"
+          minimum: 1
+    Family:
+      name: "family"
+      in: "query"
+      required: false
+      description: "Filtro global «familia» (U1 §0.2, K5), tres valores incluyentes: household = Hogar, registros con reparto Hogar o Conjunto (incluye lo conjunto); external = Karen, registros con reparto Karen o Conjunto (incluye lo conjunto); joint = Conjunto, solo los registros con reparto Conjunto. Sin valor: todos."
+      schema:
+        type: "string"
+        enum:
+          - "household"
+          - "external"
+          - "joint"
+    CategoryId:
+      name: "category_id"
+      in: "query"
+      required: false
+      description: "Filtro global «categoría»: ids separados por coma (category.id)."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "integer"
+          minimum: 1
+    StoreId:
+      name: "store_id"
+      in: "query"
+      required: false
+      description: "Filtro global «tienda»: ids separados por coma (store.id); en promociones, el comercio ligado."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "integer"
+          minimum: 1
+    Period:
+      name: "period"
+      in: "query"
+      required: false
+      description: "Filtro global «periodo», una sola sintaxis: `2026-10` mes calendario (periodo base); `2026-10-q1` / `2026-10-q2` quincena (q1 del 1 al 15, q2 del 16 al último día; días de pago 15 y 30, y en febrero el último día, p. ej. 2027-02-28); `2026-W42` semana ISO de lunes a domingo; `2026` año calendario; `2026-10-10..2026-11-09` rango inclusivo. Quincenas y semanas según K8 (el 31 cae en q2). Sin valor: el periodo por defecto de cada operación."
+      schema:
+        type: "string"
+        pattern: "^([0-9]{4}|[0-9]{4}-(0[1-9]|1[0-2])|[0-9]{4}-(0[1-9]|1[0-2])-q[12]|[0-9]{4}-W(0[1-9]|[1-4][0-9]|5[0-3])|[0-9]{4}-[0-9]{2}-[0-9]{2}\\.\\.[0-9]{4}-[0-9]{2}-[0-9]{2})$"
+        examples:
+          - "2026-10"
+    CreditId:
+      name: "credit_id"
+      in: "query"
+      required: false
+      description: "Filtro global «crédito»: ids de línea separados por coma (credit.id). En gastos, la forma de pago a crédito con esa línea."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "integer"
+          minimum: 1
+    Cursor:
+      name: "cursor"
+      in: "query"
+      required: false
+      description: "Cursor opaco devuelto en `next_cursor` de la página anterior. Sin valor: primera página."
+      schema:
+        type: "string"
+        maxLength: 512
+    Limit:
+      name: "limit"
+      in: "query"
+      required: false
+      description: "Registros por página: 50 por defecto (U1); máximo 200 (K6)."
+      schema:
+        type: "integer"
+        minimum: 1
+        maximum: 200
+        default: 50
+    Sort:
+      name: "sort"
+      in: "query"
+      required: false
+      description: "Orden: propiedades separadas por coma; prefijo `-` = descendente (p. ej. `-expense_date,-created_at`). El orden por defecto de cada lista está en su descripción. El id cierra siempre el orden para que el cursor sea estable."
+      schema:
+        type: "string"
+        pattern: "^-?[a-z][a-z0-9_]*(,-?[a-z][a-z0-9_]*)*$"
+    BudgetScope:
+      name: "scope"
+      in: "query"
+      required: false
+      description: "Alcance de un cambio de monto (K2): this_month = «solo este mes»; onward = «de este mes en adelante» (por omisión; preseleccionado en pantalla)."
+      schema:
+        type: "string"
+        enum:
+          - "this_month"
+          - "onward"
+        default: "onward"
+    BudgetMonth:
+      name: "month"
+      in: "query"
+      required: false
+      description: "Mes al que aplica el cambio de monto (AAAA-MM): el que muestra la pantalla. Sin valor, el mes en curso."
+      schema:
+        $ref: "#/components/schemas/Month"
+    ListWeek:
+      name: "week"
+      in: "query"
+      required: true
+      description: "Llave de la lista de compras semanal (R3-01): dice qué lista se lee o se escribe. No es un filtro ni sustituye al filtro global `period` (C1-datos.md §6, «Llaves que no son filtros»). Semana ISO `2026-W42`, de lunes a domingo (K8). Obligatoria: la pantalla manda la semana que muestra; el contrato no tiene semana por omisión (la regla de la lista vigente vive en la PWA, U1 §0.2)."
+      schema:
+        type: "string"
+        pattern: "^[0-9]{4}-W(0[1-9]|[1-4][0-9]|5[0-3])$"
+        examples:
+          - "2026-W42"
+    Q:
+      name: "q"
+      in: "query"
+      required: false
+      description: "Texto libre, sin distinguir mayúsculas ni acentos."
+      schema:
+        type: "string"
+        maxLength: 200
+    IdempotencyKey:
+      name: "Idempotency-Key"
+      in: "header"
+      required: true
+      description: "Obligatorio en todo POST de captura. Clave única por intento (UUID v4 recomendado). Repetir la misma clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API la guarda por cuenta en la tabla idempotency_key de S1 (huella SHA-256 del cuerpo y respuesta); retención de 24 h (K6, app_setting idempotency.retention_hours). Gastos y pesos guardan además la clave en su propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9)."
+      schema:
+        type: "string"
+        minLength: 16
+        maxLength: 128
+        pattern: "^[A-Za-z0-9_-]+$"
+  headers:
+    RequestId:
+      description: "Identificador de la petición (también en Error.request_id y audit_log.request_id)."
+      schema:
+        type: "string"
+    IdempotentReplayed:
+      description: "true cuando la respuesta es la repetición de una captura ya hecha con la misma Idempotency-Key."
+      schema:
+        type: "boolean"
+    SetCookie:
+      description: "Cookie de sesión `fh_session`: HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age de la sesión larga (90 días renovables con el uso, K11)."
+      schema:
+        type: "string"
+  responses:
+    BadRequest:
+      description: "Petición mal formada: JSON inválido o parámetro con formato incorrecto (`bad_request`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: "Sin sesión, sesión vencida o cerrada desde otro dispositivo (`unauthorized`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Forbidden:
+      description: "Acción no permitida sobre ese registro (`forbidden`, `read_only_source`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: "El registro no existe (`not_found`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Conflict:
+      description: "Conflicto con el estado actual (`conflict`, `already_exists`, `in_use`, `budget_overlap`, `idempotency_key_reused`, …)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    PayloadTooLarge:
+      description: "Archivo demasiado grande (`payload_too_large`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    UnsupportedMediaType:
+      description: "Tipo de archivo no admitido (`unsupported_media_type`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    UnprocessableEntity:
+      description: "Validación de negocio o de campos (`validation_failed`, con `fields`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    TooManyRequests:
+      description: "Demasiados intentos de inicio de sesión (`too_many_attempts`, con `retry_at`)."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Error:
+      description: "Cualquier otro error, incluidos 500 `internal_error`, 501 `not_implemented` y 503 `unavailable`, con el esquema único."
+      headers:
+        X-Request-Id:
+          $ref: "#/components/headers/RequestId"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    MoneyCents:
+      type: "integer"
+      description: "Importe exacto en centavos de MXN (entero, nunca punto flotante). 97375 = $973.75. Redondeo ROUND_HALF_UP; en una serie de pagos el último ajusta centavos. En pantalla: `$` y dos decimales."
+      examples:
+        - 97375
+    Date:
+      type: "string"
+      format: "date"
+      pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+      description: "Fecha de negocio ISO 8601 (AAAA-MM-DD) del calendario de America/Mexico_City. En pantalla se muestra 10-oct-2026."
+      examples:
+        - "2026-10-30"
+    DateTime:
+      type: "string"
+      format: "date-time"
+      pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?(Z|[+-][0-9]{2}:[0-9]{2})$"
+      description: "Instante ISO 8601 con desplazamiento explícito de America/Mexico_City (hoy -06:00). La base lo guarda en UTC con «Z» y la API lo convierte al responder. El sufijo «Z» (UTC) solo se acepta en las entradas; las respuestas siempre llevan el desplazamiento (K12, R2-06)."
+      examples:
+        - "2026-10-10T21:30:00-06:00"
+    Month:
+      type: "string"
+      pattern: "^[0-9]{4}-(0[1-9]|1[0-2])$"
+      description: "Mes calendario AAAA-MM."
+      examples:
+        - "2026-10"
+    Error:
+      type: "object"
+      additionalProperties: false
+      required:
+        - "code"
+        - "message"
+        - "request_id"
+      description: "Esquema único de error de toda la API (C1 §3). Lo usan todas las respuestas 4xx y 5xx."
+      properties:
+        code:
+          type: "string"
+          pattern: "^[a-z][a-z0-9_]*$"
+          description: "Código estable en inglés (tabla de códigos en C1-datos.md §3)."
+          examples:
+            - "validation_failed"
+        message:
+          type: "string"
+          description: "Mensaje para la persona usuaria, en español de México."
+          examples:
+            - "Revisa los campos marcados."
+        fields:
+          type: "array"
+          description: "Detalle por campo cuando aplica (validación)."
+          items:
+            $ref: "#/components/schemas/FieldError"
+        request_id:
+          type: "string"
+          description: "Identificador de la petición; es el mismo valor que el encabezado X-Request-Id y el de audit_log.request_id."
+          examples:
+            - "01JABCDEF0123456789"
+        retry_at:
+          $ref: "#/components/schemas/DateTime"
+          description: "Solo en 429 (límite de intentos de inicio de sesión): hora a partir de la cual se puede intentar de nuevo."
+    FieldError:
+      type: "object"
+      additionalProperties: false
+      required:
+        - "field"
+        - "code"
+        - "message"
+      properties:
+        field:
+          type: "string"
+          description: "Nombre de la propiedad (nombre_codigo) o ruta JSON del campo con error."
+          examples:
+            - "amount_cents"
+        code:
+          type: "string"
+          pattern: "^[a-z][a-z0-9_]*$"
+          description: "Motivo estable en inglés: required, invalid_format, out_of_range, not_found, not_allowed, conflict."
+          examples:
+            - "out_of_range"
+        message:
+          type: "string"
+          description: "Explicación en español de México."
+          examples:
+            - "El monto debe ser mayor que cero."
+    Page:
+      type: "object"
+      required:
+        - "items"
+        - "next_cursor"
+      description: "Envoltura única de toda colección paginada (C1 §5). `next_cursor` = null indica que no hay más."
+      properties:
+        items:
+          type: "array"
+          description: "Registros de la página, en el orden pedido."
+        next_cursor:
+          type:
+            - "string"
+            - "null"
+          description: "Cursor opaco para pedir la página siguiente; null cuando no hay más registros."

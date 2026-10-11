@@ -1,0 +1,1299 @@
+# Finanzas Hogar · Contrato C1 v1.1.0 · extracto «compras-tiendas-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto compras-tiendas-b"
+  version: "1.1.0"
+  description: "Extracto de la etiqueta «Compras y tiendas» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Compras y tiendas"
+    description: "Lista de compras, comparar canasta, productos, precios e inventario."
+paths:
+  /api/v1/products/{product_id}/presentations:
+    post:
+      operationId: "createPresentation"
+      tags:
+        - "Compras y tiendas"
+      summary: "Nueva presentación"
+      description: "Nueva presentación."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PresentationCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Presentation"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/presentations/{presentation_id}:
+    patch:
+      operationId: "updatePresentation"
+      tags:
+        - "Compras y tiendas"
+      summary: "Editar presentación"
+      description: "Editar presentación."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "presentation"
+      parameters:
+        - name: "presentation_id"
+          in: "path"
+          required: true
+          description: "Id del registro (presentation_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PresentationUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Presentation"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/products/{product_id}/prices:
+    get:
+      operationId: "listProductPrices"
+      tags:
+        - "Compras y tiendas"
+      summary: "Precios de un producto"
+      description: "Orden por defecto: -observed_date (historial para Tendencias)."
+      x-necesidades:
+        - "N-171"
+      x-tablas:
+        - "app_setting"
+        - "presentation"
+        - "price"
+        - "store"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - name: "source"
+          in: "query"
+          required: false
+          description: "Fuente."
+          schema:
+            type: "string"
+            enum:
+              - "ticket_manual"
+              - "ticket_ocr"
+              - "site_assisted"
+              - "profeco"
+              - "manual"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PricePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/products/{product_id}/nutrition-facts:
+    get:
+      operationId: "listNutritionFacts"
+      tags:
+        - "Compras y tiendas"
+      summary: "Nutrición del producto"
+      description: "Nutrición del producto."
+      x-necesidades:
+        - "N-173"
+      x-tablas:
+        - "nutrition_fact"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NutritionFactPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createNutritionFact"
+      tags:
+        - "Compras y tiendas"
+      summary: "Capturar dato nutricional con cita"
+      description: "Capturar dato nutricional con cita."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "nutrition_fact"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NutritionFactCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NutritionFact"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/prices/summary:
+    get:
+      operationId: "getPriceSummary"
+      tags:
+        - "Compras y tiendas"
+      summary: "Resumen de precios"
+      description: "Resumen de precios."
+      x-necesidades:
+        - "N-172"
+      x-tablas:
+        - "app_setting"
+        - "presentation"
+        - "price"
+        - "product"
+        - "store"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceSummary"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/prices:
+    post:
+      operationId: "createPrice"
+      tags:
+        - "Compras y tiendas"
+      summary: "Capturar precio"
+      description: "Capturar precio."
+      x-necesidades:
+        - "N-174"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "price"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PriceCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Price"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/prices/{price_id}:
+    patch:
+      operationId: "updatePrice"
+      tags:
+        - "Compras y tiendas"
+      summary: "Corregir precio"
+      description: "Los precios de PROFECO no se editan: 403 `read_only_source`."
+      x-necesidades:
+        - "N-176"
+      x-tablas:
+        - "audit_log"
+        - "price"
+      parameters:
+        - name: "price_id"
+          in: "path"
+          required: true
+          description: "Id del registro (price_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PriceUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Price"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "403":
+          $ref: "componentes-comunes.yaml#/components/responses/Forbidden"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deletePrice"
+      tags:
+        - "Compras y tiendas"
+      summary: "Eliminar precio"
+      description: "PROFECO: 403 `read_only_source`."
+      x-necesidades:
+        - "N-176"
+      x-tablas:
+        - "audit_log"
+        - "price"
+      parameters:
+        - name: "price_id"
+          in: "path"
+          required: true
+          description: "Id del registro (price_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "403":
+          $ref: "componentes-comunes.yaml#/components/responses/Forbidden"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory-items:
+    get:
+      operationId: "listInventoryItems"
+      tags:
+        - "Compras y tiendas"
+      summary: "Inventario"
+      description: "Orden por defecto: out, reorder, sufficient y luego nombre."
+      x-necesidades:
+        - "N-180"
+        - "N-314"
+      x-tablas:
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+        - name: "tracking_mode"
+          in: "query"
+          required: false
+          description: "stock o consumption_rate."
+          schema:
+            type: "string"
+            enum:
+              - "stock"
+              - "consumption_rate"
+        - name: "status"
+          in: "query"
+          required: false
+          description: "sufficient, reorder u out."
+          schema:
+            type: "string"
+            enum:
+              - "sufficient"
+              - "reorder"
+              - "out"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItemPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createInventoryItem"
+      tags:
+        - "Compras y tiendas"
+      summary: "Alta de inventario o sobrante"
+      description: "Una existencia inicial mayor que cero escribe su inventory_movement en la misma transacción (invariante 12 de S1): recipe_leftover en un sobrante; adjustment con motivo count (conteo inicial) en un producto."
+      x-necesidades:
+        - "N-184"
+        - "N-315"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "inventory_item"
+        - "inventory_movement"
+        - "product"
+        - "recipe"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryItemCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory/summary:
+    get:
+      operationId: "getInventorySummary"
+      tags:
+        - "Compras y tiendas"
+      summary: "Resumen de inventario"
+      description: "Resumen de inventario."
+      x-necesidades:
+        - "N-182"
+      x-tablas:
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventorySummary"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory-items/{inventory_item_id}/movements:
+    get:
+      operationId: "listInventoryMovements"
+      tags:
+        - "Compras y tiendas"
+      summary: "Movimientos de un artículo"
+      description: "Movimientos guardados del renglón (inventory_movement): fecha, tipo (compra, sobrante de receta, consumo del plan o ajuste), motivo en los ajustes, diferencia y origen (renglón de ticket o entrada del plan). Orden por defecto: -movement_date."
+      x-necesidades:
+        - "N-181"
+      x-tablas:
+        - "expense_item"
+        - "inventory_item"
+        - "inventory_movement"
+        - "meal_plan_entry"
+      parameters:
+        - name: "inventory_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (inventory_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryMovementPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory-items/{inventory_item_id}/adjustments:
+    post:
+      operationId: "adjustInventoryItem"
+      tags:
+        - "Compras y tiendas"
+      summary: "Ajustar existencia"
+      description: "Cantidad nueva o diferencia, con motivo (conteo, consumo o merma): cambia la existencia y escribe el movimiento adjustment en la misma transacción."
+      x-necesidades:
+        - "N-183"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "inventory_item"
+        - "inventory_movement"
+      parameters:
+        - name: "inventory_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (inventory_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryAdjustmentRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+  schemas:
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    Presentation:
+      type: "object"
+      description: "Presentación (tabla `presentation`). Presentación comprable de un producto (marca y contenido), con su factor de equivalencia a la unidad base. Campos ausentes = sin valor (NULL)."
+      x-tabla: "presentation"
+      required:
+        - "id"
+        - "product_id"
+        - "name"
+        - "size_milli"
+        - "is_bulk"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto genérico"
+        name:
+          type: "string"
+          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
+        brand:
+          type: "string"
+          description: "Marca"
+        size_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
+        is_bulk:
+          type: "boolean"
+          description: "1 = a granel: se vende por kilo o por unidad base"
+        barcode:
+          type: "string"
+          description: "Código de barras EAN o UPC (cruce con Open Food Facts)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    PresentationCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de presentación (tabla `presentation`)."
+      x-tabla: "presentation"
+      properties:
+        name:
+          type: "string"
+          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
+        brand:
+          type: "string"
+          description: "Marca"
+        size_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
+        is_bulk:
+          type: "boolean"
+          description: "1 = a granel: se vende por kilo o por unidad base"
+        barcode:
+          type: "string"
+          description: "Código de barras EAN o UPC (cruce con Open Food Facts)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "name"
+        - "size_milli"
+    PresentationUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de presentación (tabla `presentation`)."
+      x-tabla: "presentation"
+      properties:
+        name:
+          type: "string"
+          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
+        brand:
+          type:
+            - "string"
+            - "null"
+          description: "Marca · null borra el valor"
+        size_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
+        is_bulk:
+          type: "boolean"
+          description: "1 = a granel: se vende por kilo o por unidad base"
+        barcode:
+          type:
+            - "string"
+            - "null"
+          description: "Código de barras EAN o UPC (cruce con Open Food Facts) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    NutritionFact:
+      type: "object"
+      description: "Dato nutricional (tabla `nutrition_fact`). Kilocalorías por 100 g de un producto (o de una presentación específica) con fuente citada. Macronutrientes previstos, se llenan después. Campos ausentes = sin valor (NULL)."
+      x-tabla: "nutrition_fact"
+      required:
+        - "id"
+        - "product_id"
+        - "kcal_milli_per_100g"
+        - "source"
+        - "is_preferred"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto"
+        presentation_id:
+          type: "integer"
+          description: "Presentación específica (etiqueta, Open Food Facts). NULL = valor genérico del producto"
+        kcal_milli_per_100g:
+          type: "integer"
+          description: "Milésimas de kilocaloría por 100 g (884 kcal = 884000)"
+        protein_mg_per_100g:
+          type: "integer"
+          description: "Proteína en mg por 100 g (previsto)"
+        fat_mg_per_100g:
+          type: "integer"
+          description: "Grasa en mg por 100 g (previsto)"
+        carbs_mg_per_100g:
+          type: "integer"
+          description: "Carbohidratos en mg por 100 g (previsto)"
+        fiber_mg_per_100g:
+          type: "integer"
+          description: "Fibra en mg por 100 g (previsto)"
+        source:
+          type: "string"
+          enum:
+            - "usda_fdc"
+            - "open_food_facts"
+            - "mx_table"
+            - "store_label"
+            - "manual"
+          description: "Fuente: USDA FoodData Central, Open Food Facts, tabla mexicana citada, etiqueta de tienda o captura manual"
+        source_ref:
+          type: "string"
+          description: "Cita: fdc_id, código de barras, tabla y página o URL de la etiqueta"
+        source_license:
+          type: "string"
+          description: "Licencia de la fuente (CC0, ODbL)"
+        is_preferred:
+          type: "boolean"
+          description: "1 = valor que usan los cálculos"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    NutritionFactCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Dato nutricional manual con cita (source manual, mx_table o store_label; N-175)."
+      x-tabla: "nutrition_fact"
+      properties:
+        presentation_id:
+          type: "integer"
+          description: "Presentación específica (etiqueta, Open Food Facts). NULL = valor genérico del producto"
+        kcal_milli_per_100g:
+          type: "integer"
+          description: "Milésimas de kilocaloría por 100 g (884 kcal = 884000)"
+        protein_mg_per_100g:
+          type: "integer"
+          description: "Proteína en mg por 100 g (previsto)"
+        fat_mg_per_100g:
+          type: "integer"
+          description: "Grasa en mg por 100 g (previsto)"
+        carbs_mg_per_100g:
+          type: "integer"
+          description: "Carbohidratos en mg por 100 g (previsto)"
+        fiber_mg_per_100g:
+          type: "integer"
+          description: "Fibra en mg por 100 g (previsto)"
+        source:
+          type: "string"
+          enum:
+            - "usda_fdc"
+            - "open_food_facts"
+            - "mx_table"
+            - "store_label"
+            - "manual"
+          description: "Fuente: USDA FoodData Central, Open Food Facts, tabla mexicana citada, etiqueta de tienda o captura manual"
+        source_ref:
+          type: "string"
+          description: "Cita: fdc_id, código de barras, tabla y página o URL de la etiqueta"
+        source_license:
+          type: "string"
+          description: "Licencia de la fuente (CC0, ODbL)"
+        is_preferred:
+          type: "boolean"
+          description: "1 = valor que usan los cálculos"
+      required:
+        - "kcal_milli_per_100g"
+        - "source"
+    Price:
+      type: "object"
+      description: "Precio (tabla `price`). Precio observado de una presentación en una tienda, con fecha y fuente autorizada. Un precio es viejo a los 30 días y pesa menos en la comparativa. Campos ausentes = sin valor (NULL)."
+      x-tabla: "price"
+      required:
+        - "id"
+        - "presentation_id"
+        - "store_id"
+        - "price_cents"
+        - "observed_date"
+        - "source"
+        - "is_promotional"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        presentation_id:
+          type: "integer"
+          description: "Presentación"
+        store_id:
+          type: "integer"
+          description: "Tienda del precio (sucursal, cadena o mercado)"
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación en centavos con IVA (Nutrioli Oli 500 ml en Bodega Aurrera: 15000)"
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del precio. Es viejo cuando tiene 30 días o más"
+        source:
+          type: "string"
+          enum:
+            - "ticket_manual"
+            - "ticket_ocr"
+            - "site_assisted"
+            - "profeco"
+            - "manual"
+          description: "Fuente: ticket capturado a mano, ticket por OCR ya confirmado, lectura asistida del sitio, PROFECO u otra captura manual"
+        is_promotional:
+          type: "boolean"
+          description: "1 = precio de promoción (sexta lata de atún a 2100), no se toma como precio regular"
+        source_ref:
+          type: "string"
+          description: "Referencia de la fuente (mes del dataset PROFECO, URL)"
+        expense_item_id:
+          type: "integer"
+          description: "Renglón de ticket que originó el precio"
+        attachment_id:
+          type: "integer"
+          description: "Foto del ticket"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        base_unit_price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio por 1 kg, 1 l o 1 pieza (K7)."
+          x-calculado: true
+        age_days:
+          type: "integer"
+          description: "Días desde observed_date."
+          x-calculado: true
+        is_stale:
+          type: "boolean"
+          description: "Viejo: 30 días o más (K22)."
+          x-calculado: true
+    PriceCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Captura manual de un precio (N-174); source = manual lo pone la API."
+      x-tabla: "price"
+      properties:
+        presentation_id:
+          type: "integer"
+          description: "Presentación"
+        store_id:
+          type: "integer"
+          description: "Tienda del precio (sucursal, cadena o mercado)"
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación en centavos con IVA (Nutrioli Oli 500 ml en Bodega Aurrera: 15000)"
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del precio. Es viejo cuando tiene 30 días o más"
+        is_promotional:
+          type: "boolean"
+          description: "1 = precio de promoción (sexta lata de atún a 2100), no se toma como precio regular"
+        source_ref:
+          type: "string"
+          description: "Referencia de la fuente (mes del dataset PROFECO, URL)"
+      required:
+        - "presentation_id"
+        - "store_id"
+        - "price_cents"
+        - "observed_date"
+    PriceUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de precio (tabla `price`)."
+      x-tabla: "price"
+      properties:
+        store_id:
+          type: "integer"
+          description: "Tienda del precio (sucursal, cadena o mercado)"
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación en centavos con IVA (Nutrioli Oli 500 ml en Bodega Aurrera: 15000)"
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del precio. Es viejo cuando tiene 30 días o más"
+      minProperties: 1
+    PriceSummary:
+      type: "object"
+      description: "Resumen de precios (N-172)."
+      properties:
+        fresh_count:
+          type: "integer"
+          description: "Productos con precio fresco."
+        stale_count:
+          type: "integer"
+          description: "Con precio viejo."
+        no_price_count:
+          type: "integer"
+          description: "Sin precio."
+        stores:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por tienda."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Tienda."
+              latest_observed_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Precio más reciente."
+            required:
+              - "store_id"
+            x-calculado: true
+          description: "Tiendas activas."
+      required:
+        - "fresh_count"
+        - "stale_count"
+        - "no_price_count"
+        - "stores"
+      x-calculado: true
+    InventoryItem:
+      type: "object"
+      description: "Renglón de inventario (tabla `inventory_item`). Inventario híbrido: existencia por unidad (básicos, no perecederos y sobrantes de recetas) o ritmo de consumo (el resto). Campos ausentes = sin valor (NULL)."
+      x-tabla: "inventory_item"
+      required:
+        - "id"
+        - "tracking_mode"
+        - "quantity_milli"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto en existencia"
+        recipe_id:
+          type: "integer"
+          description: "Sobrante de una receta (en porciones)"
+        tracking_mode:
+          type: "string"
+          enum:
+            - "stock"
+            - "consumption_rate"
+          description: "stock = existencia por unidad, consumption_rate = ritmo de consumo"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia en milésimas de la unidad base (en sobrantes, porciones ×1000): la vigente en stock y la del último conteo en ritmo de consumo. Cada cambio deja su inventory_movement"
+        counted_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último conteo, base de la estimación por ritmo"
+        rate_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Ritmo: cantidad que se consume (milésimas de la unidad base)"
+        rate_period_days:
+          type: "integer"
+          description: "Ritmo: en cuántos días se consume esa cantidad"
+        reorder_level_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Nivel que pone el producto en la lista de compras. NULL = sin aviso"
+        expires_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Caducidad (sobrantes y perecederos)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        status:
+          type: "string"
+          enum:
+            - "sufficient"
+            - "reorder"
+            - "out"
+          description: "Suficiente, reponer o agotado (motor S4, K7: reponer si la existencia ≤ nivel de reposición; agotado si es 0)."
+          x-calculado: true
+        estimated_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia estimada hoy (ritmo de consumo, motor S4)."
+          x-calculado: true
+        weekly_consumption_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Consumo estimado por semana."
+          x-calculado: true
+        days_left:
+          type: "integer"
+          description: "Días restantes estimados."
+          x-calculado: true
+    InventoryItemCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de un renglón de inventario: producto con su modo (N-315) o sobrante de receta (recipe_id, N-184)."
+      x-tabla: "inventory_item"
+      properties:
+        product_id:
+          type: "integer"
+          description: "Producto en existencia"
+        recipe_id:
+          type: "integer"
+          description: "Sobrante de una receta (en porciones)"
+        tracking_mode:
+          type: "string"
+          enum:
+            - "stock"
+            - "consumption_rate"
+          description: "stock = existencia por unidad, consumption_rate = ritmo de consumo"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia en milésimas de la unidad base (en sobrantes, porciones ×1000): la vigente en stock y la del último conteo en ritmo de consumo. Cada cambio deja su inventory_movement"
+        counted_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último conteo, base de la estimación por ritmo"
+        rate_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Ritmo: cantidad que se consume (milésimas de la unidad base)"
+        rate_period_days:
+          type: "integer"
+          description: "Ritmo: en cuántos días se consume esa cantidad"
+        reorder_level_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Nivel que pone el producto en la lista de compras. NULL = sin aviso"
+        expires_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Caducidad (sobrantes y perecederos)"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "tracking_mode"
+    InventoryAdjustmentRequest:
+      type: "object"
+      additionalProperties: false
+      description: "Ajuste de existencia (N-183): cantidad nueva o diferencia, y motivo (count = conteo, consumption = consumo, waste = merma). En una sola transacción cambia inventory_item.quantity_milli y escribe un inventory_movement de tipo adjustment con su motivo (RN-15, invariante 12 de S1). movement_date ausente = hoy."
+      x-tabla: "inventory_movement"
+      properties:
+        movement_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del movimiento"
+        reason:
+          type: "string"
+          enum:
+            - "count"
+            - "consumption"
+            - "waste"
+          description: "Motivo del ajuste: count = conteo, consumption = consumo, waste = merma (N-183)"
+        quantity_delta_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Diferencia en milésimas de la unidad base (en sobrantes, porciones ×1000): positiva entra, negativa sale. Un ajuste por «cantidad nueva» guarda la diferencia"
+        notes:
+          type: "string"
+          description: "notes"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad nueva (inventory_item.quantity_milli); la API guarda la diferencia en inventory_movement.quantity_delta_milli. Exactamente uno de quantity_milli o quantity_delta_milli."
+          x-columna: "inventory_item.quantity_milli"
+        counted_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del conteo (inventory_item.counted_date); por defecto la fecha del movimiento. En ritmo de consumo es la base de la estimación."
+          x-columna: "inventory_item.counted_date"
+      required:
+        - "reason"
+    InventoryMovement:
+      type: "object"
+      description: "Movimiento de inventario (tabla `inventory_movement`). Cada entrada o salida de un renglón de inventario: compra, sobrante de receta, consumo del plan o ajuste a mano con su motivo (conteo, consumo o merma). La API lo escribe en la misma transacción que cambia la existencia. Campos ausentes = sin valor (NULL)."
+      x-tabla: "inventory_movement"
+      required:
+        - "id"
+        - "inventory_item_id"
+        - "movement_date"
+        - "kind"
+        - "quantity_delta_milli"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        inventory_item_id:
+          type: "integer"
+          description: "Renglón de inventario"
+        movement_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del movimiento"
+        kind:
+          type: "string"
+          enum:
+            - "purchase"
+            - "recipe_leftover"
+            - "plan_consumption"
+            - "adjustment"
+          description: "purchase = entrada por compra, recipe_leftover = sobrante de receta, plan_consumption = consumo del plan, adjustment = ajuste a mano (N-181)"
+        reason:
+          type: "string"
+          enum:
+            - "count"
+            - "consumption"
+            - "waste"
+          description: "Motivo del ajuste: count = conteo, consumption = consumo, waste = merma (N-183)"
+        quantity_delta_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Diferencia en milésimas de la unidad base (en sobrantes, porciones ×1000): positiva entra, negativa sale. Un ajuste por «cantidad nueva» guarda la diferencia"
+        expense_item_id:
+          type: "integer"
+          description: "Renglón del ticket que le dio origen (compra)"
+        meal_plan_entry_id:
+          type: "integer"
+          description: "Entrada del plan que le dio origen (consumo o sobrante)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        expense_id:
+          type: "integer"
+          description: "Gasto al que pertenece el renglón de ticket de origen (expense_item.expense_id), para abrir el origen en una compra."
+          x-calculado: true
+    InventorySummary:
+      type: "object"
+      description: "Conteo por estado (N-182)."
+      properties:
+        sufficient_count:
+          type: "integer"
+          description: "Suficiente."
+        reorder_count:
+          type: "integer"
+          description: "Reponer."
+        out_count:
+          type: "integer"
+          description: "Agotado."
+      required:
+        - "sufficient_count"
+        - "reorder_count"
+        - "out_count"
+      x-calculado: true
+    PricePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Price"
+      description: "Página de Price con la envoltura única (Page)."
+    NutritionFactPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/NutritionFact"
+      description: "Página de NutritionFact con la envoltura única (Page)."
+    InventoryItemPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/InventoryItem"
+      description: "Página de InventoryItem con la envoltura única (Page)."
+    InventoryMovementPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/InventoryMovement"
+      description: "Página de InventoryMovement con la envoltura única (Page)."

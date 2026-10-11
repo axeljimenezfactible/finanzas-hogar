@@ -438,173 +438,173 @@
         }
       },
       "expense": {
-        "$description": "Gasto · matiz 25° · decisiones §I",
+        "$description": "Gasto · matiz 45° · K26 (puerta 1): terracota 40–45°; 45° es el grado del rango más separado de error y advertencia (Cambios 1.1)",
         "light": {
           "$type": "color",
-          "$value": "#A44541",
+          "$value": "#A04B20",
           "$description": "Paso 700 (texto/icono en claro)",
           "$extensions": {
             "oklch": {
               "l": 0.515,
               "c": 0.126,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "dark": {
           "$type": "color",
-          "$value": "#FC9A92",
+          "$value": "#F8A078",
           "$description": "Paso 400 (texto/icono en oscuro)",
           "$extensions": {
             "oklch": {
               "l": 0.785,
               "c": 0.119,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "surface-light": {
           "$type": "color",
-          "$value": "#FFEEEC",
+          "$value": "#FFEFE8",
           "$description": "Paso 100 (fondo de insignia en claro)",
           "$extensions": {
             "oklch": {
               "l": 0.962,
-              "c": 0.018695,
-              "h": 25.0
+              "c": 0.020215,
+              "h": 45.0
             }
           }
         },
         "surface-dark": {
           "$type": "color",
-          "$value": "#5A2220",
+          "$value": "#59260B",
           "$description": "Paso 900 (fondo de insignia en oscuro)",
           "$extensions": {
             "oklch": {
               "l": 0.335,
               "c": 0.084,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "50": {
           "$type": "color",
-          "$value": "#FFF8F8",
+          "$value": "#FFF9F6",
           "$extensions": {
             "oklch": {
               "l": 0.985,
-              "c": 0.00724,
-              "h": 25.0
+              "c": 0.007839,
+              "h": 45.0
             }
           }
         },
         "100": {
           "$type": "color",
-          "$value": "#FFEEEC",
+          "$value": "#FFEFE8",
           "$extensions": {
             "oklch": {
               "l": 0.962,
-              "c": 0.018695,
-              "h": 25.0
+              "c": 0.020215,
+              "h": 45.0
             }
           }
         },
         "200": {
           "$type": "color",
-          "$value": "#FFDDDA",
+          "$value": "#FFDED0",
           "$extensions": {
             "oklch": {
               "l": 0.925,
-              "c": 0.038089,
-              "h": 25.0
+              "c": 0.041095,
+              "h": 45.0
             }
           }
         },
         "300": {
           "$type": "color",
-          "$value": "#FFC1BB",
+          "$value": "#FFC3A9",
           "$extensions": {
             "oklch": {
               "l": 0.865,
-              "c": 0.072409,
-              "h": 25.0
+              "c": 0.077809,
+              "h": 45.0
             }
           }
         },
         "400": {
           "$type": "color",
-          "$value": "#FC9A92",
+          "$value": "#F8A078",
           "$extensions": {
             "oklch": {
               "l": 0.785,
               "c": 0.119,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "500": {
           "$type": "color",
-          "$value": "#E77770",
+          "$value": "#E37E4E",
           "$extensions": {
             "oklch": {
               "l": 0.695,
               "c": 0.14,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "600": {
           "$type": "color",
-          "$value": "#C85B56",
+          "$value": "#C46231",
           "$extensions": {
             "oklch": {
               "l": 0.605,
               "c": 0.14,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "700": {
           "$type": "color",
-          "$value": "#A44541",
+          "$value": "#A04B20",
           "$extensions": {
             "oklch": {
               "l": 0.515,
               "c": 0.126,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "800": {
           "$type": "color",
-          "$value": "#7E3330",
+          "$value": "#7C3815",
           "$extensions": {
             "oklch": {
               "l": 0.425,
               "c": 0.105,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "900": {
           "$type": "color",
-          "$value": "#5A2220",
+          "$value": "#59260B",
           "$extensions": {
             "oklch": {
               "l": 0.335,
               "c": 0.084,
-              "h": 25.0
+              "h": 45.0
             }
           }
         },
         "950": {
           "$type": "color",
-          "$value": "#3C1413",
+          "$value": "#3B1705",
           "$extensions": {
             "oklch": {
               "l": 0.255,
               "c": 0.063,
-              "h": 25.0
+              "h": 45.0
             }
           }
         }
@@ -1871,28 +1871,28 @@
         }
       },
       "karen": {
-        "$description": "Karen · matiz 50°",
+        "$description": "Karen · matiz 333°",
         "light": {
           "$type": "color",
-          "$value": "#C67544",
-          "$description": "Karen en claro (L 0.640)",
+          "$value": "#B870AC",
+          "$description": "Karen en claro (L 0.642) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
           "$extensions": {
             "oklch": {
-              "l": 0.64,
+              "l": 0.642,
               "c": 0.12,
-              "h": 50.0
+              "h": 333.0
             }
           }
         },
         "dark": {
           "$type": "color",
-          "$value": "#E28F5E",
-          "$description": "Karen en oscuro (L 0.725)",
+          "$value": "#D389C6",
+          "$description": "Karen en oscuro (L 0.725) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
           "$extensions": {
             "oklch": {
               "l": 0.725,
               "c": 0.12,
-              "h": 50.0
+              "h": 333.0
             }
           }
         }
@@ -1943,11 +1943,11 @@
         },
         "dark": {
           "$type": "color",
-          "$value": "#7BA4F0",
-          "$description": "Walmart en oscuro (L 0.720)",
+          "$value": "#7AA3EE",
+          "$description": "Walmart en oscuro (L 0.716) · PROVISIONAL: bloqueo U2a-walmart-oscuro (L 0.720 → 0.716)",
           "$extensions": {
             "oklch": {
-              "l": 0.72,
+              "l": 0.716,
               "c": 0.12,
               "h": 262.0
             }
@@ -1955,28 +1955,28 @@
         }
       },
       "bodega-aurrera": {
-        "$description": "Bodega Aurrera · matiz 50°",
+        "$description": "Bodega Aurrera · matiz 356°",
         "light": {
           "$type": "color",
-          "$value": "#773400",
-          "$description": "Bodega Aurrera en claro (L 0.410)",
+          "$value": "#762C4C",
+          "$description": "Bodega Aurrera en claro (L 0.410) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
           "$extensions": {
             "oklch": {
               "l": 0.41,
-              "c": 0.108391,
-              "h": 50.0
+              "c": 0.11,
+              "h": 356.0
             }
           }
         },
         "dark": {
           "$type": "color",
-          "$value": "#FFB389",
-          "$description": "Bodega Aurrera en oscuro (L 0.830)",
+          "$value": "#FFAAC9",
+          "$description": "Bodega Aurrera en oscuro (L 0.829) · PROVISIONAL: bloqueo U2a-rosas-ximena-bodega (bajo ≥ 20° o ΔL ≥ 0.15 frente a Ximena)",
           "$extensions": {
             "oklch": {
-              "l": 0.83,
-              "c": 0.104938,
-              "h": 50.0
+              "l": 0.829,
+              "c": 0.106641,
+              "h": 356.0
             }
           }
         }

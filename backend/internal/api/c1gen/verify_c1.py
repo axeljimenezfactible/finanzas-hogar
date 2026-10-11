@@ -2,7 +2,7 @@
 # Uso, desde cualquier carpeta (lee el repositorio que contiene este archivo):
 #   uv run --no-project --with pyyaml --with jsonschema python3 -I backend/internal/api/c1gen/verify_c1.py [--db BASE] [--root RAIZ]
 #   --db BASE   base SQLite ya migrada (p. ej. goose -dir backend/db/migrations sqlite3 BASE up) para C1-03, abierta solo lectura;
-#               sin --db se aplica en memoria la sección Up de backend/db/migrations/00001_esquema.sql.
+#               sin --db se aplican en memoria, en orden, las secciones Up de backend/db/migrations/*.sql.
 #   --root RAIZ otra copia del repositorio (por defecto, cuatro niveles arriba de esta carpeta).
 # Código de salida: 0 si todo OK; 1 si hay alguna FALLA. Origen: anexo A del reporte S6a-contrato-c1 (corrección r1).
 import argparse, json, re, os, sqlite3, random, sys, yaml
@@ -88,10 +88,13 @@ if ARGS.db:
     db = sqlite3.connect(f'file:{os.path.abspath(ARGS.db)}?mode=ro', uri=True)
     print(f'C1-03 base: {os.path.abspath(ARGS.db)} (migrada por fuera, abierta solo lectura; se excluye goose_db_version)')
 else:
-    sql = open(os.path.join(ROOT, 'backend/db/migrations/00001_esquema.sql'), encoding='utf-8').read()
-    up = sql.split('-- +goose Down')[0].split('-- +goose Up', 1)[1].replace('-- +goose StatementBegin', '').replace('-- +goose StatementEnd', '')
-    db = sqlite3.connect(':memory:'); db.executescript(up)
-    print('C1-03 base: sección Up de backend/db/migrations/00001_esquema.sql aplicada en memoria')
+    import glob
+    db = sqlite3.connect(':memory:')
+    migs = sorted(glob.glob(os.path.join(ROOT, 'backend/db/migrations/[0-9]*.sql')))
+    for mp in migs:
+        sql = open(mp, encoding='utf-8').read()
+        db.executescript(sql.split('-- +goose Down')[0].split('-- +goose Up', 1)[1].replace('-- +goose StatementBegin', '').replace('-- +goose StatementEnd', ''))
+    print('C1-03 base: secciones Up de', ', '.join(os.path.basename(m) for m in migs), 'aplicadas en orden en memoria')
 tabs = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name <> 'goose_db_version'")}
 used = {t for _, _, o in OPS for t in o.get('x-tablas', [])}
 sinx = [o['operationId'] for _, _, o in OPS if 'x-tablas' not in o]
@@ -159,6 +162,18 @@ for m, p, o in OPS:
 defs = {k: d['components']['parameters'][v]['name'] == k for k, v in F6.items()}
 print('C1-06 usos por filtro:', usos, '· definidos inline:', inl, '· sinónimos:', sinon)
 ok(all(defs.values()) and not inl and not sinon, f'C1-06 {sum(defs.values())} de 6 filtros con definición única por $ref, 0 sinónimos')
+# H-r2-01 (revisión C1-r2): cada nombre de parámetro tiene un solo componente; ningún otro componente usa el nombre de un filtro;
+# los componentes con nombre de periodo que no son el filtro (llaves) se documentan en §6 de C1-datos.md.
+PC = d['components']['parameters']
+cnt = {}
+for k, v in PC.items(): cnt.setdefault((v['name'], v['in']), []).append(k)
+dup = sorted(f'{n} ({i}): {ks}' for (n, i), ks in cnt.items() if len(ks) > 1)
+otros = sorted(f"{k} → {v['name']}" for k, v in PC.items() if v['name'] in F6 and F6[v['name']] != k)
+llaves = sorted((k, v['name']) for k, v in PC.items() if v['name'] in SIN)
+s6 = c1[c1.index('## 6. '):c1.index('## 7. ')]
+nodoc = [f'{k} → {n}' for k, n in llaves if f'`{n}`' not in s6 or k not in s6]
+print('C1-06 nombres con más de un componente:', dup, '· otros componentes con nombre de filtro:', otros, '· llaves que no son filtro:', [f'{k} → {n}' for k, n in llaves], '· sin documentar en §6:', nodoc)
+ok(not dup and not otros and not nodoc, f'C1-06 {len(PC)} componentes de parámetro, cada nombre con un solo componente; {len(llaves)} llaves documentadas en §6')
 # C1-07
 fmts = set(); exs = []
 def walk(o, path=''):
@@ -224,7 +239,7 @@ ids = [o['operationId'] for _, _, o in OPS]
 TAGS9 = ['Inicio', 'Gastos', 'Presupuesto', 'Comidas', 'Compras y tiendas', 'Créditos', 'Salud', 'Reportes', 'Ajustes']
 badtag = [o['operationId'] for _, _, o in OPS if not o.get('tags') or not set(o['tags']) <= set(TAGS9)]
 print(f'C1-13 operationId duplicadas: {len(ids) - len(set(ids))} · sin etiqueta válida: {badtag} · etiquetas: {[t["name"] for t in d["tags"]]} · info.version: {d["info"]["version"]}')
-ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.0' in c1 and d['info']['version'] == '1.0.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.0')
+ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.1' in c1 and d['info']['version'] == '1.1.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.1')
 # C1-14
 try:
     from jsonschema import Draft202012Validator
@@ -265,6 +280,8 @@ print('C1-14 muestra de 20 descripciones para el revisor:'); [print('   -', x[:1
 ok(not eng, 'C1-14 descripciones en español')
 # C1-15
 B = os.path.join(ROOT, 'docs/estado/bloqueos'); bl = {f[:-3] for f in os.listdir(B) if f.endswith('.md')}
+# C1 v1.1: una marca solo es válida si cita un bloqueo ABIERTO (sin «Respuesta de Axel» ni «Estado: RESUELTO»)
+abiertos = {b for b in bl if not re.search(r'Respuesta de Axel|Estado: RESUELTO', open(os.path.join(B, b + '.md'), encoding='utf-8').read())}
 nprov = 0; huerf = []
 def walkv(o, path):
     global nprov
@@ -272,16 +289,44 @@ def walkv(o, path):
         de = o.get('description', '') if isinstance(o.get('description'), str) else ''
         if o.get('x-provisional') or 'PROVISIONAL' in de:
             nprov += 1
-            if not any(b in de for b in bl): huerf.append(path)
+            if not any(b in de for b in abiertos): huerf.append(path)
         for k, v in o.items(): walkv(v, path + '/' + str(k))
     elif isinstance(o, list):
         for i, v in enumerate(o): walkv(v, f'{path}[{i}]')
 walkv(d, '')
 lin = [l for l in c1.split('\n') if 'PROVISIONAL' in l]
-c1h = [l[:80] for l in lin if not any(b in l for b in bl) and not l.startswith('#') and not re.match(r'^\| (Tema|#) \|', l) and 'Estado:' not in l and 'Todo lo que no sale' not in l and 'C1 tomó en cada caso' not in l]  # títulos y encabezados de tabla no afirman nada
+c1h = [l[:80] for l in lin if not any(b in l for b in abiertos) and not l.startswith('#') and not l.startswith('| C1 v') and not re.match(r'^\| (Tema|#) \|', l) and 'Estado:' not in l and 'Todo lo que no sale' not in l and 'C1 tomó en cada caso' not in l]  # títulos y encabezados de tabla no afirman nada
 refs = sorted({r for l in c1.split('\n') for r in re.findall(r'`((?:C1|S1|S6|U1|criterios)-[a-z0-9-]+)`', l)})
-print(f'C1-15 marcas PROVISIONAL en openapi.yaml: {nprov} · sin bloqueo existente: {huerf[:5]} · líneas PROVISIONAL en C1-datos.md: {len(lin)} · sin bloqueo: {c1h[:5]} · bloqueos citados en C1: {len(refs)} · citados que no existen: {[r for r in refs if r not in bl]}')
-ok(not huerf and not c1h and all(r in bl for r in refs), 'C1-15 toda marca PROVISIONAL remite a un bloqueo existente')
+print(f'C1-15 marcas PROVISIONAL en openapi.yaml: {nprov} · bloqueos abiertos citados: {sorted(b for b in abiertos if b in str(d))} · sin bloqueo abierto: {huerf[:5]} · líneas PROVISIONAL en C1-datos.md: {len(lin)} · sin bloqueo: {c1h[:5]} · bloqueos citados en C1: {len(refs)} · citados que no existen: {[r for r in refs if r not in bl]}')
+ok(not huerf and not c1h and all(r in bl for r in refs), 'C1-15 toda marca PROVISIONAL remite a un bloqueo abierto (sin «Respuesta de Axel»)')
+# EXT extractos (protocolo-agentes §4, K32): cada operación en un solo extracto, ≤ 80 KB y referencias resueltas
+EXD = os.path.join(ROOT, 'docs/contratos/extractos')
+exf = sorted(f for f in os.listdir(EXD) if f.endswith('.yaml')) if os.path.isdir(EXD) else []
+exdocs = {f: yaml.safe_load(open(os.path.join(EXD, f), encoding='utf-8')) for f in exf}
+exbig = [f for f in exf if os.path.getsize(os.path.join(EXD, f)) > 80 * 1024]
+excnt = {}
+for e in exdocs.values():
+    for it in (e.get('paths') or {}).values():
+        for o_ in it.values():
+            excnt[o_['operationId']] = excnt.get(o_['operationId'], 0) + 1
+allids = [o['operationId'] for _, _, o in OPS]
+exrep = sorted(k for k, n in excnt.items() if n != 1); exmiss = sorted(set(allids) - set(excnt)); exextra = sorted(set(excnt) - set(allids))
+def exrefs(o, acc):
+    if isinstance(o, dict):
+        if isinstance(o.get('$ref'), str): acc.append(o['$ref'])
+        for x in o.values(): exrefs(x, acc)
+    elif isinstance(o, list):
+        for x in o: exrefs(x, acc)
+    return acc
+exbad = []
+for f, e in exdocs.items():
+    for r in exrefs(e, []):
+        fn, _, frag = r.partition('#'); node = exdocs.get(fn) if fn else e
+        for part in frag.strip('/').split('/'):
+            node = node.get(part) if isinstance(node, dict) else None
+        if node is None: exbad.append(f'{f}: {r}')
+print(f'EXT extractos: {len(exf)} archivos (incluye componentes-comunes.yaml) · operaciones en extractos: {sum(excnt.values())} · en openapi.yaml: {len(allids)} · repetidas: {exrep[:3]} · faltantes: {exmiss[:3]} · sobrantes: {exextra[:3]} · > 80 KB: {exbig} · referencias sin resolver: {len(exbad)} {exbad[:3]} · INDICE.md: {os.path.isfile(os.path.join(EXD, "INDICE.md"))}')
+ok(bool(exf) and 'componentes-comunes.yaml' in exf and not exrep and not exmiss and not exextra and not exbig and not exbad and os.path.isfile(os.path.join(EXD, 'INDICE.md')), 'EXT extractos: cada operación en un solo extracto, ≤ 80 KB y referencias resueltas')
 # S6-03 paridad de rutas
 rg = open(os.path.join(ROOT, 'backend/internal/api/routes.go'), encoding='utf-8').read()
 rr = set(re.findall(r'Method: "(\w+)", Pattern: "([^"]+)", OperationID: "(\w+)"', rg))

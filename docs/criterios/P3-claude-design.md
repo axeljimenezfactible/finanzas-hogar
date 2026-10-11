@@ -1,6 +1,10 @@
 # P3 · Pista 3, Claude Design — Criterios de aceptación
 
-Versión 1.1 (10-oct-2026) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (ver `INDICE.md` §9) · Los evalúa el revisor visual (agente Sonnet de la Pista 3) y, en la puerta 4, el revisor de WF-3. La Pista 3 la ejecuta el orquestador en la sesión principal con el navegador. Convención de evidencia, severidades y comandos: ver `INDICE.md`.
+Versión 1.1 (11-oct-2026) · Escrito en WF-0 por el agente «criterios»; ronda 1 de revisión de WF-0 (ver `INDICE.md` §9); respuestas de la puerta 1 (`docs/plan/decisiones.md` §K) y hallazgos bajos de r3 aplicados por el agente «criterios-UC-1.1» · Los evalúa el revisor visual (agente Sonnet de la Pista 3) y, en la puerta 4, el revisor de WF-3. La Pista 3 la ejecuta el orquestador en la sesión principal con el navegador. Convención de evidencia, severidades y comandos: ver `INDICE.md`.
+
+**Cambios de la versión 1.1 (11-oct-2026, puerta 1):**
+- Sin cambios en los criterios P3-01 a P3-13.
+- §5: la cita de decisiones G se corrige a «Dashboard minimalista: Resumen (≤ 6 tarjetas)» para que sea textual.
 
 ## 1. Objetivo
 Obtener de Claude Design (claude.ai/design) una referencia visual de las pantallas de U3 y U4 con tokens de C2, en ≤ 3 iteraciones, usando solo las acciones autorizadas, y dejar `docs/design/referencia-visual.md` que diga qué adoptar en F1–F4, sin que la implementación dependa de ese servicio.
@@ -80,7 +84,7 @@ Obtener de Claude Design (claude.ai/design) una referencia visual de las pantall
 - plan.md §3.6 pasos 1–6 (puerta 3; paquete en disco; navegador; revisión; descargas y referencia visual; reglas) → P3-01, P3-02, P3-03, P3-06, P3-07, P3-09, P3-10, P3-04, P3-05.
 - plan.md §1.5 (Claude Design: entradas documentadas, Markdown no listado, `file_upload` solo carpetas compartidas) y §7 riesgo R4 → P3-02, P3-05, P3-11.
 - decisiones J punto 3 «Antes de Pista 3: Axel inicia sesión en claude.ai/design y comparte `docs/design/entrada/`» → P3-01.
-- decisiones G «Notion es la única referencia visual… Paleta nueva completa… Dashboard minimalista (≤ 6 tarjetas)… Ajustes, 14 secciones… WCAG 2.2 AA» → P3-07, P3-08, P3-10.
+- decisiones G «Notion es la única referencia visual… Paleta nueva completa… Dashboard minimalista: Resumen (≤ 6 tarjetas)… Ajustes, 14 secciones… WCAG 2.2 AA» → P3-07, P3-08, P3-10.
 - decisiones I «Matiz base aprobado: C · Índigo 280°» → P3-08.
 - protocolo §7 (credenciales, no Telegram desde agentes) → P3-12.
 - plan.md §3.6 paso 6 («si algo falla 2–3 veces, detener y reportar»), plan.md §7 riesgo R4 («la Pista 3 es referencia visual, no dependencia») y protocolo §2 («Regla suprema: no asumas»; sección SUPUESTOS; bloqueos) → P3-13.

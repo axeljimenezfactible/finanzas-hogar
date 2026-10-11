@@ -292,3 +292,20 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 | D2 | (a) solo LAN |
 | D3 | (b) ACL de lectura de openclaw.json para el servicio |
 | D4 | (a) cada agente propone; Axel aprueba en su puerta |
+
+## Bloqueos nuevos de P1 (11-oct-2026)
+Los dejaron los agentes del flujo «P1 · Aplicar respuestas de la puerta 1» por ambigüedades que §K no resuelve. Los 8 están **abiertos** (sin «Respuesta de Axel»). Ninguno cambia cifras del oráculo ni el esquema; lo que depende de ellos lleva la marca PROVISIONAL y cita el archivo. Registrado por el integrador de P1 (`integrador-p1`).
+
+| Archivo | Fase que lo dejó | Pregunta para Axel | Qué queda PROVISIONAL | Fase que lo usa |
+|---|---|---|---|---|
+| `C1-valores-k31.md` | C1 v1.1 | Aprobar o cambiar 4 propuestas de valores operativos (K31) | 4 descripciones de `openapi.yaml` (alta de adjuntos, `compareScenarios`, `DashboardWeekMeals`, `NotificationUpdate`) y el estado de N-023, N-064, N-226, N-297 y N-300 en la matriz de `C1-datos.md` §10 | La puerta que fija K31 para cada valor (optimizador en la puerta 2; los demás en la 4) |
+| `S1-ajuste-objetivo-kcal.md` | S1 esquema 1.2 | Cuánto se ajusta la meta sugerida de calorías al bajar o subir de peso (K23 no da la cifra) | El ajuste por objetivo en RN-17 y en C1; «mantener» no ajusta | S4 (WF-1) y la pantalla Salud |
+| `S1-fuentes-precio.md` | S1 esquema 1.2 | Si compiten en la comparativa los precios de la lectura asistida y los capturados a mano sin ticket, y con qué peso | Las fuentes que compiten en RN-12 | S5 (WF-1) |
+| `U1-lista-vigente-domingo.md` | U1 1.1 | Los domingos, qué semana abren por defecto el plan de comidas y la lista de compras | La semana por omisión de P-10, P-13 y P-14 (U1 §0.2 y §7); C1 debe marcarla igual (hallazgo alto H-r3-02 de `docs/estado/p1/REVISION-C1-r3.md`) | U1 y C1 (antes de WF-3) |
+| `U2a-rosas-ximena-bodega.md` | Colorimetría 1.1 | Si se acepta que Karen y Bodega Aurrera queden cerca de Ximena solo con el refuerzo declarado, u otra salida | 4 tokens: `color.person.karen.light/.dark` y `color.store.bodega-aurrera.light/.dark` | U2 `DESIGN.md` (WF-1, puerta 2) |
+| `U2a-walmart-oscuro.md` | Colorimetría 1.1 | Si se acepta bajar Walmart en oscuro de L 0.720 a 0.716 (`#7BA4F0` → `#7AA3EE`, ΔE 0.4) | `color.store.walmart.dark` | U2 `DESIGN.md` (WF-1, puerta 2) |
+| `criterios-frescura-extremos.md` | Criterios 1.1 | Cuánto pesa un precio de 30 días y cómo cambia día a día entre el 30 y el 90 (K22 en los extremos) | El peso de los precios de 30 a 89 días en la comparativa | S5 (WF-1) |
+| `criterios-promedios-redondeo.md` | Criterios 1.1 | Si el promedio semanal multiplica por 7 el diario sin redondear o ya redondeado a centavos (K20) | Solo el promedio semanal (unos centavos por periodo) | S2 (WF-1) |
+
+Detalle de dónde se cita cada uno y cuántas marcas PROVISIONAL hay por archivo: `docs/estado/p1/INTEGRACION.md`.
+

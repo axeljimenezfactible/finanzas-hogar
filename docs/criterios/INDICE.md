@@ -1,10 +1,10 @@
 # Índice de criterios de aceptación · Finanzas Hogar (Etapa B)
 
-Versión 1.1 (10-oct-2026) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
+Versión 1.1 (10-oct-2026; filas y totales actualizados el 11-oct-2026, puerta 1; filas C1, U1 y U5 y total corregidos en la ronda 1 de P1; conteo reconciliado por el integrador de P1 el 11-oct-2026, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
 
 ## 1. Cómo usar estos archivos
 - **Un archivo por ítem** (18 + este índice). Cada uno trae: 1 Objetivo · 2 Criterios numerados `<ID>-nn` (enunciado medible, «Verifica» con comando o cálculo, «Evidencia», severidad) · 3 No aceptable · 4 Umbrales numéricos · 5 Trazabilidad.
-- **Severidad:** *alta* bloquea la puerta; *media* el revisor la devuelve y debe quedar corregida o justificada por escrito antes de la ronda final; *baja* se registra en el informe del revisor. (Hoy los 248 criterios son alta o media.)
+- **Severidad:** *alta* bloquea la puerta; *media* el revisor la devuelve y debe quedar corregida o justificada por escrito antes de la ronda final; *baja* se registra en el informe del revisor. (Hoy los 257 criterios de la tabla son alta o media: 197 alta y 60 media; ninguno baja.)
 - **Evidencia:** cada criterio deja una línea que **empieza con su ID** en `docs/estado/<flujo>/<agente>.md` (flujos `wf0`, `wf1`, `wf3`, `wf4`), con el comando ejecutado y su salida resumida; los archivos con nombre fijo del plan son `docs/estado/S3-escenarios.md`, `S5-terminos.md`, `S5-cobertura-profeco.md`, `U5-revision.md`, `P3-iter-N.md` e `informe-final.md`. El revisor **reejecuta** los comandos; no se aprueba por la sola palabra del agente.
 - **Lo que depende de Axel** (instalar la CA en los Android, abrir la PWA en Android, reiniciar la máquina, que Ximena escriba al bot, iniciar sesión en claude.ai/design) **no se declara cumplido** hasta que Axel lo confirme: queda «pendiente de Axel» o «no verificado» en el informe final.
 - **Rutas y comandos:** absolutos, desde `/home/deepsec/finanzas-hogar`. `jq` no está instalado en la máquina (se usa `python3 -I`). Los scripts auxiliares los entrega cada agente y se nombran en su reporte; si falta una herramienta (`goose`, `govulncheck`, `mkcert`, validador OpenAPI, `style-dictionary`, `jsonschema`), se instala (autorizado) y se anota en «Paquetes instalados».
@@ -15,8 +15,8 @@ Versión 1.1 (10-oct-2026) · Escrito en WF-0 por el agente «criterios»; corre
 | Archivo | Ítem | Se construye en | Lo evalúa | Criterios (alta / media) |
 |---|---|---|---|---|
 | `S1.md` | Dominio y datos | WF-0 | Revisor WF-0 → puerta 1 | 17 (12 / 5) |
-| `C1.md` | Contrato de datos y API (OpenAPI) | WF-0 | Revisor WF-0 → puerta 1 | 15 (13 / 2) |
-| `U1.md` | Arquitectura de información | WF-0 | Revisor WF-0 → puerta 1 | 14 (9 / 5) |
+| `C1.md` | Contrato de datos y API (OpenAPI) | WF-0 | Revisor WF-0 → puerta 1 | 21 (19 / 2) |
+| `U1.md` | Arquitectura de información | WF-0 | Revisor WF-0 → puerta 1 | 16 (10 / 6) |
 | `S2.md` | Motor financiero (85 cifras canon) | WF-1 | Revisor motores → puerta 2 | 16 (13 / 3) |
 | `S3.md` | Motor de créditos y optimizador (85 cifras canon) | WF-1 | Revisor motores → puerta 2 | 20 (17 / 3) |
 | `S4.md` | Recetas y comidas | WF-1 | Revisor recetas+precios → puerta 2 | 15 (11 / 4) |
@@ -28,11 +28,11 @@ Versión 1.1 (10-oct-2026) · Escrito en WF-0 por el agente «criterios»; corre
 | `P3-claude-design.md` | Pista 3 · Claude Design | Entre puertas 3 y 4 (orquestador) | Revisor visual Sonnet; puerta 4 | 13 (10 / 3) |
 | `S6.md` | Backend local | WF-3 | Revisores backend ×2 → puerta 4 | 16 (12 / 4) |
 | `S7.md` | Reportes | WF-3 | Revisor backend → puerta 4 | 14 (12 / 2) |
-| `U5.md` | Prototipo y verificación visual | WF-3 | Revisor visual → puerta 4 | 12 (9 / 3) |
+| `U5.md` | Prototipo y verificación visual | WF-3 | Revisor visual → puerta 4 | 13 (10 / 3) |
 | `C3.md` | Contrato de integración | WF-3 | Revisor independiente → puerta 4 | 11 (9 / 2) |
 | `S8.md` | Calidad y operación | WF-4 | Revisor final | 11 (8 / 3) |
 | `WF4-operacion.md` | Operación, semilla, seguridad, informe | WF-4 | Revisor final | 12 (10 / 2) |
-| **Total** | | | | **248 (189 / 59)** |
+| **Total** | | | | **257 (197 / 60)** |
 
 Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 del frontend (plan §5) no tienen archivo propio: se evalúan por U3, U4, U5 y C3.
 
@@ -112,3 +112,35 @@ Origen: `docs/estado/wf0/REVISION-r1.md` §5, hallazgos H-06, H-07 y H-08 (sever
 | H-06 · identificadores | Pantalla = `P-xx` (`P-26.xx` para las 14 secciones de Ajustes); necesidad de datos = `N-xxx`; componentes globales `G-xx` y flujos `F-x` (los fija U1 §0.1). C1-02 cruza `N-xxx` ↔ `operationId` y exige que cada `P-xx` tenga al menos una operación o la declaración Local; una `N-xxx` bloqueada o PROVISIONAL sin endpoint no cuenta como cubierta. El conteo `N` pasa a `T` (pantallas `P-xx` más secciones `P-26.xx`) para no chocar con `N-xxx`. Bloqueo `criterios-nxx` cerrado con la opción (b). | `U1.md` (objetivo, U1-02, U1-03, U1-04, U1-05, U1-07, U1-08, U1-09, §3, §4), `C1.md` (C1-02, C1-10, §3, §4), `C3.md` (C3-01, C3-02, C3-08, §4), `U5.md` (U5-01, U5-03, §4), `U4.md` (U4-01), `P3-claude-design.md` (P3-06) |
 | H-07 · periodos | S1-09 ya no pide insertar P1–P6 (ventanas del 10 al 9): pide los meses calendario oct-2026…mar-2027 con sus quincenas, el rechazo de la ventana por el `CHECK` y la prueba de equivalencia con el oráculo (12 de 12 cifras). S2-09 y las notas de R-45…R-50 (`S2.md` §6 (e), `S3.md` §6 (d)) dicen que la equivalencia depende de la semilla; S2-06 usa una etiqueta de mes calendario; S2-03, S2-07 y el §4 de S2, C1-09, C3-09 y S7-02 (consumidores de R-45…R-50) aclaran que P1–P6 son oct-2026…mar-2027. | `S1.md` (S1-09, §3, §5), `S2.md` (S2-03, S2-06, S2-07, S2-09, §4, nota (e)), `S3.md` (nota (d)), `C1.md` (C1-09), `C3.md` (C3-09), `S7.md` (S7-02) |
 | H-08 · trazabilidad | Los 35 criterios que no aparecían en la sección 5 de su archivo tienen ahora su línea (al plan, a decisiones o al protocolo; lo que no deriva de una frase se marca «convención propia del directorio»). Todo criterio de los 18 archivos aparece ya en su sección 5 (248 de 248). | C1-04; S1-15; U1-14; C2-09, C2-10, C2-11; C3-03, C3-10, C3-11; P3-13; S2-08, S2-09, S2-14, S2-16; S3-04, S3-11, S3-20; S4-06, S4-15; S5-13; S6-08, S6-10, S6-15, S6-16; S7-14; S8-08; U3-08, U3-10, U3-12; U4-07, U4-09, U4-10, U4-11; U5-06, U5-12 |
+
+## 10. Conteo reconciliado de la puerta 1 (11-oct-2026, agente `integrador-p1`)
+Conteo propio por script sobre los 18 archivos (no incluye este índice): cuenta las líneas que empiezan con `**<ID>-nn` seguidas de la severidad entre paréntesis, y comprueba que no haya IDs repetidos y que cada archivo diga «Versión 1.1». Coincide fila por fila con la tabla de §2 y con los totales de `docs/criterios/tools/traza.py` (257 criterios definidos) y `refs.py` (257 IDs citados, 0 inexistentes).
+
+| Archivo | Criterios (alta / media / baja) | Versión |
+|---|---|---|
+| `S1.md` | 17 (12 / 5 / 0) | 1.1 |
+| `S2.md` | 16 (13 / 3 / 0) | 1.1 |
+| `S3.md` | 20 (17 / 3 / 0) | 1.1 |
+| `S4.md` | 15 (11 / 4 / 0) | 1.1 |
+| `S5.md` | 13 (10 / 3 / 0) | 1.1 |
+| `S6.md` | 16 (12 / 4 / 0) | 1.1 |
+| `S7.md` | 14 (12 / 2 / 0) | 1.1 |
+| `S8.md` | 11 (8 / 3 / 0) | 1.1 |
+| `WF4-operacion.md` | 12 (10 / 2 / 0) | 1.1 |
+| `U1.md` | 16 (10 / 6 / 0) | 1.1 |
+| `U2.md` | 14 (10 / 4 / 0) | 1.1 |
+| `U3.md` | 12 (8 / 4 / 0) | 1.1 |
+| `U4.md` | 11 (8 / 3 / 0) | 1.1 |
+| `U5.md` | 13 (10 / 3 / 0) | 1.1 |
+| `C1.md` | 21 (19 / 2 / 0) | 1.1 |
+| `C2.md` | 12 (8 / 4 / 0) | 1.1 |
+| `C3.md` | 11 (9 / 2 / 0) | 1.1 |
+| `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.1 |
+| **Total (18 archivos)** | **257 (197 / 60 / 0)** | |
+
+Reconciliación con los reportes de P1:
+- `docs/estado/p1/criterios-S-1.1.md`: S1–S8 y WF4 = 134 (105 / 29), sin cambio. **Coincide.** Su total de 248 era la tabla de antes de los cambios de U1 y C1; el mismo reporte anticipaba 256 con esos cambios.
+- `docs/estado/p1/criterios-UC-1.1.md`: daba 256 (196 / 60) en total. La diferencia es 1 criterio alto: U5-13, que agregó la ronda 1 de correcciones de P1 (`docs/estado/p1/correccion-criterios-r1.md`; U5 pasa a 13 = 10 / 3), con lo que el total queda en 257 (197 / 60). El conteo propio y `traza.py` confirman 257.
+- Comando: `make verify-criterios` (corre `docs/criterios/tools/verif_final.sh` y exige sus resultados esperados).
+
+Siguen registrados (hallazgo bajo B-01 de `docs/estado/p1/REVISION-criterios-r3.md`; el integrador no cambia contenido): las notas 8 y 10 de §5 todavía describen como problemas la colisión error–gasto y el token del bot, ya resueltos por K26 y K30, y §6 no lista los bloqueos nuevos `criterios-promedios-redondeo` y `criterios-frescura-extremos` (están en `docs/estado/bloqueos/INDICE.md`, sección «Bloqueos nuevos de P1»).
