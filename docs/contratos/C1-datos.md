@@ -1,0 +1,840 @@
+# C1 · Contrato de datos y API · Finanzas Hogar
+
+| | |
+|---|---|
+| Versión | **C1 v1.0** (10-oct-2026) · `info.version` 1.0.0 de `docs/contratos/openapi.yaml` |
+| Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2 |
+| Estado | Propuesta para la puerta 1 (C1 + U1 + criterios) |
+| Fuentes | `plan.md` §1, §3.4 (S6, S7), §3.5 (U1), §3.7; `decisiones.md`; esquema de S1, versión 1.1 (`backend/db/migrations/00001_esquema.sql`, `docs/contratos/diccionario-datos.md`, `docs/contratos/reglas-negocio.md`); `docs/design/U1-arquitectura.md` (199 necesidades N-xxx) |
+| Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): 158 rutas, 197 operaciones, 237 esquemas |
+| Generador | Este documento, `openapi.yaml` y `backend/internal/api/routes.go` son archivos generados: no se editan a mano. Fuente: `backend/internal/api/c1gen/` (este texto sale de `c1_plantilla.md`; ver su `README.md`). Regenerar: `python3 -I backend/internal/api/c1gen/build.py`. Comprobar que nadie los editó a mano: `python3 -I backend/internal/api/c1gen/build.py --check`. Verificar C1-01 a C1-15, la matriz §10 y S6-03: `uv run --no-project --with pyyaml --with jsonschema python3 -I backend/internal/api/c1gen/verify_c1.py` |
+
+Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla **necesita**. El OpenAPI es la fuente de verdad de rutas y esquemas; aquí están las convenciones únicas, las métricas con su fórmula, la matriz pantalla → necesidad → endpoint y la cobertura de S1. Todo lo que no sale del plan, de las decisiones o del oráculo va marcado **PROVISIONAL** y apunta a su bloqueo en `docs/estado/bloqueos/`.
+
+## Cambios
+
+| Versión | Fecha | Cambio |
+|---|---|---|
+| C1 v1.0 | 10-oct-2026 | Primera versión (WF-0). Los cambios posteriores se publican como C1 v1.1, v1.2… (plan §3.7) con esta tabla actualizada y `info.version` igual. |
+| C1 v1.0 · corrección r1 | 10-oct-2026 | Sin cambios de rutas, esquemas, convenciones ni matriz. El generador y el verificador pasan al repositorio (`backend/internal/api/c1gen/`) y las cabeceras de `openapi.yaml` y `routes.go` lo citan (hallazgo H-05 de la revisión r1). |
+| C1 v1.0 · corrección r2 | 11-oct-2026 | Regenerado contra el esquema 1.1 de S1 (hallazgos R2-01 y R2-02 de la revisión r2; sigue siendo la entrega de WF-0 para la puerta 1). Lista de compras guardada: `generateShoppingList` (N-127), `createShoppingListItem` (N-152), `updateShoppingListItem` (N-151, N-153), `assignShoppingListStore` (N-165) y `getShoppingList` con la lista guardada y el filtro `is_bought` (N-150, N-073), todo PROVISIONAL por la opción A de `C1-lista-compras`. Presupuesto con vigencia (`valid_from_date`, `valid_to_date`; sin `period_id`) y 409 `budget_overlap`. Tiempos aptos de la receta como lista `meal_slot_ids` sobre `recipe_meal_slot` (sin `default_meal_slot_id`). Descripción del gasto opcional sin texto de relleno. Movimientos de inventario guardados en `inventory_movement`, con motivo en los ajustes. Ingreso esperado con `second_half_amount_cents`. `idempotency_key` en `x-tablas` de los POST de captura. Tope por quincena sin cifra. Columna nueva `category.kind`. |
+
+## 1. Convenciones generales
+
+1. **Base**: `https://finanzas.local:8443` (solo red local, decisión H). Recursos bajo `/api/v1`; fuera de él solo `GET /health` y `GET /openapi.yaml`.
+2. **Formato**: JSON UTF-8 (`application/json`), salvo adjuntos y PDF (binario) y cargas de archivo (`multipart/form-data`).
+3. **Nombres**: rutas, parámetros y propiedades en inglés corto, **iguales al `nombre_codigo` del diccionario de S1**. Descripciones y mensajes en español de México.
+4. **Extensiones del contrato**: `x-tablas` (tablas de S1 que lee o escribe cada operación), `x-necesidades` (necesidades N-xxx de U1 que cubre), `x-tabla` (tabla de un esquema de entidad), `x-calculado` (campo calculado por la API o un motor; no es columna), `x-entrada` (dato de una acción que no se guarda, p. ej. la contraseña o la confirmación de una restauración), `x-columna` (columna a la que corresponde una entrada en lista, p. ej. `plan_dates` → `plan_date`), `x-app-setting` (clave de `app_setting`) y `x-provisional` (depende de un bloqueo abierto).
+5. **Booleanos**: las columnas 0/1 de SQLite se exponen como `true`/`false`.
+6. **Valores nulos**: en las respuestas, una columna NULL **se omite** (campo ausente = sin valor; la pantalla muestra «—», U1 §0.2 «sin datos no es cero»). Los esquemas de lectura marcan como `required` solo las columnas NOT NULL.
+7. **Altas** (`POST`) aceptan las columnas escribibles; `id`, `created_at` y `updated_at` los pone el servidor. **Cambios** (`PATCH`) siguen JSON Merge Patch (RFC 7396): solo se cambian los campos enviados y `null` borra un valor que admite NULL. Reemplazos completos de listas (orden de categorías, destinatarios, grupos de producto) usan `PUT` con `{"ids": [...]}`.
+8. **Idempotencia**: todo `POST` de captura exige el encabezado `Idempotency-Key` (16 a 128 caracteres `[A-Za-z0-9_-]`, UUID v4 recomendado). Repetir la clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API guarda cada clave por cuenta en la tabla `idempotency_key` de S1, con la huella SHA-256 del cuerpo y la respuesta (S1 C-15), y la declara en `x-tablas` de cada operación que la exige; un job la purga por antigüedad. Retención de 24 h: **PROVISIONAL** (bloqueo `C1-parametros-tecnicos`). Lo exigen 41 operaciones. No la llevan: las consultas por `POST` que no guardan nada (`previewCreditPurchase`, `compareScenarios`, `previewPlannedItemsImport`, `suggestRecipeWithAi`), las acciones de sesión (`login`, `logout`, `changeOwnPassword`, `revokeSessions`), el aviso de prueba (`sendTestNotification`) y la restauración, que lleva su propia confirmación escrita (`restoreBackup`).
+9. **Identificador de petición**: toda respuesta lleva `X-Request-Id`; el mismo valor va en `Error.request_id` y en `audit_log.request_id` de los cambios que haga la petición.
+10. **Cálculos**: la API no recalcula reglas en el cliente. Las cifras marcadas «motor Sx» las calcula ese motor con las reglas de `reglas-negocio.md`; la interfaz solo muestra, filtra, ordena y suma lo visible (U1 §0.2).
+
+## 2. Autenticación, sesiones y permisos
+
+- **Esquema**: `cookieAuth`, cookie `fh_session` **HttpOnly; Secure; SameSite=Strict; Path=/**. El token en claro solo viaja en la cookie; la base guarda su SHA-256 (`device_session.token_hash`). Ninguna respuesta incluye hashes, tokens, `chat_id` ni llaves (C1-12).
+- **Operaciones públicas**: solo `POST /api/v1/auth/login` y `GET /health` (sin datos). Todo lo demás, incluidos adjuntos, PDF y `GET /openapi.yaml`, exige sesión; sin sesión, vencida o cerrada responde **401 `unauthorized`**.
+- **Inicio de sesión** (`login`, N-010): usuario y contraseña (argon2id en la base). Error de credenciales: 401 `invalid_credentials` con el mensaje genérico «Usuario o contraseña incorrectos». **Límite (decisión A): 5 intentos fallidos en 15 minutos** (`app_setting auth.max_failed_attempts = 5`, `auth.lockout_window_minutes = 15`). El intento siguiente responde **429 `too_many_attempts`**, mensaje «Demasiados intentos. Vuelve a intentar a las 21:45.» y `retry_at` (instante con -06:00), **aunque la contraseña sea correcta**; así se cubre también el «estado de bloqueo» (N-011) sin una consulta pública que revele usuarios. **PROVISIONAL** (bloqueo existente `criterios-login-bloqueo`, opción c: S6 propone y Axel aprueba en la puerta 1): ventana deslizante de 15 minutos; se cuentan los fallos por usuario y por IP (lo que llegue primero a 5); `retry_at` = hora del fallo más antiguo de la ventana + 15 minutos.
+- **Sesión larga por dispositivo** (decisión A, «meses»): **PROVISIONAL** 90 días desde el último uso, renovable con cada petición (`device_session.expires_at`, `app_setting session.max_age_days` sin valor sembrado; bloqueo `criterios-login-bloqueo`). `logout` cierra la del dispositivo; Ajustes lista las sesiones de **ambos** usuarios y cualquiera puede cerrarlas (`listSessions`, `revokeSession`, `revokeSessions`, N-271 y N-272). Una sesión cerrada responde 401 en la siguiente petición.
+- **Permisos**: Axel y Ximena son co-titulares con **los mismos permisos**; ninguna operación filtra ni oculta datos según quién inició sesión (U1 §0.5). El usuario de la sesión solo da valores por defecto (persona del gasto, del peso) y el «creado por» de `audit_log`. **No existe operación para crear cuentas**: Karen no tiene cuenta ni acceso (decisión A); `person` no se crea desde la API.
+- **CSRF**: con `SameSite=Strict` (**PROVISIONAL**, bloqueo `C1-parametros-tecnicos`) el navegador no envía la cookie en peticiones que vienen de otro sitio.
+- **Contraseña mínima** del cambio de contraseña (N-273): **PROVISIONAL** 12 caracteres (bloqueo `C1-parametros-tecnicos`).
+
+## 3. Modelo de errores (esquema único)
+
+Todas las respuestas 4xx y 5xx de todas las operaciones usan `components/schemas/Error` mediante `components/responses/*` (más `default` para cualquier otro código):
+
+```json
+{"code": "validation_failed", "message": "Revisa los campos marcados.", "fields": [{"field": "amount_cents", "code": "out_of_range", "message": "El monto debe ser mayor que cero."}], "request_id": "01JABCDEF0123456789"}
+```
+
+- `code`: estable, en inglés, `^[a-z][a-z0-9_]*$`. `message`: español de México, lenguaje simple (qué pasó y qué hacer). `fields`: detalle por campo (nombre_codigo). `request_id`: siempre. `retry_at`: solo en 429.
+
+| HTTP | Uso | Códigos estables |
+|---|---|---|
+| 400 | Petición mal formada: JSON inválido, parámetro con formato incorrecto (p. ej. `period=oct-2026`, fecha en formato de pantalla `10-oct-2026`) | `bad_request` |
+| 401 | Sin sesión, vencida o cerrada; credenciales incorrectas en el inicio de sesión | `unauthorized`, `invalid_credentials` |
+| 403 | Acción prohibida sobre el registro (precio de PROFECO) | `forbidden`, `read_only_source` |
+| 404 | El registro o la ruta no existe (también una persona no externa en el estado de cuenta) | `not_found` |
+| 405 | Método no admitido en una ruta existente | `method_not_allowed` |
+| 409 | Conflicto con el estado: ya existe, en uso, gasto con compra a crédito, receta planeada, casilla con «fuera», vigencia de presupuesto traslapada, IA apagada, lectura asistida sin veredicto, clave de idempotencia reutilizada | `conflict`, `already_exists`, `in_use`, `has_credit_purchase`, `has_payments`, `recipe_planned`, `slot_conflict`, `budget_overlap`, `ai_disabled`, `assisted_reading_not_allowed`, `idempotency_key_reused` |
+| 413 | Archivo demasiado grande | `payload_too_large` |
+| 415 | Tipo de archivo no admitido | `unsupported_media_type` |
+| 422 | Validación de negocio o de campos (con `fields`) | `validation_failed`, `invalid_current_password`, `not_revolving`, `not_a_card`, `external_person` |
+| 429 | Límite de intentos de inicio de sesión (con `retry_at`) | `too_many_attempts` |
+| 500 / 501 / 503 | Error interno / operación aún no implementada (esqueleto WF-0) / servicio o archivo no disponible | `internal_error`, `not_implemented`, `unavailable` |
+
+**Validación de dinero**: un importe que no es entero (`973.75`, `"973.75"`) es 400 `bad_request`; un entero fuera de regla (cero o negativo donde se pide mayor que 0, partes que no suman el total) es 422 `validation_failed` con `fields[].code = out_of_range` o `invalid_sum`. **Validación de fechas**: una fecha que no es `AAAA-MM-DD` válida (`2026-02-30`, `10-oct-2026`) es 400; una fecha válida fuera de regla (pago antes de la compra, fin antes del inicio) es 422.
+
+## 4. Fechas y dinero
+
+- **Fechas de negocio** (`Date`, sufijo `_date`, y `valid_from`/`valid_to`): ISO 8601 `2026-10-10`, calendario de `America/Mexico_City`. **Instantes** (`DateTime`, sufijo `_at`): ISO 8601 con desplazamiento explícito de `America/Mexico_City`, hoy `-06:00` (`2026-10-10T21:30:00-06:00`); la base los guarda en UTC con «Z» y la API los convierte. **Mes** (`Month`): `2026-10`. Ningún formato de pantalla (`10-oct-2026`, `Vie 30 oct 2026`) aparece en la API; la interfaz los forma.
+- **Quincenas**: los días de pago son el **15 y el 30**; en meses más cortos el «30» es el **último día** (en febrero, el 28: `2027-02-28`, R-23). Rangos para agrupar: Q1 del 1 al 15 y Q2 del 16 al último día — **PROVISIONAL** (bloqueo `U1-periodos-semana-quincena`, opción C, la misma que usan U1 y S1). **Semana**: lunes a domingo, **PROVISIONAL** (mismo bloqueo).
+- **Dinero** (`MoneyCents`): entero exacto de **centavos MXN**, sufijo `_cents`, nunca `number` de punto flotante. `97375` = $973.75. Redondeo **ROUND_HALF_UP**; en una serie de pagos **el último pago ajusta centavos** (5,034.74 → 1,258.68 ×3 + 1,258.70, R-18 a R-21). Los dos modos de base de la serie que usa el oráculo y su generalización están en `S1-redondeo-series` (las series se guardan ya calculadas, el contrato solo las expone). En pantalla: `$`, separador de miles y dos decimales.
+- **Porcentajes** (`BasisPoints`, sufijo `_bp`): 10000 = 100 %. Los porcentajes de avance calculados (`used_pct`, `progress_pct`) son enteros ROUND_HALF_UP. **Tasas**: fracción exacta `rate_num`/`rate_den` (S1; la tasa redondeada no reproduce el oráculo) y, para mostrar, `rate_pct` en texto con 4 decimales (`25.8685`). **Cantidades** (`Milli`, sufijo `_milli`): milésimas de la unidad base (g, ml, pieza) o de porción.
+
+## 5. Paginación y orden (una sola convención)
+
+- **Colección** = lista de registros de una entidad. Toda colección (`39` operaciones `GET`) usa **los mismos parámetros**: `cursor` (opaco; sin valor = primera página), `limit` (por defecto **50**, como pide U1; máximo **200**, PROVISIONAL `C1-parametros-tecnicos`) y `sort` (propiedades separadas por coma, `-` = descendente; el `id` cierra siempre el orden para que el cursor sea estable). **Misma envoltura** `Page`: `{"items": [...], "next_cursor": "…" | null}`; **`next_cursor: null` indica que no hay más**. El orden por defecto de cada colección está en su descripción (tomado de U1 §2.5.b).
+- **Agregados y métricas** (tarjetas, resúmenes, series de 12 meses o 24 quincenas, comparativas) son objetos calculados con tamaño acotado; no se paginan.
+
+## 6. Filtros globales (definición única)
+
+Los seis filtros del plan (§3.7) tienen **una sola definición** en `components/parameters` y todas las operaciones los usan por `$ref`:
+
+| Filtro | Parámetro | Tipo y formato | Significado |
+|---|---|---|---|
+| persona | `person_id` | ids separados por coma | `person.id`; en gastos, `expense.person_id`; en partes de dinero, la persona de la parte |
+| familia | `family` | `household` · `external` · `joint` | U1 §0.2: Hogar (partes a nombre del titular) o Karen (partes de persona externa); `joint` = con ambas partes. Semántica incluyente **PROVISIONAL** (bloqueo `C1-filtro-familia`) |
+| categoría | `category_id` | ids separados por coma | `category.id` |
+| tienda | `store_id` | ids separados por coma | `store.id` (en promociones, el comercio ligado) |
+| periodo | `period` | `2026-10` mes · `2026-10-q1`/`q2` quincena · `2026-W42` semana · `2026` año · `2026-10-10..2026-11-09` rango | mes calendario como base; quincena y semana PROVISIONALES (`U1-periodos-semana-quincena`) |
+| crédito | `credit_id` | ids separados por coma | `credit.id`; en gastos, la forma de pago con esa línea |
+
+Además se reutilizan `q` (texto) y los parámetros de paginación. Los filtros propios de una entidad (`status`, `kind`, `source`, etc.) se documentan en cada operación.
+
+**Matriz recurso × filtro** (operaciones que admiten cada filtro):
+
+| Operación | Ruta | persona | familia | categoría | tienda | periodo | crédito |
+|---|---|---|---|---|---|---|---|
+| `listSessions` | GET `/api/v1/sessions` | ✓ |  |  |  |  |  |
+| `listCalendarEvents` | GET `/api/v1/calendar/events` |  | ✓ |  |  | ✓ | ✓ |
+| `queryView` | GET `/api/v1/views/{entity}` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `getDashboardMonthVsPlan` | GET `/api/v1/dashboard/month-vs-plan` |  |  |  |  | ✓ |  |
+| `getDashboardFortnightFlow` | GET `/api/v1/dashboard/fortnight-flow` |  |  |  |  | ✓ |  |
+| `getDashboardWeekMeals` | GET `/api/v1/dashboard/week-meals` |  |  |  |  | ✓ |  |
+| `listExpenses` | GET `/api/v1/expenses` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `getExpenseTotals` | GET `/api/v1/expenses/totals` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `getExpenseSummary` | GET `/api/v1/expenses/summary` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `getExpenseMonthlyTrend` | GET `/api/v1/expenses/monthly-trend` | ✓ | ✓ |  |  |  | ✓ |
+| `listPeriods` | GET `/api/v1/periods` |  |  |  |  | ✓ |  |
+| `listBudgets` | GET `/api/v1/budgets` |  |  | ✓ |  | ✓ |  |
+| `getBudgetMonth` | GET `/api/v1/budget/month` |  |  |  |  | ✓ |  |
+| `getBudgetByCategory` | GET `/api/v1/budget/categories` |  |  |  |  | ✓ |  |
+| `getBudgetFortnights` | GET `/api/v1/budget/fortnights` |  |  |  |  | ✓ |  |
+| `getAccruedGroceries` | GET `/api/v1/budget/accrued-groceries` |  |  |  |  | ✓ |  |
+| `getBudgetMonthlyTrend` | GET `/api/v1/budget/monthly-trend` |  |  | ✓ |  |  |  |
+| `listIncomes` | GET `/api/v1/incomes` |  |  |  |  | ✓ |  |
+| `getIncomeMonth` | GET `/api/v1/incomes/month` |  |  |  |  | ✓ |  |
+| `listPlannedItems` | GET `/api/v1/planned-items` |  |  | ✓ |  |  | ✓ |
+| `listSavingsMovements` | GET `/api/v1/savings-movements` |  |  |  |  | ✓ |  |
+| `getMealPlanWeek` | GET `/api/v1/meal-plan/week` | ✓ |  |  |  | ✓ |  |
+| `getMealPlanMonth` | GET `/api/v1/meal-plan/month` |  |  |  |  | ✓ |  |
+| `getMealPlanTrends` | GET `/api/v1/meal-plan/trends` | ✓ |  |  |  |  |  |
+| `copyPreviousWeek` | POST `/api/v1/meal-plan/copy-previous-week` |  |  |  |  | ✓ |  |
+| `getShoppingList` | GET `/api/v1/shopping-list` |  |  |  | ✓ | ✓ |  |
+| `generateShoppingList` | POST `/api/v1/shopping-list/generate` |  |  |  |  | ✓ |  |
+| `createShoppingListItem` | POST `/api/v1/shopping-list/items` |  |  |  |  | ✓ |  |
+| `assignShoppingListStore` | POST `/api/v1/shopping-list/assign-store` |  |  |  |  | ✓ |  |
+| `getBasketComparison` | GET `/api/v1/basket-comparison` |  |  |  |  | ✓ |  |
+| `listProducts` | GET `/api/v1/products` |  |  |  | ✓ |  |  |
+| `listProductPrices` | GET `/api/v1/products/{product_id}/prices` |  |  |  | ✓ | ✓ |  |
+| `getDebtTrend` | GET `/api/v1/credits/debt-trend` |  |  |  |  |  | ✓ |
+| `listCreditPurchases` | GET `/api/v1/credit-purchases` | ✓ | ✓ |  |  | ✓ | ✓ |
+| `listScheduledPayments` | GET `/api/v1/scheduled-payments` | ✓ | ✓ |  |  | ✓ | ✓ |
+| `listPromotions` | GET `/api/v1/promotions` |  |  |  | ✓ | ✓ | ✓ |
+| `listWeightEntries` | GET `/api/v1/weight-entries` | ✓ |  |  |  | ✓ |  |
+| `listReports` | GET `/api/v1/reports` | ✓ |  |  |  | ✓ |  |
+| `getMonthlyReport` | GET `/api/v1/monthly-report` |  |  |  |  | ✓ |  |
+| `getExternalStatement` | GET `/api/v1/persons/{person_id}/statement` |  |  |  |  | ✓ |  |
+| `listNotificationDeliveries` | GET `/api/v1/notification-deliveries` |  |  |  |  | ✓ |  |
+| `listBackups` | GET `/api/v1/backups` |  |  |  |  | ✓ |  |
+
+## 7. Recursos: las 31 entidades de plan §3.4.1
+
+Cada entidad tiene su recurso (lectura y, cuando el usuario la edita, escritura) o declara qué motor u operación la usa. Las vistas siguen U1 §2.5.a y se piden con `GET /api/v1/views/{entity}` (§8).
+
+| # | Entidad (§3.4.1) | Tabla(s) S1 | Operaciones | Vistas (U1 §2.5.a; * = por defecto) |
+|---|---|---|---|---|
+| 1 | persona | `person` | listPersons, updatePerson, getPersonParticipation | Tabla* (P-26.12) |
+| 2 | cuenta_usuario | `user_account` | listUsers, login, getCurrentSession, changeOwnPassword (sin alta: Karen no tiene cuenta) | Tabla* (P-26.01) |
+| 3 | sesion_dispositivo | `device_session` | listSessions, revokeSession, revokeSessions, logout | Tabla* (P-26.01) |
+| 4 | periodo | `period` | listPeriods (selector); motor S2 (meses y quincenas de los cálculos; el presupuesto usa vigencia por fechas) | Sin lista: dato derivado (U1) |
+| 5 | ingreso | `income + planned_item` | listIncomes, getIncomeMonth, createIncome, updateIncome, deleteIncome, getIncomeMonthlyTrend; listPlannedItems, createPlannedItem, updatePlannedItem | Tabla*, calendario (income_date) |
+| 6 | categoria | `category` | listCategories, createCategory, updateCategory, reorderCategories | Tabla*, tablero (default_cost_share_rule_id) |
+| 7 | gasto | `expense + expense_item + expense_share + attachment` | listExpenses, getExpense, createExpense, updateExpense, deleteExpense, duplicateExpense, markExpensePaid, listExpenseItems, uploadExpenseAttachment, downloadAttachment, deleteAttachment, ticket-scans | Tabla*, tablero (category_id), calendario (expense_date), galería (tickets) |
+| 8 | regla_reparto | `cost_share_rule + cost_share_rule_part` | listCostShareRules, updateCostShareRule; reglas de un solo uso al crear gasto o renglón | Sin lista: propiedad de la categoría y del gasto (U1) |
+| 9 | meta_ahorro | `savings_goal` | listSavingsGoals, createSavingsGoal, updateSavingsGoal, getSavingsSummary | Tabla (P-26.13), tablero (status), calendario (target_date), galería* (P-09) |
+| 10 | movimiento_ahorro | `savings_movement` | listSavingsMovements, createSavingsMovement, updateSavingsMovement, deleteSavingsMovement | Tabla*, calendario (movement_date) |
+| 11 | credito | `credit + credit_statement` | listCredits, getCredit, createCredit, updateCredit, getCreditTotals, previewAvailability, getAvailabilitySeries, getCardStatus, getDebtTrend | Tabla (P-26.05), tablero (kind), galería* (P-17) |
+| 12 | tasa_por_plazo | `credit_term_rate` | listCreditTermRates, createCreditTermRate, updateCreditTermRate, deleteCreditTermRate | Tabla* |
+| 13 | compra_credito | `credit_purchase + credit_purchase_share` | listCreditPurchases, getCreditPurchase, createCreditPurchase, previewCreditPurchase, updateCreditPurchase, deleteCreditPurchase | Tabla*, tablero (status), calendario (purchase_date) |
+| 14 | pago_programado | `scheduled_payment + scheduled_payment_share + credit_payment` | listScheduledPayments, markScheduledPaymentPaid, deleteCreditPayment, listCalendarEvents | Tabla, tablero (status), calendario* (due_date) |
+| 15 | promocion | `promotion` | listPromotions, createPromotion, updatePromotion, deletePromotion | Tabla, tablero (credit_id), calendario* (valid_from a valid_to) |
+| 16 | tienda | `store + store_product_group + product_group` | listStores, createStore, updateStore, setStoreProductGroups, listProductGroups | Tabla*, tablero (kind), calendario (visit_weekday, recurrente), galería |
+| 17 | producto | `product` | listProducts, getProduct, createProduct, updateProduct | Tabla*, tablero (freshness), galería |
+| 18 | presentacion | `presentation` | createPresentation, updatePresentation; dentro de getProduct | Sin lista propia: tabla dentro del producto (U1) |
+| 19 | precio | `price` | listProductPrices, createPrice, updatePrice, deletePrice, getPriceSummary, importProfeco | Tabla*, tablero (freshness) |
+| 20 | receta | `recipe + recipe_meal_slot` | listRecipes, getRecipe, createRecipe, updateRecipe, duplicateRecipe, deleteRecipe, getRecipeUsage, suggestRecipeWithAi | Tabla, tablero (tiempos aptos, recipe_meal_slot), galería* |
+| 21 | ingrediente_receta | `recipe_ingredient` | dentro de getRecipe, createRecipe y updateRecipe | Sin lista propia: tabla dentro de la receta (U1) |
+| 22 | tiempo_comida | `meal_slot` | listMealSlots (solo lectura) | Sin lista: catálogo fijo de 4 (U1) |
+| 23 | plan_comida | `meal_plan_entry` | getMealPlanWeek, getMealPlanMonth, getMealPlanTrends, createMealPlanEntries, updateMealPlanEntry, deleteMealPlanEntry, copyPreviousWeek | Tabla, tablero (meal_slot_id), calendario* (plan_date), galería (recipe_id) |
+| 24 | inventario_item | `inventory_item + inventory_movement` | listInventoryItems, createInventoryItem, updateInventoryItem, adjustInventoryItem, listInventoryMovements, getInventorySummary | Tabla*, tablero (status), galería |
+| 25 | perfil_salud | `health_profile` | listHealthProfiles, createHealthProfile, updateHealthProfile, getTodayKcal | Sin lista: una ficha por persona (U1) |
+| 26 | peso_historico | `weight_entry` | listWeightEntries, createWeightEntry, updateWeightEntry, deleteWeightEntry | Tabla* |
+| 27 | nutricion_ingrediente | `nutrition_fact` | listNutritionFacts, createNutritionFact, reloadNutritionBase, getRecipeSettings | Sin lista: propiedad del producto (U1) |
+| 28 | notificacion | `notification + notification_delivery` | listNotifications, updateNotification, sendTestNotification, listNotificationDeliveries | Tabla*, tablero (notification_id), calendario (sent_at) en avisos enviados |
+| 29 | destinatario | `notification_recipient + notification_subscription` | listNotificationRecipients, createNotificationRecipient, updateNotificationRecipient, setNotificationRecipients | Sin lista: se elige dentro de cada aviso (U1) |
+| 30 | job | `job` | listJobs, updateJob | Tabla*, tablero (code), calendario (next_run_at) |
+| 31 | respaldo | `backup` | listBackups, createBackup, restoreBackup | Tabla* |
+
+## 8. Vistas de base de datos (tabla, tablero, calendario, galería)
+
+`GET /api/v1/views/{entity}?mode=table|board|calendar|gallery` (decisión G) aplica los filtros globales, `q`, `status`, `sort` y la paginación únicos, y responde `ViewPage` = `Page` + `mode` + `groups`. En **tablero**, `group_by` elige la columna y cada grupo trae `count`, `total_cents` (Σ del importe principal) y `share_bp`; en **calendario**, `date_field` elige la fecha y los grupos son días; en **galería**, cada registro trae `image_attachment_id` cuando hay foto. La vista elegida, filtros y columnas visibles se recuerdan en el dispositivo (U1 §2.5 y su supuesto 2); no hay vistas guardadas compartidas en esta versión.
+
+| `entity` | Modos | `group_by` permitidos | `date_field` | Importe principal (`total_cents`) | Necesidades |
+|---|---|---|---|---|---|
+| `expense` | table, board, calendar, gallery | category_id, kind, payment_method, person_id | expense_date | parte del hogar | N-043, N-045, N-046 |
+| `income` | table, calendar | — | income_date | amount_cents | N-104 (también listCalendarEvents) |
+| `category` | table, board | default_cost_share_rule_id | — | — | N-281 |
+| `savings_goal` | table, board, calendar, gallery | status | target_date | saved_cents | N-111 |
+| `savings_movement` | table, calendar | savings_goal_id, kind | movement_date | amount_cents (aportación +, retiro −) | N-115 |
+| `credit` | table, board, gallery | kind | — | live_debt_cents | N-190 |
+| `credit_term_rate` | table | — | — | — | N-286 |
+| `credit_purchase` | table, board, calendar | status, credit_id | purchase_date | total_cents | N-202 |
+| `scheduled_payment` | table, board, calendar | status, credit_id | due_date | amount_cents | N-192 |
+| `promotion` | table, board, calendar | credit_id | valid_from (franja hasta valid_to) | — | N-287 |
+| `store` | table, board, calendar, gallery | kind | visit_weekday (recurrente) | — | N-290 |
+| `product` | table, board, gallery | freshness, product_group_id | — | — | N-170 |
+| `price` | table, board | is_stale, source, store_id | observed_date | — | N-171 |
+| `recipe` | table, board, gallery | meal_slot_id (tiempos aptos de recipe_meal_slot: una receta con varios tiempos aparece en cada columna), origin | — | — | N-135 |
+| `meal_plan_entry` | table, board, calendar, gallery | meal_slot_id, person_id | plan_date | — | N-128 |
+| `inventory_item` | table, board, gallery | status, tracking_mode | — | — | N-180 |
+| `notification_delivery` | table, board, calendar | notification_id, status | sent_at (día local) | — | N-247 |
+| `job` | table, board, calendar | code, last_status | next_run_at (día local) | — | N-246, N-302 |
+| `person` | table | — | — | — | N-309 |
+| `user_account` | table | — | — | — | N-270 |
+| `device_session` | table | user_account_id | — | — | N-271 |
+| `weight_entry` | table | person_id | measured_date | — | N-232 |
+| `backup` | table | status, kind | started_at (día local) | — | N-302 |
+
+Otro valor de `group_by` o `date_field` responde 422 `validation_failed`. `queryView` declara en `x-necesidades` las necesidades cuya vista principal es de tablero, calendario o galería; las vistas de tabla de cada entidad también se pueden pedir aquí, aunque cada pantalla usa la colección tipada de su recurso.
+
+## 9. Métricas del dashboard (fórmula, periodo, filtros, tablas, endpoint, ejemplo del oráculo)
+
+Las 6 tarjetas de Inicio › Resumen (U1 N-020 a N-025, U3) y las métricas de sus subsecciones. Periodo por defecto: **mes calendario**; la quincena es subperiodo. «Parte del hogar» = parte a nombre del titular; toda cifra de presupuesto, flujo y ahorro usa la parte del hogar (U1 §0.2). Los ejemplos usan cifras del oráculo (`oraculo/model.json`, identificadores R-nn de `docs/criterios/S3.md`) o un marcador cuando el oráculo no trae el dato. En la API van en centavos.
+
+| Id | Tarjeta o subsección | Fórmula | Periodo | Filtros | Tablas de origen | Endpoint | Ejemplo (oráculo) |
+|---|---|---|---|---|---|---|---|
+| M-01 | Mes vs plan (N-020) | real = Σ parte del hogar devengada en el mes (motor S2); plan = Σ `budget.amount_cents` del renglón vigente en el mes (RN-22) de las categorías activas; % usado = real ÷ plan × 100 entero ROUND_HALF_UP; restante = plan − real; estado normal < 80, aviso ≥ 80, excedido ≥ 100; días que faltan contando hoy | mes en curso (`period`) | `period` | budget, category, period, expense, expense_share, credit_purchase | GET `/api/v1/dashboard/month-vs-plan` | oct-2026: real (parte del hogar devengada) **1,197.64** = `periodos[0].devengado.axel` (P1 = oct-2026, hallazgo 4 de S1); plan: marcador (lo captura Axel) |
+| M-02 | Flujo quincenal (N-021) | ingresos = quincena capturada (o esperada, marcada) + extras de la quincena; egresos hechos = efectivo pagado hasta hoy (contado + partes del hogar pagadas); comprometido = partes del hogar pendientes de la quincena + fijos y venideros sin pagar; saldo al cierre = ingresos − egresos − comprometido | quincena en curso | `period` (`2026-10-q2`) | income, planned_item, expense, expense_share, scheduled_payment, scheduled_payment_share, credit_payment | GET `/api/v1/dashboard/fortnight-flow` | Q2 oct-2026: comprometido incluye la parte del hogar del pago del 30-oct **598.82** (R-13); ingreso: marcador |
+| M-03 | Próximo pago (N-022 a) | pago con alguna parte pendiente y fecha mínima ≥ hoy en todas las líneas; si hay pendientes con fecha < hoy, primero el más antiguo («sin marcar como pagado»); pagos del mismo día se suman | hoy en adelante | — | scheduled_payment, scheduled_payment_share, credit_payment, credit | GET `/api/v1/dashboard/next-payment` | **30-oct-2026, 973.75** (hogar 598.82, Karen 374.93) (R-13) |
+| M-04 | Disponible A/B (N-022 b, N-201, N-285) | disponible de hoy de cada línea revolvente con la lectura activa (B por defecto) y aviso «pendiente confirmar»; vista previa con ambas lecturas y el mínimo del horizonte (motor S3) | hoy y horizonte | `credit_id` | credit, credit_purchase, scheduled_payment, credit_payment | GET `/api/v1/dashboard/next-payment`, GET `/api/v1/credits/{credit_id}/availability-preview` | 10-oct-2026: **A 10,000.00 · B 6,905.50** (R-64); mínimos **8,094.50 · 5,000.00** (R-61, R-62) |
+| M-05 | Comidas de la semana (N-023) | costo = Σ costo de casillas con receta («fuera» no suma); kcal promedio por día = Σ kcal de la persona ÷ días con al menos un tiempo asignado; casillas sin armar = pares día × tiempo obligatorio sin receta ni «fuera» para alguna persona (máx. 21; PROVISIONAL `criterios-umbrales-ausentes`) | semana en curso (lunes a domingo, PROVISIONAL) | `period` (`2026-W42`) | meal_plan_entry, meal_slot, recipe, recipe_ingredient, nutrition_fact, price, presentation, health_profile | GET `/api/v1/dashboard/week-meals` | marcador (el oráculo no trae comidas) |
+| M-06 | Mejor canasta (N-024) | lista de compras vigente (o la última compra con renglones) comparada por tienda (motor S5); ganadora = menor total; diferencia contra la segunda; cobertura = artículos con precio ÷ artículos; precios viejos usados; Sam's como si tuvieran membresía | lista vigente | — | shopping_list, shopping_list_item, meal_plan_entry, recipe_ingredient, inventory_item, price, presentation, product, store, expense, expense_item | GET `/api/v1/dashboard/best-basket` | compra semilla 10-oct-2026: Bodega Aurrera **3,094.50** (R-01) contra Walmart 3,233.00 (`data.json totales.walmart`), diferencia **138.50** (plan §3.4 fila S5) |
+| M-07 | Ahorro (N-025) | ahorrado = Σ aportaciones − Σ retiros (fondo y metas); aportado del mes contra planificado del mes (Σ `planned_monthly_cents` activos); meta más próxima con % = ahorrado ÷ monto meta × 100 entero | mes en curso | — | savings_goal, savings_movement | GET `/api/v1/dashboard/savings` | marcador (el oráculo no trae ahorro) |
+| M-08 | Participación de Karen (N-026) | su parte devengada de la despensa del mes; sus compras vivas; sus partes de pagos del mes con estado; deuda viva = Σ partes pendientes | mes en curso | — | person, expense, expense_share, credit_purchase, credit_purchase_share, scheduled_payment, scheduled_payment_share, credit_payment | GET `/api/v1/persons/{person_id}/participation` | oct-2026: parte devengada **749.86** (`periodos[0].devengado.karen`); su parte del pago del 30-oct **374.93** (R-11) |
+| M-09 | Presupuesto por categoría (N-081, N-027) | por categoría: plan, real (parte del hogar devengada), plan − real, % usado y estado (umbrales de M-01) | mes (`period`) | `period` | budget, category, period, expense, expense_share | GET `/api/v1/budget/categories` | marcador (plan por categoría lo captura Axel) |
+| M-10 | Flujo por quincena (N-090) | por quincena (24 hacia adelante): ingresos, partes del hogar de pagos, fijos y venideros, variable estimado (PROVISIONAL `criterios-promedios`), ahorro planificado, saldo y saldo acumulado; efectivo | desde Q1 del mes en curso | — | income, planned_item, expense, expense_share, scheduled_payment, scheduled_payment_share, credit_payment, savings_goal | GET `/api/v1/cash-flow/fortnights` | Q2 oct-2026: pagos de crédito, parte del hogar **598.82** (R-13) |
+| M-11 | Devengado contra efectivo (N-091, N-028) | por mes: devengado y efectivo (totales y partes); diferencia acumulada = devengado acumulado − efectivo acumulado (no se rotula deuda viva; `criterios-invariante-deuda`) | mes en curso a +11 | — | expense, expense_share, planned_item, scheduled_payment, scheduled_payment_share, credit_purchase | GET `/api/v1/cash-flow/accrual-vs-cash` | oct-2026: devengado **1,947.50**, efectivo **973.75**, diferencia acumulada 973.75 (R-45); totales P1–P6 14,362.48 / 13,103.78 (R-51, R-52) |
+| M-12 | Deuda viva a una fecha (N-092) | Σ de lo que queda por pagar después de la fecha (capital + intereses) de las compras hechas hasta esa fecha; total, por línea y por compra (motor S3) | fecha elegida | `date` | credit_purchase, scheduled_payment, credit | GET `/api/v1/debt/live` | 10-abr-2027: **6,293.44** (R-53 = 1,258.70 R-54 + 5,034.74 R-55) |
+| M-13 | Calendario unificado de pagos (N-192, N-027) | pagos de todas las líneas en el rango con partes y estado; promociones vigentes y cortes de tarjeta | mes visible o hoy..+60 | `period`, `credit_id`, `family` | scheduled_payment, scheduled_payment_share, credit_payment, credit_purchase, promotion, credit_statement | GET `/api/v1/scheduled-payments`, GET `/api/v1/calendar/events` | pagos de la despensa 1: 30-oct, 15-nov, 30-nov y 15-dic-2026 por **973.75** (R-13 a R-16) |
+| M-14 | Plan contra real por mes (N-085, N-028) | por mes (máx. 12): plan total y real total (o de una categoría) | 12 meses | `category_id` | budget, category, expense, expense_share | GET `/api/v1/budget/monthly-trend` | marcador (plan lo captura Axel) |
+| M-15 | Costo semanal y kcal (N-129, N-233, N-028) | por semana (12): costo de casillas con receta y kcal promedio por día por persona contra su meta | 12 semanas | `person_id` | meal_plan_entry, recipe, recipe_ingredient, nutrition_fact, price, health_profile | GET `/api/v1/meal-plan/trends` | marcador |
+| M-16 | Metas (N-111, N-027) | por meta: ahorrado, % de avance entero, aportación mensual necesaria = (monto meta − ahorrado) ÷ meses que faltan (motor S2) y estado | hoy | `status` | savings_goal, savings_movement | GET `/api/v1/savings-goals` | marcador |
+| M-17 | Deuda viva proyectada (N-194, N-209) | por mes (12): deuda viva al cierre por línea; intereses pagados y por pagar | 12 meses | `credit_id` | credit, credit_purchase, scheduled_payment, credit_payment | GET `/api/v1/credits/debt-trend` | punto de control: deuda viva al 10-abr-2027 **6,293.44** (R-53); los meses sin cifra canon llevan la marca de `criterios-proyeccion-12m` |
+
+## 10. Matriz pantalla P-xx → necesidad N-xxx → endpoint(s)
+
+Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada pantalla que las usa, como en U1 §3.29). Estado: **OK** = cubierta; **PROVISIONAL** = cubierta en parte, con bloqueo; **BLOQUEO** = sin endpoint por un bloqueo abierto (hoy ninguna); **Local** = vive en el dispositivo (U1 la declara sin API).
+
+| Pantalla | Necesidad | Tipo | Qué necesita (U1) | Operación(es) C1 | Estado |
+|---|---|---|---|---|---|
+| Global | N-001 | L | Sesión actual | GET `/api/v1/auth/me` | OK |
+| Global | N-002 | L | Búsqueda global | GET `/api/v1/search` | OK |
+| Global | N-003 | L | Recientes | Recientes en el dispositivo (U1: Local) | Local |
+| Global | N-004 | L | Estado del servidor | GET `/health` | OK |
+| Global | N-005 | L | Líneas para la barra lateral | GET `/api/v1/credits` | OK |
+| Global | N-006 | E | Cerrar sesión | POST `/api/v1/auth/logout` | OK |
+| P-00 | N-011 | L | Estado de bloqueo | POST `/api/v1/auth/login` | PROVISIONAL `criterios-login-bloqueo` |
+| P-00 | N-010 | E | Iniciar sesión | POST `/api/v1/auth/login` | PROVISIONAL `criterios-login-bloqueo` |
+| P-01 | N-020 | L | Tarjeta «Mes vs plan» | GET `/api/v1/dashboard/month-vs-plan` | OK |
+| P-01 | N-021 | L | Tarjeta «Flujo quincenal» | GET `/api/v1/dashboard/fortnight-flow` | OK |
+| P-01 | N-022 | L | Tarjeta «Próximo pago y disponible» | GET `/api/v1/dashboard/next-payment` | OK |
+| P-01 | N-023 | L | Tarjeta «Comidas de la semana» | GET `/api/v1/dashboard/week-meals` | OK |
+| P-01 | N-024 | L | Tarjeta «Mejor canasta» | GET `/api/v1/dashboard/best-basket` | OK |
+| P-01 | N-025 | L | Tarjeta «Ahorro» | GET `/api/v1/dashboard/savings` | OK |
+| P-01 | N-026 | L | Participación de Karen | GET `/api/v1/persons/{person_id}/participation` | OK |
+| P-01 | N-027 | L | Segundo nivel de las tarjetas | GET `/api/v1/budget/categories` · GET `/api/v1/cash-flow/fortnights` · GET `/api/v1/savings-goals` · GET `/api/v1/meal-plan/week` · GET `/api/v1/basket-comparison` | OK |
+| P-01 | N-028 | L | Gráficas de Inicio | GET `/api/v1/budget/monthly-trend` · GET `/api/v1/cash-flow/accrual-vs-cash` · GET `/api/v1/meal-plan/trends` · GET `/api/v1/credits/debt-trend` | OK |
+| P-01 | N-029 | L | Calendario del hogar | GET `/api/v1/calendar/events` | OK |
+| P-01 | N-081 | L | Presupuesto por categoría | GET `/api/v1/budget/categories` | OK |
+| P-01 | N-085 | L | Plan contra real por mes | GET `/api/v1/budget/monthly-trend` | OK |
+| P-01 | N-090 | L | Flujo por quincena | GET `/api/v1/cash-flow/fortnights` | OK |
+| P-01 | N-091 | L | Devengado contra efectivo, 12 meses | GET `/api/v1/cash-flow/accrual-vs-cash` | OK |
+| P-01 | N-111 | L | Metas | GET `/api/v1/views/{entity}` · GET `/api/v1/savings-goals` | OK |
+| P-01 | N-121 | L | Totales del plan | GET `/api/v1/meal-plan/week` | OK |
+| P-01 | N-129 | L | Tendencias de comidas | GET `/api/v1/meal-plan/trends` | OK |
+| P-01 | N-162 | L | Detalle por artículo | GET `/api/v1/basket-comparison` | OK |
+| P-01 | N-192 | L | Calendario unificado | GET `/api/v1/calendar/events` · GET `/api/v1/scheduled-payments` | OK |
+| P-01 | N-194 | L | Tendencias de deuda | GET `/api/v1/credits/debt-trend` | OK |
+| P-01 | N-054 | E | Crear gasto | POST `/api/v1/expenses` | OK |
+| P-02 | N-040 | L | Lista de gastos | GET `/api/v1/expenses` · GET `/api/v1/persons` | PROVISIONAL `C1-filtro-familia` |
+| P-02 | N-041 | L | Totales del filtro | GET `/api/v1/expenses/totals` | OK |
+| P-02 | N-042 | L | Resumen del periodo | GET `/api/v1/expenses/summary` | OK |
+| P-02 | N-043 | L | Gasto por categoría | GET `/api/v1/views/{entity}` | OK |
+| P-02 | N-044 | L | Tendencia mensual | GET `/api/v1/expenses/monthly-trend` | OK |
+| P-02 | N-045 | L | Calendario de gastos | GET `/api/v1/views/{entity}` | OK |
+| P-02 | N-046 | L | Galería de tickets | GET `/api/v1/views/{entity}` · GET `/api/v1/attachments/{attachment_id}/file` | OK |
+| P-02 | N-047 | E | Editar en el lugar | PATCH `/api/v1/expenses/{expense_id}` | OK |
+| P-02 | N-062 | E | Actualizar gasto | PATCH `/api/v1/expenses/{expense_id}` | OK |
+| P-02 | N-063 | E | Eliminar gasto | GET `/api/v1/expenses` · DELETE `/api/v1/expenses/{expense_id}` | OK |
+| P-03 | N-050 | L | Categorías sugeridas | GET `/api/v1/categories` | OK |
+| P-03 | N-051 | L | Todas las categorías | GET `/api/v1/categories` · GET `/api/v1/cost-share-rules` | OK |
+| P-03 | N-052 | L | Valores por defecto | GET `/api/v1/auth/me` · GET `/api/v1/cost-share-rules` | OK |
+| P-03 | N-053 | L | Líneas para «forma de pago» | GET `/api/v1/credits` | OK |
+| P-03 | N-054 | E | Crear gasto | POST `/api/v1/expenses` | OK |
+| P-03 | N-055 | E | Deshacer | DELETE `/api/v1/expenses/{expense_id}` | OK |
+| P-03 | N-102 | E | Registrar ingreso extra | POST `/api/v1/incomes` | OK |
+| P-03 | N-240 | E | Registrar peso | POST `/api/v1/weight-entries` | OK |
+| P-04 | N-060 | L | Gasto | GET `/api/v1/expenses/{expense_id}` · GET `/api/v1/attachments/{attachment_id}/file` | OK |
+| P-04 | N-061 | L | Renglones del ticket | GET `/api/v1/expenses/{expense_id}/items` | OK |
+| P-04 | N-062 | E | Actualizar gasto | PATCH `/api/v1/expenses/{expense_id}` | OK |
+| P-04 | N-063 | E | Eliminar gasto | GET `/api/v1/expenses` · DELETE `/api/v1/expenses/{expense_id}` | OK |
+| P-04 | N-064 | E | Adjuntar o quitar ticket | POST `/api/v1/expenses/{expense_id}/attachments` · DELETE `/api/v1/attachments/{attachment_id}` | PROVISIONAL `criterios-umbrales-ausentes` |
+| P-04 | N-065 | E | Marcar venidero como pagado | POST `/api/v1/expenses/{expense_id}/mark-paid` | OK |
+| P-04 | N-066 | E | Duplicar gasto | POST `/api/v1/expenses/{expense_id}/duplicate` | OK |
+| P-05 | N-071 | L | Resultado de la lectura | GET `/api/v1/attachments/{attachment_id}/file` · GET `/api/v1/ticket-scans/{attachment_id}` | OK |
+| P-05 | N-072 | L | Buscar en catálogo | GET `/api/v1/search` · GET `/api/v1/products` | OK |
+| P-05 | N-073 | L | Prellenado desde la lista | GET `/api/v1/shopping-list` | PROVISIONAL `C1-lista-compras` |
+| P-05 | N-076 | L | Tickets por confirmar | GET `/api/v1/ticket-scans` | OK |
+| P-05 | N-070 | E | Leer ticket | POST `/api/v1/ticket-scans` | OK |
+| P-05 | N-074 | E | Confirmar ticket | POST `/api/v1/ticket-scans/{attachment_id}/confirm` | OK |
+| P-05 | N-075 | E | Guardar para después | POST `/api/v1/ticket-scans` | PROVISIONAL `C1-huecos-u1-s1` |
+| P-06 | N-080 | L | Resumen del mes | GET `/api/v1/periods` · GET `/api/v1/budget/month` | OK |
+| P-06 | N-081 | L | Presupuesto por categoría | GET `/api/v1/budget/categories` | OK |
+| P-06 | N-082 | L | Quincenas del mes | GET `/api/v1/periods` · GET `/api/v1/budget/fortnights` | OK |
+| P-06 | N-083 | L | Despensa devengada | GET `/api/v1/budget/accrued-groceries` | OK |
+| P-06 | N-084 | L | Alertas activas | GET `/api/v1/budget/alerts` | OK |
+| P-06 | N-085 | L | Plan contra real por mes | GET `/api/v1/budget/monthly-trend` | OK |
+| P-06 | N-086 | L | Calendario del mes | GET `/api/v1/calendar/events` | OK |
+| P-06 | N-087 | E | Ajustar presupuesto | POST `/api/v1/budgets` · PATCH `/api/v1/budgets/{budget_id}` | PROVISIONAL `C1-huecos-u1-s1` |
+| P-07 | N-090 | L | Flujo por quincena | GET `/api/v1/cash-flow/fortnights` | OK |
+| P-07 | N-091 | L | Devengado contra efectivo, 12 meses | GET `/api/v1/cash-flow/accrual-vs-cash` | OK |
+| P-07 | N-092 | L | Deuda viva a una fecha | GET `/api/v1/debt/live` | OK |
+| P-07 | N-093 | L | Supuestos de la proyección | GET `/api/v1/cash-flow/assumptions` | OK |
+| P-08 | N-100 | L | Ingresos del mes | GET `/api/v1/periods` · GET `/api/v1/incomes` · GET `/api/v1/incomes/month` | OK |
+| P-08 | N-103 | L | Ingreso por mes | GET `/api/v1/incomes/monthly-trend` | OK |
+| P-08 | N-104 | L | Calendario de ingresos | GET `/api/v1/calendar/events` | OK |
+| P-08 | N-101 | E | Capturar quincena | POST `/api/v1/incomes` | OK |
+| P-08 | N-102 | E | Registrar ingreso extra | POST `/api/v1/incomes` | OK |
+| P-08 | N-105 | E | Corregir o eliminar ingreso | GET `/api/v1/incomes` · PATCH `/api/v1/incomes/{income_id}` · DELETE `/api/v1/incomes/{income_id}` | OK |
+| P-09 | N-110 | L | Fondo y totales | GET `/api/v1/savings/summary` | OK |
+| P-09 | N-111 | L | Metas | GET `/api/v1/views/{entity}` · GET `/api/v1/savings-goals` | OK |
+| P-09 | N-112 | L | Movimientos de ahorro | GET `/api/v1/savings-movements` | OK |
+| P-09 | N-114 | L | Tendencia de ahorro | GET `/api/v1/savings/monthly-trend` | OK |
+| P-09 | N-115 | L | Calendario de ahorro | GET `/api/v1/calendar/events` | OK |
+| P-09 | N-113 | E | Registrar movimiento | POST `/api/v1/savings-movements` | OK |
+| P-09 | N-116 | E | Corregir o eliminar movimiento | GET `/api/v1/savings-movements` · PATCH `/api/v1/savings-movements/{savings_movement_id}` · DELETE `/api/v1/savings-movements/{savings_movement_id}` | OK |
+| P-10 | N-120 | L | Plan de la semana | GET `/api/v1/meal-slots` · GET `/api/v1/meal-plan/week` | OK |
+| P-10 | N-121 | L | Totales del plan | GET `/api/v1/meal-plan/week` | OK |
+| P-10 | N-122 | L | Recetas para una casilla | GET `/api/v1/recipes` | OK |
+| P-10 | N-128 | L | Calendario mensual | GET `/api/v1/views/{entity}` · GET `/api/v1/meal-plan/month` | OK |
+| P-10 | N-129 | L | Tendencias de comidas | GET `/api/v1/meal-plan/trends` | OK |
+| P-10 | N-123 | E | Asignar receta | POST `/api/v1/meal-plan-entries` · PATCH `/api/v1/meal-plan-entries/{meal_plan_entry_id}` | OK |
+| P-10 | N-124 | E | Marcar «fuera» | POST `/api/v1/meal-plan-entries` | OK |
+| P-10 | N-125 | E | Vaciar casilla | DELETE `/api/v1/meal-plan-entries/{meal_plan_entry_id}` | OK |
+| P-10 | N-126 | E | Copiar semana anterior | POST `/api/v1/meal-plan/copy-previous-week` | OK |
+| P-10 | N-127 | E | Generar lista de compras | POST `/api/v1/shopping-list/generate` | PROVISIONAL `C1-lista-compras` |
+| P-11 | N-135 | L | Recetas | GET `/api/v1/views/{entity}` · GET `/api/v1/recipes` | OK |
+| P-11 | N-136 | E | Crear receta | POST `/api/v1/recipes` | OK |
+| P-11 | N-137 | E | Sugerir receta con IA | POST `/api/v1/recipes/ai-suggestions` | OK |
+| P-12 | N-140 | L | Receta escalada | GET `/api/v1/recipes/{recipe_id}` | OK |
+| P-12 | N-141 | L | Uso de la receta | GET `/api/v1/recipes/{recipe_id}/usage` | OK |
+| P-12 | N-123 | E | Asignar receta | POST `/api/v1/meal-plan-entries` · PATCH `/api/v1/meal-plan-entries/{meal_plan_entry_id}` | OK |
+| P-12 | N-142 | E | Actualizar receta | PATCH `/api/v1/recipes/{recipe_id}` | OK |
+| P-12 | N-143 | E | Duplicar receta | POST `/api/v1/recipes/{recipe_id}/duplicate` | OK |
+| P-12 | N-144 | E | Eliminar receta | DELETE `/api/v1/recipes/{recipe_id}` | OK |
+| P-13 | N-150 | L | Lista de compras de la semana | GET `/api/v1/shopping-list` · GET `/api/v1/product-groups` | PROVISIONAL `C1-lista-compras` |
+| P-13 | N-151 | E | Marcar comprado | PATCH `/api/v1/shopping-list/items/{shopping_list_item_id}` | PROVISIONAL `C1-lista-compras` |
+| P-13 | N-152 | E | Agregar artículo | POST `/api/v1/shopping-list/items` | PROVISIONAL `C1-lista-compras` |
+| P-13 | N-153 | E | Cambiar tienda o cantidad de un artículo | PATCH `/api/v1/shopping-list/items/{shopping_list_item_id}` | PROVISIONAL `C1-lista-compras` |
+| P-14 | N-160 | L | Canastas disponibles | GET `/api/v1/baskets` | OK |
+| P-14 | N-161 | L | Comparativa por tienda | GET `/api/v1/basket-comparison` | OK |
+| P-14 | N-162 | L | Detalle por artículo | GET `/api/v1/basket-comparison` | OK |
+| P-14 | N-163 | L | Ganadores | GET `/api/v1/basket-comparison` | OK |
+| P-14 | N-164 | L | Membresía Sam's | GET `/api/v1/basket-comparison` | OK |
+| P-14 | N-165 | E | Usar esta tienda | POST `/api/v1/shopping-list/assign-store` | PROVISIONAL `C1-lista-compras` |
+| P-15 | N-170 | L | Catálogo | GET `/api/v1/views/{entity}` · GET `/api/v1/products` | OK |
+| P-15 | N-171 | L | Precios de un producto | GET `/api/v1/views/{entity}` · GET `/api/v1/products/{product_id}` · GET `/api/v1/products/{product_id}/prices` | OK |
+| P-15 | N-172 | L | Resumen de precios | GET `/api/v1/prices/summary` | OK |
+| P-15 | N-173 | L | Nutrición del producto | GET `/api/v1/products/{product_id}` · GET `/api/v1/products/{product_id}/nutrition-facts` | OK |
+| P-15 | N-174 | E | Capturar precio | POST `/api/v1/prices` | OK |
+| P-15 | N-175 | E | Crear o editar producto | POST `/api/v1/products` · PATCH `/api/v1/products/{product_id}` · POST `/api/v1/products/{product_id}/presentations` · PATCH `/api/v1/presentations/{presentation_id}` · POST `/api/v1/products/{product_id}/nutrition-facts` | OK |
+| P-15 | N-176 | E | Corregir o eliminar precio | PATCH `/api/v1/prices/{price_id}` · DELETE `/api/v1/prices/{price_id}` | OK |
+| P-16 | N-180 | L | Inventario | GET `/api/v1/views/{entity}` · GET `/api/v1/inventory-items` | OK |
+| P-16 | N-181 | L | Movimientos de un artículo | GET `/api/v1/inventory-items/{inventory_item_id}/movements` | OK |
+| P-16 | N-182 | L | Resumen | GET `/api/v1/inventory/summary` | OK |
+| P-16 | N-183 | E | Ajustar existencia | POST `/api/v1/inventory-items/{inventory_item_id}/adjustments` | OK |
+| P-16 | N-184 | E | Registrar sobrante | POST `/api/v1/inventory-items` | OK |
+| P-17 | N-190 | L | Líneas | GET `/api/v1/credits` | OK |
+| P-17 | N-191 | L | Totales | GET `/api/v1/credits/totals` | OK |
+| P-17 | N-192 | L | Calendario unificado | GET `/api/v1/calendar/events` · GET `/api/v1/scheduled-payments` | OK |
+| P-17 | N-193 | L | Aviso A/B | GET `/api/v1/credits/{credit_id}` | OK |
+| P-17 | N-194 | L | Tendencias de deuda | GET `/api/v1/credits/debt-trend` | OK |
+| P-18 | N-200 | L | Línea | GET `/api/v1/credits/{credit_id}` | OK |
+| P-18 | N-201 | L | Resumen de la línea | GET `/api/v1/credits/{credit_id}` · GET `/api/v1/credits/{credit_id}/availability-preview` | OK |
+| P-18 | N-202 | L | Compras de la línea | GET `/api/v1/views/{entity}` · GET `/api/v1/credit-purchases` | OK |
+| P-18 | N-203 | L | Serie de disponible | GET `/api/v1/credits/{credit_id}/availability-series` | OK |
+| P-18 | N-204 | L | Tasas por plazo | GET `/api/v1/credits/{credit_id}/term-rates` | OK |
+| P-18 | N-205 | L | Estado de la tarjeta | GET `/api/v1/credits/{credit_id}/card-status` | OK |
+| P-18 | N-206 | L | Amortización | GET `/api/v1/scheduled-payments` | OK |
+| P-18 | N-207 | L | Abonos | GET `/api/v1/scheduled-payments` | OK |
+| P-18 | N-208 | L | Calendario de la línea | GET `/api/v1/calendar/events` | OK |
+| P-18 | N-209 | L | Tendencias de la línea | GET `/api/v1/credits/debt-trend` · GET `/api/v1/credits/{credit_id}/availability-series` | OK |
+| P-18 | N-210 | E | Marcar pago | POST `/api/v1/scheduled-payments/{scheduled_payment_id}/payments` · DELETE `/api/v1/credit-payments/{credit_payment_id}` | PROVISIONAL `S1-reposicion-parte-externa` |
+| P-19 | N-215 | L | Compra | GET `/api/v1/credit-purchases` · GET `/api/v1/credit-purchases/{credit_purchase_id}` · GET `/api/v1/scheduled-payments` | OK |
+| P-19 | N-216 | L | Vista previa del cálculo | POST `/api/v1/credit-purchases/preview` | OK |
+| P-19 | N-217 | L | Promociones aplicables | POST `/api/v1/credit-purchases/preview` · GET `/api/v1/promotions` | OK |
+| P-19 | N-210 | E | Marcar pago | POST `/api/v1/scheduled-payments/{scheduled_payment_id}/payments` · DELETE `/api/v1/credit-payments/{credit_payment_id}` | PROVISIONAL `S1-reposicion-parte-externa` |
+| P-19 | N-218 | E | Crear compra | POST `/api/v1/credit-purchases` | OK |
+| P-19 | N-219 | E | Editar o eliminar compra | PATCH `/api/v1/credit-purchases/{credit_purchase_id}` · DELETE `/api/v1/credit-purchases/{credit_purchase_id}` | OK |
+| P-20 | N-225 | L | Valores por defecto | GET `/api/v1/settings/optimizer` | PROVISIONAL `S1-restricciones-optimizador` |
+| P-20 | N-226 | L | Resultado del comparador | POST `/api/v1/scenario-comparisons` | PROVISIONAL `S1-restricciones-optimizador` |
+| P-21 | N-230 | L | Perfiles | GET `/api/v1/health-profiles` | OK |
+| P-21 | N-231 | L | Calorías de hoy | GET `/api/v1/meal-plan/week` · GET `/api/v1/health/today-kcal` | OK |
+| P-21 | N-232 | L | Historial de peso | GET `/api/v1/weight-entries` | OK |
+| P-21 | N-233 | L | kcal promedio por semana | GET `/api/v1/meal-plan/trends` | OK |
+| P-21 | N-242 | E | Corregir o eliminar peso | PATCH `/api/v1/weight-entries/{weight_entry_id}` · DELETE `/api/v1/weight-entries/{weight_entry_id}` | OK |
+| P-22 | N-241 | L | Último peso | GET `/api/v1/weight-entries` | OK |
+| P-22 | N-240 | E | Registrar peso | POST `/api/v1/weight-entries` | OK |
+| P-23 | N-245 | L | Reportes generados | GET `/api/v1/reports` · GET `/api/v1/notification-deliveries` | OK |
+| P-23 | N-246 | L | Próximos envíos | GET `/api/v1/jobs` | OK |
+| P-23 | N-247 | L | Avisos enviados | GET `/api/v1/views/{entity}` · GET `/api/v1/notification-deliveries` | OK |
+| P-23 | N-249 | L | Descargar archivo | GET `/api/v1/reports/{report_id}/file` | OK |
+| P-23 | N-248 | E | Generar reporte mensual | POST `/api/v1/reports/monthly` | OK |
+| P-23 | N-250 | E | Reintentar envío | POST `/api/v1/reports/{report_id}/send` | OK |
+| P-24 | N-255 | L | Meses disponibles | GET `/api/v1/monthly-report/months` | OK |
+| P-24 | N-256 | L | Reporte del mes | GET `/api/v1/monthly-report` | OK |
+| P-24 | N-257 | L | PDF del mes | GET `/api/v1/reports` · GET `/api/v1/monthly-report` | OK |
+| P-24 | N-249 | L | Descargar archivo | GET `/api/v1/reports/{report_id}/file` | OK |
+| P-24 | N-248 | E | Generar reporte mensual | POST `/api/v1/reports/monthly` | OK |
+| P-25 | N-260 | L | Estado de cuenta | GET `/api/v1/scheduled-payments` · GET `/api/v1/persons/{person_id}/statement` | OK |
+| P-25 | N-262 | L | Estados anteriores | GET `/api/v1/reports` | OK |
+| P-25 | N-249 | L | Descargar archivo | GET `/api/v1/reports/{report_id}/file` | OK |
+| P-25 | N-261 | E | Generar PDF | POST `/api/v1/reports/external-statements` | OK |
+| P-26.01 | N-270 | L | Usuarios | GET `/api/v1/users` | OK |
+| P-26.01 | N-271 | L | Sesiones | GET `/api/v1/sessions` | OK |
+| P-26.01 | N-274 | L | Este dispositivo | GET `/api/v1/system/ca-certificate` | OK |
+| P-26.01 | N-272 | E | Cerrar sesiones | DELETE `/api/v1/sessions/{session_id}` · POST `/api/v1/sessions/revoke` | OK |
+| P-26.01 | N-273 | E | Cambiar contraseña | POST `/api/v1/auth/password` | OK |
+| P-26.02 | N-275 | L | Presupuesto mensual | GET `/api/v1/budgets` | OK |
+| P-26.02 | N-276 | L | Gastos fijos recurrentes | GET `/api/v1/planned-items` | OK |
+| P-26.02 | N-277 | L | Despensa programada | GET `/api/v1/planned-items` | OK |
+| P-26.02 | N-278 | E | Editar presupuesto, fijos y despensa | POST `/api/v1/budgets` · PATCH `/api/v1/budgets/{budget_id}` · DELETE `/api/v1/budgets/{budget_id}` · POST `/api/v1/planned-items` · PATCH `/api/v1/planned-items/{planned_item_id}` | PROVISIONAL `C1-huecos-u1-s1` |
+| P-26.03 | N-279 | L | Ingreso esperado | GET `/api/v1/planned-items` | OK |
+| P-26.03 | N-280 | E | Editar ingreso esperado | POST `/api/v1/planned-items` · PATCH `/api/v1/planned-items/{planned_item_id}` | OK |
+| P-26.04 | N-281 | L | Categorías | GET `/api/v1/views/{entity}` · GET `/api/v1/categories` · GET `/api/v1/cost-share-rules` | OK |
+| P-26.04 | N-282 | E | Editar categorías | POST `/api/v1/categories` · PATCH `/api/v1/categories/{category_id}` · PUT `/api/v1/categories/order` | OK |
+| P-26.05 | N-283 | L | Créditos | GET `/api/v1/credits` | OK |
+| P-26.05 | N-284 | L | Lectura A/B | GET `/api/v1/credits/{credit_id}` | OK |
+| P-26.05 | N-285 | L | Vista previa A/B | GET `/api/v1/credits/{credit_id}/availability-preview` | OK |
+| P-26.05 | N-286 | L | Tasas por plazo | GET `/api/v1/credits/{credit_id}/term-rates` | OK |
+| P-26.05 | N-287 | L | Promociones | GET `/api/v1/views/{entity}` · GET `/api/v1/promotions` | OK |
+| P-26.05 | N-288 | L | Valores del comparador | GET `/api/v1/settings/optimizer` | PROVISIONAL `S1-restricciones-optimizador` |
+| P-26.05 | N-289 | E | Editar créditos y condiciones | PATCH `/api/v1/persons/{person_id}` · POST `/api/v1/credits` · PATCH `/api/v1/credits/{credit_id}` · POST `/api/v1/credits/{credit_id}/term-rates` · PATCH `/api/v1/credit-term-rates/{credit_term_rate_id}` · DELETE `/api/v1/credit-term-rates/{credit_term_rate_id}` · POST `/api/v1/promotions` · PATCH `/api/v1/promotions/{promotion_id}` · DELETE `/api/v1/promotions/{promotion_id}` · PATCH `/api/v1/settings/optimizer` | OK |
+| P-26.06 | N-290 | L | Tiendas | GET `/api/v1/views/{entity}` · GET `/api/v1/stores` · GET `/api/v1/product-groups` | OK |
+| P-26.06 | N-291 | L | Fuentes de precio | GET `/api/v1/price-sources` · GET `/api/v1/settings/prices` · GET `/api/v1/jobs` | OK |
+| P-26.06 | N-292 | E | Editar tiendas y fuentes | POST `/api/v1/stores` · PATCH `/api/v1/stores/{store_id}` · PUT `/api/v1/stores/{store_id}/product-groups` · PATCH `/api/v1/settings/prices` | OK |
+| P-26.06 | N-293 | E | Importar corte PROFECO | POST `/api/v1/profeco-imports` | OK |
+| P-26.07 | N-294 | L | Recetario y nutrición | GET `/api/v1/meal-slots` · GET `/api/v1/settings/recipes` | OK |
+| P-26.07 | N-295 | E | Recargar base nutricional | POST `/api/v1/nutrition-facts/reload` | OK |
+| P-26.08 | N-296 | L | Reportes programados | GET `/api/v1/jobs` · GET `/api/v1/notifications` | OK |
+| P-26.08 | N-297 | E | Editar reportes programados | PATCH `/api/v1/jobs/{job_id}` · PATCH `/api/v1/notifications/{notification_id}` · PUT `/api/v1/notifications/{notification_id}/recipients` | OK |
+| P-26.08 | N-248 | E | Generar reporte mensual | POST `/api/v1/reports/monthly` | OK |
+| P-26.09 | N-298 | L | Alertas | GET `/api/v1/notifications` | OK |
+| P-26.09 | N-299 | L | Registro de chat | GET `/api/v1/notification-recipients` · POST `/api/v1/notification-recipients` · PATCH `/api/v1/notification-recipients/{recipient_id}` | PROVISIONAL `C1-huecos-u1-s1` |
+| P-26.09 | N-300 | E | Editar alertas y probar | PATCH `/api/v1/notifications/{notification_id}` · PUT `/api/v1/notifications/{notification_id}/recipients` · POST `/api/v1/notifications/{notification_id}/test` | OK |
+| P-26.10 | N-301 | L | Tema | Tema por dispositivo (U1: Local) | Local |
+| P-26.11 | N-302 | L | Respaldos | GET `/api/v1/jobs` · GET `/api/v1/backups` | OK |
+| P-26.11 | N-305 | L | Datos semilla | GET `/api/v1/system/seed-status` | OK |
+| P-26.11 | N-306 | L | IA opcional | GET `/api/v1/ai/providers` | OK |
+| P-26.11 | N-308 | L | Estado del servicio | GET `/api/v1/system/status` | OK |
+| P-26.11 | N-303 | E | Respaldar y restaurar | POST `/api/v1/backups` · POST `/api/v1/backups/{backup_id}/restore` | OK |
+| P-26.11 | N-304 | E | Importar gastos fijos e ingresos | POST `/api/v1/imports/planned-items/preview` · POST `/api/v1/imports/planned-items` | OK |
+| P-26.11 | N-307 | E | Activar o desactivar IA | PATCH `/api/v1/ai/providers/{provider}` | OK |
+| P-26.12 | N-309 | L | Personas y reparto | GET `/api/v1/persons` · GET `/api/v1/cost-share-rules` | OK |
+| P-26.12 | N-310 | E | Editar personas y reparto | PATCH `/api/v1/persons/{person_id}` · PATCH `/api/v1/cost-share-rules/{cost_share_rule_id}` | OK |
+| P-26.13 | N-311 | L | Perfiles de salud | GET `/api/v1/health-profiles` | OK |
+| P-26.13 | N-312 | L | Metas y fondo | GET `/api/v1/savings-goals` | OK |
+| P-26.13 | N-313 | E | Editar perfiles, metas y fondo | POST `/api/v1/savings-goals` · PATCH `/api/v1/savings-goals/{savings_goal_id}` · POST `/api/v1/health-profiles` · PATCH `/api/v1/health-profiles/{health_profile_id}` | OK |
+| P-26.14 | N-314 | L | Configuración de inventario | GET `/api/v1/products` · GET `/api/v1/inventory-items` | OK |
+| P-26.14 | N-315 | E | Editar inventario | POST `/api/v1/inventory-items` · PATCH `/api/v1/inventory-items/{inventory_item_id}` | OK |
+
+## 11. Cobertura
+
+### 11.1 Resumen
+- Necesidades de U1: **199** (N-001 a N-315). Con operación: **197**. Locales sin API (U1): **2** (N-003, N-301). Sin endpoint por bloqueo: **0**. Con cobertura PROVISIONAL (bloqueos de §13, p. ej. `C1-huecos-u1-s1`): **19**.
+- Operaciones del contrato: **197** en **158** rutas. Con al menos una N-xxx: **196**. Excepciones técnicas sin N-xxx: **1** (§11.2). N-xxx citadas por el contrato que no existen en U1: **0**.
+- Pantallas de la matriz de U1 §3.29: **41** (Global, P-00 a P-25 y P-26.01 a P-26.14); filas de la matriz: **220**.
+- Tablas de S1: **54**; con al menos una operación: **54** (§11.4). `idempotency_key` es infraestructura de S6: la declaran en `x-tablas` las **41** operaciones con `Idempotency-Key` (§1 punto 8).
+
+### 11.2 Operaciones sin necesidad de U1 (excepciones técnicas, una por una)
+| Operación | Motivo |
+|---|---|
+| GET `/openapi.yaml` (`getOpenApiDocument`) | Estático y técnico: sirve este mismo contrato para desarrollo y para la prueba de contrato de S6 (S6-03). Requiere sesión. Excepción «estáticos» de C1-02. |
+
+Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «Sin conexión») sí tienen necesidad en U1, aunque C1-02 los admite como excepciones.
+
+### 11.3 Necesidades sin endpoint
+| Necesidad | Qué es | Motivo |
+|---|---|---|
+| N-003 | Recientes | Recientes en el dispositivo (U1: Local) |
+| N-301 | Tema | Tema por dispositivo (U1: Local) |
+
+### 11.4 Tablas de S1 → operaciones (54 de 54)
+| Tabla S1 | Operaciones | Ejemplos |
+|---|---|---|
+| `person` | 46 | `login`, `getCurrentSession`, `listUsers`, `queryView`, `getDashboardFortnightFlow` … |
+| `user_account` | 7 | `login`, `getCurrentSession`, `changeOwnPassword`, `listUsers`, `listSessions` … |
+| `device_session` | 9 | `login`, `logout`, `getCurrentSession`, `changeOwnPassword`, `listUsers` … |
+| `login_attempt` | 1 | `login` |
+| `app_setting` | 16 | `login`, `getDashboardBestBasket`, `suggestRecipeWithAi`, `getBasketComparison`, `listProducts` … |
+| `audit_log` | 88 | `changeOwnPassword`, `revokeSession`, `revokeSessions`, `createExpense`, `getExpense` … |
+| `idempotency_key` | 41 | `createExpense`, `duplicateExpense`, `markExpensePaid`, `uploadExpenseAttachment`, `createTicketScan` … |
+| `period` | 10 | `getDashboardMonthVsPlan`, `listPeriods`, `getBudgetMonth`, `getBudgetByCategory`, `getBudgetFortnights` … |
+| `cost_share_rule` | 21 | `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary`, `getExpenseMonthlyTrend` … |
+| `cost_share_rule_part` | 14 | `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary`, `getExpenseMonthlyTrend` … |
+| `category` | 33 | `search`, `queryView`, `getDashboardMonthVsPlan`, `listExpenses`, `createExpense` … |
+| `budget` | 12 | `getDashboardMonthVsPlan`, `listBudgets`, `createBudget`, `updateBudget`, `deleteBudget` … |
+| `store` | 36 | `search`, `listCalendarEvents`, `queryView`, `getDashboardBestBasket`, `listExpenses` … |
+| `product_group` | 7 | `getShoppingList`, `generateShoppingList`, `listStores`, `setStoreProductGroups`, `listProductGroups` … |
+| `store_product_group` | 4 | `getShoppingList`, `generateShoppingList`, `listStores`, `setStoreProductGroups` |
+| `product` | 24 | `search`, `queryView`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
+| `presentation` | 27 | `search`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
+| `credit` | 31 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment` … |
+| `credit_term_rate` | 16 | `queryView`, `confirmTicketScan`, `listCredits`, `getCreditTotals`, `getDebtTrend` … |
+| `promotion` | 12 | `listCalendarEvents`, `queryView`, `confirmTicketScan`, `listCreditPurchases`, `createCreditPurchase` … |
+| `planned_item` | 18 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getBudgetMonth`, `getBudgetFortnights`, `getCashFlowFortnights` … |
+| `income` | 13 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getBudgetMonth` … |
+| `expense` | 40 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
+| `expense_item` | 18 | `getDashboardBestBasket`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
+| `expense_share` | 27 | `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow`, `getPersonParticipation`, `listExpenses` … |
+| `attachment` | 18 | `queryView`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
+| `price` | 25 | `queryView`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `deleteAttachment`, `getTicketScan` … |
+| `credit_purchase` | 46 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
+| `credit_purchase_share` | 16 | `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `confirmTicketScan`, `getAccruedGroceries` … |
+| `scheduled_payment` | 28 | `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation` … |
+| `scheduled_payment_share` | 23 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `confirmTicketScan` … |
+| `credit_statement` | 9 | `listCalendarEvents`, `deleteAttachment`, `listCredits`, `getCreditTotals`, `getDebtTrend` … |
+| `credit_payment` | 22 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `getCashFlowFortnights` … |
+| `savings_goal` | 14 | `search`, `listCalendarEvents`, `queryView`, `getDashboardSavings`, `getBudgetMonth` … |
+| `savings_movement` | 11 | `listCalendarEvents`, `queryView`, `getDashboardSavings`, `getSavingsSummary`, `getSavingsMonthlyTrend` … |
+| `meal_slot` | 11 | `getDashboardWeekMeals`, `listMealSlots`, `getMealPlanWeek`, `getMealPlanMonth`, `getMealPlanTrends` … |
+| `recipe` | 17 | `search`, `queryView`, `getDashboardWeekMeals`, `getMealPlanWeek`, `getMealPlanTrends` … |
+| `recipe_meal_slot` | 7 | `queryView`, `listRecipes`, `createRecipe`, `getRecipe`, `updateRecipe` … |
+| `recipe_ingredient` | 17 | `search`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `getMealPlanWeek`, `getMealPlanTrends` … |
+| `meal_plan_entry` | 22 | `queryView`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `getMealPlanWeek`, `getMealPlanMonth` … |
+| `inventory_item` | 14 | `queryView`, `getDashboardBestBasket`, `confirmTicketScan`, `getMealPlanWeek`, `getMealPlanTrends` … |
+| `inventory_movement` | 4 | `confirmTicketScan`, `createInventoryItem`, `listInventoryMovements`, `adjustInventoryItem` |
+| `shopping_list` | 8 | `getDashboardBestBasket`, `getShoppingList`, `generateShoppingList`, `createShoppingListItem`, `updateShoppingListItem` … |
+| `shopping_list_item` | 8 | `getDashboardBestBasket`, `getShoppingList`, `generateShoppingList`, `createShoppingListItem`, `updateShoppingListItem` … |
+| `health_profile` | 8 | `getDashboardWeekMeals`, `getMealPlanWeek`, `getMealPlanTrends`, `listHealthProfiles`, `createHealthProfile` … |
+| `weight_entry` | 7 | `queryView`, `listHealthProfiles`, `listWeightEntries`, `createWeightEntry`, `updateWeightEntry` … |
+| `nutrition_fact` | 11 | `getDashboardWeekMeals`, `getMealPlanWeek`, `getMealPlanTrends`, `listRecipes`, `getRecipe` … |
+| `notification` | 7 | `listReports`, `generateMonthlyReport`, `listNotificationDeliveries`, `listJobs`, `listNotifications` … |
+| `notification_recipient` | 8 | `generateMonthlyReport`, `sendReport`, `listNotificationDeliveries`, `setNotificationRecipients`, `sendTestNotification` … |
+| `notification_subscription` | 5 | `generateMonthlyReport`, `sendReport`, `listJobs`, `listNotifications`, `setNotificationRecipients` |
+| `notification_delivery` | 6 | `queryView`, `listReports`, `generateMonthlyReport`, `sendReport`, `listNotificationDeliveries` … |
+| `job` | 11 | `listCalendarEvents`, `queryView`, `createTicketScan`, `getPriceSources`, `importProfeco` … |
+| `backup` | 4 | `queryView`, `listBackups`, `createBackup`, `restoreBackup` |
+| `generated_report` | 7 | `listReports`, `generateMonthlyReport`, `generateExternalStatement`, `downloadReportFile`, `sendReport` … |
+
+`idempotency_key` no tiene pantalla propia: es infraestructura de S6. La leen y escriben en la misma transacción todas las operaciones que exigen `Idempotency-Key` (§1 punto 8; S1 C-15), por eso figura en su `x-tablas`, y la purga por antigüedad la hace un job de S6 (retención PROVISIONAL, `C1-parametros-tecnicos`). `inventory_movement`, `recipe_meal_slot`, `shopping_list` y `shopping_list_item` son detalle de entidades del plan (inventario, receta y lista de compras) y tienen sus propias operaciones.
+
+### 11.5 Las 14 secciones de Ajustes → necesidades → operaciones
+| Sección | Nombre | Necesidades | Operaciones |
+|---|---|---|---|
+| P-26.01 | Cuenta y roles | N-270, N-271, N-274, N-272, N-273 | `listUsers`, `listSessions`, `getCaCertificate`, `revokeSession`, `revokeSessions`, `changeOwnPassword` |
+| P-26.02 | Presupuesto | N-275, N-276, N-277, N-278 | `listBudgets`, `listPlannedItems`, `createBudget`, `updateBudget`, `deleteBudget`, `createPlannedItem`, `updatePlannedItem` |
+| P-26.03 | Ingresos | N-279, N-280 | `listPlannedItems`, `createPlannedItem`, `updatePlannedItem` |
+| P-26.04 | Categorías | N-281, N-282 | `queryView`, `listCategories`, `listCostShareRules`, `createCategory`, `updateCategory`, `reorderCategories` |
+| P-26.05 | Créditos y condiciones (incluye promociones) | N-283, N-284, N-285, N-286, N-287, N-288, N-289 | `listCredits`, `getCredit`, `previewAvailability`, `listCreditTermRates`, `queryView`, `listPromotions`, `getOptimizerSettings`, `updatePerson`, `createCredit`, `updateCredit`, `createCreditTermRate`, `updateCreditTermRate`, `deleteCreditTermRate`, `createPromotion`, `updatePromotion`, `deletePromotion`, `updateOptimizerSettings` |
+| P-26.06 | Tiendas y precios (incluye mercados y membresía Sam's) | N-290, N-291, N-292, N-293 | `queryView`, `listStores`, `listProductGroups`, `getPriceSources`, `getPriceSettings`, `listJobs`, `createStore`, `updateStore`, `setStoreProductGroups`, `updatePriceSettings`, `importProfeco` |
+| P-26.07 | Recetas | N-294, N-295 | `listMealSlots`, `getRecipeSettings`, `reloadNutritionBase` |
+| P-26.08 | Reportes y frecuencias | N-296, N-297, N-248 | `listJobs`, `listNotifications`, `updateJob`, `updateNotification`, `setNotificationRecipients`, `generateMonthlyReport` |
+| P-26.09 | Notificaciones | N-298, N-299, N-300 | `listNotifications`, `listNotificationRecipients`, `createNotificationRecipient`, `updateNotificationRecipient`, `updateNotification`, `setNotificationRecipients`, `sendTestNotification` |
+| P-26.10 | Apariencia | N-301 | Sin API: el tema vive en el dispositivo (N-301, Local) |
+| P-26.11 | Datos y respaldos | N-302, N-305, N-306, N-308, N-303, N-304, N-307 | `listJobs`, `listBackups`, `getSeedStatus`, `listAiProviders`, `getSystemStatus`, `createBackup`, `restoreBackup`, `previewPlannedItemsImport`, `importPlannedItems`, `updateAiProvider` |
+| P-26.12 | Personas y reparto | N-309, N-310 | `listPersons`, `listCostShareRules`, `updatePerson`, `updateCostShareRule` |
+| P-26.13 | Salud y metas de ahorro | N-311, N-312, N-313 | `listHealthProfiles`, `listSavingsGoals`, `createSavingsGoal`, `updateSavingsGoal`, `createHealthProfile`, `updateHealthProfile` |
+| P-26.14 | Inventario | N-314, N-315 | `listProducts`, `listInventoryItems`, `createInventoryItem`, `updateInventoryItem` |
+
+### 11.6 Capacidades exigidas (C1-11) → operaciones
+| # | Capacidad | Operaciones |
+|---|---|---|
+| 1 | Las 14 secciones de Ajustes | §11.5 |
+| 2 | Sesiones por dispositivo y su cierre | listSessions, revokeSession, revokeSessions, logout |
+| 3 | Interruptor A/B y su vista previa | getCredit, updateCredit, previewAvailability |
+| 4 | Comparador de escenarios: 4 objetivos, restricciones, pesos y recomendación | compareScenarios, getOptimizerSettings, updateOptimizerSettings |
+| 5 | Promociones | listPromotions, createPromotion, updatePromotion, deletePromotion |
+| 6 | Tasa por plazo | listCreditTermRates, createCreditTermRate, updateCreditTermRate, deleteCreditTermRate |
+| 7 | Calendario unificado de pagos | listScheduledPayments, listCalendarEvents |
+| 8 | Créditos de los 4 tipos y sus condiciones | listCredits, createCredit, updateCredit, getCardStatus, listScheduledPayments (amortización y abonos) |
+| 9 | Compras a crédito con partes por persona | createCreditPurchase, previewCreditPurchase, getCreditPurchase, markScheduledPaymentPaid, deleteCreditPayment |
+| 10 | Plan de comidas | getMealPlanWeek, createMealPlanEntries, updateMealPlanEntry, deleteMealPlanEntry, copyPreviousWeek, getMealPlanMonth, getMealPlanTrends |
+| 11 | Lista de compras | getShoppingList, generateShoppingList, createShoppingListItem, updateShoppingListItem, assignShoppingListStore (PROVISIONAL: opción A de `C1-lista-compras`) |
+| 12 | Recetas e ingredientes | listRecipes, getRecipe, createRecipe, updateRecipe, duplicateRecipe, deleteRecipe, getRecipeUsage, suggestRecipeWithAi |
+| 13 | Perfil de salud y peso | listHealthProfiles, createHealthProfile, updateHealthProfile, getTodayKcal, listWeightEntries, createWeightEntry, updateWeightEntry, deleteWeightEntry |
+| 14 | Precios con fuente y frescura | listProductPrices, createPrice, updatePrice, deletePrice, getPriceSummary, getPriceSettings, getPriceSources |
+| 15 | OCR con confirmación humana | createTicketScan, listTicketScans, getTicketScan, confirmTicketScan |
+| 16 | Mercados con día de visita | listStores (kind=market), createStore, updateStore, setStoreProductGroups |
+| 17 | Membresía de Sam's (punto de equilibrio) | getBasketComparison (membership), updateStore (membership_annual_fee_cents) |
+| 18 | Gastos con reparto y adjuntos | createExpense, updateExpense, listCostShareRules, uploadExpenseAttachment, downloadAttachment, deleteAttachment |
+| 19 | Ingresos fijos y extra | createIncome, listIncomes, getIncomeMonth, updateIncome, deleteIncome, listPlannedItems |
+| 20 | Categorías | listCategories, createCategory, updateCategory, reorderCategories |
+| 21 | Metas y fondo de ahorro | listSavingsGoals, createSavingsGoal, updateSavingsGoal, getSavingsSummary, createSavingsMovement |
+| 22 | Tiendas, productos, presentaciones y equivalencias | listStores, listProducts, createProduct, getProduct, createPresentation, updatePresentation |
+| 23 | Comparador de canasta | listBaskets, getBasketComparison, assignShoppingListStore |
+| 24 | Inventario | listInventoryItems, createInventoryItem, updateInventoryItem, adjustInventoryItem, listInventoryMovements, getInventorySummary |
+| 25 | Nutrición por ingrediente | listNutritionFacts, createNutritionFact, reloadNutritionBase |
+| 26 | Notificaciones y destinatarios | listNotifications, updateNotification, setNotificationRecipients, listNotificationRecipients, createNotificationRecipient, listNotificationDeliveries |
+| 27 | Disparo manual del resumen diario y de una alerta | sendTestNotification |
+| 28 | Reporte mensual PDF (generar, listar, descargar, reenviar) | generateMonthlyReport, listReports, downloadReportFile, sendReport |
+| 29 | Estado de cuenta de Karen bajo demanda | getExternalStatement, generateExternalStatement |
+| 30 | Vista web mensual | getMonthlyReport, listMonthlyReportMonths |
+| 31 | Jobs | listJobs, updateJob |
+| 32 | Respaldos (listar, ejecutar, restaurar) | listBackups, createBackup, restoreBackup |
+| 33 | IA opcional apagada por defecto | listAiProviders, updateAiProvider |
+| 34 | Vistas de base de datos genéricas | queryView |
+| 35 | Métricas del dashboard | getDashboardMonthVsPlan, getDashboardFortnightFlow, getDashboardNextPayment, getDashboardWeekMeals, getDashboardBestBasket, getDashboardSavings |
+
+## 12. Índice de operaciones
+
+| Método y ruta | operationId | Etiqueta | N-xxx | Tablas S1 (`x-tablas`) |
+|---|---|---|---|---|
+| GET `/api/v1/ai/providers` | `listAiProviders` | Ajustes | N-306 | app_setting |
+| PATCH `/api/v1/ai/providers/{provider}` | `updateAiProvider` | Ajustes | N-307 | app_setting, audit_log |
+| DELETE `/api/v1/attachments/{attachment_id}` | `deleteAttachment` | Gastos | N-064 | attachment, audit_log, credit_statement, price |
+| GET `/api/v1/attachments/{attachment_id}/file` | `downloadAttachment` | Gastos | N-046, N-060, N-071 | attachment |
+| POST `/api/v1/auth/login` | `login` | Ajustes | N-010, N-011 | app_setting, device_session, login_attempt, person, user_account |
+| POST `/api/v1/auth/logout` | `logout` | Ajustes | N-006 | device_session |
+| GET `/api/v1/auth/me` | `getCurrentSession` | Inicio | N-001, N-052 | device_session, person, user_account |
+| POST `/api/v1/auth/password` | `changeOwnPassword` | Ajustes | N-273 | audit_log, device_session, user_account |
+| GET `/api/v1/backups` | `listBackups` | Ajustes | N-302 | backup, job |
+| POST `/api/v1/backups` | `createBackup` | Ajustes | N-303 | backup, idempotency_key |
+| POST `/api/v1/backups/{backup_id}/restore` | `restoreBackup` | Ajustes | N-303 | backup |
+| GET `/api/v1/basket-comparison` | `getBasketComparison` | Compras y tiendas | N-161, N-162, N-163, N-164, N-027 | app_setting, expense, expense_item, inventory_item, meal_plan_entry, presentation, price, product, recipe_ingredient, shopping_list, shopping_list_item, store |
+| GET `/api/v1/baskets` | `listBaskets` | Compras y tiendas | N-160 | expense, expense_item, meal_plan_entry, shopping_list, shopping_list_item, store |
+| GET `/api/v1/budget/accrued-groceries` | `getAccruedGroceries` | Presupuesto | N-083 | category, credit_purchase, credit_purchase_share, expense, expense_share |
+| GET `/api/v1/budget/alerts` | `getBudgetAlerts` | Presupuesto | N-084 | budget, category, credit_purchase, expense, expense_share, period |
+| GET `/api/v1/budget/categories` | `getBudgetByCategory` | Presupuesto | N-081, N-027 | budget, category, credit_purchase, expense, expense_share, period |
+| GET `/api/v1/budget/fortnights` | `getBudgetFortnights` | Presupuesto | N-082 | budget, category, credit_purchase, expense, expense_share, period, planned_item |
+| GET `/api/v1/budget/month` | `getBudgetMonth` | Presupuesto | N-080 | budget, category, credit_purchase, expense, expense_share, income, period, planned_item, savings_goal |
+| GET `/api/v1/budget/monthly-trend` | `getBudgetMonthlyTrend` | Presupuesto | N-085, N-028 | budget, category, credit_purchase, expense, expense_share, period |
+| GET `/api/v1/budgets` | `listBudgets` | Presupuesto | N-275 | budget, category |
+| POST `/api/v1/budgets` | `createBudget` | Presupuesto | N-087, N-278 | audit_log, budget, category, idempotency_key |
+| DELETE `/api/v1/budgets/{budget_id}` | `deleteBudget` | Presupuesto | N-278 | audit_log, budget |
+| PATCH `/api/v1/budgets/{budget_id}` | `updateBudget` | Presupuesto | N-087, N-278 | audit_log, budget |
+| GET `/api/v1/calendar/events` | `listCalendarEvents` | Inicio | N-029, N-086, N-104, N-115, N-192, N-208 | credit, credit_payment, credit_purchase, credit_statement, expense, income, job, planned_item, promotion, savings_goal, savings_movement, scheduled_payment, scheduled_payment_share, store |
+| GET `/api/v1/cash-flow/accrual-vs-cash` | `getAccrualVsCash` | Presupuesto | N-091, N-028 | credit, credit_payment, credit_purchase, credit_purchase_share, expense, expense_share, person, planned_item, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/cash-flow/assumptions` | `getCashFlowAssumptions` | Presupuesto | N-093 | expense, planned_item |
+| GET `/api/v1/cash-flow/fortnights` | `getCashFlowFortnights` | Presupuesto | N-090, N-027 | credit, credit_payment, credit_purchase, credit_purchase_share, expense, expense_share, income, person, planned_item, savings_goal, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/categories` | `listCategories` | Ajustes | N-050, N-051, N-281 | category, cost_share_rule, expense |
+| POST `/api/v1/categories` | `createCategory` | Ajustes | N-282 | audit_log, category, cost_share_rule, idempotency_key |
+| PUT `/api/v1/categories/order` | `reorderCategories` | Ajustes | N-282 | audit_log, category |
+| PATCH `/api/v1/categories/{category_id}` | `updateCategory` | Ajustes | N-282 | audit_log, category, cost_share_rule |
+| GET `/api/v1/cost-share-rules` | `listCostShareRules` | Ajustes | N-309, N-051, N-052, N-281 | cost_share_rule, cost_share_rule_part, person |
+| PATCH `/api/v1/cost-share-rules/{cost_share_rule_id}` | `updateCostShareRule` | Ajustes | N-310 | audit_log, cost_share_rule, cost_share_rule_part |
+| DELETE `/api/v1/credit-payments/{credit_payment_id}` | `deleteCreditPayment` | Créditos | N-210 | audit_log, credit_payment |
+| GET `/api/v1/credit-purchases` | `listCreditPurchases` | Créditos | N-202, N-215 | credit_payment, credit_purchase, credit_purchase_share, expense, promotion, scheduled_payment |
+| POST `/api/v1/credit-purchases` | `createCreditPurchase` | Créditos | N-218 | audit_log, credit, credit_purchase, credit_purchase_share, credit_term_rate, expense, expense_share, idempotency_key, person, promotion, scheduled_payment, scheduled_payment_share |
+| POST `/api/v1/credit-purchases/preview` | `previewCreditPurchase` | Créditos | N-216, N-217 | credit, credit_term_rate, person, promotion, scheduled_payment |
+| DELETE `/api/v1/credit-purchases/{credit_purchase_id}` | `deleteCreditPurchase` | Créditos | N-219 | audit_log, credit_payment, credit_purchase, credit_purchase_share, expense, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/credit-purchases/{credit_purchase_id}` | `getCreditPurchase` | Créditos | N-215 | credit_payment, credit_purchase, credit_purchase_share, expense, promotion, scheduled_payment, scheduled_payment_share |
+| PATCH `/api/v1/credit-purchases/{credit_purchase_id}` | `updateCreditPurchase` | Créditos | N-219 | audit_log, credit_purchase |
+| DELETE `/api/v1/credit-term-rates/{credit_term_rate_id}` | `deleteCreditTermRate` | Ajustes | N-289 | audit_log, credit_term_rate |
+| PATCH `/api/v1/credit-term-rates/{credit_term_rate_id}` | `updateCreditTermRate` | Ajustes | N-289 | audit_log, credit_term_rate |
+| GET `/api/v1/credits` | `listCredits` | Créditos | N-005, N-053, N-190, N-283 | credit, credit_payment, credit_purchase, credit_statement, credit_term_rate, scheduled_payment, scheduled_payment_share |
+| POST `/api/v1/credits` | `createCredit` | Ajustes | N-289 | audit_log, credit, idempotency_key, person |
+| GET `/api/v1/credits/debt-trend` | `getDebtTrend` | Créditos | N-194, N-209, N-028 | credit, credit_payment, credit_purchase, credit_statement, credit_term_rate, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/credits/totals` | `getCreditTotals` | Créditos | N-191 | credit, credit_payment, credit_purchase, credit_purchase_share, credit_statement, credit_term_rate, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/credits/{credit_id}` | `getCredit` | Créditos | N-200, N-201, N-193, N-284 | credit, credit_payment, credit_purchase, credit_statement, credit_term_rate, scheduled_payment, scheduled_payment_share |
+| PATCH `/api/v1/credits/{credit_id}` | `updateCredit` | Ajustes | N-289 | audit_log, credit |
+| GET `/api/v1/credits/{credit_id}/availability-preview` | `previewAvailability` | Créditos | N-285, N-201 | credit, credit_payment, credit_purchase, credit_statement, credit_term_rate, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/credits/{credit_id}/availability-series` | `getAvailabilitySeries` | Créditos | N-203, N-209 | credit, credit_payment, credit_purchase, credit_statement, credit_term_rate, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/credits/{credit_id}/card-status` | `getCardStatus` | Créditos | N-205 | credit, credit_payment, credit_purchase, credit_statement, credit_term_rate, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/credits/{credit_id}/term-rates` | `listCreditTermRates` | Créditos | N-204, N-286 | credit_term_rate |
+| POST `/api/v1/credits/{credit_id}/term-rates` | `createCreditTermRate` | Ajustes | N-289 | audit_log, credit_term_rate, idempotency_key |
+| GET `/api/v1/dashboard/best-basket` | `getDashboardBestBasket` | Inicio | N-024 | app_setting, expense, expense_item, inventory_item, meal_plan_entry, presentation, price, product, recipe_ingredient, shopping_list, shopping_list_item, store |
+| GET `/api/v1/dashboard/fortnight-flow` | `getDashboardFortnightFlow` | Inicio | N-021 | credit, credit_payment, credit_purchase, credit_purchase_share, expense, expense_share, income, person, planned_item, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/dashboard/month-vs-plan` | `getDashboardMonthVsPlan` | Inicio | N-020 | budget, category, credit_purchase, expense, expense_share, period |
+| GET `/api/v1/dashboard/next-payment` | `getDashboardNextPayment` | Inicio | N-022 | credit, credit_payment, credit_purchase, credit_purchase_share, person, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/dashboard/savings` | `getDashboardSavings` | Inicio | N-025 | savings_goal, savings_movement |
+| GET `/api/v1/dashboard/week-meals` | `getDashboardWeekMeals` | Inicio | N-023 | health_profile, meal_plan_entry, meal_slot, nutrition_fact, person, presentation, price, recipe, recipe_ingredient |
+| GET `/api/v1/debt/live` | `getLiveDebt` | Presupuesto | N-092 | credit, credit_purchase, scheduled_payment |
+| GET `/api/v1/expenses` | `listExpenses` | Gastos | N-040, N-063 | attachment, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, person, store |
+| POST `/api/v1/expenses` | `createExpense` | Gastos | N-054 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, idempotency_key, person, store |
+| GET `/api/v1/expenses/monthly-trend` | `getExpenseMonthlyTrend` | Gastos | N-044 | attachment, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, person, store |
+| GET `/api/v1/expenses/summary` | `getExpenseSummary` | Gastos | N-042 | attachment, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, person, store |
+| GET `/api/v1/expenses/totals` | `getExpenseTotals` | Gastos | N-041 | attachment, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, person, store |
+| DELETE `/api/v1/expenses/{expense_id}` | `deleteExpense` | Gastos | N-055, N-063 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, person, store |
+| GET `/api/v1/expenses/{expense_id}` | `getExpense` | Gastos | N-060 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, person, scheduled_payment, store |
+| PATCH `/api/v1/expenses/{expense_id}` | `updateExpense` | Gastos | N-047, N-062 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, person, store |
+| POST `/api/v1/expenses/{expense_id}/attachments` | `uploadExpenseAttachment` | Gastos | N-064 | attachment, audit_log, expense, idempotency_key |
+| POST `/api/v1/expenses/{expense_id}/duplicate` | `duplicateExpense` | Gastos | N-066 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, idempotency_key, person, store |
+| GET `/api/v1/expenses/{expense_id}/items` | `listExpenseItems` | Gastos | N-061 | cost_share_rule, cost_share_rule_part, expense_item, presentation, product |
+| POST `/api/v1/expenses/{expense_id}/mark-paid` | `markExpensePaid` | Gastos | N-065 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, idempotency_key, person, store |
+| GET `/api/v1/health-profiles` | `listHealthProfiles` | Salud | N-230, N-311 | health_profile, person, weight_entry |
+| POST `/api/v1/health-profiles` | `createHealthProfile` | Ajustes | N-313 | audit_log, health_profile, idempotency_key, person |
+| PATCH `/api/v1/health-profiles/{health_profile_id}` | `updateHealthProfile` | Ajustes | N-313 | audit_log, health_profile |
+| GET `/api/v1/health/today-kcal` | `getTodayKcal` | Salud | N-231 | health_profile, meal_plan_entry, nutrition_fact, recipe, recipe_ingredient |
+| POST `/api/v1/imports/planned-items` | `importPlannedItems` | Ajustes | N-304 | audit_log, category, cost_share_rule, credit, idempotency_key, person, planned_item |
+| POST `/api/v1/imports/planned-items/preview` | `previewPlannedItemsImport` | Ajustes | N-304 | category, cost_share_rule, credit, person, planned_item |
+| GET `/api/v1/incomes` | `listIncomes` | Presupuesto | N-100, N-105 | income, planned_item |
+| POST `/api/v1/incomes` | `createIncome` | Presupuesto | N-101, N-102 | audit_log, idempotency_key, income, person, planned_item |
+| GET `/api/v1/incomes/month` | `getIncomeMonth` | Presupuesto | N-100 | audit_log, income, period, planned_item |
+| GET `/api/v1/incomes/monthly-trend` | `getIncomeMonthlyTrend` | Presupuesto | N-103 | income, planned_item |
+| DELETE `/api/v1/incomes/{income_id}` | `deleteIncome` | Presupuesto | N-105 | audit_log, income |
+| PATCH `/api/v1/incomes/{income_id}` | `updateIncome` | Presupuesto | N-105 | audit_log, income |
+| GET `/api/v1/inventory-items` | `listInventoryItems` | Compras y tiendas | N-180, N-314 | inventory_item, meal_plan_entry, product, recipe, recipe_ingredient |
+| POST `/api/v1/inventory-items` | `createInventoryItem` | Compras y tiendas | N-184, N-315 | audit_log, idempotency_key, inventory_item, inventory_movement, product, recipe |
+| PATCH `/api/v1/inventory-items/{inventory_item_id}` | `updateInventoryItem` | Ajustes | N-315 | audit_log, inventory_item |
+| POST `/api/v1/inventory-items/{inventory_item_id}/adjustments` | `adjustInventoryItem` | Compras y tiendas | N-183 | audit_log, idempotency_key, inventory_item, inventory_movement |
+| GET `/api/v1/inventory-items/{inventory_item_id}/movements` | `listInventoryMovements` | Compras y tiendas | N-181 | expense_item, inventory_item, inventory_movement, meal_plan_entry |
+| GET `/api/v1/inventory/summary` | `getInventorySummary` | Compras y tiendas | N-182 | inventory_item, meal_plan_entry, product, recipe, recipe_ingredient |
+| GET `/api/v1/jobs` | `listJobs` | Reportes | N-246, N-302, N-296, N-291 | job, notification, notification_subscription |
+| PATCH `/api/v1/jobs/{job_id}` | `updateJob` | Ajustes | N-297 | audit_log, job |
+| POST `/api/v1/meal-plan-entries` | `createMealPlanEntries` | Comidas | N-123, N-124 | audit_log, idempotency_key, meal_plan_entry, meal_slot, person, recipe |
+| DELETE `/api/v1/meal-plan-entries/{meal_plan_entry_id}` | `deleteMealPlanEntry` | Comidas | N-125 | audit_log, meal_plan_entry |
+| PATCH `/api/v1/meal-plan-entries/{meal_plan_entry_id}` | `updateMealPlanEntry` | Comidas | N-123 | audit_log, meal_plan_entry |
+| POST `/api/v1/meal-plan/copy-previous-week` | `copyPreviousWeek` | Comidas | N-126 | audit_log, idempotency_key, meal_plan_entry |
+| GET `/api/v1/meal-plan/month` | `getMealPlanMonth` | Comidas | N-128 | meal_plan_entry, meal_slot |
+| GET `/api/v1/meal-plan/trends` | `getMealPlanTrends` | Comidas | N-129, N-028, N-233 | health_profile, inventory_item, meal_plan_entry, meal_slot, nutrition_fact, person, presentation, price, product, recipe, recipe_ingredient |
+| GET `/api/v1/meal-plan/week` | `getMealPlanWeek` | Comidas | N-120, N-121, N-027, N-231 | health_profile, inventory_item, meal_plan_entry, meal_slot, nutrition_fact, person, presentation, price, product, recipe, recipe_ingredient |
+| GET `/api/v1/meal-slots` | `listMealSlots` | Comidas | N-120, N-294 | meal_slot |
+| GET `/api/v1/monthly-report` | `getMonthlyReport` | Reportes | N-256, N-257 | budget, category, credit, credit_payment, credit_purchase, credit_purchase_share, expense, expense_share, generated_report, income, meal_plan_entry, period, person, planned_item, price, savings_goal, savings_movement, scheduled_payment, scheduled_payment_share, weight_entry |
+| GET `/api/v1/monthly-report/months` | `listMonthlyReportMonths` | Reportes | N-255 | expense, generated_report |
+| GET `/api/v1/notification-deliveries` | `listNotificationDeliveries` | Reportes | N-247, N-245 | notification, notification_delivery, notification_recipient |
+| GET `/api/v1/notification-recipients` | `listNotificationRecipients` | Ajustes | N-299 | notification_recipient, person |
+| POST `/api/v1/notification-recipients` | `createNotificationRecipient` | Ajustes | N-299 | audit_log, idempotency_key, notification_recipient, person |
+| PATCH `/api/v1/notification-recipients/{recipient_id}` | `updateNotificationRecipient` | Ajustes | N-299 | audit_log, notification_recipient |
+| GET `/api/v1/notifications` | `listNotifications` | Ajustes | N-296, N-298 | job, notification, notification_subscription |
+| PATCH `/api/v1/notifications/{notification_id}` | `updateNotification` | Ajustes | N-297, N-300 | audit_log, notification |
+| PUT `/api/v1/notifications/{notification_id}/recipients` | `setNotificationRecipients` | Ajustes | N-297, N-300 | audit_log, notification_recipient, notification_subscription |
+| POST `/api/v1/notifications/{notification_id}/test` | `sendTestNotification` | Ajustes | N-300 | notification, notification_delivery, notification_recipient |
+| POST `/api/v1/nutrition-facts/reload` | `reloadNutritionBase` | Ajustes | N-295 | idempotency_key, job, nutrition_fact, product |
+| GET `/api/v1/periods` | `listPeriods` | Presupuesto | N-080, N-082, N-100 | period |
+| GET `/api/v1/persons` | `listPersons` | Ajustes | N-309, N-040 | person, user_account |
+| PATCH `/api/v1/persons/{person_id}` | `updatePerson` | Ajustes | N-310, N-289 | audit_log, person |
+| GET `/api/v1/persons/{person_id}/participation` | `getPersonParticipation` | Inicio | N-026 | credit, credit_payment, credit_purchase, credit_purchase_share, expense, expense_share, person, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/persons/{person_id}/statement` | `getExternalStatement` | Reportes | N-260 | credit, credit_payment, credit_purchase, credit_purchase_share, expense, expense_share, person, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/planned-items` | `listPlannedItems` | Ajustes | N-276, N-277, N-279 | category, credit, planned_item |
+| POST `/api/v1/planned-items` | `createPlannedItem` | Ajustes | N-278, N-280 | audit_log, category, cost_share_rule, credit, idempotency_key, planned_item |
+| PATCH `/api/v1/planned-items/{planned_item_id}` | `updatePlannedItem` | Ajustes | N-278, N-280 | audit_log, planned_item |
+| PATCH `/api/v1/presentations/{presentation_id}` | `updatePresentation` | Compras y tiendas | N-175 | audit_log, presentation |
+| GET `/api/v1/price-sources` | `getPriceSources` | Ajustes | N-291 | app_setting, job, price, store |
+| POST `/api/v1/prices` | `createPrice` | Compras y tiendas | N-174 | audit_log, idempotency_key, presentation, price, store |
+| GET `/api/v1/prices/summary` | `getPriceSummary` | Compras y tiendas | N-172 | app_setting, presentation, price, product, store |
+| DELETE `/api/v1/prices/{price_id}` | `deletePrice` | Compras y tiendas | N-176 | audit_log, price |
+| PATCH `/api/v1/prices/{price_id}` | `updatePrice` | Compras y tiendas | N-176 | audit_log, price |
+| GET `/api/v1/product-groups` | `listProductGroups` | Compras y tiendas | N-290, N-150 | product_group |
+| GET `/api/v1/products` | `listProducts` | Compras y tiendas | N-170, N-072, N-314 | app_setting, presentation, price, product, product_group, store |
+| POST `/api/v1/products` | `createProduct` | Compras y tiendas | N-175 | audit_log, idempotency_key, presentation, product |
+| GET `/api/v1/products/{product_id}` | `getProduct` | Compras y tiendas | N-171, N-173 | app_setting, nutrition_fact, presentation, price, product, product_group, store |
+| PATCH `/api/v1/products/{product_id}` | `updateProduct` | Compras y tiendas | N-175 | audit_log, product |
+| GET `/api/v1/products/{product_id}/nutrition-facts` | `listNutritionFacts` | Compras y tiendas | N-173 | nutrition_fact |
+| POST `/api/v1/products/{product_id}/nutrition-facts` | `createNutritionFact` | Compras y tiendas | N-175 | audit_log, idempotency_key, nutrition_fact |
+| POST `/api/v1/products/{product_id}/presentations` | `createPresentation` | Compras y tiendas | N-175 | audit_log, idempotency_key, presentation |
+| GET `/api/v1/products/{product_id}/prices` | `listProductPrices` | Compras y tiendas | N-171 | app_setting, presentation, price, store |
+| POST `/api/v1/profeco-imports` | `importProfeco` | Ajustes | N-293 | audit_log, idempotency_key, job, presentation, price, product, store |
+| GET `/api/v1/promotions` | `listPromotions` | Créditos | N-217, N-287 | credit, promotion, store |
+| POST `/api/v1/promotions` | `createPromotion` | Ajustes | N-289 | audit_log, idempotency_key, promotion |
+| DELETE `/api/v1/promotions/{promotion_id}` | `deletePromotion` | Ajustes | N-289 | audit_log, promotion |
+| PATCH `/api/v1/promotions/{promotion_id}` | `updatePromotion` | Ajustes | N-289 | audit_log, promotion |
+| GET `/api/v1/recipes` | `listRecipes` | Comidas | N-122, N-135 | meal_plan_entry, meal_slot, nutrition_fact, presentation, price, recipe, recipe_ingredient, recipe_meal_slot |
+| POST `/api/v1/recipes` | `createRecipe` | Comidas | N-136 | audit_log, idempotency_key, meal_slot, presentation, product, recipe, recipe_ingredient, recipe_meal_slot |
+| POST `/api/v1/recipes/ai-suggestions` | `suggestRecipeWithAi` | Comidas | N-137 | app_setting, meal_slot, presentation, product |
+| DELETE `/api/v1/recipes/{recipe_id}` | `deleteRecipe` | Comidas | N-144 | audit_log, meal_plan_entry, recipe, recipe_ingredient, recipe_meal_slot |
+| GET `/api/v1/recipes/{recipe_id}` | `getRecipe` | Comidas | N-140 | nutrition_fact, presentation, price, product, recipe, recipe_ingredient, recipe_meal_slot |
+| PATCH `/api/v1/recipes/{recipe_id}` | `updateRecipe` | Comidas | N-142 | audit_log, meal_slot, recipe, recipe_ingredient, recipe_meal_slot |
+| POST `/api/v1/recipes/{recipe_id}/duplicate` | `duplicateRecipe` | Comidas | N-143 | audit_log, idempotency_key, recipe, recipe_ingredient, recipe_meal_slot |
+| GET `/api/v1/recipes/{recipe_id}/usage` | `getRecipeUsage` | Comidas | N-141 | meal_plan_entry |
+| GET `/api/v1/reports` | `listReports` | Reportes | N-245, N-257, N-262 | generated_report, notification, notification_delivery |
+| POST `/api/v1/reports/external-statements` | `generateExternalStatement` | Reportes | N-261 | audit_log, credit, credit_payment, credit_purchase, credit_purchase_share, generated_report, idempotency_key, person, scheduled_payment, scheduled_payment_share |
+| POST `/api/v1/reports/monthly` | `generateMonthlyReport` | Reportes | N-248 | audit_log, budget, category, credit_purchase, expense, expense_share, generated_report, idempotency_key, job, notification, notification_delivery, notification_recipient, notification_subscription, period |
+| GET `/api/v1/reports/{report_id}/file` | `downloadReportFile` | Reportes | N-249 | generated_report |
+| POST `/api/v1/reports/{report_id}/send` | `sendReport` | Reportes | N-250 | generated_report, idempotency_key, notification_delivery, notification_recipient, notification_subscription |
+| GET `/api/v1/savings-goals` | `listSavingsGoals` | Presupuesto | N-111, N-312, N-027 | savings_goal, savings_movement |
+| POST `/api/v1/savings-goals` | `createSavingsGoal` | Ajustes | N-313 | audit_log, idempotency_key, savings_goal |
+| PATCH `/api/v1/savings-goals/{savings_goal_id}` | `updateSavingsGoal` | Ajustes | N-313 | audit_log, savings_goal |
+| GET `/api/v1/savings-movements` | `listSavingsMovements` | Presupuesto | N-112, N-116 | savings_goal, savings_movement |
+| POST `/api/v1/savings-movements` | `createSavingsMovement` | Presupuesto | N-113 | audit_log, idempotency_key, savings_goal, savings_movement |
+| DELETE `/api/v1/savings-movements/{savings_movement_id}` | `deleteSavingsMovement` | Presupuesto | N-116 | audit_log, savings_movement |
+| PATCH `/api/v1/savings-movements/{savings_movement_id}` | `updateSavingsMovement` | Presupuesto | N-116 | audit_log, savings_movement |
+| GET `/api/v1/savings/monthly-trend` | `getSavingsMonthlyTrend` | Presupuesto | N-114 | savings_goal, savings_movement |
+| GET `/api/v1/savings/summary` | `getSavingsSummary` | Presupuesto | N-110 | savings_goal, savings_movement |
+| POST `/api/v1/scenario-comparisons` | `compareScenarios` | Créditos | N-226 | app_setting, credit, credit_purchase, credit_term_rate, person, price, promotion, scheduled_payment, scheduled_payment_share, store |
+| GET `/api/v1/scheduled-payments` | `listScheduledPayments` | Créditos | N-192, N-206, N-207, N-215, N-260 | credit, credit_payment, credit_purchase, credit_purchase_share, person, scheduled_payment, scheduled_payment_share |
+| POST `/api/v1/scheduled-payments/{scheduled_payment_id}/payments` | `markScheduledPaymentPaid` | Créditos | N-210 | audit_log, credit, credit_payment, idempotency_key, person, scheduled_payment, scheduled_payment_share |
+| GET `/api/v1/search` | `search` | Inicio | N-002, N-072 | category, credit, credit_purchase, expense, income, presentation, product, recipe, recipe_ingredient, savings_goal, store |
+| GET `/api/v1/sessions` | `listSessions` | Ajustes | N-271 | device_session, user_account |
+| POST `/api/v1/sessions/revoke` | `revokeSessions` | Ajustes | N-272 | audit_log, device_session |
+| DELETE `/api/v1/sessions/{session_id}` | `revokeSession` | Ajustes | N-272 | audit_log, device_session |
+| GET `/api/v1/settings/optimizer` | `getOptimizerSettings` | Ajustes | N-225, N-288 | app_setting, person |
+| PATCH `/api/v1/settings/optimizer` | `updateOptimizerSettings` | Ajustes | N-289 | app_setting, audit_log |
+| GET `/api/v1/settings/prices` | `getPriceSettings` | Ajustes | N-291 | app_setting |
+| PATCH `/api/v1/settings/prices` | `updatePriceSettings` | Ajustes | N-292 | app_setting, audit_log |
+| GET `/api/v1/settings/recipes` | `getRecipeSettings` | Ajustes | N-294 | meal_slot, nutrition_fact, recipe |
+| GET `/api/v1/shopping-list` | `getShoppingList` | Compras y tiendas | N-150, N-073 | inventory_item, meal_plan_entry, presentation, price, product, product_group, recipe_ingredient, shopping_list, shopping_list_item, store, store_product_group |
+| POST `/api/v1/shopping-list/assign-store` | `assignShoppingListStore` | Compras y tiendas | N-165 | audit_log, idempotency_key, presentation, price, shopping_list, shopping_list_item, store |
+| POST `/api/v1/shopping-list/generate` | `generateShoppingList` | Compras y tiendas | N-127 | audit_log, idempotency_key, inventory_item, meal_plan_entry, presentation, price, product, product_group, recipe_ingredient, shopping_list, shopping_list_item, store, store_product_group |
+| POST `/api/v1/shopping-list/items` | `createShoppingListItem` | Compras y tiendas | N-152 | audit_log, idempotency_key, presentation, product, shopping_list, shopping_list_item, store |
+| PATCH `/api/v1/shopping-list/items/{shopping_list_item_id}` | `updateShoppingListItem` | Compras y tiendas | N-151, N-153 | audit_log, presentation, shopping_list, shopping_list_item, store |
+| GET `/api/v1/stores` | `listStores` | Compras y tiendas | N-290 | product_group, store, store_product_group |
+| POST `/api/v1/stores` | `createStore` | Ajustes | N-292 | audit_log, idempotency_key, store |
+| PATCH `/api/v1/stores/{store_id}` | `updateStore` | Ajustes | N-292 | audit_log, store |
+| PUT `/api/v1/stores/{store_id}/product-groups` | `setStoreProductGroups` | Ajustes | N-292 | audit_log, product_group, store_product_group |
+| GET `/api/v1/system/ca-certificate` | `getCaCertificate` | Ajustes | N-274 | — (archivo, no base) |
+| GET `/api/v1/system/seed-status` | `getSeedStatus` | Ajustes | N-305 | audit_log, credit_purchase, expense, expense_item, planned_item |
+| GET `/api/v1/system/status` | `getSystemStatus` | Ajustes | N-308 | — (archivo, no base) |
+| GET `/api/v1/ticket-scans` | `listTicketScans` | Gastos | N-076 | attachment, store |
+| POST `/api/v1/ticket-scans` | `createTicketScan` | Gastos | N-070, N-075 | attachment, idempotency_key, job |
+| GET `/api/v1/ticket-scans/{attachment_id}` | `getTicketScan` | Gastos | N-071 | attachment, category, cost_share_rule, expense_item, presentation, price, product, store |
+| POST `/api/v1/ticket-scans/{attachment_id}/confirm` | `confirmTicketScan` | Gastos | N-074 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, credit_purchase_share, credit_term_rate, expense, expense_item, expense_share, idempotency_key, inventory_item, inventory_movement, person, presentation, price, promotion, scheduled_payment, scheduled_payment_share, store |
+| GET `/api/v1/users` | `listUsers` | Ajustes | N-270 | device_session, person, user_account |
+| GET `/api/v1/views/{entity}` | `queryView` | Inicio | N-043, N-045, N-046, N-111, N-128, N-135, N-170, N-171, N-180, N-202, N-247, N-281, N-287, N-290 | attachment, backup, category, credit, credit_purchase, credit_term_rate, device_session, expense, expense_share, income, inventory_item, job, meal_plan_entry, notification_delivery, person, price, product, promotion, recipe, recipe_meal_slot, savings_goal, savings_movement, scheduled_payment, store, user_account, weight_entry |
+| GET `/api/v1/weight-entries` | `listWeightEntries` | Salud | N-232, N-241 | health_profile, person, weight_entry |
+| POST `/api/v1/weight-entries` | `createWeightEntry` | Salud | N-240 | audit_log, idempotency_key, person, weight_entry |
+| DELETE `/api/v1/weight-entries/{weight_entry_id}` | `deleteWeightEntry` | Salud | N-242 | audit_log, weight_entry |
+| PATCH `/api/v1/weight-entries/{weight_entry_id}` | `updateWeightEntry` | Salud | N-242 | audit_log, weight_entry |
+| GET `/health` | `getHealth` | Inicio | N-004 | — (archivo, no base) |
+| GET `/openapi.yaml` | `getOpenApiDocument` | Ajustes | — | — (archivo, no base) |
+
+## 13. PROVISIONAL y bloqueos
+
+| Tema | Qué queda PROVISIONAL en C1 | Bloqueo |
+|---|---|---|
+| Filtro familia | valores `household`/`external`/`joint` y semántica incluyente | `C1-filtro-familia` (C1) |
+| Lista de compras | que las marcas de comprado, los artículos a mano y la tienda o cantidad elegidas se guarden en el servidor y se compartan entre los dos teléfonos (opción A): `getShoppingList` (N-150, N-073), `generateShoppingList` (N-127), `createShoppingListItem` (N-152), `updateShoppingListItem` (N-151, N-153) y `assignShoppingListStore` (N-165). Si Axel elige B o C en la puerta 1, esas operaciones cambian o salen | `C1-lista-compras` (C1), igual a `S1-lista-compras` |
+| Huecos U1 ↔ S1 que siguen abiertos | qué vigencia escribe un cambio de presupuesto (solo ese mes, o ese y los siguientes; N-087, N-278), si «Guardar para después» guarda las correcciones del OCR (N-075) y cómo se registra el chat con el bot (N-299). Los otros cuatro huecos y la idempotencia ya los resolvió el esquema 1.1 de S1 (§14) | `C1-huecos-u1-s1` (C1), igual a `S1-huecos-negocio` |
+| Parámetros técnicos | `limit` máximo 200, retención de `Idempotency-Key` (24 h; la tabla ya existe), `SameSite=Strict`, contraseña mínima, tamaño máximo de la carga de PROFECO | `C1-parametros-tecnicos` (C1) |
+| Campos calculados de motores | clasificación del IMC, precio por unidad base, punto de equilibrio de la membresía, rendimiento por peso y puntaje del comparador | `C1-campos-calculados` (C1) |
+| Inicio de sesión y sesión | conteo por usuario e IP, ventana deslizante, duración 90 días renovable | `criterios-login-bloqueo` (existente) |
+| Quincena y semana | Q1 1–15, Q2 16–fin; semana lunes a domingo | `U1-periodos-semana-quincena` (existente) |
+| Adjuntos y tiempos | tamaño máximo 10 MB de adjuntos; hora de resúmenes y anticipación de alertas; tiempo máximo del comparador | `criterios-umbrales-ausentes` (existente) |
+| Frescura | frontera ≥ 30 días y peso de precio viejo | `criterios-frescura-peso`, `S1-frescura-peso` (existentes) |
+| Promedios y variable estimado | definición de promedios y del gasto variable estimado | `criterios-promedios` (existente) |
+| Comparador | restricciones sin valor; normalización, rendimiento por peso, puntaje | `S1-restricciones-optimizador`, `criterios-optimizador` (existentes) |
+| Pago por parte | capital que repone la parte de Karen pagada por separado | `S1-reposicion-parte-externa` (existente) |
+| Meta de kcal | escala de actividad | `S1-meta-kcal` (existente) |
+| Meses sin cifra canon | marca de los meses fuera de P1–P6 | `criterios-proyeccion-12m` (existente) |
+
+## 14. Inconsistencias S1 ↔ U1 encontradas (sin tocar sus archivos)
+
+En C1 v1.0 (WF-0) C1 tomó en cada caso la lectura más conservadora y la marcó PROVISIONAL, y pidió las correcciones a S1 en `docs/estado/wf0/S6a-contrato-c1.md`. El esquema 1.1 de S1 dio dónde guardar siete de los diez puntos: cinco quedan resueltos, y la lista de compras y la vigencia que escribe un cambio de presupuesto esperan a Axel. La corrección r2 regeneró C1 contra ese esquema. La columna «Estado» dice qué queda abierto.
+
+| # | Dónde | S1 1.1 dice | U1 dice | Cómo lo cubre C1 | Estado |
+|---|---|---|---|---|---|
+| 1 | Descripción del gasto | `expense.description` admite NULL (C-16) | N-054: descripción o comercio opcional; F-1 (3 toques) no la pide | Opcional en `ExpenseCreate`; si falta, el gasto queda sin descripción y la pantalla muestra la categoría. La API no inventa un texto de relleno | Resuelto en S1 1.1 |
+| 2 | Lista de compras | `shopping_list` y `shopping_list_item`, opción A marcada PROVISIONAL | N-150 a N-153 y N-165: marcas de comprado, artículos a mano, tienda y cantidad por artículo; N-127 generar; N-073 terminar compra | `getShoppingList`, `generateShoppingList`, `createShoppingListItem`, `updateShoppingListItem` y `assignShoppingListStore` | PROVISIONAL hasta la puerta 1: `C1-lista-compras` (la misma pregunta de `S1-lista-compras`) |
+| 3 | Inventario | `inventory_movement` con tipo (`kind`) y motivo del ajuste (`reason`) | N-181 movimientos con tipo y origen; N-183 ajuste con motivo | `listInventoryMovements` lee la tabla; `adjustInventoryItem`, `createInventoryItem` y `confirmTicketScan` escriben su movimiento en la misma transacción | Resuelto en S1 1.1 |
+| 4 | Ticket por confirmar | solo `attachment.ocr_text` y `ocr_status` | N-075 «Guardar para después» | La lectura queda guardada al crearse; las correcciones a medias no se guardan | Abierto: `C1-huecos-u1-s1` (= `S1-huecos-negocio`, punto 2) |
+| 5 | Presupuesto | `budget` con vigencia `valid_from_date`/`valid_to_date`; los renglones de una categoría no se traslapan (invariante 7) | P-26.02 y N-087: monto mensual por categoría | Renglones con vigencia en `Budget`; un traslape responde 409 `budget_overlap` | Esquema resuelto. Qué vigencia escribe un cambio (solo ese mes, o ese y los siguientes) sigue abierto: `C1-huecos-u1-s1` (= `S1-huecos-negocio`, punto 1) |
+| 6 | Tiempos de una receta | `recipe_meal_slot` (varios por receta) | N-122, N-135, N-136: «tiempos aptos» | `meal_slot_ids` en `Recipe`, `RecipeCreate` y `RecipeUpdate`; filtro `meal_slot_id` de `listRecipes` | Resuelto en S1 1.1 |
+| 7 | Ingreso esperado | `planned_item.second_half_amount_cents` (monto del 30 si difiere del 15) | N-279: el 15 y el 30 pueden diferir | Una partida quincenal con sus dos montos en `PlannedItem` | Resuelto en S1 1.1 |
+| 8 | Filtro familia | partes del titular y de personas externas | §0.2 «Hogar o Karen»; N-040 «Hogar, Karen, Conjunto» | `family` = household, external o joint, semántica incluyente | Abierto: `C1-filtro-familia` |
+| 9 | Registro del chat | `notification_recipient.chat_id` NOT NULL | N-299: instrucciones para registrarlo en el bot (S7) | Alta manual con `chat_id` solo de entrada; el mecanismo del bot no está definido | Abierto: `C1-huecos-u1-s1` (= `S1-huecos-negocio`, punto 3) |
+| 10 | Idempotencia | tabla `idempotency_key` (C-15) | — (la pide C1 §1 punto 8) | Encabezado obligatorio en los POST de captura, tabla declarada en su `x-tablas` | Resuelto en S1 1.1; la retención de 24 h sigue PROVISIONAL en `C1-parametros-tecnicos` |

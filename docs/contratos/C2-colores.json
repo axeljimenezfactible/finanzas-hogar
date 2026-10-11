@@ -1,0 +1,2259 @@
+{
+  "color": {
+    "$description": "Parte de color del contrato C2 (U2a, WF-0). Generado por docs/design/tools/colorimetria.py.",
+    "base": {
+      "white": {
+        "$type": "color",
+        "$value": "#FFFFFF",
+        "$description": "Blanco puro (texto sobre marca 700 y error 700 en claro)",
+        "$extensions": {
+          "oklch": {
+            "l": 1.0,
+            "c": 0.0,
+            "h": 0.0
+          }
+        }
+      }
+    },
+    "brand": {
+      "$description": "Marca · matiz 280° · croma máx. 0.11 · L fija por paso",
+      "50": {
+        "$type": "color",
+        "$value": "#F9FAFF",
+        "$extensions": {
+          "oklch": {
+            "l": 0.985,
+            "c": 0.007136,
+            "h": 280.0
+          }
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#F0F1FF",
+        "$extensions": {
+          "oklch": {
+            "l": 0.962,
+            "c": 0.018245,
+            "h": 280.0
+          }
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#E1E4FF",
+        "$extensions": {
+          "oklch": {
+            "l": 0.925,
+            "c": 0.036551,
+            "h": 280.0
+          }
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#C9CFFF",
+        "$extensions": {
+          "oklch": {
+            "l": 0.865,
+            "c": 0.067413,
+            "h": 280.0
+          }
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#ADB3F4",
+        "$extensions": {
+          "oklch": {
+            "l": 0.785,
+            "c": 0.0935,
+            "h": 280.0
+          }
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#9095E0",
+        "$extensions": {
+          "oklch": {
+            "l": 0.695,
+            "c": 0.11,
+            "h": 280.0
+          }
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#7579C2",
+        "$extensions": {
+          "oklch": {
+            "l": 0.605,
+            "c": 0.11,
+            "h": 280.0
+          }
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#5D609F",
+        "$extensions": {
+          "oklch": {
+            "l": 0.515,
+            "c": 0.099,
+            "h": 280.0
+          }
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#46487B",
+        "$extensions": {
+          "oklch": {
+            "l": 0.425,
+            "c": 0.0825,
+            "h": 280.0
+          }
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#303258",
+        "$extensions": {
+          "oklch": {
+            "l": 0.335,
+            "c": 0.066,
+            "h": 280.0
+          }
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#1E203A",
+        "$extensions": {
+          "oklch": {
+            "l": 0.255,
+            "c": 0.0495,
+            "h": 280.0
+          }
+        }
+      }
+    },
+    "neutral": {
+      "$description": "Neutro tintado con la marca · matiz 280° · croma máx. 0.012",
+      "50": {
+        "$type": "color",
+        "$value": "#FAFAFB",
+        "$extensions": {
+          "oklch": {
+            "l": 0.985,
+            "c": 0.0012,
+            "h": 280.0
+          }
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#F2F2F4",
+        "$extensions": {
+          "oklch": {
+            "l": 0.962,
+            "c": 0.003,
+            "h": 280.0
+          }
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#E5E6E9",
+        "$extensions": {
+          "oklch": {
+            "l": 0.925,
+            "c": 0.0048,
+            "h": 280.0
+          }
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#D1D2D8",
+        "$extensions": {
+          "oklch": {
+            "l": 0.865,
+            "c": 0.0078,
+            "h": 280.0
+          }
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#B7B8C0",
+        "$extensions": {
+          "oklch": {
+            "l": 0.785,
+            "c": 0.0102,
+            "h": 280.0
+          }
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#9B9CA4",
+        "$extensions": {
+          "oklch": {
+            "l": 0.695,
+            "c": 0.012,
+            "h": 280.0
+          }
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#808189",
+        "$extensions": {
+          "oklch": {
+            "l": 0.605,
+            "c": 0.012,
+            "h": 280.0
+          }
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#66676E",
+        "$extensions": {
+          "oklch": {
+            "l": 0.515,
+            "c": 0.0108,
+            "h": 280.0
+          }
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#4D4E53",
+        "$extensions": {
+          "oklch": {
+            "l": 0.425,
+            "c": 0.009,
+            "h": 280.0
+          }
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#36363A",
+        "$extensions": {
+          "oklch": {
+            "l": 0.335,
+            "c": 0.0072,
+            "h": 280.0
+          }
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#222325",
+        "$extensions": {
+          "oklch": {
+            "l": 0.255,
+            "c": 0.0054,
+            "h": 280.0
+          }
+        }
+      }
+    },
+    "role": {
+      "$description": "Roles semánticos: light/dark = texto e icono por tema; surface-* = fondo de insignia",
+      "income": {
+        "$description": "Ingreso · matiz 135° · Propuesta U2a con la opción que prevé decisiones §I (135°): a 15° de éxito y a 5° del acento dividido 130°",
+        "light": {
+          "$type": "color",
+          "$value": "#457723",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 135.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#98CA7B",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 135.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#E9F8E1",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.035,
+              "h": 135.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#22400D",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 135.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#F6FCF3",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.014,
+              "h": 135.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#E9F8E1",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.035,
+              "h": 135.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#D7EFCA",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.056,
+              "h": 135.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#B9E1A4",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.091,
+              "h": 135.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#98CA7B",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 135.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#75B052",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.14,
+              "h": 135.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#5B9335",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.14,
+              "h": 135.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#457723",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 135.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#335A18",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.105,
+              "h": 135.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#22400D",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 135.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#142907",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.063,
+              "h": 135.0
+            }
+          }
+        }
+      },
+      "expense": {
+        "$description": "Gasto · matiz 25° · decisiones §I",
+        "light": {
+          "$type": "color",
+          "$value": "#A44541",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 25.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#FC9A92",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 25.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#FFEEEC",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.018695,
+              "h": 25.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#5A2220",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 25.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#FFF8F8",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.00724,
+              "h": 25.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#FFEEEC",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.018695,
+              "h": 25.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#FFDDDA",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.038089,
+              "h": 25.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#FFC1BB",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.072409,
+              "h": 25.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#FC9A92",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 25.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#E77770",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.14,
+              "h": 25.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#C85B56",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.14,
+              "h": 25.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#A44541",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 25.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#7E3330",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.105,
+              "h": 25.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#5A2220",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 25.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#3C1413",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.063,
+              "h": 25.0
+            }
+          }
+        }
+      },
+      "savings": {
+        "$description": "Ahorro · matiz 200° · decisiones §I",
+        "light": {
+          "$type": "color",
+          "$value": "#00767B",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.087553,
+              "h": 200.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#3FD0D7",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 200.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#D8FAFC",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.035,
+              "h": 200.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#003F42",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.056952,
+              "h": 200.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#F0FDFE",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.014,
+              "h": 200.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#D8FAFC",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.035,
+              "h": 200.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#BBF2F5",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.056,
+              "h": 200.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#85E5EA",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.091,
+              "h": 200.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#3FD0D7",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 200.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#00B2BA",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.118154,
+              "h": 200.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#00949A",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.102853,
+              "h": 200.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#00767B",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.087553,
+              "h": 200.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#005A5E",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.072252,
+              "h": 200.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#003F42",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.056952,
+              "h": 200.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#00292B",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.043351,
+              "h": 200.0
+            }
+          }
+        }
+      },
+      "debt": {
+        "$description": "Deuda / crédito · matiz 310° · decisiones §I",
+        "light": {
+          "$type": "color",
+          "$value": "#7E509D",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 310.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#D0A3F2",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 310.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#F7EEFF",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.024076,
+              "h": 310.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#442857",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 310.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#FCF8FF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.009411,
+              "h": 310.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#F7EEFF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.024076,
+              "h": 310.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#F0DEFF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.048281,
+              "h": 310.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#E5C3FF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.089202,
+              "h": 310.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#D0A3F2",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 310.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#B782DD",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.14,
+              "h": 310.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#9B67C0",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.14,
+              "h": 310.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#7E509D",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 310.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#603C79",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.105,
+              "h": 310.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#442857",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 310.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#2C1939",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.063,
+              "h": 310.0
+            }
+          }
+        }
+      },
+      "warning": {
+        "$description": "Advertencia · matiz 75° · decisiones §I",
+        "light": {
+          "$type": "color",
+          "$value": "#8B5D00",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.108645,
+              "h": 75.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#E5AE5B",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 75.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#FFF0DC",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.030581,
+              "h": 75.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#4C3000",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.070672,
+              "h": 75.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#FFF9F1",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.011918,
+              "h": 75.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#FFF0DC",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.030581,
+              "h": 75.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#FDE2BD",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.056,
+              "h": 75.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#F6CB8F",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.091,
+              "h": 75.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#E5AE5B",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 75.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#CF8E1B",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.14,
+              "h": 75.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#AD7500",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.127631,
+              "h": 75.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#8B5D00",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.108645,
+              "h": 75.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#6B4600",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.089658,
+              "h": 75.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#4C3000",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.070672,
+              "h": 75.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#321E00",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.053795,
+              "h": 75.0
+            }
+          }
+        }
+      },
+      "error": {
+        "$description": "Error · matiz 20° · decisiones §I (rojo)",
+        "light": {
+          "$type": "color",
+          "$value": "#A34449",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 20.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#FC9999",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 20.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#FFEEED",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.018693,
+              "h": 20.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#5A2124",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 20.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#FFF8F8",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.007238,
+              "h": 20.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#FFEEED",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.018693,
+              "h": 20.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#FFDDDC",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.038101,
+              "h": 20.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#FFC0BF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.072486,
+              "h": 20.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#FC9999",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 20.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#E77678",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.14,
+              "h": 20.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#C75A5E",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.14,
+              "h": 20.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#A34449",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 20.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#7E3236",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.105,
+              "h": 20.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#5A2124",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 20.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#3C1416",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.063,
+              "h": 20.0
+            }
+          }
+        }
+      },
+      "success": {
+        "$description": "Éxito · matiz 150° · decisiones §I (reasignado desde 280°)",
+        "light": {
+          "$type": "color",
+          "$value": "#207B3E",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 150.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#7ECF90",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 150.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#E3FAE6",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.035,
+              "h": 150.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#0A421E",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 150.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#F4FDF5",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.014,
+              "h": 150.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#E3FAE6",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.035,
+              "h": 150.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#CDF1D3",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.056,
+              "h": 150.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#A8E4B3",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.091,
+              "h": 150.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#7ECF90",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 150.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#53B56D",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.14,
+              "h": 150.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#339852",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.14,
+              "h": 150.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#207B3E",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.126,
+              "h": 150.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#155E2D",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.105,
+              "h": 150.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#0A421E",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.084,
+              "h": 150.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#052B11",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.063,
+              "h": 150.0
+            }
+          }
+        }
+      },
+      "info": {
+        "$description": "Información · matiz 240° · decisiones §I",
+        "light": {
+          "$type": "color",
+          "$value": "#006FA4",
+          "$description": "Paso 700 (texto/icono en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.117966,
+              "h": 240.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#6BC3FD",
+          "$description": "Paso 400 (texto/icono en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 240.0
+            }
+          }
+        },
+        "surface-light": {
+          "$type": "color",
+          "$value": "#E7F5FF",
+          "$description": "Paso 100 (fondo de insignia en claro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.020158,
+              "h": 240.0
+            }
+          }
+        },
+        "surface-dark": {
+          "$type": "color",
+          "$value": "#003B5A",
+          "$description": "Paso 900 (fondo de insignia en oscuro)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.076735,
+              "h": 240.0
+            }
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": "#F6FBFF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.985,
+              "c": 0.007889,
+              "h": 240.0
+            }
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#E7F5FF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.962,
+              "c": 0.020158,
+              "h": 240.0
+            }
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#CFEBFF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.925,
+              "c": 0.040341,
+              "h": 240.0
+            }
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#A6DAFF",
+          "$extensions": {
+            "oklch": {
+              "l": 0.865,
+              "c": 0.074271,
+              "h": 240.0
+            }
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#6BC3FD",
+          "$extensions": {
+            "oklch": {
+              "l": 0.785,
+              "c": 0.119,
+              "h": 240.0
+            }
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#35A7EA",
+          "$extensions": {
+            "oklch": {
+              "l": 0.695,
+              "c": 0.14,
+              "h": 240.0
+            }
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#008ACB",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.138582,
+              "h": 240.0
+            }
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#006FA4",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.117966,
+              "h": 240.0
+            }
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#00547E",
+          "$extensions": {
+            "oklch": {
+              "l": 0.425,
+              "c": 0.097351,
+              "h": 240.0
+            }
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#003B5A",
+          "$extensions": {
+            "oklch": {
+              "l": 0.335,
+              "c": 0.076735,
+              "h": 240.0
+            }
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#00263C",
+          "$extensions": {
+            "oklch": {
+              "l": 0.255,
+              "c": 0.05841,
+              "h": 240.0
+            }
+          }
+        }
+      }
+    },
+    "critical": {
+      "$description": "Acción crítica · matiz 100° · decisiones §I: eje opuesto reservado para confirmar acciones críticas",
+      "light": {
+        "$type": "color",
+        "$value": "#766800",
+        "$description": "Paso 700 (texto/icono en claro)",
+        "$extensions": {
+          "oklch": {
+            "l": 0.515,
+            "c": 0.107068,
+            "h": 100.0
+          }
+        }
+      },
+      "dark": {
+        "$type": "color",
+        "$value": "#CBBB5A",
+        "$description": "Paso 400 (texto/icono en oscuro)",
+        "$extensions": {
+          "oklch": {
+            "l": 0.785,
+            "c": 0.119,
+            "h": 100.0
+          }
+        }
+      },
+      "surface-light": {
+        "$type": "color",
+        "$value": "#F8F4D9",
+        "$description": "Paso 100 (fondo de insignia en claro)",
+        "$extensions": {
+          "oklch": {
+            "l": 0.962,
+            "c": 0.035,
+            "h": 100.0
+          }
+        }
+      },
+      "surface-dark": {
+        "$type": "color",
+        "$value": "#3F3700",
+        "$description": "Paso 900 (fondo de insignia en oscuro)",
+        "$extensions": {
+          "oklch": {
+            "l": 0.335,
+            "c": 0.069646,
+            "h": 100.0
+          }
+        }
+      },
+      "50": {
+        "$type": "color",
+        "$value": "#FCFBF0",
+        "$extensions": {
+          "oklch": {
+            "l": 0.985,
+            "c": 0.014,
+            "h": 100.0
+          }
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#F8F4D9",
+        "$extensions": {
+          "oklch": {
+            "l": 0.962,
+            "c": 0.035,
+            "h": 100.0
+          }
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#EEE8BD",
+        "$extensions": {
+          "oklch": {
+            "l": 0.925,
+            "c": 0.056,
+            "h": 100.0
+          }
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#E0D58E",
+        "$extensions": {
+          "oklch": {
+            "l": 0.865,
+            "c": 0.091,
+            "h": 100.0
+          }
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#CBBB5A",
+        "$extensions": {
+          "oklch": {
+            "l": 0.785,
+            "c": 0.119,
+            "h": 100.0
+          }
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#B29E15",
+        "$extensions": {
+          "oklch": {
+            "l": 0.695,
+            "c": 0.14,
+            "h": 100.0
+          }
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#948200",
+        "$extensions": {
+          "oklch": {
+            "l": 0.605,
+            "c": 0.125779,
+            "h": 100.0
+          }
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#766800",
+        "$extensions": {
+          "oklch": {
+            "l": 0.515,
+            "c": 0.107068,
+            "h": 100.0
+          }
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#5A4F00",
+        "$extensions": {
+          "oklch": {
+            "l": 0.425,
+            "c": 0.088357,
+            "h": 100.0
+          }
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#3F3700",
+        "$extensions": {
+          "oklch": {
+            "l": 0.335,
+            "c": 0.069646,
+            "h": 100.0
+          }
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#292300",
+        "$extensions": {
+          "oklch": {
+            "l": 0.255,
+            "c": 0.053014,
+            "h": 100.0
+          }
+        }
+      }
+    },
+    "person": {
+      "$description": "Personas · paleta categórica con L escalonada por tema",
+      "axel": {
+        "$description": "Axel · matiz 256°",
+        "light": {
+          "$type": "color",
+          "$value": "#002E64",
+          "$description": "Axel en claro (L 0.310)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.31,
+              "c": 0.105844,
+              "h": 256.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#4F83C8",
+          "$description": "Axel en oscuro (L 0.605)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.605,
+              "c": 0.12,
+              "h": 256.0
+            }
+          }
+        }
+      },
+      "ximena": {
+        "$description": "Ximena · matiz 350°",
+        "light": {
+          "$type": "color",
+          "$value": "#A14E78",
+          "$description": "Ximena en claro (L 0.540)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.54,
+              "c": 0.12,
+              "h": 350.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#FFACD3",
+          "$description": "Ximena en oscuro (L 0.835)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.835,
+              "c": 0.108508,
+              "h": 350.0
+            }
+          }
+        }
+      },
+      "karen": {
+        "$description": "Karen · matiz 50°",
+        "light": {
+          "$type": "color",
+          "$value": "#C67544",
+          "$description": "Karen en claro (L 0.640)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.64,
+              "c": 0.12,
+              "h": 50.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#E28F5E",
+          "$description": "Karen en oscuro (L 0.725)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.725,
+              "c": 0.12,
+              "h": 50.0
+            }
+          }
+        }
+      },
+      "shared": {
+        "$description": "Conjunto · matiz 280°",
+        "light": {
+          "$type": "color",
+          "$value": "#484B66",
+          "$description": "Conjunto en claro (L 0.420)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.42,
+              "c": 0.045,
+              "h": 280.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#E7EAFF",
+          "$description": "Conjunto en oscuro (L 0.940)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.94,
+              "c": 0.029064,
+              "h": 280.0
+            }
+          }
+        }
+      }
+    },
+    "store": {
+      "$description": "Tiendas · paleta categórica con L escalonada por tema",
+      "walmart": {
+        "$description": "Walmart · matiz 262°",
+        "light": {
+          "$type": "color",
+          "$value": "#4065AC",
+          "$description": "Walmart en claro (L 0.515)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.515,
+              "c": 0.12,
+              "h": 262.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#7BA4F0",
+          "$description": "Walmart en oscuro (L 0.720)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.72,
+              "c": 0.12,
+              "h": 262.0
+            }
+          }
+        }
+      },
+      "bodega-aurrera": {
+        "$description": "Bodega Aurrera · matiz 50°",
+        "light": {
+          "$type": "color",
+          "$value": "#773400",
+          "$description": "Bodega Aurrera en claro (L 0.410)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.41,
+              "c": 0.108391,
+              "h": 50.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#FFB389",
+          "$description": "Bodega Aurrera en oscuro (L 0.830)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.83,
+              "c": 0.104938,
+              "h": 50.0
+            }
+          }
+        }
+      },
+      "sams-club": {
+        "$description": "Sam's Club · matiz 175°",
+        "light": {
+          "$type": "color",
+          "$value": "#009D82",
+          "$description": "Sam's Club en claro (L 0.620)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.62,
+              "c": 0.116902,
+              "h": 175.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#99FFE4",
+          "$description": "Sam's Club en oscuro (L 0.930)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.93,
+              "c": 0.103566,
+              "h": 175.0
+            }
+          }
+        }
+      },
+      "market": {
+        "$description": "Mercado · matiz 28°",
+        "light": {
+          "$type": "color",
+          "$value": "#5C0204",
+          "$description": "Mercado en claro (L 0.300)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.3,
+              "c": 0.12,
+              "h": 28.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#C2665B",
+          "$description": "Mercado en oscuro (L 0.615)",
+          "$extensions": {
+            "oklch": {
+              "l": 0.615,
+              "c": 0.12,
+              "h": 28.0
+            }
+          }
+        }
+      }
+    },
+    "chart": {
+      "$description": "Series de gráficas en orden fijo de uso (1 a 8); variante por tema",
+      "1": {
+        "$description": "Serie 1 · índigo · matiz 280° · clase B",
+        "light": {
+          "$type": "color",
+          "$value": "#474698",
+          "$description": "Serie 1 (índigo) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.44,
+              "c": 0.13,
+              "h": 280.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#797DCD",
+          "$description": "Serie 1 (índigo) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.62,
+              "c": 0.12,
+              "h": 280.0
+            }
+          }
+        }
+      },
+      "2": {
+        "$description": "Serie 2 · verde azulado · matiz 180° · clase A",
+        "light": {
+          "$type": "color",
+          "$value": "#009A87",
+          "$description": "Serie 2 (verde azulado) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.615,
+              "c": 0.111579,
+              "h": 180.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#61E4CD",
+          "$description": "Serie 2 (verde azulado) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.84,
+              "c": 0.12,
+              "h": 180.0
+            }
+          }
+        }
+      },
+      "3": {
+        "$description": "Serie 3 · óxido · matiz 45° · clase B",
+        "light": {
+          "$type": "color",
+          "$value": "#883500",
+          "$description": "Serie 3 (óxido) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.44,
+              "c": 0.125796,
+              "h": 45.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#C16D45",
+          "$description": "Serie 3 (óxido) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.62,
+              "c": 0.12,
+              "h": 45.0
+            }
+          }
+        }
+      },
+      "4": {
+        "$description": "Serie 4 · naranja · matiz 55° · clase A",
+        "light": {
+          "$type": "color",
+          "$value": "#BF6D2C",
+          "$description": "Serie 4 (naranja) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.615,
+              "c": 0.13,
+              "h": 55.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#FFB989",
+          "$description": "Serie 4 (naranja) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.84,
+              "c": 0.102608,
+              "h": 55.0
+            }
+          }
+        }
+      },
+      "5": {
+        "$description": "Serie 5 · magenta · matiz 345° · clase B",
+        "light": {
+          "$type": "color",
+          "$value": "#812E63",
+          "$description": "Serie 5 (magenta) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.44,
+              "c": 0.13,
+              "h": 345.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#B86797",
+          "$description": "Serie 5 (magenta) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.62,
+              "c": 0.12,
+              "h": 345.0
+            }
+          }
+        }
+      },
+      "6": {
+        "$description": "Serie 6 · azul cielo · matiz 225° · clase A",
+        "light": {
+          "$type": "color",
+          "$value": "#0092B9",
+          "$description": "Serie 6 (azul cielo) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.615,
+              "c": 0.116522,
+              "h": 225.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#76D9FF",
+          "$description": "Serie 6 (azul cielo) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.84,
+              "c": 0.106925,
+              "h": 225.0
+            }
+          }
+        }
+      },
+      "7": {
+        "$description": "Serie 7 · violeta · matiz 310° · clase B",
+        "light": {
+          "$type": "color",
+          "$value": "#683987",
+          "$description": "Serie 7 (violeta) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.44,
+              "c": 0.13,
+              "h": 310.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#9C70BC",
+          "$description": "Serie 7 (violeta) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.62,
+              "c": 0.12,
+              "h": 310.0
+            }
+          }
+        }
+      },
+      "8": {
+        "$description": "Serie 8 · verde · matiz 140° · clase A",
+        "light": {
+          "$type": "color",
+          "$value": "#579749",
+          "$description": "Serie 8 (verde) en claro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.615,
+              "c": 0.13,
+              "h": 140.0
+            }
+          }
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#A0DE93",
+          "$description": "Serie 8 (verde) en oscuro",
+          "$extensions": {
+            "oklch": {
+              "l": 0.84,
+              "c": 0.12,
+              "h": 140.0
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,203 @@
+primer_plano,fondo,tema,uso,ratio,umbral,cumple,primer_plano_hex,fondo_hex
+color.neutral.900,color.neutral.50,claro,Texto normal sobre fondo,11.53,4.5,true,#36363A,#FAFAFB
+color.neutral.700,color.neutral.50,claro,Texto secundario sobre fondo,5.39,4.5,true,#66676E,#FAFAFB
+color.neutral.700,color.neutral.50,claro,Texto deshabilitado sobre fondo,5.39,4.5,true,#66676E,#FAFAFB
+color.neutral.900,color.neutral.100,claro,Texto normal sobre tarjeta,10.75,4.5,true,#36363A,#F2F2F4
+color.neutral.700,color.neutral.100,claro,Texto secundario sobre tarjeta,5.03,4.5,true,#66676E,#F2F2F4
+color.neutral.700,color.neutral.100,claro,Texto deshabilitado sobre tarjeta,5.03,4.5,true,#66676E,#F2F2F4
+color.neutral.700,color.neutral.100,claro,Texto de control deshabilitado sobre su relleno,5.03,4.5,true,#66676E,#F2F2F4
+color.neutral.700,color.neutral.50,claro,Marcador de posición (placeholder) dentro de campo,5.39,4.5,true,#66676E,#FAFAFB
+color.neutral.900,color.neutral.50,claro,Texto capturado dentro de campo,11.53,4.5,true,#36363A,#FAFAFB
+color.brand.700,color.neutral.50,claro,Enlace (reposo) sobre fondo,5.53,4.5,true,#5D609F,#FAFAFB
+color.brand.800,color.neutral.50,claro,Enlace (hover) sobre fondo,8.13,4.5,true,#46487B,#FAFAFB
+color.brand.700,color.neutral.100,claro,Enlace (reposo) sobre tarjeta,5.16,4.5,true,#5D609F,#F2F2F4
+color.brand.800,color.neutral.100,claro,Enlace (hover) sobre tarjeta,7.59,4.5,true,#46487B,#F2F2F4
+color.base.white,color.brand.700,claro,Botón primario (reposo): texto sobre relleno,5.77,4.5,true,#FFFFFF,#5D609F
+color.base.white,color.brand.800,claro,Botón primario (hover): texto sobre relleno,8.49,4.5,true,#FFFFFF,#46487B
+color.brand.700,color.neutral.50,claro,Botón primario (reposo): relleno contra fondo,5.53,3.0,true,#5D609F,#FAFAFB
+color.brand.800,color.neutral.50,claro,Botón primario (hover): relleno contra fondo,8.13,3.0,true,#46487B,#FAFAFB
+color.brand.700,color.neutral.100,claro,Botón primario (reposo): relleno contra tarjeta,5.16,3.0,true,#5D609F,#F2F2F4
+color.brand.800,color.neutral.100,claro,Botón primario (hover): relleno contra tarjeta,7.59,3.0,true,#46487B,#F2F2F4
+color.base.white,color.role.error.700,claro,Botón destructivo (reposo): texto sobre relleno,6.03,4.5,true,#FFFFFF,#A34449
+color.base.white,color.role.error.800,claro,Botón destructivo (hover): texto sobre relleno,8.76,4.5,true,#FFFFFF,#7E3236
+color.role.error.700,color.neutral.50,claro,Botón destructivo (reposo): relleno contra fondo,5.78,3.0,true,#A34449,#FAFAFB
+color.role.error.800,color.neutral.50,claro,Botón destructivo (hover): relleno contra fondo,8.40,3.0,true,#7E3236,#FAFAFB
+color.role.error.700,color.neutral.100,claro,Botón destructivo (reposo): relleno contra tarjeta,5.39,3.0,true,#A34449,#F2F2F4
+color.role.error.800,color.neutral.100,claro,Botón destructivo (hover): relleno contra tarjeta,7.83,3.0,true,#7E3236,#F2F2F4
+color.base.white,color.critical.700,claro,Botón de acción crítica (reposo): texto sobre relleno,5.59,4.5,true,#FFFFFF,#766800
+color.base.white,color.critical.800,claro,Botón de acción crítica (hover): texto sobre relleno,8.22,4.5,true,#FFFFFF,#5A4F00
+color.critical.700,color.neutral.50,claro,Botón de acción crítica (reposo): relleno contra fondo,5.36,3.0,true,#766800,#FAFAFB
+color.critical.800,color.neutral.50,claro,Botón de acción crítica (hover): relleno contra fondo,7.88,3.0,true,#5A4F00,#FAFAFB
+color.critical.700,color.neutral.100,claro,Botón de acción crítica (reposo): relleno contra tarjeta,5.00,3.0,true,#766800,#F2F2F4
+color.critical.800,color.neutral.100,claro,Botón de acción crítica (hover): relleno contra tarjeta,7.35,3.0,true,#5A4F00,#F2F2F4
+color.neutral.900,color.neutral.50,claro,Botón secundario (reposo): texto sobre fondo,11.53,4.5,true,#36363A,#FAFAFB
+color.neutral.600,color.neutral.50,claro,Botón secundario (reposo y hover): borde contra fondo,3.71,3.0,true,#808189,#FAFAFB
+color.neutral.900,color.neutral.100,claro,Botón secundario (reposo): texto sobre tarjeta,10.75,4.5,true,#36363A,#F2F2F4
+color.neutral.600,color.neutral.100,claro,Botón secundario (reposo y hover): borde contra tarjeta,3.46,3.0,true,#808189,#F2F2F4
+color.neutral.900,color.neutral.200,claro,Botón secundario (hover): texto sobre relleno de hover,9.63,4.5,true,#36363A,#E5E6E9
+color.neutral.600,color.neutral.50,claro,Borde de campo contra fondo,3.71,3.0,true,#808189,#FAFAFB
+color.brand.600,color.neutral.50,claro,Anillo de foco contra fondo,3.81,3.0,true,#7579C2,#FAFAFB
+color.neutral.600,color.neutral.100,claro,Borde de campo contra tarjeta,3.46,3.0,true,#808189,#F2F2F4
+color.brand.600,color.neutral.100,claro,Anillo de foco contra tarjeta,3.56,3.0,true,#7579C2,#F2F2F4
+color.neutral.900,color.brand.100,claro,Elemento activo / fila seleccionada: texto sobre superficie de marca,10.73,4.5,true,#36363A,#F0F1FF
+color.brand.700,color.brand.100,claro,Elemento activo: etiqueta e icono de marca sobre superficie de marca,5.14,4.5,true,#5D609F,#F0F1FF
+color.role.income.light,color.role.income.surface-light,claro,Insignia de ingreso: texto sobre su fondo,4.84,4.5,true,#457723,#E9F8E1
+color.role.income.light,color.neutral.50,claro,Cifra o texto de ingreso sobre fondo,5.14,4.5,true,#457723,#FAFAFB
+color.role.income.light,color.neutral.100,claro,Cifra o texto de ingreso sobre tarjeta,4.79,4.5,true,#457723,#F2F2F4
+color.role.expense.light,color.role.expense.surface-light,claro,Insignia de gasto: texto sobre su fondo,5.33,4.5,true,#A44541,#FFEEEC
+color.role.expense.light,color.neutral.50,claro,Cifra o texto de gasto sobre fondo,5.74,4.5,true,#A44541,#FAFAFB
+color.role.expense.light,color.neutral.100,claro,Cifra o texto de gasto sobre tarjeta,5.35,4.5,true,#A44541,#F2F2F4
+color.role.savings.light,color.role.savings.surface-light,claro,Insignia de ahorro: texto sobre su fondo,4.90,4.5,true,#00767B,#D8FAFC
+color.role.savings.light,color.neutral.50,claro,Cifra o texto de ahorro sobre fondo,5.19,4.5,true,#00767B,#FAFAFB
+color.role.savings.light,color.neutral.100,claro,Cifra o texto de ahorro sobre tarjeta,4.84,4.5,true,#00767B,#F2F2F4
+color.role.debt.light,color.role.debt.surface-light,claro,Insignia de deuda / crédito: texto sobre su fondo,5.29,4.5,true,#7E509D,#F7EEFF
+color.role.debt.light,color.neutral.50,claro,Cifra o texto de deuda / crédito sobre fondo,5.71,4.5,true,#7E509D,#FAFAFB
+color.role.debt.light,color.neutral.100,claro,Cifra o texto de deuda / crédito sobre tarjeta,5.33,4.5,true,#7E509D,#F2F2F4
+color.role.warning.light,color.role.warning.surface-light,claro,Insignia de advertencia: texto sobre su fondo,5.11,4.5,true,#8B5D00,#FFF0DC
+color.role.warning.light,color.neutral.50,claro,Cifra o texto de advertencia sobre fondo,5.49,4.5,true,#8B5D00,#FAFAFB
+color.role.warning.light,color.neutral.100,claro,Cifra o texto de advertencia sobre tarjeta,5.12,4.5,true,#8B5D00,#F2F2F4
+color.role.error.light,color.role.error.surface-light,claro,Insignia de error: texto sobre su fondo,5.37,4.5,true,#A34449,#FFEEED
+color.role.error.light,color.neutral.50,claro,Cifra o texto de error sobre fondo,5.78,4.5,true,#A34449,#FAFAFB
+color.role.error.light,color.neutral.100,claro,Cifra o texto de error sobre tarjeta,5.39,4.5,true,#A34449,#F2F2F4
+color.role.success.light,color.role.success.surface-light,claro,Insignia de éxito: texto sobre su fondo,4.81,4.5,true,#207B3E,#E3FAE6
+color.role.success.light,color.neutral.50,claro,Cifra o texto de éxito sobre fondo,5.07,4.5,true,#207B3E,#FAFAFB
+color.role.success.light,color.neutral.100,claro,Cifra o texto de éxito sobre tarjeta,4.73,4.5,true,#207B3E,#F2F2F4
+color.role.info.light,color.role.info.surface-light,claro,Insignia de información: texto sobre su fondo,4.96,4.5,true,#006FA4,#E7F5FF
+color.role.info.light,color.neutral.50,claro,Cifra o texto de información sobre fondo,5.28,4.5,true,#006FA4,#FAFAFB
+color.role.info.light,color.neutral.100,claro,Cifra o texto de información sobre tarjeta,4.93,4.5,true,#006FA4,#F2F2F4
+color.critical.light,color.critical.surface-light,claro,Insignia de acción crítica: texto sobre su fondo,5.04,4.5,true,#766800,#F8F4D9
+color.critical.light,color.neutral.50,claro,Cifra o texto de acción crítica sobre fondo,5.36,4.5,true,#766800,#FAFAFB
+color.critical.light,color.neutral.100,claro,Cifra o texto de acción crítica sobre tarjeta,5.00,4.5,true,#766800,#F2F2F4
+color.chart.1.light,color.neutral.50,claro,Serie 1 de gráfica contra fondo,7.75,3.0,true,#474698,#FAFAFB
+color.chart.1.light,color.neutral.100,claro,Serie 1 de gráfica contra tarjeta,7.23,3.0,true,#474698,#F2F2F4
+color.chart.2.light,color.neutral.50,claro,Serie 2 de gráfica contra fondo,3.37,3.0,true,#009A87,#FAFAFB
+color.chart.2.light,color.neutral.100,claro,Serie 2 de gráfica contra tarjeta,3.14,3.0,true,#009A87,#F2F2F4
+color.chart.3.light,color.neutral.50,claro,Serie 3 de gráfica contra fondo,7.87,3.0,true,#883500,#FAFAFB
+color.chart.3.light,color.neutral.100,claro,Serie 3 de gráfica contra tarjeta,7.34,3.0,true,#883500,#F2F2F4
+color.chart.4.light,color.neutral.50,claro,Serie 4 de gráfica contra fondo,3.70,3.0,true,#BF6D2C,#FAFAFB
+color.chart.4.light,color.neutral.100,claro,Serie 4 de gráfica contra tarjeta,3.45,3.0,true,#BF6D2C,#F2F2F4
+color.chart.5.light,color.neutral.50,claro,Serie 5 de gráfica contra fondo,8.03,3.0,true,#812E63,#FAFAFB
+color.chart.5.light,color.neutral.100,claro,Serie 5 de gráfica contra tarjeta,7.49,3.0,true,#812E63,#F2F2F4
+color.chart.6.light,color.neutral.50,claro,Serie 6 de gráfica contra fondo,3.46,3.0,true,#0092B9,#FAFAFB
+color.chart.6.light,color.neutral.100,claro,Serie 6 de gráfica contra tarjeta,3.23,3.0,true,#0092B9,#F2F2F4
+color.chart.7.light,color.neutral.50,claro,Serie 7 de gráfica contra fondo,7.97,3.0,true,#683987,#FAFAFB
+color.chart.7.light,color.neutral.100,claro,Serie 7 de gráfica contra tarjeta,7.44,3.0,true,#683987,#F2F2F4
+color.chart.8.light,color.neutral.50,claro,Serie 8 de gráfica contra fondo,3.39,3.0,true,#579749,#FAFAFB
+color.chart.8.light,color.neutral.100,claro,Serie 8 de gráfica contra tarjeta,3.16,3.0,true,#579749,#F2F2F4
+color.person.axel.light,color.neutral.50,claro,"Persona Axel (punto, anillo o serie) contra fondo",12.78,3.0,true,#002E64,#FAFAFB
+color.person.axel.light,color.neutral.100,claro,"Persona Axel (punto, anillo o serie) contra tarjeta",11.92,3.0,true,#002E64,#F2F2F4
+color.person.ximena.light,color.neutral.50,claro,"Persona Ximena (punto, anillo o serie) contra fondo",5.19,3.0,true,#A14E78,#FAFAFB
+color.person.ximena.light,color.neutral.100,claro,"Persona Ximena (punto, anillo o serie) contra tarjeta",4.84,3.0,true,#A14E78,#F2F2F4
+color.person.karen.light,color.neutral.50,claro,"Persona Karen (punto, anillo o serie) contra fondo",3.33,3.0,true,#C67544,#FAFAFB
+color.person.karen.light,color.neutral.100,claro,"Persona Karen (punto, anillo o serie) contra tarjeta",3.11,3.0,true,#C67544,#F2F2F4
+color.person.shared.light,color.neutral.50,claro,"Persona Conjunto (punto, anillo o serie) contra fondo",8.13,3.0,true,#484B66,#FAFAFB
+color.person.shared.light,color.neutral.100,claro,"Persona Conjunto (punto, anillo o serie) contra tarjeta",7.59,3.0,true,#484B66,#F2F2F4
+color.store.walmart.light,color.neutral.50,claro,"Tienda Walmart (punto, anillo o serie) contra fondo",5.47,3.0,true,#4065AC,#FAFAFB
+color.store.walmart.light,color.neutral.100,claro,"Tienda Walmart (punto, anillo o serie) contra tarjeta",5.11,3.0,true,#4065AC,#F2F2F4
+color.store.bodega-aurrera.light,color.neutral.50,claro,"Tienda Bodega Aurrera (punto, anillo o serie) contra fondo",8.84,3.0,true,#773400,#FAFAFB
+color.store.bodega-aurrera.light,color.neutral.100,claro,"Tienda Bodega Aurrera (punto, anillo o serie) contra tarjeta",8.25,3.0,true,#773400,#F2F2F4
+color.store.sams-club.light,color.neutral.50,claro,"Tienda Sam's Club (punto, anillo o serie) contra fondo",3.27,3.0,true,#009D82,#FAFAFB
+color.store.sams-club.light,color.neutral.100,claro,"Tienda Sam's Club (punto, anillo o serie) contra tarjeta",3.05,3.0,true,#009D82,#F2F2F4
+color.store.market.light,color.neutral.50,claro,"Tienda Mercado (punto, anillo o serie) contra fondo",13.73,3.0,true,#5C0204,#FAFAFB
+color.store.market.light,color.neutral.100,claro,"Tienda Mercado (punto, anillo o serie) contra tarjeta",12.81,3.0,true,#5C0204,#F2F2F4
+color.neutral.100,color.neutral.950,oscuro,Texto normal sobre fondo,14.06,4.5,true,#F2F2F4,#222325
+color.neutral.300,color.neutral.950,oscuro,Texto secundario sobre fondo,10.42,4.5,true,#D1D2D8,#222325
+color.neutral.400,color.neutral.950,oscuro,Texto deshabilitado sobre fondo,7.96,4.5,true,#B7B8C0,#222325
+color.neutral.100,color.neutral.900,oscuro,Texto normal sobre tarjeta,10.75,4.5,true,#F2F2F4,#36363A
+color.neutral.300,color.neutral.900,oscuro,Texto secundario sobre tarjeta,7.97,4.5,true,#D1D2D8,#36363A
+color.neutral.400,color.neutral.900,oscuro,Texto deshabilitado sobre tarjeta,6.08,4.5,true,#B7B8C0,#36363A
+color.neutral.400,color.neutral.900,oscuro,Texto de control deshabilitado sobre su relleno,6.08,4.5,true,#B7B8C0,#36363A
+color.neutral.300,color.neutral.950,oscuro,Marcador de posición (placeholder) dentro de campo,10.42,4.5,true,#D1D2D8,#222325
+color.neutral.100,color.neutral.950,oscuro,Texto capturado dentro de campo,14.06,4.5,true,#F2F2F4,#222325
+color.brand.300,color.neutral.950,oscuro,Enlace (reposo) sobre fondo,10.37,4.5,true,#C9CFFF,#222325
+color.brand.200,color.neutral.950,oscuro,Enlace (hover) sobre fondo,12.54,4.5,true,#E1E4FF,#222325
+color.brand.300,color.neutral.900,oscuro,Enlace (reposo) sobre tarjeta,7.93,4.5,true,#C9CFFF,#36363A
+color.brand.200,color.neutral.900,oscuro,Enlace (hover) sobre tarjeta,9.59,4.5,true,#E1E4FF,#36363A
+color.brand.950,color.brand.300,oscuro,Botón primario (reposo): texto sobre relleno,10.47,4.5,true,#1E203A,#C9CFFF
+color.brand.950,color.brand.200,oscuro,Botón primario (hover): texto sobre relleno,12.65,4.5,true,#1E203A,#E1E4FF
+color.brand.300,color.neutral.950,oscuro,Botón primario (reposo): relleno contra fondo,10.37,3.0,true,#C9CFFF,#222325
+color.brand.200,color.neutral.950,oscuro,Botón primario (hover): relleno contra fondo,12.54,3.0,true,#E1E4FF,#222325
+color.brand.300,color.neutral.900,oscuro,Botón primario (reposo): relleno contra tarjeta,7.93,3.0,true,#C9CFFF,#36363A
+color.brand.200,color.neutral.900,oscuro,Botón primario (hover): relleno contra tarjeta,9.59,3.0,true,#E1E4FF,#36363A
+color.role.error.950,color.role.error.300,oscuro,Botón destructivo (reposo): texto sobre relleno,10.38,4.5,true,#3C1416,#FFC0BF
+color.role.error.950,color.role.error.200,oscuro,Botón destructivo (hover): texto sobre relleno,12.75,4.5,true,#3C1416,#FFDDDC
+color.role.error.300,color.neutral.950,oscuro,Botón destructivo (reposo): relleno contra fondo,10.14,3.0,true,#FFC0BF,#222325
+color.role.error.200,color.neutral.950,oscuro,Botón destructivo (hover): relleno contra fondo,12.45,3.0,true,#FFDDDC,#222325
+color.role.error.300,color.neutral.900,oscuro,Botón destructivo (reposo): relleno contra tarjeta,7.75,3.0,true,#FFC0BF,#36363A
+color.role.error.200,color.neutral.900,oscuro,Botón destructivo (hover): relleno contra tarjeta,9.52,3.0,true,#FFDDDC,#36363A
+color.critical.950,color.critical.300,oscuro,Botón de acción crítica (reposo): texto sobre relleno,10.54,4.5,true,#292300,#E0D58E
+color.critical.950,color.critical.200,oscuro,Botón de acción crítica (hover): texto sobre relleno,12.67,4.5,true,#292300,#EEE8BD
+color.critical.300,color.neutral.950,oscuro,Botón de acción crítica (reposo): relleno contra fondo,10.54,3.0,true,#E0D58E,#222325
+color.critical.200,color.neutral.950,oscuro,Botón de acción crítica (hover): relleno contra fondo,12.66,3.0,true,#EEE8BD,#222325
+color.critical.300,color.neutral.900,oscuro,Botón de acción crítica (reposo): relleno contra tarjeta,8.06,3.0,true,#E0D58E,#36363A
+color.critical.200,color.neutral.900,oscuro,Botón de acción crítica (hover): relleno contra tarjeta,9.68,3.0,true,#EEE8BD,#36363A
+color.neutral.100,color.neutral.950,oscuro,Botón secundario (reposo): texto sobre fondo,14.06,4.5,true,#F2F2F4,#222325
+color.neutral.400,color.neutral.950,oscuro,Botón secundario (reposo y hover): borde contra fondo,7.96,3.0,true,#B7B8C0,#222325
+color.neutral.100,color.neutral.900,oscuro,Botón secundario (reposo): texto sobre tarjeta,10.75,4.5,true,#F2F2F4,#36363A
+color.neutral.400,color.neutral.900,oscuro,Botón secundario (reposo y hover): borde contra tarjeta,6.08,3.0,true,#B7B8C0,#36363A
+color.neutral.100,color.neutral.800,oscuro,Botón secundario (hover): texto sobre relleno de hover,7.42,4.5,true,#F2F2F4,#4D4E53
+color.neutral.400,color.neutral.950,oscuro,Borde de campo contra fondo,7.96,3.0,true,#B7B8C0,#222325
+color.brand.400,color.neutral.950,oscuro,Anillo de foco contra fondo,7.88,3.0,true,#ADB3F4,#222325
+color.neutral.400,color.neutral.900,oscuro,Borde de campo contra tarjeta,6.08,3.0,true,#B7B8C0,#36363A
+color.brand.400,color.neutral.900,oscuro,Anillo de foco contra tarjeta,6.03,3.0,true,#ADB3F4,#36363A
+color.neutral.100,color.brand.900,oscuro,Elemento activo / fila seleccionada: texto sobre superficie de marca,10.90,4.5,true,#F2F2F4,#303258
+color.brand.300,color.brand.900,oscuro,Elemento activo: etiqueta e icono de marca sobre superficie de marca,8.04,4.5,true,#C9CFFF,#303258
+color.role.income.dark,color.role.income.surface-dark,oscuro,Insignia de ingreso: texto sobre su fondo,6.12,4.5,true,#98CA7B,#22400D
+color.role.income.dark,color.neutral.950,oscuro,Cifra o texto de ingreso sobre fondo,8.29,4.5,true,#98CA7B,#222325
+color.role.income.dark,color.neutral.900,oscuro,Cifra o texto de ingreso sobre tarjeta,6.34,4.5,true,#98CA7B,#36363A
+color.role.expense.dark,color.role.expense.surface-dark,oscuro,Insignia de gasto: texto sobre su fondo,6.04,4.5,true,#FC9A92,#5A2220
+color.role.expense.dark,color.neutral.950,oscuro,Cifra o texto de gasto sobre fondo,7.62,4.5,true,#FC9A92,#222325
+color.role.expense.dark,color.neutral.900,oscuro,Cifra o texto de gasto sobre tarjeta,5.82,4.5,true,#FC9A92,#36363A
+color.role.savings.dark,color.role.savings.surface-dark,oscuro,Insignia de ahorro: texto sobre su fondo,6.26,4.5,true,#3FD0D7,#003F42
+color.role.savings.dark,color.neutral.950,oscuro,Cifra o texto de ahorro sobre fondo,8.39,4.5,true,#3FD0D7,#222325
+color.role.savings.dark,color.neutral.900,oscuro,Cifra o texto de ahorro sobre tarjeta,6.42,4.5,true,#3FD0D7,#36363A
+color.role.debt.dark,color.role.debt.surface-dark,oscuro,Insignia de deuda / crédito: texto sobre su fondo,6.04,4.5,true,#D0A3F2,#442857
+color.role.debt.dark,color.neutral.950,oscuro,Cifra o texto de deuda / crédito sobre fondo,7.64,4.5,true,#D0A3F2,#222325
+color.role.debt.dark,color.neutral.900,oscuro,Cifra o texto de deuda / crédito sobre tarjeta,5.84,4.5,true,#D0A3F2,#36363A
+color.role.warning.dark,color.role.warning.surface-dark,oscuro,Insignia de advertencia: texto sobre su fondo,6.09,4.5,true,#E5AE5B,#4C3000
+color.role.warning.dark,color.neutral.950,oscuro,Cifra o texto de advertencia sobre fondo,7.89,4.5,true,#E5AE5B,#222325
+color.role.warning.dark,color.neutral.900,oscuro,Cifra o texto de advertencia sobre tarjeta,6.03,4.5,true,#E5AE5B,#36363A
+color.role.error.dark,color.role.error.surface-dark,oscuro,Insignia de error: texto sobre su fondo,6.05,4.5,true,#FC9999,#5A2124
+color.role.error.dark,color.neutral.950,oscuro,Cifra o texto de error sobre fondo,7.60,4.5,true,#FC9999,#222325
+color.role.error.dark,color.neutral.900,oscuro,Cifra o texto de error sobre tarjeta,5.81,4.5,true,#FC9999,#36363A
+color.role.success.dark,color.role.success.surface-dark,oscuro,Insignia de éxito: texto sobre su fondo,6.19,4.5,true,#7ECF90,#0A421E
+color.role.success.dark,color.neutral.950,oscuro,Cifra o texto de éxito sobre fondo,8.39,4.5,true,#7ECF90,#222325
+color.role.success.dark,color.neutral.900,oscuro,Cifra o texto de éxito sobre tarjeta,6.42,4.5,true,#7ECF90,#36363A
+color.role.info.dark,color.role.info.surface-dark,oscuro,Insignia de información: texto sobre su fondo,6.11,4.5,true,#6BC3FD,#003B5A
+color.role.info.dark,color.neutral.950,oscuro,Cifra o texto de información sobre fondo,8.12,4.5,true,#6BC3FD,#222325
+color.role.info.dark,color.neutral.900,oscuro,Cifra o texto de información sobre tarjeta,6.21,4.5,true,#6BC3FD,#36363A
+color.critical.dark,color.critical.surface-dark,oscuro,Insignia de acción crítica: texto sobre su fondo,6.14,4.5,true,#CBBB5A,#3F3700
+color.critical.dark,color.neutral.950,oscuro,Cifra o texto de acción crítica sobre fondo,8.08,4.5,true,#CBBB5A,#222325
+color.critical.dark,color.neutral.900,oscuro,Cifra o texto de acción crítica sobre tarjeta,6.18,4.5,true,#CBBB5A,#36363A
+color.chart.1.dark,color.neutral.950,oscuro,Serie 1 de gráfica contra fondo,4.21,3.0,true,#797DCD,#222325
+color.chart.1.dark,color.neutral.900,oscuro,Serie 1 de gráfica contra tarjeta,3.22,3.0,true,#797DCD,#36363A
+color.chart.2.dark,color.neutral.950,oscuro,Serie 2 de gráfica contra fondo,10.10,3.0,true,#61E4CD,#222325
+color.chart.2.dark,color.neutral.900,oscuro,Serie 2 de gráfica contra tarjeta,7.72,3.0,true,#61E4CD,#36363A
+color.chart.3.dark,color.neutral.950,oscuro,Serie 3 de gráfica contra fondo,4.15,3.0,true,#C16D45,#222325
+color.chart.3.dark,color.neutral.900,oscuro,Serie 3 de gráfica contra tarjeta,3.17,3.0,true,#C16D45,#36363A
+color.chart.4.dark,color.neutral.950,oscuro,Serie 4 de gráfica contra fondo,9.40,3.0,true,#FFB989,#222325
+color.chart.4.dark,color.neutral.900,oscuro,Serie 4 de gráfica contra tarjeta,7.19,3.0,true,#FFB989,#36363A
+color.chart.5.dark,color.neutral.950,oscuro,Serie 5 de gráfica contra fondo,4.06,3.0,true,#B86797,#222325
+color.chart.5.dark,color.neutral.900,oscuro,Serie 5 de gráfica contra tarjeta,3.10,3.0,true,#B86797,#36363A
+color.chart.6.dark,color.neutral.950,oscuro,Serie 6 de gráfica contra fondo,9.84,3.0,true,#76D9FF,#222325
+color.chart.6.dark,color.neutral.900,oscuro,Serie 6 de gráfica contra tarjeta,7.52,3.0,true,#76D9FF,#36363A
+color.chart.7.dark,color.neutral.950,oscuro,Serie 7 de gráfica contra fondo,4.08,3.0,true,#9C70BC,#222325
+color.chart.7.dark,color.neutral.900,oscuro,Serie 7 de gráfica contra tarjeta,3.12,3.0,true,#9C70BC,#36363A
+color.chart.8.dark,color.neutral.950,oscuro,Serie 8 de gráfica contra fondo,10.00,3.0,true,#A0DE93,#222325
+color.chart.8.dark,color.neutral.900,oscuro,Serie 8 de gráfica contra tarjeta,7.65,3.0,true,#A0DE93,#36363A
+color.person.axel.dark,color.neutral.950,oscuro,"Persona Axel (punto, anillo o serie) contra fondo",4.05,3.0,true,#4F83C8,#222325
+color.person.axel.dark,color.neutral.900,oscuro,"Persona Axel (punto, anillo o serie) contra tarjeta",3.10,3.0,true,#4F83C8,#36363A
+color.person.ximena.dark,color.neutral.950,oscuro,"Persona Ximena (punto, anillo o serie) contra fondo",9.05,3.0,true,#FFACD3,#222325
+color.person.ximena.dark,color.neutral.900,oscuro,"Persona Ximena (punto, anillo o serie) contra tarjeta",6.92,3.0,true,#FFACD3,#36363A
+color.person.karen.dark,color.neutral.950,oscuro,"Persona Karen (punto, anillo o serie) contra fondo",6.23,3.0,true,#E28F5E,#222325
+color.person.karen.dark,color.neutral.900,oscuro,"Persona Karen (punto, anillo o serie) contra tarjeta",4.76,3.0,true,#E28F5E,#36363A
+color.person.shared.dark,color.neutral.950,oscuro,"Persona Conjunto (punto, anillo o serie) contra fondo",13.19,3.0,true,#E7EAFF,#222325
+color.person.shared.dark,color.neutral.900,oscuro,"Persona Conjunto (punto, anillo o serie) contra tarjeta",10.08,3.0,true,#E7EAFF,#36363A
+color.store.walmart.dark,color.neutral.950,oscuro,"Tienda Walmart (punto, anillo o serie) contra fondo",6.29,3.0,true,#7BA4F0,#222325
+color.store.walmart.dark,color.neutral.900,oscuro,"Tienda Walmart (punto, anillo o serie) contra tarjeta",4.81,3.0,true,#7BA4F0,#36363A
+color.store.bodega-aurrera.dark,color.neutral.950,oscuro,"Tienda Bodega Aurrera (punto, anillo o serie) contra fondo",9.03,3.0,true,#FFB389,#222325
+color.store.bodega-aurrera.dark,color.neutral.900,oscuro,"Tienda Bodega Aurrera (punto, anillo o serie) contra tarjeta",6.90,3.0,true,#FFB389,#36363A
+color.store.sams-club.dark,color.neutral.950,oscuro,"Tienda Sam's Club (punto, anillo o serie) contra fondo",13.31,3.0,true,#99FFE4,#222325
+color.store.sams-club.dark,color.neutral.900,oscuro,"Tienda Sam's Club (punto, anillo o serie) contra tarjeta",10.18,3.0,true,#99FFE4,#36363A
+color.store.market.dark,color.neutral.950,oscuro,"Tienda Mercado (punto, anillo o serie) contra fondo",4.00,3.0,true,#C2665B,#222325
+color.store.market.dark,color.neutral.900,oscuro,"Tienda Mercado (punto, anillo o serie) contra tarjeta",3.06,3.0,true,#C2665B,#36363A
