@@ -1,0 +1,1024 @@
+{
+ "version": "v3",
+ "parametros": {
+  "tasa": 0.2586847632897075,
+  "tasa_pct": 25.868476328970754,
+  "papel": 199.0,
+  "limite_credito": 10000.0,
+  "horizonte": [
+   "2026-10-10",
+   "2027-04-10"
+  ],
+  "karen_fija": {
+   "capital": 1191.5,
+   "intereses": 308.22,
+   "total": 1499.72,
+   "pago": 374.93,
+   "conjunto": 851.0
+  }
+ },
+ "periodos": [
+  {
+   "periodo": "P1",
+   "etiqueta": "10-oct-2026 a 9-nov-2026",
+   "inicio": "2026-10-10",
+   "fin": "2026-11-09",
+   "despensa_que_cubre": 1,
+   "devengado": {
+    "despensa_total": 1947.5,
+    "papel_contado": 0.0,
+    "total": 1947.5,
+    "axel": 1197.64,
+    "karen": 749.86
+   },
+   "efectivo": {
+    "pagos": 973.75,
+    "papel": 0.0,
+    "total": 973.75,
+    "axel": 598.82,
+    "karen": 374.93,
+    "n_pagos": 1,
+    "detalle_pagos": [
+     {
+      "despensa": 1,
+      "fecha": "2026-10-30",
+      "monto": 973.75,
+      "axel": 598.82,
+      "karen": 374.93
+     }
+    ]
+   },
+   "diferencia_acumulada": 973.75
+  },
+  {
+   "periodo": "P2",
+   "etiqueta": "10-nov-2026 a 9-dic-2026",
+   "inicio": "2026-11-10",
+   "fin": "2026-12-09",
+   "despensa_que_cubre": 1,
+   "devengado": {
+    "despensa_total": 1947.5,
+    "papel_contado": 0.0,
+    "total": 1947.5,
+    "axel": 1197.64,
+    "karen": 749.86
+   },
+   "efectivo": {
+    "pagos": 1947.5,
+    "papel": 0.0,
+    "total": 1947.5,
+    "axel": 1197.64,
+    "karen": 749.86,
+    "n_pagos": 2,
+    "detalle_pagos": [
+     {
+      "despensa": 1,
+      "fecha": "2026-11-15",
+      "monto": 973.75,
+      "axel": 598.82,
+      "karen": 374.93
+     },
+     {
+      "despensa": 1,
+      "fecha": "2026-11-30",
+      "monto": 973.75,
+      "axel": 598.82,
+      "karen": 374.93
+     }
+    ]
+   },
+   "diferencia_acumulada": 973.75
+  },
+  {
+   "periodo": "P3",
+   "etiqueta": "10-dic-2026 a 9-ene-2027",
+   "inicio": "2026-12-10",
+   "fin": "2027-01-09",
+   "despensa_que_cubre": 2,
+   "devengado": {
+    "despensa_total": 2517.37,
+    "papel_contado": 0.0,
+    "total": 2517.37,
+    "axel": 1767.51,
+    "karen": 749.86
+   },
+   "efectivo": {
+    "pagos": 2232.43,
+    "papel": 0.0,
+    "total": 2232.43,
+    "axel": 1482.57,
+    "karen": 749.86,
+    "n_pagos": 2,
+    "detalle_pagos": [
+     {
+      "despensa": 1,
+      "fecha": "2026-12-15",
+      "monto": 973.75,
+      "axel": 598.82,
+      "karen": 374.93
+     },
+     {
+      "despensa": 2,
+      "fecha": "2026-12-30",
+      "monto": 1258.68,
+      "axel": 883.75,
+      "karen": 374.93
+     }
+    ]
+   },
+   "diferencia_acumulada": 1258.69
+  },
+  {
+   "periodo": "P4",
+   "etiqueta": "10-ene-2027 a 9-feb-2027",
+   "inicio": "2027-01-10",
+   "fin": "2027-02-09",
+   "despensa_que_cubre": 2,
+   "devengado": {
+    "despensa_total": 2517.37,
+    "papel_contado": 199.0,
+    "total": 2716.37,
+    "axel": 1767.51,
+    "karen": 948.86
+   },
+   "efectivo": {
+    "pagos": 2517.36,
+    "papel": 199.0,
+    "total": 2716.36,
+    "axel": 1767.5,
+    "karen": 948.86,
+    "n_pagos": 2,
+    "detalle_pagos": [
+     {
+      "despensa": 2,
+      "fecha": "2027-01-15",
+      "monto": 1258.68,
+      "axel": 883.75,
+      "karen": 374.93
+     },
+     {
+      "despensa": 2,
+      "fecha": "2027-01-30",
+      "monto": 1258.68,
+      "axel": 883.75,
+      "karen": 374.93
+     }
+    ]
+   },
+   "diferencia_acumulada": 1258.7
+  },
+  {
+   "periodo": "P5",
+   "etiqueta": "10-feb-2027 a 9-mar-2027",
+   "inicio": "2027-02-10",
+   "fin": "2027-03-09",
+   "despensa_que_cubre": 3,
+   "devengado": {
+    "despensa_total": 2517.37,
+    "papel_contado": 0.0,
+    "total": 2517.37,
+    "axel": 1767.51,
+    "karen": 749.86
+   },
+   "efectivo": {
+    "pagos": 2517.38,
+    "papel": 0.0,
+    "total": 2517.38,
+    "axel": 1767.52,
+    "karen": 749.86,
+    "n_pagos": 2,
+    "detalle_pagos": [
+     {
+      "despensa": 2,
+      "fecha": "2027-02-15",
+      "monto": 1258.7,
+      "axel": 883.77,
+      "karen": 374.93
+     },
+     {
+      "despensa": 3,
+      "fecha": "2027-02-28",
+      "monto": 1258.68,
+      "axel": 883.75,
+      "karen": 374.93
+     }
+    ]
+   },
+   "diferencia_acumulada": 1258.69
+  },
+  {
+   "periodo": "P6",
+   "etiqueta": "10-mar-2027 a 9-abr-2027",
+   "inicio": "2027-03-10",
+   "fin": "2027-04-09",
+   "despensa_que_cubre": 3,
+   "devengado": {
+    "despensa_total": 2517.37,
+    "papel_contado": 199.0,
+    "total": 2716.37,
+    "axel": 1767.51,
+    "karen": 948.86
+   },
+   "efectivo": {
+    "pagos": 2517.36,
+    "papel": 199.0,
+    "total": 2716.36,
+    "axel": 1767.5,
+    "karen": 948.86,
+    "n_pagos": 2,
+    "detalle_pagos": [
+     {
+      "despensa": 3,
+      "fecha": "2027-03-15",
+      "monto": 1258.68,
+      "axel": 883.75,
+      "karen": 374.93
+     },
+     {
+      "despensa": 3,
+      "fecha": "2027-03-30",
+      "monto": 1258.68,
+      "axel": 883.75,
+      "karen": 374.93
+     }
+    ]
+   },
+   "diferencia_acumulada": 1258.7
+  }
+ ],
+ "despensas": [
+  {
+   "n": 1,
+   "fecha": "2026-10-10",
+   "capital": 3094.5,
+   "intereses": 800.5,
+   "total": 3895.0,
+   "pagos": [
+    {
+     "fecha": "2026-10-30",
+     "monto": 973.75,
+     "axel": 598.82,
+     "karen": 374.93,
+     "capital_repuesto": 773.63
+    },
+    {
+     "fecha": "2026-11-15",
+     "monto": 973.75,
+     "axel": 598.82,
+     "karen": 374.93,
+     "capital_repuesto": 773.63
+    },
+    {
+     "fecha": "2026-11-30",
+     "monto": 973.75,
+     "axel": 598.82,
+     "karen": 374.93,
+     "capital_repuesto": 773.63
+    },
+    {
+     "fecha": "2026-12-15",
+     "monto": 973.75,
+     "axel": 598.82,
+     "karen": 374.93,
+     "capital_repuesto": 773.61
+    }
+   ],
+   "axel": {
+    "capital": 1903.0,
+    "conjunto": 851.0,
+    "propio": 1052.0,
+    "papel_dentro": 0.0,
+    "libre": 1903.0,
+    "intereses": 492.28,
+    "total": 2395.28,
+    "pago_por_quincena": 598.82
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 199.0,
+    "libre": 992.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  },
+  {
+   "n": 2,
+   "fecha": "2026-12-10",
+   "capital": 4000.0,
+   "intereses": 1034.74,
+   "total": 5034.74,
+   "pagos": [
+    {
+     "fecha": "2026-12-30",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-01-15",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-01-30",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-02-15",
+     "monto": 1258.7,
+     "axel": 883.77,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    }
+   ],
+   "axel": {
+    "capital": 2808.5,
+    "conjunto": 851.0,
+    "propio": 1957.5,
+    "papel_dentro": 199.0,
+    "libre": 2609.5,
+    "intereses": 726.52,
+    "total": 3535.02,
+    "pago_por_quincena": 883.75
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 0.0,
+    "libre": 1191.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  },
+  {
+   "n": 3,
+   "fecha": "2027-02-10",
+   "capital": 4000.0,
+   "intereses": 1034.74,
+   "total": 5034.74,
+   "pagos": [
+    {
+     "fecha": "2027-02-28",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-03-15",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-03-30",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-04-15",
+     "monto": 1258.7,
+     "axel": 883.77,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    }
+   ],
+   "axel": {
+    "capital": 2808.5,
+    "conjunto": 851.0,
+    "propio": 1957.5,
+    "papel_dentro": 199.0,
+    "libre": 2609.5,
+    "intereses": 726.52,
+    "total": 3535.02,
+    "pago_por_quincena": 883.75
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 0.0,
+    "libre": 1191.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  },
+  {
+   "n": 4,
+   "fecha": "2027-04-10",
+   "capital": 4000.0,
+   "intereses": 1034.74,
+   "total": 5034.74,
+   "pagos": [
+    {
+     "fecha": "2027-04-30",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-05-15",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-05-30",
+     "monto": 1258.68,
+     "axel": 883.75,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    },
+    {
+     "fecha": "2027-06-15",
+     "monto": 1258.7,
+     "axel": 883.77,
+     "karen": 374.93,
+     "capital_repuesto": 1000.0
+    }
+   ],
+   "axel": {
+    "capital": 2808.5,
+    "conjunto": 851.0,
+    "propio": 1957.5,
+    "papel_dentro": 199.0,
+    "libre": 2609.5,
+    "intereses": 726.52,
+    "total": 3535.02,
+    "pago_por_quincena": 883.75
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 0.0,
+    "libre": 1191.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  }
+ ],
+ "credito": {
+  "eventos": [
+   {
+    "fecha": "2026-10-10",
+    "tipo": "inicio",
+    "descripcion": "Disponible hoy",
+    "monto": 0.0,
+    "capital_repuesto": 0.0,
+    "interes_no_repuesto": 0.0,
+    "disponible_A": 10000.0,
+    "disponible_B": 6905.5
+   },
+   {
+    "fecha": "2026-10-30",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 1 (repone capital)",
+    "monto": 973.75,
+    "capital_repuesto": 773.63,
+    "interes_no_repuesto": 200.12,
+    "disponible_A": 10773.63,
+    "disponible_B": 7679.13
+   },
+   {
+    "fecha": "2026-11-15",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 1 (repone capital)",
+    "monto": 973.75,
+    "capital_repuesto": 773.63,
+    "interes_no_repuesto": 200.12,
+    "disponible_A": 11547.26,
+    "disponible_B": 8452.76
+   },
+   {
+    "fecha": "2026-11-30",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 1 (repone capital)",
+    "monto": 973.75,
+    "capital_repuesto": 773.63,
+    "interes_no_repuesto": 200.12,
+    "disponible_A": 12320.89,
+    "disponible_B": 9226.39
+   },
+   {
+    "fecha": "2026-12-10",
+    "tipo": "compra",
+    "descripcion": "Despensa 2 (a credito, solo capital)",
+    "monto": 4000.0,
+    "capital_repuesto": 0.0,
+    "interes_no_repuesto": 0.0,
+    "disponible_A": 8320.89,
+    "disponible_B": 5226.39
+   },
+   {
+    "fecha": "2026-12-15",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 1 (repone capital)",
+    "monto": 973.75,
+    "capital_repuesto": 773.61,
+    "interes_no_repuesto": 200.14,
+    "disponible_A": 9094.5,
+    "disponible_B": 6000.0
+   },
+   {
+    "fecha": "2026-12-30",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 2 (repone capital)",
+    "monto": 1258.68,
+    "capital_repuesto": 1000.0,
+    "interes_no_repuesto": 258.68,
+    "disponible_A": 10094.5,
+    "disponible_B": 7000.0
+   },
+   {
+    "fecha": "2027-01-10",
+    "tipo": "papel",
+    "descripcion": "Papel de contado (Karen); no mueve el credito",
+    "monto": 199.0,
+    "capital_repuesto": 0.0,
+    "interes_no_repuesto": 0.0,
+    "disponible_A": 10094.5,
+    "disponible_B": 7000.0
+   },
+   {
+    "fecha": "2027-01-15",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 2 (repone capital)",
+    "monto": 1258.68,
+    "capital_repuesto": 1000.0,
+    "interes_no_repuesto": 258.68,
+    "disponible_A": 11094.5,
+    "disponible_B": 8000.0
+   },
+   {
+    "fecha": "2027-01-30",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 2 (repone capital)",
+    "monto": 1258.68,
+    "capital_repuesto": 1000.0,
+    "interes_no_repuesto": 258.68,
+    "disponible_A": 12094.5,
+    "disponible_B": 9000.0
+   },
+   {
+    "fecha": "2027-02-10",
+    "tipo": "compra",
+    "descripcion": "Despensa 3 (a credito, solo capital)",
+    "monto": 4000.0,
+    "capital_repuesto": 0.0,
+    "interes_no_repuesto": 0.0,
+    "disponible_A": 8094.5,
+    "disponible_B": 5000.0
+   },
+   {
+    "fecha": "2027-02-15",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 2 (repone capital)",
+    "monto": 1258.7,
+    "capital_repuesto": 1000.0,
+    "interes_no_repuesto": 258.7,
+    "disponible_A": 9094.5,
+    "disponible_B": 6000.0
+   },
+   {
+    "fecha": "2027-02-28",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 3 (repone capital)",
+    "monto": 1258.68,
+    "capital_repuesto": 1000.0,
+    "interes_no_repuesto": 258.68,
+    "disponible_A": 10094.5,
+    "disponible_B": 7000.0
+   },
+   {
+    "fecha": "2027-03-10",
+    "tipo": "papel",
+    "descripcion": "Papel de contado (Karen); no mueve el credito",
+    "monto": 199.0,
+    "capital_repuesto": 0.0,
+    "interes_no_repuesto": 0.0,
+    "disponible_A": 10094.5,
+    "disponible_B": 7000.0
+   },
+   {
+    "fecha": "2027-03-15",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 3 (repone capital)",
+    "monto": 1258.68,
+    "capital_repuesto": 1000.0,
+    "interes_no_repuesto": 258.68,
+    "disponible_A": 11094.5,
+    "disponible_B": 8000.0
+   },
+   {
+    "fecha": "2027-03-30",
+    "tipo": "pago",
+    "descripcion": "Pago despensa 3 (repone capital)",
+    "monto": 1258.68,
+    "capital_repuesto": 1000.0,
+    "interes_no_repuesto": 258.68,
+    "disponible_A": 12094.5,
+    "disponible_B": 9000.0
+   },
+   {
+    "fecha": "2027-04-10",
+    "tipo": "compra",
+    "descripcion": "Despensa 4 (a credito, solo capital)",
+    "monto": 4000.0,
+    "capital_repuesto": 0.0,
+    "interes_no_repuesto": 0.0,
+    "disponible_A": 8094.5,
+    "disponible_B": 5000.0
+   }
+  ],
+  "comparacion_series": {
+   "esperado_A": [
+    10773.63,
+    11547.26,
+    12320.89,
+    8320.89,
+    9094.5,
+    10094.5,
+    11094.5,
+    12094.5,
+    8094.5,
+    9094.5,
+    10094.5,
+    11094.5,
+    12094.5,
+    8094.5
+   ],
+   "esperado_B": [
+    7679.13,
+    8452.76,
+    9226.39,
+    5226.39,
+    6000.0,
+    7000.0,
+    8000.0,
+    9000.0,
+    5000.0,
+    6000.0,
+    7000.0,
+    8000.0,
+    9000.0,
+    5000.0
+   ],
+   "calculado_A": [
+    10773.63,
+    11547.26,
+    12320.89,
+    8320.89,
+    9094.5,
+    10094.5,
+    11094.5,
+    12094.5,
+    8094.5,
+    9094.5,
+    10094.5,
+    11094.5,
+    12094.5,
+    8094.5
+   ],
+   "calculado_B": [
+    7679.13,
+    8452.76,
+    9226.39,
+    5226.39,
+    6000.0,
+    7000.0,
+    8000.0,
+    9000.0,
+    5000.0,
+    6000.0,
+    7000.0,
+    8000.0,
+    9000.0,
+    5000.0
+   ],
+   "coinciden": true
+  },
+  "minimo_A": 8094.5,
+  "minimo_B": 5000.0,
+  "nota": "Solo capital usa/repone la linea; intereses nunca regresan; papel de contado no mueve el credito. A: 10,000 libres hoy y los pagos suman encima; B: 10,000 es tope total (inicial 6,905.50)"
+ },
+ "valor_estable": {
+  "mes": {
+   "total": 2616.87,
+   "axel": 1767.51,
+   "karen": 849.36
+  },
+  "quincena": {
+   "total": 1308.44,
+   "axel": 883.76,
+   "karen": 424.68,
+   "suma_axel_karen": 1308.44,
+   "diferencia_centavo": 0.0,
+   "nota": "redondeo a centavo; diferencia de 0.01 si suma != total"
+  },
+  "componentes": {
+   "mitad_despensa": 2517.37,
+   "papel_contado_mes": 99.5,
+   "karen_mitad_despensa": 749.86,
+   "axel_mitad_despensa": 1767.51,
+   "formula": "5034.74/2 + 199/2"
+  }
+ },
+ "sensibilidad": [
+  {
+   "N": 3000,
+   "intereses": 776.05,
+   "total": 3776.05,
+   "pago_quincenal": 944.01,
+   "axel_total": 2276.33,
+   "axel_capital": 1808.5,
+   "axel_menor_que_actual": true,
+   "costo_mensual_total": 1987.53,
+   "axel_mensual": 1138.17,
+   "karen_mensual": 849.36
+  },
+  {
+   "N": 3500,
+   "intereses": 905.4,
+   "total": 4405.4,
+   "pago_quincenal": 1101.35,
+   "axel_total": 2905.68,
+   "axel_capital": 2308.5,
+   "axel_menor_que_actual": false,
+   "costo_mensual_total": 2302.2,
+   "axel_mensual": 1452.84,
+   "karen_mensual": 849.36
+  },
+  {
+   "N": 4000,
+   "intereses": 1034.74,
+   "total": 5034.74,
+   "pago_quincenal": 1258.68,
+   "axel_total": 3535.02,
+   "axel_capital": 2808.5,
+   "axel_menor_que_actual": false,
+   "costo_mensual_total": 2616.87,
+   "axel_mensual": 1767.51,
+   "karen_mensual": 849.36
+  },
+  {
+   "N": 4500,
+   "intereses": 1164.08,
+   "total": 5664.08,
+   "pago_quincenal": 1416.02,
+   "axel_total": 4164.36,
+   "axel_capital": 3308.5,
+   "axel_menor_que_actual": false,
+   "costo_mensual_total": 2931.54,
+   "axel_mensual": 2082.18,
+   "karen_mensual": 849.36
+  },
+  {
+   "N": 5000,
+   "intereses": 1293.42,
+   "total": 6293.42,
+   "pago_quincenal": 1573.36,
+   "axel_total": 4793.7,
+   "axel_capital": 3808.5,
+   "axel_menor_que_actual": false,
+   "costo_mensual_total": 3246.21,
+   "axel_mensual": 2396.85,
+   "karen_mensual": 849.36
+  }
+ ],
+ "papel": [
+  {
+   "paquete": 1,
+   "cubre": "noviembre 2026",
+   "compra": "2026-10-10",
+   "quien": "Karen",
+   "forma": "dentro de despensa 1",
+   "nota": "ya incluido en sus 1,191.50; no hay compra el 10-nov",
+   "monto": 199.0
+  },
+  {
+   "paquete": 2,
+   "cubre": "diciembre 2026",
+   "compra": "2026-12-10",
+   "quien": "Axel",
+   "forma": "dentro de despensa 2",
+   "nota": "",
+   "monto": 199.0
+  },
+  {
+   "paquete": 3,
+   "cubre": "enero 2027",
+   "compra": "2027-01-10",
+   "quien": "Karen",
+   "forma": "de contado",
+   "nota": "credito sigue activo; fuera del cap de 374.93",
+   "monto": 199.0
+  },
+  {
+   "paquete": 4,
+   "cubre": "febrero 2027",
+   "compra": "2027-02-10",
+   "quien": "Axel",
+   "forma": "dentro de despensa 3",
+   "nota": "",
+   "monto": 199.0
+  },
+  {
+   "paquete": 5,
+   "cubre": "marzo 2027",
+   "compra": "2027-03-10",
+   "quien": "Karen",
+   "forma": "de contado",
+   "nota": "fuera del cap de 374.93",
+   "monto": 199.0
+  },
+  {
+   "paquete": 6,
+   "cubre": "abril 2027",
+   "compra": "2027-04-10",
+   "quien": "Axel",
+   "forma": "dentro de despensa 4",
+   "nota": "",
+   "monto": 199.0
+  }
+ ],
+ "disposicion_por_despensa": [
+  {
+   "despensa": 1,
+   "fecha": "2026-10-10",
+   "axel": {
+    "capital": 1903.0,
+    "conjunto": 851.0,
+    "propio": 1052.0,
+    "papel_dentro": 0.0,
+    "libre": 1903.0,
+    "intereses": 492.28,
+    "total": 2395.28,
+    "pago_por_quincena": 598.82
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 199.0,
+    "libre": 992.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  },
+  {
+   "despensa": 2,
+   "fecha": "2026-12-10",
+   "axel": {
+    "capital": 2808.5,
+    "conjunto": 851.0,
+    "propio": 1957.5,
+    "papel_dentro": 199.0,
+    "libre": 2609.5,
+    "intereses": 726.52,
+    "total": 3535.02,
+    "pago_por_quincena": 883.75
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 0.0,
+    "libre": 1191.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  },
+  {
+   "despensa": 3,
+   "fecha": "2027-02-10",
+   "axel": {
+    "capital": 2808.5,
+    "conjunto": 851.0,
+    "propio": 1957.5,
+    "papel_dentro": 199.0,
+    "libre": 2609.5,
+    "intereses": 726.52,
+    "total": 3535.02,
+    "pago_por_quincena": 883.75
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 0.0,
+    "libre": 1191.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  },
+  {
+   "despensa": 4,
+   "fecha": "2027-04-10",
+   "axel": {
+    "capital": 2808.5,
+    "conjunto": 851.0,
+    "propio": 1957.5,
+    "papel_dentro": 199.0,
+    "libre": 2609.5,
+    "intereses": 726.52,
+    "total": 3535.02,
+    "pago_por_quincena": 883.75
+   },
+   "karen": {
+    "capital": 1191.5,
+    "conjunto": 851.0,
+    "propio": 340.5,
+    "papel_dentro": 0.0,
+    "libre": 1191.5,
+    "intereses": 308.22,
+    "total": 1499.72,
+    "pago_por_quincena": 374.93
+   }
+  }
+ ],
+ "horizonte": {
+  "inicio": "2026-10-10",
+  "fin": "2027-04-10",
+  "pagos_despensa_1": 3895.0,
+  "pagos_despensa_2": 5034.74,
+  "pagos_despensa_3_en_horizonte": 3776.04,
+  "papel_contado": 398.0,
+  "total_efectivo": 13103.78,
+  "suma_periodos_efectivo": 13103.78,
+  "total_devengado": 14362.48,
+  "deuda_viva_10_abr": 6293.44,
+  "deuda_viva_detalle": {
+   "despensa_3_pendiente": 1258.7,
+   "despensa_4": 5034.74
+  },
+  "promedio_mensual_efectivo": 2183.96,
+  "promedio_mensual_devengado": 2393.75,
+  "diferencia_final": 1258.7
+ },
+ "interes_por_monto": [
+  {
+   "monto": 1,
+   "intereses": 0.26,
+   "total": 1.26,
+   "pago_quincenal": 0.31
+  },
+  {
+   "monto": 100,
+   "intereses": 25.87,
+   "total": 125.87,
+   "pago_quincenal": 31.47
+  },
+  {
+   "monto": 1000,
+   "intereses": 258.68,
+   "total": 1258.68,
+   "pago_quincenal": 314.67
+  },
+  {
+   "monto": 2000,
+   "intereses": 517.37,
+   "total": 2517.37,
+   "pago_quincenal": 629.34
+  },
+  {
+   "monto": 3094.5,
+   "intereses": 800.5,
+   "total": 3895.0,
+   "pago_quincenal": 973.75
+  },
+  {
+   "monto": 4000,
+   "intereses": 1034.74,
+   "total": 5034.74,
+   "pago_quincenal": 1258.68
+  },
+  {
+   "monto": 5000,
+   "intereses": 1293.42,
+   "total": 6293.42,
+   "pago_quincenal": 1573.36
+  }
+ ]
+}

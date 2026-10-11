@@ -1,0 +1,672 @@
+{
+ "fecha": "2026-10-10",
+ "tienda_a": "Bodega Aurrera (sucursal Vallejo)",
+ "tienda_b": "Walmart (sucursal Acueducto de Guadalupe)",
+ "items_identicos": [
+  {
+   "producto": "Aceite de oliva Nutrioli Oli 500 ml",
+   "cantidad": 1,
+   "bodega_total": 150.0,
+   "walmart_total": 150.0,
+   "bodega_unit": 150.0,
+   "walmart_unit": 150.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Aceite de soya Nutrioli 946 ml",
+   "cantidad": 3,
+   "bodega_total": 144.0,
+   "walmart_total": 135.0,
+   "bodega_unit": 48.0,
+   "walmart_unit": 45.0,
+   "diff": -9.0,
+   "diff_pct": -6.25,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Frijoles bayos La Costeña refritos 220 g",
+   "cantidad": 4,
+   "bodega_total": 48.0,
+   "walmart_total": 50.0,
+   "bodega_unit": 12.0,
+   "walmart_unit": 12.5,
+   "diff": 2.0,
+   "diff_pct": 4.17,
+   "cuenta": "mixto"
+  },
+  {
+   "producto": "Duraznos La Costeña cubitos en almíbar 425 g",
+   "cantidad": 1,
+   "bodega_total": 40.0,
+   "walmart_total": 39.0,
+   "bodega_unit": 40.0,
+   "walmart_unit": 39.0,
+   "diff": -1.0,
+   "diff_pct": -2.5,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Café soluble Nescafé Reserva Mexicana Verarica 180 g",
+   "cantidad": 1,
+   "bodega_total": 112.0,
+   "walmart_total": 150.0,
+   "bodega_unit": 112.0,
+   "walmart_unit": 150.0,
+   "diff": 38.0,
+   "diff_pct": 33.93,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Jamón de pavo Sabori Parma virginia premium 400 g",
+   "cantidad": 1,
+   "bodega_total": 62.0,
+   "walmart_total": 63.0,
+   "bodega_unit": 62.0,
+   "walmart_unit": 63.0,
+   "diff": 1.0,
+   "diff_pct": 1.61,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Salchicha de pavo Sabori Parma 500 g",
+   "cantidad": 2,
+   "bodega_total": 80.0,
+   "walmart_total": 110.0,
+   "bodega_unit": 40.0,
+   "walmart_unit": 55.0,
+   "diff": 30.0,
+   "diff_pct": 37.5,
+   "cuenta": "mixto"
+  },
+  {
+   "producto": "Avena 3 Minutos con sémola de trigo 400 g",
+   "cantidad": 1,
+   "bodega_total": 36.0,
+   "walmart_total": 37.0,
+   "bodega_unit": 36.0,
+   "walmart_unit": 37.0,
+   "diff": 1.0,
+   "diff_pct": 2.78,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Blanqueador Cloralex El Rendidor 3.75 l",
+   "cantidad": 2,
+   "bodega_total": 116.0,
+   "walmart_total": 118.0,
+   "bodega_unit": 58.0,
+   "walmart_unit": 59.0,
+   "diff": 2.0,
+   "diff_pct": 1.72,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Caldo de pollo Knorr 24 cubos",
+   "cantidad": 2,
+   "bodega_total": 112.0,
+   "walmart_total": 112.0,
+   "bodega_unit": 56.0,
+   "walmart_unit": 56.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Pasta dental Colgate Triple Acción 2 x 80 ml",
+   "cantidad": 1,
+   "bodega_total": 35.0,
+   "walmart_total": 35.0,
+   "bodega_unit": 35.0,
+   "walmart_unit": 35.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Jabón líquido Grisi frutos rojos 450 ml",
+   "cantidad": 2,
+   "bodega_total": 124.0,
+   "walmart_total": 130.0,
+   "bodega_unit": 62.0,
+   "walmart_unit": 65.0,
+   "diff": 6.0,
+   "diff_pct": 4.84,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Acondicionador Pantene 3 Minute Miracle Repara 170 ml",
+   "cantidad": 2,
+   "bodega_total": 180.0,
+   "walmart_total": 180.0,
+   "bodega_unit": 90.0,
+   "walmart_unit": 90.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Desinfectante Lysol Crisp Linen aerosol 354 g",
+   "cantidad": 1,
+   "bodega_total": 139.0,
+   "walmart_total": 140.0,
+   "bodega_unit": 139.0,
+   "walmart_unit": 140.0,
+   "diff": 1.0,
+   "diff_pct": 0.72,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Detergente en polvo Roma multiusos 1 kg",
+   "cantidad": 1,
+   "bodega_total": 35.0,
+   "walmart_total": 36.0,
+   "bodega_unit": 35.0,
+   "walmart_unit": 36.0,
+   "diff": 1.0,
+   "diff_pct": 2.86,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Granos de elote Herdez 220 g",
+   "cantidad": 5,
+   "bodega_total": 67.5,
+   "walmart_total": 70.0,
+   "bodega_unit": 13.5,
+   "walmart_unit": 14.0,
+   "diff": 2.5,
+   "diff_pct": 3.7,
+   "cuenta": "mixto"
+  },
+  {
+   "producto": "Atún Dolores aleta amarilla en agua con aceite 140 g (5 pzas)",
+   "cantidad": 5,
+   "bodega_total": 105.0,
+   "walmart_total": 105.0,
+   "bodega_unit": 21.0,
+   "walmart_unit": 21.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Uva verde por pieza de 1 kg aprox",
+   "cantidad": 1,
+   "bodega_total": 87.0,
+   "walmart_total": 88.0,
+   "bodega_unit": 87.0,
+   "walmart_unit": 88.0,
+   "diff": 1.0,
+   "diff_pct": 1.15,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Jabón para trastes Salvo Power Clean 1.2 l",
+   "cantidad": 2,
+   "bodega_total": 122.0,
+   "walmart_total": 126.0,
+   "bodega_unit": 61.0,
+   "walmart_unit": 63.0,
+   "diff": 4.0,
+   "diff_pct": 3.28,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Pan Oroweat mantequilla 680 g",
+   "cantidad": 1,
+   "bodega_total": 92.0,
+   "walmart_total": 93.0,
+   "bodega_unit": 92.0,
+   "walmart_unit": 93.0,
+   "diff": 1.0,
+   "diff_pct": 1.09,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Papel higiénico Kleenex Cottonelle Elegance 30 rollos",
+   "cantidad": 1,
+   "bodega_total": 199.0,
+   "walmart_total": 209.0,
+   "bodega_unit": 199.0,
+   "walmart_unit": 209.0,
+   "diff": 10.0,
+   "diff_pct": 5.03,
+   "cuenta": "karen"
+  },
+  {
+   "producto": "Spaghetti La Moderna 250 g",
+   "cantidad": 2,
+   "bodega_total": 24.0,
+   "walmart_total": 25.0,
+   "bodega_unit": 12.0,
+   "walmart_unit": 12.5,
+   "diff": 1.0,
+   "diff_pct": 4.17,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Queso manchego NocheBuena rebanadas 200 g",
+   "cantidad": 1,
+   "bodega_total": 61.0,
+   "walmart_total": 62.0,
+   "bodega_unit": 61.0,
+   "walmart_unit": 62.0,
+   "diff": 1.0,
+   "diff_pct": 1.64,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Mayonesa McCormick con chilpotle squeeze 310 g",
+   "cantidad": 1,
+   "bodega_total": 44.0,
+   "walmart_total": 45.0,
+   "bodega_unit": 44.0,
+   "walmart_unit": 45.0,
+   "diff": 1.0,
+   "diff_pct": 2.27,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Soya Maggi tradicional 290 ml",
+   "cantidad": 1,
+   "bodega_total": 39.0,
+   "walmart_total": 39.0,
+   "bodega_unit": 39.0,
+   "walmart_unit": 39.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Catsup Heinz 397 g",
+   "cantidad": 1,
+   "bodega_total": 29.0,
+   "walmart_total": 30.0,
+   "bodega_unit": 29.0,
+   "walmart_unit": 30.0,
+   "diff": 1.0,
+   "diff_pct": 3.45,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Aderezo de mayonesa McCormick 420 g",
+   "cantidad": 1,
+   "bodega_total": 49.0,
+   "walmart_total": 50.0,
+   "bodega_unit": 49.0,
+   "walmart_unit": 50.0,
+   "diff": 1.0,
+   "diff_pct": 2.04,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Salsa Inglesa Crosse & Blackwell 290 ml",
+   "cantidad": 1,
+   "bodega_total": 70.0,
+   "walmart_total": 71.0,
+   "bodega_unit": 70.0,
+   "walmart_unit": 71.0,
+   "diff": 1.0,
+   "diff_pct": 1.43,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Servilletas Pétalo 420 pzas",
+   "cantidad": 1,
+   "bodega_total": 50.0,
+   "walmart_total": 47.0,
+   "bodega_unit": 50.0,
+   "walmart_unit": 47.0,
+   "diff": -3.0,
+   "diff_pct": -6.0,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Servitoalla Pétalo Mega Jumbo 270 hojas dobles",
+   "cantidad": 3,
+   "bodega_total": 102.0,
+   "walmart_total": 108.0,
+   "bodega_unit": 34.0,
+   "walmart_unit": 36.0,
+   "diff": 6.0,
+   "diff_pct": 5.88,
+   "cuenta": "conjunto"
+  },
+  {
+   "producto": "Yoghurt Yoplait Griego natural sin azúcar 750 g",
+   "cantidad": 1,
+   "bodega_total": 75.0,
+   "walmart_total": 75.0,
+   "bodega_unit": 75.0,
+   "walmart_unit": 75.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Yoghurt bebible Alpura multi sabor 10 pzas 220 g",
+   "cantidad": 1,
+   "bodega_total": 108.0,
+   "walmart_total": 108.0,
+   "bodega_unit": 108.0,
+   "walmart_unit": 108.0,
+   "diff": 0.0,
+   "diff_pct": 0.0,
+   "cuenta": "axel"
+  },
+  {
+   "producto": "Queso petit suisse Danonino fresa 6 pzas 42 g",
+   "cantidad": 1,
+   "bodega_total": 37.0,
+   "walmart_total": 38.0,
+   "bodega_unit": 37.0,
+   "walmart_unit": 38.0,
+   "diff": 1.0,
+   "diff_pct": 2.7,
+   "cuenta": "karen"
+  }
+ ],
+ "sustitutos": [
+  {
+   "bodega": "Arroz SOS grano largo súper extra 750 g",
+   "cant_b": 3,
+   "bodega_total": 66.0,
+   "walmart": "Arroz SOS grano largo uruguayo 1 kg",
+   "cant_w": 3,
+   "walmart_total": 84.0,
+   "nota": "$29.33/kg vs $28.00/kg: Walmart más barato"
+  },
+  {
+   "bodega": "Pack Coffee Mate 640 g + 140 g (780 g)",
+   "cant_b": 1,
+   "bodega_total": 99.0,
+   "walmart": "Coffee Mate en polvo 640 g",
+   "cant_w": 1,
+   "walmart_total": 105.0,
+   "nota": "$127/kg vs $164/kg: Bodega más barato"
+  },
+  {
+   "bodega": "Leche Santa Clara 4 pack 1 l + taza de regalo",
+   "cant_b": 1,
+   "bodega_total": 135.0,
+   "walmart": "Leche Santa Clara entera caja 6 pzas 1 l",
+   "cant_w": 1,
+   "walmart_total": 170.0,
+   "nota": "$33.75/l vs $28.33/l: Walmart más barato"
+  }
+ ],
+ "atun_sexta_pieza_bodega": 21.0,
+ "totales": {
+  "bodega": 3094.5,
+  "walmart": 3233.0,
+  "bodega_identicos": 2773.5,
+  "walmart_identicos": 2874.0,
+  "articulos_bodega": 61,
+  "articulos_walmart": 60,
+  "articulos_identicos": 55
+ },
+ "resultados_por_producto": {
+  "bodega_gana": 22,
+  "empates": 8,
+  "walmart_gana": 3
+ },
+ "cuentas": {
+  "axel": {
+   "solo": 1052.0,
+   "lineas": [
+    {
+     "producto": "Duraznos La Costeña cubitos 425 g",
+     "cant": 1,
+     "importe": 40.0
+    },
+    {
+     "producto": "Jamón de pavo Sabori 400 g",
+     "cant": 1,
+     "importe": 62.0
+    },
+    {
+     "producto": "Salchicha de pavo Sabori 500 g",
+     "cant": 1,
+     "importe": 40.0
+    },
+    {
+     "producto": "Avena 3 Minutos 400 g",
+     "cant": 1,
+     "importe": 36.0
+    },
+    {
+     "producto": "Lysol Crisp Linen 354 g",
+     "cant": 1,
+     "importe": 139.0
+    },
+    {
+     "producto": "Frijoles refritos La Costeña",
+     "cant": 2,
+     "importe": 24.0
+    },
+    {
+     "producto": "Granos de elote Herdez",
+     "cant": 2,
+     "importe": 27.0
+    },
+    {
+     "producto": "Atún Dolores 140 g",
+     "cant": 6,
+     "importe": 126.0
+    },
+    {
+     "producto": "Uva verde 1 kg",
+     "cant": 1,
+     "importe": 87.0
+    },
+    {
+     "producto": "Leche Santa Clara 4 pack + taza",
+     "cant": 1,
+     "importe": 135.0
+    },
+    {
+     "producto": "Pan Oroweat mantequilla 680 g",
+     "cant": 1,
+     "importe": 92.0
+    },
+    {
+     "producto": "Queso manchego NocheBuena 200 g",
+     "cant": 1,
+     "importe": 61.0
+    },
+    {
+     "producto": "Yoghurt Yoplait Griego 750 g",
+     "cant": 1,
+     "importe": 75.0
+    },
+    {
+     "producto": "Yoghurt Alpura bebible 10 pzas",
+     "cant": 1,
+     "importe": 108.0
+    }
+   ]
+  },
+  "karen": {
+   "solo": 340.5,
+   "lineas": [
+    {
+     "producto": "Frijoles refritos La Costeña",
+     "cant": 2,
+     "importe": 24.0
+    },
+    {
+     "producto": "Salchicha de pavo Sabori 500 g",
+     "cant": 1,
+     "importe": 40.0
+    },
+    {
+     "producto": "Papel higiénico Cottonelle 30 rollos",
+     "cant": 1,
+     "importe": 199.0
+    },
+    {
+     "producto": "Danonino fresa 6 pzas",
+     "cant": 1,
+     "importe": 37.0
+    },
+    {
+     "producto": "Granos de elote Herdez",
+     "cant": 3,
+     "importe": 40.5
+    }
+   ]
+  },
+  "conjunto": {
+   "total": 1702.0,
+   "mitad": 851.0,
+   "lineas": [
+    {
+     "producto": "Aceite de oliva Nutrioli 500 ml",
+     "cant": 1,
+     "importe": 150.0
+    },
+    {
+     "producto": "Aceite de soya Nutrioli 946 ml",
+     "cant": 3,
+     "importe": 144.0
+    },
+    {
+     "producto": "Arroz SOS 750 g",
+     "cant": 3,
+     "importe": 66.0
+    },
+    {
+     "producto": "Pack Coffee Mate",
+     "cant": 1,
+     "importe": 99.0
+    },
+    {
+     "producto": "Nescafé Verarica 180 g",
+     "cant": 1,
+     "importe": 112.0
+    },
+    {
+     "producto": "Cloralex 3.75 l",
+     "cant": 2,
+     "importe": 116.0
+    },
+    {
+     "producto": "Caldo Knorr 24 cubos",
+     "cant": 2,
+     "importe": 112.0
+    },
+    {
+     "producto": "Spaghetti La Moderna",
+     "cant": 2,
+     "importe": 24.0
+    },
+    {
+     "producto": "Jabón Grisi 450 ml",
+     "cant": 2,
+     "importe": 124.0
+    },
+    {
+     "producto": "Pasta dental Colgate",
+     "cant": 1,
+     "importe": 35.0
+    },
+    {
+     "producto": "Pantene 3 Minute Miracle",
+     "cant": 2,
+     "importe": 180.0
+    },
+    {
+     "producto": "Detergente Roma 1 kg",
+     "cant": 1,
+     "importe": 35.0
+    },
+    {
+     "producto": "Jabón Salvo 1.2 l",
+     "cant": 2,
+     "importe": 122.0
+    },
+    {
+     "producto": "Mayonesa McCormick chipotle",
+     "cant": 1,
+     "importe": 44.0
+    },
+    {
+     "producto": "Soya Maggi",
+     "cant": 1,
+     "importe": 39.0
+    },
+    {
+     "producto": "Catsup Heinz",
+     "cant": 1,
+     "importe": 29.0
+    },
+    {
+     "producto": "Mayonesa McCormick 420 g",
+     "cant": 1,
+     "importe": 49.0
+    },
+    {
+     "producto": "Salsa Inglesa Crosse & Blackwell",
+     "cant": 1,
+     "importe": 70.0
+    },
+    {
+     "producto": "Servilletas Pétalo 420",
+     "cant": 1,
+     "importe": 50.0
+    },
+    {
+     "producto": "Servitoalla Pétalo",
+     "cant": 3,
+     "importe": 102.0
+    }
+   ]
+  }
+ },
+ "reparto": {
+  "axel_total": 1903.0,
+  "karen_total": 1191.5,
+  "axel_pct": 61.4963,
+  "karen_pct": 38.5037
+ },
+ "financiamiento": {
+  "cuatro_quincenas": {
+   "total": 3895.0,
+   "intereses": 800.5,
+   "tasa_pct": 25.87,
+   "axel": {
+    "intereses": 492.28,
+    "total": 2395.28,
+    "por_quincena": 598.82
+   },
+   "karen": {
+    "intereses": 308.22,
+    "total": 1499.72,
+    "por_quincena": 374.93
+   }
+  },
+  "dos_quincenas": {
+   "total": 3629.0,
+   "intereses": 534.5,
+   "tasa_pct": 17.27,
+   "axel": {
+    "intereses": 328.7,
+    "total": 2231.7,
+    "por_quincena": 1115.85
+   },
+   "karen": {
+    "intereses": 205.8,
+    "total": 1397.3,
+    "por_quincena": 698.65
+   }
+  },
+  "escenario_elegido": "cuatro_quincenas"
+ },
+ "supuestos": [
+  "Conjunto dividido 50/50",
+  "Productos no mencionados asignados a Axel",
+  "Intereses proporcionales al total de cada quien",
+  "Precios del carrito ya con descuentos e IVA; sin envío"
+ ]
+}
