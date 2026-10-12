@@ -1,0 +1,200 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-profeco-bordes",
+  "descripcion": "Lectura PROFECO con los 17 registros de bordes de REVISION-S5-r3 H-r3-03 (ILUSTRATIVO; §11 versión 1.5, Q2-04 = A). Renglón por renglón: 1 carga; 2 «1,021.00» = 102100 carga; 3 ATUN DOLORES liga con ATÚN DOLORES (normalizada) y carga; 4 0.00 -> «precio no positivo»; 5 cadena vacía -> «cadena comercial vacía» (rechazo, no filtrado); 6 24.505 -> «precio con más de dos decimales»; 7 14 columnas -> «columnas: 14 en vez de 15»; 8 SORIANA -> filtrado; 9 FRIJOLES con liga propuesta -> omitido en producción y loaded_proposed en revisión; 10 duplicado de 1; 11 «$24.90», 12 « 25 », 13 «25.5», 14 «1,021», 15 (WALMART TEPEYAC), 16 «Atún Dolores / 140 g / Dolores» y 17 (2026/08/17) cargan. Producción: 17 = 4 + 1 + 1 + 10 + 0 + 1; revisión: 17 = 4 + 1 + 0 + 10 + 1 + 1. coverage cuenta cargados y cargados con liga propuesta.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-05"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§11 de S5-interfaz.md"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "docs/estado/wf1/REVISION-S5-r3.md H-r3-03"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-profeco-filtro.md",
+    "que": "liga normalizada (pregunta 2 = Q2-57) y filtro en uso (opción A); los motivos de lectura son regla técnica"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega",
+          "profeco_name": "BODEGA AURRERA",
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "bodega-vallejo",
+          "kind": "branch",
+          "parent": "bodega",
+          "name": "bodega-vallejo",
+          "profeco_name": "BODEGA AURRERA VALLEJO",
+          "municipality": "AZCAPOTZALCO",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": "WALMART",
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart-tepeyac",
+          "kind": "branch",
+          "parent": "walmart",
+          "name": "walmart-tepeyac",
+          "profeco_name": "WALMART TEPEYAC",
+          "municipality": "GUSTAVO A. MADERO",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "produccion",
+        "funcion": "profeco_import",
+        "argumentos": {
+          "files": [
+            "oraculo/fixtures/s5/_datos/profeco-bordes.csv"
+          ],
+          "links_file": "oraculo/fixtures/s5/_datos/profeco-vinculos.csv",
+          "mode": "production"
+        }
+      },
+      {
+        "id": "revision",
+        "funcion": "profeco_import",
+        "argumentos": {
+          "files": [
+            "oraculo/fixtures/s5/_datos/profeco-bordes.csv"
+          ],
+          "links_file": "oraculo/fixtures/s5/_datos/profeco-vinculos.csv",
+          "mode": "review"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "produccion": {
+      "read": 17,
+      "rejected": 4,
+      "filtered_out": 1,
+      "skipped": 1,
+      "loaded": 10,
+      "loaded_proposed": 0,
+      "duplicates": 1,
+      "coverage": [
+        {
+          "chain": "BODEGA AURRERA",
+          "municipality": "AZCAPOTZALCO",
+          "price_count": 7
+        },
+        {
+          "chain": "WALMART",
+          "municipality": "GUSTAVO A. MADERO",
+          "price_count": 3
+        }
+      ],
+      "rejections": [
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 4,
+          "reason": "precio no positivo"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 5,
+          "reason": "cadena comercial vacía"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 6,
+          "reason": "precio con más de dos decimales"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 7,
+          "reason": "columnas: 14 en vez de 15"
+        }
+      ]
+    },
+    "revision": {
+      "read": 17,
+      "rejected": 4,
+      "filtered_out": 1,
+      "skipped": 0,
+      "loaded": 10,
+      "loaded_proposed": 1,
+      "duplicates": 1,
+      "coverage": [
+        {
+          "chain": "BODEGA AURRERA",
+          "municipality": "AZCAPOTZALCO",
+          "price_count": 8
+        },
+        {
+          "chain": "WALMART",
+          "municipality": "GUSTAVO A. MADERO",
+          "price_count": 3
+        }
+      ],
+      "rejections": [
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 4,
+          "reason": "precio no positivo"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 5,
+          "reason": "cadena comercial vacía"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 6,
+          "reason": "precio con más de dos decimales"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+          "row": 7,
+          "reason": "columnas: 14 en vez de 15"
+        }
+      ]
+    }
+  }
+}

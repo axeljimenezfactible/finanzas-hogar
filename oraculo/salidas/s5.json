@@ -71,9 +71,170 @@
         "cheapest_store": "walmart"
       }
     },
+    "s5-carritos-granel": {
+      "granel": {
+        "stores": [
+          {
+            "store": "bodega",
+            "total_cents": 101,
+            "identical_count": 2,
+            "identical_total_cents": 101,
+            "substitute_count": 0,
+            "piece_count": 2,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 0,
+            "assumes_membership": false
+          },
+          {
+            "store": "walmart",
+            "total_cents": 103,
+            "identical_count": 2,
+            "identical_total_cents": 103,
+            "substitute_count": 0,
+            "piece_count": 2,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 2,
+            "assumes_membership": false
+          }
+        ],
+        "identical_pieces": 2,
+        "winners": [
+          {
+            "store": "bodega",
+            "count": 2
+          },
+          {
+            "store": "walmart",
+            "count": 0
+          }
+        ],
+        "ties": 0,
+        "rows": [
+          {
+            "kind": "identical",
+            "product": "arroz-grano-largo",
+            "lines": [
+              {
+                "store": "bodega",
+                "presentation": "arroz-grano-largo.sos-750g",
+                "quantity_milli": 500,
+                "total_cents": 51,
+                "base_unit_price_cents": 135
+              },
+              {
+                "store": "walmart",
+                "presentation": "arroz-grano-largo.sos-750g",
+                "quantity_milli": 500,
+                "total_cents": 52,
+                "base_unit_price_cents": 137
+              }
+            ],
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "atun-agua",
+            "lines": [
+              {
+                "store": "bodega",
+                "presentation": "atun-agua.dolores-140g",
+                "quantity_milli": 500,
+                "total_cents": 51,
+                "base_unit_price_cents": 721
+              },
+              {
+                "store": "walmart",
+                "presentation": "atun-agua.dolores-140g",
+                "quantity_milli": 500,
+                "total_cents": 52,
+                "base_unit_price_cents": 736
+              }
+            ],
+            "winner_store": "bodega"
+          }
+        ]
+      },
+      "granel-sustituto": {
+        "stores": [
+          {
+            "store": "bodega",
+            "total_cents": 733,
+            "identical_count": 0,
+            "identical_total_cents": 0,
+            "substitute_count": 1,
+            "piece_count": 1,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 0,
+            "assumes_membership": false
+          },
+          {
+            "store": "walmart",
+            "total_cents": 1868,
+            "identical_count": 0,
+            "identical_total_cents": 0,
+            "substitute_count": 1,
+            "piece_count": 1,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 1135,
+            "assumes_membership": false
+          }
+        ],
+        "identical_pieces": 0,
+        "winners": [
+          {
+            "store": "bodega",
+            "count": 0
+          },
+          {
+            "store": "walmart",
+            "count": 0
+          }
+        ],
+        "ties": 0,
+        "rows": [
+          {
+            "kind": "substitute",
+            "product": "arroz-grano-largo",
+            "lines": [
+              {
+                "store": "bodega",
+                "presentation": "arroz-grano-largo.sos-750g",
+                "quantity_milli": 333,
+                "total_cents": 733,
+                "base_unit_price_cents": 2933
+              },
+              {
+                "store": "walmart",
+                "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+                "quantity_milli": 667,
+                "total_cents": 1868,
+                "base_unit_price_cents": 2800
+              }
+            ],
+            "winner_store": "walmart"
+          }
+        ]
+      }
+    },
     "s5-carritos-presentaciones": {
       "carritos": {
         "stores": [
+          {
+            "store": "bodega",
+            "total_cents": 42600,
+            "identical_count": 1,
+            "identical_total_cents": 10500,
+            "substitute_count": 2,
+            "piece_count": 11,
+            "missing_count": 0,
+            "stale_count": 4,
+            "difference_vs_cheapest_cents": 0,
+            "assumes_membership": false
+          },
           {
             "store": "tercera",
             "total_cents": 16500,
@@ -83,7 +244,7 @@
             "piece_count": 7,
             "missing_count": 2,
             "stale_count": 0,
-            "difference_vs_cheapest_cents": 0,
+            "difference_vs_cheapest_cents": null,
             "assumes_membership": false
           },
           {
@@ -95,34 +256,22 @@
             "piece_count": 9,
             "missing_count": 1,
             "stale_count": 0,
-            "difference_vs_cheapest_cents": 13150,
-            "assumes_membership": false
-          },
-          {
-            "store": "bodega",
-            "total_cents": 42600,
-            "identical_count": 1,
-            "identical_total_cents": 10500,
-            "substitute_count": 2,
-            "piece_count": 11,
-            "missing_count": 0,
-            "stale_count": 4,
-            "difference_vs_cheapest_cents": 26100,
+            "difference_vs_cheapest_cents": null,
             "assumes_membership": false
           }
         ],
         "identical_pieces": 5,
         "winners": [
           {
+            "store": "bodega",
+            "count": 0
+          },
+          {
             "store": "tercera",
             "count": 1
           },
           {
             "store": "walmart",
-            "count": 0
-          },
-          {
-            "store": "bodega",
             "count": 0
           }
         ],
@@ -1303,6 +1452,11 @@
         "error": "future_date"
       }
     },
+    "s5-ingesta-hora-24": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
     "s5-ingesta-precio-duplicado": {
       "precio": {
         "error": "duplicate_price"
@@ -1316,6 +1470,16 @@
     "s5-ingesta-tienda-desconocida": {
       "precio": {
         "error": "unknown_store"
+      }
+    },
+    "s5-ingesta-zona-hora": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
+    "s5-ingesta-zona-minuto": {
+      "precio": {
+        "error": "invalid_date"
       }
     },
     "s5-lectura-asistida-apagada": {
@@ -1510,19 +1674,22 @@
       "canasta": {
         "stores": [
           {
-            "store": "t3",
-            "total_cents": 500,
-            "missing_count": 1
-          },
-          {
             "store": "t2",
             "total_cents": 3100,
-            "missing_count": 0
+            "missing_count": 0,
+            "difference_vs_cheapest_cents": 0
           },
           {
             "store": "t1",
             "total_cents": 3100,
-            "missing_count": 0
+            "missing_count": 0,
+            "difference_vs_cheapest_cents": 0
+          },
+          {
+            "store": "t3",
+            "total_cents": 500,
+            "missing_count": 1,
+            "difference_vs_cheapest_cents": null
           }
         ],
         "cheapest_store": "t2"
@@ -1710,6 +1877,44 @@
         ]
       }
     },
+    "s5-precio-vigente-zona": {
+      "precio-t-menos6": {
+        "price": {
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual"
+        },
+        "references": [],
+        "promotion": null
+      },
+      "precio-t-cero": {
+        "price": {
+          "price_cents": 2000,
+          "observed_date": "2026-10-10",
+          "source": "manual"
+        },
+        "references": [],
+        "promotion": null
+      },
+      "precio-t-mas6": {
+        "price": {
+          "price_cents": 2000,
+          "observed_date": "2026-10-10",
+          "source": "manual"
+        },
+        "references": [],
+        "promotion": null
+      },
+      "precio-t-fraccion": {
+        "price": {
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual"
+        },
+        "references": [],
+        "promotion": null
+      }
+    },
     "s5-precios-viejos": {
       "despensa": {
         "stale": [
@@ -1757,6 +1962,94 @@
         "without_price": []
       }
     },
+    "s5-profeco-bordes": {
+      "produccion": {
+        "read": 17,
+        "rejected": 4,
+        "filtered_out": 1,
+        "skipped": 1,
+        "loaded": 10,
+        "loaded_proposed": 0,
+        "duplicates": 1,
+        "coverage": [
+          {
+            "chain": "BODEGA AURRERA",
+            "municipality": "AZCAPOTZALCO",
+            "price_count": 7
+          },
+          {
+            "chain": "WALMART",
+            "municipality": "GUSTAVO A. MADERO",
+            "price_count": 3
+          }
+        ],
+        "rejections": [
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 4,
+            "reason": "precio no positivo"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 5,
+            "reason": "cadena comercial vacía"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 6,
+            "reason": "precio con más de dos decimales"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 7,
+            "reason": "columnas: 14 en vez de 15"
+          }
+        ]
+      },
+      "revision": {
+        "read": 17,
+        "rejected": 4,
+        "filtered_out": 1,
+        "skipped": 0,
+        "loaded": 10,
+        "loaded_proposed": 1,
+        "duplicates": 1,
+        "coverage": [
+          {
+            "chain": "BODEGA AURRERA",
+            "municipality": "AZCAPOTZALCO",
+            "price_count": 8
+          },
+          {
+            "chain": "WALMART",
+            "municipality": "GUSTAVO A. MADERO",
+            "price_count": 3
+          }
+        ],
+        "rejections": [
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 4,
+            "reason": "precio no positivo"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 5,
+            "reason": "cadena comercial vacía"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 6,
+            "reason": "precio con más de dos decimales"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-bordes.csv",
+            "row": 7,
+            "reason": "columnas: 14 en vez de 15"
+          }
+        ]
+      }
+    },
     "s5-profeco-filtro": {
       "filtro": {
         "read": 8,
@@ -1764,6 +2057,7 @@
         "filtered_out": 3,
         "skipped": 0,
         "loaded": 4,
+        "loaded_proposed": 0,
         "duplicates": 1,
         "coverage": [
           {
@@ -1790,6 +2084,66 @@
         "rejections": []
       }
     },
+    "s5-profeco-motivos": {
+      "motivos": {
+        "read": 9,
+        "rejected": 8,
+        "filtered_out": 0,
+        "skipped": 0,
+        "loaded": 1,
+        "loaded_proposed": 0,
+        "duplicates": 0,
+        "coverage": [
+          {
+            "chain": "BODEGA AURRERA",
+            "municipality": "AZCAPOTZALCO",
+            "price_count": 1
+          }
+        ],
+        "rejections": [
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 1,
+            "reason": "precio vacío"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 2,
+            "reason": "precio con comas mal puestas"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 3,
+            "reason": "precio con comas mal puestas"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 4,
+            "reason": "precio ilegible"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 5,
+            "reason": "precio ilegible"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 6,
+            "reason": "producto vacío"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 7,
+            "reason": "fecha vacía"
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+            "row": 8,
+            "reason": "fecha futura"
+          }
+        ]
+      }
+    },
     "s5-profeco-muestra": {
       "produccion": {
         "read": 10,
@@ -1797,6 +2151,7 @@
         "filtered_out": 2,
         "skipped": 2,
         "loaded": 2,
+        "loaded_proposed": 0,
         "duplicates": 1,
         "coverage": [
           {
@@ -1813,15 +2168,18 @@
         "rejections": [
           {
             "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
-            "row": 3
+            "row": 3,
+            "reason": "fecha ilegible"
           },
           {
             "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-            "row": 2
+            "row": 2,
+            "reason": "columnas: 14 en vez de 15"
           },
           {
             "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-            "row": 3
+            "row": 3,
+            "reason": "precio ilegible"
           }
         ]
       },
@@ -1830,7 +2188,8 @@
         "rejected": 3,
         "filtered_out": 2,
         "skipped": 1,
-        "loaded": 3,
+        "loaded": 2,
+        "loaded_proposed": 1,
         "duplicates": 1,
         "coverage": [
           {
@@ -1847,15 +2206,18 @@
         "rejections": [
           {
             "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
-            "row": 3
+            "row": 3,
+            "reason": "fecha ilegible"
           },
           {
             "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-            "row": 2
+            "row": 2,
+            "reason": "columnas: 14 en vez de 15"
           },
           {
             "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-            "row": 3
+            "row": 3,
+            "reason": "precio ilegible"
           }
         ]
       }

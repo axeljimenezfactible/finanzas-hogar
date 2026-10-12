@@ -2,7 +2,6 @@ package motor_fin
 
 import (
 	"sort"
-	"time"
 )
 
 // Input es la raíz de entradas (interfaz §2; en las fixtures, entradas.datos).
@@ -31,15 +30,15 @@ type Input struct {
 
 // Params §2.1.
 type Params struct {
-	Today                *Date      `json:"today"`
-	Now                  *time.Time `json:"now"`
-	Zone                 string     `json:"zone"`
-	Holder               string     `json:"holder"`
-	GroceriesCategory    string     `json:"groceries_category"`
-	PaperCategory        string     `json:"paper_category"`
-	RepeatCadenceEnabled bool       `json:"repeat_cadence_enabled"`
-	BudgetWarningPct     *int64     `json:"budget_warning_pct"`
-	BudgetLimitPct       *int64     `json:"budget_limit_pct"`
+	Today                *Date    `json:"today"`
+	Now                  *Instant `json:"now"`
+	Zone                 string   `json:"zone"`
+	Holder               string   `json:"holder"`
+	GroceriesCategory    string   `json:"groceries_category"`
+	PaperCategory        string   `json:"paper_category"`
+	RepeatCadenceEnabled bool     `json:"repeat_cadence_enabled"`
+	BudgetWarningPct     *int64   `json:"budget_warning_pct"`
+	BudgetLimitPct       *int64   `json:"budget_limit_pct"`
 }
 
 // Person §2.2.
@@ -211,7 +210,7 @@ type SavingsMovement struct {
 	AmountCents  Cents  `json:"amount_cents"`
 }
 
-// Cadence §2.10 (PROVISIONAL, docs/estado/bloqueos/S2-proyeccion-interruptor.md).
+// Cadence §2.10 (FIRME desde la puerta 2, Q2-21 a Q2-24: la arma quien llama; S2 solo la usa).
 type Cadence struct {
 	Purchases []CreditPurchase `json:"purchases"`
 	Expenses  []Expense        `json:"expenses"`
@@ -268,7 +267,7 @@ func (in *Input) Prepare() error {
 	case p.Today != nil && p.Now == nil:
 		in.today = *p.Today
 	case p.Now != nil && p.Today == nil:
-		t, err := Today(*p.Now, p.Zone)
+		t, err := Today(p.Now.Time, p.Zone)
 		if err != nil {
 			return err
 		}

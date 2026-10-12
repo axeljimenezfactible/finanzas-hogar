@@ -45,8 +45,9 @@ BLOCKED = {}
 # C1 v1.2 (puerta 1b): K36, K38, K39 y K43 cerraron esas marcas; quedan FIRMES citando su decisión. N-297 y N-300 son FIRMES
 # (claves de K43), pero dónde viven send_time y advance_days sigue PROVISIONAL por el bloqueo abierto S1-parametros-avisos.
 PARTIAL = {}
-FIRM = {'N-023': 'K43', 'N-064': 'K43', 'N-226': 'K43', 'N-297': 'K43', 'N-300': 'K43', 'N-042': 'K39', 'N-230': 'K36', 'N-311': 'K36', 'N-313': 'K36', 'N-120': 'K38'}
-PLACE = {'N-297': 'S1-parametros-avisos', 'N-300': 'S1-parametros-avisos'}
+FIRM = {'N-023': 'K43', 'N-064': 'K43', 'N-226': 'K43', 'N-297': 'K43, K47', 'N-300': 'K43, K47', 'N-042': 'K39', 'N-230': 'K36', 'N-311': 'K36', 'N-313': 'K36', 'N-120': 'K38'}
+# C1 v1.3 (puerta 2, Q2-11 B, K47): el lugar de send_time y advance_days quedó en app_setting; ya no hay marca de lugar.
+PLACE = {}
 def status(n):
     if n in LOCAL: return 'Local'
     if n in BLOCKED: return f'BLOQUEO `{BLOCKED[n]}`'
@@ -189,22 +190,34 @@ for _p, _item in d['paths'].items():
             for k in _pk(_rq, 'parameters') & _pk(_rq, 'reset_parameters'): pwr.setdefault(k, []).append(_o['operationId'])
 _pb = [p['key'] for p in PRM['params'] if len(prd.get(p['key'], [])) != 1 or len(pwr.get(p['key'], [])) != 1]
 assert not _pb, f'parámetros K44 sin una lectura y un cambio: {_pb}'
-PARAMS_T = '\n'.join(['| Clave de `app_setting` | Tipo | Unidad | Valor inicial | Decisión | Sección de Ajustes (propuesta de K44) | Sembrada en | Lectura | Cambio y «restablecer» |', '|---|---|---|---|---|---|---|---|---|'] +
-    [f"| `{p['key']}` | {p['type']} | {p['unit']} | `{p['initial_json']}` | {p['decision']} | {p['section']} | {p['migration']} | `{prd[p['key']][0]}` | `{pwr[p['key']][0]}` |" for p in PRM['params']])
+def _rg(p):
+    if p['type'] == 'hora HH:MM': return '`pattern: ' + p['pattern'].replace('|', '\\|') + '`'  # «|» escapado: la celda es de una tabla
+    if p['type'] == 'lista de enteros': return 'elementos `minimum: 0`'
+    return f"`minimum: {p['minimum']}`" + (f", `maximum: {p['maximum']}`" if 'maximum' in p else '')
+PARAMS_T = '\n'.join(['| Clave de `app_setting` | Tipo | Unidad | Valor inicial | Rango (cambio) | Decisión | Sección de Ajustes (propuesta de K44) | Sembrada en | Lectura | Cambio y «restablecer» |', '|---|---|---|---|---|---|---|---|---|---|'] +
+    [f"| `{p['key']}` | {p['type']} | {p['unit']} | `{p['initial_json']}` | {_rg(p)} | {p['decision']} | {p['section']} | {p['migration']} | `{prd[p['key']][0]}` | `{pwr[p['key']][0]}` |" for p in PRM['params']])
 PARAMS_SV = '\n'.join(['| Parámetro | Para qué | Por qué no tiene valor sembrado aquí |', '|---|---|---|'] + [f"| {p['name']} | {p['purpose']} | {p['reason']} |" for p in PRM['params_sin_valor']])
-# C1 v1.2 · corrección r1 (A-01 de docs/estado/p1c/REVISION-C1-r1.md, C1-23): validación de send_time y advance_days (K43) tal como
-# la declaran las propiedades de params_json en openapi; Notification y NotificationUpdate tienen que traer las mismas.
-_pjk = {n: SCH[n]['properties']['params_json'].get('properties', {}) for n in ('Notification', 'NotificationUpdate')}
-assert _pjk['Notification'] == _pjk['NotificationUpdate'] and set(_pjk['Notification']) == {'send_time', 'advance_days'}, _pjk
-def _rng(v): return ', '.join(f'`{k}: {v[k]}`' for k in ('type', 'pattern', 'minimum') if k in v) + (f", valor por omisión `{v['default']}`" if 'default' in v else ', sin valor por omisión')
-PARAMS_K43 = '\n'.join(['Validación de las claves de K43 en `params_json` de `Notification` y `NotificationUpdate` (`updateNotification`). El tipo y el rango son FIRMES (K43); solo su lugar es PROVISIONAL, bloqueo `S1-parametros-avisos` (§13):', ''] +
-    [f"- `{k}`: {_rng(v)}." for k, v in _pjk['NotificationUpdate'].items()] +
-    ['- `weekday` y `day_of_month` (decisión F) no se declaran como propiedades: entran por `additionalProperties: true` con el valor que sembró la 00001.'])
+# C1 v1.3 (puerta 2, K47, K50): sustituye a PARAMS_K43. El rango de cada clave sale de params.json (parse_schema.py lo lee de los
+# disparadores de S1) y tiene que ser el mismo que declara la propiedad de la clave en el cambio de su sección (openapi.json).
+_wq = {}
+for _p, _item in d['paths'].items():
+    for _m, _o in _item.items():
+        if isinstance(_o, dict) and _m == 'patch':
+            _rq = _o.get('requestBody', {}).get('content', {}).get('application/json', {}).get('schema', {}).get('$ref', '')
+            for _k, _v in SCH.get(_rq.split('/')[-1], {}).get('properties', {}).get('parameters', {}).get('properties', {}).items(): _wq[_k] = _v
+for _pp in PRM['params']:
+    _v = _wq[_pp['key']]
+    _vv = _v.get('items', _v) if _pp['type'] == 'lista de enteros' else _v
+    assert all(_vv.get(c) == _pp.get(c) for c in ('minimum', 'maximum', 'pattern')), (_pp['key'], _v)
+PARAMS_RANGO = '\n'.join(['Reglas de rango que no caben en una sola clave (`@param_rango` de las migraciones; las valida la API con 422 `validation_failed`):', ''] +
+    [f"- `{p['key']}`: {n['note']}; decisión {n['decision']}." for p in PRM['params'] for n in p.get('range_notes', []) if any(q['key'] in n['note'] for q in PRM['params'] if q['key'] != p['key'])] +
+    ['', 'Parámetros que antes no tenían valor o vivían en `notification.params_json` y ya son claves de `app_setting` (`@param_sin_valor_cerrado`):', ''] +
+    [f"- {p['name']}: {p['closed']}." for p in PRM['params_sin_valor_cerrados']])
 INCONS = open(os.path.join(HERE, 'c1_inconsistencias.md'), encoding='utf-8').read().strip()
 t = open(os.path.join(HERE, 'c1_plantilla.md'), encoding='utf-8').read()
 repl = {'N_TABLAS': str(len(schema)), 'N_TABLAS_OP': str(sum(1 for v in tabla_ops.values() if v)), 'N_RUTAS': str(len(d['paths'])), 'N_OPS': str(len(OPS)), 'N_ESQ': str(len(d['components']['schemas'])), 'N_IDEM': str(sum(o['idem'] for o in OPS)),
         'N_LISTAS': str(sum(1 for o in OPS if any(p.get('$ref', '').endswith('/Cursor') for p in o['params']))), 'FILTROS': FILTROS, 'ENTIDADES': ENTIDADES, 'VISTAS': VISTAS, 'MATRIZ': MATRIZ,
-        'RESUMEN': RESUMEN, 'SIN_N': SIN_N, 'N_SIN_EP': N_SIN_EP, 'TABLAS': TABLAS, 'AJUSTES': AJUSTES, 'CAPACIDADES': CAPACIDADES, 'OPERACIONES': OPERACIONES, 'INCONSISTENCIAS': INCONS, 'PARAMS': PARAMS_T, 'PARAMS_SV': PARAMS_SV, 'PARAMS_K43': PARAMS_K43}
+        'RESUMEN': RESUMEN, 'SIN_N': SIN_N, 'N_SIN_EP': N_SIN_EP, 'TABLAS': TABLAS, 'AJUSTES': AJUSTES, 'CAPACIDADES': CAPACIDADES, 'OPERACIONES': OPERACIONES, 'INCONSISTENCIAS': INCONS, 'PARAMS': PARAMS_T, 'PARAMS_SV': PARAMS_SV, 'PARAMS_RANGO': PARAMS_RANGO}
 for k, v in repl.items(): t = t.replace('{{%s}}' % k, v)
 assert '{{' not in t, re.findall(r'{{\w+}}', t)
 open(os.path.join(OUT, 'docs/contratos/C1-datos.md'), 'w', encoding='utf-8').write(t)

@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «creditos-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «creditos-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto creditos-a"
-  version: "1.2.0"
+  version: "1.3.0"
   description: "Extracto de la etiqueta «Créditos» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -455,7 +455,7 @@ components:
           description: "Denominador de la tasa anual ordinaria"
         vat_on_interest_bp:
           $ref: "#/components/schemas/BasisPoints"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski)"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26)"
         annual_fee_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Comisión anual"
@@ -492,6 +492,10 @@ components:
         annual_rate_decimals:
           type: "integer"
           description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
+        vat_included:
+          type: "boolean"
+          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18)"
+          x-provisional: true
         live_debt_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Deuda viva = capital + intereses por pagar (motor S3)."
@@ -523,10 +527,12 @@ components:
             enum:
               - "annual_rate"
               - "rate_base"
+              - "vat"
               - "min_payment_pct_bp"
               - "min_payment_fixed_cents"
-          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18); vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar»."
+          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18, RN-26): son 5 desde C1 v1.3 (Q2-67 opción 1, K46): annual_rate, rate_base, vat, min_payment_pct_bp y min_payment_fixed_cents. vat sale mientras vat_included sea NULL (falta capturar si la tasa incluye IVA). Vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar». Con vat_included = 0 y sin vat_on_interest_bp también sale vat: PROVISIONAL, bloqueo S3-iva-lectura (pregunta 2; lectura en uso de S3 1.5 §5.3)."
           x-calculado: true
+          x-provisional: true
     CreditTotals:
       type: "object"
       description: "Totales de créditos (N-191)."

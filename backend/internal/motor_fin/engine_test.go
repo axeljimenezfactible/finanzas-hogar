@@ -296,7 +296,7 @@ func TestProyeccionCadencia(t *testing.T) {
 	s["cadence"].(M)["expenses"] = []any{cashExp(20, "papel", 19900, "2027-05-10", "variable")}
 	on, off := q(t, s, "proyeccion", `{"from":"2026-10"}`), q(t, seed, "proyeccion", `{"from":"2026-10"}`)
 	eq(t, "papel alterno en may", qc(t, on, "months[7].cash.total_cents")-qc(t, off, "months[7].cash.total_cents"), 19900)
-	eq(t, "marca mes 7", fmt.Sprint(leaf(t, on, "months[6].provisional")), "[S2-proyeccion-interruptor]")
+	eq(t, "sin marca mes 7 (FIRME, Q2-21 a Q2-24)", leaf(t, on, "months[6].provisional"), nil)
 	eq(t, "sin marca mes 6", leaf(t, on, "months[5].provisional"), nil)
 	s["cadence"].(M)["expenses"] = []any{cashExp(20, "papel", 19900, "2027-03-10", "variable")}
 	if _, e := Eval(mustJSON(t, s), "proyeccion", []byte(`{"from":"2026-10"}`)); e == nil || e.Code != CodeCadenceBefore7 {
@@ -306,12 +306,12 @@ func TestProyeccionCadencia(t *testing.T) {
 	push(l, "planned_items", incomePlan())
 	push(l, "incomes", M{"id": 1, "person": "axel", "kind": "fixed", "amount_cents": 990000, "income_date": "2026-10-14", "planned_item_id": 1})
 	f := q(t, l, "flujo_quincenal", `{"from":"2026-10-q1","count":2}`)
-	eq(t, "q1 marca", fmt.Sprint(leaf(t, f, "[0].provisional")), "[S2-flujo-quincenal]")
+	eq(t, "q1 sin marca (FIRME, Q2-14 = A)", leaf(t, f, "[0].provisional"), nil)
 	eq(t, "q1 esperado", qc(t, f, "[0].income.expected_cents"), 0)
 	eq(t, "q2 esperado", qc(t, f, "[1].income.expected_cents"), 1200000)
 	eq(t, "q2 marca", leaf(t, f, "[1].provisional"), nil)
 	p := q(t, l, "proyeccion", `{"from":"2026-10"}`)
-	eq(t, "proy oct marca", fmt.Sprint(leaf(t, p, "months[0].provisional")), "[S2-flujo-quincenal]")
+	eq(t, "proy oct sin marca", leaf(t, p, "months[0].provisional"), nil)
 	eq(t, "proy nov sin marca", leaf(t, p, "months[1].provisional"), nil)
 }
 

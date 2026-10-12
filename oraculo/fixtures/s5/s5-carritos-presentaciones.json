@@ -2,7 +2,7 @@
   "formato": "fixture/1",
   "motor": "s5",
   "caso": "s5-carritos-presentaciones",
-  "descripcion": "compare_carts con tres canastas (ILUSTRATIVO; §7.2, REVISION-S5-r2 R2-03) y la opción A del bloqueo S5-carritos-detalle. Bodega (base, del 1-sep, vieja) = los 3 sustitutos de data.json + 6 atunes a 21.00; Walmart = arroz y crema de data.json + 5 atunes a 21.50 (sin leche); tercera = arroz 750 g a 15.00 + arroz 1 kg a 50.00 + 5 atunes a 20.00. (1) El sustituto del arroz lo gana Walmart (28.00/kg) porque la tercera cobró 65.00 por 1.75 kg (37.14/kg), aunque su 750 g sola saldría a 20.00/kg. (2) missing_count: tercera 2 (crema y leche), Walmart 1 (leche), Bodega 0. (3) stale_count de Bodega = 4 presentaciones agrupadas (el atún cuenta una vez aunque salga como idéntico y como «solo aquí»). winners[] va en el orden de stores[].",
+  "descripcion": "compare_carts con tres canastas (ILUSTRATIVO; §7.2, REVISION-S5-r2 R2-03) y la opción A del bloqueo S5-carritos-detalle. Bodega (base, del 1-sep, vieja) = los 3 sustitutos de data.json + 6 atunes a 21.00; Walmart = arroz y crema de data.json + 5 atunes a 21.50 (sin leche); tercera = arroz 750 g a 15.00 + arroz 1 kg a 50.00 + 5 atunes a 20.00. (1) El sustituto del arroz lo gana Walmart (28.00/kg) porque la tercera cobró 65.00 por 1.75 kg (37.14/kg), aunque su 750 g sola saldría a 20.00/kg. (2) missing_count: tercera 2 (crema y leche), Walmart 1 (leche), Bodega 0. (3) stale_count de Bodega = 4 presentaciones agrupadas (el atún cuenta una vez aunque salga como idéntico y como «solo aquí»). (4) §7.4 de la versión 1.5 (H-r3-04, Q2-05 = A): Bodega es la única completa, va primero con diferencia 0; tercera (165.00) y Walmart (296.50), incompletas, van después por total y con diferencia null. winners[] va en el orden de stores[].",
   "fuente": [
     {
       "tipo": "bloqueo",
@@ -167,6 +167,18 @@
     "carritos": {
       "stores": [
         {
+          "store": "bodega",
+          "total_cents": 42600,
+          "identical_count": 1,
+          "identical_total_cents": 10500,
+          "substitute_count": 2,
+          "piece_count": 11,
+          "missing_count": 0,
+          "stale_count": 4,
+          "difference_vs_cheapest_cents": 0,
+          "assumes_membership": false
+        },
+        {
           "store": "tercera",
           "total_cents": 16500,
           "identical_count": 1,
@@ -175,7 +187,7 @@
           "piece_count": 7,
           "missing_count": 2,
           "stale_count": 0,
-          "difference_vs_cheapest_cents": 0,
+          "difference_vs_cheapest_cents": null,
           "assumes_membership": false
         },
         {
@@ -187,34 +199,22 @@
           "piece_count": 9,
           "missing_count": 1,
           "stale_count": 0,
-          "difference_vs_cheapest_cents": 13150,
-          "assumes_membership": false
-        },
-        {
-          "store": "bodega",
-          "total_cents": 42600,
-          "identical_count": 1,
-          "identical_total_cents": 10500,
-          "substitute_count": 2,
-          "piece_count": 11,
-          "missing_count": 0,
-          "stale_count": 4,
-          "difference_vs_cheapest_cents": 26100,
+          "difference_vs_cheapest_cents": null,
           "assumes_membership": false
         }
       ],
       "identical_pieces": 5,
       "winners": [
         {
+          "store": "bodega",
+          "count": 0
+        },
+        {
           "store": "tercera",
           "count": 1
         },
         {
           "store": "walmart",
-          "count": 0
-        },
-        {
-          "store": "bodega",
           "count": 0
         }
       ],

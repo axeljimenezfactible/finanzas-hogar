@@ -1,0 +1,157 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-profeco-motivos",
+  "descripcion": "Lista cerrada de motivos de §11 (ILUSTRATIVO; regla técnica, H-r3-03, Q2-04 = A), los que no salen en s5-profeco-bordes: 1 precio vacío; 2 «1,02.00» y 3 «1.0,0» -> comas mal puestas (un grupo de 2 dígitos; una coma en los decimales); 4 «12.» (punto sin decimales) y 5 «12.5x» -> ilegible; 6 producto vacío; 7 fecha vacía; 8 2026-10-13 con hoy 2026-10-12 -> fecha futura; 9 carga. «CSV mal formado» no tiene renglón: con comillas sueltas el lector en uso las acepta y el renglón cae en «columnas».",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-05"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§11 de S5-interfaz.md"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-profeco-filtro.md",
+    "que": "el renglón de control pasa el filtro en uso (opción A); los motivos son regla técnica"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega",
+          "profeco_name": "BODEGA AURRERA",
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "bodega-vallejo",
+          "kind": "branch",
+          "parent": "bodega",
+          "name": "bodega-vallejo",
+          "profeco_name": "BODEGA AURRERA VALLEJO",
+          "municipality": "AZCAPOTZALCO",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": "WALMART",
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart-tepeyac",
+          "kind": "branch",
+          "parent": "walmart",
+          "name": "walmart-tepeyac",
+          "profeco_name": "WALMART TEPEYAC",
+          "municipality": "GUSTAVO A. MADERO",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "motivos",
+        "funcion": "profeco_import",
+        "argumentos": {
+          "files": [
+            "oraculo/fixtures/s5/_datos/profeco-motivos.csv"
+          ],
+          "links_file": "oraculo/fixtures/s5/_datos/profeco-vinculos.csv",
+          "mode": "production"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "motivos": {
+      "read": 9,
+      "rejected": 8,
+      "filtered_out": 0,
+      "skipped": 0,
+      "loaded": 1,
+      "loaded_proposed": 0,
+      "duplicates": 0,
+      "coverage": [
+        {
+          "chain": "BODEGA AURRERA",
+          "municipality": "AZCAPOTZALCO",
+          "price_count": 1
+        }
+      ],
+      "rejections": [
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 1,
+          "reason": "precio vacío"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 2,
+          "reason": "precio con comas mal puestas"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 3,
+          "reason": "precio con comas mal puestas"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 4,
+          "reason": "precio ilegible"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 5,
+          "reason": "precio ilegible"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 6,
+          "reason": "producto vacío"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 7,
+          "reason": "fecha vacía"
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-motivos.csv",
+          "row": 8,
+          "reason": "fecha futura"
+        }
+      ]
+    }
+  }
+}

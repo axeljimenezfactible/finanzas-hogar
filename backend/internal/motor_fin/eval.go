@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"strings"
-	"time"
 )
 
 // ---------- Vistas del oráculo (§3.14): claves literales de model.json, en centavos ----------
@@ -262,8 +261,8 @@ func dispatch(in *Input, fn string, args []byte) (any, error) {
 	switch fn {
 	case "calendario":
 		var a struct {
-			Date *Date      `json:"date"`
-			Now  *time.Time `json:"now"`
+			Date *Date    `json:"date"`
+			Now  *Instant `json:"now"`
 		}
 		if err := dec(&a); err != nil {
 			return nil, err
@@ -272,7 +271,7 @@ func dispatch(in *Input, fn string, args []byte) (any, error) {
 			return nil, missing(fn)
 		}
 		if a.Now != nil {
-			d, err := Today(*a.Now, in.Params.Zone)
+			d, err := Today(a.Now.Time, in.Params.Zone)
 			if err != nil {
 				return nil, err
 			}

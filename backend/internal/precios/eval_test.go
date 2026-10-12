@@ -161,6 +161,8 @@ func TestEvalErrores(t *testing.T) {
 		{`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [{"presentation": "arroz-1kg", "store": "walmart", "price_cents": 1, "source": "manual"}]}`, "missing_field"},
 		{`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [{"presentation": "arroz-1kg", "store": "walmart"}]}`, "missing_field"},
 		{`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [{"presentation": "arroz-1kg", "store": "walmart", "price_cents": 1, "observed_date": "2026-10-10", "source": "manual", "created_at": "ayer"}]}`, "invalid_date"},
+		{`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [{"presentation": "arroz-1kg", "store": "walmart", "price_cents": 1, "observed_date": "2026-10-10", "source": "manual", "created_at": "2026-10-10T13:00:00+24:00"}]}`, "invalid_date"},
+		{`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [{"presentation": "arroz-1kg", "store": "walmart", "price_cents": 1, "observed_date": "2026-10-10", "source": "manual", "created_at": "2026-10-10T13:00:00+05:60"}]}`, "invalid_date"},
 		{`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [{"presentation": "arroz-1kg", "store": "walmart", "price_cents": 1, "observed_date": "2026-10-13", "source": "manual"}]}`, "future_date"},
 		{`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [{"presentation": "arroz-1kg", "store": "walmart", "price_cents": 1, "observed_date": "2026-10-10", "source": "manual"}, {"presentation": "arroz-1kg", "store": "walmart", "price_cents": 2, "observed_date": "2026-10-10", "source": "manual"}]}`, "duplicate_price"},
 		{`{"today": "2026-10-12", ` + evalCatalog + `, "carts": [{"code": "a"}]}`, "missing_field"},
@@ -195,8 +197,10 @@ func TestEvalCarritos(t *testing.T) {
   {"presentation": "arroz-750", "quantity_milli": 3000, "unit_price_cents": 2200}, {"presentation": "frijol-1kg", "quantity_milli": 1000, "unit_price_cents": 3000}]}]`)
 	m := run(t, in, "compare_carts", `{"base": "w", "others": ["b"]}`)
 	st := m["stores"].([]any)
-	eq(t, "empate de totales: gana la de menos viejos", js(st[0].(map[string]any)["store"]), `"walmart"`)
-	eq(t, "Bodega", js(st[1]), `{"assumes_membership":false,"difference_vs_cheapest_cents":0,"identical_count":0,"identical_total_cents":0,"missing_count":1,"piece_count":4,"stale_count":2,"store":"bodega","substitute_count":1,"total_cents":9600}`)
+	// Las dos están incompletas (§7.4): a igual total va primero la base y las dos diferencias son null.
+	eq(t, "empate de totales: primero la base", js(st[0].(map[string]any)["store"]), `"walmart"`)
+	eq(t, "Walmart incompleta", js(st[0].(map[string]any)["difference_vs_cheapest_cents"]), `null`)
+	eq(t, "Bodega", js(st[1]), `{"assumes_membership":false,"difference_vs_cheapest_cents":null,"identical_count":0,"identical_total_cents":0,"missing_count":1,"piece_count":4,"stale_count":2,"store":"bodega","substitute_count":1,"total_cents":9600}`)
 	rows := m["rows"].([]any)
 	eq(t, "renglones", len(rows), 3)
 	eq(t, "sustituto", js(rows[0].(map[string]any)["winner_store"]), `"walmart"`)
@@ -341,14 +345,49 @@ func TestEvalCarritosVariasPresentaciones(t *testing.T) {
 		order = append(order, r["store"].(string))
 		got[r["store"].(string)] = [3]any{r["total_cents"], r["missing_count"], r["stale_count"]}
 	}
-	eq(t, "orden por total", strings.Join(order, ","), "sams,walmart,bodega")
+	eq(t, "completas y luego incompletas por total (§7.4)", strings.Join(order, ","), "bodega,sams,walmart")
 	eq(t, "bodega total/faltantes/viejos", js(got["bodega"]), `[17600,0,3]`)
 	eq(t, "walmart total/faltantes/viejos", js(got["walmart"]), `[12500,1,0]`)
 	eq(t, "sams total/faltantes/viejos", js(got["sams"]), `[10400,1,0]`)
-	eq(t, "winners en el orden de stores", js(m["winners"]), `[{"count":1,"store":"sams"},{"count":0,"store":"walmart"},{"count":0,"store":"bodega"}]`)
+	eq(t, "winners en el orden de stores", js(m["winners"]), `[{"count":0,"store":"bodega"},{"count":1,"store":"sams"},{"count":0,"store":"walmart"}]`)
 	rows := m["rows"].([]any)
 	eq(t, "renglones", len(rows), 4)
 	// arroz: Bodega 6600/2.25 kg = 29.33; Walmart 8400/3 kg = 28.00; Sam's 6500/1.75 kg = 37.14 (su 750 g sola daría 20.00)
 	eq(t, "sustituto con dos presentaciones en Sam's", js(rows[1].(map[string]any)["winner_store"]), `"walmart"`)
 	eq(t, "idéntico", js(rows[0].(map[string]any)["winner_store"]), `"sams"`)
+}
+
+// Bloqueo S5-carritos-granel (PROVISIONAL, regla en uso; §7.2 paso 8, H-r3-02): el total de la
+// tienda es HALF_UP de la suma exacta (un solo redondeo) y cada línea se muestra con su HALF_UP.
+func TestEvalCarritosGranel(t *testing.T) {
+	in := evalInput(`, "carts": [
+ {"code": "b", "store": "bodega", "kind": "expense", "observed_date": "2026-10-10", "source": "manual", "lines": [
+  {"presentation": "arroz-750", "quantity_milli": 500, "unit_price_cents": 101}, {"presentation": "frijol-1kg", "quantity_milli": 500, "unit_price_cents": 101}]},
+ {"code": "w", "store": "walmart", "kind": "cart", "observed_date": "2026-10-10", "source": "manual", "lines": [
+  {"presentation": "arroz-750", "quantity_milli": 500, "unit_price_cents": 103}, {"presentation": "frijol-1kg", "quantity_milli": 500, "unit_price_cents": 103}]}]`)
+	m := run(t, in, "compare_carts", `{"base": "b", "others": ["w"]}`)
+	st := m["stores"].([]any)
+	eq(t, "Bodega 1.01 con un solo redondeo", js(st[0].(map[string]any)["total_cents"]), `101`)
+	eq(t, "Walmart 1.03", js(st[1].(map[string]any)["total_cents"]), `103`)
+	eq(t, "diferencia", js(st[1].(map[string]any)["difference_vs_cheapest_cents"]), `2`)
+	l := m["rows"].([]any)[0].(map[string]any)["lines"].([]any)[0].(map[string]any)
+	eq(t, "línea 0.505 se muestra 51", js(l["total_cents"]), `51`)
+	eq(t, "unidad base exacta 134.67", js(l["base_unit_price_cents"]), `135`)
+}
+
+// S-8 con zona horaria (§6, §15.1): el created_at se compara como instante, no como texto.
+func TestEvalCreatedAtZona(t *testing.T) {
+	for _, c := range []struct{ created, want string }{
+		{"2026-10-10T07:00:00-06:00", `{"observed_date":"2026-10-10","price_cents":2100,"source":"ticket_manual"}`},
+		{"2026-10-10T12:00:00+00:00", `{"observed_date":"2026-10-10","price_cents":2000,"source":"manual"}`},
+		{"2026-10-10T18:00:00+06:00", `{"observed_date":"2026-10-10","price_cents":2000,"source":"manual"}`},
+		{"2026-10-10T06:30:00.250-06:00", `{"observed_date":"2026-10-10","price_cents":2100,"source":"ticket_manual"}`},
+	} {
+		in := json.RawMessage(`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [
+ {"presentation": "arroz-1kg", "store": "walmart", "price_cents": 2000, "observed_date": "2026-10-10", "source": "manual", "is_promotional": false, "source_ref": null, "created_at": "2026-10-10T12:30:00Z"},
+ {"presentation": "arroz-1kg", "store": "walmart", "price_cents": 2100, "observed_date": "2026-10-10", "source": "ticket_manual", "is_promotional": false, "source_ref": null, "created_at": "` + c.created + `"}]}`)
+		if got := js(run(t, in, "current_price", `{"presentation": "arroz-1kg", "store": "walmart"}`)["price"]); got != c.want {
+			t.Errorf("%s: %s, se esperaba %s", c.created, got, c.want)
+		}
+	}
 }

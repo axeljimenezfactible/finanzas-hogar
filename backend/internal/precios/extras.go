@@ -35,8 +35,8 @@ type MembershipResult struct {
 
 // Membership evalúa la membresía de una tienda que la exige. El ahorro por compra viene dado
 // (savings != nil) o sale de la canasta: Σ max(0, costo en la mejor tienda sin membresía −
-// costo en la tienda). Equilibrio = techo(costo anual ÷ ahorro por compra) (PROVISIONAL p4b);
-// compras al año = despensas en cadenas de los últimos 365 días (PROVISIONAL p4a, opción B).
+// costo en la tienda). Equilibrio = techo(costo anual ÷ ahorro por compra) (FIRME, puerta 2, Q2-63 = A);
+// compras al año = despensas en cadenas de los últimos 365 días (FIRME, puerta 2, Q2-62 = B).
 func (b *Book) Membership(store string, savings *int64, list []ListItem, hist []Purchase) (*MembershipResult, error) {
 	st, ok := b.Store(store)
 	if !ok {
@@ -85,6 +85,8 @@ func (b *Book) Membership(store string, savings *int64, list []ListItem, hist []
 	}
 	switch {
 	case r.AnnualFeeCents == nil:
+		// §8 y criterio S5-09 (alta): con costo ausente la salida dice «sin costo capturado»
+		// PROVISIONAL. La marca se queda hasta que el integrador alinee S5-09 con §8 (REVISION-motor-S5-r1, M-3).
 		r.Verdict, r.Note = "missing_fee", "sin costo capturado (PROVISIONAL, S5-09)"
 	case r.BasketSavingsCents == 0:
 		r.Verdict = "not_worth_it"
@@ -121,7 +123,12 @@ type StaleReport struct {
 // precio que compita (un precio de más de D0 días ya no compite: queda «sin precio»).
 func (b *Book) StalePricesForPlan(products []string, assigned map[string]string, grocery time.Time) (*StaleReport, error) {
 	r := &StaleReport{Stale: []StaleItem{}, WithoutPrice: []string{}}
+	seen := map[string]bool{}
 	for _, pc := range products {
+		if seen[pc] { // §15.2: en el orden de products[], sin repetidos
+			continue
+		}
+		seen[pc] = true
 		q, ok, err := b.QuoteFor(pc, assigned[pc], "", grocery)
 		switch {
 		case err != nil:

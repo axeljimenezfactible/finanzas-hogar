@@ -10,3 +10,29 @@ Opciones:
 - Pregunta 3. A (la que tomé, PROVISIONAL): sobre `bmi_tenths`, el valor que se muestra (lo que la persona lee coincide con su categoría). B: sobre el valor exacto (18.4975 se muestra 18.5 pero es «bajo peso»).
 Impacto: solo los campos `leftovers`, `needed_milli` de artículos por ritmo y `bmi_class` en la franja de ±0.05 de cada corte. Ninguna cifra canon del oráculo ni del reporte depende de esto.
 Cómo seguí: el contrato S4 usa la opción A de cada pregunta marcada PROVISIONAL con cita a este bloqueo (§6.2 paso 3, §6.4 y §10.1); el resto del motor no depende de esto.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-44 · (1) Sobrante previsto
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «se cocina lo planeado; el plan no genera sobrantes nuevos y `leftovers` muestra los sobrantes registrados que el plan no alcanza a consumir.»
+- **Consecuencia** (el archivo no la separa por opción; es su «Impacto»)**:** Impacto: solo los campos `leftovers`, `needed_milli` de artículos por ritmo y `bmi_class` en la franja de ±0.05 de cada corte. Ninguna cifra canon del oráculo ni del reporte depende de esto.
+- **Qué cambia:** Campos `leftovers`, `needed_milli` de artículos por ritmo y `bmi_class` en la franja de ±0.05 de cada corte; `S4-interfaz.md` §6.2 paso 3, §6.4 y §10.1 quitan la marca PROVISIONAL.
+- **Estado:** RESUELTO
+
+### Q2-45 · (2) Reposición por ritmo de consumo
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «si la existencia estimada al domingo de la semana es ≤ nivel de reposición, se agrega el consumo estimado de una semana (HALF_UP(ritmo × 7 / días del ritmo)); sin nivel no se repone.»
+- **Consecuencia** (el archivo no la separa por opción; es su «Impacto»)**:** Impacto: solo los campos `leftovers`, `needed_milli` de artículos por ritmo y `bmi_class` en la franja de ±0.05 de cada corte. Ninguna cifra canon del oráculo ni del reporte depende de esto.
+- **Qué cambia:** Campos `leftovers`, `needed_milli` de artículos por ritmo y `bmi_class` en la franja de ±0.05 de cada corte; `S4-interfaz.md` §6.2 paso 3, §6.4 y §10.1 quitan la marca PROVISIONAL.
+- **Estado:** RESUELTO
+
+### Q2-46 · (3) Clasificación del IMC
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «sobre `bmi_tenths`, el valor que se muestra (lo que la persona lee coincide con su categoría).»
+- **Consecuencia** (el archivo no la separa por opción; es su «Impacto»)**:** Impacto: solo los campos `leftovers`, `needed_milli` de artículos por ritmo y `bmi_class` en la franja de ±0.05 de cada corte. Ninguna cifra canon del oráculo ni del reporte depende de esto.
+- **Qué cambia:** Campos `leftovers`, `needed_milli` de artículos por ritmo y `bmi_class` en la franja de ±0.05 de cada corte; `S4-interfaz.md` §6.2 paso 3, §6.4 y §10.1 quitan la marca PROVISIONAL.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

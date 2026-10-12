@@ -1100,9 +1100,7 @@
           "committed_cents": 0,
           "balance_cents": 1195000,
           "cumulative_balance_cents": 1195000,
-          "provisional": [
-            "S2-flujo-quincenal"
-          ]
+          "provisional": null
         },
         {
           "fortnight": "2026-10-q2",
@@ -1187,9 +1185,7 @@
             "planned_expense_cents": 0,
             "net_cash_cents": 2385118,
             "cumulative_diff_cents": 97375,
-            "provisional": [
-              "S2-flujo-quincenal"
-            ]
+            "provisional": null
           },
           {
             "index": 2,
@@ -2007,6 +2003,87 @@
         }
       ]
     },
+    "s2-metas-vencida": {
+      "metas": {
+        "month_summary": {
+          "saved_cents": 800,
+          "contributed_this_month_cents": 800,
+          "planned_this_month_cents": 0
+        },
+        "goals": [
+          {
+            "goal_id": 1,
+            "kind": "goal",
+            "saved_cents": 100,
+            "target_cents": 500,
+            "progress_tenths_pct": 200,
+            "progress_pct": 20,
+            "months_left": 1,
+            "needed_monthly_cents": 400,
+            "plan": [
+              {
+                "month": "2026-10",
+                "cents": 400
+              }
+            ],
+            "state": "overdue"
+          },
+          {
+            "goal_id": 2,
+            "kind": "goal",
+            "saved_cents": 100,
+            "target_cents": 500,
+            "progress_tenths_pct": 200,
+            "progress_pct": 20,
+            "months_left": 0,
+            "needed_monthly_cents": 400,
+            "plan": [
+              {
+                "month": "2026-10",
+                "cents": 400
+              }
+            ],
+            "state": "overdue"
+          },
+          {
+            "goal_id": 3,
+            "kind": "fund",
+            "saved_cents": 600,
+            "target_cents": 500,
+            "progress_tenths_pct": 1200,
+            "progress_pct": 120,
+            "months_left": null,
+            "needed_monthly_cents": null,
+            "plan": [],
+            "state": "achieved"
+          },
+          {
+            "goal_id": 4,
+            "kind": "fund",
+            "saved_cents": 0,
+            "target_cents": null,
+            "progress_tenths_pct": null,
+            "progress_pct": null,
+            "months_left": 0,
+            "needed_monthly_cents": null,
+            "plan": [],
+            "state": "overdue"
+          },
+          {
+            "goal_id": 5,
+            "kind": "fund",
+            "saved_cents": 0,
+            "target_cents": null,
+            "progress_tenths_pct": null,
+            "progress_pct": null,
+            "months_left": null,
+            "needed_monthly_cents": null,
+            "plan": [],
+            "state": "in_progress"
+          }
+        ]
+      }
+    },
     "s2-metas": {
       "metas": {
         "month_summary": {
@@ -2049,7 +2126,8 @@
                 "month": "2027-03",
                 "cents": 100000
               }
-            ]
+            ],
+            "state": "in_progress"
           },
           {
             "goal_id": 2,
@@ -2089,7 +2167,8 @@
                 "month": "2027-04",
                 "cents": 44954
               }
-            ]
+            ],
+            "state": "in_progress"
           },
           {
             "goal_id": 3,
@@ -2100,7 +2179,8 @@
             "progress_pct": 110,
             "months_left": 3,
             "needed_monthly_cents": 0,
-            "plan": []
+            "plan": [],
+            "state": "achieved"
           },
           {
             "goal_id": 4,
@@ -2111,7 +2191,8 @@
             "progress_pct": null,
             "months_left": null,
             "needed_monthly_cents": null,
-            "plan": []
+            "plan": [],
+            "state": "in_progress"
           }
         ]
       }
@@ -2984,9 +3065,7 @@
             "planned_expense_cents": 0,
             "net_cash_cents": -176752,
             "cumulative_diff_cents": 125869,
-            "provisional": [
-              "S2-proyeccion-interruptor"
-            ]
+            "provisional": null
           },
           {
             "index": 8,
@@ -3044,9 +3123,7 @@
             "planned_expense_cents": 0,
             "net_cash_cents": -176750,
             "cumulative_diff_cents": 125870,
-            "provisional": [
-              "S2-proyeccion-interruptor"
-            ]
+            "provisional": null
           },
           {
             "index": 9,
@@ -3102,9 +3179,7 @@
             "planned_expense_cents": 0,
             "net_cash_cents": -176752,
             "cumulative_diff_cents": 125869,
-            "provisional": [
-              "S2-proyeccion-interruptor"
-            ]
+            "provisional": null
           },
           {
             "index": 10,
@@ -3162,9 +3237,7 @@
             "planned_expense_cents": 0,
             "net_cash_cents": -176750,
             "cumulative_diff_cents": 125870,
-            "provisional": [
-              "S2-proyeccion-interruptor"
-            ]
+            "provisional": null
           },
           {
             "index": 11,
@@ -3220,9 +3293,7 @@
             "planned_expense_cents": 0,
             "net_cash_cents": -176752,
             "cumulative_diff_cents": 125869,
-            "provisional": [
-              "S2-proyeccion-interruptor"
-            ]
+            "provisional": null
           },
           {
             "index": 12,
@@ -3280,9 +3351,7 @@
             "planned_expense_cents": 0,
             "net_cash_cents": -176750,
             "cumulative_diff_cents": 125870,
-            "provisional": [
-              "S2-proyeccion-interruptor"
-            ]
+            "provisional": null
           }
         ]
       }
@@ -4583,6 +4652,165 @@
         }
       }
     },
+    "s2-ventanas-a-mas-c": {
+      "a-mas-c": {
+        "error": "invalid_argument"
+      },
+      "a-b-c": [
+        {
+          "label": "A",
+          "start": "2026-10-10",
+          "end": "2026-11-09",
+          "days": 31,
+          "accrued": {
+            "total_cents": 50000,
+            "by_person": {
+              "axel": 50000,
+              "karen": 0
+            },
+            "by_category": {
+              "despensa": 50000
+            }
+          },
+          "cash": {
+            "total_cents": 100000,
+            "payments_cents": 0,
+            "cash_expenses_cents": 100000,
+            "by_person": {
+              "axel": 100000,
+              "karen": 0
+            },
+            "by_category": {
+              "despensa": 100000
+            },
+            "payment_count": 0,
+            "payments": []
+          },
+          "cumulative_diff_cents": -50000,
+          "covering_groceries_seq": null
+        },
+        {
+          "label": "B",
+          "start": "2026-11-10",
+          "end": "2026-12-09",
+          "days": 30,
+          "accrued": {
+            "total_cents": 50000,
+            "by_person": {
+              "axel": 50000,
+              "karen": 0
+            },
+            "by_category": {
+              "despensa": 50000
+            }
+          },
+          "cash": {
+            "total_cents": 0,
+            "payments_cents": 0,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {},
+            "payment_count": 0,
+            "payments": []
+          },
+          "cumulative_diff_cents": 0,
+          "covering_groceries_seq": null
+        },
+        {
+          "label": "C",
+          "start": "2026-12-10",
+          "end": "2027-01-09",
+          "days": 31,
+          "accrued": {
+            "total_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {}
+          },
+          "cash": {
+            "total_cents": 0,
+            "payments_cents": 0,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {},
+            "payment_count": 0,
+            "payments": []
+          },
+          "cumulative_diff_cents": 0,
+          "covering_groceries_seq": null
+        }
+      ],
+      "meses-oct-dic": [
+        {
+          "label": "1-oct-2026 a 31-oct-2026",
+          "start": "2026-10-01",
+          "end": "2026-10-31",
+          "days": 31,
+          "accrued": {
+            "total_cents": 50000,
+            "by_person": {
+              "axel": 50000,
+              "karen": 0
+            },
+            "by_category": {
+              "despensa": 50000
+            }
+          },
+          "cash": {
+            "total_cents": 100000,
+            "payments_cents": 0,
+            "cash_expenses_cents": 100000,
+            "by_person": {
+              "axel": 100000,
+              "karen": 0
+            },
+            "by_category": {
+              "despensa": 100000
+            },
+            "payment_count": 0,
+            "payments": []
+          },
+          "cumulative_diff_cents": -50000,
+          "covering_groceries_seq": null
+        },
+        {
+          "label": "1-dic-2026 a 31-dic-2026",
+          "start": "2026-12-01",
+          "end": "2026-12-31",
+          "days": 31,
+          "accrued": {
+            "total_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {}
+          },
+          "cash": {
+            "total_cents": 0,
+            "payments_cents": 0,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {},
+            "payment_count": 0,
+            "payments": []
+          },
+          "cumulative_diff_cents": 0,
+          "covering_groceries_seq": null
+        }
+      ]
+    },
     "s2-ventanas-dia-5": {
       "ventanas": [
         {
@@ -5140,7 +5368,86 @@
       },
       "contenida-a-b": {
         "error": "invalid_argument"
-      }
+      },
+      "hueco-sin-eventos": {
+        "error": "invalid_argument"
+      },
+      "d-r-caso-2": [
+        {
+          "label": "d",
+          "start": "2026-10-10",
+          "end": "2026-10-10",
+          "days": 1,
+          "accrued": {
+            "total_cents": 194750,
+            "by_person": {
+              "axel": 119764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750
+            }
+          },
+          "cash": {
+            "total_cents": 0,
+            "payments_cents": 0,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {},
+            "payment_count": 0,
+            "payments": []
+          },
+          "cumulative_diff_cents": 194750,
+          "covering_groceries_seq": 1
+        },
+        {
+          "label": "r",
+          "start": "2026-10-11",
+          "end": "2026-11-09",
+          "days": 30,
+          "accrued": {
+            "total_cents": 194750,
+            "by_person": {
+              "axel": 119764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750
+            }
+          },
+          "cash": {
+            "total_cents": 97375,
+            "payments_cents": 97375,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 59882,
+              "karen": 37493
+            },
+            "by_category": {
+              "despensa": 97375
+            },
+            "payment_count": 1,
+            "payments": [
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 1,
+                "due_date": "2026-10-30",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "cumulative_diff_cents": 292125,
+          "covering_groceries_seq": 1
+        }
+      ]
     },
     "s2-zona-medianoche": {
       "antes": {
@@ -5190,6 +5497,12 @@
       },
       "dos-formas": {
         "error": "invalid_argument"
+      },
+      "desfase-cero": {
+        "error": "invalid_date"
+      },
+      "desfase-cdmx": {
+        "error": "invalid_date"
       }
     }
   }

@@ -7,7 +7,7 @@ Verificadores independientes en Python 3.14 (solo biblioteca estándar, siempre 
 - `model.py` (Decimal) y `verify3.py` (float): importarlos ya no escribe nada (S2-04). Ejecutados, escriben en `datos/tmp/model.json` y `datos/tmp/verify3.json` (rutas relativas a la raíz del repositorio); `model.py` además dice si su salida es igual byte a byte a `model.json`.
 
 ## Oráculo financiero S2 (`fin_*.py`)
-Contrato: `docs/contratos/motores/S2-interfaz.md` 1.2 y `oraculo/fixtures/FORMATO.md` 1.2. Método propio (S2-03): un libro de costos y movimientos que se recorre día por día; dinero en centavos enteros, intermedios con `Fraction`, HALF_UP solo donde lo dice la interfaz (§1.3).
+Contrato: `docs/contratos/motores/S2-interfaz.md` 1.3 y `oraculo/fixtures/FORMATO.md` 1.2. Método propio (S2-03): un libro de costos y movimientos que se recorre día por día; dinero en centavos enteros, intermedios con `Fraction`, HALF_UP solo donde lo dice la interfaz (§1.3).
 
 | Archivo | Contenido |
 |---|---|
@@ -19,7 +19,7 @@ Contrato: `docs/contratos/motores/S2-interfaz.md` 1.2 y `oraculo/fixtures/FORMAT
 | `fin_proyeccion.py` | `proyeccion` (12 meses, interruptor K21) |
 | `fin_metas.py` | `metas` |
 | `fin_vistas.py` | vistas con las claves literales de `model.json` (§3.14) |
-| `fin_genera_fixtures.py` | escribe las 27 fixtures y `_datos/` de `fixtures/s2/` (único autor, §5.0) |
+| `fin_genera_fixtures.py` | escribe las 32 fixtures y `_datos/` de `fixtures/s2/` (único autor, §5.0) |
 | `fin_run_fixtures.py` | corre las fixtures y escribe `salidas/s2.json` (`salida/1`) |
 | `fin_verify.py` | segunda vía en float de las 159 hojas de S2 |
 | `compara.py` | comparación genérica de todos los motores (FORMATO §5); `fin_compara.py` = `compara.py s2` |
@@ -27,7 +27,7 @@ Contrato: `docs/contratos/motores/S2-interfaz.md` 1.2 y `oraculo/fixtures/FORMAT
 ## Comandos (desde la raíz del repositorio)
 ```
 python3 -I oraculo/fin_genera_fixtures.py     # solo si cambia la interfaz; es determinista
-python3 -I oraculo/fin_run_fixtures.py        # 27 fixtures, 27 coinciden, 0 diferencias
+python3 -I oraculo/fin_run_fixtures.py        # 32 fixtures, 32 coinciden, 0 diferencias
 python3 -I oraculo/compara.py s2              # usa datos/tmp/motor-s2.json si existe; --sin-motor para omitirlo
 python3 -I oraculo/fin_verify.py              # 159 de 159 a 2 decimales
 ```

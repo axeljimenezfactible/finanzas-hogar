@@ -7,3 +7,15 @@ Opciones:
 3. (c) RN-07 literal, pero el pago que ajusta los centavos del capital es el primero y no el último. Consecuencia (verificada con aritmética exacta): no evita los negativos. 3,094.50 a 4 q da capital 773.61, 773.63, 773.63 y 773.63 e intereses +0.01, −0.01, −0.01 y +0.01; 1,000.00 en 3 da capital 333.34, 333.33 y 333.33 e intereses −0.01, 0 y +0.01. Exige cambiar el CHECK como (b) y cambia el capital de la fixture `s3-tienda-abonos`.
 Impacto: queda PROVISIONAL en `S3-interfaz.md` la serie de capital (y el interés por pago) de toda compra con intereses 0 y 2 o más pagos: §5.1 (línea), §5.3 (meses sin intereses), §5.5 y §5.8 (tienda). La lista `provisional` de esas compras, de sus entradas del calendario unificado y de los escenarios del comparador que las usan lleva `S3-serie-sin-intereses` (§14.1); el disponible A/B y el objetivo 3 del comparador dependen de esa serie cuando hay una promoción. No cambia ningún monto (77362 ×3 + 77364; 33333, 33333 y 33334), ni el interés total 0.00 (S3-07), ni ninguna cifra canon (el canon no tiene promociones). WF-2 no puede guardar la serie de la promoción de la línea con el CHECK actual hasta la decisión.
 Cómo seguí: cada sección conserva la regla que ya tenía, marcada PROVISIONAL con este bloqueo: la línea, RN-07 literal (opción b, la de K14); los meses sin intereses y la tienda, capital = monto (opción a). Las fixtures `s3-promocion-0`, `s3-tarjeta-sin-intereses` y `s3-tienda-abonos` piden solo los montos y el interés total, que son FIRMES. Ningún número provisional entra en cifras canon ni en el esquema.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-38 · ¿Qué capital lleva cada pago cuando los intereses son 0?
+- **Respuesta:** **(a)** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «Con intereses 0, capital = monto en los tres tipos (línea, tarjeta y tienda).»
+- **Consecuencia:** intereses 0 en cada pago; cabe en el esquema sin cambios; RN-07 y K14 ganan una excepción escrita («serie sin intereses»); 3,094.50 a 4 q queda con capital 773.62 ×3 + 773.64. Con los montos de RN-07 fijos (los que pide S3-07), es la única serie con intereses ≥ 0 en cada pago.
+- **Qué cambia:** La línea tipo Kueski cambia de RN-07 literal a «capital = monto» (excepción escrita «serie sin intereses» en RN-07 y K14; `reglas-negocio.md`); `S3-interfaz.md` §5.1, §5.3, §5.5 y §5.8 y su lista `provisional` (§14.1); fixtures `s3-promocion-0`, `s3-tarjeta-sin-intereses` y `s3-tienda-abonos`. Con esto WF-2 sí puede guardar la serie de la promoción al 0 % con el esquema actual.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

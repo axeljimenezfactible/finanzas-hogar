@@ -27,14 +27,13 @@ type Price struct {
 
 // PriceSink recibe los precios filtrados y ligados. Devuelve inserted = false si
 // ya existía el mismo precio (presentación, tienda y día): el primero gana y los
-// demás se cuentan como duplicados (bloqueo S5-profeco-almacen, pregunta 3,
-// opción A PROVISIONAL).
+// demás se cuentan como duplicados (FIRME, puerta 2, Q2-55 = A).
 type PriceSink interface {
 	AddPrice(ctx context.Context, p Price) (inserted bool, err error)
 }
 
-// RecordSink recibe todos los registros bien formados (PROVISIONAL, bloqueo
-// S5-profeco-almacen, pregunta 1, opción A: base local aparte qqp.sqlite).
+// RecordSink recibe todos los registros bien formados (FIRME, puerta 2,
+// Q2-53 = A: base local aparte qqp.sqlite).
 type RecordSink interface {
 	AddRecord(ctx context.Context, file string, rec *Record) error
 }
@@ -49,7 +48,7 @@ type Options struct {
 	Records       RecordSink // opcional
 	Today         string     // ISO; si no está vacío, rechaza fechas futuras
 	MaxBytes      int64      // límite por archivo; 0 = sin límite
-	MaxRejections int        // renglones rechazados con detalle; 0 = 100
+	MaxRejections int        // renglones rechazados con detalle; 0 = 100 (PROVISIONAL, bloqueo S5-motor-oraculo-reglas pregunta 6)
 }
 
 // Rejection es el detalle de un renglón rechazado.

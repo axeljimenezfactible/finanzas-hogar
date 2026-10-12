@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «inicio». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «inicio». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto inicio"
-  version: "1.2.0"
+  version: "1.3.0"
   description: "Extracto de la etiqueta «Inicio» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -736,6 +736,10 @@ components:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Ahorrado = Σ aportaciones − Σ retiros."
           x-calculado: true
+        progress_tenths_pct:
+          type: "integer"
+          description: "saved ÷ target × 1000, entero ROUND_HALF_UP: décimas de punto porcentual (500 = 50.0 %; RN-18). Lo muestra la pantalla de Metas con un decimal; la tarjeta de Inicio usa progress_pct, entero (Q2-17 C, motor S2). Sin tope: una meta cumplida puede pasar de 1000. Ausente sin target_cents, como progress_pct."
+          x-calculado: true
         progress_pct:
           type: "integer"
           description: "saved ÷ target × 100, entero ROUND_HALF_UP (solo metas)."
@@ -961,6 +965,9 @@ components:
         difference_vs_second_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Diferencia contra la segunda tienda."
+        second_store_id:
+          type: "integer"
+          description: "Segunda tienda: contra la que se mide difference_vs_second_cents (Q2-86 A). La tarjeta de Inicio la nombra («$138.50 menos que …»). Ausente si no hay segunda tienda."
         covered_count:
           type: "integer"
           description: "Artículos con precio en esa tienda."

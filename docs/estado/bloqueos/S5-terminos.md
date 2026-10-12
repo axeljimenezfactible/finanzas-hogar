@@ -15,3 +15,19 @@ Opciones:
 Impacto: S5-07 **no se marca cumplido**. La lectura asistida sigue desactivada y no activable (no hay veredicto). `site_assisted` no compite (K37). Nada más de S5 depende de esto.
 
 Cómo seguí: no escribí `docs/estado/S5-terminos.md` (un archivo con la palabra «Veredicto» sin veredicto real podría engañar al interruptor o a la verificación) ni entré a ningún sitio de tienda. Dejé el interruptor como estaba (apagado, rechaza sin veredicto). Nada provisional entró en cifras ni en esquema.
+
+## Resultado
+11-oct-2026, 22:28 CST. Q2-64 = A (Axel). El agente S5-terminos intentó la portada de los 3 sitios (3 solicitudes de 12); los 3 devolvieron un desafío anti-robot («Verifica tu identidad») y no fue posible leer ninguna página legal. Se escribió `docs/estado/S5-terminos.md` con 3 veredictos «no verificado» y la evidencia del bloqueo. **El bloqueo sigue ABIERTO**: S5-07 no se cumple en el fondo. Nadie reintenta leer esos sitios. PREGUNTA para Axel, qué sigue: **B** (tú lees los términos y dictas el veredicto con URL y fecha), **C** (queda pendiente, lectura asistida apagada y S5-07 en «NO CUMPLE») o **D** (descartas la lectura asistida en esta etapa). El agente además propuso intentar directo las URL legales si Axel las da; eso sería una autorización nueva y no está dada. La lectura asistida sigue apagada y `site_assisted` solo como referencia (K37).
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-64 · ¿Cómo se obtiene el veredicto de términos de walmart.com.mx, bodegaaurrera.com.mx y sams.com.mx?
+- **Respuesta:** **A** (respuesta explícita de Axel)
+- **Texto de la opción (literal del archivo):** «Axel autoriza por escrito que un agente lea **solo** las páginas legales (términos y condiciones, aviso de uso) de los 3 sitios, sin buscar ni extraer precios, y escriba `docs/estado/S5-terminos.md` con veredicto, URL y fecha por sitio.»
+- **Autorización (tal como la describe RESPUESTAS.md):** excepción a «nada de sitios de tiendas», limitada a las páginas legales (términos, condiciones, aviso de privacidad, políticas de uso) y, si hace falta para ubicarlas, la portada; sin buscar ni extraer precios. Resultado en `docs/estado/S5-terminos.md` con URL y fecha.
+- **Consecuencia:** S5-07 se puede cerrar en WF-2; es una excepción explícita a la regla «nada de sitios de tiendas».
+- **Qué cambia:** `docs/estado/S5-terminos.md` con URL y fecha por sitio (escrito el 11-oct-2026 por el agente S5-terminos de P2c: los 3 sitios devolvieron un desafío anti-robot y quedaron «no verificado»). Autorización de Axel tal como la describe `RESPUESTAS.md`: «excepción a "nada de sitios de tiendas", limitada a las páginas legales (términos, condiciones, aviso de privacidad, políticas de uso) y, si hace falta para ubicarlas, la portada; sin buscar ni extraer precios». Solo el agente S5-terminos usa WebFetch y solo en esas páginas.
+- **Estado:** RESUELTO (la decisión de Axel; el bloqueo sigue ABIERTO, ver abajo)
+
+**Estado del bloqueo (puerta 2): ABIERTO** — la decisión (A) está tomada, pero el intento de lectura del 11-oct-2026 no obtuvo veredicto (ver «Resultado» arriba); falta que Axel decida el siguiente paso (B, URL legales, C o D) y S5-07 sigue sin cumplirse.

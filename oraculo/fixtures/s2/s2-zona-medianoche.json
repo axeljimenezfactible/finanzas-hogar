@@ -2,7 +2,7 @@
   "formato": "fixture/1",
   "motor": "s2",
   "caso": "s2-zona-medianoche",
-  "descripcion": "Hoy en America/Mexico_City (UTC−6 todo el año) cerca de la medianoche; resto calculado por el oráculo",
+  "descripcion": "Hoy en America/Mexico_City (UTC−6 todo el año) cerca de la medianoche; un instante con desfase +00:00 o −06:00 en lugar de «Z» es invalid_date (§1.1, REVISION-S2-r3 B1); resto calculado por el oráculo",
   "fuente": [
     {
       "tipo": "criterio",
@@ -11,6 +11,10 @@
     {
       "tipo": "manual",
       "ruta": "instante de verano sin horario de verano"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "S2-interfaz §1.1: instante RFC 3339 en UTC con «Z»"
     }
   ],
   "provisional": null,
@@ -46,6 +50,20 @@
         "argumentos": {
           "date": "2026-10-31",
           "now": "2026-10-31T06:00:00Z"
+        }
+      },
+      {
+        "id": "desfase-cero",
+        "funcion": "calendario",
+        "argumentos": {
+          "now": "2026-10-31T05:59:59+00:00"
+        }
+      },
+      {
+        "id": "desfase-cdmx",
+        "funcion": "calendario",
+        "argumentos": {
+          "now": "2026-10-31T00:30:00-06:00"
         }
       }
     ]
@@ -98,6 +116,12 @@
     },
     "dos-formas": {
       "error": "invalid_argument"
+    },
+    "desfase-cero": {
+      "error": "invalid_date"
+    },
+    "desfase-cdmx": {
+      "error": "invalid_date"
     }
   }
 }

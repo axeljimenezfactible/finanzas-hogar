@@ -13,10 +13,7 @@
       "ruta": "RN-13"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
-    "que": "preguntas 4a y 4b: compras al año = despensas en cadenas de los últimos 365 días; equilibrio hacia arriba"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "today": "2026-10-12",

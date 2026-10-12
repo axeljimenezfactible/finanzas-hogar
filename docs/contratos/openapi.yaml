@@ -1,12 +1,12 @@
-# Finanzas Hogar · Contrato C1 v1.2.0 (OpenAPI 3.1). Archivo generado: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.3.0 (OpenAPI 3.1). Archivo generado: no se edita a mano.
 # Generador: backend/internal/api/c1gen/ (agente S6a-contrato-c1, WF-0, 2026-10-10; v1.1: agente C1-v1.1, puerta 1, 2026-10-11). Regenerar: python3 -I backend/internal/api/c1gen/build.py (con --check compara sin escribir).
 # Fuente: esquema de S1 (backend/db/migrations/*.sql, aplicadas en orden) + necesidades de U1 (docs/design/U1-arquitectura.md). Ver docs/contratos/C1-datos.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1)"
-  version: "1.2.0"
-  summary: "Contrato C1 v1.2 del backend Go local de Finanzas Hogar."
-  description: "Contrato C1 v1.2 (11-oct-2026, respuestas de las puertas 1 y 1b). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura; parámetros operativos (K44) por clave de app_setting, con valor vigente, valor inicial y «restablecer», en las operaciones /api/v1/settings/*. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto)."
+  version: "1.3.0"
+  summary: "Contrato C1 v1.3 del backend Go local de Finanzas Hogar."
+  description: "Contrato C1 v1.3 (11-oct-2026, respuestas de las puertas 1, 1b y 2). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura; parámetros operativos (K44) por clave de app_setting, con valor vigente, valor inicial y «restablecer», en las operaciones /api/v1/settings/*. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto)."
 servers:
   - url: "https://finanzas.local:8443"
     description: "Máquina de casa, solo red local (decisión H)."
@@ -3676,13 +3676,16 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar reparto por defecto"
-      description: "P. ej. el % del Conjunto (50/50 por defecto, decisión B). No cambia gastos ya guardados (sus partes están congeladas en expense_share)."
+      description: "P. ej. el % del Conjunto (50/50 por defecto, decisión B). Un cambio de parts lleva su alcance en scope (Q2-68 C, RN-03; C1-datos §7.2): onward no toca los gastos ya guardados (sus partes están congeladas en expense_share); all recalcula con las partes nuevas las de los gastos ya capturados. parts sin scope: 422 validation_failed."
       x-necesidades:
         - "N-310"
       x-tablas:
         - "audit_log"
         - "cost_share_rule"
         - "cost_share_rule_part"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
       parameters:
         - name: "cost_share_rule_id"
           in: "path"
@@ -5648,7 +5651,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Cambiar ajustes de precios"
-      description: "Cambia el interruptor general de lectura asistida (N-292) y los parámetros de precios (N-322). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      description: "Cambia el interruptor general de lectura asistida (N-292) y los parámetros de precios (N-322). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-292"
         - "N-322"
@@ -6162,7 +6165,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Nuevo crédito"
-      description: "Nuevo crédito."
+      description: "Nuevo crédito. Si lo que quedaría guardado (el cuerpo o, en un cambio, el cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, responde 422 validation_failed con fields[].field = vat_on_interest_bp; la API no cambia el otro campo por su cuenta (CHECK de la 00004, Q2-67 opción 1; detalle en CreditCreate y CreditUpdate)."
       x-necesidades:
         - "N-289"
       x-tablas:
@@ -6324,7 +6327,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar crédito o interruptor A/B"
-      description: "Incluye availability_reading (A/B, B por defecto). Antes de cambiarlo la pantalla muestra previewAvailability."
+      description: "Incluye availability_reading (A/B, B por defecto). Antes de cambiarlo la pantalla muestra previewAvailability. Si lo que quedaría guardado (el cuerpo o, en un cambio, el cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, responde 422 validation_failed con fields[].field = vat_on_interest_bp; la API no cambia el otro campo por su cuenta (CHECK de la 00004, Q2-67 opción 1; detalle en CreditCreate y CreditUpdate)."
       x-necesidades:
         - "N-289"
       x-tablas:
@@ -7312,7 +7315,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar valores del comparador"
-      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto. Además, el tiempo máximo del comparador (comparator.timeout_seconds, N-321; K43). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto. Además, el tiempo máximo del comparador (comparator.timeout_seconds, N-321; K43). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-289"
         - "N-321"
@@ -8255,7 +8258,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar aviso"
-      description: "Editar aviso."
+      description: "Activa o desactiva el aviso o el reporte y cambia sus parámetros propios. La hora, el día y la anticipación se cambian en updateReportSettings y updateAlertSettings (Q2-11 B, K47)."
       x-necesidades:
         - "N-297"
         - "N-300"
@@ -8772,7 +8775,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Cambiar parámetros de acceso"
-      description: "login, changeOwnPassword y la renovación de la sesión usan el valor vigente desde el siguiente intento. Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      description: "login, changeOwnPassword y la renovación de la sesión usan el valor vigente desde el siguiente intento. Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-320"
       x-tablas:
@@ -8809,9 +8812,10 @@ paths:
       operationId: "getAlertSettings"
       tags:
         - "Ajustes"
-      summary: "Umbrales de avisos"
-      description: "Umbrales del aviso de presupuesto (80 % y 100 %) y días antes del pago próximo ([1, 0]) de la decisión F. Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
+      summary: "Parámetros de avisos"
+      description: "Umbrales del aviso de presupuesto (80 % y 100 %) y días antes del pago próximo ([1, 0]) de la decisión F; hora de los avisos con hora (09:00), anticipación del aviso de precios viejos (1 día) y día del aviso de plan de comidas faltante (7 = domingo) (decisión F, Q2-73, K47, K50). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
       x-necesidades:
+        - "N-298"
         - "N-323"
       x-tablas:
         - "app_setting"
@@ -8835,9 +8839,10 @@ paths:
       operationId: "updateAlertSettings"
       tags:
         - "Ajustes"
-      summary: "Cambiar umbrales de avisos"
-      description: "Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      summary: "Cambiar parámetros de avisos"
+      description: "Los avisos (S7) usan el valor vigente desde su siguiente envío. Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
+        - "N-300"
         - "N-323"
       x-tablas:
         - "app_setting"
@@ -8858,6 +8863,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AlertSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/settings/reports:
+    get:
+      operationId: "getReportSettings"
+      tags:
+        - "Ajustes"
+      summary: "Hora y día de los reportes"
+      description: "Hora del resumen diario (21:30), día y hora del semanal (domingo, 19:00) y día del mes y hora del mensual en PDF (día 1, 08:00) (decisión F, Q2-72, K47, K50). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
+      x-necesidades:
+        - "N-296"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportSettings"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      operationId: "updateReportSettings"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar hora y día de los reportes"
+      description: "Los reportes programados (S7) usan el valor vigente desde su siguiente envío; un día del mes que el mes no tiene sale el último día del mes (Q2-66 B, RN-29). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
+      x-necesidades:
+        - "N-297"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportSettings"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -8900,7 +8969,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Cambiar parámetros de datos"
-      description: "uploadExpenseAttachment y la purga de idempotency_key usan el valor vigente. Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      description: "uploadExpenseAttachment y la purga de idempotency_key usan el valor vigente. Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-325"
       x-tablas:
@@ -8964,7 +9033,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Cambiar ajuste de kcal de la casa"
-      description: "suggested_kcal_target usa el valor vigente en las personas sin ajuste propio (RN-17). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      description: "suggested_kcal_target usa el valor vigente en las personas sin ajuste propio (RN-17). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-326"
       x-tablas:
@@ -9896,6 +9965,14 @@ components:
           items:
             $ref: "#/components/schemas/CostShareRulePartInput"
           description: "Reemplaza las partes de la regla (cost_share_rule_part). El resto y los centavos van a remainder_person_id."
+        scope:
+          type: "string"
+          enum:
+            - "onward"
+            - "all"
+          x-entrada: true
+          x-provisional: true
+          description: "Alcance del cambio de partes (Q2-68 C, RN-03; C1-datos §7.2): onward = «solo los nuevos»: los gastos ya guardados conservan sus partes congeladas en expense_share; all = «también los ya capturados»: el motor de reparto recalcula con las partes nuevas el expense_share de los gastos ya capturados. Obligatorio si viene parts y solo se acepta con parts (si no, 422 validation_failed). Sin valor por omisión: la pantalla pregunta el alcance en cada cambio (P-26.12). Qué gastos abarca all es PROVISIONAL: bloqueo C1-reparto-alcance."
       minProperties: 1
     Period:
       type: "object"
@@ -11122,7 +11199,7 @@ components:
       x-calculado: true
     AccrualVsCash:
       type: "object"
-      description: "Devengado contra efectivo por mes (N-091, motor S2). cumulative_difference_cents = devengado acumulado − efectivo acumulado (periodos[i].diferencia_acumulada de model.json); no se rotula deuda viva."
+      description: "Devengado contra efectivo por mes (N-091, motor S2). cumulative_difference_cents = devengado acumulado − efectivo acumulado (periodos[i].diferencia_acumulada de model.json); no se rotula deuda viva. cumulative_accrued_cents y cumulative_cash_cents tienen el mismo origen (Q2-65 A), así que la cima de T-2 es el devengado acumulado sea cual sea el mes en curso."
       properties:
         projection_mode:
           type: "string"
@@ -11157,9 +11234,15 @@ components:
               cash_external_cents:
                 $ref: "#/components/schemas/MoneyCents"
                 description: "Efectivo, parte de Karen."
+              cumulative_accrued_cents:
+                $ref: "#/components/schemas/MoneyCents"
+                description: "Devengado acumulado al cierre del mes, con el mismo origen que cumulative_difference_cents (motor S2; Q2-65 A). Cima de la gráfica T-2 de Inicio."
+              cumulative_cash_cents:
+                $ref: "#/components/schemas/MoneyCents"
+                description: "Efectivo acumulado al cierre del mes, con el mismo origen que cumulative_difference_cents (motor S2; Q2-65 A)."
               cumulative_difference_cents:
                 $ref: "#/components/schemas/MoneyCents"
-                description: "Devengado acumulado − efectivo acumulado."
+                description: "Devengado acumulado − efectivo acumulado = cumulative_accrued_cents − cumulative_cash_cents (periodos[i].diferencia_acumulada de model.json)."
               is_canonical:
                 type: "boolean"
                 description: "true si el mes tiene cifra canon en model.json (oct-2026 a mar-2027); los demás siguen el modo de projection_mode (K21)."
@@ -11171,6 +11254,8 @@ components:
               - "accrued_external_cents"
               - "cash_household_cents"
               - "cash_external_cents"
+              - "cumulative_accrued_cents"
+              - "cumulative_cash_cents"
               - "cumulative_difference_cents"
               - "is_canonical"
             x-calculado: true
@@ -11830,6 +11915,10 @@ components:
           $ref: "#/components/schemas/MoneyCents"
           description: "Ahorrado = Σ aportaciones − Σ retiros."
           x-calculado: true
+        progress_tenths_pct:
+          type: "integer"
+          description: "saved ÷ target × 1000, entero ROUND_HALF_UP: décimas de punto porcentual (500 = 50.0 %; RN-18). Lo muestra la pantalla de Metas con un decimal; la tarjeta de Inicio usa progress_pct, entero (Q2-17 C, motor S2). Sin tope: una meta cumplida puede pasar de 1000. Ausente sin target_cents, como progress_pct."
+          x-calculado: true
         progress_pct:
           type: "integer"
           description: "saved ÷ target × 100, entero ROUND_HALF_UP (solo metas)."
@@ -12292,6 +12381,9 @@ components:
         difference_vs_second_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Diferencia contra la segunda tienda."
+        second_store_id:
+          type: "integer"
+          description: "Segunda tienda: contra la que se mide difference_vs_second_cents (Q2-86 A). La tarjeta de Inicio la nombra («$138.50 menos que …»). Ausente si no hay segunda tienda."
         covered_count:
           type: "integer"
           description: "Artículos con precio en esa tienda."
@@ -13348,9 +13440,13 @@ components:
           type: "integer"
           description: "Piezas a comprar de la presentación (motor S4)."
           x-calculado: true
+        assigned_store_id:
+          type: "integer"
+          description: "Tienda asignada (motor S4 §6.5; Q2-39 a Q2-42 A): la elegida (store_id) si la hay; si no, en vertical chain la de la cotización que rige y en vertical market el mercado que surte su grupo con la próxima visita más cercana (en empate, el primero dado de alta). Rige la agrupación (groups[].store_id). Ausente = sin tienda: artículo de cadena sin cotización o de mercado sin mercado dado de alta (Q2-40 A)."
+          x-calculado: true
         recommended_store_id:
           type: "integer"
-          description: "Tienda o mercado que recomienda S5; rige mientras store_id esté ausente."
+          description: "Tienda o mercado que recomienda S5 por precio (QuoteFor); rige el precio y la presentación mientras store_id esté ausente. En vertical market no rige la agrupación y puede ser distinta de assigned_store_id (Q2-41 A: el artículo se queda en el mercado; la cadena se ve en la comparativa y se puede elegir)."
           x-calculado: true
         recommended_presentation_id:
           type: "integer"
@@ -13358,7 +13454,7 @@ components:
           x-calculado: true
         estimated_price_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Precio estimado en la tienda asignada (motor S5)."
+          description: "Costo estimado con la cotización que rige (S4 §8.1): piezas × precio del paquete, en la tienda de esa cotización (en vertical market puede ser otra que assigned_store_id). Ausente = sin precio: no suma en los totales (Q2-42 A)."
           x-calculado: true
         price_observed_date:
           $ref: "#/components/schemas/Date"
@@ -13386,7 +13482,7 @@ components:
           x-calculado: true
     ShoppingList:
       type: "object"
-      description: "Lista de compras de la semana (N-150). Guarda lo que no se calcula (artículos a mano, tienda, presentación o cantidad elegidas y marcas de comprado; shopping_list y shopping_list_item) y añade al consultar lo que calculan S4 y S5 (piezas, tienda recomendada, precio y frescura). Agrupada por vertical y tienda, luego categoría de producto, orden alfabético. Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
+      description: "Lista de compras de la semana (N-150). Guarda lo que no se calcula (artículos a mano, tienda, presentación o cantidad elegidas y marcas de comprado; shopping_list y shopping_list_item) y añade al consultar lo que calculan S4 y S5 (piezas, tienda recomendada, precio y frescura). Agrupada por vertical y tienda asignada (orden de groups[]: S4 §6.5, Q2-42 A), luego categoría de producto, orden alfabético. Marcas y artículos compartidos en el servidor entre los dos teléfonos (K1)."
       properties:
         shopping_list_id:
           type: "integer"
@@ -13404,7 +13500,7 @@ components:
           type: "array"
           items:
             type: "object"
-            description: "Grupo."
+            description: "Grupo: par vertical y tienda asignada (S4 §6.5). Orden (Q2-42 A): primero los de mercado y luego los de cadena; dentro de cada vertical, por visit_date ascendente (sin fecha al final) y luego por id de tienda, con el grupo sin tienda al final."
             properties:
               purchase_channel:
                 type: "string"
@@ -13414,10 +13510,13 @@ components:
                 description: "Vertical (product_group.purchase_channel)."
               store_id:
                 type: "integer"
-                description: "Tienda o mercado (el elegido o el recomendado)."
+                description: "Tienda asignada del grupo (assigned_store_id de sus artículos). Ausente = sin tienda; en vertical market es el grupo «sin mercado dado de alta» (Q2-40 A), con el total de sus artículos con precio de S5."
               visit_weekday:
                 type: "integer"
-                description: "Día de visita del mercado (1 = lunes … 7 = domingo)."
+                description: "Día ISO de visit_date (1 = lunes … 7 = domingo), que es el visit_weekday del mercado. Solo en grupos de mercado con tienda."
+              visit_date:
+                $ref: "#/components/schemas/Date"
+                description: "Fecha de la próxima visita del mercado (S4 next_visit, que calcula S5 §9; Q2-42 A: se cuenta desde la fecha más tardía entre hoy y el lunes de la semana de la lista). Solo en grupos de mercado con tienda."
               items:
                 type: "array"
                 items:
@@ -13425,7 +13524,7 @@ components:
                 description: "Artículos."
               total_cents:
                 $ref: "#/components/schemas/MoneyCents"
-                description: "Total estimado del grupo."
+                description: "Total estimado del grupo: Σ estimated_price_cents de sus artículos con precio (calculated y manual, comprados o no). Los que no tienen precio no suman y se reconocen por estimated_price_cents ausente (Q2-42 A)."
             required:
               - "purchase_channel"
               - "items"
@@ -13434,7 +13533,7 @@ components:
           description: "Grupos."
         total_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Total estimado."
+          description: "Total estimado de la lista: Σ groups[].total_cents, solo artículos con precio (Q2-42 A)."
       required:
         - "start_date"
         - "end_date"
@@ -13586,7 +13685,7 @@ components:
                 description: "Total."
               identical_count:
                 type: "integer"
-                description: "Artículos idénticos."
+                description: "Renglones idénticos (no piezas; S5 §7.2)."
               identical_total_cents:
                 $ref: "#/components/schemas/MoneyCents"
                 description: "Total de idénticos."
@@ -13601,7 +13700,7 @@ components:
                 description: "Precios viejos."
               difference_vs_cheapest_cents:
                 $ref: "#/components/schemas/MoneyCents"
-                description: "Diferencia contra la más barata."
+                description: "Total de la tienda − total de cheapest_store_id. Solo en tiendas completas; ausente en las incompletas o si no hay cheapest_store_id (S5 §7.4)."
               assumes_membership:
                 type: "boolean"
                 description: "Comparada como si tuvieran membresía."
@@ -13613,10 +13712,12 @@ components:
               - "substitute_count"
               - "missing_count"
               - "stale_count"
-              - "difference_vs_cheapest_cents"
               - "assumes_membership"
             x-calculado: true
-          description: "Orden por total ascendente."
+          description: "Primero las tiendas completas (missing_count = 0) por total ascendente y después las incompletas por total ascendente (S5 §7.4; desempates en S5)."
+        cheapest_store_id:
+          type: "integer"
+          description: "Tienda más barata: la primera tienda completa de stores (missing_count = 0). Ausente si ninguna está completa (S5 §7.4; un solo significado con basket=shopping_list y basket=expense)."
         items:
           type: "array"
           items:
@@ -14647,7 +14748,7 @@ components:
     SettingParameterInteger:
       type: "object"
       x-calculado: true
-      description: "Parámetro operativo de tipo entero (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. Solo se valida tipo y signo, como los disparadores trg_app_setting_param_int* de 00003; sin topes mínimos ni máximos hasta la puerta 2."
+      description: "Parámetro operativo de tipo entero (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. El tipo y el rango de cada clave los validan los disparadores de S1 (trg_app_setting_param_int* de 00003; trg_app_setting_param_range* y trg_app_setting_param_time* de 00004) y los declara la propiedad de la clave en el cambio de su sección (minimum, maximum o pattern; puerta 2, K50)."
       required:
         - "key"
         - "value_type"
@@ -14685,7 +14786,7 @@ components:
     SettingParameterIntegerList:
       type: "object"
       x-calculado: true
-      description: "Parámetro operativo de tipo lista de enteros (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. Solo se valida tipo y signo, como los disparadores trg_app_setting_param_int* de 00003; sin topes mínimos ni máximos hasta la puerta 2."
+      description: "Parámetro operativo de tipo lista de enteros (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. El tipo y el rango de cada clave los validan los disparadores de S1 (trg_app_setting_param_int* de 00003; trg_app_setting_param_range* y trg_app_setting_param_time* de 00004) y los declara la propiedad de la clave en el cambio de su sección (minimum, maximum o pattern; puerta 2, K50)."
       required:
         - "key"
         - "value_type"
@@ -14724,6 +14825,44 @@ components:
         is_initial:
           type: "boolean"
           description: "true si el valor vigente es igual al inicial."
+    SettingParameterTime:
+      type: "object"
+      x-calculado: true
+      description: "Parámetro operativo de tipo hora HH:MM (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. El tipo y el rango de cada clave los validan los disparadores de S1 (trg_app_setting_param_int* de 00003; trg_app_setting_param_range* y trg_app_setting_param_time* de 00004) y los declara la propiedad de la clave en el cambio de su sección (minimum, maximum o pattern; puerta 2, K50)."
+      required:
+        - "key"
+        - "value_type"
+        - "unit"
+        - "value"
+        - "initial_value"
+        - "is_initial"
+      properties:
+        key:
+          type: "string"
+          description: "Clave de app_setting (app_setting.setting_key)."
+        value_type:
+          type: "string"
+          enum:
+            - "time"
+          description: "Tipo del valor."
+        unit:
+          type: "string"
+          description: "Unidad en español (intentos, minutos, días, MB…)."
+        value:
+          type:
+            - "string"
+            - "null"
+          pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          description: "Valor vigente (app_setting.value_json del hogar). null = no hay valor guardado."
+        initial_value:
+          type:
+            - "string"
+            - "null"
+          pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          description: "Valor inicial sembrado por la migración (el decidido en decisiones.md §A–§K; K44). «Restablecer» vuelve a él. null = no hay valor inicial."
+        is_initial:
+          type: "boolean"
+          description: "true si el valor vigente es igual al inicial."
     PriceSettings:
       type: "object"
       description: "Ajustes de precios (app_setting price.*; N-291, N-322). La frescura y el peso en la comparativa siguen RN-12 con los valores vigentes de price.stale_after_days y price.zero_weight_after_days (K22, K40, K44); PROFECO nunca compite: solo es referencia."
@@ -14742,15 +14881,15 @@ components:
           properties:
             price.stale_after_days:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Un precio es viejo cuando tiene esta edad en días o más (decisión E). Valor inicial: 30 (días; Decisión E, K22; sembrado por 00001)."
+              description: "Un precio es viejo cuando tiene esta edad en días o más (decisión E). Valor inicial: 30 (días; Decisión E, K22; sembrado por 00001). Rango: entero de 1 o más; 1 o más (Q2-77), Q2-77 (K50)."
               x-app-setting: "price.stale_after_days"
             price.zero_weight_after_days:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Días de edad desde los que un precio ya no compite en la comparativa: solo se muestra marcado. Entero en días. Entre price.stale_after_days y este valor el peso baja en línea recta (K22, K40, K44). Valor inicial: 90 (días; K22, K40; sembrado por 00003)."
+              description: "Días de edad desde los que un precio ya no compite en la comparativa: solo se muestra marcado. Entero en días. Entre price.stale_after_days y este valor el peso baja en línea recta (K22, K40, K44). Valor inicial: 90 (días; K22, K40; sembrado por 00003). Rango: entero de 0 o más; igual o mayor que price.stale_after_days (Q2-77; lo valida el motor de precios), Q2-77 (K50)."
               x-app-setting: "price.zero_weight_after_days"
             price.profeco_import_max_gb:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Tamaño máximo de un archivo de PROFECO al importarlo. Entero en GB (K6, K44). Valor inicial: 1 (GB; K6; sembrado por 00003)."
+              description: "Tamaño máximo de un archivo de PROFECO al importarlo. Entero en GB (K6, K44). Valor inicial: 1 (GB; K6; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "price.profeco_import_max_gb"
           x-calculado: true
           description: "Parámetros operativos de «Tiendas y precios» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
@@ -14760,7 +14899,7 @@ components:
       x-calculado: true
     PriceSettingsUpdate:
       type: "object"
-      description: "Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. El interruptor solo acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed)."
+      description: "Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. El interruptor solo acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed). price.zero_weight_after_days tiene que ser igual o mayor que price.stale_after_days con los valores que quedan después del cambio (Q2-77, K50, RN-12; también lo valida el motor de precios): si no, 422 validation_failed y no se guarda ninguno."
       properties:
         assisted_reading_enabled:
           type: "boolean"
@@ -14770,22 +14909,22 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             price.stale_after_days:
               type: "integer"
-              minimum: 0
-              description: "Valor nuevo de price.stale_after_days (días)."
+              minimum: 1
+              description: "Valor nuevo de price.stale_after_days (días). Rango: entero de 1 o más; 1 o más (Q2-77), Q2-77 (K50)."
               x-app-setting: "price.stale_after_days"
             price.zero_weight_after_days:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de price.zero_weight_after_days (días)."
+              description: "Valor nuevo de price.zero_weight_after_days (días). Rango: entero de 0 o más; igual o mayor que price.stale_after_days (Q2-77; lo valida el motor de precios), Q2-77 (K50)."
               x-app-setting: "price.zero_weight_after_days"
             price.profeco_import_max_gb:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de price.profeco_import_max_gb (GB)."
+              description: "Valor nuevo de price.profeco_import_max_gb (GB). Rango: entero de 0 o más."
               x-app-setting: "price.profeco_import_max_gb"
         reset_parameters:
           type: "array"
@@ -15264,7 +15403,7 @@ components:
           description: "Denominador de la tasa anual ordinaria"
         vat_on_interest_bp:
           $ref: "#/components/schemas/BasisPoints"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski)"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26)"
         annual_fee_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Comisión anual"
@@ -15301,6 +15440,10 @@ components:
         annual_rate_decimals:
           type: "integer"
           description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
+        vat_included:
+          type: "boolean"
+          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18)"
+          x-provisional: true
         live_debt_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Deuda viva = capital + intereses por pagar (motor S3)."
@@ -15332,14 +15475,16 @@ components:
             enum:
               - "annual_rate"
               - "rate_base"
+              - "vat"
               - "min_payment_pct_bp"
               - "min_payment_fixed_cents"
-          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18); vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar»."
+          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18, RN-26): son 5 desde C1 v1.3 (Q2-67 opción 1, K46): annual_rate, rate_base, vat, min_payment_pct_bp y min_payment_fixed_cents. vat sale mientras vat_included sea NULL (falta capturar si la tasa incluye IVA). Vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar». Con vat_included = 0 y sin vat_on_interest_bp también sale vat: PROVISIONAL, bloqueo S3-iva-lectura (pregunta 2; lectura en uso de S3 1.5 §5.3)."
           x-calculado: true
+          x-provisional: true
     CreditCreate:
       type: "object"
       additionalProperties: false
-      description: "Alta de crédito (tabla `credit`)."
+      description: "Alta de crédito (tabla `credit`). IVA (Q2-67 opción 1, CHECK de la 00004): vat_on_interest_bp con valor solo se admite con vat_included = false. Si la combinación que quedaría guardada (en el alta, la del cuerpo; en el Merge Patch, la del cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, la API responde 422 validation_failed con el detalle en fields[] (field = vat_on_interest_bp) y no guarda nada. Ejemplos: {\"vat_included\": true, \"vat_on_interest_bp\": 1600}; el alta {\"kind\": \"store_credit\", …, \"vat_on_interest_bp\": 1600} sin vat_included; y, sobre un crédito guardado con vat_included = false y vat_on_interest_bp = 1600, {\"vat_included\": true} o {\"vat_included\": null}. La API no cambia el otro campo por su cuenta: no vacía vat_on_interest_bp ni cambia vat_included (tampoco deduce false a partir del porcentaje). Para pasar a «la tasa ya incluye IVA» un crédito con porcentaje, el cambio manda {\"vat_included\": true, \"vat_on_interest_bp\": null}."
       x-tabla: "credit"
       properties:
         name:
@@ -15398,7 +15543,7 @@ components:
           description: "Denominador de la tasa anual ordinaria"
         vat_on_interest_bp:
           $ref: "#/components/schemas/BasisPoints"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski)"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26)"
         annual_fee_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Comisión anual"
@@ -15429,6 +15574,10 @@ components:
         annual_rate_decimals:
           type: "integer"
           description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
+        vat_included:
+          type: "boolean"
+          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18)"
+          x-provisional: true
       required:
         - "name"
         - "kind"
@@ -15437,7 +15586,7 @@ components:
     CreditUpdate:
       type: "object"
       additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de crédito (tabla `credit`)."
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de crédito (tabla `credit`). IVA (Q2-67 opción 1, CHECK de la 00004): vat_on_interest_bp con valor solo se admite con vat_included = false. Si la combinación que quedaría guardada (en el alta, la del cuerpo; en el Merge Patch, la del cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, la API responde 422 validation_failed con el detalle en fields[] (field = vat_on_interest_bp) y no guarda nada. Ejemplos: {\"vat_included\": true, \"vat_on_interest_bp\": 1600}; el alta {\"kind\": \"store_credit\", …, \"vat_on_interest_bp\": 1600} sin vat_included; y, sobre un crédito guardado con vat_included = false y vat_on_interest_bp = 1600, {\"vat_included\": true} o {\"vat_included\": null}. La API no cambia el otro campo por su cuenta: no vacía vat_on_interest_bp ni cambia vat_included (tampoco deduce false a partir del porcentaje). Para pasar a «la tasa ya incluye IVA» un crédito con porcentaje, el cambio manda {\"vat_included\": true, \"vat_on_interest_bp\": null}."
       x-tabla: "credit"
       properties:
         name:
@@ -15514,7 +15663,7 @@ components:
           anyOf:
             - $ref: "#/components/schemas/BasisPoints"
             - type: "null"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) · null borra el valor"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26) · null borra el valor"
         annual_fee_cents:
           anyOf:
             - $ref: "#/components/schemas/MoneyCents"
@@ -15562,6 +15711,12 @@ components:
             - "integer"
             - "null"
           description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato · null borra el valor"
+        vat_included:
+          type:
+            - "boolean"
+            - "null"
+          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18) · null borra el valor"
+          x-provisional: true
       minProperties: 1
     CreditTotals:
       type: "object"
@@ -16706,11 +16861,16 @@ components:
           additionalProperties: false
           required:
             - "comparator.timeout_seconds"
+            - "optimizer.date_window_days"
           properties:
             comparator.timeout_seconds:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Tiempo máximo del comparador de escenarios; si se pasa, la API responde 503 unavailable. Entero en segundos (K43, K44). Valor inicial: 5 (segundos; K43; sembrado por 00003)."
+              description: "Tiempo máximo del comparador de escenarios; si se pasa, la API responde 503 unavailable. Entero en segundos (K43, K44). Valor inicial: 5 (segundos; K43; sembrado por 00003). Rango: entero de 1 a 30; de 1 a 30 (límites de seguridad, Q2-74), Q2-74 (K50)."
               x-app-setting: "comparator.timeout_seconds"
+            optimizer.date_window_days:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Días antes y después de la fecha de una compra planeada que prueba el comparador de escenarios («fecha ± días»). Entero en días (Q2-75, K44). Valor inicial: 7 (días antes y después de la fecha (fecha ± días), 0 o más; Q2-75 (K50); sembrado por 00004). Rango: entero de 0 o más."
+              x-app-setting: "optimizer.date_window_days"
           x-calculado: true
           description: "Parámetros operativos de «Créditos y condiciones» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
         min_available_buffer_cents:
@@ -16725,10 +16885,6 @@ components:
           $ref: "#/components/schemas/Date"
           description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.zero_debt_by_date"
-        date_window_days:
-          type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
-          x-app-setting: "optimizer.date_window_days"
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
@@ -16752,10 +16908,6 @@ components:
           $ref: "#/components/schemas/Date"
           description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.zero_debt_by_date"
-        date_window_days:
-          type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
-          x-app-setting: "optimizer.date_window_days"
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
@@ -16763,13 +16915,19 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             comparator.timeout_seconds:
               type: "integer"
-              minimum: 0
-              description: "Valor nuevo de comparator.timeout_seconds (segundos)."
+              minimum: 1
+              maximum: 30
+              description: "Valor nuevo de comparator.timeout_seconds (segundos). Rango: entero de 1 a 30; de 1 a 30 (límites de seguridad, Q2-74), Q2-74 (K50)."
               x-app-setting: "comparator.timeout_seconds"
+            optimizer.date_window_days:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de optimizer.date_window_days (días antes y después de la fecha (fecha ± días), 0 o más). Rango: entero de 0 o más."
+              x-app-setting: "optimizer.date_window_days"
         reset_parameters:
           type: "array"
           uniqueItems: true
@@ -16778,6 +16936,7 @@ components:
             type: "string"
             enum:
               - "comparator.timeout_seconds"
+              - "optimizer.date_window_days"
           x-entrada: true
           description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
       additionalProperties: false
@@ -16797,19 +16956,19 @@ components:
           properties:
             auth.max_failed_attempts:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Intentos fallidos permitidos dentro de la ventana antes de bloquear (decisión A). Valor inicial: 5 (intentos; Decisión A, K11; sembrado por 00001)."
+              description: "Intentos fallidos permitidos dentro de la ventana antes de bloquear (decisión A). Valor inicial: 5 (intentos; Decisión A, K11; sembrado por 00001). Rango: entero de 0 o más."
               x-app-setting: "auth.max_failed_attempts"
             auth.lockout_window_minutes:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Ventana en minutos para contar intentos fallidos (decisión A). Valor inicial: 15 (minutos; Decisión A, K11; sembrado por 00001)."
+              description: "Ventana en minutos para contar intentos fallidos (decisión A). Valor inicial: 15 (minutos; Decisión A, K11; sembrado por 00001). Rango: entero de 0 o más."
               x-app-setting: "auth.lockout_window_minutes"
             auth.password_min_length:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Caracteres mínimos de una contraseña nueva. Entero en caracteres (K6, K44). Valor inicial: 12 (caracteres; K6; sembrado por 00003)."
+              description: "Caracteres mínimos de una contraseña nueva. Entero en caracteres (K6, K44). Valor inicial: 12 (caracteres; K6; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "auth.password_min_length"
             session.max_age_days:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Días que dura la sesión de un dispositivo; se renueva con cada uso (K11). Valor inicial: 90 (días; K11; sembrado por 00002)."
+              description: "Días que dura la sesión de un dispositivo; se renueva con cada uso (K11). Valor inicial: 90 (días; K11; sembrado por 00002). Rango: entero de 0 o más."
               x-app-setting: "session.max_age_days"
           x-calculado: true
           description: "Parámetros operativos de «Cuenta y roles» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
@@ -16823,27 +16982,27 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             auth.max_failed_attempts:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de auth.max_failed_attempts (intentos)."
+              description: "Valor nuevo de auth.max_failed_attempts (intentos). Rango: entero de 0 o más."
               x-app-setting: "auth.max_failed_attempts"
             auth.lockout_window_minutes:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de auth.lockout_window_minutes (minutos)."
+              description: "Valor nuevo de auth.lockout_window_minutes (minutos). Rango: entero de 0 o más."
               x-app-setting: "auth.lockout_window_minutes"
             auth.password_min_length:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de auth.password_min_length (caracteres)."
+              description: "Valor nuevo de auth.password_min_length (caracteres). Rango: entero de 0 o más."
               x-app-setting: "auth.password_min_length"
             session.max_age_days:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de session.max_age_days (días)."
+              description: "Valor nuevo de session.max_age_days (días). Rango: entero de 0 o más."
               x-app-setting: "session.max_age_days"
         reset_parameters:
           type: "array"
@@ -16862,7 +17021,7 @@ components:
       minProperties: 1
     DataSettings:
       type: "object"
-      description: "Parámetros de datos (N-325; K6, K43, K44): tamaño máximo de un adjunto (uploadExpenseAttachment) y retención de las claves Idempotency-Key en la tabla idempotency_key."
+      description: "Parámetros de datos (N-325; K6, K43, K44, K50): tamaño máximo de un adjunto (uploadExpenseAttachment), retención de las claves Idempotency-Key en la tabla idempotency_key y tiempo máximo del OCR por imagen (ocr.timeout_seconds, Q2-76; sección propuesta por S1)."
       properties:
         parameters:
           type: "object"
@@ -16870,15 +17029,20 @@ components:
           required:
             - "attachment.max_size_mb"
             - "idempotency.retention_hours"
+            - "ocr.timeout_seconds"
           properties:
             attachment.max_size_mb:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Tamaño máximo de un ticket o adjunto. Entero en MB (K43, K44). Valor inicial: 10 (MB; K43; sembrado por 00003)."
+              description: "Tamaño máximo de un ticket o adjunto. Entero en MB (K43, K44). Valor inicial: 10 (MB; K43; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "attachment.max_size_mb"
             idempotency.retention_hours:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Horas que se guarda una clave de idempotency_key antes de purgarla (K6). Valor inicial: 24 (horas; K6; sembrado por 00002)."
+              description: "Horas que se guarda una clave de idempotency_key antes de purgarla (K6). Valor inicial: 24 (horas; K6; sembrado por 00002). Rango: entero de 0 o más."
               x-app-setting: "idempotency.retention_hours"
+            ocr.timeout_seconds:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Tiempo máximo de la lectura OCR de una imagen de ticket. Entero en segundos (Q2-76, K44). Valor inicial: 30 (segundos por imagen, 0 o más; Q2-76 (K50); sección: propuesta S1; sembrado por 00004). Rango: entero de 0 o más."
+              x-app-setting: "ocr.timeout_seconds"
           x-calculado: true
           description: "Parámetros operativos de «Datos y respaldos» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
       required:
@@ -16891,18 +17055,23 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             attachment.max_size_mb:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de attachment.max_size_mb (MB)."
+              description: "Valor nuevo de attachment.max_size_mb (MB). Rango: entero de 0 o más."
               x-app-setting: "attachment.max_size_mb"
             idempotency.retention_hours:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de idempotency.retention_hours (horas)."
+              description: "Valor nuevo de idempotency.retention_hours (horas). Rango: entero de 0 o más."
               x-app-setting: "idempotency.retention_hours"
+            ocr.timeout_seconds:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de ocr.timeout_seconds (segundos por imagen, 0 o más). Rango: entero de 0 o más."
+              x-app-setting: "ocr.timeout_seconds"
         reset_parameters:
           type: "array"
           uniqueItems: true
@@ -16912,6 +17081,98 @@ components:
             enum:
               - "attachment.max_size_mb"
               - "idempotency.retention_hours"
+              - "ocr.timeout_seconds"
+          x-entrada: true
+          description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
+      additionalProperties: false
+      minProperties: 1
+    ReportSettings:
+      type: "object"
+      description: "Hora y día de los reportes programados (N-296, N-297; decisión F, K31 punto 1, Q2-72, K47, K50): hora del resumen diario, día de la semana (ISO 8601, 7 = domingo) y hora del resumen semanal, y día del mes y hora del reporte mensual en PDF (en un mes más corto sale su último día, Q2-66 B, RN-29). Desde el esquema 1.4 viven en app_setting y ya no en notification.params_json (Q2-11 B). Activo y destinatarios de cada reporte siguen en updateNotification y setNotificationRecipients."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          required:
+            - "reports.daily_send_time"
+            - "reports.weekly_weekday"
+            - "reports.weekly_send_time"
+            - "reports.monthly_day_of_month"
+            - "reports.monthly_send_time"
+          properties:
+            reports.daily_send_time:
+              $ref: "#/components/schemas/SettingParameterTime"
+              description: "Hora a la que sale el resumen diario. Texto HH:MM de 24 h, hora del centro de México (Q2-72, K31, K47). Valor inicial: \"21:30\" (hora del centro de México, de 00:00 a 23:59; Q2-72 (K50), K31 punto 1, lugar K47; sembrado por 00004). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "reports.daily_send_time"
+            reports.weekly_weekday:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Día de la semana del resumen semanal: 1 = lunes … 7 = domingo (ISO 8601). Entero de 1 a 7 (decisión F, K47). Valor inicial: 7 (día de la semana ISO 8601, de 1 a 7 (7 = domingo); Decisión F, lugar K47; sembrado por 00004). Rango: entero de 1 a 7."
+              x-app-setting: "reports.weekly_weekday"
+            reports.weekly_send_time:
+              $ref: "#/components/schemas/SettingParameterTime"
+              description: "Hora a la que sale el resumen semanal. Texto HH:MM de 24 h, hora del centro de México (Q2-72, K31, K47). Valor inicial: \"19:00\" (hora del centro de México, de 00:00 a 23:59; Q2-72 (K50), K31 punto 1, lugar K47; sembrado por 00004). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "reports.weekly_send_time"
+            reports.monthly_day_of_month:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Día del mes en que se genera el reporte mensual en PDF. Entero de 1 a 31; en un mes que no tiene ese día sale su último día (decisión F, Q2-66, K47). Valor inicial: 1 (día del mes, de 1 a 31 (en un mes más corto sale su último día, Q2-66 B); Decisión F, Q2-66 B, lugar K47; sembrado por 00004). Rango: entero de 1 a 31."
+              x-app-setting: "reports.monthly_day_of_month"
+            reports.monthly_send_time:
+              $ref: "#/components/schemas/SettingParameterTime"
+              description: "Hora a la que se genera el reporte mensual en PDF. Texto HH:MM de 24 h, hora del centro de México (Q2-72, K31, K47). Valor inicial: \"08:00\" (hora del centro de México, de 00:00 a 23:59; Q2-72 (K50), K31 punto 1, lugar K47; sembrado por 00004). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "reports.monthly_send_time"
+          x-calculado: true
+          description: "Parámetros operativos de «Reportes y frecuencias» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
+      required:
+        - "parameters"
+    ReportSettingsUpdate:
+      type: "object"
+      description: "Cambio o «restablecer» de los parámetros de «Reportes y frecuencias» (K44, C1 §11.7)."
+      properties:
+        parameters:
+          type: "object"
+          additionalProperties: false
+          minProperties: 1
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
+          properties:
+            reports.daily_send_time:
+              type: "string"
+              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              description: "Valor nuevo de reports.daily_send_time (hora del centro de México, de 00:00 a 23:59). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "reports.daily_send_time"
+            reports.weekly_weekday:
+              type: "integer"
+              minimum: 1
+              maximum: 7
+              description: "Valor nuevo de reports.weekly_weekday (día de la semana ISO 8601, de 1 a 7 (7 = domingo)). Rango: entero de 1 a 7."
+              x-app-setting: "reports.weekly_weekday"
+            reports.weekly_send_time:
+              type: "string"
+              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              description: "Valor nuevo de reports.weekly_send_time (hora del centro de México, de 00:00 a 23:59). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "reports.weekly_send_time"
+            reports.monthly_day_of_month:
+              type: "integer"
+              minimum: 1
+              maximum: 31
+              description: "Valor nuevo de reports.monthly_day_of_month (día del mes, de 1 a 31 (en un mes más corto sale su último día, Q2-66 B)). Rango: entero de 1 a 31."
+              x-app-setting: "reports.monthly_day_of_month"
+            reports.monthly_send_time:
+              type: "string"
+              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              description: "Valor nuevo de reports.monthly_send_time (hora del centro de México, de 00:00 a 23:59). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "reports.monthly_send_time"
+        reset_parameters:
+          type: "array"
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: "string"
+            enum:
+              - "reports.daily_send_time"
+              - "reports.weekly_weekday"
+              - "reports.weekly_send_time"
+              - "reports.monthly_day_of_month"
+              - "reports.monthly_send_time"
           x-entrada: true
           description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
       additionalProperties: false
@@ -16929,11 +17190,11 @@ components:
           properties:
             health.goal_adjust_lose_kcal:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Kilocalorías que se restan de la meta sugerida cuando el objetivo es bajar. Entero en kcal, 0 o más. Valor de la casa: cada persona puede tener el suyo en su perfil de salud (K36, K44). Valor inicial: 0 (kcal; K36; sembrado por 00003)."
+              description: "Kilocalorías que se restan de la meta sugerida cuando el objetivo es bajar. Entero en kcal, 0 o más. Valor de la casa: cada persona puede tener el suyo en su perfil de salud (K36, K44). Valor inicial: 0 (kcal; K36; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "health.goal_adjust_lose_kcal"
             health.goal_adjust_gain_kcal:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Kilocalorías que se suman a la meta sugerida cuando el objetivo es subir. Entero en kcal, 0 o más. Valor de la casa: cada persona puede tener el suyo en su perfil de salud (K36, K44). Valor inicial: 0 (kcal; K36; sembrado por 00003)."
+              description: "Kilocalorías que se suman a la meta sugerida cuando el objetivo es subir. Entero en kcal, 0 o más. Valor de la casa: cada persona puede tener el suyo en su perfil de salud (K36, K44). Valor inicial: 0 (kcal; K36; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "health.goal_adjust_gain_kcal"
           x-calculado: true
           description: "Parámetros operativos de «Salud y metas de ahorro» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
@@ -16947,17 +17208,17 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             health.goal_adjust_lose_kcal:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de health.goal_adjust_lose_kcal (kcal)."
+              description: "Valor nuevo de health.goal_adjust_lose_kcal (kcal). Rango: entero de 0 o más."
               x-app-setting: "health.goal_adjust_lose_kcal"
             health.goal_adjust_gain_kcal:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de health.goal_adjust_gain_kcal (kcal)."
+              description: "Valor nuevo de health.goal_adjust_gain_kcal (kcal). Rango: entero de 0 o más."
               x-app-setting: "health.goal_adjust_gain_kcal"
         reset_parameters:
           type: "array"
@@ -16974,7 +17235,7 @@ components:
       minProperties: 1
     AlertSettings:
       type: "object"
-      description: "Umbrales del aviso de presupuesto y días antes del pago próximo (N-323; decisión F, K44). Desde el esquema 1.3 viven en app_setting y ya no en notification.params_json (RN-29)."
+      description: "Parámetros de los avisos (N-298, N-300, N-323; decisión F, K43, K44, K47, K50): umbrales del aviso de presupuesto, días antes del pago próximo, hora de los avisos con hora (alerts.send_time), anticipación del aviso de precios viejos antes del día de despensa y día de la semana del aviso de plan de comidas faltante. Desde el esquema 1.3 (umbrales y pago próximo) y 1.4 (hora, anticipación y día; Q2-11 B) viven en app_setting y ya no en notification.params_json (RN-29)."
       properties:
         parameters:
           type: "object"
@@ -16983,19 +17244,34 @@ components:
             - "alerts.budget_warning_pct"
             - "alerts.budget_limit_pct"
             - "alerts.payment_due_days_before"
+            - "alerts.send_time"
+            - "alerts.stale_prices_advance_days"
+            - "alerts.meal_plan_missing_weekday"
           properties:
             alerts.budget_warning_pct:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Porcentaje del presupuesto, por categoría y en el total, en el que llega el primer aviso. Entero en por ciento (decisión F, K44). Valor inicial: 80 (% del presupuesto; Decisión F, K44; sembrado por 00003)."
+              description: "Porcentaje del presupuesto, por categoría y en el total, en el que llega el primer aviso. Entero en por ciento (decisión F, K44). Valor inicial: 80 (% del presupuesto; Decisión F, K44; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "alerts.budget_warning_pct"
             alerts.budget_limit_pct:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Porcentaje del presupuesto, por categoría y en el total, en el que llega el aviso de tope. Entero en por ciento (decisión F, K44). Valor inicial: 100 (% del presupuesto; Decisión F, K44; sembrado por 00003)."
+              description: "Porcentaje del presupuesto, por categoría y en el total, en el que llega el aviso de tope. Entero en por ciento (decisión F, K44). Valor inicial: 100 (% del presupuesto; Decisión F, K44; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "alerts.budget_limit_pct"
             alerts.payment_due_days_before:
               $ref: "#/components/schemas/SettingParameterIntegerList"
-              description: "Días antes de cada pago en que llega el aviso de pago próximo: 1 es el día anterior y 0 el mismo día. Lista de enteros en días (decisión F, K44). Valor inicial: [1, 0] (días antes del pago; Decisión F, K44; sembrado por 00003)."
+              description: "Días antes de cada pago en que llega el aviso de pago próximo: 1 es el día anterior y 0 el mismo día. Lista de enteros en días (decisión F, K44). Valor inicial: [1, 0] (días antes del pago; Decisión F, K44; sembrado por 00003). Rango: lista de enteros mayores o iguales a 0."
               x-app-setting: "alerts.payment_due_days_before"
+            alerts.send_time:
+              $ref: "#/components/schemas/SettingParameterTime"
+              description: "Hora a la que salen los avisos con hora. Texto HH:MM de 24 h, hora del centro de México (Q2-73, K31, K43, K47). Valor inicial: \"09:00\" (hora del centro de México, de 00:00 a 23:59; Q2-73 (K50), K31 punto 2, K43, lugar K47; sembrado por 00004). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "alerts.send_time"
+            alerts.stale_prices_advance_days:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Días antes del día de despensa en que llega el aviso de precios viejos: 0 es el mismo día. Entero en días (Q2-73, K31, K43, K47). Valor inicial: 1 (días antes del día de despensa, 0 o más; Q2-73 (K50), K31 punto 2, K43, lugar K47; sembrado por 00004). Rango: entero de 0 o más."
+              x-app-setting: "alerts.stale_prices_advance_days"
+            alerts.meal_plan_missing_weekday:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Día de la semana del aviso de plan de comidas sin armar: 1 = lunes … 7 = domingo (ISO 8601). Entero de 1 a 7 (decisión F, K47). Valor inicial: 7 (día de la semana ISO 8601, de 1 a 7 (7 = domingo); Decisión F, lugar K47; sembrado por 00004). Rango: entero de 1 a 7."
+              x-app-setting: "alerts.meal_plan_missing_weekday"
           x-calculado: true
           description: "Parámetros operativos de «Notificaciones» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
       required:
@@ -17008,25 +17284,41 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             alerts.budget_warning_pct:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de alerts.budget_warning_pct (% del presupuesto)."
+              description: "Valor nuevo de alerts.budget_warning_pct (% del presupuesto). Rango: entero de 0 o más."
               x-app-setting: "alerts.budget_warning_pct"
             alerts.budget_limit_pct:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de alerts.budget_limit_pct (% del presupuesto)."
+              description: "Valor nuevo de alerts.budget_limit_pct (% del presupuesto). Rango: entero de 0 o más."
               x-app-setting: "alerts.budget_limit_pct"
             alerts.payment_due_days_before:
               type: "array"
               items:
                 type: "integer"
                 minimum: 0
-              description: "Valor nuevo de alerts.payment_due_days_before (días antes del pago)."
+              description: "Valor nuevo de alerts.payment_due_days_before (días antes del pago). Rango: lista de enteros mayores o iguales a 0."
               x-app-setting: "alerts.payment_due_days_before"
+            alerts.send_time:
+              type: "string"
+              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              description: "Valor nuevo de alerts.send_time (hora del centro de México, de 00:00 a 23:59). Rango: texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)."
+              x-app-setting: "alerts.send_time"
+            alerts.stale_prices_advance_days:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de alerts.stale_prices_advance_days (días antes del día de despensa, 0 o más). Rango: entero de 0 o más."
+              x-app-setting: "alerts.stale_prices_advance_days"
+            alerts.meal_plan_missing_weekday:
+              type: "integer"
+              minimum: 1
+              maximum: 7
+              description: "Valor nuevo de alerts.meal_plan_missing_weekday (día de la semana ISO 8601, de 1 a 7 (7 = domingo)). Rango: entero de 1 a 7."
+              x-app-setting: "alerts.meal_plan_missing_weekday"
         reset_parameters:
           type: "array"
           uniqueItems: true
@@ -17037,6 +17329,9 @@ components:
               - "alerts.budget_warning_pct"
               - "alerts.budget_limit_pct"
               - "alerts.payment_due_days_before"
+              - "alerts.send_time"
+              - "alerts.stale_prices_advance_days"
+              - "alerts.meal_plan_missing_weekday"
           x-entrada: true
           description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
       additionalProperties: false
@@ -17100,7 +17395,7 @@ components:
           x-app-setting: "optimizer.zero_debt_by_date"
         date_window_days:
           type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days). En la petición sobreescribe solo para esta comparación el valor vigente, que se lee y cambia en parameters de getOptimizerSettings y updateOptimizerSettings (valor inicial 7, Q2-75, K50, K44)."
           x-app-setting: "optimizer.date_window_days"
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
@@ -17122,6 +17417,9 @@ components:
         purchase_date:
           $ref: "#/components/schemas/Date"
           description: "Fecha de compra."
+        store_id:
+          type: "integer"
+          description: "Tienda del escenario (motor S3, Q2-33 (b)): la tienda es dimensión del escenario solo si la petición no fija store_id; si lo fija, es esa. Ausente cuando S3 la entrega en null (escenario sin tienda)."
         promotion_id:
           type: "integer"
           description: "Promoción aplicada."
@@ -17201,7 +17499,7 @@ components:
               x-app-setting: "optimizer.zero_debt_by_date"
             date_window_days:
               type: "integer"
-              description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
+              description: "«Fecha ± días» de los escenarios (optimizer.date_window_days). En la petición sobreescribe solo para esta comparación el valor vigente, que se lee y cambia en parameters de getOptimizerSettings y updateOptimizerSettings (valor inicial 7, Q2-75, K50, K44)."
               x-app-setting: "optimizer.date_window_days"
         evaluated_count:
           type: "integer"
@@ -17904,20 +18202,8 @@ components:
           description: "1 = activo"
         params_json:
           type: "object"
-          properties:
-            send_time:
-              type: "string"
-              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
-              description: "Hora local de envío en formato HH:MM de 24 horas, zona America/Mexico_City (K43), del resumen diario y de los avisos con hora. No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
-            advance_days:
-              type: "integer"
-              minimum: 0
-              description: "Días de anticipación del aviso de precios viejos antes del día de despensa: entero mayor o igual a 0 (K43). No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
           additionalProperties: true
-          description: "Parámetros de programación del aviso (objeto JSON). Desde el esquema 1.3 (00003, K44) los umbrales del aviso de presupuesto (80 y 100 %) y los días antes del pago próximo (1 y 0) ya no van aquí: son las claves `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` de `app_setting` (RN-29, getAlertSettings); el Down de la 00003 los repone aquí. Aquí quedan cuatro claves: `send_time` y `advance_days` (K43; sin valor sembrado, lo propone S7), y `weekday` (7 en `weekly_summary` y `meal_plan_missing`) y `day_of_month` (1 en `monthly_report`), cuyo valor es FIRME (decisión F). Dónde viven las cuatro (aquí o en `app_setting`) es PROVISIONAL: bloqueo S1-parametros-avisos."
-          x-provisional: true
+          description: "Parámetros propios del aviso (objeto JSON). La hora, el día, la anticipación, los umbrales del presupuesto y los días antes del pago próximo no van aquí: son claves de `app_setting` (RN-29): `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` desde el esquema 1.3 (00003, K44), y `reports.*` (hora y día de los reportes), `alerts.send_time`, `alerts.stale_prices_advance_days` y `alerts.meal_plan_missing_weekday` desde el 1.4 (00004, Q2-11 B, K47); se leen y cambian en getReportSettings y getAlertSettings. Con los valores iniciales solo `budget_threshold` conserva un parámetro (`scopes`); los demás avisos quedan con `{}`. Los Down de la 00004 y de la 00003 los reponen aquí."
         created_at:
           $ref: "#/components/schemas/DateTime"
           description: "created_at"
@@ -17937,7 +18223,7 @@ components:
     NotificationUpdate:
       type: "object"
       additionalProperties: false
-      description: "Activa o desactiva un aviso y sus parámetros (N-297, N-298, N-300). Claves de params_json FIRMES (K43): send_time (hora local HH:MM, America/Mexico_City, del resumen diario y de los avisos con hora) y advance_days (entero ≥ 0: días de anticipación del aviso de precios viejos antes del día de despensa). Hoy no tienen valor sembrado (RN-29 1.3; lo propone S7), así que no hay «restablecer» para ellas; cuando una migración siembre su valor, será su valor inicial (K44). Los umbrales del presupuesto y los días antes del pago próximo ya no van aquí: son claves de app_setting (getAlertSettings, K44). is_enabled es FIRME. Dónde viven send_time, advance_days, weekday y day_of_month (aquí o en app_setting) lo decide el bloqueo S1-parametros-avisos; la marca de lugar va en params_json y en sus claves send_time y advance_days, no en el esquema entero."
+      description: "Activa o desactiva un aviso o un reporte programado (N-297, N-300) y cambia sus parámetros propios (params_json). La hora, el día y la anticipación ya no van aquí (Q2-11 B, K47): son claves de app_setting con valor inicial y «restablecer» (K44), las de los reportes en updateReportSettings y las de los avisos en updateAlertSettings. is_enabled es FIRME."
       x-tabla: "notification"
       properties:
         is_enabled:
@@ -17945,20 +18231,8 @@ components:
           description: "1 = activo"
         params_json:
           type: "object"
-          properties:
-            send_time:
-              type: "string"
-              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
-              description: "Hora local de envío en formato HH:MM de 24 horas, zona America/Mexico_City (K43), del resumen diario y de los avisos con hora. No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
-            advance_days:
-              type: "integer"
-              minimum: 0
-              description: "Días de anticipación del aviso de precios viejos antes del día de despensa: entero mayor o igual a 0 (K43). No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
           additionalProperties: true
-          description: "Parámetros de programación del aviso (objeto JSON). Desde el esquema 1.3 (00003, K44) los umbrales del aviso de presupuesto (80 y 100 %) y los días antes del pago próximo (1 y 0) ya no van aquí: son las claves `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` de `app_setting` (RN-29, getAlertSettings); el Down de la 00003 los repone aquí. Aquí quedan cuatro claves: `send_time` y `advance_days` (K43; sin valor sembrado, lo propone S7), y `weekday` (7 en `weekly_summary` y `meal_plan_missing`) y `day_of_month` (1 en `monthly_report`), cuyo valor es FIRME (decisión F). Dónde viven las cuatro (aquí o en `app_setting`) es PROVISIONAL: bloqueo S1-parametros-avisos."
-          x-provisional: true
+          description: "Parámetros propios del aviso (objeto JSON). La hora, el día, la anticipación, los umbrales del presupuesto y los días antes del pago próximo no van aquí: son claves de `app_setting` (RN-29): `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` desde el esquema 1.3 (00003, K44), y `reports.*` (hora y día de los reportes), `alerts.send_time`, `alerts.stale_prices_advance_days` y `alerts.meal_plan_missing_weekday` desde el 1.4 (00004, Q2-11 B, K47); se leen y cambian en getReportSettings y getAlertSettings. Con los valores iniciales solo `budget_threshold` conserva un parámetro (`scopes`); los demás avisos quedan con `{}`. Los Down de la 00004 y de la 00003 los reponen aquí."
       minProperties: 1
     TestNotificationRequest:
       type: "object"
@@ -18187,7 +18461,8 @@ components:
       properties:
         schedule:
           type: "string"
-          description: "Expresión cron de 5 campos en hora de America/Mexico_City"
+          description: "Expresión cron de 5 campos en hora de America/Mexico_City Los reportes programados toman su hora y su día de app_setting (reports.*, Q2-11 B, K47; updateReportSettings); cómo se relaciona schedule de sus jobs con esas claves es PROVISIONAL: bloqueo C1-hora-reportes-job."
+          x-provisional: true
         is_enabled:
           type: "boolean"
           description: "1 = activo"

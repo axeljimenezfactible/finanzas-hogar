@@ -10,3 +10,29 @@ Opciones:
 - Pregunta 3. **A)** Solo entrada del motor y de la fixture: la app arranca sin precios de Walmart. **B)** También en `price` con fuente `manual` y fecha 2026-10-10: la comparativa de la lista de compras tiene precios de Walmart desde el primer día; son precios del 10-oct-2026 y se marcan viejos el 9-nov-2026 (K22).
 Impacto: el motor S5 queda fijado (S5 §7.2 `CompareCarts`, con el canon exacto). Queda PROVISIONAL la parte de la API: cómo `getBasketComparison` con `basket = expense` arma las canastas de las otras tiendas (S5 §7.2 «API» y §14 `CompareExpense`), la fuente de la semilla de Bodega (S5 §3) y si los precios del carrito de Walmart se siembran en `price` (S5 §3).
 Cómo seguí: pregunta 1 con la opción A (sin cambiar C1); pregunta 2 con la opción A (`manual`, porque no consta un ticket); pregunta 3 con la opción A (solo entrada del motor y de la fixture). Las tres llevan la marca PROVISIONAL citando este bloqueo en `docs/contratos/motores/S5-interfaz.md` 1.1. Ninguna cifra canon depende de estas respuestas.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-47 · (1) Al comparar una compra registrada, ¿contra qué se compara en las otras tiendas?
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «Cada otra tienda se cotiza con sus precios vigentes que compiten (S5 §6) para los productos y cantidades de la compra base, eligiendo presentación como en S5 §7.3. No cambia C1.»
+- **Consecuencia:** No cambia C1. La API **no** reproduce +138.50 con la semilla (Walmart cotizado con las cantidades de Bodega da otro total); el canon K-01 a K-08 se reproduce en el motor (`CompareCarts`) y en la fixture `s5-comparativa-canon`.
+- **Qué cambia:** `S5-interfaz.md` §7.2 «API» y §14 `CompareExpense`: quita la marca PROVISIONAL de esta parte; C1 no cambia; la API no reproduce +$138.50 pero el motor sí (`CompareCarts`, fixture `s5-comparativa-canon`).
+- **Estado:** RESUELTO
+
+### Q2-49 · (3) ¿Los precios del carrito de Walmart del 10-oct-2026 se siembran en la app?
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «Solo entrada del motor y de la fixture: la app arranca sin precios de Walmart.»
+- **Consecuencia** (el archivo no la separa por opción; es su «Impacto»)**:** Impacto: el motor S5 queda fijado (S5 §7.2 `CompareCarts`, con el canon exacto). Queda PROVISIONAL la parte de la API: cómo `getBasketComparison` con `basket = expense` arma las canastas de las otras tiendas (S5 §7.2 «API» y §14 `CompareExpense`), la fuente de la semilla de Bodega (S5 §3) y si los precios del carrito de Walmart se siembran en `price` (S5 §3).
+- **Qué cambia:** `S5-interfaz.md` §3 (semilla): la app arranca sin precios de Walmart; quita la marca PROVISIONAL de esta parte.
+- **Estado:** RESUELTO
+
+## Puerta 2 (11-oct-2026): sin respuesta
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` («Las preguntas sin recomendación quedan sin respuesta en esta puerta: PROVISIONAL con la opción que ya está en uso, y pasan a WF-3») y hoja de respuestas de `PUERTA-2.md` §8. Axel puede mandar una excepción por id cuando lea el documento.
+
+### Q2-48 · (2) ¿Con qué fuente se siembran los precios de la compra de Bodega del 10-oct-2026?
+- PROVISIONAL: sigue en uso A (`manual`), «porque no consta un ticket» (cita de este archivo, «Cómo seguí»). Solo Axel sabe si hubo ticket impreso (PUERTA-2 §3.16 y §7). Pasa a WF-3.
+- **Estado:** ABIERTO
+
+**Estado del bloqueo (puerta 2): ABIERTO** — Q2-47 y Q2-49 están resueltas; queda abierta Q2-48 (fuente de la semilla de Bodega).

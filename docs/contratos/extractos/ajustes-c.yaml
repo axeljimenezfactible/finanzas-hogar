@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «ajustes-c». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «ajustes-c». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto ajustes-c"
-  version: "1.2.0"
+  version: "1.3.0"
   description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -119,7 +119,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Cambiar ajustes de precios"
-      description: "Cambia el interruptor general de lectura asistida (N-292) y los parámetros de precios (N-322). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      description: "Cambia el interruptor general de lectura asistida (N-292) y los parámetros de precios (N-322). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-292"
         - "N-322"
@@ -340,7 +340,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Nuevo crédito"
-      description: "Nuevo crédito."
+      description: "Nuevo crédito. Si lo que quedaría guardado (el cuerpo o, en un cambio, el cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, responde 422 validation_failed con fields[].field = vat_on_interest_bp; la API no cambia el otro campo por su cuenta (CHECK de la 00004, Q2-67 opción 1; detalle en CreditCreate y CreditUpdate)."
       x-necesidades:
         - "N-289"
       x-tablas:
@@ -384,7 +384,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar crédito o interruptor A/B"
-      description: "Incluye availability_reading (A/B, B por defecto). Antes de cambiarlo la pantalla muestra previewAvailability."
+      description: "Incluye availability_reading (A/B, B por defecto). Antes de cambiarlo la pantalla muestra previewAvailability. Si lo que quedaría guardado (el cuerpo o, en un cambio, el cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, responde 422 validation_failed con fields[].field = vat_on_interest_bp; la API no cambia el otro campo por su cuenta (CHECK de la 00004, Q2-67 opción 1; detalle en CreditCreate y CreditUpdate)."
       x-necesidades:
         - "N-289"
       x-tablas:
@@ -604,6 +604,89 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/promotions/{promotion_id}:
+    patch:
+      operationId: "updatePromotion"
+      tags:
+        - "Ajustes"
+      summary: "Editar promoción"
+      description: "Editar promoción."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "promotion"
+      parameters:
+        - name: "promotion_id"
+          in: "path"
+          required: true
+          description: "Id del registro (promotion_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PromotionUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Promotion"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deletePromotion"
+      tags:
+        - "Ajustes"
+      summary: "Eliminar promoción"
+      description: "Con compras que la usan responde 409 `in_use` (desactivar con is_active = false)."
+      x-necesidades:
+        - "N-289"
+      x-tablas:
+        - "audit_log"
+        - "promotion"
+      parameters:
+        - name: "promotion_id"
+          in: "path"
+          required: true
+          description: "Id del registro (promotion_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
 components:
   securitySchemes:
     cookieAuth:
@@ -752,7 +835,7 @@ components:
     SettingParameterInteger:
       type: "object"
       x-calculado: true
-      description: "Parámetro operativo de tipo entero (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. Solo se valida tipo y signo, como los disparadores trg_app_setting_param_int* de 00003; sin topes mínimos ni máximos hasta la puerta 2."
+      description: "Parámetro operativo de tipo entero (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. El tipo y el rango de cada clave los validan los disparadores de S1 (trg_app_setting_param_int* de 00003; trg_app_setting_param_range* y trg_app_setting_param_time* de 00004) y los declara la propiedad de la clave en el cambio de su sección (minimum, maximum o pattern; puerta 2, K50)."
       required:
         - "key"
         - "value_type"
@@ -805,15 +888,15 @@ components:
           properties:
             price.stale_after_days:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Un precio es viejo cuando tiene esta edad en días o más (decisión E). Valor inicial: 30 (días; Decisión E, K22; sembrado por 00001)."
+              description: "Un precio es viejo cuando tiene esta edad en días o más (decisión E). Valor inicial: 30 (días; Decisión E, K22; sembrado por 00001). Rango: entero de 1 o más; 1 o más (Q2-77), Q2-77 (K50)."
               x-app-setting: "price.stale_after_days"
             price.zero_weight_after_days:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Días de edad desde los que un precio ya no compite en la comparativa: solo se muestra marcado. Entero en días. Entre price.stale_after_days y este valor el peso baja en línea recta (K22, K40, K44). Valor inicial: 90 (días; K22, K40; sembrado por 00003)."
+              description: "Días de edad desde los que un precio ya no compite en la comparativa: solo se muestra marcado. Entero en días. Entre price.stale_after_days y este valor el peso baja en línea recta (K22, K40, K44). Valor inicial: 90 (días; K22, K40; sembrado por 00003). Rango: entero de 0 o más; igual o mayor que price.stale_after_days (Q2-77; lo valida el motor de precios), Q2-77 (K50)."
               x-app-setting: "price.zero_weight_after_days"
             price.profeco_import_max_gb:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Tamaño máximo de un archivo de PROFECO al importarlo. Entero en GB (K6, K44). Valor inicial: 1 (GB; K6; sembrado por 00003)."
+              description: "Tamaño máximo de un archivo de PROFECO al importarlo. Entero en GB (K6, K44). Valor inicial: 1 (GB; K6; sembrado por 00003). Rango: entero de 0 o más."
               x-app-setting: "price.profeco_import_max_gb"
           x-calculado: true
           description: "Parámetros operativos de «Tiendas y precios» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
@@ -823,7 +906,7 @@ components:
       x-calculado: true
     PriceSettingsUpdate:
       type: "object"
-      description: "Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. El interruptor solo acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed)."
+      description: "Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. El interruptor solo acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed). price.zero_weight_after_days tiene que ser igual o mayor que price.stale_after_days con los valores que quedan después del cambio (Q2-77, K50, RN-12; también lo valida el motor de precios): si no, 422 validation_failed y no se guarda ninguno."
       properties:
         assisted_reading_enabled:
           type: "boolean"
@@ -833,22 +916,22 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             price.stale_after_days:
               type: "integer"
-              minimum: 0
-              description: "Valor nuevo de price.stale_after_days (días)."
+              minimum: 1
+              description: "Valor nuevo de price.stale_after_days (días). Rango: entero de 1 o más; 1 o más (Q2-77), Q2-77 (K50)."
               x-app-setting: "price.stale_after_days"
             price.zero_weight_after_days:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de price.zero_weight_after_days (días)."
+              description: "Valor nuevo de price.zero_weight_after_days (días). Rango: entero de 0 o más; igual o mayor que price.stale_after_days (Q2-77; lo valida el motor de precios), Q2-77 (K50)."
               x-app-setting: "price.zero_weight_after_days"
             price.profeco_import_max_gb:
               type: "integer"
               minimum: 0
-              description: "Valor nuevo de price.profeco_import_max_gb (GB)."
+              description: "Valor nuevo de price.profeco_import_max_gb (GB). Rango: entero de 0 o más."
               x-app-setting: "price.profeco_import_max_gb"
         reset_parameters:
           type: "array"
@@ -1177,7 +1260,7 @@ components:
           description: "Denominador de la tasa anual ordinaria"
         vat_on_interest_bp:
           $ref: "#/components/schemas/BasisPoints"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski)"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26)"
         annual_fee_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Comisión anual"
@@ -1214,6 +1297,10 @@ components:
         annual_rate_decimals:
           type: "integer"
           description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
+        vat_included:
+          type: "boolean"
+          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18)"
+          x-provisional: true
         live_debt_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Deuda viva = capital + intereses por pagar (motor S3)."
@@ -1245,14 +1332,16 @@ components:
             enum:
               - "annual_rate"
               - "rate_base"
+              - "vat"
               - "min_payment_pct_bp"
               - "min_payment_fixed_cents"
-          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18); vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar»."
+          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18, RN-26): son 5 desde C1 v1.3 (Q2-67 opción 1, K46): annual_rate, rate_base, vat, min_payment_pct_bp y min_payment_fixed_cents. vat sale mientras vat_included sea NULL (falta capturar si la tasa incluye IVA). Vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar». Con vat_included = 0 y sin vat_on_interest_bp también sale vat: PROVISIONAL, bloqueo S3-iva-lectura (pregunta 2; lectura en uso de S3 1.5 §5.3)."
           x-calculado: true
+          x-provisional: true
     CreditCreate:
       type: "object"
       additionalProperties: false
-      description: "Alta de crédito (tabla `credit`)."
+      description: "Alta de crédito (tabla `credit`). IVA (Q2-67 opción 1, CHECK de la 00004): vat_on_interest_bp con valor solo se admite con vat_included = false. Si la combinación que quedaría guardada (en el alta, la del cuerpo; en el Merge Patch, la del cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, la API responde 422 validation_failed con el detalle en fields[] (field = vat_on_interest_bp) y no guarda nada. Ejemplos: {\"vat_included\": true, \"vat_on_interest_bp\": 1600}; el alta {\"kind\": \"store_credit\", …, \"vat_on_interest_bp\": 1600} sin vat_included; y, sobre un crédito guardado con vat_included = false y vat_on_interest_bp = 1600, {\"vat_included\": true} o {\"vat_included\": null}. La API no cambia el otro campo por su cuenta: no vacía vat_on_interest_bp ni cambia vat_included (tampoco deduce false a partir del porcentaje). Para pasar a «la tasa ya incluye IVA» un crédito con porcentaje, el cambio manda {\"vat_included\": true, \"vat_on_interest_bp\": null}."
       x-tabla: "credit"
       properties:
         name:
@@ -1311,7 +1400,7 @@ components:
           description: "Denominador de la tasa anual ordinaria"
         vat_on_interest_bp:
           $ref: "#/components/schemas/BasisPoints"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski)"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26)"
         annual_fee_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Comisión anual"
@@ -1342,6 +1431,10 @@ components:
         annual_rate_decimals:
           type: "integer"
           description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
+        vat_included:
+          type: "boolean"
+          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18)"
+          x-provisional: true
       required:
         - "name"
         - "kind"
@@ -1350,7 +1443,7 @@ components:
     CreditUpdate:
       type: "object"
       additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de crédito (tabla `credit`)."
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de crédito (tabla `credit`). IVA (Q2-67 opción 1, CHECK de la 00004): vat_on_interest_bp con valor solo se admite con vat_included = false. Si la combinación que quedaría guardada (en el alta, la del cuerpo; en el Merge Patch, la del cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, la API responde 422 validation_failed con el detalle en fields[] (field = vat_on_interest_bp) y no guarda nada. Ejemplos: {\"vat_included\": true, \"vat_on_interest_bp\": 1600}; el alta {\"kind\": \"store_credit\", …, \"vat_on_interest_bp\": 1600} sin vat_included; y, sobre un crédito guardado con vat_included = false y vat_on_interest_bp = 1600, {\"vat_included\": true} o {\"vat_included\": null}. La API no cambia el otro campo por su cuenta: no vacía vat_on_interest_bp ni cambia vat_included (tampoco deduce false a partir del porcentaje). Para pasar a «la tasa ya incluye IVA» un crédito con porcentaje, el cambio manda {\"vat_included\": true, \"vat_on_interest_bp\": null}."
       x-tabla: "credit"
       properties:
         name:
@@ -1427,7 +1520,7 @@ components:
           anyOf:
             - $ref: "#/components/schemas/BasisPoints"
             - type: "null"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) · null borra el valor"
+          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26) · null borra el valor"
         annual_fee_cents:
           anyOf:
             - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
@@ -1475,6 +1568,12 @@ components:
             - "integer"
             - "null"
           description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato · null borra el valor"
+        vat_included:
+          type:
+            - "boolean"
+            - "null"
+          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18) · null borra el valor"
+          x-provisional: true
       minProperties: 1
     CreditTermRate:
       type: "object"
@@ -1719,3 +1818,54 @@ components:
         - "term_count"
         - "valid_from"
         - "valid_to"
+    PromotionUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de promoción (tabla `promotion`)."
+      x-tabla: "promotion"
+      properties:
+        credit_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Crédito al que aplica (Kueski). NULL = cualquiera · null borra el valor"
+        merchant_name:
+          type: "string"
+          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
+        store_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Tienda registrada que corresponde al comercio, si existe · null borra el valor"
+        term_count:
+          type: "integer"
+          description: "Plazo en pagos (4 quincenas)"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa promocional"
+        min_purchase_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
+        valid_from:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio de vigencia, inclusive"
+        valid_to:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
+        source_note:
+          type:
+            - "string"
+            - "null"
+          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        rate_decimals:
+          type:
+            - "integer"
+            - "null"
+          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato · null borra el valor"
+      minProperties: 1

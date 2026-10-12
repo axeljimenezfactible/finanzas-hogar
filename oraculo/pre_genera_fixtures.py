@@ -267,7 +267,30 @@ def fuentes():
             'Promociones (RN-12, S5-10): la del 2026-10-05 (2000) está vencida y no se muestra ni cuenta; la de hoy (2500) se muestra junto al precio regular, '
             'y ninguna entra en la cotización (gana el regular 2900, primera tienda).',
             [('regla', 'RN-12'), ('criterio', 'S5-10')], datos, q, e,
-            prov('S5-reglas-comparativa', 'pregunta 3: una promoción solo es vigente en su observed_date (opción A)'))
+            None)
+
+
+def vigente_zona():
+    """S-8 (§6) con created_at RFC 3339 en distintas zonas (§15.1): el instante se compara en UTC, no como texto."""
+    cat = catalogo([('a', 'g', 'abarrotes', [('a-1kg', 1000000)])])
+    # (tienda, created_at del ticket_manual a 2100, instante en UTC escrito a mano); el manual a 2000 es de las 12:30:00Z
+    filas = [('t-menos6', '2026-10-10T07:00:00-06:00', '13:00:00Z'), ('t-cero', '2026-10-10T12:00:00+00:00', '12:00:00Z'),
+             ('t-mas6', '2026-10-10T18:00:00+06:00', '12:00:00Z'), ('t-fraccion', '2026-10-10T06:30:00.250-06:00', '12:30:00.25Z')]
+    pr = []
+    for t, c, _ in filas:
+        pr += [precio('a-1kg', t, 2000, '2026-10-10', 'manual', created='2026-10-10T12:30:00Z'),
+               precio('a-1kg', t, 2100, '2026-10-10', 'ticket_manual', created=c)]
+    vig = lambda cents, src: {'price': {'price_cents': cents, 'observed_date': '2026-10-10', 'source': src}, 'references': [], 'promotion': None}
+    e = {'precio-t-menos6': vig(2100, 'ticket_manual'), 'precio-t-cero': vig(2000, 'manual'),
+         'precio-t-mas6': vig(2000, 'manual'), 'precio-t-fraccion': vig(2100, 'ticket_manual')}
+    fixture('s5-precio-vigente-zona',
+            'Supuesto S-8 (§6) con `created_at` RFC 3339 (§15.1). En cada tienda compiten dos precios del 2026-10-10: manual a 2000 capturado a las 12:30:00Z '
+            'y ticket_manual a 2100. Cálculo a mano del instante del ticket en UTC: 07:00:00-06:00 = 13:00:00Z, posterior, rige 2100; '
+            '12:00:00+00:00 = 12:00:00Z, anterior, rige 2000; 18:00:00+06:00 = 12:00:00Z, anterior, rige 2000 (leído como texto sin zona daría 2100); '
+            '06:30:00.250-06:00 = 12:30:00.25Z, posterior por 0.25 s, rige 2100 (leído sin zona daría 2000). Ningún par empata en el instante.',
+            [('manual', '§6 y §15.1 de S5-interfaz.md'), ('manual', 'RFC 3339 §5.6')],
+            {'today': HOY, 'catalog': cat, 'stores': [tienda(t) for t, _, _ in filas], 'prices': pr},
+            [consulta(f'precio-{t}', 'current_price', presentation='a-1kg', store=t) for t, _, _ in filas], e)
 
 
 # ---------------------------------------------------------------- canasta del 10-oct y mejor tienda
@@ -321,7 +344,7 @@ def canasta():
 
 def empates():
     cat = catalogo([('a', 'g', 'abarrotes', [('a-1kg', 1000000)]), ('b', 'g', 'abarrotes', [('b-1kg', 1000000)]), ('c', 'g', 'abarrotes', [('c-1kg', 1000000)])])
-    pv = prov('S5-reglas-comparativa', 'pregunta 2: desempate por renglones recomendados, luego precios viejos, luego orden de `stores` (opción A)')
+    pv = None  # FIRME (puerta 2, Q2-60 = A): desempate por renglones recomendados, luego precios viejos, luego orden de `stores`
     nec = lambda p: lista_item(p, nec=1000000, rec=p + '-1kg')
     # a) mismo total; gana la que tiene más renglones recomendados aunque vaya segunda en `stores`
     pr = [precio('a-1kg', 't1', 1100, '2026-10-10'), precio('a-1kg', 't2', 1000, '2026-10-10'), precio('b-1kg', 't1', 1900, '2026-10-10'), precio('b-1kg', 't2', 2100, '2026-10-10'),
@@ -356,11 +379,12 @@ def empates():
     # d) canasta incompleta: la tienda sin precio de b se lista pero no puede ser la más barata
     pr = [precio('a-1kg', 't1', 1000, '2026-10-10'), precio('a-1kg', 't2', 1100, '2026-10-10'), precio('a-1kg', 't3', 500, '2026-10-10'),
           precio('b-1kg', 't1', 2100, '2026-10-10'), precio('b-1kg', 't2', 2000, '2026-10-10')]
-    e = {'canasta': {'stores': [{'store': 't3', 'total_cents': 500, 'missing_count': 1}, {'store': 't2', 'total_cents': 3100, 'missing_count': 0},
-                                {'store': 't1', 'total_cents': 3100, 'missing_count': 0}], 'cheapest_store': 't2'}}
+    e = {'canasta': {'stores': [{'store': 't2', 'total_cents': 3100, 'missing_count': 0, 'difference_vs_cheapest_cents': 0},
+                                {'store': 't1', 'total_cents': 3100, 'missing_count': 0, 'difference_vs_cheapest_cents': 0},
+                                {'store': 't3', 'total_cents': 500, 'missing_count': 1, 'difference_vs_cheapest_cents': None}], 'cheapest_store': 't2'}}
     fixture('s5-mejor-tienda-incompleta',
-            't3 solo tiene precio de a (500): se lista con missing_count 1 y total 500 (ordenada por total ascendente), pero la más barata es t2: gana el empate de total con t1 '
-            'porque es la recomendada de b (t3 lo es de a, t1 de ninguno).',
+            't3 solo tiene precio de a (500): se lista con missing_count 1 y total 500, pero va DESPUÉS de las completas y con diferencia null (§7.4 de la versión 1.5, '
+            'H-r3-04, Q2-05 = A); la más barata es t2: gana el empate de total con t1 porque es la recomendada de b (t3 lo es de a, t1 de ninguno).',
             [('regla', 'RN-12'), ('criterio', 'S5-03')],
             {'today': HOY, 'catalog': cat, 'stores': st('t1', 't2', 't3'), 'prices': pr, 'shopping_list': [nec('a'), nec('b')]},
             [consulta('canasta', 'compare_basket')], e, pv)
@@ -400,7 +424,7 @@ def cotizacion():
             'Bodega la más barata, Walmart +700.',
             [('criterio', 'S5-03'), ('manual', '§14.1 y §7.3 de S5-interfaz.md')],
             {'today': HOY, 'catalog': cat, 'stores': stores, 'prices': pr, 'shopping_list': [lista_item('arroz', nec=500000, rec='arroz-1kg')]}, q, e,
-            prov('S5-reglas-comparativa', 'pregunta 2: desempate por precio del paquete, orden de `stores` y orden del catálogo (opción A)'))
+            None)
     # regla única (contraejemplo de M-r4-1)
     cat = catalogo([('arroz', 'g', 'abarrotes', [('arroz-1kg', 1000000), ('arroz-500', 500000)]), ('aceite-soya', 'ml', 'abarrotes', [('aceite-946', 946000)])])
     pr = [precio('arroz-1kg', 'walmart', 2800, '2026-10-10'), precio('arroz-500', 'walmart', 1450, '2026-10-10'), precio('arroz-500', 'bodega', 1460, '2026-10-10'),
@@ -423,7 +447,7 @@ def cotizacion():
             [('criterio', 'S5-03'), ('manual', '§7.3 de S5-interfaz.md y REVISION-contrato-S4S5-r4.md')],
             {'today': HOY, 'catalog': cat, 'stores': [tienda('walmart'), tienda('bodega')], 'prices': pr, 'shopping_list': lista},
             [consulta('canasta', 'compare_basket')], e,
-            prov('S5-reglas-comparativa', 'pregunta 2: desempate (aquí no interviene; la recomendación es única por unidad base)'))
+            None)
 
 
 # ---------------------------------------------------------------- membresía
@@ -455,7 +479,7 @@ def membresia():
             '1000.00 / 120.00 = 8.33 -> 9 (hacia arriba: con 8 no se cubre). RN-13: 138.50 x 6 = 831.00 (no cubre 1,000.00 pero sí 800.00 de `sams-b`, que equilibra en 6).',
             [('criterio', 'S5-09'), ('regla', 'RN-13')],
             {'today': HOY, 'catalog': cat, 'stores': stores, 'grocery_purchases': compras}, consultas, e,
-            prov('S5-reglas-comparativa', 'preguntas 4a y 4b: compras al año = despensas en cadenas de los últimos 365 días; equilibrio hacia arriba'))
+            None)
     # ahorro calculado con la canasta: A 200, B 0, C 200 -> 400; equilibrio 100000 / 400 = 250 (exacto)
     pr = [precio('a-1kg', 'sams', 1000, '2026-10-10'), precio('a-1kg', 'chedraui', 1200, '2026-10-10'), precio('a-1kg', 'sams-b', 700, '2026-10-10'),
           precio('b-1kg', 'sams', 2500, '2026-10-10'), precio('b-1kg', 'chedraui', 2300, '2026-10-10'),
@@ -541,7 +565,13 @@ def ingesta():
     casos = {'fecha-futura': ([precio('a-1kg', 't1', 1000, '2026-10-13')], 'future_date', 'una fecha posterior a hoy (2026-10-12) es error de captura (S-7)'),
              'presentacion-desconocida': ([precio('a-2kg', 't1', 1000, '2026-10-10')], 'unknown_presentation', 'la presentación no existe'),
              'tienda-desconocida': ([precio('a-1kg', 't9', 1000, '2026-10-10')], 'unknown_store', 'la tienda no existe'),
-             'precio-duplicado': (base + base, 'duplicate_price', 'misma (presentación, tienda, fecha, fuente, promoción) dos veces')}
+             'precio-duplicado': (base + base, 'duplicate_price', 'misma (presentación, tienda, fecha, fuente, promoción) dos veces'),
+             'zona-hora': ([precio('a-1kg', 't1', 1000, '2026-10-10', created='2026-10-10T13:00:00+24:00')], 'invalid_date',
+                           'created_at con zona +24:00: RFC 3339 §5.6 limita la hora de la zona a 00-23 (§15.1)'),
+             'zona-minuto': ([precio('a-1kg', 't1', 1000, '2026-10-10', created='2026-10-10T13:00:00+05:60')], 'invalid_date',
+                             'created_at con zona +05:60: RFC 3339 §5.6 limita el minuto de la zona a 00-59 (§15.1)'),
+             'hora-24': ([precio('a-1kg', 't1', 1000, '2026-10-10', created='2026-10-10T24:00:00Z')], 'invalid_date',
+                         'created_at a las 24:00:00Z: RFC 3339 §5.6 limita la hora a 00-23 (§15.1)')}
     for nombre, (pr, code, desc) in casos.items():
         fixture(f's5-ingesta-{nombre}', f'Validación común de la ingesta (§3, S5-10): {desc}. Toda consulta del caso sale con el error.',
                 [('criterio', 'S5-10')], {'today': HOY, 'catalog': cat, 'stores': [tienda('t1')], 'prices': pr},
@@ -577,23 +607,27 @@ def profeco():
               tienda('walmart-tepeyac', kind='branch', parent='walmart', profeco_name='WALMART TEPEYAC', municipality='GUSTAVO A. MADERO')]
     d = 'oraculo/fixtures/s5/_datos/'
     args = lambda modo: dict(files=[d + 'profeco-muestra-a.csv', d + 'profeco-muestra-b.csv'], links_file=d + 'profeco-vinculos.csv', mode=modo)
-    rej = [{'file': d + 'profeco-muestra-a.csv', 'row': 3}, {'file': d + 'profeco-muestra-b.csv', 'row': 2}, {'file': d + 'profeco-muestra-b.csv', 'row': 3}]
-    e = {'produccion': {'read': 10, 'rejected': 3, 'filtered_out': 2, 'skipped': 2, 'loaded': 2, 'duplicates': 1,
+    rej = [{'file': d + 'profeco-muestra-a.csv', 'row': 3, 'reason': 'fecha ilegible'}, {'file': d + 'profeco-muestra-b.csv', 'row': 2, 'reason': 'columnas: 14 en vez de 15'},
+           {'file': d + 'profeco-muestra-b.csv', 'row': 3, 'reason': 'precio ilegible'}]
+    e = {'produccion': {'read': 10, 'rejected': 3, 'filtered_out': 2, 'skipped': 2, 'loaded': 2, 'loaded_proposed': 0, 'duplicates': 1,
                         'coverage': [{'chain': 'BODEGA AURRERA', 'municipality': 'AZCAPOTZALCO', 'price_count': 1}, {'chain': 'WALMART', 'municipality': 'GUSTAVO A. MADERO', 'price_count': 1}],
                         'rejections': rej},
-         'revision': {'read': 10, 'rejected': 3, 'filtered_out': 2, 'skipped': 1, 'loaded': 3, 'duplicates': 1,
+         'revision': {'read': 10, 'rejected': 3, 'filtered_out': 2, 'skipped': 1, 'loaded': 2, 'loaded_proposed': 1, 'duplicates': 1,
                       'coverage': [{'chain': 'BODEGA AURRERA', 'municipality': 'AZCAPOTZALCO', 'price_count': 2}, {'chain': 'WALMART', 'municipality': 'GUSTAVO A. MADERO', 'price_count': 1}],
                       'rejections': rej}}
+    for x in e.values():
+        assert x['read'] == x['rejected'] + x['filtered_out'] + x['skipped'] + x['loaded'] + x['loaded_proposed'] + x['duplicates']
     fixture('s5-profeco-muestra',
             'Cargador PROFECO sobre 2 CSV de muestra (ILUSTRATIVO; S5-05, §11): a = UTF-8 con BOM, 6 renglones; b = Windows-1252, 4 renglones. Renglón por renglón: a1 se carga; a2 es el mismo '
             'registro del mismo día en otro formato de fecha (15/08/2026) -> duplicado; a3 fecha ilegible -> rechazado; a4 cadena que no es de Axel -> filtrado; a5 sin liga -> omitido; '
             'a6 liga "propuesto" -> omitido en producción y cargado en revisión; b1 se carga (tienda = la cadena, porque ninguna sucursal se llama WALMART ACUEDUCTO); b2 con 14 columnas -> rechazado; '
-            'b3 precio ilegible -> rechazado; b4 municipio fuera del filtro -> filtrado. El municipio de Walmart va en su sucursal walmart-tepeyac y no en la cadena: así las dos lecturas de §11 («municipios de las sucursales») dan lo mismo hasta que el integrador fije el texto (REVISION-S5-r1 H-01). Lectura 10 = 3 + 2 + 2 + 2 + 1 (producción) = 3 + 2 + 1 + 3 + 1 (revisión). '
-            'Los motivos (`reason`) son texto libre y no se comparan.',
+            'b3 precio ilegible -> rechazado; b4 municipio fuera del filtro -> filtrado. El municipio de Walmart va en su sucursal walmart-tepeyac y no en la cadena (§11: municipios solo de las sucursales). '
+            'Lectura 10 = rechazados 3 + filtrados 2 + omitidos 2 + cargados 2 + cargados con liga propuesta 0 + duplicados 1 (producción) = 3 + 2 + 1 + 2 + 1 + 1 (revisión: a6 va a loaded_proposed, §11 de la versión 1.5). '
+            'Los motivos (`reason`) son la lista cerrada de §11 (H-r3-03, Q2-04 = A) y se comparan.',
             [('criterio', 'S5-05'), ('manual', '§11 de S5-interfaz.md')],
             {'today': HOY, 'catalog_file': CAT, 'stores': stores},
             [consulta('produccion', 'profeco_import', **args('production')), consulta('revision', 'profeco_import', **args('review'))], e,
-            prov('S5-profeco-almacen', 'almacenamiento, conteos y cobertura (opción A); ligas confirmadas: bloqueo S4-confirmacion-empates'))
+            prov('S5-profeco-filtro', 'conteos con el filtro y la liga normalizada en uso (opción A, preguntas 1 a 3 = Q2-56 a Q2-58)'))
 
 
 def ocr():
@@ -645,13 +679,13 @@ def profeco_filtro():
               tienda('walmart-tepeyac', kind='branch', parent='walmart', profeco_name='Walmart Tepeyac', municipality='Gustavo A. Madero'),
               tienda('tianguis', kind='market', name='Tianguis', municipality='IZTAPALAPA', visit_weekday=2)]
     d = 'oraculo/fixtures/s5/_datos/'
-    e = {'read': 8, 'rejected': 0, 'filtered_out': 3, 'skipped': 0, 'loaded': 4, 'duplicates': 1,
+    e = {'read': 8, 'rejected': 0, 'filtered_out': 3, 'skipped': 0, 'loaded': 4, 'loaded_proposed': 0, 'duplicates': 1,
          'coverage': [{'chain': 'Bodega Aurrerá', 'municipality': 'Azcapotzalco', 'price_count': 1},
                       {'chain': 'WAL-MART', 'municipality': 'GUSTAVO A. MADERO', 'price_count': 1},
                       {'chain': 'WALMART', 'municipality': 'AZCAPOTZALCO', 'price_count': 1},
                       {'chain': 'WALMART', 'municipality': 'GUSTAVO A. MADERO', 'price_count': 1}],
          'rejections': []}
-    assert e['read'] == e['rejected'] + e['filtered_out'] + e['skipped'] + e['loaded'] + e['duplicates']
+    assert e['read'] == e['rejected'] + e['filtered_out'] + e['skipped'] + e['loaded'] + e['loaded_proposed'] + e['duplicates']
     assert e['loaded'] == sum(c['price_count'] for c in e['coverage'])
     fixture('s5-profeco-filtro',
             'Filtro de profeco_import (ILUSTRATIVO; §11, REVISION-S5-r2 R2-02) con la opción A del bloqueo S5-profeco-filtro: (1) el municipio de una cadena (Bodega en TLALNEPANTLA DE BAZ) '
@@ -691,10 +725,12 @@ def carritos():
     assert Fraction(1500 * 1000000, tam[a750]) == 2000  # la mejor presentación de la tercera (opción B) habría ganado con 20.00/kg
     st = lambda s, t_, ic, it, sc, pc, mc, stc, dif: {'store': s, 'total_cents': t_, 'identical_count': ic, 'identical_total_cents': it, 'substitute_count': sc,
                                                      'piece_count': pc, 'missing_count': mc, 'stale_count': stc, 'difference_vs_cheapest_cents': dif, 'assumes_membership': False}
+    # §7.4 (versión 1.5, H-r3-04, Q2-05 = A): solo Bodega está completa (missing_count 0): va primero y es la referencia;
+    # tercera (2 faltantes) y Walmart (1 faltante) van después, por total ascendente, con diferencia null.
     esperado = {'carritos': {
-        'stores': [st('tercera', 16500, 1, 10000, 1, 7, 2, 0, 0), st('walmart', 29650, 1, 10750, 2, 9, 1, 0, 29650 - 16500),
-                   st('bodega', 42600, 1, 10500, 2, 11, 0, 4, 42600 - 16500)],
-        'identical_pieces': 5, 'winners': [{'store': 'tercera', 'count': 1}, {'store': 'walmart', 'count': 0}, {'store': 'bodega', 'count': 0}], 'ties': 0,
+        'stores': [st('bodega', 42600, 1, 10500, 2, 11, 0, 4, 0), st('tercera', 16500, 1, 10000, 1, 7, 2, 0, None),
+                   st('walmart', 29650, 1, 10750, 2, 9, 1, 0, None)],
+        'identical_pieces': 5, 'winners': [{'store': 'bodega', 'count': 0}, {'store': 'tercera', 'count': 1}, {'store': 'walmart', 'count': 0}], 'ties': 0,
         'rows': [{'kind': 'identical', 'product': 'atun-agua', 'winner_store': 'tercera'},
                  {'kind': 'substitute', 'product': 'arroz-grano-largo', 'winner_store': 'walmart'},
                  {'kind': 'substitute', 'product': 'sustituto-crema-cafe', 'winner_store': 'bodega'},
@@ -705,11 +741,137 @@ def carritos():
             'compare_carts con tres canastas (ILUSTRATIVO; §7.2, REVISION-S5-r2 R2-03) y la opción A del bloqueo S5-carritos-detalle. Bodega (base, del 1-sep, vieja) = los 3 sustitutos de data.json + 6 atunes a 21.00; '
             'Walmart = arroz y crema de data.json + 5 atunes a 21.50 (sin leche); tercera = arroz 750 g a 15.00 + arroz 1 kg a 50.00 + 5 atunes a 20.00. (1) El sustituto del arroz lo gana Walmart '
             '(28.00/kg) porque la tercera cobró 65.00 por 1.75 kg (37.14/kg), aunque su 750 g sola saldría a 20.00/kg. (2) missing_count: tercera 2 (crema y leche), Walmart 1 (leche), Bodega 0. '
-            '(3) stale_count de Bodega = 4 presentaciones agrupadas (el atún cuenta una vez aunque salga como idéntico y como «solo aquí»). winners[] va en el orden de stores[].',
+            '(3) stale_count de Bodega = 4 presentaciones agrupadas (el atún cuenta una vez aunque salga como idéntico y como «solo aquí»). (4) §7.4 de la versión 1.5 (H-r3-04, Q2-05 = A): '
+            'Bodega es la única completa, va primero con diferencia 0; tercera (165.00) y Walmart (296.50), incompletas, van después por total y con diferencia null. winners[] va en el orden de stores[].',
             [('bloqueo', BLOQ + 'S5-carritos-detalle.md'), ('data.json', 'sustitutos'), ('manual', '§7.2 de S5-interfaz.md')],
             {'today': HOY, 'catalog_file': CAT, 'stores': TIENDAS_CANON + [tienda('tercera', name='Tercera tienda')], 'carts': carts},
             [consulta('carritos', 'compare_carts', base='bodega', others=['walmart', 'tercera'])], esperado,
             prov('S5-carritos-detalle', 'ganador del sustituto con varias presentaciones, missing_count y stale_count de carritos (opción A)'))
+
+
+def carritos_granel():
+    """Bloqueo S5-carritos-granel (PROVISIONAL, regla en uso; REVISION-S5-r3 H-r3-02, §7.2 paso 8): importe de línea exacto,
+    total de tienda = HALF_UP de la suma exacta (un solo redondeo), lines[].total_cents = HALF_UP de su línea (solo para mostrar)
+    y precio por unidad base desde la fracción exacta. Son los dos casos del revisor, rehechos aquí con Fraction."""
+    a750, a1k, atun = 'arroz-grano-largo.sos-750g', 'arroz-grano-largo.sos-uruguayo-1kg', 'atun-agua.dolores-140g'
+    tam = {v[1]: v[2] for v in NOMBRE.values()}
+    assert (tam[a750], tam[a1k], tam[atun]) == (750000, 1000000, 140000)
+    assert (NOMBRE_PROD[a750], NOMBRE_PROD[a1k], NOMBRE_PROD[atun]) == ('arroz-grano-largo', 'arroz-grano-largo', 'atun-agua')
+    ln = lambda pres, q, u: {'presentation': pres, 'quantity_milli': q, 'unit_price_cents': u}
+    cart = lambda code, store, kind, lines: {'code': code, 'store': store, 'kind': kind, 'observed_date': '2026-10-10', 'source': 'manual', 'lines': lines}
+    carts = [cart('bodega-granel', 'bodega', 'expense', [ln(a750, 500, 101), ln(atun, 500, 101)]),
+             cart('walmart-granel', 'walmart', 'cart', [ln(a750, 500, 103), ln(atun, 500, 103)]),
+             cart('bodega-sustituto', 'bodega', 'expense', [ln(a750, 333, 2200)]),
+             cart('walmart-sustituto', 'walmart', 'cart', [ln(a1k, 667, 2800)])]
+    imp = lambda q, u: Fraction(q * u, 1000)             # importe exacto de la línea, en centavos
+    pub = lambda pres, u: Fraction(u * 1000000, tam[pres])  # centavos por kg, exacto (S5-02)
+    linea = lambda st, pres, q, u: {'store': st, 'presentation': pres, 'quantity_milli': q, 'total_cents': hu(imp(q, u)), 'base_unit_price_cents': hu(pub(pres, u))}
+    tb, tw = hu(imp(500, 101) * 2), hu(imp(500, 103) * 2)
+    assert (tb, tw) == (101, 103) and hu(imp(500, 101)) * 2 == 102  # el redondeo por línea daba 102 y 104 (H-r3-02)
+    assert [hu(pub(a750, 101)), hu(pub(a750, 103)), hu(pub(atun, 101)), hu(pub(atun, 103))] == [135, 137, 721, 736]
+    st = lambda s_, t_, ic, it, sc, pc, dif: {'store': s_, 'total_cents': t_, 'identical_count': ic, 'identical_total_cents': it, 'substitute_count': sc,
+                                              'piece_count': pc, 'missing_count': 0, 'stale_count': 0, 'difference_vs_cheapest_cents': dif, 'assumes_membership': False}
+    sb, sw = hu(imp(333, 2200)), hu(imp(667, 2800))
+    assert (sb, sw) == (733, 1868) and (hu(pub(a750, 2200)), hu(pub(a1k, 2800))) == (2933, 2800) and pub(a1k, 2800) < pub(a750, 2200)
+    esperado = {
+        'granel': {'stores': [st('bodega', tb, 2, tb, 0, 2, 0), st('walmart', tw, 2, tw, 0, 2, tw - tb)], 'identical_pieces': 2,
+                   'winners': [{'store': 'bodega', 'count': 2}, {'store': 'walmart', 'count': 0}], 'ties': 0,
+                   'rows': [{'kind': 'identical', 'product': 'arroz-grano-largo', 'lines': [linea('bodega', a750, 500, 101), linea('walmart', a750, 500, 103)], 'winner_store': 'bodega'},
+                            {'kind': 'identical', 'product': 'atun-agua', 'lines': [linea('bodega', atun, 500, 101), linea('walmart', atun, 500, 103)], 'winner_store': 'bodega'}]},
+        'granel-sustituto': {'stores': [st('bodega', sb, 0, 0, 1, 1, 0), st('walmart', sw, 0, 0, 1, 1, sw - sb)], 'identical_pieces': 0,
+                             'winners': [{'store': 'bodega', 'count': 0}, {'store': 'walmart', 'count': 0}], 'ties': 0,
+                             'rows': [{'kind': 'substitute', 'product': 'arroz-grano-largo', 'lines': [linea('bodega', a750, 333, 2200), linea('walmart', a1k, 667, 2800)],
+                                       'winner_store': 'walmart'}]}}
+    fixture('s5-carritos-granel',
+            'compare_carts con cantidades a granel (ILUSTRATIVO; §7.2 paso 8, REVISION-S5-r3 H-r3-02, bloqueo S5-carritos-granel, regla en uso). (1) granel: arroz 750 g y atún 140 g, 0.5 de cada uno, '
+            'a 1.01 en Bodega y a 1.03 en Walmart: cada línea vale 0.505 y 0.515 exactos (se muestran 51 y 52 centavos), pero el total es HALF_UP de la suma exacta: Bodega 1.01 y Walmart 1.03 '
+            '(el redondeo por línea daba 1.02 y 1.04); la suma de las líneas mostradas puede diferir del total. Precio por unidad base desde la fracción exacta: 101 × 1000000 / 750000 = 134.67 -> 135, '
+            '103 -> 137.33 -> 137, 101 × 1000000 / 140000 = 721.43 -> 721, 103 -> 735.71 -> 736. (2) granel-sustituto: Bodega 0.333 de arroz 750 g a 22.00 (732.6 -> 7.33; 2933.33 -> 29.33/kg) '
+            'contra Walmart 0.667 de arroz 1 kg a 28.00 (1867.6 -> 18.68; 28.00/kg): gana Walmart por unidad base; por total Bodega va primero (+11.35 Walmart).',
+            [('bloqueo', BLOQ + 'S5-carritos-granel.md'), ('manual', '§7.2 paso 8 de S5-interfaz.md'), ('manual', 'docs/estado/wf1/REVISION-S5-r3.md H-r3-02')],
+            {'today': HOY, 'catalog_file': CAT, 'stores': TIENDAS_CANON, 'carts': carts},
+            [consulta('granel', 'compare_carts', base='bodega-granel', others=['walmart-granel']),
+             consulta('granel-sustituto', 'compare_carts', base='bodega-sustituto', others=['walmart-sustituto'])], esperado,
+            prov('S5-carritos-granel', 'importe de línea exacto, total con un solo redondeo y lines[].total_cents solo para mostrar (regla en uso, la del motor)'))
+
+
+PROFECO_CAB = 'producto,presentacion,marca,categoria,catalogo,precio,fecha_registro,cadena_comercial,giro,nombre_comercial,direccion,estado,municipio,latitud,longitud'
+PROFECO_TIENDAS = [tienda('bodega', profeco_name='BODEGA AURRERA'),
+                   tienda('bodega-vallejo', kind='branch', parent='bodega', profeco_name='BODEGA AURRERA VALLEJO', municipality='AZCAPOTZALCO'),
+                   tienda('walmart', profeco_name='WALMART'),
+                   tienda('walmart-tepeyac', kind='branch', parent='walmart', profeco_name='WALMART TEPEYAC', municipality='GUSTAVO A. MADERO')]
+
+
+def _fila_profeco(prod, pres, marca, precio_, fecha_, cadena='BODEGA AURRERA', nombre='BODEGA AURRERA VALLEJO', muni='AZCAPOTZALCO'):
+    return f'{prod},{pres},{marca},ABARROTES,CATALOGO,{precio_},{fecha_},{cadena},SUPERMERCADO,{nombre},"CALLE 4",CIUDAD DE MEXICO,{muni},19.45,-99.15'
+
+
+def profeco_bordes():
+    """REVISION-S5-r3 H-r3-03: 17 registros con los bordes del revisor (rv-bordes), rehechos aquí. Lectura: regla técnica de §11
+    (Q2-04 = A); liga normalizada y filtro: PROVISIONAL, en uso A (bloqueo S5-profeco-filtro). Esperado renglón por renglón."""
+    L = lambda precio_, fecha_, **kw: _fila_profeco('LECHE ENTERA', '1 L', 'SANTA CLARA', precio_, fecha_, **kw)
+    W = dict(cadena='WALMART', nombre='WALMART ACUEDUCTO', muni='GUSTAVO A. MADERO')
+    filas = [L('24.50', '2026-08-01'),                                              # 1 carga (bodega-vallejo)
+             L('"1,021.00"', '2026-08-02'),                                         # 2 carga 102100: coma de miles (H-r3-03)
+             _fila_profeco('ATUN DOLORES', '140 G', 'DOLORES', '21.00', '2026-08-03', **W),  # 3 carga: liga normalizada contra «ATÚN DOLORES»
+             L('0.00', '2026-08-04'),                                               # 4 rechazo: precio no positivo
+             L('24.50', '2026-08-05', cadena=''),                                   # 5 rechazo: cadena comercial vacía
+             L('24.505', '2026-08-06'),                                             # 6 rechazo: más de dos decimales
+             'LECHE ENTERA,1 L,SANTA CLARA,ABARROTES,CATALOGO,24.50,2026-08-07,BODEGA AURRERA,SUPERMERCADO,BODEGA AURRERA VALLEJO,"CALLE 4",CIUDAD DE MEXICO,AZCAPOTZALCO,19.45',  # 7 rechazo: 14 columnas
+             L('25.00', '2026-08-08', cadena='SORIANA', nombre='SORIANA GAM', muni='GUSTAVO A. MADERO'),  # 8 filtrado
+             _fila_profeco('FRIJOLES REFRITOS', '220 G', 'LA COSTEÑA', '12.00', '2026-08-09'),  # 9 liga propuesta: omitido (producción) / loaded_proposed (revisión)
+             L('24.50', '2026-08-01'),                                              # 10 duplicado de 1
+             L('$24.90', '2026-08-11'),                                             # 11 carga 2490 ($ inicial)
+             L(' 25 ', '2026-08-12'),                                               # 12 carga 2500 (espacios en las orillas, sin decimales)
+             L('25.5', '2026-08-13'),                                               # 13 carga 2550 (un decimal)
+             L('"1,021"', '2026-08-14'),                                            # 14 carga 102100 (miles sin decimales)
+             _fila_profeco('ATÚN DOLORES', '140 G', 'DOLORES', '21.50', '2026-08-15', cadena='WALMART', nombre='WALMART TEPEYAC', muni='GUSTAVO A. MADERO'),  # 15 carga (walmart-tepeyac)
+             _fila_profeco('Atún Dolores', '140 g', 'Dolores', '22.00', '2026-08-16', **W),  # 16 carga: liga normalizada (mayúsculas)
+             L('24.50', '2026/08/17')]                                              # 17 carga (fecha AAAA/MM/DD)
+    assert len(filas) == 17
+    (DATOS / 'profeco-bordes.csv').write_bytes((PROFECO_CAB + '\n' + '\n'.join(filas) + '\n').encode('utf-8'))
+    d = 'oraculo/fixtures/s5/_datos/'
+    rej = [{'file': d + 'profeco-bordes.csv', 'row': r, 'reason': m} for r, m in
+           ((4, 'precio no positivo'), (5, 'cadena comercial vacía'), (6, 'precio con más de dos decimales'), (7, 'columnas: 14 en vez de 15'))]
+    cov = lambda bodega: [{'chain': 'BODEGA AURRERA', 'municipality': 'AZCAPOTZALCO', 'price_count': bodega}, {'chain': 'WALMART', 'municipality': 'GUSTAVO A. MADERO', 'price_count': 3}]
+    e = {'produccion': {'read': 17, 'rejected': 4, 'filtered_out': 1, 'skipped': 1, 'loaded': 10, 'loaded_proposed': 0, 'duplicates': 1, 'coverage': cov(7), 'rejections': rej},
+         'revision': {'read': 17, 'rejected': 4, 'filtered_out': 1, 'skipped': 0, 'loaded': 10, 'loaded_proposed': 1, 'duplicates': 1, 'coverage': cov(8), 'rejections': rej}}
+    for x in e.values():
+        assert x['read'] == x['rejected'] + x['filtered_out'] + x['skipped'] + x['loaded'] + x['loaded_proposed'] + x['duplicates']
+        assert x['loaded'] + x['loaded_proposed'] == sum(c['price_count'] for c in x['coverage'])
+    args = lambda modo: dict(files=[d + 'profeco-bordes.csv'], links_file=d + 'profeco-vinculos.csv', mode=modo)
+    fixture('s5-profeco-bordes',
+            'Lectura PROFECO con los 17 registros de bordes de REVISION-S5-r3 H-r3-03 (ILUSTRATIVO; §11 versión 1.5, Q2-04 = A). Renglón por renglón: 1 carga; 2 «1,021.00» = 102100 carga; '
+            '3 ATUN DOLORES liga con ATÚN DOLORES (normalizada) y carga; 4 0.00 -> «precio no positivo»; 5 cadena vacía -> «cadena comercial vacía» (rechazo, no filtrado); '
+            '6 24.505 -> «precio con más de dos decimales»; 7 14 columnas -> «columnas: 14 en vez de 15»; 8 SORIANA -> filtrado; 9 FRIJOLES con liga propuesta -> omitido en producción y '
+            'loaded_proposed en revisión; 10 duplicado de 1; 11 «$24.90», 12 « 25 », 13 «25.5», 14 «1,021», 15 (WALMART TEPEYAC), 16 «Atún Dolores / 140 g / Dolores» y 17 (2026/08/17) cargan. '
+            'Producción: 17 = 4 + 1 + 1 + 10 + 0 + 1; revisión: 17 = 4 + 1 + 0 + 10 + 1 + 1. coverage cuenta cargados y cargados con liga propuesta.',
+            [('criterio', 'S5-05'), ('manual', '§11 de S5-interfaz.md'), ('manual', 'docs/estado/wf1/REVISION-S5-r3.md H-r3-03')],
+            {'today': HOY, 'catalog_file': CAT, 'stores': PROFECO_TIENDAS},
+            [consulta('produccion', 'profeco_import', **args('production')), consulta('revision', 'profeco_import', **args('review'))], e,
+            prov('S5-profeco-filtro', 'liga normalizada (pregunta 2 = Q2-57) y filtro en uso (opción A); los motivos de lectura son regla técnica'))
+
+
+def profeco_motivos():
+    """§11 paso 1 a 4: el resto de la lista cerrada de motivos (los que no salen en profeco-bordes), uno por renglón, y un control que carga."""
+    L = lambda precio_, fecha_, prod='LECHE ENTERA': _fila_profeco(prod, '1 L', 'SANTA CLARA', precio_, fecha_)
+    filas = [L('', '2026-08-20'), L('"1,02.00"', '2026-08-21'), L('"1.0,0"', '2026-08-22'), L('12.', '2026-08-23'), L('12.5x', '2026-08-24'),
+             L('24.50', '2026-08-25', prod=''), L('24.50', ''), L('24.50', '2026-10-13'), L('24.50', '2026-08-28')]
+    (DATOS / 'profeco-motivos.csv').write_bytes((PROFECO_CAB + '\n' + '\n'.join(filas) + '\n').encode('utf-8'))
+    d = 'oraculo/fixtures/s5/_datos/'
+    motivos = ['precio vacío', 'precio con comas mal puestas', 'precio con comas mal puestas', 'precio ilegible', 'precio ilegible',
+               'producto vacío', 'fecha vacía', 'fecha futura']
+    e = {'read': 9, 'rejected': 8, 'filtered_out': 0, 'skipped': 0, 'loaded': 1, 'loaded_proposed': 0, 'duplicates': 0,
+         'coverage': [{'chain': 'BODEGA AURRERA', 'municipality': 'AZCAPOTZALCO', 'price_count': 1}],
+         'rejections': [{'file': d + 'profeco-motivos.csv', 'row': i, 'reason': m} for i, m in enumerate(motivos, 1)]}
+    fixture('s5-profeco-motivos',
+            'Lista cerrada de motivos de §11 (ILUSTRATIVO; regla técnica, H-r3-03, Q2-04 = A), los que no salen en s5-profeco-bordes: 1 precio vacío; 2 «1,02.00» y 3 «1.0,0» -> comas mal puestas '
+            '(un grupo de 2 dígitos; una coma en los decimales); 4 «12.» (punto sin decimales) y 5 «12.5x» -> ilegible; 6 producto vacío; 7 fecha vacía; 8 2026-10-13 con hoy 2026-10-12 -> fecha futura; '
+            '9 carga. «CSV mal formado» no tiene renglón: con comillas sueltas el lector en uso las acepta y el renglón cae en «columnas».',
+            [('criterio', 'S5-05'), ('manual', '§11 de S5-interfaz.md')],
+            {'today': HOY, 'catalog_file': CAT, 'stores': PROFECO_TIENDAS},
+            [consulta('motivos', 'profeco_import', files=[d + 'profeco-motivos.csv'], links_file=d + 'profeco-vinculos.csv', mode='production')], {'motivos': e},
+            prov('S5-profeco-filtro', 'el renglón de control pasa el filtro en uso (opción A); los motivos son regla técnica'))
 
 
 if __name__ == '__main__':
@@ -717,6 +879,7 @@ if __name__ == '__main__':
     unidad()
     frescura()
     fuentes()
+    vigente_zona()
     canasta()
     empates()
     cotizacion()
@@ -729,4 +892,7 @@ if __name__ == '__main__':
     profeco_filtro()
     ocr()
     carritos()
+    carritos_granel()
+    profeco_bordes()
+    profeco_motivos()
     print(f'{len(list(OUT.glob("*.json")))} fixtures en {OUT}')

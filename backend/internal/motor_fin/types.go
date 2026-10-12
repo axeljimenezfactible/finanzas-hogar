@@ -226,6 +226,26 @@ func WeekBounds(w Week) (monday, sunday Date) {
 	return monday, monday.AddDays(6)
 }
 
+// Instant es un instante RFC 3339 en UTC con «Z» (§1.1, K12). Otro desfase, aunque sea +00:00, es
+// invalid_date, igual que un instante mal formado (REVISION-S2-r3 B1).
+type Instant struct{ time.Time }
+
+func (t *Instant) UnmarshalJSON(b []byte) error {
+	var s string
+	if err := json.Unmarshal(b, &s); err != nil {
+		return errf(CodeInvalidDate, "instante no es texto: %s", b)
+	}
+	if !strings.HasSuffix(s, "Z") {
+		return errf(CodeInvalidDate, "instante %q: va en UTC con «Z» (§1.1)", s)
+	}
+	p, err := time.Parse(time.RFC3339Nano, s)
+	if err != nil {
+		return errf(CodeInvalidDate, "instante inválido %q", s)
+	}
+	t.Time = p
+	return nil
+}
+
 // Today resuelve la fecha civil del instante en la zona (S2-14), con la base de zonas del sistema.
 func Today(now time.Time, zone string) (Date, error) {
 	if zone == "" {

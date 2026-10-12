@@ -1,0 +1,299 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-carritos-granel",
+  "descripcion": "compare_carts con cantidades a granel (ILUSTRATIVO; §7.2 paso 8, REVISION-S5-r3 H-r3-02, bloqueo S5-carritos-granel, regla en uso). (1) granel: arroz 750 g y atún 140 g, 0.5 de cada uno, a 1.01 en Bodega y a 1.03 en Walmart: cada línea vale 0.505 y 0.515 exactos (se muestran 51 y 52 centavos), pero el total es HALF_UP de la suma exacta: Bodega 1.01 y Walmart 1.03 (el redondeo por línea daba 1.02 y 1.04); la suma de las líneas mostradas puede diferir del total. Precio por unidad base desde la fracción exacta: 101 × 1000000 / 750000 = 134.67 -> 135, 103 -> 137.33 -> 137, 101 × 1000000 / 140000 = 721.43 -> 721, 103 -> 735.71 -> 736. (2) granel-sustituto: Bodega 0.333 de arroz 750 g a 22.00 (732.6 -> 7.33; 2933.33 -> 29.33/kg) contra Walmart 0.667 de arroz 1 kg a 28.00 (1867.6 -> 18.68; 28.00/kg): gana Walmart por unidad base; por total Bodega va primero (+11.35 Walmart).",
+  "fuente": [
+    {
+      "tipo": "bloqueo",
+      "ruta": "docs/estado/bloqueos/S5-carritos-granel.md"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§7.2 paso 8 de S5-interfaz.md"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "docs/estado/wf1/REVISION-S5-r3.md H-r3-02"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-carritos-granel.md",
+    "que": "importe de línea exacto, total con un solo redondeo y lines[].total_cents solo para mostrar (regla en uso, la del motor)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "Bodega Aurrera (sucursal Vallejo)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "Walmart (sucursal Acueducto de Guadalupe)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "carts": [
+        {
+          "code": "bodega-granel",
+          "store": "bodega",
+          "kind": "expense",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 500,
+              "unit_price_cents": 101
+            },
+            {
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 500,
+              "unit_price_cents": 101
+            }
+          ]
+        },
+        {
+          "code": "walmart-granel",
+          "store": "walmart",
+          "kind": "cart",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 500,
+              "unit_price_cents": 103
+            },
+            {
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 500,
+              "unit_price_cents": 103
+            }
+          ]
+        },
+        {
+          "code": "bodega-sustituto",
+          "store": "bodega",
+          "kind": "expense",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 333,
+              "unit_price_cents": 2200
+            }
+          ]
+        },
+        {
+          "code": "walmart-sustituto",
+          "store": "walmart",
+          "kind": "cart",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+              "quantity_milli": 667,
+              "unit_price_cents": 2800
+            }
+          ]
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "granel",
+        "funcion": "compare_carts",
+        "argumentos": {
+          "base": "bodega-granel",
+          "others": [
+            "walmart-granel"
+          ]
+        }
+      },
+      {
+        "id": "granel-sustituto",
+        "funcion": "compare_carts",
+        "argumentos": {
+          "base": "bodega-sustituto",
+          "others": [
+            "walmart-sustituto"
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "granel": {
+      "stores": [
+        {
+          "store": "bodega",
+          "total_cents": 101,
+          "identical_count": 2,
+          "identical_total_cents": 101,
+          "substitute_count": 0,
+          "piece_count": 2,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 0,
+          "assumes_membership": false
+        },
+        {
+          "store": "walmart",
+          "total_cents": 103,
+          "identical_count": 2,
+          "identical_total_cents": 103,
+          "substitute_count": 0,
+          "piece_count": 2,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 2,
+          "assumes_membership": false
+        }
+      ],
+      "identical_pieces": 2,
+      "winners": [
+        {
+          "store": "bodega",
+          "count": 2
+        },
+        {
+          "store": "walmart",
+          "count": 0
+        }
+      ],
+      "ties": 0,
+      "rows": [
+        {
+          "kind": "identical",
+          "product": "arroz-grano-largo",
+          "lines": [
+            {
+              "store": "bodega",
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 500,
+              "total_cents": 51,
+              "base_unit_price_cents": 135
+            },
+            {
+              "store": "walmart",
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 500,
+              "total_cents": 52,
+              "base_unit_price_cents": 137
+            }
+          ],
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "atun-agua",
+          "lines": [
+            {
+              "store": "bodega",
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 500,
+              "total_cents": 51,
+              "base_unit_price_cents": 721
+            },
+            {
+              "store": "walmart",
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 500,
+              "total_cents": 52,
+              "base_unit_price_cents": 736
+            }
+          ],
+          "winner_store": "bodega"
+        }
+      ]
+    },
+    "granel-sustituto": {
+      "stores": [
+        {
+          "store": "bodega",
+          "total_cents": 733,
+          "identical_count": 0,
+          "identical_total_cents": 0,
+          "substitute_count": 1,
+          "piece_count": 1,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 0,
+          "assumes_membership": false
+        },
+        {
+          "store": "walmart",
+          "total_cents": 1868,
+          "identical_count": 0,
+          "identical_total_cents": 0,
+          "substitute_count": 1,
+          "piece_count": 1,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 1135,
+          "assumes_membership": false
+        }
+      ],
+      "identical_pieces": 0,
+      "winners": [
+        {
+          "store": "bodega",
+          "count": 0
+        },
+        {
+          "store": "walmart",
+          "count": 0
+        }
+      ],
+      "ties": 0,
+      "rows": [
+        {
+          "kind": "substitute",
+          "product": "arroz-grano-largo",
+          "lines": [
+            {
+              "store": "bodega",
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 333,
+              "total_cents": 733,
+              "base_unit_price_cents": 2933
+            },
+            {
+              "store": "walmart",
+              "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+              "quantity_milli": 667,
+              "total_cents": 1868,
+              "base_unit_price_cents": 2800
+            }
+          ],
+          "winner_store": "walmart"
+        }
+      ]
+    }
+  }
+}

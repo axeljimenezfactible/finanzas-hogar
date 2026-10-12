@@ -256,7 +256,9 @@ func ParseInput(raw json.RawMessage) (*Input, error) {
 		}
 		var ca time.Time
 		if x.CreatedAt != nil {
-			if ca, err = time.Parse(time.RFC3339, *x.CreatedAt); err != nil {
+			// §15.1: instante RFC 3339. time.Parse guarda nanosegundos (PROVISIONAL, bloqueo S5-precio-vigente-captura
+			// pregunta 2) y no acepta «t», «z» ni el segundo 60 (pregunta 3).
+			if ca, err = time.Parse(time.RFC3339, *x.CreatedAt); err != nil || !rfc3339Offset(*x.CreatedAt) {
 				return nil, fmt.Errorf("%w: created_at %q", ErrInvalidDate, *x.CreatedAt)
 			}
 		}
@@ -566,4 +568,14 @@ func Eval(raw json.RawMessage, fn string, args json.RawMessage) (any, error) {
 		}{true}, nil
 	}
 	return nil, fmt.Errorf("%w: función %q", ErrInvalidArgument, fn)
+}
+
+// rfc3339Offset revisa la zona de un instante que time.Parse(time.RFC3339) ya aceptó: RFC 3339 §5.6 la define como «Z» o
+// ±time-hour:time-minute, con hora 00-23 y minuto 00-59, y time.Parse también deja pasar +24:00 y +05:60.
+func rfc3339Offset(s string) bool {
+	if strings.HasSuffix(s, "Z") {
+		return true
+	}
+	z := s[len(s)-6:] // time.Parse ya exigió «Z» o ±hh:mm con dígitos
+	return (z[1]-'0')*10+(z[2]-'0') <= 23 && (z[4]-'0')*10+(z[5]-'0') <= 59
 }

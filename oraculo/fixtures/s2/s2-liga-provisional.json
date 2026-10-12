@@ -2,7 +2,7 @@
   "formato": "fixture/1",
   "motor": "s2",
   "caso": "s2-liga-provisional",
-  "descripcion": "Sueldo quincenal con una captura del 14-oct ligada a la ocurrencia del 15-oct (lectura de trabajo 3A); resto calculado por el oráculo",
+  "descripcion": "Sueldo quincenal con una captura del 14-oct ligada a la ocurrencia del 15-oct (FIRME desde la puerta 2, Q2-14 = A: provisional null; el id de la fixture se conserva); resto calculado por el oráculo",
   "fuente": [
     {
       "tipo": "criterio",
@@ -17,10 +17,7 @@
       "ruta": "captura del 2026-10-14 de fixture"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S2-flujo-quincenal.md",
-    "que": "liga ocurrencia ↔ captura"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "$ref": "_datos/semilla-oraculo.json",
@@ -111,9 +108,7 @@
         "committed_cents": 0,
         "balance_cents": 1195000,
         "cumulative_balance_cents": 1195000,
-        "provisional": [
-          "S2-flujo-quincenal"
-        ]
+        "provisional": null
       },
       {
         "fortnight": "2026-10-q2",
@@ -198,9 +193,7 @@
           "planned_expense_cents": 0,
           "net_cash_cents": 2385118,
           "cumulative_diff_cents": 97375,
-          "provisional": [
-            "S2-flujo-quincenal"
-          ]
+          "provisional": null
         },
         {
           "index": 2,

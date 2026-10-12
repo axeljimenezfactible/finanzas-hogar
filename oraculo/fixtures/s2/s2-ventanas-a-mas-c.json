@@ -1,0 +1,314 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-ventanas-a-mas-c",
+  "descripcion": "Ventanas A y C con un hueco sin eventos (B) que cruza un devengo de 2 meses: invalid_argument (§2.12 regla 4, PROVISIONAL); control A, B y C contiguas: A 50000/100000/−50000, B devenga 50000 y C 0 con diferencia 0; en meses [oct, dic] diciembre devenga 0. Datos de REVISION-S2-r3 M1: la semilla sin despensas a crédito más un gasto de contado de 100000 el 2026-10-10 con accrual_months 2; cifras a mano",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-03"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-16"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "S2-interfaz §2.12 regla 4 y REVISION-S2-r3 M1: 100000 / 2 = 50000 por mes"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S2-ventanas.md",
+    "que": "pregunta 4, caso 1: contigüidad de las ventanas (regla 4 de §2.12)"
+  },
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "categories": [
+          {
+            "code": "despensa",
+            "name": "Despensa",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "papel",
+            "name": "Papel",
+            "kind": "variable",
+            "is_active": true
+          }
+        ],
+        "credit_purchases": [],
+        "expenses": [
+          {
+            "id": 5,
+            "kind": "variable",
+            "category": "papel",
+            "amount_cents": 19900,
+            "expense_date": "2027-01-10",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": "karen",
+            "shares": [
+              {
+                "person": "karen",
+                "amount_cents": 19900
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 6,
+            "kind": "variable",
+            "category": "papel",
+            "amount_cents": 19900,
+            "expense_date": "2027-03-10",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": "karen",
+            "shares": [
+              {
+                "person": "karen",
+                "amount_cents": 19900
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 7,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 100000,
+            "expense_date": "2026-10-10",
+            "accrual_months": 2,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 100000
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "a-mas-c",
+        "funcion": "periodos",
+        "argumentos": {
+          "windows": [
+            {
+              "label": "A",
+              "start": "2026-10-10",
+              "end": "2026-11-09"
+            },
+            {
+              "label": "C",
+              "start": "2026-12-10",
+              "end": "2027-01-09"
+            }
+          ]
+        }
+      },
+      {
+        "id": "a-b-c",
+        "funcion": "periodos",
+        "argumentos": {
+          "windows": [
+            {
+              "label": "A",
+              "start": "2026-10-10",
+              "end": "2026-11-09"
+            },
+            {
+              "label": "B",
+              "start": "2026-11-10",
+              "end": "2026-12-09"
+            },
+            {
+              "label": "C",
+              "start": "2026-12-10",
+              "end": "2027-01-09"
+            }
+          ]
+        }
+      },
+      {
+        "id": "meses-oct-dic",
+        "funcion": "periodos",
+        "argumentos": {
+          "months": [
+            "2026-10",
+            "2026-12"
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "a-mas-c": {
+      "error": "invalid_argument"
+    },
+    "a-b-c": [
+      {
+        "label": "A",
+        "start": "2026-10-10",
+        "end": "2026-11-09",
+        "days": 31,
+        "accrued": {
+          "total_cents": 50000,
+          "by_person": {
+            "axel": 50000,
+            "karen": 0
+          },
+          "by_category": {
+            "despensa": 50000
+          }
+        },
+        "cash": {
+          "total_cents": 100000,
+          "payments_cents": 0,
+          "cash_expenses_cents": 100000,
+          "by_person": {
+            "axel": 100000,
+            "karen": 0
+          },
+          "by_category": {
+            "despensa": 100000
+          },
+          "payment_count": 0,
+          "payments": []
+        },
+        "cumulative_diff_cents": -50000,
+        "covering_groceries_seq": null
+      },
+      {
+        "label": "B",
+        "start": "2026-11-10",
+        "end": "2026-12-09",
+        "days": 30,
+        "accrued": {
+          "total_cents": 50000,
+          "by_person": {
+            "axel": 50000,
+            "karen": 0
+          },
+          "by_category": {
+            "despensa": 50000
+          }
+        },
+        "cash": {
+          "total_cents": 0,
+          "payments_cents": 0,
+          "cash_expenses_cents": 0,
+          "by_person": {
+            "axel": 0,
+            "karen": 0
+          },
+          "by_category": {},
+          "payment_count": 0,
+          "payments": []
+        },
+        "cumulative_diff_cents": 0,
+        "covering_groceries_seq": null
+      },
+      {
+        "label": "C",
+        "start": "2026-12-10",
+        "end": "2027-01-09",
+        "days": 31,
+        "accrued": {
+          "total_cents": 0,
+          "by_person": {
+            "axel": 0,
+            "karen": 0
+          },
+          "by_category": {}
+        },
+        "cash": {
+          "total_cents": 0,
+          "payments_cents": 0,
+          "cash_expenses_cents": 0,
+          "by_person": {
+            "axel": 0,
+            "karen": 0
+          },
+          "by_category": {},
+          "payment_count": 0,
+          "payments": []
+        },
+        "cumulative_diff_cents": 0,
+        "covering_groceries_seq": null
+      }
+    ],
+    "meses-oct-dic": [
+      {
+        "label": "1-oct-2026 a 31-oct-2026",
+        "start": "2026-10-01",
+        "end": "2026-10-31",
+        "days": 31,
+        "accrued": {
+          "total_cents": 50000,
+          "by_person": {
+            "axel": 50000,
+            "karen": 0
+          },
+          "by_category": {
+            "despensa": 50000
+          }
+        },
+        "cash": {
+          "total_cents": 100000,
+          "payments_cents": 0,
+          "cash_expenses_cents": 100000,
+          "by_person": {
+            "axel": 100000,
+            "karen": 0
+          },
+          "by_category": {
+            "despensa": 100000
+          },
+          "payment_count": 0,
+          "payments": []
+        },
+        "cumulative_diff_cents": -50000,
+        "covering_groceries_seq": null
+      },
+      {
+        "label": "1-dic-2026 a 31-dic-2026",
+        "start": "2026-12-01",
+        "end": "2026-12-31",
+        "days": 31,
+        "accrued": {
+          "total_cents": 0,
+          "by_person": {
+            "axel": 0,
+            "karen": 0
+          },
+          "by_category": {}
+        },
+        "cash": {
+          "total_cents": 0,
+          "payments_cents": 0,
+          "cash_expenses_cents": 0,
+          "by_person": {
+            "axel": 0,
+            "karen": 0
+          },
+          "by_category": {},
+          "payment_count": 0,
+          "payments": []
+        },
+        "cumulative_diff_cents": 0,
+        "covering_groceries_seq": null
+      }
+    ]
+  }
+}

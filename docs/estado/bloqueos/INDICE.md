@@ -9,19 +9,25 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 
 > **Estado al 11-oct-2026 (puerta 1): las 31 preguntas quedaron RESUELTAS.** Axel respondió en la sesión; la respuesta está al final de cada archivo (sección «Respuesta de Axel») y consolidada en `docs/plan/decisiones.md` §K. Las dos preguntas sin archivo ya lo tienen: `C1-decimales-tasa.md` (A12) y `S1-tope-quincena-karen.md` (A13). Lo que sigue: aplicar las respuestas (C1 v1.1, migración 00002, U1, criterios y colorimetría) en el flujo de la puerta 1.
 
+> **Estado al 11-oct-2026 (puerta 2): 21 de los 27 bloqueos abiertos quedaron RESUELTOS y 6 siguen ABIERTOS.** Axel contestó en modo «lo recomendado + excepciones» (`docs/estado/puerta2/RESPUESTAS.md`): la opción recomendada de `PUERTA-2.md` es la respuesta, más tres respuestas explícitas (Q2-11 = B, Q2-64 = A, Q2-96 = A). Las preguntas «sin recomendación» (Q2-48, Q2-50 a Q2-52, Q2-56 a Q2-58) quedan **sin respuesta, PROVISIONAL con la opción en uso, y pasan a WF-3**; Q2-12 (la recomendada es «C o A», dos opciones) y la pregunta 4 de `S2-ventanas` (Q2-01, casos 1 y 2: el caso 1 con la regla 1A como PROVISIONAL y el caso 2 sin recomendación) también quedan abiertos. Cada archivo trae al final «Respuesta de Axel (puerta 2, 11-oct-2026)» y/o «Puerta 2 (11-oct-2026): sin respuesta», y la línea «Estado del bloqueo (puerta 2)». Detalle en la sección «Respuestas de la puerta 2 (11-oct-2026)» al final y en `docs/plan/decisiones.md` §K46 a §K52. Después de las respuestas, P2c abrió 4 bloqueos nuevos (`S2-ahorro-quincenal`, `S2-metas-vencida`, `S4-presentacion-respaldo` y `S5-carritos-granel`, los 4 ABIERTOS; ver «Bloqueos nuevos de P2c»; al cierre de P2c son 13, todos ABIERTOS) y la Pista 3 abrió 2 (`P3-contraste-chip-hover` y `P3-huecos-componentes`).
+
 ## Resumen
 
-**Conteo al 11-oct-2026, cierre de P1c (integrador `integrador-p1c`):** esta carpeta tiene **43 archivos de bloqueo** (sin contar este índice): **42 resueltos y 1 abierto**. **Conteo al cierre de WF-1 (integrador `integrador-wf1`, 11-oct-2026):** 69 archivos, **42 resueltos y 27 abiertos** (`S1-parametros-avisos` de P1c y 26 nuevos de WF-1).
+**Conteo al 11-oct-2026, cierre de P1c (integrador `integrador-p1c`):** esta carpeta tiene **43 archivos de bloqueo** (sin contar este índice): **42 resueltos y 1 abierto**. **Conteo al cierre de WF-1 (integrador `integrador-wf1`, 11-oct-2026):** 69 archivos, **42 resueltos y 27 abiertos** (`S1-parametros-avisos` de P1c y 26 nuevos de WF-1). **Conteo al cierre de P2c (puerta 2, 11-oct-2026, agente `bloqueos-respuestas`):** 69 archivos, **63 resueltos y 6 abiertos** (`S2-flujo-quincenal`, `S2-ventanas`, `S5-carrito-comparativa`, `S5-carritos-detalle`, `S5-profeco-filtro` y `S5-terminos`). **Conteo al 11-oct-2026, noche (corrección `correccion-bloqueos-r2`, con la carpeta en disco):** 75 archivos, **63 resueltos y 12 abiertos**: los 69 de arriba (63 y 6), más 4 que abrió P2c después de las respuestas (`S2-ahorro-quincenal`, `S2-metas-vencida`, `S4-presentacion-respaldo`, `S5-carritos-granel`) y 2 de la Pista 3 (`P3-contraste-chip-hover`, `P3-huecos-componentes`). Las 12 abiertas: las 6 de WF-1, las 4 de P2c y las 2 de la Pista 3. Las cifras de esta carpeta cambian si otro agente abre o cierra un bloqueo; la fuente es la carpeta, no este párrafo. **Conteo al cierre de P2c (integrador `integrador-p2c`, 11-oct-2026, noche, con la carpeta en disco):** 84 archivos, **63 resueltos y 21 abiertos**: las 6 de WF-1, **13 de P2c** (los 4 de arriba más 9 que abrieron `C1-puerta2` y las correcciones de la ronda; ver «Bloqueos nuevos de P2c») y las 2 de la Pista 3. `S5-terminos` sigue ABIERTO en su archivo: la lectura del 11-oct-2026 quedó «no verificado» por desafío anti-robot y Axel contestó en la puerta 2 bis («Ignóralo», `docs/estado/puerta2/RESPUESTAS.md`), que se registra como K53 en P2d; hasta entonces no se cierra aquí.
 
 | Origen | Archivos | Resueltos | Abiertos | Cómo se resolvieron |
 |---|---|---|---|---|
 | WF-0 y puerta 1 (32 de WF-0 más los 2 que se crearon en la puerta 1 para A12 y A13) | 34 | 34 | 0 | 33 con «Respuesta de Axel» de la puerta 1 (K1 a K31); `criterios-nxx` con su «Resolución» de WF-0 |
 | Flujo P1 | 8 | 8 | 0 | «Respuesta de Axel (puerta 1b)», K36 a K43 |
-| Flujo P1c | 1 | 0 | 1 | `S1-parametros-avisos.md`, abierto (ver «Bloqueos nuevos de P1c» al final) |
-| Flujo WF-1 | 26 | 0 | 26 | abiertos; se deciden en la puerta 2 (ver «Bloqueos nuevos de WF-1» al final) |
-| **Total** | **69** | **42** | **27** | |
+| Flujo P1c | 1 | 1 | 0 | `S1-parametros-avisos.md`, «Respuesta de Axel (puerta 2)», Q2-11 = B, K47 (antes abierto; ver «Bloqueos nuevos de P1c» al final) |
+| Flujo WF-1 | 26 | 20 | 6 | 24 con la sección «Respuesta de Axel (puerta 2)», 20 RESUELTOS (Q2-13 a Q2-71, K46); 6 abiertos (4 de ellos, `S2-flujo-quincenal`, `S2-ventanas`, `S5-carrito-comparativa` y `S5-terminos`, traen la sección porque tienen preguntas contestadas): `S2-flujo-quincenal`, `S2-ventanas`, `S5-carrito-comparativa`, `S5-carritos-detalle`, `S5-profeco-filtro` y `S5-terminos` (ver «Respuestas de la puerta 2» al final) |
+| Flujo P2c (bloqueos nuevos de la ronda, ver «Bloqueos nuevos de P2c») | 13 | 0 | 13 | 4 de `contratos-puerta2` al aplicar Q2-03, Q2-07, Q2-13, Q2-16 y Q2-18; 2 de `C1-puerta2`; 7 de las correcciones (`correccion-S1-r1` 1, `correccion-contratos-r1` 3, `correccion-motor-S5-r1` 1, `correccion-motor-S5-r2` 1 y `correccion-U4-r1` 1) |
+| Pista 3 (ver «Bloqueos nuevos de la Pista 3») | 2 | 0 | 2 | abiertos por el agente `ds-brandbook`; no detienen la Pista 3 |
+| **Total** | **84** | **63** | **21** | |
 
-Regla de conteo: un bloqueo está resuelto si su archivo trae la sección «Respuesta de Axel» (o, en el caso de `criterios-nxx`, su «Resolución»); sin ella sigue abierto y la marca PROVISIONAL que lo cita se conserva. Las marcas PROVISIONAL activas de los artefactos citan solo el bloqueo abierto (detalle por archivo en `docs/estado/p1c/INTEGRACION.md` §4). La tabla que sigue es la de la puerta 1 (sus 31 preguntas, todas resueltas); la columna «Lo que quedó mientras tanto» describe el estado anterior a las respuestas.
+Regla de conteo de las puertas 1 y 1b (no es la que cuenta desde la puerta 2; ver el párrafo siguiente): un bloqueo está resuelto si su archivo trae la sección «Respuesta de Axel» (o, en el caso de `criterios-nxx`, su «Resolución»); sin ella sigue abierto y la marca PROVISIONAL que lo cita se conserva. Las marcas PROVISIONAL activas de los artefactos citan solo el bloqueo abierto (detalle por archivo en `docs/estado/p1c/INTEGRACION.md` §4). La tabla que sigue es la de la puerta 1 (sus 31 preguntas, todas resueltas); la columna «Lo que quedó mientras tanto» describe el estado anterior a las respuestas.
+
+Regla de conteo desde la puerta 2: un archivo con respuesta a medias, o con una decisión tomada pero sin resultado, ya no cuenta como resuelto solo por traer «Respuesta de Axel». Cada archivo tocado en la puerta 2 termina con la línea **«Estado del bloqueo (puerta 2): RESUELTO»** o **«ABIERTO»**, y el conteo de arriba sale de esa línea. Un bloqueo con varias preguntas es RESUELTO solo si todas tienen respuesta. Hasta que `verify_c1.py` (l. 322-323) y `s1_verifica.py` (l. 242 y 575) lean esa línea (solicitud fuera de alcance en `docs/estado/p2c/correccion-bloqueos-r1.md`), las herramientas siguen la regla anterior y cuentan 67 resueltos y 8 abiertos en la carpeta de hoy: los 2 de WF-1 sin «Respuesta de Axel» (`S5-carritos-detalle` y `S5-profeco-filtro`), los 4 de P2c y los 2 de la Pista 3. Con esa regla, `S2-flujo-quincenal`, `S2-ventanas`, `S5-carrito-comparativa` y `S5-terminos` cuentan como resueltos, aunque tienen preguntas abiertas. El bloqueo `S4-presentacion-respaldo` (variante de Q2-07, K46) ya existe y está en el conteo de 75.
 
 | # | Tema | Archivo(s) | Fase que la usa | Lo que quedó mientras tanto |
 |---|---|---|---|---|
@@ -336,6 +342,7 @@ Detalle de dónde se cita cada uno y cuántas marcas PROVISIONAL hay por archivo
 | (proceso) | La Pista 3 (Claude Design) la ejecuta Axel; el orquestador entrega `docs/design/entrada/` y revisa `docs/design/salida/` | K35 |
 
 ## Bloqueos nuevos de P1c (11-oct-2026)
+> **Actualización de la puerta 2 (11-oct-2026):** `S1-parametros-avisos.md` quedó RESUELTO con Q2-11 = B (K47): los cuatro parámetros viven en `app_setting`.
 Los dejaron los agentes del flujo «P1c · Aplicar respuestas de la puerta 1b» por un choque que §K no resuelve. Registrado por el integrador de P1c (`integrador-p1c`). No cambia cifras del oráculo; lo que depende de él lleva la marca PROVISIONAL y cita el archivo.
 
 | Archivo | Fase que lo dejó | Pregunta para Axel | Qué queda PROVISIONAL | Fase que lo usa |
@@ -345,6 +352,7 @@ Los dejaron los agentes del flujo «P1c · Aplicar respuestas de la puerta 1b» 
 Recomendaciones de los agentes, que no coinciden: S1 recomienda la **opción B** (`docs/estado/p1c/correccion-S1-r2.md`, una sola fuente por valor, como los umbrales); la corrección de criterios recomendó la **opción A** (`docs/estado/p1c/correccion-criterios-r1.md`, sin cambio de esquema ni contrato). Ojo: los criterios 1.2 todavía describen los umbrales y los días antes del pago como si vivieran en `params_json` (hallazgo A, alto, de `docs/estado/p1c/REVISION-criterios-r3.md`); el esquema 1.3 ya los tiene en `app_setting`.
 
 ## Bloqueos nuevos de WF-1 (11-oct-2026, para la puerta 2)
+> **Actualización de la puerta 2 (11-oct-2026):** 20 de los 26 quedaron RESUELTOS; siguen abiertos `S2-flujo-quincenal`, `S2-ventanas`, `S5-carrito-comparativa`, `S5-carritos-detalle`, `S5-profeco-filtro` y `S5-terminos`. El texto de abajo es el de la consolidación de WF-1 y no se reescribe.
 
 Consolidado por `integrador-wf1`. WF-1 dejó **26 archivos nuevos, todos abiertos**; `S1-parametros-avisos` (P1c) también sigue abierto: nadie lo decidió en WF-1 y lo que depende de él (U4 «Notificaciones» y «Reportes y frecuencias») lleva la marca PROVISIONAL con sus dos variantes. La columna «Fase» es la fase que dejó el archivo y la que lo usa. Las recomendaciones de los agentes para cada bloqueo están en `docs/estado/wf1/INTEGRACION.md` §7.2, y los artefactos que se escalan a Axel con sus hallazgos abiertos, en §4.
 
@@ -386,3 +394,123 @@ Consolidado por `integrador-wf1`. WF-1 dejó **26 archivos nuevos, todos abierto
 | `optimizer.date_window_days` | 7 días | cubre una semana y mueve el primer pago a la quincena vecina; peor caso ≈ 7,600 escenarios, muy por debajo de 5 s | `contrato-S3` |
 | `ocr.timeout_seconds` | 30 s | 2 imágenes sintéticas tardan ≈ 2 s; una foto de 12 MP en un equipo lento, 5–10 s; margen de 3× | `ocr`, `contrato-S4S5` |
 | Rango de frescura (K44) | `price.stale_after_days` ≥ 1 y `price.zero_weight_after_days` ≥ `price.stale_after_days`; fórmula general del peso (Z − días) ÷ (Z − S + 1), que con 30 y 90 da K40 | con otros valores la recta no baja de 1 a 0; el motor los rechaza con `invalid_argument` | `motor-S5-go`, `U4a-ajustes` |
+
+## Bloqueos nuevos de P2c (11-oct-2026, noche)
+
+Los abrió `contratos-puerta2` al aplicar las respuestas de la puerta 2 en los contratos de los motores (`docs/estado/p2c/contratos-puerta2.md`). Los 4 están **ABIERTOS**, **sin recomendación**, y se deciden en WF-3 o cuando Axel conteste por id. Ninguno cambia una cifra canon. Dado de alta en este índice por `correccion-bloqueos-r2`; las opciones y el impacto completos están en cada archivo.
+
+| Archivo | Nació de | Pregunta para Axel | Opciones | Qué queda PROVISIONAL | Fase que lo usa |
+|---|---|---|---|---|---|
+| `S2-ahorro-quincenal.md` | Q2-13 = B (`S2-flujo-quincenal`, pregunta 2) | El reparto del ahorro mensual planificado (mitad y mitad, HALF_UP en la quincena 1) ya es FIRME; falta (1) si se reparte meta por meta o sobre la suma del mes, (2) qué metas cuentan en una quincena futura y (3) si el ahorro planificado resta del saldo o solo se informa | P1: (A) sobre la suma del mes, (B) meta por meta. P2: (A) todas las metas activas con `planned_monthly_cents`, (B) además solo del mes de `start_date` al de `target_date` y sin las cumplidas. P3: (A) solo se informa, (B) resta del saldo como egreso comprometido | `savings_planned_cents` sigue en `null` y no entra a ningún saldo (`S2-interfaz.md` 1.3 §3.11) | S2 (M-02 y M-10), WF-3 |
+| `S2-metas-vencida.md` | Q2-16 = A y Q2-18 = A | ¿Qué aportación muestra la pantalla de Metas para una meta vencida que no se cumplió (`months_left` 0 y restante mayor que 0)? El motor y el oráculo difieren | (A) todo el restante en el mes de hoy (lo que hace el motor), (B) sin aportación calculada: `needed_monthly_cents` null y `plan` vacío (lo que hace el oráculo), (C) `needed_monthly_cents` = restante y `plan` vacío | La opción A, y el oráculo se alinea a ella (`S2-interfaz.md` 1.3 §3.13) | S2 (pantalla de Metas), WF-3 |
+| `S4-presentacion-respaldo.md` | Q2-07 = A (hallazgo M-r5-2); la variante quedó sin recomendación (PUERTA-2 §2.3 y §8) | Sin precio en S5, ¿qué presentación rige un artículo de la lista cuando (a) viene de varias recetas con presentación distinta, (b) es solo de reposición por ritmo o (c) es `calculated` con necesidad 0 y sin ingrediente esa semana? | (i) la presentación típica del catálogo (`typical_presentation` en `catalog.products[]`), (ii) para (a) la de la primera receta en orden de fecha y tiempo, y para (b) y (c) además i o iii, (iii) `null` en `presentation`, `packages_to_buy` y `leftover_milli`, con el producto en `missing_prices[]` | La regla del motor: ii para (a), luego i, luego la primera presentación del catálogo (`S4-interfaz.md` 1.5 §6.2 paso 5). El oráculo debe alinearse y falta una fixture con los tres casos | S4, WF-3 |
+| `S5-carritos-granel.md` | Q2-03 = A (hallazgo H-r3-02) | Con cantidades a granel, ¿el importe de cada renglón se redondea como en el ticket o se suma exacto? | (A) exacto: HALF_UP de la suma exacta, un solo redondeo (lo que hace el motor), (B) como el ticket: cada línea HALF_UP y el total es la suma de las redondeadas (lo que hace el oráculo), (C) otra regla por línea, por ejemplo la de cada tienda, documentada con un ticket real | La opción A (`S5-interfaz.md` 1.5 §7.2 paso 8). Falta alinear el oráculo y agregar una fixture a granel | S5, WF-3 |
+
+### Dados de alta al cierre de P2c (integrador `integrador-p2c`, 11-oct-2026, noche)
+
+`C1-puerta2` y las correcciones de la ronda abrieron 9 bloqueos más. Los 9 están **ABIERTOS** y ninguno cambia una cifra canon. Ninguno trae recomendación de la puerta; donde el agente dejó una PROPUESTA se anota como tal (no es respuesta). Mientras no se contesten rige la opción en uso, marcada PROVISIONAL con cita del archivo. Las opciones y el impacto completos están en cada archivo.
+
+| Archivo | Lo abrió | Pregunta para Axel | Opciones | Qué queda PROVISIONAL | Fase que lo usa |
+|---|---|---|---|---|---|
+| `C1-hora-reportes-job.md` | `C1-puerta2`, al aplicar Q2-11 = B (K47) | ¿Qué manda la hora y el día de un reporte programado: las claves `reports.*` de `app_setting` o `job.schedule`? | (A) mandan las claves y la API reescribe `schedule`; (B) manda `job.schedule` y las claves solo informan; (C) quitar `schedule` de los jobs de reportes (migración nueva). PROPUESTA del agente: A | `JobUpdate.schedule` y la fila de C1-datos §13: `updateJob` acepta `schedule` en todos los jobs (en uso) | C1, S7 (WF-3), U4 P-26.08 |
+| `C1-reparto-alcance.md` | `C1-puerta2`, al aplicar Q2-68 = C | ¿Qué gastos recalcula `CostShareRuleUpdate.scope = all`? | (A) solo los que nombran la regla; (B) todos los que la usan, también por categoría o por omisión; (C) B limitado a un rango de fechas. PROPUESTA del agente: B | El alcance de `all` (C1-datos §7.2 y §13) | C1, motor de reparto (WF-3), U4 P-26.12 |
+| `S1-reparto-edicion-gasto.md` | `correccion-S1-r1` (M-02 de `REVISION-S1-r1.md`) | Tras cambiar una regla con «solo los nuevos», si se edita un gasto anterior, ¿con qué partes se recalcula? | (A) proporción de las partes congeladas; (B) guardar cómo se calculó cada parte (migración); (C) con la regla vigente | La C, que es la que hace hoy `updateExpense` (RN-03 e invariante 18 del diccionario) | S1, C1, S7 |
+| `S3-formula-tarjeta-pdf.md` | `correccion-contratos-r1` (M-3 de `REVISION-contratos-r1.md`) | Falta la entrega de los 2 PDF de estado de cuenta (una tarjeta y un crédito de tienda) para escribir la fórmula de cada producto; la respuesta (a) ya es de Axel | Sin recomendación: solo falta la entrega | La fórmula general de la opción (b) de `S3-formula-tarjeta` en `S3-interfaz.md` 1.5 (§5.3, §5.5, §5.8, §6 y §14.1) | S3, WF-3 |
+| `S3-iva-lectura.md` | `correccion-contratos-r1`, al aplicar Q2-67 = 1 | (1) Préstamo sin el dato de IVA: ¿no suma IVA, «falta capturar» o la API no deja guardarlo? (2) Crédito «no incluye IVA» sin porcentaje: ¿«falta capturar» con aviso en C1 o la API lo impide? | P1: A, B o C; P2: A o B. Sin recomendación | P1: la A (en uso); P2: `ErrMissingCapture` sin decidir si C1 lo avisa | S3, S1, C1, U4 |
+| `S4-empates-sin-confirmar.md` | `correccion-contratos-r1` (M-1 y M-4 de `REVISION-contratos-r1.md`) | Que Axel confirme o corrija los empates de nutrición (Q2-90) y, cuando exista, la lista de ligas PROFECO | (A) confirmar tal cual; (B) corregir. Sin recomendación: faltan datos que solo Axel tiene | Los valores de los renglones `propuesto` (`S4-interfaz.md` §9.1) y las fixtures `s4-kcal-*` | S4, WF-3 |
+| `S5-motor-oraculo-reglas.md` | `correccion-motor-S5-r1` (M-1 y M-2 de `REVISION-motor-S5-r1.md`) | Cuatro reglas en que el motor y el oráculo difieren (conteo de piezas, desglose de idénticos, precios por fuente y lectura de fechas) | En cada una: (A) lo que hace el motor, (B) lo que hace el oráculo, (C) otra. Sin recomendación | En uso: el motor; el código de los dos lados cita la pregunta | S5, WF-3 |
+| `S5-precio-vigente-captura.md` | `correccion-motor-S5-r2` (M-1 de `REVISION-motor-S5-r2.md`) | Cuatro puntos de `S5-interfaz.md` 1.5 que el contrato no fija: (1) desempate con el mismo `created_at`, (2) precisión de la fracción de segundo, (3) perfil de RFC 3339 de `created_at` y (4) claves obligatorias de `prices[]` | Por pregunta, en el archivo | En uso: el motor, igual que en `S5-motor-oraculo-reglas`. La revisión r3 (M-1, medio) pide sumar el año 0000 a la pregunta 3 y corregir el texto «sin divergencia» | S5, WF-3 |
+| `U4-reparto-preseleccion.md` | `correccion-U4-r1` (M-1 de `REVISION-U4-r1.md`) | En el diálogo de alcance de P-26.12, ¿qué opción aparece preseleccionada? | (A) «Solo a los gastos nuevos»; (B) «También a los ya capturados»; (C) ninguna. PROPUESTA de `U4-puerta2`: A | La A, que es la que describe U4 1.5 (P-26.12 y supuesto 6) | U4, puerta 4 |
+
+La pregunta 4 de `S2-ventanas` (Q2-01) no es un bloqueo nuevo: es una pregunta que `contratos-puerta2` redactó dentro del bloqueo existente. **Queda abierta con sus dos casos**: el caso 1 (hueco sin eventos que cruza un devengo) con la regla 1A como PROVISIONAL, y el caso 2 (ventanas contiguas que no duran un mes) con 2A, el comportamiento actual, también PROVISIONAL y sin recomendación.
+
+## Bloqueos nuevos de la Pista 3 (11-oct-2026)
+
+Los dejó el agente `ds-brandbook` de la Pista 3 (sistema de diseño). No pasan por la puerta 2 ni los tocó este índice más que para contarlos; su dueño es la Pista 3 y los archivos no usan el formato «Estado del bloqueo (puerta 2)» (traen «Estado: ABIERTO» en el encabezado). Ninguno detiene la Pista 3.
+
+| Archivo | Pregunta para Axel | Qué queda PROVISIONAL |
+|---|---|---|
+| `P3-contraste-chip-hover.md` | Contraste de la marca categórica sobre el hover del chip seleccionable: 4 marcas bajo 3:1 sobre `ui-surface-hover`. Opciones: (A) el hover cambia solo el borde, (B) se deja y se declara decorativa la marca, (C) otra. El agente recomienda A | La vista previa respeta DESIGN §7.4 tal cual y el verificador lo marca como excepción declarada |
+| `P3-huecos-componentes.md` | Seis huecos de DESIGN.md resueltos como supuesto con tokens existentes (iconos de 4 secciones de la barra lateral, bloque «Antes → Después», perilla del interruptor, círculo de «hoy», comandos de ejemplo del menú «/», pesos y 2 px del anillo). Pregunta explícita: ¿se confirman los iconos? | Todos los supuestos del archivo |
+
+## Respuestas de la puerta 2 (11-oct-2026)
+
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo «lo recomendado + excepciones». «Origen» dice si la respuesta fue explícita de Axel o la recomendada aprobada en bloque. Consolidado en `docs/plan/decisiones.md` §K46 a §K52. Q2-01 a Q2-10 (artefactos de WF-1) y Q2-78 a Q2-98 no son bloqueos y se tratan en otras partes de P2c y en §K46, §K49, §K51 y §K52; aquí solo aparece Q2-01 (casos 1 y 2, pregunta 4 de `S2-ventanas`) porque queda abierta. La variante de Q2-07 sin recomendación vive en el bloqueo nuevo `S4-presentacion-respaldo` (ver «Bloqueos nuevos de P2c»).
+
+| Q2 | Bloqueo | Respuesta (letra) | Estado | Origen |
+|---|---|---|---|---|
+| Q2-01 (casos 1 y 2, pregunta 4 del bloqueo) | `S2-ventanas` | — (sin respuesta; Q2-01 = A autoriza escribir la pregunta, no la cierra) | ABIERTO | caso 1: 1A PROVISIONAL; caso 2: 2A PROVISIONAL, sin recomendación; pasa a WF-3 |
+| Q2-11 | `S1-parametros-avisos` | B | RESUELTO | explícita |
+| Q2-12 | `S2-flujo-quincenal` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-13 | `S2-flujo-quincenal` | B | RESUELTO | recomendada |
+| Q2-14 | `S2-flujo-quincenal` | A | RESUELTO | recomendada |
+| Q2-15 | `S2-metas-resumen` | A | RESUELTO | recomendada |
+| Q2-16 | `S2-metas` | A | RESUELTO | recomendada |
+| Q2-17 | `S2-metas` | C | RESUELTO | recomendada |
+| Q2-18 | `S2-metas` | A | RESUELTO | recomendada |
+| Q2-19 | `S2-presupuesto-total` | B | RESUELTO | recomendada |
+| Q2-20 | `S2-presupuesto-total` | A | RESUELTO | recomendada |
+| Q2-21 | `S2-proyeccion-interruptor` | C | RESUELTO | recomendada |
+| Q2-22 | `S2-proyeccion-interruptor` | C | RESUELTO | recomendada |
+| Q2-23 | `S2-proyeccion-interruptor` | C | RESUELTO | recomendada |
+| Q2-24 | `S2-proyeccion-interruptor` | C | RESUELTO | recomendada |
+| Q2-25 | `S2-ventanas` | A | RESUELTO | recomendada |
+| Q2-26 | `S2-ventanas` | H1 | RESUELTO | recomendada |
+| Q2-27 | `S2-ventanas` | O1 | RESUELTO | recomendada |
+| Q2-28 | `S3-convencion-prestamo` | (a) | RESUELTO | recomendada |
+| Q2-29 | `S3-formula-tarjeta` | (a) | RESUELTO | recomendada |
+| Q2-30 | `S3-formula-tarjeta` | (a) | RESUELTO | recomendada |
+| Q2-31 | `S3-formula-tarjeta` | (a) | RESUELTO | recomendada |
+| Q2-32 | `S3-formula-tarjeta` | A (propuesta del agente, letras de PUERTA-2) | RESUELTO | recomendada |
+| Q2-33 | `S3-objetivos-medida` | (b) | RESUELTO | recomendada |
+| Q2-34 | `S3-objetivos-medida` | A | RESUELTO | recomendada |
+| Q2-35 | `S3-objetivos-medida` | A | RESUELTO | recomendada |
+| Q2-36 | `S3-objetivos-medida` | A | RESUELTO | recomendada |
+| Q2-37 | `S3-origen-cargo-normal` | (a) | RESUELTO | recomendada |
+| Q2-38 | `S3-serie-sin-intereses` | (a) | RESUELTO | recomendada |
+| Q2-39 | `S4-asignacion-mercado` | A | RESUELTO | recomendada |
+| Q2-40 | `S4-asignacion-mercado` | A | RESUELTO | recomendada |
+| Q2-41 | `S4-asignacion-mercado` | A | RESUELTO | recomendada |
+| Q2-42 | `S4-asignacion-mercado` | A | RESUELTO | recomendada |
+| Q2-43 | `S4-confirmacion-empates` | A | RESUELTO | recomendada |
+| Q2-44 | `S4-reglas-lista` | A | RESUELTO | recomendada |
+| Q2-45 | `S4-reglas-lista` | A | RESUELTO | recomendada |
+| Q2-46 | `S4-reglas-lista` | A | RESUELTO | recomendada |
+| Q2-47 | `S5-carrito-comparativa` | A | RESUELTO | recomendada |
+| Q2-48 | `S5-carrito-comparativa` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-49 | `S5-carrito-comparativa` | A | RESUELTO | recomendada |
+| Q2-50 | `S5-carritos-detalle` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-51 | `S5-carritos-detalle` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-52 | `S5-carritos-detalle` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-53 | `S5-profeco-almacen` | A | RESUELTO | recomendada |
+| Q2-54 | `S5-profeco-almacen` | A | RESUELTO | recomendada |
+| Q2-55 | `S5-profeco-almacen` | A | RESUELTO | recomendada |
+| Q2-56 | `S5-profeco-filtro` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-57 | `S5-profeco-filtro` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-58 | `S5-profeco-filtro` | — (sin respuesta) | ABIERTO | PROVISIONAL en uso; pasa a WF-3 |
+| Q2-59 | `S5-reglas-comparativa` | A | RESUELTO | recomendada |
+| Q2-60 | `S5-reglas-comparativa` | A | RESUELTO | recomendada |
+| Q2-61 | `S5-reglas-comparativa` | A | RESUELTO | recomendada |
+| Q2-62 | `S5-reglas-comparativa` | B | RESUELTO | recomendada |
+| Q2-63 | `S5-reglas-comparativa` | A | RESUELTO | recomendada |
+| Q2-64 | `S5-terminos` | A | RESUELTO (decisión); bloqueo ABIERTO | explícita |
+| Q2-65 | `U3-t2-acumulados` | A | RESUELTO | recomendada |
+| Q2-66 | `U4-dia-mes-reporte` | B | RESUELTO | recomendada |
+| Q2-67 | `U4-iva-credito` | 1 | RESUELTO | recomendada |
+| Q2-68 | `U4-reparto-retroactivo` | C | RESUELTO | recomendada |
+| Q2-69 | `U4-vista-previa-formulas` | (a) | RESUELTO | recomendada |
+| Q2-70 | `U4-vista-previa-formulas` | (a) | RESUELTO | recomendada |
+| Q2-71 | `WF1-catalogo-huevo-por-kilo` | 1 | RESUELTO | recomendada |
+
+### Valores operativos K31 y K44 (Q2-72 a Q2-77), todos A: aprobados
+
+| Q2 | Valor | Respuesta | Estado |
+|---|---|---|---|
+| Q2-72 | Hora de los reportes: diario 21:30; semanal domingo 19:00; mensual día 1 a las 08:00 | A | FIRME (K50) |
+| Q2-73 | Avisos: anticipación de precios viejos 1 día; hora de avisos 09:00 | A | FIRME (K50) |
+| Q2-74 | Tiempo máximo del comparador 5 s; límites de seguridad de 1 s a 30 s | A | FIRME (K50) |
+| Q2-75 | `optimizer.date_window_days` = 7 días | A | FIRME (K50) |
+| Q2-76 | `ocr.timeout_seconds` = 30 s | A | FIRME (K50) |
+| Q2-77 | Rango de frescura: `price.stale_after_days` ≥ 1 y `price.zero_weight_after_days` ≥ el anterior; peso (Z − días) ÷ (Z − S + 1) | A | FIRME (K50) |
+
+Dónde se guardan las claves de Q2-72 y Q2-73 lo fija Q2-11 = B (`app_setting`).

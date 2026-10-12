@@ -2,7 +2,7 @@
   "formato": "fixture/1",
   "motor": "s2",
   "caso": "s2-proyeccion-7-12-cadencia",
-  "descripcion": "Proyección con el interruptor encendido y una cadencia de prueba (opción A del bloqueo); todo calculado por el oráculo",
+  "descripcion": "Proyección con el interruptor encendido y una cadencia de prueba (valores de la opción A del bloqueo; FIRME desde la puerta 2, Q2-21 a Q2-24: provisional null en los 12 meses); todo calculado por el oráculo",
   "fuente": [
     {
       "tipo": "criterio",
@@ -21,10 +21,7 @@
       "ruta": "papel[2]"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S2-proyeccion-interruptor.md",
-    "que": "cadencia de los meses 7–12 con el interruptor encendido"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "$ref": "_datos/semilla-oraculo.json",
@@ -752,9 +749,7 @@
           "planned_expense_cents": 0,
           "net_cash_cents": -176752,
           "cumulative_diff_cents": 125869,
-          "provisional": [
-            "S2-proyeccion-interruptor"
-          ]
+          "provisional": null
         },
         {
           "index": 8,
@@ -812,9 +807,7 @@
           "planned_expense_cents": 0,
           "net_cash_cents": -176750,
           "cumulative_diff_cents": 125870,
-          "provisional": [
-            "S2-proyeccion-interruptor"
-          ]
+          "provisional": null
         },
         {
           "index": 9,
@@ -870,9 +863,7 @@
           "planned_expense_cents": 0,
           "net_cash_cents": -176752,
           "cumulative_diff_cents": 125869,
-          "provisional": [
-            "S2-proyeccion-interruptor"
-          ]
+          "provisional": null
         },
         {
           "index": 10,
@@ -930,9 +921,7 @@
           "planned_expense_cents": 0,
           "net_cash_cents": -176750,
           "cumulative_diff_cents": 125870,
-          "provisional": [
-            "S2-proyeccion-interruptor"
-          ]
+          "provisional": null
         },
         {
           "index": 11,
@@ -988,9 +977,7 @@
           "planned_expense_cents": 0,
           "net_cash_cents": -176752,
           "cumulative_diff_cents": 125869,
-          "provisional": [
-            "S2-proyeccion-interruptor"
-          ]
+          "provisional": null
         },
         {
           "index": 12,
@@ -1048,9 +1035,7 @@
           "planned_expense_cents": 0,
           "net_cash_cents": -176750,
           "cumulative_diff_cents": 125870,
-          "provisional": [
-            "S2-proyeccion-interruptor"
-          ]
+          "provisional": null
         }
       ]
     }

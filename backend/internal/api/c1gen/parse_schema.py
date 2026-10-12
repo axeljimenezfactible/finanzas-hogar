@@ -58,6 +58,7 @@ for path in MIGS:
         enums[(t, name)] = enum_of(r"\b%s IN \(([^)]*)\)" % name, rest)
 # C1 v1.2 (K44): inventario de parámetros operativos y notas de columna de 1.3.
 params, params_sin_valor = [], []
+rangos, cerrados, colbase = [], [], {}
 for path in MIGS:
     head = open(path, encoding='utf-8').read().split('-- +goose Down')[0]
     for line in re.findall(r'^-- @param (.*)$', head, re.M):
@@ -66,8 +67,15 @@ for path in MIGS:
     for line in re.findall(r'^-- @param_sin_valor (.*)$', head, re.M):
         k, why, who = [x.strip().replace('|', '/') for x in line.split('|', 2)]
         params_sin_valor.append(dict(name=k, purpose=why, reason=who))
+    for line in re.findall(r'^-- @param_rango (.*)$', head, re.M):
+        k, rng, dec = [x.strip() for x in line.split('|')]
+        rangos.append(dict(key=k, note=rng, decision=dec))
+    for line in re.findall(r'^-- @param_sin_valor_cerrado (.*)$', head, re.M):
+        k, where = [x.strip() for x in line.split('|', 1)]
+        cerrados.append(dict(name=k, closed=where.replace('|', '/'), migration=os.path.basename(path)[:5]))
     for tc, note in re.findall(r'^-- @col_note (\w+\.\w+) \| (.*)$', head, re.M):
-        t_, c_ = tc.split('.'); base, sep, rest = colcomments.get((t_, c_), '').partition('|')
+        # C1 v1.3 (puerta 2): como gen_dict.py de S1 1.4, la última @col_note sustituye a la anterior (no se acumulan).
+        t_, c_ = tc.split('.'); colbase.setdefault((t_, c_), colcomments.get((t_, c_), '')); base, sep, rest = colbase[(t_, c_)].partition('|')
         colcomments[(t_, c_)] = (base.strip() + ' ' + note.strip()).strip() + ((' |' + rest) if sep else '')
 keys = [p['key'] for p in params]
 if len(keys) != len(set(keys)):
@@ -77,7 +85,55 @@ for p in params:
     if row is None or json.loads(row[0]) != json.loads(p['initial_json']):
         raise SystemExit(f"parse_schema: {p['key']}: la siembra ({row and row[0]}) no coincide con @param ({p['initial_json']})")
     p['initial'] = json.loads(row[0]); p['seed_description'] = (row[1] or '').strip()
-json.dump(dict(params=params, params_sin_valor=params_sin_valor), open(os.path.join(WORK, 'params.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+# C1 v1.3 (puerta 2): @param_rango se suma a su clave; @param_sin_valor_cerrado saca de la lista un @param_sin_valor anterior.
+# El rango de cada clave se lee de la base, no se copia: cada valor se prueba con un UPDATE dentro de un SAVEPOINT que se
+# deshace, así minimum, maximum y el patrón de la hora salen de los disparadores de S1 (00003 y 00004).
+HHMM = '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+pk = {p['key']: p for p in params}
+for r in rangos:
+    if r['key'] not in pk: raise SystemExit(f"parse_schema: @param_rango de una clave sin @param: {r['key']}")
+    pk[r['key']].setdefault('range_notes', []).append(dict(note=r['note'], decision=r['decision']))
+_sv = {s['name'] for s in params_sin_valor}
+for c in cerrados:
+    if c['name'] not in _sv: raise SystemExit(f"parse_schema: @param_sin_valor_cerrado sin @param_sin_valor: {c['name']}")
+params_sin_valor_cerrados = [dict(s, closed=c['closed'], closed_by=c['migration']) for c in cerrados for s in params_sin_valor if s['name'] == c['name']]
+params_sin_valor = [s for s in params_sin_valor if s['name'] not in {c['name'] for c in cerrados}]
+db.isolation_level = None
+def _acepta(key, val):
+    db.execute('SAVEPOINT rango')
+    try:
+        db.execute('UPDATE app_setting SET value_json = ? WHERE setting_key = ? AND user_account_id IS NULL', (json.dumps(val), key)); return True
+    except sqlite3.DatabaseError:
+        return False
+    finally:
+        db.execute('ROLLBACK TO rango'); db.execute('RELEASE rango')
+TOPE = 10 ** 12
+for p in params:
+    k = p['key']
+    if not _acepta(k, p['initial']): raise SystemExit(f'parse_schema: {k}: la base rechaza su propio valor inicial')
+    if p['type'] == 'entero':
+        if _acepta(k, -1) or _acepta(k, '1') or _acepta(k, 1.5): raise SystemExit(f'parse_schema: {k}: la base acepta un valor que no es entero >= 0')
+        lo = 0 if _acepta(k, 0) else 1 if _acepta(k, 1) else None
+        if lo is None: raise SystemExit(f'parse_schema: {k}: no acepta 0 ni 1; rango no previsto por el generador')
+        p['minimum'] = lo
+        if not _acepta(k, TOPE):
+            a, b = p['initial'], TOPE
+            while b - a > 1:
+                m = (a + b) // 2
+                if _acepta(k, m): a = m
+                else: b = m
+            p['maximum'] = a
+    elif p['type'] == 'hora HH:MM':
+        _rx = re.compile(HHMM)
+        _malas = [s for s in [f'{h:02d}:{m:02d}' for h in range(30) for m in (0, 5, 59, 60, 99)] + ['9:00', '12:5', '1230', '08:00 ', ''] if bool(_rx.fullmatch(s)) != _acepta(k, s)]
+        if _malas or _acepta(k, 900): raise SystemExit(f'parse_schema: {k}: el patrón {HHMM} no coincide con la base en {_malas[:5]}')
+        p['pattern'] = HHMM
+    elif p['type'] == 'lista de enteros':
+        if _acepta(k, [-1]): raise SystemExit(f'parse_schema: {k}: la base acepta un elemento negativo')
+        p['minimum'] = 0
+    else:
+        raise SystemExit(f"parse_schema: {k}: tipo de parámetro desconocido: {p['type']}")
+json.dump(dict(params=params, params_sin_valor=params_sin_valor, params_sin_valor_cerrados=params_sin_valor_cerrados), open(os.path.join(WORK, 'params.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 db.commit()
 names = [r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name <> 'goose_db_version' ORDER BY rowid")]
 tables = {}

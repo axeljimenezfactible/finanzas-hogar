@@ -27,7 +27,7 @@ type BudgetMonthResult struct {
 	CashHouseholdCents    Cents        `json:"cash_household_cents"`
 }
 
-// BudgetTotal es el renglón total (declared_total_row_cents PROVISIONAL, S2-presupuesto-total).
+// BudgetTotal es el renglón total; el renglón declarado solo se informa (FIRME, Q2-19 = B).
 type BudgetTotal struct {
 	PlanCents             Cents  `json:"plan_cents"`
 	ActualCents           Cents  `json:"actual_cents"`
@@ -40,7 +40,7 @@ type BudgetTotal struct {
 }
 
 func (in *Input) flags(plan, actual Cents) (*int64, bool, bool, string) {
-	if plan == 0 { // plan 0: PROVISIONAL (S2-presupuesto-total)
+	if plan == 0 { // plan 0: sin porcentaje ni banderas (FIRME, Q2-20 = A)
 		return nil, false, false, "no_plan"
 	}
 	u := halfUp(int64(actual)*100, int64(plan))
@@ -334,8 +334,8 @@ func occurrencesIn(p *PlannedItem, from, to Date) []occurrence {
 	return out
 }
 
-// linked: lectura de trabajo PROVISIONAL (docs/estado/bloqueos/S2-flujo-quincenal.md): una captura
-// con ese planned_item_id en la misma quincena (semanal o quincenal) o en el mismo mes (mensual o mayor).
+// linked: liga ocurrencia ↔ captura (FIRME desde la puerta 2, Q2-14 = A; §3.11): una captura con ese
+// planned_item_id en la misma quincena (semanal o quincenal) o en el mismo mes (mensual o mayor).
 func (in *Input) linked(o occurrence) bool {
 	same := func(d Date) bool {
 		if o.item.Frequency == "weekly" || o.item.Frequency == "fortnightly" {
@@ -401,19 +401,14 @@ type FortnightRow struct {
 	CreditPayments         FlowCredit `json:"credit_payments"`
 	FixedUpcoming          FlowFixed  `json:"fixed_upcoming"`
 	VariableSpentCents     Cents      `json:"variable_spent_cents"`
-	VariableEstimatedCents *Cents     `json:"variable_estimated_cents"`
-	SavingsPlannedCents    *Cents     `json:"savings_planned_cents"`
+	VariableEstimatedCents *Cents     `json:"variable_estimated_cents"` // null: PROVISIONAL, S2-flujo-quincenal pregunta 1 (Q2-12 sin respuesta)
+	SavingsPlannedCents    *Cents     `json:"savings_planned_cents"`    // null: PROVISIONAL, S2-ahorro-quincenal (falta la base mensual)
 	SpentCents             Cents      `json:"spent_cents"`
 	CommittedCents         Cents      `json:"committed_cents"`
 	BalanceCents           Cents      `json:"balance_cents"`
 	CumulativeBalanceCents Cents      `json:"cumulative_balance_cents"`
 	Provisional            []string   `json:"provisional"`
 }
-
-const (
-	blockFlow       = "S2-flujo-quincenal"
-	blockProjection = "S2-proyeccion-interruptor"
-)
 
 // FortnightFlow calcula el flujo del hogar por quincena (§3.11).
 func FortnightFlow(in Input, from Fortnight, count int) ([]FortnightRow, error) {
@@ -447,10 +442,7 @@ func FortnightFlow(in Input, from Fortnight, count int) ([]FortnightRow, error) 
 			}
 		}
 		for _, o := range p.allOccurrences(s, e) {
-			lk := p.linked(o)
-			if lk {
-				r.Provisional = []string{blockFlow}
-			}
+			lk := p.linked(o) // provisional queda null: la liga es FIRME (Q2-14 = A)
 			switch o.item.Kind {
 			case "income":
 				if !lk {

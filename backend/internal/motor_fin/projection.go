@@ -22,7 +22,8 @@ type ProjectionResult struct {
 }
 
 // Projection proyecta 12 meses en devengado y efectivo; los meses 7–12 suman la cadencia
-// solo con el interruptor encendido (K21, RN-28; cadencia PROVISIONAL, S2-proyeccion-interruptor).
+// solo con el interruptor encendido (K21, RN-28; FIRME desde la puerta 2, Q2-21 a Q2-24). provisional
+// queda null en los 12 meses: la liga (Q2-14) y la cadencia son FIRMES; el campo se conserva.
 func Projection(in Input, from Month) (ProjectionResult, error) {
 	var res ProjectionResult
 	p, err := prepared(in)
@@ -45,11 +46,10 @@ func Projection(in Input, from Month) (ProjectionResult, error) {
 	}
 	var xc []costItem
 	var xk []cashEvent
-	incOcc, planned, linkedM := map[int]Cents{}, map[int]Cents{}, map[int]bool{}
+	incOcc, planned := map[int]Cents{}, map[int]Cents{}
 	for _, o := range p.allOccurrences(from.First(), end) {
 		mi := o.date.MonthOf().idx()
 		if p.linked(o) {
-			linkedM[mi] = true
 			continue
 		}
 		if o.item.Kind == "income" {
@@ -91,12 +91,6 @@ func Projection(in Input, from Month) (ProjectionResult, error) {
 		pm.PlannedExpenseCents = planned[m.idx()]
 		pm.NetCashCents = pm.IncomeCents - pm.Cash.ByPerson.Get(p.holder)
 		pm.CumulativeDiffCents = accruedUpTo(ms, m.idx()) - l.cashUpTo(e)
-		if linkedM[m.idx()] {
-			pm.Provisional = append(pm.Provisional, blockFlow)
-		}
-		if i >= 6 && p.Params.RepeatCadenceEnabled {
-			pm.Provisional = append(pm.Provisional, blockProjection)
-		}
 		res.Months = append(res.Months, pm)
 	}
 	return res, nil
@@ -110,7 +104,7 @@ type GoalPlanMonth struct {
 	Cents Cents `json:"cents"`
 }
 
-// GoalStatus es el avance de una meta o fondo (months_left, plan y state PROVISIONAL, S2-metas).
+// GoalStatus es el avance de una meta o fondo (§3.13; months_left, porcentaje y state FIRMES, Q2-16 a Q2-18).
 type GoalStatus struct {
 	GoalID             int64           `json:"goal_id"`
 	Kind               string          `json:"kind"`
@@ -124,7 +118,7 @@ type GoalStatus struct {
 	State              string          `json:"state"`
 }
 
-// MonthSummary es el resumen del mes en curso (PROVISIONAL, S2-metas-resumen).
+// MonthSummary es el resumen del mes en curso, solo con las metas activas (FIRME, Q2-15 = A).
 type MonthSummary struct {
 	SavedCents                Cents `json:"saved_cents"`
 	ContributedThisMonthCents Cents `json:"contributed_this_month_cents"`
@@ -165,12 +159,18 @@ func SavingsGoals(in Input) (SavingsResult, error) {
 				st.SavedCents -= mv.AmountCents
 			}
 		}
-		st.State = "open"
+		// state (FIRME, Q2-18 = A): achieved solo exige target_cents; luego overdue; si no, in_progress.
+		switch {
+		case g.TargetCents != nil && st.SavedCents >= *g.TargetCents:
+			st.State = "achieved"
+		case g.TargetDate != nil && g.TargetDate.Before(T):
+			st.State = "overdue"
+		default:
+			st.State = "in_progress"
+		}
+		// months_left (FIRME, Q2-16 = A): del mes de hoy al de target_date, los dos incluidos, mínimo 0.
 		if g.TargetDate != nil {
-			ml := 0
-			if !g.TargetDate.Before(T) {
-				ml = g.TargetDate.MonthOf().idx() - T.MonthOf().idx() + 1
-			}
+			ml := max(0, g.TargetDate.MonthOf().idx()-T.MonthOf().idx()+1)
 			st.MonthsLeft = &ml
 		}
 		if t := g.TargetCents; t != nil && *t > 0 {
@@ -181,15 +181,10 @@ func SavingsGoals(in Input) (SavingsResult, error) {
 		if g.TargetCents != nil && g.TargetDate != nil {
 			rem := *g.TargetCents - st.SavedCents
 			var need Cents
-			switch {
-			case rem <= 0:
-				st.State = "achieved"
-			default:
-				n := *st.MonthsLeft
-				st.State = "in_progress"
-				if n < 1 {
-					n, st.State = 1, "overdue"
-				}
+			if rem > 0 {
+				// Meta vencida sin cumplir (months_left 0): PROVISIONAL (bloqueo S2-metas-vencida), regla
+				// en uso: todo el restante en el mes de hoy.
+				n := max(1, *st.MonthsLeft)
 				for k := 0; k < n; k++ {
 					st.Plan = append(st.Plan, GoalPlanMonth{T.MonthOf().Add(k), series(rem, n, k)})
 				}

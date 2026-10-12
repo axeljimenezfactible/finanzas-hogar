@@ -112,7 +112,7 @@ func (rd *Reader) Next() (Record, error) {
 	if err != nil {
 		var pe *csv.ParseError
 		if errors.As(err, &pe) {
-			return Record{}, &RowError{Line: pe.StartLine, Row: rd.Read, Reason: "CSV mal formado: " + pe.Err.Error()}
+			return Record{}, &RowError{Line: pe.StartLine, Row: rd.Read, Reason: "CSV mal formado"} // texto cerrado, sin el detalle del lector (§11)
 		}
 		return Record{}, err
 	}

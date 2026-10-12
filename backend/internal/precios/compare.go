@@ -32,7 +32,7 @@ type StoreTotals struct {
 	PieceCount                int64  `json:"piece_count"`
 	MissingCount              int    `json:"missing_count"`
 	StaleCount                int    `json:"stale_count"`
-	DifferenceVsCheapestCents int64  `json:"difference_vs_cheapest_cents"`
+	DifferenceVsCheapestCents *int64 `json:"difference_vs_cheapest_cents"` // null en incompletas (§7.4)
 	AssumesMembership         bool   `json:"assumes_membership"`
 	order, assigned           int
 }
@@ -72,7 +72,9 @@ type CartComparison struct {
 
 // agg agrupa los renglones de una presentación en una canasta y los consume en orden de
 // captura: la parte emparejada sale de los primeros renglones y el excedente de los últimos
-// (la sexta lata de atún de Bodega es el último renglón, a 21.00).
+// (la sexta lata de atún de Bodega es el último renglón, a 21.00). PROVISIONAL (bloqueo
+// S5-motor-oraculo-reglas pregunta 2; §7.2 pasos 1 y 2 no dicen qué precio toma la parte emparejada si la
+// misma presentación trae precios distintos): en uso, el orden de captura; el oráculo usa el promedio.
 type agg struct {
 	pres  Presentation
 	qty   int64 // milésimas de presentación sin consumir
@@ -100,7 +102,10 @@ func pieces(qty int64) int64 {
 	if qty%1000 == 0 {
 		return qty / 1000
 	}
-	return 1 // renglón a granel = 1 pieza (supuesto S-11)
+	// Renglón a granel = 1 pieza (supuesto S-11). PROVISIONAL (bloqueo S5-motor-oraculo-reglas pregunta 1;
+	// §7.2 paso 6 no dice qué es «renglón»): en uso, la presentación agrupada del paso 1; el
+	// oráculo cuenta cada línea de rows[] (emparejada y excedente por separado).
+	return 1
 }
 
 // CompareCarts compara la canasta base contra otras, renglón contra renglón (§7.2): idénticos
@@ -341,55 +346,49 @@ func (b *Book) addLine(row *Row, ci int, store string, p Presentation, qty int64
 	return nil
 }
 
-// rankCarts ordena las canastas de CompareCarts por total ascendente; a igual total, el orden
-// base y luego others (convención 1 del oráculo S5; solicitud a §15.2). La diferencia es contra
-// la de menor total.
+// rankCarts ordena las canastas de CompareCarts (§7.4, §15.2): completas por total ascendente y
+// luego incompletas por total ascendente; a igual total, la base y luego others en su orden.
 func rankCarts(t []StoreTotals) []StoreTotals {
-	s := append([]StoreTotals(nil), t...)
-	sort.SliceStable(s, func(i, j int) bool {
-		if s[i].TotalCents != s[j].TotalCents {
-			return s[i].TotalCents < s[j].TotalCents
-		}
-		return s[i].order < s[j].order
-	})
-	for i := range s {
-		s[i].DifferenceVsCheapestCents = s[i].TotalCents - s[0].TotalCents
-	}
-	return s
+	return rankComplete(t, func(a, b *StoreTotals) bool { return a.order < b.order })
 }
 
-// rankStores ordena las tiendas de la canasta por total ascendente, también las incompletas
-// (§7.4 «tiendas ordenadas por total ascendente»). Empate de totales (PROVISIONAL, bloqueo
-// S5-reglas-comparativa, pregunta 2, opción A): más renglones recomendados, luego menos precios
-// viejos, luego el orden de stores. La diferencia es contra la más barata completa (una tienda con
-// faltantes no puede ser la más barata; su diferencia puede ser negativa); si ninguna está
-// completa, contra la de menor total.
+// rankStores ordena las tiendas de la canasta por necesidad (§7.4, §15.2): completas por total
+// ascendente y luego incompletas por total ascendente. Empate de totales (FIRME, puerta 2, Q2-60 = A):
+// más renglones recomendados, luego menos precios viejos, luego el orden de stores.
 func rankStores(t []StoreTotals) []StoreTotals {
+	return rankComplete(t, func(a, b *StoreTotals) bool {
+		if a.assigned != b.assigned {
+			return a.assigned > b.assigned
+		}
+		if a.StaleCount != b.StaleCount {
+			return a.StaleCount < b.StaleCount
+		}
+		return a.order < b.order
+	})
+}
+
+// rankComplete aplica la regla única de §7.4 en los dos modos (H-r3-04, Q2-05 = A; M-r5-3,
+// Q2-08 = A): una tienda está completa si su missing_count es 0; van primero las completas y
+// después las incompletas, cada grupo por total ascendente y, a igual total, por tie. La
+// diferencia es contra la primera completa y queda en null en las incompletas o si ninguna
+// tienda está completa.
+func rankComplete(t []StoreTotals, tie func(a, b *StoreTotals) bool) []StoreTotals {
 	s := append([]StoreTotals(nil), t...)
 	sort.SliceStable(s, func(i, j int) bool {
+		if ci, cj := s[i].MissingCount == 0, s[j].MissingCount == 0; ci != cj {
+			return ci
+		}
 		if s[i].TotalCents != s[j].TotalCents {
 			return s[i].TotalCents < s[j].TotalCents
 		}
-		if s[i].assigned != s[j].assigned {
-			return s[i].assigned > s[j].assigned
-		}
-		if s[i].StaleCount != s[j].StaleCount {
-			return s[i].StaleCount < s[j].StaleCount
-		}
-		return s[i].order < s[j].order
+		return tie(&s[i], &s[j])
 	})
-	ref := int64(0)
-	if len(s) > 0 {
-		ref = s[0].TotalCents
-	}
 	for i := range s {
+		s[i].DifferenceVsCheapestCents = nil
 		if s[i].MissingCount == 0 {
-			ref = s[i].TotalCents
-			break
+			d := s[i].TotalCents - s[0].TotalCents // s[0] es completa si s[i] lo es
+			s[i].DifferenceVsCheapestCents = &d
 		}
-	}
-	for i := range s {
-		s[i].DifferenceVsCheapestCents = s[i].TotalCents - ref
 	}
 	return s
 }

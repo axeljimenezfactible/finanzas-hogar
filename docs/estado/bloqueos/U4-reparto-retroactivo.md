@@ -7,3 +7,15 @@ Opciones:
 - C. Preguntar el alcance en cada cambio, como el presupuesto en K2 («solo los nuevos» o «también los ya capturados»). Consecuencia: cambio en C1 (parámetro de alcance) y en el motor de reparto.
 Impacto: con el valor inicial (50/50) las cifras canon no cambian. Afecta la vista previa y el texto de confirmación de P-26.12 y, según la opción, S1, C1 y S2.
 Cómo seguí: `docs/design/U4-ajustes-b.md` usa `updateCostShareRule` como está en C1 v1.2 y su vista previa muestra el ejemplo del nuevo reparto con la regla de K14 más el aviso del alcance, marcado PROVISIONAL citando este bloqueo. Nada entra en cifras ni en el esquema.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-68 · Si cambias el porcentaje de una regla de reparto reutilizable, ¿vale para los gastos ya capturados o solo para los nuevos?
+- **Respuesta:** **C** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «Preguntar el alcance en cada cambio, como el presupuesto en K2 («solo los nuevos» o «también los ya capturados»).»
+- **Consecuencia:** cambio en C1 (parámetro de alcance) y en el motor de reparto.
+- **Qué cambia:** C1 (`updateCostShareRule` con parámetro de alcance), motor de reparto (S2) y, según el alcance, S1; vista previa y texto de confirmación de P-26.12 en `docs/design/U4-ajustes-b.md` sin marca PROVISIONAL.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

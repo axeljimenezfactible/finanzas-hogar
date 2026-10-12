@@ -8,3 +8,15 @@ Opciones:
 - Un agente (por ejemplo el revisor) no puede confirmar: R9 y S4-11 piden confirmación humana.
 Impacto: queda PROVISIONAL quién confirma y cuándo (S4 §9.1 y S5 §11). No cambia ninguna cifra canon; las fórmulas de kcal no dependen de la confirmación. El cargador ya queda fijado: en modo producción no carga un renglón `propuesto` (S4-11, «ninguno entra automático»); en modo revisión (pruebas, fixtures y medición de WF-1) sí lo usa y lo cuenta aparte.
 Cómo seguí: opción A, marcada PROVISIONAL citando este bloqueo en `docs/contratos/motores/S4-interfaz.md` §9.1 y `docs/contratos/motores/S5-interfaz.md` §11 (versiones 1.1).
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-43 · ¿Quién confirma los empates producto ↔ dato nutricional y las ligas de PROFECO, y cuándo?
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «Axel en la puerta 2, sobre una lista que entrega el agente de nutrición (y la del agente PROFECO) con los renglones `propuesto`: los que apruebe pasan a `confirmado` con `confirmo = axel` y la fecha.»
+- **Consecuencia:** WF-1 mide S4-08 con los renglones propuestos y confirmados (dos conteos) y nada propuesto entra a la base de la app.
+- **Qué cambia:** `S4-interfaz.md` §9.1 y `S5-interfaz.md` §11 quitan la marca PROVISIONAL de quién y cuándo; Axel confirma la lista de renglones «propuesto» (la de nutrición es la Q2-90, sin respuesta); en producción no se carga ningún renglón «propuesto»; no toca esquema ni C1. Acción pendiente de Axel en PUERTA-2 §7.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

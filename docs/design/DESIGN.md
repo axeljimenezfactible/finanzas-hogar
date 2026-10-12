@@ -106,7 +106,7 @@ Texto e icono del rol: paso 700 en claro y 400 en oscuro (tokens `light` y `dark
 Decisiones de matiz que este resumen respeta:
 
 - **Gasto en terracota 45°** (K26: rango 40–45°, error se queda en 20°). De los seis grados del rango, 45° es el más separado de error (24.9°) y de advertencia (30.7°) medidos en el hex (colorimetría «Cambios 1.1», punto 1).
-- **Ingreso**: decisiones §I lo deja en **150°** «o U2 propone 135°». Valor vigente en los tokens: **135°** (propuesta de U2a ya prevista por decisiones §I). Motivo: separa ingreso de éxito 15° en vez de 0° y forma con advertencia el par de acentos de la armonía. Aun así, lado a lado ingreso y éxito apenas se distinguen (ΔE ≈ 3), por eso ingreso vive en cifras con «+» y éxito solo en avisos con palomita (colorimetría §6.4).
+- **Ingreso**: decisiones §I lo deja en **150°** «o U2 propone 135°». Valor vigente en los tokens: **135°** (propuesta de U2a ya prevista por decisiones §I; ratificada por Axel en la puerta 2, Q2-81 A, K51). Motivo: separa ingreso de éxito 15° en vez de 0° y forma con advertencia el par de acentos de la armonía. Aun así, lado a lado ingreso y éxito apenas se distinguen (ΔE ≈ 3), por eso ingreso vive en cifras con «+» y éxito solo en avisos con palomita (colorimetría §6.4).
 - **Gasto frente a error**: ya no colisionan (≥ 24.9° de matiz), pero con daltonismo rojo-verde siguen cerca: el gasto solo aparece como cifra con «−», el error solo como mensaje con icono; nunca comparten componente (colorimetría §6.5).
 
 ### 2.5 Acción crítica (eje opuesto 100°)
@@ -1083,7 +1083,7 @@ Doble eje; 3D; arcoíris o colores generados fuera de C2; dona con más de 5 par
 | 1.4.12 Espaciado del texto | ningún contenedor con alto fijo recorta texto si se amplía interlínea o espaciado; las cifras no se truncan (§3.3) |
 | 1.4.13 Contenido al pasar el puntero o al enfocar | las descripciones emergentes se cierran con Esc, se pueden recorrer con el puntero y no desaparecen solas |
 | 2.1.1 Teclado · 2.1.2 Sin trampas | todo se hace con teclado (U1 §5.3); solo diálogos y hojas atrapan el foco, y Esc los cierra |
-| 2.1.4 Atajos de una tecla | `/`, `?` y las flechas solo actúan fuera de campos de texto (U1 §5.4); PROPUESTA: interruptor «Atajos de una tecla» en Apariencia para desactivarlos (§9.6) |
+| 2.1.4 Atajos de una tecla | `/`, `?` y las flechas solo actúan fuera de campos de texto (U1 §5.4); interruptor «Atajos de una tecla» en Apariencia para desactivarlos (§9.6; ratificado en la puerta 2, Q2-82 A, K51) |
 | 2.3.1 Tres destellos | nada parpadea (§6.4) |
 | 2.4.3 Orden del foco · 2.4.7 Foco visible · 2.4.11 Foco no oculto | el orden sigue la lectura; anillo de §9.2; `scroll-padding` igual a las barras fijas para que nada tape el elemento enfocado |
 | 2.5.7 Movimientos de arrastre | arrastrar siempre tiene alternativa de un toque («Mover a…», §7.5.3) |
@@ -1127,7 +1127,7 @@ U5 y WF-3 comprueban: navegación completa solo con teclado en 1440; TalkBack co
 | `prefers-color-scheme` | tema por defecto según el sistema; el interruptor (Sistema · Claro · Oscuro, en Apariencia, en el pie de la barra lateral, `Ctrl+Shift+L` y /tema) fija `data-theme` en la raíz y se recuerda por dispositivo |
 | `prefers-reduced-motion` | se anulan las transiciones no esenciales (§6.3) |
 | `forced-colors` | colores del sistema; se conservan anillo de foco, bordes de controles, forma, trazo y patrón de las series |
-| Atajos de una tecla | PROPUESTA de U2b-2 para WCAG 2.1.4: interruptor local en Apariencia, encendido por omisión; lo decide Axel en la puerta 2 y lo agregan U1 y U4 |
+| Atajos de una tecla | Para WCAG 2.1.4: interruptor local en Apariencia, encendido por omisión (ratificado por Axel en la puerta 2, Q2-82 A, K51); lo agregan U1 y U4 |
 
 ## 10. Tokens
 
@@ -1393,5 +1393,5 @@ Secciones 7 a 10 (U2b-2-design):
 6. **Capa semántica `ui.*`** (§7.1, §10): 41 alias de primitivos de C2, sin valores nuevos; el prefijo `ui` evita confundirlos con los primitivos `color.*` que comprueba `verificar.py`. `ui.surface.hover-subtle` existe porque las cifras de rol sobre `ui.surface.hover` bajan de 4.5:1 (gasto en oscuro 4.07; ingreso 4.30 en claro y 4.37 en oscuro; cálculo previo de U2b-2): filas y edición en el lugar usan el hover sutil y las tarjetas solo cambian el borde.
 7. Las medidas de componente de §10.6, el nombre del archivo del tema de Tailwind (quedó `docs/contratos/tailwind.theme.css`, §10.1) y los nombres `breakpoint.*` son propuestas listas para U2c; no cambian ningún valor de §3–§6.
 8. Patrón de relleno siempre presente desde la serie 2 (K27) y cifras tabulares en todo dinero (§3.3), aunque la guía de visualización los plantea como opcional y como proporcionales en cifras grandes: rigen las decisiones.
-9. Las constantes de interfaz (aviso breve 5 s de U1 G-07; «Guardado» 2 s en Ajustes; indicador de carga desde 400 ms; mensaje de lentitud a los 10 s de U1 §2.4) se tratan como diseño y no como parámetros operativos de K44; si Axel los quiere configurables, irían en Apariencia.
+9. Las constantes de interfaz (aviso breve 5 s de U1 G-07; «Guardado» 2 s en Ajustes; indicador de carga desde 400 ms; mensaje de lentitud a los 10 s de U1 §2.4) son de diseño y no parámetros operativos de K44 (ratificado por Axel en la puerta 2, Q2-84 A, K51).
 10. **Barra inferior** (§4.6, §9.3; corrección de la revisión U2 r1): «56 × ≥ 64 px» se lee como alto 56 px, el mismo de `layout.bottombar.height` (un destino no puede ser más alto que su barra), y ancho mínimo 64 px (5 destinos en 360 px dan 72 px cada uno). No se agrega ningún valor: son los dos números que ya traía este documento.

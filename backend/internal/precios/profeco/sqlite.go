@@ -106,7 +106,7 @@ func LoadIntoDB(ctx context.Context, db *sql.DB, o Options, paths ...string) (*I
 }
 
 // QQP es la base local aparte datos/profeco/qqp.sqlite con todos los registros
-// bien formados (PROVISIONAL, bloqueo S5-profeco-almacen, pregunta 1, opción A).
+// bien formados (FIRME, puerta 2, Q2-53 = A).
 // Va fuera del esquema de la app. Escribe por lotes dentro de una transacción.
 type QQP struct {
 	db    *sql.DB

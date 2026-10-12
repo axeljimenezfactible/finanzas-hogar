@@ -8,3 +8,15 @@ Opciones:
 4. Dos productos: `huevo` (pieza) y `huevo-granel` (g). Consecuencia: duplica el producto y su comparación de precios.
 Impacto: S4 §8.2 (costo por receta) calcula con precio por pieza; un precio por kilo del mercado queda sin captura. PROFECO: el vínculo del huevo debe decidir si compara por pieza o por kilo. El catálogo sigue siendo válido; nada se bloquea.
 Cómo seguí: dejé `huevo` sin cambios con sus tres presentaciones por pieza (la forma en que se compra en cadena, que es la fuente dominante del hogar) y lo documenté en el README. Ningún valor provisional entra en cifras ni esquema.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-71 · ¿Cómo se registra un precio por kilo del huevo, cuya unidad base es la pieza?
+- **Respuesta:** **1** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «Dejar `huevo` en `pieza` y que Axel capture siempre el precio por pieza o por cartón (al comprar por kilo, divide).»
+- **Consecuencia:** cero cambios; el precio por kilo del mercado no se captura tal cual.
+- **Qué cambia:** Ningún archivo cambia: el catálogo (`datos/semilla/productos.json`) conserva `huevo` en `pieza` con sus tres presentaciones; el README del catálogo ya lo documenta.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

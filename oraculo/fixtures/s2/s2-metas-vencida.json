@@ -1,0 +1,191 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-metas-vencida",
+  "descripcion": "Metas vencidas y fondos: target_date anterior a hoy en el mes de hoy (months_left 1) y en el mes anterior (months_left 0), fondo con monto cumplido sin fecha (achieved), fondo sin monto con fecha pasada (overdue) y fondo sin monto ni fecha (in_progress); la vencida sin cumplir pone todo el restante en el mes de hoy (PROVISIONAL, S2-metas-vencida); cifras a mano",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-12"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-18"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "S2-interfaz §3.13: months_left, state y meta vencida; restante 500 − 100 = 400"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S2-metas-vencida.md",
+    "que": "needed_monthly_cents y plan de una meta vencida sin cumplir (todo el restante en el mes de hoy, regla en uso)"
+  },
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "savings_goals": [
+          {
+            "id": 1,
+            "name": "Vencida este mes",
+            "kind": "goal",
+            "target_cents": 500,
+            "target_date": "2026-10-05",
+            "planned_monthly_cents": null,
+            "start_date": "2026-01-01",
+            "is_active": true
+          },
+          {
+            "id": 2,
+            "name": "Vencida el mes anterior",
+            "kind": "goal",
+            "target_cents": 500,
+            "target_date": "2026-09-30",
+            "planned_monthly_cents": null,
+            "start_date": "2026-01-01",
+            "is_active": true
+          },
+          {
+            "id": 3,
+            "name": "Fondo cumplido sin fecha",
+            "kind": "fund",
+            "target_cents": 500,
+            "target_date": null,
+            "planned_monthly_cents": null,
+            "start_date": "2026-01-01",
+            "is_active": true
+          },
+          {
+            "id": 4,
+            "name": "Fondo con fecha pasada",
+            "kind": "fund",
+            "target_cents": null,
+            "target_date": "2026-09-30",
+            "planned_monthly_cents": null,
+            "start_date": "2026-01-01",
+            "is_active": true
+          },
+          {
+            "id": 5,
+            "name": "Fondo sin monto ni fecha",
+            "kind": "fund",
+            "target_cents": null,
+            "target_date": null,
+            "planned_monthly_cents": null,
+            "start_date": "2026-01-01",
+            "is_active": true
+          }
+        ],
+        "savings_movements": [
+          {
+            "goal_id": 1,
+            "movement_date": "2026-10-01",
+            "kind": "deposit",
+            "amount_cents": 100
+          },
+          {
+            "goal_id": 2,
+            "movement_date": "2026-10-01",
+            "kind": "deposit",
+            "amount_cents": 100
+          },
+          {
+            "goal_id": 3,
+            "movement_date": "2026-10-01",
+            "kind": "deposit",
+            "amount_cents": 600
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "metas",
+        "funcion": "metas",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "metas": {
+      "month_summary": {
+        "saved_cents": 800,
+        "contributed_this_month_cents": 800,
+        "planned_this_month_cents": 0
+      },
+      "goals": [
+        {
+          "goal_id": 1,
+          "kind": "goal",
+          "saved_cents": 100,
+          "target_cents": 500,
+          "progress_tenths_pct": 200,
+          "progress_pct": 20,
+          "months_left": 1,
+          "needed_monthly_cents": 400,
+          "plan": [
+            {
+              "month": "2026-10",
+              "cents": 400
+            }
+          ],
+          "state": "overdue"
+        },
+        {
+          "goal_id": 2,
+          "kind": "goal",
+          "saved_cents": 100,
+          "target_cents": 500,
+          "progress_tenths_pct": 200,
+          "progress_pct": 20,
+          "months_left": 0,
+          "needed_monthly_cents": 400,
+          "plan": [
+            {
+              "month": "2026-10",
+              "cents": 400
+            }
+          ],
+          "state": "overdue"
+        },
+        {
+          "goal_id": 3,
+          "kind": "fund",
+          "saved_cents": 600,
+          "target_cents": 500,
+          "progress_tenths_pct": 1200,
+          "progress_pct": 120,
+          "months_left": null,
+          "needed_monthly_cents": null,
+          "plan": [],
+          "state": "achieved"
+        },
+        {
+          "goal_id": 4,
+          "kind": "fund",
+          "saved_cents": 0,
+          "target_cents": null,
+          "progress_tenths_pct": null,
+          "progress_pct": null,
+          "months_left": 0,
+          "needed_monthly_cents": null,
+          "plan": [],
+          "state": "overdue"
+        },
+        {
+          "goal_id": 5,
+          "kind": "fund",
+          "saved_cents": 0,
+          "target_cents": null,
+          "progress_tenths_pct": null,
+          "progress_pct": null,
+          "months_left": null,
+          "needed_monthly_cents": null,
+          "plan": [],
+          "state": "in_progress"
+        }
+      ]
+    }
+  }
+}

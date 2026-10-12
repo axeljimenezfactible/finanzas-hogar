@@ -100,3 +100,20 @@ func TestIsFocusChain(t *testing.T) {
 		}
 	}
 }
+
+// Lista cerrada de motivos del precio (§11 paso 3, H-r3-03, Q2-04 = A).
+func TestParsePriceMotivos(t *testing.T) {
+	for in, want := range map[string]string{
+		"": "precio vacío", " $ ": "precio vacío", "1,02.00": "precio con comas mal puestas", ",500": "precio con comas mal puestas",
+		"1.0,0": "precio con comas mal puestas", "1,,000": "precio con comas mal puestas", "24.505": "precio con más de dos decimales",
+		".123": "precio con más de dos decimales", "abc": "precio ilegible", "12.": "precio ilegible", ".5": "precio ilegible",
+		"-5": "precio ilegible", "1 021.00": "precio ilegible", "9999999999999999": "precio ilegible", "0.00": "precio no positivo", "$0": "precio no positivo",
+	} {
+		if _, err := ParsePriceCents(in); err == nil || err.Error() != want {
+			t.Errorf("%q: %v; se esperaba %q", in, err, want)
+		}
+	}
+	if c, err := ParsePriceCents("$ 1,021.00"); err != nil || c != 102100 {
+		t.Errorf("1,021.00 = %d, %v", c, err)
+	}
+}

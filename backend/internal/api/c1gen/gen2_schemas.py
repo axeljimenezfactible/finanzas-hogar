@@ -237,15 +237,32 @@ S['PriceSummary'] = O('Resumen de precios (N-172).', fresh_count='i:Productos co
 S['PriceSources'] = O('Fuentes de precio (N-291).', manual_enabled='b:Siempre true.', ocr_engine='s:Motor OCR local (Tesseract 5.5.3, spa).', assisted_reading_enabled='b:Interruptor general (app_setting price.assisted_reading_enabled).', sites=A(O('Sitio.', store_id='i:Cadena.', website_url_='s:Sitio.', verdict='e:allowed,denied,missing:Veredicto en docs/estado/S5-terminos.md.', assisted_reading_enabled='b:Activada para esa cadena.'), 'Cadenas con sitio.'), profeco_last_import_at_='r:DateTime:Último corte importado (job).', profeco_price_count='i:Precios PROFECO cargados.', profeco_coverage=A(O('Cobertura.', store_id_='i:Cadena ligada.', municipality_='s:Municipio.', price_count='i:Precios.'), 'Por cadena y municipio.'))
 # C1 v1.2 (puerta 1b, K44): parámetros operativos de app_setting. Salen de las anotaciones @param de las migraciones
 # (PARAMS, de parse_schema.py) y se exponen por clave en la operación de settings de su sección de Ajustes (C1 §11.7).
-def _pv(typ, null=False):
+# C1 v1.3 (puerta 2, K47, K50): tipo nuevo «hora HH:MM» (texto de 24 horas, hora del centro de México) y rango por clave
+# (minimum, maximum y pattern) leído de la base por parse_schema.py: el cambio de cada clave declara el rango de su disparador.
+HHMM_PATTERN = '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+_PREF = {'entero': 'Integer', 'lista de enteros': 'IntegerList', 'hora HH:MM': 'Time'}
+def _pv(typ, null=False, p=None):
     it = {'type': 'integer', 'minimum': 0}
-    if typ == 'entero': s = dict(it)
+    if typ == 'entero':
+        s = dict(it)
+        if p is not None:
+            s['minimum'] = p['minimum']
+            if 'maximum' in p: s['maximum'] = p['maximum']
     elif typ == 'lista de enteros': s = {'type': 'array', 'items': it}
+    elif typ == 'hora HH:MM':
+        s = {'type': 'string', 'pattern': HHMM_PATTERN}
+        if p is not None and p.get('pattern') != HHMM_PATTERN: raise SystemExit('gen2: patrón de hora distinto del de la base: ' + p['key'])
     else: raise SystemExit('gen2: tipo de parámetro desconocido: ' + typ)
     if null: s['type'] = [s['type'], 'null']
     return s
-for _n, _t, _vt in (('Integer', 'entero', 'integer'), ('IntegerList', 'lista de enteros', 'integer_list')):
-    S['SettingParameter' + _n] = {'type': 'object', 'x-calculado': True, 'description': f'Parámetro operativo de tipo {_t} (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. Solo se valida tipo y signo, como los disparadores trg_app_setting_param_int* de 00003; sin topes mínimos ni máximos hasta la puerta 2.',
+def _rango_txt(p):
+    if p['type'] == 'hora HH:MM': r = 'texto HH:MM de 24 horas, de 00:00 a 23:59, hora del centro de México (America/Mexico_City)'
+    elif p['type'] == 'lista de enteros': r = 'lista de enteros mayores o iguales a 0'
+    elif 'maximum' in p: r = f"entero de {p['minimum']} a {p['maximum']}"
+    else: r = f"entero de {p['minimum']} o más"
+    return 'Rango: ' + r + ''.join(f"; {n['note']}, {n['decision']}" for n in p.get('range_notes', [])) + '.'
+for _n, _t, _vt in (('Integer', 'entero', 'integer'), ('IntegerList', 'lista de enteros', 'integer_list'), ('Time', 'hora HH:MM', 'time')):
+    S['SettingParameter' + _n] = {'type': 'object', 'x-calculado': True, 'description': f'Parámetro operativo de tipo {_t} (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. El tipo y el rango de cada clave los validan los disparadores de S1 (trg_app_setting_param_int* de 00003; trg_app_setting_param_range* y trg_app_setting_param_time* de 00004) y los declara la propiedad de la clave en el cambio de su sección (minimum, maximum o pattern; puerta 2, K50).',
         'required': ['key', 'value_type', 'unit', 'value', 'initial_value', 'is_initial'],
         'properties': {'key': {'type': 'string', 'description': 'Clave de app_setting (app_setting.setting_key).'},
                        'value_type': {'type': 'string', 'enum': [_vt], 'description': 'Tipo del valor.'},
@@ -258,21 +275,23 @@ def _psec(sec):
     if not ps: raise SystemExit('gen2: sección de Ajustes sin parámetros: ' + sec)
     return ps
 def params_read(sec):
-    props = {p['key']: {'$ref': '#/components/schemas/SettingParameter' + ('Integer' if p['type'] == 'entero' else 'IntegerList'),
-                        'description': f"{p['seed_description']} Valor inicial: {p['initial_json']} ({p['unit']}; {p['decision']}; sembrado por {p['migration']}).", 'x-app-setting': p['key']} for p in _psec(sec)}
+    props = {p['key']: {'$ref': '#/components/schemas/SettingParameter' + _PREF[p['type']],
+                        'description': f"{p['seed_description']} Valor inicial: {p['initial_json']} ({p['unit']}; {p['decision']}; sembrado por {p['migration']}). {_rango_txt(p)}", 'x-app-setting': p['key']} for p in _psec(sec)}
     return {'type': 'object', 'additionalProperties': False, 'required': list(props), 'properties': props, 'x-calculado': True,
             'description': f'Parámetros operativos de «{sec}» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad.'}
 def PWRITE(sec):
     ps = _psec(sec)
     return {'parameters_': {'type': 'object', 'additionalProperties': False, 'minProperties': 1,
-                            'description': 'Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2.',
-                            'properties': {p['key']: {**_pv(p['type']), 'description': f"Valor nuevo de {p['key']} ({p['unit']}).", 'x-app-setting': p['key']} for p in ps}},
+                            'description': 'Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro.',
+                            'properties': {p['key']: {**_pv(p['type'], p=p), 'description': f"Valor nuevo de {p['key']} ({p['unit']}). {_rango_txt(p)}", 'x-app-setting': p['key']} for p in ps}},
             'reset_parameters_': {'type': 'array', 'uniqueItems': True, 'minItems': 1, 'items': {'type': 'string', 'enum': [p['key'] for p in ps]}, 'x-entrada': True,
                                   'description': 'Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed).'}}
 S['PriceSettings'] = O('Ajustes de precios (app_setting price.*; N-291, N-322). La frescura y el peso en la comparativa siguen RN-12 con los valores vigentes de price.stale_after_days y price.zero_weight_after_days (K22, K40, K44); PROFECO nunca compite: solo es referencia.', assisted_reading_enabled={'type': 'boolean', 'description': 'Interruptor general de la lectura asistida (price.assisted_reading_enabled, false por defecto).', 'x-app-setting': 'price.assisted_reading_enabled'}, parameters=params_read('Tiendas y precios'))
 S['PriceSettingsUpdate'] = O('Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. El interruptor solo acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed).', False, assisted_reading_enabled_={'type': 'boolean', 'description': 'Nuevo valor.', 'x-app-setting': 'price.assisted_reading_enabled'}, **PWRITE('Tiendas y precios'))
 S['PriceSettingsUpdate']['additionalProperties'] = False; S['PriceSettingsUpdate']['minProperties'] = 1
 S['ProfecoImportResult'] = O('Resultado de importar un corte PROFECO (N-293).', loaded_count='i:Precios cargados.', skipped_count='i:Registros sin presentación ligada.', coverage=A(O('Cobertura.', store_id_='i:Cadena.', municipality_='s:Municipio.', price_count='i:Precios.'), 'Por cadena y municipio.'))
+# C1 v1.3 (puerta 2, Q2-77): la regla entre dos claves no está en el esquema; la valida la API (y el motor de precios).
+S['PriceSettingsUpdate']['description'] += ' price.zero_weight_after_days tiene que ser igual o mayor que price.stale_after_days con los valores que quedan después del cambio (Q2-77, K50, RN-12; también lo valida el motor de precios): si no, 422 validation_failed y no se guarda ninguno.'
 S['RecipeSettings'] = O('Recetario y nutrición (N-294).', default_base_servings='i:Porciones base por defecto (recipe.base_servings = 2).', meal_slots=A(ref('MealSlot'), 'Los 4 tiempos.'), recipe_counts=A(O('Por origen.', origin='e:claude_seed,household:Origen.', count='i:Recetas.'), 'Por origen.'), nutrition_sources=A(O('Base nutricional local.', source='e:usda_fdc,open_food_facts,mx_table,store_label,manual:Fuente.', food_count='i:Alimentos.', loaded_at_='r:DateTime:Fecha de carga.'), 'Por fuente.'))
 S['NutritionReloadRequest'] = O('Recarga de una base nutricional local (N-295).', False, source='e:usda_fdc,open_food_facts:Base que se recarga desde el archivo local.')
 S['NutritionReloadResult'] = O('Resultado de la recarga.', source='e:usda_fdc,open_food_facts:Base.', loaded_count='i:Alimentos cargados.')
@@ -290,6 +309,31 @@ S['InventorySummary'] = O('Conteo por estado (N-182).', sufficient_count='i:Sufi
 # ---------- Créditos ----------
 S['Credit'] = entity_read('credit', {'live_debt_cents': C('r:MoneyCents:Deuda viva = capital + intereses por pagar (motor S3).'), 'available_cents': C('r:MoneyCents:Disponible hoy: revolvente con la lectura activa; tarjeta = límite − saldo; préstamo y tienda: ausente.'), 'next_payment_date': C('r:Date:Próximo pago con alguna parte pendiente.'), 'next_payment_cents': C('r:MoneyCents:Monto del próximo pago.'), 'live_purchase_count': C('i:Compras vivas (status active).'), 'annual_rate_pct': C('s:Tasa anual en porcentaje como se capturó: annual_rate_num/annual_rate_den redondeada ROUND_HALF_UP a annual_rate_decimals decimales (K12); ausente sin tasa o sin decimales.'), 'missing_terms': C('[e:annual_rate,rate_base,min_payment_pct_bp,min_payment_fixed_cents:Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18); vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar».')})
 S['CreditCreate'] = entity_write('credit'); S['CreditUpdate'] = entity_write('credit', update=True)
+# C1 v1.3 (puerta 2, Q2-67 opción 1, K46): credit.vat_included (00004) y vat en missing_terms: 5 datos de K18 (RN-26).
+_mt = S['Credit']['properties']['missing_terms']
+assert _mt['items']['enum'] == ['annual_rate', 'rate_base', 'min_payment_pct_bp', 'min_payment_fixed_cents'], _mt
+_mt['items']['enum'] = ['annual_rate', 'rate_base', 'vat', 'min_payment_pct_bp', 'min_payment_fixed_cents']
+_mt['description'] = ('Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18, RN-26): son 5 desde C1 v1.3 '
+    '(Q2-67 opción 1, K46): annual_rate, rate_base, vat, min_payment_pct_bp y min_payment_fixed_cents. vat sale mientras vat_included sea NULL (falta capturar '
+    'si la tasa incluye IVA). Vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar». Con vat_included = 0 y sin vat_on_interest_bp '
+    'también sale vat: PROVISIONAL, bloqueo S3-iva-lectura (pregunta 2; lectura en uso de S3 1.5 §5.3).')
+_mt['x-provisional'] = True
+# Corrección C1 r1 (H-3) y r2 (M-1): qué responde la API al CHECK completo de la 00004 (vat_on_interest_bp solo con vat_included = 0:
+# lo rechaza con 1 y también con NULL, que en el alta es vat_included ausente). Se valida antes de escribir. La API no deduce
+# vat_included = false del porcentaje: sería una regla nueva (pregunta para Axel, no decidida). verify_c1.py (C1-04) prueba las
+# combinaciones contra la base y exige que cada una que se rechaza esté en estos textos.
+CREDIT_VAT_RULE = ('IVA (Q2-67 opción 1, CHECK de la 00004): vat_on_interest_bp con valor solo se admite con vat_included = false. Si la combinación '
+    'que quedaría guardada (en el alta, la del cuerpo; en el Merge Patch, la del cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y '
+    'vat_included = true, null o ausente, la API responde 422 validation_failed con el detalle en fields[] (field = vat_on_interest_bp) y no guarda nada. '
+    'Ejemplos: {"vat_included": true, "vat_on_interest_bp": 1600}; el alta {"kind": "store_credit", …, "vat_on_interest_bp": 1600} sin vat_included; '
+    'y, sobre un crédito guardado con vat_included = false y vat_on_interest_bp = 1600, {"vat_included": true} o {"vat_included": null}. La API no cambia el otro campo '
+    'por su cuenta: no vacía vat_on_interest_bp ni cambia vat_included (tampoco deduce false a partir del porcentaje). Para pasar a «la tasa ya incluye IVA» '
+    'un crédito con porcentaje, el cambio manda {"vat_included": true, "vat_on_interest_bp": null}.')
+CREDIT_VAT_RULE_OP = ('Si lo que quedaría guardado (el cuerpo o, en un cambio, el cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y '
+    'vat_included = true, null o ausente, responde 422 validation_failed con fields[].field = vat_on_interest_bp; la API no cambia el otro campo '
+    'por su cuenta (CHECK de la 00004, Q2-67 opción 1; detalle en CreditCreate y CreditUpdate).')
+S['CreditCreate']['description'] += ' ' + CREDIT_VAT_RULE
+S['CreditUpdate']['description'] += ' ' + CREDIT_VAT_RULE
 S['CreditTotals'] = O('Totales de créditos (N-191).', live_debt_cents='r:MoneyCents:Deuda viva total.', fortnight_total_cents='r:MoneyCents:Pagos con fecha en la quincena en curso.', fortnight_household_cents='r:MoneyCents:Parte del hogar.', fortnight_external_cents='r:MoneyCents:Parte de Karen.', month_total_cents='r:MoneyCents:Pagos del mes en curso.', month_household_cents='r:MoneyCents:Parte del hogar.', month_external_cents='r:MoneyCents:Parte de Karen.', interest_paid_month_cents='r:MoneyCents:Intereses pagados en el mes.', interest_paid_year_cents='r:MoneyCents:Intereses pagados en el año calendario.')
 READ = O('Disponible con una lectura.', available_today_cents='r:MoneyCents:Disponible de hoy.', horizon_min_cents='r:MoneyCents:Mínimo del horizonte.')
 S['AvailabilityPreview'] = O('Vista previa A/B (N-285, N-201, motor S3). Canon semilla 10-oct-2026: hoy A 1000000 y B 690550; mínimos A 809450 y B 500000.', credit_id='i:Línea revolvente.', availability_reading='e:A,B:Lectura activa.', availability_confirmed='b:false = aviso «pendiente confirmar».', reading_a=READ, reading_b=READ)
@@ -324,14 +368,19 @@ OPTPROPS = dict(min_available_buffer_cents_={'$ref': '#/components/schemas/Money
   zero_debt_by_date_={'$ref': '#/components/schemas/Date', 'description': 'Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). ' + SINV, 'x-app-setting': 'optimizer.zero_debt_by_date'},
   date_window_days_={'type': 'integer', 'description': '«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). ' + SINV, 'x-app-setting': 'optimizer.date_window_days'},
   weights='r:OptimizerWeights:Pesos.')
-S['OptimizerSettings'] = O('Restricciones duras globales y pesos del comparador (N-225, N-288; K16). Las restricciones pueden venir vacías: missing_constraints dice cuáles faltan. El tope por persona es person.fortnight_payment_cap_cents (objetivo, no restricción dura; K13) y se lee y edita en /persons.', False, missing_constraints=MISSING, parameters=params_read('Créditos y condiciones'), **OPTPROPS)
-S['OptimizerSettingsUpdate'] = O('Cambio de los valores del comparador (N-289) y de su tiempo máximo (N-321; K43, K44).', False, **{k if k.endswith('_') else k + '_': v for k, v in OPTPROPS.items()}, **PWRITE('Créditos y condiciones'))
+# C1 v1.3 (puerta 2, Q2-75, K50): optimizer.date_window_days tiene valor inicial (7) y se lee y cambia por clave en parameters (K44);
+# deja de ser campo propio de OptimizerSettings y OptimizerSettingsUpdate. ScenarioRequest y constraints_used la conservan (S3 §8.1).
+OPTPROPS['date_window_days_'] = dict(OPTPROPS['date_window_days_'], description='«Fecha ± días» de los escenarios (optimizer.date_window_days). En la petición sobreescribe solo para esta comparación el valor vigente, que se lee y cambia en parameters de getOptimizerSettings y updateOptimizerSettings (valor inicial 7, Q2-75, K50, K44).')
+OPTSET = {k: v for k, v in OPTPROPS.items() if k != 'date_window_days_'}
+S['OptimizerSettings'] = O('Restricciones duras globales y pesos del comparador (N-225, N-288; K16). Las restricciones pueden venir vacías: missing_constraints dice cuáles faltan. El tope por persona es person.fortnight_payment_cap_cents (objetivo, no restricción dura; K13) y se lee y edita en /persons.', False, missing_constraints=MISSING, parameters=params_read('Créditos y condiciones'), **OPTSET)
+S['OptimizerSettingsUpdate'] = O('Cambio de los valores del comparador (N-289) y de su tiempo máximo (N-321; K43, K44).', False, **{k if k.endswith('_') else k + '_': v for k, v in OPTSET.items()}, **PWRITE('Créditos y condiciones'))
 S['OptimizerSettingsUpdate']['additionalProperties'] = False; S['OptimizerSettingsUpdate']['minProperties'] = 1
 PROJ = {'type': 'boolean', 'description': 'Interruptor de la proyección de los meses 7 a 12 (app_setting projection.repeat_cadence_enabled, K21): false (por defecto) = solo compromisos contratados, gastos fijos e ingresos del CSV; true = agrega la cadencia bimestral de despensa a crédito y el papel alterno de $199.', 'x-app-setting': 'projection.repeat_cadence_enabled'}
 for _name, _sec, _txt in (('SecuritySettings', 'Cuenta y roles', 'Parámetros de acceso (N-320; K6, K11, K44): intentos fallidos y ventana del bloqueo de inicio de sesión, duración de la sesión y largo mínimo de una contraseña nueva. login, changeOwnPassword y la renovación de la sesión usan el valor vigente.'),
-                           ('DataSettings', 'Datos y respaldos', 'Parámetros de datos (N-325; K6, K43, K44): tamaño máximo de un adjunto (uploadExpenseAttachment) y retención de las claves Idempotency-Key en la tabla idempotency_key.'),
+                           ('DataSettings', 'Datos y respaldos', 'Parámetros de datos (N-325; K6, K43, K44, K50): tamaño máximo de un adjunto (uploadExpenseAttachment), retención de las claves Idempotency-Key en la tabla idempotency_key y tiempo máximo del OCR por imagen (ocr.timeout_seconds, Q2-76; sección propuesta por S1).'),
+                           ('ReportSettings', 'Reportes y frecuencias', 'Hora y día de los reportes programados (N-296, N-297; decisión F, K31 punto 1, Q2-72, K47, K50): hora del resumen diario, día de la semana (ISO 8601, 7 = domingo) y hora del resumen semanal, y día del mes y hora del reporte mensual en PDF (en un mes más corto sale su último día, Q2-66 B, RN-29). Desde el esquema 1.4 viven en app_setting y ya no en notification.params_json (Q2-11 B). Activo y destinatarios de cada reporte siguen en updateNotification y setNotificationRecipients.'),
                            ('HealthSettings', 'Salud y metas de ahorro', 'Ajuste de la meta de calorías por objetivo, valor de la casa (N-326; K36, K44). Cada persona puede tener el suyo en su perfil de salud (health_profile.goal_adjust_lose_kcal y goal_adjust_gain_kcal; NULL = el de la casa).'),
-                           ('AlertSettings', 'Notificaciones', 'Umbrales del aviso de presupuesto y días antes del pago próximo (N-323; decisión F, K44). Desde el esquema 1.3 viven en app_setting y ya no en notification.params_json (RN-29).')):
+                           ('AlertSettings', 'Notificaciones', 'Parámetros de los avisos (N-298, N-300, N-323; decisión F, K43, K44, K47, K50): umbrales del aviso de presupuesto, días antes del pago próximo, hora de los avisos con hora (alerts.send_time), anticipación del aviso de precios viejos antes del día de despensa y día de la semana del aviso de plan de comidas faltante. Desde el esquema 1.3 (umbrales y pago próximo) y 1.4 (hora, anticipación y día; Q2-11 B) viven en app_setting y ya no en notification.params_json (RN-29).')):
     S[_name] = O(_txt, False, parameters=params_read(_sec))
     S[_name + 'Update'] = O(f'Cambio o «restablecer» de los parámetros de «{_sec}» (K44, C1 §11.7).', False, **PWRITE(_sec))
     S[_name + 'Update']['additionalProperties'] = False; S[_name + 'Update']['minProperties'] = 1
@@ -343,6 +392,52 @@ S['ScenarioRequest']['additionalProperties'] = False
 SCN = O('Escenario evaluado (motor S3, búsqueda exhaustiva).', credit_id='i:Línea.', term_count='i:Plazo en pagos.', purchase_date='r:Date:Fecha de compra.', promotion_id_='i:Promoción aplicada.', interest_cents='r:MoneyCents:Intereses totales.', max_fortnight_payment_cents='r:MoneyCents:Pago máximo por quincena.', fortnight_payment_spread_cents='r:MoneyCents:Diferencia entre la quincena más alta y la más baja.', min_available_cents='r:MoneyCents:Disponible mínimo resultante.', max_live_purchases='i:Compras vivas máximas.', zero_debt_date='r:Date:Fecha en que la deuda queda en cero.', value_per_peso_milli_='i:Rendimiento por peso ×1000: unidades base de la canasta por peso gastado con los precios vigentes de cada tienda (K17).', score_bp_='r:BasisPoints:Puntaje ponderado con normalización mín-máx entre los escenarios generados (K17).')
 S['Scenario'] = SCN
 S['ScenarioResult'] = O('Resultado del comparador (N-226): los 4 óptimos lado a lado y la recomendación ponderada (pesos iguales normalizados por defecto). Si faltan restricciones (K16) no evalúa ni recomienda: status = missing_constraints, listas vacías y missing_constraints dice cuáles faltan.', status='e:ok,missing_constraints,no_valid_scenario:ok = hay recomendación; missing_constraints = faltan restricciones (K16); no_valid_scenario = ningún escenario respeta las restricciones.', missing_constraints=MISSING, constraints_used_=O('Restricciones con que se evaluó: las de la petición o, si no vinieron, las globales (K16).', False, **{k: v for k, v in OPTPROPS.items() if k != 'weights'}), evaluated_count='i:Escenarios evaluados.', valid=A(ref('Scenario'), 'Escenarios que respetan las 3 restricciones duras.'), optima=O('Óptimo por objetivo.', lowest_interest_='r:Scenario:Menores intereses.', even_low_payment_='r:Scenario:Pago por quincena parejo y bajo tope.', max_available_='r:Scenario:Máximo disponible.', most_value_per_peso_='r:Scenario:Comprar más por peso.'), recommendation_='r:Scenario:Recomendación por puntaje ponderado; ausente si status no es ok.', rejected=A(O('Descartado.', scenario='r:Scenario:Escenario.', violated_constraint='e:min_available_buffer,max_live_purchases,zero_debt_by_date:Restricción que viola.'), 'Descartados.'))
+# C1 v1.3 (puerta 2): campos pedidos por los contratos de motores y por U3 (docs/estado/p2c/contratos-puerta2.md, «Solicitudes a C1»).
+def _ins(props, before=None, after_=None, **new):
+    # El «_» final es la marca de opcional de O(), que lo quita; _ins no la usa: el nombre va tal cual (C1-14; corrección C1 r1, H-1).
+    assert not any(n.endswith('_') for n in new), ('_ins: nombre con «_» final', list(new))
+    out = {}
+    for k, v in props.items():
+        if k == before: out.update({n: P(x) for n, x in new.items()})
+        out[k] = v
+        if k == after_: out.update({n: P(x) for n, x in new.items()})
+    assert all(n in out for n in new), (before, after_, list(new))
+    return out
+_m = S['AccrualVsCash']['properties']['months']['items']
+_m['properties'] = _ins(_m['properties'], before='cumulative_difference_cents',
+    cumulative_accrued_cents='r:MoneyCents:Devengado acumulado al cierre del mes, con el mismo origen que cumulative_difference_cents (motor S2; Q2-65 A). Cima de la gráfica T-2 de Inicio.',
+    cumulative_cash_cents='r:MoneyCents:Efectivo acumulado al cierre del mes, con el mismo origen que cumulative_difference_cents (motor S2; Q2-65 A).')
+_m['properties']['cumulative_difference_cents']['description'] = 'Devengado acumulado − efectivo acumulado = cumulative_accrued_cents − cumulative_cash_cents (periodos[i].diferencia_acumulada de model.json).'
+_m['required'] = [k for k in _m['properties'] if k in _m['required'] or k in ('cumulative_accrued_cents', 'cumulative_cash_cents')]
+S['AccrualVsCash']['description'] += ' cumulative_accrued_cents y cumulative_cash_cents tienen el mismo origen (Q2-65 A), así que la cima de T-2 es el devengado acumulado sea cual sea el mes en curso.'
+_sg = S['SavingsGoal']
+_sg['properties'] = _ins(_sg['properties'], before='progress_pct', progress_tenths_pct='i:saved ÷ target × 1000, entero ROUND_HALF_UP: décimas de punto porcentual (500 = 50.0 %; RN-18). Lo muestra la pantalla de Metas con un decimal; la tarjeta de Inicio usa progress_pct, entero (Q2-17 C, motor S2). Sin tope: una meta cumplida puede pasar de 1000. Ausente sin target_cents, como progress_pct.')
+_sg['properties']['progress_tenths_pct']['x-calculado'] = True
+_bb = S['DashboardBestBasket']
+_bb['properties'] = _ins(_bb['properties'], after_='difference_vs_second_cents', second_store_id='i:Segunda tienda: contra la que se mide difference_vs_second_cents (Q2-86 A). La tarjeta de Inicio la nombra («$138.50 menos que …»). Ausente si no hay segunda tienda.')
+S['Scenario']['properties'] = _ins(S['Scenario']['properties'], after_='purchase_date', store_id='i:Tienda del escenario (motor S3, Q2-33 (b)): la tienda es dimensión del escenario solo si la petición no fija store_id; si lo fija, es esa. Ausente cuando S3 la entrega en null (escenario sin tienda).')
+_it = S['ShoppingListItem']
+_it['properties'] = _ins(_it['properties'], before='recommended_store_id', assigned_store_id='i:Tienda asignada (motor S4 §6.5; Q2-39 a Q2-42 A): la elegida (store_id) si la hay; si no, en vertical chain la de la cotización que rige y en vertical market el mercado que surte su grupo con la próxima visita más cercana (en empate, el primero dado de alta). Rige la agrupación (groups[].store_id). Ausente = sin tienda: artículo de cadena sin cotización o de mercado sin mercado dado de alta (Q2-40 A).')
+_it['properties']['assigned_store_id']['x-calculado'] = True
+_it['properties']['recommended_store_id']['description'] = 'Tienda o mercado que recomienda S5 por precio (QuoteFor); rige el precio y la presentación mientras store_id esté ausente. En vertical market no rige la agrupación y puede ser distinta de assigned_store_id (Q2-41 A: el artículo se queda en el mercado; la cadena se ve en la comparativa y se puede elegir).'
+_it['properties']['estimated_price_cents']['description'] = 'Costo estimado con la cotización que rige (S4 §8.1): piezas × precio del paquete, en la tienda de esa cotización (en vertical market puede ser otra que assigned_store_id). Ausente = sin precio: no suma en los totales (Q2-42 A).'
+_g = S['ShoppingList']['properties']['groups']['items']
+_g['properties'] = _ins(_g['properties'], after_='visit_weekday', visit_date='r:Date:Fecha de la próxima visita del mercado (S4 next_visit, que calcula S5 §9; Q2-42 A: se cuenta desde la fecha más tardía entre hoy y el lunes de la semana de la lista). Solo en grupos de mercado con tienda.')
+_g['properties']['store_id']['description'] = 'Tienda asignada del grupo (assigned_store_id de sus artículos). Ausente = sin tienda; en vertical market es el grupo «sin mercado dado de alta» (Q2-40 A), con el total de sus artículos con precio de S5.'
+_g['properties']['visit_weekday']['description'] = 'Día ISO de visit_date (1 = lunes … 7 = domingo), que es el visit_weekday del mercado. Solo en grupos de mercado con tienda.'
+_g['properties']['total_cents']['description'] = 'Total estimado del grupo: Σ estimated_price_cents de sus artículos con precio (calculated y manual, comprados o no). Los que no tienen precio no suman y se reconocen por estimated_price_cents ausente (Q2-42 A).'
+_g['description'] = 'Grupo: par vertical y tienda asignada (S4 §6.5). Orden (Q2-42 A): primero los de mercado y luego los de cadena; dentro de cada vertical, por visit_date ascendente (sin fecha al final) y luego por id de tienda, con el grupo sin tienda al final.'
+S['ShoppingList']['properties']['total_cents']['description'] = 'Total estimado de la lista: Σ groups[].total_cents, solo artículos con precio (Q2-42 A).'
+assert 'Agrupada por vertical y tienda, luego categoría de producto, orden alfabético.' in S['ShoppingList']['description']
+S['ShoppingList']['description'] = S['ShoppingList']['description'].replace('Agrupada por vertical y tienda, luego categoría de producto, orden alfabético.', 'Agrupada por vertical y tienda asignada (orden de groups[]: S4 §6.5, Q2-42 A), luego categoría de producto, orden alfabético.')
+_bc = S['BasketComparison']; _st = _bc['properties']['stores']; _sp = _st['items']['properties']
+_st['description'] = 'Primero las tiendas completas (missing_count = 0) por total ascendente y después las incompletas por total ascendente (S5 §7.4; desempates en S5).'
+_sp['identical_count']['description'] = 'Renglones idénticos (no piezas; S5 §7.2).'
+_sp['difference_vs_cheapest_cents']['description'] = 'Total de la tienda − total de cheapest_store_id. Solo en tiendas completas; ausente en las incompletas o si no hay cheapest_store_id (S5 §7.4).'
+_st['items']['required'].remove('difference_vs_cheapest_cents')
+_bc['properties'] = _ins(_bc['properties'], after_='stores', cheapest_store_id='i:Tienda más barata: la primera tienda completa de stores (missing_count = 0). Ausente si ninguna está completa (S5 §7.4; un solo significado con basket=shopping_list y basket=expense).')
+_cs = S['CostShareRuleUpdate']['properties']
+_cs['scope'] = {'type': 'string', 'enum': ['onward', 'all'], 'x-entrada': True, 'x-provisional': True, 'description': 'Alcance del cambio de partes (Q2-68 C, RN-03; C1-datos §7.2): onward = «solo los nuevos»: los gastos ya guardados conservan sus partes congeladas en expense_share; all = «también los ya capturados»: el motor de reparto recalcula con las partes nuevas el expense_share de los gastos ya capturados. Obligatorio si viene parts y solo se acepta con parts (si no, 422 validation_failed). Sin valor por omisión: la pantalla pregunta el alcance en cada cambio (P-26.12). Qué gastos abarca all es PROVISIONAL: bloqueo C1-reparto-alcance.'}
 # ---------- Salud ----------
 S['HealthProfile'] = entity_read('health_profile', {'current_weight_g': C('i:Último peso (weight_entry.weight_g).'), 'current_weight_date': C('r:Date:Fecha del último peso.'), 'age_years': C('i:Edad en años cumplidos a hoy.'), 'bmi_tenths': C('i:IMC × 10, ROUND_HALF_UP (peso kg ÷ estatura m²).'), 'bmi_class': C('e:underweight,normal,overweight,obesity:Clasificación del IMC (motor S4; OMS 18.5 / 25 / 30, K7).'), 'suggested_kcal_target': C('i:Meta diaria de kcal sugerida (motor S4, RN-17 1.3, K23, K36): Mifflin-St Jeor × factor de actividad (5 niveles, 1.2 a 1.9); con goal = lose se resta el ajuste de bajar y con gain se suma el de subir: el de la persona (goal_adjust_lose_kcal o goal_adjust_gain_kcal) o, si es NULL, el de la casa (app_setting health.goal_adjust_lose_kcal o health.goal_adjust_gain_kcal); maintain no ajusta; un solo redondeo ROUND_HALF_UP al final. Con los valores iniciales (0 y 0) los tres objetivos sugieren lo mismo. La persona la confirma o escribe otra en daily_kcal_target. Ausente si falta algún dato (estatura, fecha de nacimiento, sexo, actividad, peso u objetivo).'), 'household_goal_adjust_lose_kcal': C('i:Ajuste de bajar de la casa (app_setting health.goal_adjust_lose_kcal, 0 al sembrar; K36, K44), para mostrar «El de la casa: n kcal»; se cambia con updateHealthSettings (N-326).'), 'household_goal_adjust_gain_kcal': C('i:Ajuste de subir de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar; K36, K44), para mostrar «El de la casa: n kcal»; se cambia con updateHealthSettings (N-326).')})
 S['HealthProfileCreate'] = entity_write('health_profile'); S['HealthProfileUpdate'] = entity_write('health_profile', exclude={'person_id'}, update=True)
@@ -361,35 +456,19 @@ S['ReportMonths'] = O('Meses disponibles (N-255).', months=A(O('Mes.', month='r:
 S['MonthlyReport'] = O('Reporte del mes con las mismas cifras que el PDF (N-256, N-257; S7 cruza PDF contra API).', month='r:Month:Mes.', budget='r:BudgetMonth:Resumen.', categories='r:BudgetCategoryRows:Presupuesto por categoría.', fortnights='r:BudgetFortnights:Quincenas.', credits='r:CreditTotals:Créditos del mes.', live_debt_end_cents='r:MoneyCents:Deuda viva al cierre.', basket_='r:BasketComparison:Despensa y precios del mes.', meals='r:MealPlanTrends:Comidas y kcal.', external_participation=A(ref('PersonParticipation'), 'Participación de Karen.'), pdf_='r:GeneratedReport:PDF guardado, si existe.')
 S['ExternalStatement'] = O('Estado de cuenta de una persona externa (N-260). Nota fija sobre el pago directo a Kueski.', person_id='i:Persona externa.', period_start_date='r:Date:Inicio.', period_end_date='r:Date:Fin.', purchases=A(ref('CreditPurchase'), 'Sus compras particulares a crédito.'), grocery_shares=A(O('Su parte de una despensa.', credit_purchase_id='i:Compra.', purchase_date='r:Date:Fecha.', principal_cents='r:MoneyCents:Su capital.', interest_cents='r:MoneyCents:Intereses.', total_cents='r:MoneyCents:Total.'), 'Despensas comunes.'), payment_shares=A(SPSH, 'Sus partes de pagos del periodo y pendientes posteriores.'), paid_in_period_cents='r:MoneyCents:Pagado en el periodo.', pending_total_cents='r:MoneyCents:Saldo pendiente total.')
 S['Notification'] = entity_read('notification', {'recipient_ids': C('[i]:Destinatarios suscritos (notification_subscription).'), 'job_id': C('i:Job que lo programa.')})
-S['NotificationUpdate'] = entity_write('notification', include={'is_enabled', 'params_json'}, update=True, desc='Activa o desactiva un aviso y sus parámetros (N-297, N-298, N-300). Claves de params_json FIRMES (K43): send_time (hora local HH:MM, America/Mexico_City, del resumen diario y de los avisos con hora) y advance_days (entero ≥ 0: días de anticipación del aviso de precios viejos antes del día de despensa). Hoy no tienen valor sembrado (RN-29 1.3; lo propone S7), así que no hay «restablecer» para ellas; cuando una migración siembre su valor, será su valor inicial (K44). Los umbrales del presupuesto y los días antes del pago próximo ya no van aquí: son claves de app_setting (getAlertSettings, K44). is_enabled es FIRME. Dónde viven send_time, advance_days, weekday y day_of_month (aquí o en app_setting) lo decide el bloqueo S1-parametros-avisos; la marca de lugar va en params_json y en sus claves send_time y advance_days, no en el esquema entero.')
-# C1 v1.2 · ronda 3 (B-02 de docs/estado/p1c/REVISION-C1-r2.md): sin x-provisional a nivel de esquema, para que is_enabled no quede marcado;
-# la marca va en params_json (lugar de weekday y day_of_month) y en send_time y advance_days (PARAMS_K43, abajo).
-# C1 v1.2 · corrección r1 (hallazgo A-01 de docs/estado/p1c/REVISION-C1-r1.md, C1-23): K43 fija el tipo y el rango de send_time
-# (hora local HH:MM de 24 horas) y de advance_days (entero >= 0); se declaran como propiedades de params_json en Notification y en
-# NotificationUpdate, sin valor por omisión (no hay valor sembrado; lo propone S7). weekday y day_of_month (decisión F) siguen
-# entrando por additionalProperties: true, y la marca x-provisional de params_json (solo el lugar, bloqueo S1-parametros-avisos) se queda.
-SEND_TIME_PATTERN = '^([01][0-9]|2[0-3]):[0-5][0-9]$'
-PARAMS_K43 = {
-    'send_time': {'type': 'string', 'pattern': SEND_TIME_PATTERN,
-                  'description': 'Hora local de envío en formato HH:MM de 24 horas, zona America/Mexico_City (K43), del resumen diario y de los avisos con hora. No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos.', 'x-provisional': True},
-    'advance_days': {'type': 'integer', 'minimum': 0,
-                     'description': 'Días de anticipación del aviso de precios viejos antes del día de despensa: entero mayor o igual a 0 (K43). No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos.', 'x-provisional': True},
-}
+# C1 v1.3 (puerta 2, Q2-11 B, K47): la hora, el día y la anticipación de reportes y avisos son claves de app_setting (ReportSettings y
+# AlertSettings, con valor inicial y «restablecer»). params_json deja de declarar send_time y advance_days y pierde la marca de lugar
+# del bloqueo S1-parametros-avisos (resuelto). Sustituye a PARAMS_K43 de C1 v1.2 (corrección r1 y ronda 3).
+S['NotificationUpdate'] = entity_write('notification', include={'is_enabled', 'params_json'}, update=True, desc='Activa o desactiva un aviso o un reporte programado (N-297, N-300) y cambia sus parámetros propios (params_json). La hora, el día y la anticipación ya no van aquí (Q2-11 B, K47): son claves de app_setting con valor inicial y «restablecer» (K44), las de los reportes en updateReportSettings y las de los avisos en updateAlertSettings. is_enabled es FIRME.')
+PJ_DESC = ('Parámetros propios del aviso (objeto JSON). La hora, el día, la anticipación, los umbrales del presupuesto y los días antes del pago próximo '
+           'no van aquí: son claves de `app_setting` (RN-29): `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` '
+           'desde el esquema 1.3 (00003, K44), y `reports.*` (hora y día de los reportes), `alerts.send_time`, `alerts.stale_prices_advance_days` y '
+           '`alerts.meal_plan_missing_weekday` desde el 1.4 (00004, Q2-11 B, K47); se leen y cambian en getReportSettings y getAlertSettings. Con los valores '
+           'iniciales solo `budget_threshold` conserva un parámetro (`scopes`); los demás avisos quedan con `{}`. Los Down de la 00004 y de la 00003 los reponen aquí.')
 for _n in ('Notification', 'NotificationUpdate'):
     _pj = S[_n]['properties']['params_json']
-    assert _pj.get('type') == 'object' and _pj.get('additionalProperties') is True and _pj.get('x-provisional') is True, (_n, _pj)
-    assert 'S1-parametros-avisos' in _pj['description'], _n
-    S[_n]['properties']['params_json'] = {'type': 'object', 'properties': {k: dict(v) for k, v in PARAMS_K43.items()},
-                                         **{k: v for k, v in _pj.items() if k != 'type'}}
-# C1 v1.2 · ronda 3 (B-03 de docs/estado/p1c/REVISION-C1-r2.md): la descripción de la columna (00001 + @col_note de la 00003) se lee
-# como una sola frase que afirma lo que luego niega; el contrato la reescribe con la situación de 1.3.
-PJ_DESC = ('Parámetros de programación del aviso (objeto JSON). Desde el esquema 1.3 (00003, K44) los umbrales del aviso de presupuesto (80 y 100 %) '
-           'y los días antes del pago próximo (1 y 0) ya no van aquí: son las claves `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y '
-           '`alerts.payment_due_days_before` de `app_setting` (RN-29, getAlertSettings); el Down de la 00003 los repone aquí. Aquí quedan cuatro claves: '
-           '`send_time` y `advance_days` (K43; sin valor sembrado, lo propone S7), y `weekday` (7 en `weekly_summary` y `meal_plan_missing`) y '
-           '`day_of_month` (1 en `monthly_report`), cuyo valor es FIRME (decisión F). Dónde viven las cuatro (aquí o en `app_setting`) es PROVISIONAL: '
-           'bloqueo S1-parametros-avisos.')
-for _n in ('Notification', 'NotificationUpdate'): S[_n]['properties']['params_json']['description'] = PJ_DESC
+    assert _pj.get('type') == 'object' and _pj.get('additionalProperties') is True and 'properties' not in _pj, (_n, _pj)
+    _pj.pop('x-provisional', None); _pj['description'] = PJ_DESC
 S['TestNotificationRequest'] = O('Enviar ahora un aviso de prueba a una persona (N-300); sirve para disparar a mano el resumen diario o una alerta.', False, person_id='i:Destinataria (Axel o Ximena).')
 S['NotificationDelivery'] = entity_read('notification_delivery', {'notification_code': C('s:Clave del aviso.')})
 S['NotificationRecipient'] = entity_read('notification_recipient', {'is_registered': C('b:true si tiene chat registrado y verificado.')})
@@ -399,6 +478,10 @@ S['TelegramChatCandidateConfirm']['additionalProperties'] = False
 S['NotificationRecipientUpdate'] = entity_write('notification_recipient', include={'label', 'is_active'}, update=True)
 S['Job'] = entity_read('job')
 S['JobUpdate'] = entity_write('job', include={'schedule', 'is_enabled'}, update=True, desc='Hora (schedule, cron de 5 campos en America/Mexico_City) y activo de un job (N-297).')
+# C1 v1.3 (puerta 2): la hora y el día de los reportes viven en app_setting (Q2-11 B); su relación con job.schedule no está decidida.
+_js = S['JobUpdate']['properties']['schedule']
+_js['description'] = _js.get('description', '') + ' Los reportes programados toman su hora y su día de app_setting (reports.*, Q2-11 B, K47; updateReportSettings); cómo se relaciona schedule de sus jobs con esas claves es PROVISIONAL: bloqueo C1-hora-reportes-job.'
+_js['x-provisional'] = True
 S['Backup'] = entity_read('backup')
 S['BackupRestoreRequest'] = O('Restaurar un respaldo (N-303). Acción crítica con doble confirmación.', False, confirmation={'type': 'string', 'const': 'RESTAURAR', 'description': 'Texto de confirmación escrito por la persona.', 'x-entrada': True})
 S['RestoreResult'] = O('Resultado de la restauración.', backup_id='i:Respaldo restaurado.', integrity_check='s:Resultado de PRAGMA integrity_check (ok).', pre_restore_backup_id='i:Respaldo pre_migration tomado antes de restaurar.')

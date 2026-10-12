@@ -92,7 +92,7 @@ func TestComparativaCanon(t *testing.T) {
 	eq(t, "tienda más barata", bo.Store, "bodega")
 	eq(t, "K-01 Bodega", bo.TotalCents, 309450)
 	eq(t, "K-02 Walmart", wa.TotalCents, 323300)
-	eq(t, "K-03 Walmart − Bodega", wa.DifferenceVsCheapestCents, 13850)
+	eq(t, "K-03 Walmart − Bodega", dif(t, wa), 13850)
 	eq(t, "K-04 idénticos Bodega", bo.IdenticalTotalCents, 277350)
 	eq(t, "K-05 idénticos Walmart", wa.IdenticalTotalCents, 287400)
 	eq(t, "K-06 idénticos Walmart − Bodega", wa.IdenticalTotalCents-bo.IdenticalTotalCents, 10050)
@@ -120,7 +120,7 @@ func TestComparativaCanon(t *testing.T) {
 	eq(t, "solo Walmart", only["walmart"], 0)
 	eq(t, "descomposición", (wa.IdenticalTotalCents-bo.IdenticalTotalCents)+(sub["walmart"]-sub["bodega"])-only["bodega"], 13850)
 	t.Logf("S5-01: Bodega %d, Walmart %d (+%d); idénticos %d / %d (+%d)", bo.TotalCents, wa.TotalCents,
-		wa.DifferenceVsCheapestCents, bo.IdenticalTotalCents, wa.IdenticalTotalCents, wa.IdenticalTotalCents-bo.IdenticalTotalCents)
+		dif(t, wa), bo.IdenticalTotalCents, wa.IdenticalTotalCents, wa.IdenticalTotalCents-bo.IdenticalTotalCents)
 }
 
 func TestComparativaGanadores(t *testing.T) {
@@ -268,7 +268,7 @@ func TestMejorTiendaCotizacion(t *testing.T) {
 	eq(t, "cheapest_store", *cmp.CheapestStore, "bodega")
 	eq(t, "Bodega", cmp.Stores[0].TotalCents, 1500)
 	eq(t, "Walmart", cmp.Stores[1].TotalCents, 2200)
-	eq(t, "diferencia", cmp.Stores[1].DifferenceVsCheapestCents, 700)
+	eq(t, "diferencia", dif(t, cmp.Stores[1]), 700)
 }
 
 func TestMejorTiendaCanastaReglaUnica(t *testing.T) {
@@ -295,7 +295,7 @@ func TestMejorTiendaCanastaReglaUnica(t *testing.T) {
 	eq(t, "cheapest_store", *cmp.CheapestStore, "walmart")
 	eq(t, "Walmart", cmp.Stores[0].TotalCents, 9430)
 	eq(t, "Bodega", cmp.Stores[1].TotalCents, 9460)
-	eq(t, "diferencia", cmp.Stores[1].DifferenceVsCheapestCents, 30)
+	eq(t, "diferencia", dif(t, cmp.Stores[1]), 30)
 	eq(t, "idénticos Walmart", cmp.Stores[0].IdenticalCount, 1)
 	eq(t, "sustitutos Walmart", cmp.Stores[0].SubstituteCount, 1)
 	if _, err := b.CompareBasket([]ListItem{{Product: "arroz"}}); err == nil {
@@ -323,16 +323,19 @@ func TestMejorTiendaCanasta(t *testing.T) {
 		t.Fatal(err)
 	}
 	eq(t, "más barata completa", *c.CheapestStore, "walmart")
-	// §7.4: por total ascendente, también la incompleta (Sam's, 1.00 sin frijol), que no puede
-	// ser la más barata; su diferencia contra Walmart (la más barata completa) es negativa.
-	eq(t, "Sam's primero por total", c.Stores[0].Store, "sams")
-	eq(t, "Sam's faltantes", c.Stores[0].MissingCount, 1)
-	eq(t, "Sam's con membresía supuesta", c.Stores[0].AssumesMembership, true)
-	eq(t, "Sam's contra la más barata completa", c.Stores[0].DifferenceVsCheapestCents < 0, true)
-	eq(t, "Walmart diferencia 0", storeRow(t, c.Stores, "walmart").DifferenceVsCheapestCents, int64(0))
+	// §7.4 (H-r3-04, Q2-05 = A): primero las completas por total y después las incompletas
+	// (Sam's, 1.00 sin frijol), que no pueden ser la más barata y van con diferencia null.
+	eq(t, "Walmart primera", c.Stores[0].Store, "walmart")
+	last := c.Stores[len(c.Stores)-1]
+	eq(t, "Sam's al final aunque su total sea el menor", last.Store, "sams")
+	eq(t, "Sam's faltantes", last.MissingCount, 1)
+	eq(t, "Sam's con membresía supuesta", last.AssumesMembership, true)
+	eq(t, "Sam's diferencia null", last.DifferenceVsCheapestCents == nil, true)
+	eq(t, "Walmart diferencia 0", dif(t, storeRow(t, c.Stores, "walmart")), 0)
+	// Canasta vacía: todas tienen missing_count 0, así que la más barata es la primera (§7.4 literal).
 	empty, _ := b.CompareBasket(nil)
-	if empty.CheapestStore != nil {
-		t.Error("canasta vacía con más barata")
+	if empty.CheapestStore == nil || *empty.CheapestStore != empty.Stores[0].Store {
+		t.Error("canasta vacía: la más barata debe ser la primera tienda completa")
 	}
 }
 
@@ -606,6 +609,7 @@ func TestMembresiaSinCosto(t *testing.T) {
 		t.Fatal(err)
 	}
 	eq(t, "sin costo capturado", m.Verdict, "missing_fee")
+	eq(t, "S5-09: nota con la marca PROVISIONAL", m.Note, "sin costo capturado (PROVISIONAL, S5-09)")
 	if m.AnnualFeeCents != nil || m.BreakEvenPurchases != nil {
 		t.Error("costo o equilibrio inventados")
 	}
@@ -649,6 +653,16 @@ func TestMercadoGrupo(t *testing.T) {
 }
 
 // storeRow busca la tienda por código: el orden de stores[] es por total (§7.4).
+// dif devuelve difference_vs_cheapest_cents de una tienda completa; falla si es null.
+func dif(t *testing.T, s StoreTotals) int64 {
+	t.Helper()
+	if s.DifferenceVsCheapestCents == nil {
+		t.Fatalf("%s: difference_vs_cheapest_cents null", s.Store)
+		return 0
+	}
+	return *s.DifferenceVsCheapestCents
+}
+
 func storeRow(t *testing.T, s []StoreTotals, code string) StoreTotals {
 	t.Helper()
 	for _, x := range s {

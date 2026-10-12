@@ -130,6 +130,8 @@ func ReadLinks(r io.Reader) (*Links, error) {
 			return nil, fmt.Errorf("%w: línea %d: estado debe ser propuesto o confirmado", ErrLinks, line)
 		}
 		k := LinkKey(get("producto"), get("presentacion"), get("marca"))
+		// Liga repetida (después de normalizar) = error de todo el archivo: PROVISIONAL, bloqueo
+		// S5-motor-oraculo-reglas pregunta 8 (§11 no lo dice).
 		if _, dup := out.byKey[k]; dup {
 			return nil, fmt.Errorf("%w: línea %d: liga repetida", ErrLinks, line)
 		}

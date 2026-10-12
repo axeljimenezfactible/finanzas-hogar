@@ -2,7 +2,7 @@
   "formato": "fixture/1",
   "motor": "s5",
   "caso": "s5-profeco-muestra",
-  "descripcion": "Cargador PROFECO sobre 2 CSV de muestra (ILUSTRATIVO; S5-05, §11): a = UTF-8 con BOM, 6 renglones; b = Windows-1252, 4 renglones. Renglón por renglón: a1 se carga; a2 es el mismo registro del mismo día en otro formato de fecha (15/08/2026) -> duplicado; a3 fecha ilegible -> rechazado; a4 cadena que no es de Axel -> filtrado; a5 sin liga -> omitido; a6 liga \"propuesto\" -> omitido en producción y cargado en revisión; b1 se carga (tienda = la cadena, porque ninguna sucursal se llama WALMART ACUEDUCTO); b2 con 14 columnas -> rechazado; b3 precio ilegible -> rechazado; b4 municipio fuera del filtro -> filtrado. El municipio de Walmart va en su sucursal walmart-tepeyac y no en la cadena: así las dos lecturas de §11 («municipios de las sucursales») dan lo mismo hasta que el integrador fije el texto (REVISION-S5-r1 H-01). Lectura 10 = 3 + 2 + 2 + 2 + 1 (producción) = 3 + 2 + 1 + 3 + 1 (revisión). Los motivos (`reason`) son texto libre y no se comparan.",
+  "descripcion": "Cargador PROFECO sobre 2 CSV de muestra (ILUSTRATIVO; S5-05, §11): a = UTF-8 con BOM, 6 renglones; b = Windows-1252, 4 renglones. Renglón por renglón: a1 se carga; a2 es el mismo registro del mismo día en otro formato de fecha (15/08/2026) -> duplicado; a3 fecha ilegible -> rechazado; a4 cadena que no es de Axel -> filtrado; a5 sin liga -> omitido; a6 liga \"propuesto\" -> omitido en producción y cargado en revisión; b1 se carga (tienda = la cadena, porque ninguna sucursal se llama WALMART ACUEDUCTO); b2 con 14 columnas -> rechazado; b3 precio ilegible -> rechazado; b4 municipio fuera del filtro -> filtrado. El municipio de Walmart va en su sucursal walmart-tepeyac y no en la cadena (§11: municipios solo de las sucursales). Lectura 10 = rechazados 3 + filtrados 2 + omitidos 2 + cargados 2 + cargados con liga propuesta 0 + duplicados 1 (producción) = 3 + 2 + 1 + 2 + 1 + 1 (revisión: a6 va a loaded_proposed, §11 de la versión 1.5). Los motivos (`reason`) son la lista cerrada de §11 (H-r3-03, Q2-04 = A) y se comparan.",
   "fuente": [
     {
       "tipo": "criterio",
@@ -14,8 +14,8 @@
     }
   ],
   "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S5-profeco-almacen.md",
-    "que": "almacenamiento, conteos y cobertura (opción A); ligas confirmadas: bloqueo S4-confirmacion-empates"
+    "bloqueo": "docs/estado/bloqueos/S5-profeco-filtro.md",
+    "que": "conteos con el filtro y la liga normalizada en uso (opción A, preguntas 1 a 3 = Q2-56 a Q2-58)"
   },
   "entradas": {
     "datos": {
@@ -114,6 +114,7 @@
       "filtered_out": 2,
       "skipped": 2,
       "loaded": 2,
+      "loaded_proposed": 0,
       "duplicates": 1,
       "coverage": [
         {
@@ -130,15 +131,18 @@
       "rejections": [
         {
           "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
-          "row": 3
+          "row": 3,
+          "reason": "fecha ilegible"
         },
         {
           "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-          "row": 2
+          "row": 2,
+          "reason": "columnas: 14 en vez de 15"
         },
         {
           "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-          "row": 3
+          "row": 3,
+          "reason": "precio ilegible"
         }
       ]
     },
@@ -147,7 +151,8 @@
       "rejected": 3,
       "filtered_out": 2,
       "skipped": 1,
-      "loaded": 3,
+      "loaded": 2,
+      "loaded_proposed": 1,
       "duplicates": 1,
       "coverage": [
         {
@@ -164,15 +169,18 @@
       "rejections": [
         {
           "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
-          "row": 3
+          "row": 3,
+          "reason": "fecha ilegible"
         },
         {
           "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-          "row": 2
+          "row": 2,
+          "reason": "columnas: 14 en vez de 15"
         },
         {
           "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
-          "row": 3
+          "row": 3,
+          "reason": "precio ilegible"
         }
       ]
     }

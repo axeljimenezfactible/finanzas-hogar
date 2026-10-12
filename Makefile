@@ -1,11 +1,11 @@
 # Makefile · Finanzas Hogar
 # Verificación reproducible de los cimientos (WF-0 «Cimientos»), de la puerta 1 (flujo P1), de la puerta 1b (flujo P1c)
 # y de WF-1 «Motores y sistema de diseño».
-# Detalle en README.md. Las migraciones se toman por comodín (backend/db/migrations/*.sql, hoy 00001 a 00003).
+# Detalle en README.md. Las migraciones se toman por comodín (backend/db/migrations/*.sql, hoy 00001 a 00004).
 #
 #   make verify-wf0   SQL en base temporal, go build y go vet, colorimetría y validador OpenAPI
 #   make verify-c1    generador de C1 (build.py --check, incluidos los extractos) y verify_c1.py contra la base migrada
-#   make verify-s1    backend/db/tools/s1_verifica.py: esquema 1.3 (todas las migraciones), oráculo, negativas, Down y goose
+#   make verify-s1    backend/db/tools/s1_verifica.py: esquema 1.4 (todas las migraciones), oráculo, negativas, Down y goose
 #   make verify-u1    docs/design/tools/verificar_u1.py: U1 1.2 contra model.json, data.json, C1 y las migraciones
 #   make verify-criterios  docs/criterios/tools/verif_final.sh: conteos (y conteo.py contra INDICE.md), trazabilidad, citas y cifras canon (18 archivos)
 #   make verify-wf1   go test con cobertura K25, oráculos S2 a S5 con compara.py, recetario, tokens C2, contraste, U4 y paquete
@@ -57,7 +57,7 @@ help:
 	@echo "Finanzas Hogar · objetivos de make"
 	@echo "  make verify-wf0   SQL en base temporal, go build y go vet, colorimetría y validador OpenAPI"
 	@echo "  make verify-c1    generador de C1 (build.py --check, incluidos los extractos) y verify_c1.py contra la base migrada"
-	@echo "  make verify-s1    backend/db/tools/s1_verifica.py (esquema 1.3, oráculo, negativas, Down y goose)"
+	@echo "  make verify-s1    backend/db/tools/s1_verifica.py (esquema 1.4, oráculo, negativas, Down y goose)"
 	@echo "  make verify-u1    docs/design/tools/verificar_u1.py (U1 1.2)"
 	@echo "  make verify-criterios  docs/criterios/tools/verif_final.sh (18 archivos de criterios)"
 	@echo "  make verify-wf1   go test -cover (K25), oráculos S2 a S5, recetario, tokens C2, contraste, U4 unido y paquete"
@@ -136,7 +136,7 @@ verify-c1:
 	@$(RM_TMP)
 
 verify-s1:
-	@echo "== S1: backend/db/tools/s1_verifica.py (esquema 1.3: todas las migraciones, oráculo, negativas, Down y goose)"
+	@echo "== S1: backend/db/tools/s1_verifica.py (esquema 1.4: todas las migraciones, oráculo, negativas, Down y goose)"
 	@mkdir -p "$(TMP)"; \
 	cd "$(ROOT)" && GOOSE="$(GOOSE)" $(PYTHON) -I backend/db/tools/s1_verifica.py > "$(TMP)/s1_verifica.log" 2>&1 || { cat "$(TMP)/s1_verifica.log"; exit 1; }; \
 	cut -c1-110 "$(TMP)/s1_verifica.log" | sed 's/^/   /'; \

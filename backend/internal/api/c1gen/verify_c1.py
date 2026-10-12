@@ -248,7 +248,7 @@ ids = [o['operationId'] for _, _, o in OPS]
 TAGS9 = ['Inicio', 'Gastos', 'Presupuesto', 'Comidas', 'Compras y tiendas', 'Créditos', 'Salud', 'Reportes', 'Ajustes']
 badtag = [o['operationId'] for _, _, o in OPS if not o.get('tags') or not set(o['tags']) <= set(TAGS9)]
 print(f'C1-13 operationId duplicadas: {len(ids) - len(set(ids))} · sin etiqueta válida: {badtag} · etiquetas: {[t["name"] for t in d["tags"]]} · info.version: {d["info"]["version"]}')
-ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.2' in c1 and d['info']['version'] == '1.2.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.2')
+ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.3' in c1 and d['info']['version'] == '1.3.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.3')
 # K44 (C1 v1.2, puerta 1b): cada parámetro @param de las migraciones tiene una sola lectura (GET con parameters) y un solo cambio con
 # «restablecer» (PATCH con parameters y reset_parameters); la tabla de §11.7 da su valor inicial y la base sembró ese valor.
 PRM = []
@@ -317,6 +317,78 @@ random.seed(20261010); muestra = random.sample(allds, 20)
 print(f'C1-14 descripciones y resúmenes: {len(allds)} · con palabras frecuentes del inglés fuera de código: {len(eng)} {eng[:3]}')
 print('C1-14 muestra de 20 descripciones para el revisor:'); [print('   -', x[:110]) for x in muestra]
 ok(not eng, 'C1-14 descripciones en español')
+# C1-14 (P2c, corrección C1 r1, H-1): nombre de propiedad = nombre_codigo. O() usa el «_» final como marca de opcional y lo quita; si una
+# propiedad publicada termina en «_» (p. ej. por _ins, que no lo quita), el nombre no es el de C1-datos. Se revisa openapi.yaml y cada extracto.
+# Además, cada nombre entre comillas invertidas de «C1 v1.3 (puerta 2)» de C1-datos.md debe existir en openapi.yaml con su tipo de nombre.
+_PROPN, _ENUMV, _XTAB, _XSET = set(), set(), set(), set()
+def _walkn(o, props):
+    if isinstance(o, dict):
+        if isinstance(o.get('properties'), dict): props.update(k for k in o['properties'] if isinstance(k, str))
+        if isinstance(o.get('enum'), list): _ENUMV.update(v for v in o['enum'] if isinstance(v, str))
+        if isinstance(o.get('x-tabla'), str): _XTAB.add(o['x-tabla'])
+        if isinstance(o.get('x-tablas'), list): _XTAB.update(o['x-tablas'])
+        if isinstance(o.get('x-app-setting'), str): _XSET.add(o['x-app-setting'])
+        for v in o.values(): _walkn(v, props)
+    elif isinstance(o, list):
+        for v in o: _walkn(v, props)
+_walkn(d, _PROPN)
+_guion = sorted(n for n in _PROPN if n.endswith('_'))
+_EXD14 = os.path.join(ROOT, 'docs/contratos/extractos'); _guion_ex = []
+for _f in sorted(os.listdir(_EXD14)) if os.path.isdir(_EXD14) else []:
+    if _f.endswith('.yaml'):
+        _pe = set(); _walkn(yaml.safe_load(open(os.path.join(_EXD14, _f), encoding='utf-8')), _pe)
+        _guion_ex += [f'{_f}:{n}' for n in sorted(_pe) if n.endswith('_')]
+print(f'C1-14 propiedades distintas: {len(_PROPN)} · que terminan en «_»: openapi {_guion[:5]} · extractos {_guion_ex[:5]}')
+ok(not _guion and not _guion_ex, 'C1-14 0 propiedades que terminan en «_» (openapi.yaml y extractos)')
+_SCH = d['components']['schemas']; _OPIDS = {o['operationId'] for _, _, o in OPS}
+def _prop14(s, n):
+    s = deref(s)
+    for alt in [s] + [deref(x) for k in ('allOf', 'anyOf', 'oneOf') for x in s.get(k, [])]:
+        if isinstance(alt, dict) and n in alt.get('properties', {}): return alt['properties'][n]
+    return None
+def _ruta14(s, partes):
+    for p in partes:
+        arr = p.endswith('[]'); s = _prop14(s, p[:-2] if arr else p)
+        if s is None: return False
+        if arr:
+            s = deref(s); its = [s.get('items')] + [deref(x).get('items') for x in s.get('anyOf', []) if isinstance(deref(x), dict)]
+            s = next((x for x in its if x is not None), None)
+            if s is None: return False
+    return True
+_KW14 = {'minimum', 'maximum', 'pattern', 'true', 'false'}   # palabras de JSON Schema o de JSON, no campos
+_RET14 = {'send_time', 'advance_days'}   # la sección dice que params_json ya NO los declara (lo comprueba C1-23)
+_PJ14 = json.dumps(_prop14(_SCH['Notification'], 'params_json') or {}, ensure_ascii=False)   # claves propias de params_json: se nombran en su descripción
+_sec14 = c1.split('### C1 v1.3 (puerta 2)', 1)[1].split('\n### ', 1)[0] if '### C1 v1.3 (puerta 2)' in c1 else ''
+_tok14 = sorted(set(re.findall(r'`([^`\s]+)`', _sec14))); _falt14, _otros14 = [], []
+for t in _tok14:
+    if re.fullmatch(r'[A-Z]+', t): _otros14.append(t); continue   # PATCH, UPDATE: verbos HTTP o SQL
+    if t.startswith('/api/'): good = t in d['paths']
+    elif re.fullmatch(r'[A-Z][A-Za-z0-9]*', t): good = t in _SCH
+    elif re.fullmatch(r'[a-z]+[A-Z][A-Za-z0-9]*', t): good = t in _OPIDS
+    elif re.fullmatch(r'[A-Z][A-Za-z0-9]*(\.[a-z_][a-z0-9_]*(\[\])?)+', t):
+        _s, *_ps = t.split('.'); good = _s in _SCH and _ruta14(_SCH[_s], _ps)
+    elif '[]' in t and re.fullmatch(r'[a-z_][a-z0-9_]*(\[\])?(\.[a-z_][a-z0-9_]*(\[\])?)*', t): good = any(_ruta14(s, t.split('.')) for s in _SCH.values())
+    elif re.fullmatch(r'[a-z]+\.[a-z0-9_]+', t) and not re.search(r'\.(py|sql|md|yaml|go)$', t): good = t in _XSET or t in _PROPN
+    elif re.fullmatch(r'[a-z][a-z0-9_]*', t): good = t in _PROPN or t in _ENUMV or t in _XTAB or t in _KW14 or t in _RET14 or f'`{t}`' in _PJ14
+    else: _otros14.append(t); continue
+    if not good: _falt14.append(t)
+print(f'C1-14 nombres en «C1 v1.3 (puerta 2)» de C1-datos.md: {len(_tok14)} · comprobados: {len(_tok14) - len(_otros14)} · que no existen en openapi.yaml: {_falt14} · no son nombres de campo (archivos, anotaciones, formatos): {_otros14}')
+ok(bool(_sec14) and not _falt14, 'C1-14 cada esquema, operación, propiedad (con su ruta), clave de app_setting y valor que nombra «C1 v1.3 (puerta 2)» de C1-datos.md existe en openapi.yaml')
+# C1-09 (P2c, corrección C1 r1, H-2): M-11 nombra los acumulados de Q2-65 A, y las cifras de su ejemplo (oct-2026, ventana desde nov-2026
+# y mar-2027) se recalculan aquí desde oraculo/model.json (Σ periodos[i] con Decimal), no se copian a mano.
+from decimal import Decimal as _D9
+_mj9 = json.load(open(os.path.join(ROOT, 'oraculo/model.json'), encoding='utf-8'), parse_float=_D9)
+_ca9 = _cc9 = _D9(0); _ac9 = []
+for _p9 in _mj9['periodos']:
+    _ca9 += _D9(str(_p9['devengado']['total'])); _cc9 += _D9(str(_p9['efectivo']['total']))
+    _ac9.append((_ca9, _cc9, _ca9 - _cc9, _D9(str(_p9['diferencia_acumulada']))))
+_m11 = [l for l in c1.splitlines() if l.startswith('| M-11 |')]
+_esp9 = [f'{x:,.2f}' for i in (0, 1, len(_ac9) - 1) for x in _ac9[i][:3]]
+_m11c = [c for c in ('cumulative_accrued_cents', 'cumulative_cash_cents', 'cumulative_difference_cents') if len(_m11) != 1 or f'`{c}`' not in _m11[0]]
+_m11x = [x for x in _esp9 if len(_m11) != 1 or x not in _m11[0]]
+_dif9 = [i for i, a in enumerate(_ac9) if a[2] != a[3]]
+print(f'C1-09 M-11: filas {len(_m11)} · cifras del oráculo (P1, P2 y P{len(_ac9)}: devengado acumulado, efectivo acumulado, diferencia) {_esp9} · faltan en la fila: {_m11x} · campos que no nombra: {_m11c} · periodos donde Σ devengado − Σ efectivo ≠ diferencia_acumulada: {_dif9}')
+ok(len(_m11) == 1 and not _m11c and not _m11x and not _dif9, 'C1-09 M-11 nombra cumulative_accrued_cents, cumulative_cash_cents y cumulative_difference_cents, y su ejemplo coincide con oraculo/model.json')
 # C1-15
 B = os.path.join(ROOT, 'docs/estado/bloqueos'); bl = {f[:-3] for f in os.listdir(B) if f.endswith('.md')}
 # C1 v1.1: una marca solo es válida si cita un bloqueo ABIERTO (sin «Respuesta de Axel» ni «Estado: RESUELTO»)
@@ -382,6 +454,56 @@ for f, e in exdocs.items():
         if node is None: exbad.append(f'{f}: {r}')
 print(f'EXT extractos: {len(exf)} archivos (incluye componentes-comunes.yaml) · operaciones en extractos: {sum(excnt.values())} · en openapi.yaml: {len(allids)} · repetidas: {exrep[:3]} · faltantes: {exmiss[:3]} · sobrantes: {exextra[:3]} · > 80 KB: {exbig} · referencias sin resolver: {len(exbad)} {exbad[:3]} · INDICE.md: {os.path.isfile(os.path.join(EXD, "INDICE.md"))}')
 ok(bool(exf) and 'componentes-comunes.yaml' in exf and not exrep and not exmiss and not exextra and not exbig and not exbad and os.path.isfile(os.path.join(EXD, 'INDICE.md')), 'EXT extractos: cada operación en un solo extracto, ≤ 80 KB y referencias resueltas')
+# C1-04 (P2c, corrección C1 r2, M-1): qué responde la API al CHECK completo de credit.vat_included (00004). Las combinaciones se
+# prueban contra la base (una copia en memoria, cada una dentro de un SAVEPOINT que se deshace), no se copian: alta de un
+# store_credit con vat_on_interest_bp = 1600 y vat_included true, null, false o ausente; las mismas sin porcentaje como control; y
+# Merge Patch sobre un crédito con (false, 1600). Cada combinación que la base rechaza tiene que estar en la regla 422 de CreditCreate,
+# CreditUpdate, createCredit y updateCredit (openapi.yaml y su extracto), y la que acepta, como la única que se admite. En la copia
+# se apaga la llave a person: aquí solo se prueba el CHECK de credit.
+_dbv = sqlite3.connect(':memory:'); db.backup(_dbv); _dbv.isolation_level = None; _dbv.execute('PRAGMA foreign_keys = OFF')
+_JV = {1: 'true', None: 'null', 0: 'false'}
+_NIVA = 1600
+_INSV = "INSERT INTO credit (name, kind, holder_person_id, payment_frequency, vat_on_interest_bp{c}) VALUES ('c1-04 iva', 'store_credit', 1, 'monthly', ?{v})"
+def _civa(ins, args, upd=None):
+    _dbv.execute('SAVEPOINT iva')
+    try:
+        _dbv.execute(ins, args)
+        if upd: _dbv.execute(upd)
+        return 'acepta'
+    except sqlite3.IntegrityError as e:
+        return 'rechaza' if 'CHECK constraint failed' in str(e) else f'otro: {e}'
+    except sqlite3.DatabaseError as e:
+        return f'otro: {e}'
+    finally:
+        _dbv.execute('ROLLBACK TO iva'); _dbv.execute('RELEASE iva')
+_alta4 = {_JV[v]: _civa(_INSV.format(c=', vat_included', v=', ?'), (_NIVA, v)) for v in (1, None, 0)}
+_alta4['ausente'] = _civa(_INSV.format(c='', v=''), (_NIVA,))
+_ctl4 = {_JV[v]: _civa(_INSV.format(c=', vat_included', v=', ?'), (None, v)) for v in (1, None, 0)}
+_PAT4 = {'{"vat_included": true}': 'vat_included = 1', '{"vat_included": null}': 'vat_included = NULL',
+         '{"vat_included": true, "vat_on_interest_bp": null}': 'vat_included = 1, vat_on_interest_bp = NULL'}
+_pat4 = {k: _civa(_INSV.format(c=', vat_included', v=', ?'), (_NIVA, 0), f"UPDATE credit SET {s} WHERE name = 'c1-04 iva'") for k, s in _PAT4.items()}
+_ORD4 = ('true', 'null', 'false', 'ausente')
+def _lista4(xs): return (', '.join(xs[:-1]) + ' o ' + xs[-1]) if len(xs) > 1 else ''.join(xs)
+_rech4 = [k for k in _ORD4 if _alta4[k] == 'rechaza']; _adm4 = [k for k in _ORD4 if _alta4[k] == 'acepta']
+_cl4 = [f'vat_on_interest_bp con valor y vat_included = {_lista4(_rech4)}', '422 validation_failed', 'vat_on_interest_bp', 'no cambia el otro campo por su cuenta']
+_cls4 = _cl4 + [f'vat_on_interest_bp con valor solo se admite con vat_included = {_lista4(_adm4)}', 'no guarda nada', 'field = vat_on_interest_bp']
+_cls4 += ([f'"vat_on_interest_bp": {_NIVA}}} sin vat_included'] if _alta4['ausente'] == 'rechaza' else []) + list(_PAT4)
+_txt4 = [('openapi.yaml', 'CreditCreate', d['components']['schemas']['CreditCreate'].get('description', ''), _cls4),
+         ('openapi.yaml', 'CreditUpdate', d['components']['schemas']['CreditUpdate'].get('description', ''), _cls4)]
+_txt4 += [('openapi.yaml', o['operationId'], o.get('description', ''), _cl4) for _, _, o in OPS if o['operationId'] in ('createCredit', 'updateCredit')]
+_sin4 = [o['operationId'] for _, _, o in OPS if o['operationId'] in ('createCredit', 'updateCredit') and '422' not in o.get('responses', {})]
+for _f4, _e4 in exdocs.items():
+    for _n4 in ('CreditCreate', 'CreditUpdate'):
+        if _n4 in ((_e4.get('components') or {}).get('schemas') or {}): _txt4.append((_f4, _n4, _e4['components']['schemas'][_n4].get('description', ''), _cls4))
+    for _it4 in (_e4.get('paths') or {}).values():
+        for _o4 in _it4.values():
+            if _o4['operationId'] in ('createCredit', 'updateCredit'): _txt4.append((_f4, _o4['operationId'], _o4.get('description', ''), _cl4))
+_falt4 = [f'{a}:{b}: {c!r}' for a, b, t, cs in _txt4 for c in cs if c not in t]
+_otro4 = [r for r in list(_alta4.values()) + list(_ctl4.values()) + list(_pat4.values()) if r not in ('acepta', 'rechaza')]
+_pok4 = all((_pat4[k] == 'rechaza') == (k != '{"vat_included": true, "vat_on_interest_bp": null}') for k in _PAT4)
+print(f'C1-04 IVA (CHECK de credit.vat_included, base): alta con {_NIVA} {_alta4} · sin porcentaje {_ctl4} · Merge Patch sobre (false, {_NIVA}) {_pat4} · textos revisados: {len(_txt4)} · operaciones sin respuesta 422: {_sin4} · lo que falta en los textos: {_falt4[:6]}{" …" if len(_falt4) > 6 else ""} ({len(_falt4)})')
+ok(len(_txt4) == 8 and not _sin4 and not _otro4 and _rech4 and _adm4 and all(v == 'acepta' for v in _ctl4.values()) and _pok4 and not _falt4,
+   'C1-04 cada combinación de vat_included y vat_on_interest_bp que el CHECK de la 00004 rechaza (alta y Merge Patch) está en la regla 422 de CreditCreate, CreditUpdate, createCredit y updateCredit')
 # S6-03 paridad de rutas
 rg = open(os.path.join(ROOT, 'backend/internal/api/routes.go'), encoding='utf-8').read()
 rr = set(re.findall(r'Method: "(\w+)", Pattern: "([^"]+)", OperationID: "(\w+)"', rg))
@@ -392,29 +514,47 @@ ok(rr == oa, 'S6-03 conjunto de rutas del router idéntico al contrato')
 # y advance_days (entero >= 0) son propiedades de params_json en Notification y NotificationUpdate, sin valor por omisión; weekday y
 # day_of_month entran por additionalProperties: true y la marca de lugar x-provisional cita S1-parametros-avisos. Se comprueba en
 # openapi.yaml, en el extracto que trae esos esquemas y en C1-datos.md, junto con el resto de C1-23 (10 MB y 413, 503, N-xxx, M-05).
+# C1 v1.3 (puerta 2, Q2-11 B, K47, K50): send_time y advance_days dejan params_json (y weekday y day_of_month); la hora, el día y la
+# anticipación son claves de app_setting con su rango en el cambio de su sección. Se comprueba: params_json sin esas claves ni marca de
+# lugar en openapi.yaml y en el extracto que trae NotificationUpdate; las horas con el patrón HH:MM; los rangos aprobados (S1 1.4,
+# docs/estado/p2c/S1-puerta2.md) sin valor por omisión, y la columna «Rango (cambio)» de C1-datos.md §11.7.
 PAT_K43 = '^([01][0-9]|2[0-3]):[0-5][0-9]$'
+RANGOS_P2 = {'reports.daily_send_time': 'p', 'reports.weekly_send_time': 'p', 'reports.monthly_send_time': 'p', 'alerts.send_time': 'p',
+             'reports.weekly_weekday': (1, 7), 'alerts.meal_plan_missing_weekday': (1, 7), 'reports.monthly_day_of_month': (1, 31),
+             'comparator.timeout_seconds': (1, 30), 'price.stale_after_days': (1, None), 'alerts.stale_prices_advance_days': (0, None),
+             'optimizer.date_window_days': (0, None), 'ocr.timeout_seconds': (0, None)}
 def _k43(doc, n):
-    pj = (((doc.get('components') or {}).get('schemas') or {}).get(n) or {}).get('properties', {}).get('params_json', {})
-    pr = pj.get('properties', {}); st, ad = pr.get('send_time', {}), pr.get('advance_days', {}); m = []
-    if not (st.get('type') == 'string' and st.get('pattern') == PAT_K43 and 'default' not in st and 'K43' in st.get('description', '')): m.append('send_time')
-    if not (ad.get('type') == 'integer' and ad.get('minimum') == 0 and 'default' not in ad and 'K43' in ad.get('description', '')): m.append('advance_days')
-    if not (pj.get('additionalProperties') is True and pj.get('x-provisional') is True and 'S1-parametros-avisos' in pj.get('description', '')): m.append('lugar')
+    pj = (((doc.get('components') or {}).get('schemas') or {}).get(n) or {}).get('properties', {}).get('params_json', {}); m = []
+    if set(pj.get('properties', {})) & {'send_time', 'advance_days', 'weekday', 'day_of_month'}: m.append('claves')
+    if pj.get('x-provisional') or 'S1-parametros-avisos' in pj.get('description', ''): m.append('lugar')
+    if pj.get('type') != 'object': m.append('tipo')
     return m
 k43bad = {n: v for n in ('Notification', 'NotificationUpdate') for v in [_k43(d, n)] if v}
 k43ex = sorted(f for f, e in exdocs.items() if 'NotificationUpdate' in (((e or {}).get('components') or {}).get('schemas') or {}))
 k43exbad = {f: v for f in k43ex for v in [_k43(exdocs[f], 'Notification') + _k43(exdocs[f], 'NotificationUpdate')] if v}
+_wq = {}
+for _m, _p, _o in OPS:
+    if _m == 'PATCH' and isinstance(_o, dict):
+        _rq = _o.get('requestBody', {}).get('content', {}).get('application/json', {}).get('schema', {}).get('$ref', '') or ''
+        _wq.update(SCH.get(_rq.split('/')[-1], {}).get('properties', {}).get('parameters', {}).get('properties', {}))
+def _rok(k, r):
+    v = _wq.get(k, {})
+    if r == 'p': return v.get('type') == 'string' and v.get('pattern') == PAT_K43 and 'default' not in v
+    return v.get('type') == 'integer' and v.get('minimum') == r[0] and v.get('maximum') == r[1] and 'default' not in v
+k47rng = sorted(k for k, r in RANGOS_P2.items() if not _rok(k, r))
+def _rtxt(r): return '`pattern: ' + PAT_K43.replace('|', '\\|') + '`' if r == 'p' else f'`minimum: {r[0]}`' + (f', `maximum: {r[1]}`' if r[1] is not None else '')
+k43c1 = [k for k, r in RANGOS_P2.items() if not re.search(r'^\| `%s` \|.*\| %s \|' % (re.escape(k), re.escape(_rtxt(r))), c1, re.M)]
 _rx = re.compile(PAT_K43)
 k43rx = all(_rx.fullmatch(v) for v in ('00:00', '07:30', '19:05', '23:59')) and not any(_rx.fullmatch(v) for v in ('24:00', '7:30', '12:60', '12:5', '1230', '08:00 '))
-k43c1 = [k for k, t in (('send_time', PAT_K43), ('advance_days', '`minimum: 0`')) if not re.search(r'^- `%s`: .*%s' % (k, re.escape(t)), c1, re.M)]
 _byid = {o['operationId']: o for _, _, o in OPS}
 _up, _cmp = _byid.get('uploadExpenseAttachment', {}), _byid.get('compareScenarios', {})
 k43ops = '413' in _up.get('responses', {}) and '10 MB' in json.dumps(_up, ensure_ascii=False) and '503' in _cmp.get('responses', {}) and 'unavailable' in json.dumps(deref(_cmp['responses']['503']) if '503' in _cmp.get('responses', {}) else {}, ensure_ascii=False) + json.dumps(_cmp, ensure_ascii=False)
 _nrow = {n: [l for l in c1.splitlines() if l.startswith('| P-') and f'| {n} |' in l] for n in ('N-023', 'N-064', 'N-226', 'N-297', 'N-300')}
-k43n = sorted(n for n, ls in _nrow.items() if not ls or any('FIRME (K43)' not in l or 'C1-valores-k31' in l for l in ls))
+k43n = sorted(n for n, ls in _nrow.items() if not ls or any(not re.search(r'FIRME \(K43[,)]', l) or 'C1-valores-k31' in l for l in ls))
 k43m05 = bool(re.search(r'^\| M-05 \|.*\b21\b', c1, re.M)); k43grep = len(re.findall(r'PROVISIONAL.*C1-valores-k31', c1))
-print(f'C1-23 params_json (patrón {PAT_K43}, minimum 0) mal en openapi: {k43bad} · extractos con NotificationUpdate: {k43ex} mal: {k43exbad} · patrón acepta 00:00–23:59 y rechaza 24:00, 7:30, 12:60: {k43rx} · C1-datos.md sin la clave: {k43c1}')
+print(f'C1-23 params_json sin send_time, advance_days, weekday ni day_of_month y sin marca de lugar: mal en openapi: {k43bad} · extractos con NotificationUpdate: {k43ex} mal: {k43exbad} · claves de puerta 2 con rango distinto del aprobado: {k47rng} · patrón acepta 00:00–23:59 y rechaza 24:00, 7:30, 12:60: {k43rx} · filas de §11.7 sin su rango: {k43c1}')
 print(f'C1-23 10 MB y 413 en uploadExpenseAttachment, 503 unavailable en compareScenarios: {k43ops} · filas §10 sin FIRME (K43) o con C1-valores-k31: {k43n} · M-05 con 21: {k43m05} · grep PROVISIONAL.*C1-valores-k31: {k43grep}')
-ok(not k43bad and k43ex and not k43exbad and k43rx and not k43c1, 'C1-23 send_time con patrón HH:MM y advance_days con minimum: 0 en params_json (openapi.yaml, extracto y C1-datos.md), sin valor por omisión')
+ok(not k43bad and k43ex and not k43exbad and not k47rng and k43rx and not k43c1, 'C1-23 hora, día y anticipación como claves de app_setting con su rango aprobado (patrón HH:MM, 1 a 7, 1 a 31, 1 a 30, 1 o más) y fuera de params_json (openapi.yaml, extracto y C1-datos.md), sin valor por omisión')
 ok(k43ops and not k43n and k43m05 and k43grep == 0, 'C1-23 adjunto 10 MB con 413, comparador 503 unavailable, N-023/N-064/N-226/N-297/N-300 FIRMES (K43) y M-05 con máximo 21')
 print('\nRESULTADO:', 'TODO OK' if not fails else f'{len(fails)} falla(s)')
 sys.exit(1 if fails else 0)

@@ -2,7 +2,7 @@
   "formato": "fixture/1",
   "motor": "s5",
   "caso": "s5-mejor-tienda-incompleta",
-  "descripcion": "t3 solo tiene precio de a (500): se lista con missing_count 1 y total 500 (ordenada por total ascendente), pero la más barata es t2: gana el empate de total con t1 porque es la recomendada de b (t3 lo es de a, t1 de ninguno).",
+  "descripcion": "t3 solo tiene precio de a (500): se lista con missing_count 1 y total 500, pero va DESPUÉS de las completas y con diferencia null (§7.4 de la versión 1.5, H-r3-04, Q2-05 = A); la más barata es t2: gana el empate de total con t1 porque es la recomendada de b (t3 lo es de a, t1 de ninguno).",
   "fuente": [
     {
       "tipo": "regla",
@@ -13,10 +13,7 @@
       "ruta": "S5-03"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
-    "que": "pregunta 2: desempate por renglones recomendados, luego precios viejos, luego orden de `stores` (opción A)"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "today": "2026-10-12",
@@ -200,19 +197,22 @@
     "canasta": {
       "stores": [
         {
-          "store": "t3",
-          "total_cents": 500,
-          "missing_count": 1
-        },
-        {
           "store": "t2",
           "total_cents": 3100,
-          "missing_count": 0
+          "missing_count": 0,
+          "difference_vs_cheapest_cents": 0
         },
         {
           "store": "t1",
           "total_cents": 3100,
-          "missing_count": 0
+          "missing_count": 0,
+          "difference_vs_cheapest_cents": 0
+        },
+        {
+          "store": "t3",
+          "total_cents": 500,
+          "missing_count": 1,
+          "difference_vs_cheapest_cents": null
         }
       ],
       "cheapest_store": "t2"

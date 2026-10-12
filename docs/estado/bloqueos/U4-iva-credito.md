@@ -7,3 +7,15 @@ Opciones:
 3. Dejarlo como está: «incluye IVA» por omisión y sin aviso para ese dato. Consecuencia: K18 queda parcial (4 de 5 datos con «falta capturar»).
 Impacto: el campo «¿la tasa incluye IVA?» de P-26.05 queda PROVISIONAL en `docs/design/U4-ajustes-a.md`; no cambia ninguna cifra del oráculo (Kueski ya incluye IVA, decisión C).
 Cómo seguí: el campo se especifica con la opción sí o no y el porcentaje de IVA, escribiendo `vat_on_interest_bp` como hoy, marcado PROVISIONAL con cita de este archivo; el aviso «falta capturar» cubre los otros 4 datos.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-67 · ¿Cómo se distingue «no capturado» de «la tasa ya incluye IVA»?
+- **Respuesta:** **1** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «Columna nueva `credit.vat_included` (booleano que admite NULL = falta capturar) y `vat` en `missing_terms`; `vat_on_interest_bp` solo cuando `vat_included = 0`.»
+- **Consecuencia:** migración 00004 y C1 v1.3; la pantalla cumple K18 completo.
+- **Qué cambia:** Migración 00004 (`credit.vat_included`, admite NULL = falta capturar), C1 v1.3 (`Credit.missing_terms` incluye `vat`), motor S3 y la semilla; campo «¿la tasa incluye IVA?» de P-26.05 en `docs/design/U4-ajustes-a.md` sin marca PROVISIONAL. Ninguna cifra cambia: Kueski ya incluye IVA.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

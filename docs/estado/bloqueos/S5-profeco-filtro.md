@@ -16,3 +16,21 @@ Opciones:
 Impacto: cambian `loaded`, `filtered_out` y `coverage[]` de `profeco_import` y los precios `source = profeco` que pasan a `price` (solo referencia; PROFECO nunca compite, K22). No cambia ninguna cifra canon ni el conteo de S5-05 (37,548,200 registros en `qqp.sqlite`, que no se filtran).
 
 Cómo seguí: motor y oráculo implementan la opción A (el motor ya lo hacía; se alineó el oráculo `oraculo/pre_profeco.py`). La fixture nueva `oraculo/fixtures/s5/s5-profeco-filtro.json` (generada por `oraculo/pre_genera_fixtures.py`) prueba los tres puntos y va marcada PROVISIONAL con este bloqueo. Solicitud al dueño del contrato: escribir la opción A en §11 con la marca «PROVISIONAL (bloqueo `S5-profeco-filtro`)». Esta opción sustituye la convención 11 de `docs/estado/wf1/oraculo-S5.md` («filtros por igualdad exacta; municipio = de cualquier tienda»).
+
+
+## Puerta 2 (11-oct-2026): sin respuesta
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` («Las preguntas sin recomendación quedan sin respuesta en esta puerta: PROVISIONAL con la opción que ya está en uso, y pasan a WF-3») y hoja de respuestas de `PUERTA-2.md` §8. Axel puede mandar una excepción por id cuando lea el documento.
+
+### Q2-56 · (1) ¿El municipio de una tienda que no es sucursal entra al filtro?
+- PROVISIONAL: sigue en uso A (cita de este archivo: «**A (PROVISIONAL vigente):**» y «motor y oráculo implementan la opción A»; `docs/estado/wf1/correccion-S5-r2.md`). Pasa a WF-3.
+- **Estado:** ABIERTO
+
+### Q2-57 · (2) ¿Cómo se comparan los nombres y municipios de PROFECO con los del catálogo?
+- PROVISIONAL: sigue en uso A, comparación normalizada (misma cita). Con B, Axel capturaría nombres y municipios con la ortografía exacta de PROFECO. Pasa a WF-3.
+- **Estado:** ABIERTO
+
+### Q2-58 · (3) Para asignar la sucursal del precio, ¿solo las de la cadena que casó o cualquiera?
+- PROVISIONAL: sigue en uso A (misma cita). Pasa a WF-3.
+- **Estado:** ABIERTO
+
+**Estado del bloqueo (puerta 2): ABIERTO** — Q2-56, Q2-57 y Q2-58 sin respuesta; pasan a WF-3 con A como PROVISIONAL.

@@ -11,3 +11,22 @@ Opciones:
 - Pregunta 3: (a) días restantes = piso(existencia estimada × días del ritmo ÷ cantidad del ritmo) y consumo por semana = HALF_UP(cantidad × 7 ÷ días) en milésimas; (b) días con ROUND_HALF_UP en vez de piso; (c) sin días restantes, solo el estado (K7).
 Impacto: en `docs/design/U4-ajustes-a.md` P-26.05 (vista previa 8) y en `docs/design/U4-ajustes-b.md` P-26.14 (días restantes y consumo por semana), la parte «Antes → Después» de esas cifras queda PROVISIONAL. Los motores S3 y S4 tampoco tienen regla escrita para ellas. La aportación necesaria y el estado de P-26.13 quedan PROVISIONAL por `S2-metas` (1) y (3), y el número de decimales del avance por `S2-metas` (2), no por este bloqueo.
 Cómo seguí: las vistas previas muestran todo lo que sí tiene regla (avance y reserva del plan, RN-18; existencia estimada y estado, RN-15 y K7; para las comisiones, el texto de que hoy no cambian ninguna cifra) y dicen que el resto se recalcula al guardar. Ninguna cifra ni esquema cambia; nada provisional entra en cifras. Si la fórmula no se puede calcular en el navegador, U4 pide a C1 una vista previa sin guardar (solicitud SC-U4-2 en `docs/estado/wf1/correccion-U4-r1.md`, reiterada en `docs/estado/wf1/correccion-U4-r2.md` con la meta condicionada a `S2-metas` y el inventario a la pregunta 3 de este bloqueo).
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-69 · (pregunta 1) ¿Las comisiones de un crédito entran al costo, a la deuda o al disponible?
+- **Respuesta:** **(a)** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «no entran a ningún cálculo, solo se guardan como dato (lo que hace hoy el sistema; la vista previa lo dice)»
+- **Consecuencia** (el archivo no la separa por opción; es su «Impacto»)**:** Impacto: en `docs/design/U4-ajustes-a.md` P-26.05 (vista previa 8) y en `docs/design/U4-ajustes-b.md` P-26.14 (días restantes y consumo por semana), la parte «Antes → Después» de esas cifras queda PROVISIONAL. Los motores S3 y S4 tampoco tienen regla escrita para ellas. La aportación necesaria y el estado de P-26.13 quedan PROVISIONAL por `S2-metas` (1) y (3), y el número de decimales del avance por `S2-metas` (2), no por este bloqueo.
+- **Qué cambia:** «Antes → Después» de las comisiones en P-26.05 (vista previa 8, `docs/design/U4-ajustes-a.md`): sin marca PROVISIONAL; el sistema sigue guardándolas solo como dato.
+- **Estado:** RESUELTO
+
+### Q2-70 · (pregunta 3) Días restantes y consumo por semana de un producto por ritmo
+- **Respuesta:** **(a)** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «días restantes = piso(existencia estimada × días del ritmo ÷ cantidad del ritmo) y consumo por semana = HALF_UP(cantidad × 7 ÷ días) en milésimas»
+- **Consecuencia** (el archivo no la separa por opción; es su «Impacto»)**:** Impacto: en `docs/design/U4-ajustes-a.md` P-26.05 (vista previa 8) y en `docs/design/U4-ajustes-b.md` P-26.14 (días restantes y consumo por semana), la parte «Antes → Después» de esas cifras queda PROVISIONAL. Los motores S3 y S4 tampoco tienen regla escrita para ellas. La aportación necesaria y el estado de P-26.13 quedan PROVISIONAL por `S2-metas` (1) y (3), y el número de decimales del avance por `S2-metas` (2), no por este bloqueo.
+- **Qué cambia:** «Antes → Después» de días restantes y consumo por semana en P-26.14 (`docs/design/U4-ajustes-b.md`); regla nueva en `reglas-negocio.md` junto a RN-15 y motor S4; solicitud SC-U4-2 a C1 (vista previa sin guardar) si no se calcula en el navegador.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

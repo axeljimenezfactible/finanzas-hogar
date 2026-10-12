@@ -16,3 +16,21 @@ Opciones:
 Impacto: cambian `rows[].winner_store` de los sustitutos con varias presentaciones por tienda, y `stores[].missing_count` y `stores[].stale_count` de `compare_carts`. No cambia ninguna cifra canon (K-01 a K-08: una presentación por tienda en cada sustituto, sin faltantes y con fecha del 10-oct).
 
 Cómo seguí: motor y oráculo implementan la opción A. Se alinearon el oráculo (`oraculo/pre_calculo.py`: ganador y `missing_count`; además `winners[]` en el orden de `stores[]`, que es la convención 1 de `docs/estado/wf1/oraculo-S5.md` y el oráculo no cumplía) y el motor (`backend/internal/precios/compare.go`: `stale_count`, que coincide con la convención 4 del oráculo). La fixture nueva `oraculo/fixtures/s5/s5-carritos-presentaciones.json` prueba los tres puntos y va marcada PROVISIONAL con este bloqueo. Solicitud al dueño del contrato: escribir la opción A en §7.2 y §15.2 con la marca «PROVISIONAL (bloqueo `S5-carritos-detalle`)».
+
+
+## Puerta 2 (11-oct-2026): sin respuesta
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` («Las preguntas sin recomendación quedan sin respuesta en esta puerta: PROVISIONAL con la opción que ya está en uso, y pasan a WF-3») y hoja de respuestas de `PUERTA-2.md` §8. Axel puede mandar una excepción por id cuando lea el documento.
+
+### Q2-50 · (1) Ganador de un sustituto cuando una tienda tiene varias presentaciones
+- PROVISIONAL: sigue en uso A (cita de este archivo: «**A (PROVISIONAL vigente):**» y «motor y oráculo implementan la opción A»; `docs/estado/wf1/correccion-S5-r2.md`). Pasa a WF-3.
+- **Estado:** ABIERTO
+
+### Q2-51 · (2) `missing_count` en carritos
+- PROVISIONAL: sigue en uso A (misma cita). Pasa a WF-3.
+- **Estado:** ABIERTO
+
+### Q2-52 · (3) `stale_count` en carritos
+- PROVISIONAL: sigue en uso A (misma cita); el contrato S5 1.5 la escribe como PROVISIONAL (Q2-02). Pasa a WF-3.
+- **Estado:** ABIERTO
+
+**Estado del bloqueo (puerta 2): ABIERTO** — Q2-50, Q2-51 y Q2-52 sin respuesta; pasan a WF-3 con A como PROVISIONAL.

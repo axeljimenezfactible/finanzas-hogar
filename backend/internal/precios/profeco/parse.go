@@ -6,32 +6,38 @@ import (
 	"time"
 )
 
-// ParsePriceCents convierte el texto del precio (Número 18,2) a centavos
-// exactos, sin flotantes. Acepta «28», «34.5», «$1,234.50». Rechaza vacío,
-// negativos, más de dos decimales, texto y valores que desbordan int64.
+// ParsePriceCents convierte el texto del precio (Número 18,2) a centavos exactos, sin
+// flotantes, con la gramática de §11 paso 3 (regla técnica, H-r3-03, Q2-04 = A): se quitan
+// los espacios de las orillas y un «$» inicial; dígitos con coma de miles opcional (después del
+// primer grupo, cada grupo lleva exactamente 3 dígitos: «1,021.00» = 102100) y, opcional, un
+// punto con 1 o 2 decimales. Los motivos van en este orden y son la lista cerrada de §11:
+// «precio vacío», «precio con comas mal puestas», «precio con más de dos decimales»,
+// «precio ilegible» (otro carácter, punto sin decimales o más de 15 dígitos enteros, que
+// desbordarían int64) y «precio no positivo» (0.00 nunca se carga).
+// PROVISIONAL (bloqueo S5-motor-oraculo-reglas pregunta 7; §11 paso 3 no los fija): un espacio en medio
+// da «precio ilegible» (S-1), más de 15 dígitos enteros da «precio ilegible» (S-2) y «más de dos
+// decimales» cuenta todo lo que sigue al primer punto, aunque no sean dígitos: «1.2.3» (S-3).
 func ParsePriceCents(s string) (int64, error) {
 	t := strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(s), "$"))
 	if t == "" {
 		return 0, errors.New("precio vacío")
 	}
+	intPart, frac, hasDot := strings.Cut(t, ".")
 	if strings.Contains(t, ",") {
-		// Coma de miles solo si cada grupo posterior trae 3 dígitos.
-		parts := strings.Split(strings.SplitN(t, ".", 2)[0], ",")
-		for i, p := range parts {
-			if (i > 0 && len(p) != 3) || p == "" {
+		if strings.Contains(frac, ",") {
+			return 0, errors.New("precio con comas mal puestas")
+		}
+		for i, p := range strings.Split(intPart, ",") {
+			if p == "" || (i > 0 && len(p) != 3) {
 				return 0, errors.New("precio con comas mal puestas")
 			}
 		}
-		t = strings.ReplaceAll(t, ",", "")
-	}
-	intPart, frac, _ := strings.Cut(t, ".")
-	if intPart == "" || len(intPart) > 15 {
-		return 0, errors.New("precio ilegible")
+		intPart = strings.ReplaceAll(intPart, ",", "")
 	}
 	if len(frac) > 2 {
 		return 0, errors.New("precio con más de dos decimales")
 	}
-	if strings.Contains(t, ".") && frac == "" {
+	if intPart == "" || len(intPart) > 15 || (hasDot && frac == "") {
 		return 0, errors.New("precio ilegible")
 	}
 	var cents int64
@@ -41,7 +47,7 @@ func ParsePriceCents(s string) (int64, error) {
 		}
 		cents = cents*10 + int64(r-'0')
 	}
-	if cents <= 0 {
+	if cents == 0 {
 		return 0, errors.New("precio no positivo")
 	}
 	return cents, nil
@@ -50,6 +56,7 @@ func ParsePriceCents(s string) (int64, error) {
 // dateLayouts son los formatos de fecha que el cargador acepta. El diccionario
 // solo dice «Datetime»; el archivo 2026 trae AAAA/MM/DD. Con año al final se
 // lee día/mes/año (convención mexicana). Cualquier otro se rechaza con motivo.
+// PROVISIONAL (bloqueo S5-motor-oraculo-reglas pregunta 4): la lista no está en §11 y difiere de la del oráculo.
 var dateLayouts = []string{
 	"2006/01/02",
 	"2006-01-02",

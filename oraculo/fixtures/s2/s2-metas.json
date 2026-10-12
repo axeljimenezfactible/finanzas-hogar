@@ -2,7 +2,7 @@
   "formato": "fixture/1",
   "motor": "s2",
   "caso": "s2-metas",
-  "descripcion": "Metas: meses exactos, residuo de centavos (RN-18: 50.0 %), meta cumplida, fondo sin monto y una archivada; resto calculado por el oráculo (state no se compara)",
+  "descripcion": "Metas: meses exactos, residuo de centavos (RN-18: 50.0 %), meta cumplida, fondo sin monto y una archivada; FIRME desde la puerta 2 (Q2-15 a Q2-18), state incluido; resto calculado por el oráculo",
   "fuente": [
     {
       "tipo": "criterio",
@@ -17,10 +17,7 @@
       "ruta": "horizonte.deuda_viva_10_abr"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S2-metas.md",
-    "que": "months_left (opción 1A), needed_monthly_cents y plan; resumen solo con activas (S2-metas-resumen)"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "$ref": "_datos/semilla-oraculo.json",
@@ -167,7 +164,8 @@
               "month": "2027-03",
               "cents": 100000
             }
-          ]
+          ],
+          "state": "in_progress"
         },
         {
           "goal_id": 2,
@@ -207,7 +205,8 @@
               "month": "2027-04",
               "cents": 44954
             }
-          ]
+          ],
+          "state": "in_progress"
         },
         {
           "goal_id": 3,
@@ -218,7 +217,8 @@
           "progress_pct": 110,
           "months_left": 3,
           "needed_monthly_cents": 0,
-          "plan": []
+          "plan": [],
+          "state": "achieved"
         },
         {
           "goal_id": 4,
@@ -229,7 +229,8 @@
           "progress_pct": null,
           "months_left": null,
           "needed_monthly_cents": null,
-          "plan": []
+          "plan": [],
+          "state": "in_progress"
         }
       ]
     }

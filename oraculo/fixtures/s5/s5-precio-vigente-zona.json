@@ -1,0 +1,265 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-precio-vigente-zona",
+  "descripcion": "Supuesto S-8 (§6) con `created_at` RFC 3339 (§15.1). En cada tienda compiten dos precios del 2026-10-10: manual a 2000 capturado a las 12:30:00Z y ticket_manual a 2100. Cálculo a mano del instante del ticket en UTC: 07:00:00-06:00 = 13:00:00Z, posterior, rige 2100; 12:00:00+00:00 = 12:00:00Z, anterior, rige 2000; 18:00:00+06:00 = 12:00:00Z, anterior, rige 2000 (leído como texto sin zona daría 2100); 06:30:00.250-06:00 = 12:30:00.25Z, posterior por 0.25 s, rige 2100 (leído sin zona daría 2000). Ningún par empata en el instante.",
+  "fuente": [
+    {
+      "tipo": "manual",
+      "ruta": "§6 y §15.1 de S5-interfaz.md"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "RFC 3339 §5.6"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "a",
+            "name": "A",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "a-1kg",
+            "product": "a",
+            "name": "a-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "t-menos6",
+          "kind": "chain",
+          "parent": null,
+          "name": "t-menos6",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "t-cero",
+          "kind": "chain",
+          "parent": null,
+          "name": "t-cero",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "t-mas6",
+          "kind": "chain",
+          "parent": null,
+          "name": "t-mas6",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "t-fraccion",
+          "kind": "chain",
+          "parent": null,
+          "name": "t-fraccion",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "a-1kg",
+          "store": "t-menos6",
+          "price_cents": 2000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:30:00Z"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t-menos6",
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T07:00:00-06:00"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t-cero",
+          "price_cents": 2000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:30:00Z"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t-cero",
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00+00:00"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t-mas6",
+          "price_cents": 2000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:30:00Z"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t-mas6",
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T18:00:00+06:00"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t-fraccion",
+          "price_cents": 2000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:30:00Z"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t-fraccion",
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T06:30:00.250-06:00"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "precio-t-menos6",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "a-1kg",
+          "store": "t-menos6"
+        }
+      },
+      {
+        "id": "precio-t-cero",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "a-1kg",
+          "store": "t-cero"
+        }
+      },
+      {
+        "id": "precio-t-mas6",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "a-1kg",
+          "store": "t-mas6"
+        }
+      },
+      {
+        "id": "precio-t-fraccion",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "a-1kg",
+          "store": "t-fraccion"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "precio-t-menos6": {
+      "price": {
+        "price_cents": 2100,
+        "observed_date": "2026-10-10",
+        "source": "ticket_manual"
+      },
+      "references": [],
+      "promotion": null
+    },
+    "precio-t-cero": {
+      "price": {
+        "price_cents": 2000,
+        "observed_date": "2026-10-10",
+        "source": "manual"
+      },
+      "references": [],
+      "promotion": null
+    },
+    "precio-t-mas6": {
+      "price": {
+        "price_cents": 2000,
+        "observed_date": "2026-10-10",
+        "source": "manual"
+      },
+      "references": [],
+      "promotion": null
+    },
+    "precio-t-fraccion": {
+      "price": {
+        "price_cents": 2100,
+        "observed_date": "2026-10-10",
+        "source": "ticket_manual"
+      },
+      "references": [],
+      "promotion": null
+    }
+  }
+}

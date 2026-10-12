@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «reportes». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «reportes». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto reportes"
-  version: "1.2.0"
+  version: "1.3.0"
   description: "Extracto de la etiqueta «Reportes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -769,7 +769,7 @@ components:
                 description: "Total."
               identical_count:
                 type: "integer"
-                description: "Artículos idénticos."
+                description: "Renglones idénticos (no piezas; S5 §7.2)."
               identical_total_cents:
                 $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
                 description: "Total de idénticos."
@@ -784,7 +784,7 @@ components:
                 description: "Precios viejos."
               difference_vs_cheapest_cents:
                 $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-                description: "Diferencia contra la más barata."
+                description: "Total de la tienda − total de cheapest_store_id. Solo en tiendas completas; ausente en las incompletas o si no hay cheapest_store_id (S5 §7.4)."
               assumes_membership:
                 type: "boolean"
                 description: "Comparada como si tuvieran membresía."
@@ -796,10 +796,12 @@ components:
               - "substitute_count"
               - "missing_count"
               - "stale_count"
-              - "difference_vs_cheapest_cents"
               - "assumes_membership"
             x-calculado: true
-          description: "Orden por total ascendente."
+          description: "Primero las tiendas completas (missing_count = 0) por total ascendente y después las incompletas por total ascendente (S5 §7.4; desempates en S5)."
+        cheapest_store_id:
+          type: "integer"
+          description: "Tienda más barata: la primera tienda completa de stores (missing_count = 0). Ausente si ninguna está completa (S5 §7.4; un solo significado con basket=shopping_list y basket=expense)."
         items:
           type: "array"
           items:

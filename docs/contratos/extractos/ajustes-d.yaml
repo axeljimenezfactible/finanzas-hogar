@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.2.0 · extracto «ajustes-d». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «ajustes-d». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto ajustes-d"
-  version: "1.2.0"
+  version: "1.3.0"
   description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -11,89 +11,6 @@ tags:
   - name: "Ajustes"
     description: "Las 14 secciones de Ajustes, sesiones y sistema."
 paths:
-  /api/v1/promotions/{promotion_id}:
-    patch:
-      operationId: "updatePromotion"
-      tags:
-        - "Ajustes"
-      summary: "Editar promoción"
-      description: "Editar promoción."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "promotion"
-      parameters:
-        - name: "promotion_id"
-          in: "path"
-          required: true
-          description: "Id del registro (promotion_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PromotionUpdate"
-      responses:
-        "200":
-          description: "Correcto."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Promotion"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-    delete:
-      operationId: "deletePromotion"
-      tags:
-        - "Ajustes"
-      summary: "Eliminar promoción"
-      description: "Con compras que la usan responde 409 `in_use` (desactivar con is_active = false)."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "promotion"
-      parameters:
-        - name: "promotion_id"
-          in: "path"
-          required: true
-          description: "Id del registro (promotion_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      responses:
-        "204":
-          description: "Hecho, sin contenido."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
   /api/v1/settings/optimizer:
     get:
       operationId: "getOptimizerSettings"
@@ -129,7 +46,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar valores del comparador"
-      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto. Además, el tiempo máximo del comparador (comparator.timeout_seconds, N-321; K43). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; no hay topes mínimos ni máximos hasta la puerta 2. Responde con los valores vigentes."
+      description: "Captura o cambia las restricciones duras globales y los pesos (K16). No hay valores por defecto. Además, el tiempo máximo del comparador (comparator.timeout_seconds, N-321; K43). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-289"
         - "N-321"
@@ -344,7 +261,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar aviso"
-      description: "Editar aviso."
+      description: "Activa o desactiva el aviso o el reporte y cambia sus parámetros propios. La hora, el día y la anticipación se cambian en updateReportSettings y updateAlertSettings (Q2-11 B, K47)."
       x-necesidades:
         - "N-297"
         - "N-300"
@@ -599,6 +516,42 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/telegram-chat-candidates/{candidate_id}:
+    delete:
+      operationId: "dismissTelegramChatCandidate"
+      tags:
+        - "Ajustes"
+      summary: "Descartar chat detectado"
+      description: "Descarta un chat detectado que nadie va a confirmar: borra su renglón de telegram_chat_candidate. No toca chats confirmados ni destinatarios (notification_recipient). Solo candidatos pendientes (confirmed_at ausente); uno ya confirmado o inexistente responde 404."
+      x-necesidades:
+        - "N-324"
+      x-tablas:
+        - "audit_log"
+        - "telegram_chat_candidate"
+      parameters:
+        - name: "candidate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (candidate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
 components:
   securitySchemes:
     cookieAuth:
@@ -622,7 +575,7 @@ components:
     SettingParameterInteger:
       type: "object"
       x-calculado: true
-      description: "Parámetro operativo de tipo entero (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. Solo se valida tipo y signo, como los disparadores trg_app_setting_param_int* de 00003; sin topes mínimos ni máximos hasta la puerta 2."
+      description: "Parámetro operativo de tipo entero (K44, C1 §11.7): una clave de app_setting del hogar con su valor vigente y su valor inicial. El tipo y el rango de cada clave los validan los disparadores de S1 (trg_app_setting_param_int* de 00003; trg_app_setting_param_range* y trg_app_setting_param_time* de 00004) y los declara la propiedad de la clave en el cambio de su sección (minimum, maximum o pattern; puerta 2, K50)."
       required:
         - "key"
         - "value_type"
@@ -657,127 +610,6 @@ components:
         is_initial:
           type: "boolean"
           description: "true si el valor vigente es igual al inicial."
-    Promotion:
-      type: "object"
-      description: "Promoción (tabla `promotion`). Calendario de promociones capturado a mano: comercio, plazo, tasa (0 % casi siempre), compra mínima y vigencia. Campos ausentes = sin valor (NULL)."
-      x-tabla: "promotion"
-      required:
-        - "id"
-        - "merchant_name"
-        - "term_count"
-        - "rate_num"
-        - "rate_den"
-        - "min_purchase_cents"
-        - "valid_from"
-        - "valid_to"
-        - "is_active"
-        - "created_at"
-        - "updated_at"
-      properties:
-        id:
-          type: "integer"
-          description: "id"
-        credit_id:
-          type: "integer"
-          description: "Crédito al que aplica (Kueski). NULL = cualquiera"
-        merchant_name:
-          type: "string"
-          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
-        store_id:
-          type: "integer"
-          description: "Tienda registrada que corresponde al comercio, si existe"
-        term_count:
-          type: "integer"
-          description: "Plazo en pagos (4 quincenas)"
-        rate_num:
-          type: "integer"
-          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
-        rate_den:
-          type: "integer"
-          description: "Denominador de la tasa promocional"
-        min_purchase_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
-        valid_from:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Inicio de vigencia, inclusive"
-        valid_to:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
-        source_note:
-          type: "string"
-          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026)"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        created_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "created_at"
-        updated_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "updated_at"
-        rate_decimals:
-          type: "integer"
-          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
-        is_current:
-          type: "boolean"
-          description: "Vigente hoy."
-          x-calculado: true
-        rate_pct:
-          type: "string"
-          description: "Tasa promocional como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; con tasa 0 la pantalla muestra «sin intereses» (N-287)."
-          x-calculado: true
-    PromotionUpdate:
-      type: "object"
-      additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de promoción (tabla `promotion`)."
-      x-tabla: "promotion"
-      properties:
-        credit_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Crédito al que aplica (Kueski). NULL = cualquiera · null borra el valor"
-        merchant_name:
-          type: "string"
-          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
-        store_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Tienda registrada que corresponde al comercio, si existe · null borra el valor"
-        term_count:
-          type: "integer"
-          description: "Plazo en pagos (4 quincenas)"
-        rate_num:
-          type: "integer"
-          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
-        rate_den:
-          type: "integer"
-          description: "Denominador de la tasa promocional"
-        min_purchase_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
-        valid_from:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Inicio de vigencia, inclusive"
-        valid_to:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
-        source_note:
-          type:
-            - "string"
-            - "null"
-          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026) · null borra el valor"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        rate_decimals:
-          type:
-            - "integer"
-            - "null"
-          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato · null borra el valor"
-      minProperties: 1
     OptimizerWeights:
       type: "object"
       description: "Pesos de los 4 objetivos (app_setting optimizer.weights; iguales y normalizados, decisión C)."
@@ -821,11 +653,16 @@ components:
           additionalProperties: false
           required:
             - "comparator.timeout_seconds"
+            - "optimizer.date_window_days"
           properties:
             comparator.timeout_seconds:
               $ref: "#/components/schemas/SettingParameterInteger"
-              description: "Tiempo máximo del comparador de escenarios; si se pasa, la API responde 503 unavailable. Entero en segundos (K43, K44). Valor inicial: 5 (segundos; K43; sembrado por 00003)."
+              description: "Tiempo máximo del comparador de escenarios; si se pasa, la API responde 503 unavailable. Entero en segundos (K43, K44). Valor inicial: 5 (segundos; K43; sembrado por 00003). Rango: entero de 1 a 30; de 1 a 30 (límites de seguridad, Q2-74), Q2-74 (K50)."
               x-app-setting: "comparator.timeout_seconds"
+            optimizer.date_window_days:
+              $ref: "#/components/schemas/SettingParameterInteger"
+              description: "Días antes y después de la fecha de una compra planeada que prueba el comparador de escenarios («fecha ± días»). Entero en días (Q2-75, K44). Valor inicial: 7 (días antes y después de la fecha (fecha ± días), 0 o más; Q2-75 (K50); sembrado por 00004). Rango: entero de 0 o más."
+              x-app-setting: "optimizer.date_window_days"
           x-calculado: true
           description: "Parámetros operativos de «Créditos y condiciones» por clave de app_setting (K44, C1 §11.7): valor vigente, valor inicial, tipo y unidad."
         min_available_buffer_cents:
@@ -840,10 +677,6 @@ components:
           $ref: "componentes-comunes.yaml#/components/schemas/Date"
           description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.zero_debt_by_date"
-        date_window_days:
-          type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
-          x-app-setting: "optimizer.date_window_days"
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
@@ -867,10 +700,6 @@ components:
           $ref: "componentes-comunes.yaml#/components/schemas/Date"
           description: "Deuda en cero, en el crédito que se usa, antes de esta fecha (optimizer.zero_debt_by_date, K16). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
           x-app-setting: "optimizer.zero_debt_by_date"
-        date_window_days:
-          type: "integer"
-          description: "«Fecha ± días» de los escenarios (optimizer.date_window_days; lo pide la respuesta de S1-restricciones-optimizador). Lo captura Axel; no hay valor por defecto. Ausente = sin capturar: el comparador avisa «faltan restricciones» y no recomienda (K16)."
-          x-app-setting: "optimizer.date_window_days"
         weights:
           $ref: "#/components/schemas/OptimizerWeights"
           description: "Pesos."
@@ -878,13 +707,19 @@ components:
           type: "object"
           additionalProperties: false
           minProperties: 1
-          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; sin topes mínimos ni máximos hasta la puerta 2."
+          description: "Valores nuevos por clave de app_setting (K44). Un valor vacío, null, de otro tipo o fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) responde 422 validation_failed y no se sustituye por otro."
           properties:
             comparator.timeout_seconds:
               type: "integer"
-              minimum: 0
-              description: "Valor nuevo de comparator.timeout_seconds (segundos)."
+              minimum: 1
+              maximum: 30
+              description: "Valor nuevo de comparator.timeout_seconds (segundos). Rango: entero de 1 a 30; de 1 a 30 (límites de seguridad, Q2-74), Q2-74 (K50)."
               x-app-setting: "comparator.timeout_seconds"
+            optimizer.date_window_days:
+              type: "integer"
+              minimum: 0
+              description: "Valor nuevo de optimizer.date_window_days (días antes y después de la fecha (fecha ± días), 0 o más). Rango: entero de 0 o más."
+              x-app-setting: "optimizer.date_window_days"
         reset_parameters:
           type: "array"
           uniqueItems: true
@@ -893,6 +728,7 @@ components:
             type: "string"
             enum:
               - "comparator.timeout_seconds"
+              - "optimizer.date_window_days"
           x-entrada: true
           description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
       additionalProperties: false
@@ -1165,20 +1001,8 @@ components:
           description: "1 = activo"
         params_json:
           type: "object"
-          properties:
-            send_time:
-              type: "string"
-              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
-              description: "Hora local de envío en formato HH:MM de 24 horas, zona America/Mexico_City (K43), del resumen diario y de los avisos con hora. No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
-            advance_days:
-              type: "integer"
-              minimum: 0
-              description: "Días de anticipación del aviso de precios viejos antes del día de despensa: entero mayor o igual a 0 (K43). No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
           additionalProperties: true
-          description: "Parámetros de programación del aviso (objeto JSON). Desde el esquema 1.3 (00003, K44) los umbrales del aviso de presupuesto (80 y 100 %) y los días antes del pago próximo (1 y 0) ya no van aquí: son las claves `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` de `app_setting` (RN-29, getAlertSettings); el Down de la 00003 los repone aquí. Aquí quedan cuatro claves: `send_time` y `advance_days` (K43; sin valor sembrado, lo propone S7), y `weekday` (7 en `weekly_summary` y `meal_plan_missing`) y `day_of_month` (1 en `monthly_report`), cuyo valor es FIRME (decisión F). Dónde viven las cuatro (aquí o en `app_setting`) es PROVISIONAL: bloqueo S1-parametros-avisos."
-          x-provisional: true
+          description: "Parámetros propios del aviso (objeto JSON). La hora, el día, la anticipación, los umbrales del presupuesto y los días antes del pago próximo no van aquí: son claves de `app_setting` (RN-29): `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` desde el esquema 1.3 (00003, K44), y `reports.*` (hora y día de los reportes), `alerts.send_time`, `alerts.stale_prices_advance_days` y `alerts.meal_plan_missing_weekday` desde el 1.4 (00004, Q2-11 B, K47); se leen y cambian en getReportSettings y getAlertSettings. Con los valores iniciales solo `budget_threshold` conserva un parámetro (`scopes`); los demás avisos quedan con `{}`. Los Down de la 00004 y de la 00003 los reponen aquí."
         created_at:
           $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
           description: "created_at"
@@ -1198,7 +1022,7 @@ components:
     NotificationUpdate:
       type: "object"
       additionalProperties: false
-      description: "Activa o desactiva un aviso y sus parámetros (N-297, N-298, N-300). Claves de params_json FIRMES (K43): send_time (hora local HH:MM, America/Mexico_City, del resumen diario y de los avisos con hora) y advance_days (entero ≥ 0: días de anticipación del aviso de precios viejos antes del día de despensa). Hoy no tienen valor sembrado (RN-29 1.3; lo propone S7), así que no hay «restablecer» para ellas; cuando una migración siembre su valor, será su valor inicial (K44). Los umbrales del presupuesto y los días antes del pago próximo ya no van aquí: son claves de app_setting (getAlertSettings, K44). is_enabled es FIRME. Dónde viven send_time, advance_days, weekday y day_of_month (aquí o en app_setting) lo decide el bloqueo S1-parametros-avisos; la marca de lugar va en params_json y en sus claves send_time y advance_days, no en el esquema entero."
+      description: "Activa o desactiva un aviso o un reporte programado (N-297, N-300) y cambia sus parámetros propios (params_json). La hora, el día y la anticipación ya no van aquí (Q2-11 B, K47): son claves de app_setting con valor inicial y «restablecer» (K44), las de los reportes en updateReportSettings y las de los avisos en updateAlertSettings. is_enabled es FIRME."
       x-tabla: "notification"
       properties:
         is_enabled:
@@ -1206,20 +1030,8 @@ components:
           description: "1 = activo"
         params_json:
           type: "object"
-          properties:
-            send_time:
-              type: "string"
-              pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
-              description: "Hora local de envío en formato HH:MM de 24 horas, zona America/Mexico_City (K43), del resumen diario y de los avisos con hora. No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
-            advance_days:
-              type: "integer"
-              minimum: 0
-              description: "Días de anticipación del aviso de precios viejos antes del día de despensa: entero mayor o igual a 0 (K43). No tiene valor sembrado ni valor por omisión: lo propone S7 (RN-29 1.3) y es configurable (K44). Dónde vive (params_json, K43, o app_setting, K44) es PROVISIONAL: bloqueo S1-parametros-avisos."
-              x-provisional: true
           additionalProperties: true
-          description: "Parámetros de programación del aviso (objeto JSON). Desde el esquema 1.3 (00003, K44) los umbrales del aviso de presupuesto (80 y 100 %) y los días antes del pago próximo (1 y 0) ya no van aquí: son las claves `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` de `app_setting` (RN-29, getAlertSettings); el Down de la 00003 los repone aquí. Aquí quedan cuatro claves: `send_time` y `advance_days` (K43; sin valor sembrado, lo propone S7), y `weekday` (7 en `weekly_summary` y `meal_plan_missing`) y `day_of_month` (1 en `monthly_report`), cuyo valor es FIRME (decisión F). Dónde viven las cuatro (aquí o en `app_setting`) es PROVISIONAL: bloqueo S1-parametros-avisos."
-          x-provisional: true
+          description: "Parámetros propios del aviso (objeto JSON). La hora, el día, la anticipación, los umbrales del presupuesto y los días antes del pago próximo no van aquí: son claves de `app_setting` (RN-29): `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` desde el esquema 1.3 (00003, K44), y `reports.*` (hora y día de los reportes), `alerts.send_time`, `alerts.stale_prices_advance_days` y `alerts.meal_plan_missing_weekday` desde el 1.4 (00004, Q2-11 B, K47); se leen y cambian en getReportSettings y getAlertSettings. Con los valores iniciales solo `budget_threshold` conserva un parámetro (`scopes`); los demás avisos quedan con `{}`. Los Down de la 00004 y de la 00003 los reponen aquí."
       minProperties: 1
     TestNotificationRequest:
       type: "object"
@@ -1433,7 +1245,8 @@ components:
       properties:
         schedule:
           type: "string"
-          description: "Expresión cron de 5 campos en hora de America/Mexico_City"
+          description: "Expresión cron de 5 campos en hora de America/Mexico_City Los reportes programados toman su hora y su día de app_setting (reports.*, Q2-11 B, K47; updateReportSettings); cómo se relaciona schedule de sus jobs con esas claves es PROVISIONAL: bloqueo C1-hora-reportes-job."
+          x-provisional: true
         is_enabled:
           type: "boolean"
           description: "1 = activo"

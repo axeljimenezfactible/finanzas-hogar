@@ -1,6 +1,7 @@
 """Oráculo S5 · cargador PROFECO (§11) y parseo de TSV de Tesseract (§12) sobre archivos de oraculo/fixtures/s5/_datos/.
 
-Sin red. Importes y coordenadas como texto/Decimal, nunca flotantes. Los motivos (`reason`) son texto libre y no se comparan.
+Sin red. Importes y coordenadas como texto/Decimal, nunca flotantes. Los motivos (`reason`) son la lista cerrada de §11
+(regla técnica, H-r3-03, Q2-04 = A) y se comparan.
 """
 import csv
 import datetime as dt
@@ -17,7 +18,8 @@ COLUMNAS = ('producto', 'presentacion', 'marca', 'categoria', 'catalogo', 'preci
 _FECHAS = (re.compile(r'^(\d{4})-(\d{2})-(\d{2})(?:[ T]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?)?$'),
            re.compile(r'^(\d{4})/(\d{2})/(\d{2})(?: \d{2}:\d{2}(?::\d{2})?)?$'),
            re.compile(r'^(\d{2})/(\d{2})/(\d{4})(?: \d{2}:\d{2}(?::\d{2})?)?$'))
-_PRECIO = re.compile(r'^\d+(?:\.\d{1,2})?$')
+_DIGITOS = re.compile(r'^[0-9]+$')
+# _FECHAS: PROVISIONAL (bloqueo S5-motor-oraculo-reglas pregunta 4): §11 no lista los formatos y el motor acepta otros.
 
 
 def _lee(ruta):
@@ -31,9 +33,43 @@ def _lee(ruta):
 
 
 def _registros(ruta):
+    """Registros del CSV en orden; un renglón que el lector no puede leer llega como None («CSV mal formado»)."""
     rd = csv.reader(io.StringIO(_lee(ruta), newline=''))
-    filas = [r for r in rd if r]
-    return filas
+    filas = []
+    while True:
+        try:
+            r = next(rd)
+        except StopIteration:
+            return filas
+        except csv.Error:
+            filas.append(None)
+            continue
+        if r:
+            filas.append(r)
+
+
+def _precio(txt):
+    """§11 paso 3: devuelve (centavos, None) o (None, motivo). Se quitan los espacios de las orillas y un «$» inicial;
+    dígitos con coma de miles opcional (después del primer grupo, grupos de exactamente 3) y un punto con 1 o 2 decimales."""
+    t = txt.strip()
+    if t.startswith('$'):
+        t = t[1:].strip()
+    if not t:
+        return None, 'precio vacío'
+    entero, punto, dec = t.partition('.')
+    if ',' in t:
+        grupos = entero.split(',')
+        if ',' in dec or '' in grupos or any(len(g) != 3 for g in grupos[1:]):
+            return None, 'precio con comas mal puestas'
+        entero = ''.join(grupos)
+    if len(dec) > 2:
+        return None, 'precio con más de dos decimales'
+    # PROVISIONAL (bloqueo S5-motor-oraculo-reglas pregunta 7): un espacio en medio, más de 15 dígitos enteros y «1.2.3» como «más de
+    # dos decimales» (S-1 a S-3) están copiados del motor en uso; no son evidencia independiente (§15.3) hasta que §11 los fije.
+    if not entero or len(entero) > 15 or (punto and not dec) or not _DIGITOS.match(entero) or (dec and not _DIGITOS.match(dec)):
+        return None, 'precio ilegible'
+    c = int(entero) * 100 + int((dec + '00')[:2])
+    return (c, None) if c > 0 else (None, 'precio no positivo')
 
 
 def _fecha(txt):
@@ -72,6 +108,28 @@ def _normaliza(txt):
     return ' '.join(palabras)
 
 
+def _motivo(f, cab, hoy):
+    """Lectura de un registro (§11, regla técnica H-r3-03, Q2-04 = A): el primer fallo da el motivo de la lista cerrada; None si se lee."""
+    if f is None:
+        return 'CSV mal formado'
+    if len(f) != len(cab):
+        return f'columnas: {len(f)} en vez de {len(cab)}'
+    x = dict(zip(cab, (v.strip() for v in f)))
+    if not x['producto']:
+        return 'producto vacío'
+    if not x['cadena_comercial']:
+        return 'cadena comercial vacía'
+    _, motivo = _precio(x['precio'])
+    if motivo:
+        return motivo
+    if not x['fecha_registro']:
+        return 'fecha vacía'
+    fch = _fecha(x['fecha_registro'])
+    if fch is None:
+        return 'fecha ilegible'
+    return 'fecha futura' if fch > hoy else None
+
+
 def profeco_import(d, files, links_file, mode):
     if mode not in ('production', 'review'):
         raise ErrorMotor('invalid_argument', 'mode')
@@ -79,6 +137,8 @@ def profeco_import(d, files, links_file, mode):
         raise ErrorMotor('invalid_argument', 'files')
     enlaces = {}
     filas = _registros(ruta_repo(links_file, 'links_file', DATOS_S5))
+    if None in filas:
+        raise ErrorMotor('invalid_argument', links_file)
     cab = [c.strip().lower() for c in filas[0]] if filas else []
     for c in ('producto', 'presentacion', 'marca', 'presentacion_id', 'estado', 'confirmo', 'fecha_confirmacion'):
         if c not in cab:
@@ -89,40 +149,38 @@ def profeco_import(d, files, links_file, mode):
             raise ErrorMotor('invalid_argument', 'estado')
         if (x['estado'] == 'confirmado') != bool(x['confirmo'] and x['fecha_confirmacion']) or (x['estado'] == 'propuesto' and (x['confirmo'] or x['fecha_confirmacion'])):
             raise ErrorMotor('invalid_argument', 'confirmacion')
-        enlaces.setdefault((x['producto'], x['presentacion'], x['marca']), x)
+        # liga normalizada (PROVISIONAL, en uso A, bloqueo S5-profeco-filtro pregunta 2 = Q2-57): «ATUN DOLORES» = «ATÚN DOLORES»
+        k = (_normaliza(x['producto']), _normaliza(x['presentacion']), _normaliza(x['marca']))
+        if k in enlaces:  # PROVISIONAL, copiado del motor en uso (bloqueo S5-motor-oraculo-reglas pregunta 8)
+            raise ErrorMotor('invalid_argument', 'liga repetida')
+        enlaces[k] = x
     # Filtro (PROVISIONAL, bloqueo S5-profeco-filtro, opción A): cadena = profeco_name de las tiendas chain;
     # municipio = municipality solo de las sucursales (branch); las dos comparaciones con _normaliza.
     cadenas = {_normaliza(s['profeco_name']): s for s in d.stores.values() if s['kind'] == 'chain' and _normaliza(s['profeco_name'])}
     munis = {_normaliza(s['municipality']) for s in d.stores.values() if s['kind'] == 'branch' and _normaliza(s['municipality'])}
-    res = {'read': 0, 'rejected': 0, 'filtered_out': 0, 'skipped': 0, 'loaded': 0, 'duplicates': 0}
+    res = {'read': 0, 'rejected': 0, 'filtered_out': 0, 'skipped': 0, 'loaded': 0, 'loaded_proposed': 0, 'duplicates': 0}
     cobertura, vistos, rechazos = {}, set(), []
     for fn in files:
         ruta = ruta_repo(fn, 'files', DATOS_S5)
         filas = _registros(ruta)
-        cab = [c.strip().lower() for c in filas[0]] if filas else []
+        cab = [c.strip().lower() for c in filas[0]] if filas and filas[0] is not None else []
         if any(c not in cab for c in COLUMNAS):
             raise ErrorMotor('profeco_header', fn)
         for n, f in enumerate(filas[1:], 1):
             res['read'] += 1
-            if len(f) != len(cab):
+            motivo = _motivo(f, cab, d.today)
+            if motivo:
                 res['rejected'] += 1
-                rechazos.append({'file': fn, 'row': n, 'reason': 'columnas'})
+                rechazos.append({'file': fn, 'row': n, 'reason': motivo})  # sin tope; el motor guarda 100 (PROVISIONAL, bloqueo S5-motor-oraculo-reglas pregunta 6)
                 continue
             x = dict(zip(cab, (v.strip() for v in f)))
-            if not _PRECIO.match(x['precio']):
-                res['rejected'] += 1
-                rechazos.append({'file': fn, 'row': n, 'reason': 'precio ilegible'})
-                continue
             fch = _fecha(x['fecha_registro'])
-            if fch is None:
-                res['rejected'] += 1
-                rechazos.append({'file': fn, 'row': n, 'reason': 'fecha ilegible'})
-                continue
             cadena = cadenas.get(_normaliza(x['cadena_comercial']))
             if cadena is None or _normaliza(x['municipio']) not in munis:
                 res['filtered_out'] += 1
                 continue
-            lg = enlaces.get((x['producto'], x['presentacion'], x['marca']))
+            lg = enlaces.get((_normaliza(x['producto']), _normaliza(x['presentacion']), _normaliza(x['marca'])))
+            # presentacion_id desconocido → skipped; el motor en uso da unknown_presentation (PROVISIONAL, bloqueo S5-motor-oraculo-reglas pregunta 5)
             if lg is None or lg['presentacion_id'] not in d.pres or (mode == 'production' and lg['estado'] != 'confirmado'):
                 res['skipped'] += 1
                 continue
@@ -135,7 +193,7 @@ def profeco_import(d, files, links_file, mode):
                 res['duplicates'] += 1
                 continue
             vistos.add(clave)
-            res['loaded'] += 1
+            res['loaded' if lg['estado'] == 'confirmado' else 'loaded_proposed'] += 1  # §11: propuestas solo en modo revisión
             k = (x['cadena_comercial'], x['municipio'])
             cobertura[k] = cobertura.get(k, 0) + 1
     return {**res, 'coverage': [{'chain': c, 'municipality': m, 'price_count': v} for (c, m), v in sorted(cobertura.items())],

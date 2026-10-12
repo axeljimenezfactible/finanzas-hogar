@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| Versión | **C1 v1.2** (11-oct-2026, puerta 1b) · `info.version` 1.2.0 de `docs/contratos/openapi.yaml` |
-| Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2; v1.1 corrección r1: agente correccion-C1-r1; v1.1 corrección r4: agente correccion-C1-r4; v1.2: agente C1-v1.2; v1.2 corrección r1: agente correccion-C1-r1; v1.2 ronda 3 (P1d): agente correccion-C1-r3 |
-| Estado | Puerta 1b aplicada: respuestas K35 a K44 de `decisiones.md` §K (C1 v1.2) y bajos de la revisión r2 corregidos en la ronda 3 (P1d) |
-| Fuentes | `plan.md` §1, §3.4 (S6, S7), §3.5 (U1), §3.7; `decisiones.md`; esquema de S1, versión 1.3 (00001+00002+00003: `backend/db/migrations/00001_esquema.sql`, `00002_puerta1.sql` y `00003_puerta1b.sql`; `docs/contratos/diccionario-datos.md`, `docs/contratos/reglas-negocio.md`); U1 1.2 (`docs/design/U1-arquitectura.md`, necesidades N-xxx) |
-| Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): 167 rutas, 210 operaciones, 252 esquemas |
+| Versión | **C1 v1.3** (11-oct-2026, puerta 2) · `info.version` 1.3.0 de `docs/contratos/openapi.yaml` |
+| Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2; v1.1 corrección r1: agente correccion-C1-r1; v1.1 corrección r4: agente correccion-C1-r4; v1.2: agente C1-v1.2; v1.2 corrección r1: agente correccion-C1-r1; v1.2 ronda 3 (P1d): agente correccion-C1-r3; v1.3: agente C1-puerta2 (P2c) |
+| Estado | Puerta 2 aplicada (C1 v1.3): respuestas de Axel de `docs/estado/puerta2/RESPUESTAS.md` sobre el esquema 1.4 de S1. Las preguntas sin recomendación quedan con la opción en uso y no cambian C1 |
+| Fuentes | `plan.md` §1, §3.4 (S6, S7), §3.5 (U1), §3.7; `decisiones.md`; esquema de S1, versión 1.4 (00001 a 00004: `backend/db/migrations/00001_esquema.sql`, `00002_puerta1.sql`, `00003_puerta1b.sql` y `00004_puerta2.sql`; `docs/contratos/diccionario-datos.md`, `docs/contratos/reglas-negocio.md`); U1 1.2 (`docs/design/U1-arquitectura.md`, necesidades N-xxx); puerta 2: `docs/estado/puerta2/PUERTA-2.md` y `RESPUESTAS.md`, contratos de motores S2 1.3, S4 1.5 y S5 1.5 (`docs/contratos/motores/`) y U3 1.3 |
+| Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): 168 rutas, 212 operaciones, 255 esquemas |
 | Generador | Este documento, `openapi.yaml` y `backend/internal/api/routes.go` son archivos generados: no se editan a mano. Fuente: `backend/internal/api/c1gen/` (este texto sale de `c1_plantilla.md`; ver su `README.md`). Regenerar: `python3 -I backend/internal/api/c1gen/build.py`. Comprobar que nadie los editó a mano: `python3 -I backend/internal/api/c1gen/build.py --check`. Verificar C1-01 a C1-15, la matriz §10 y S6-03: `uv run --no-project --with pyyaml --with jsonschema python3 -I backend/internal/api/c1gen/verify_c1.py` |
 
 Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla **necesita**. El OpenAPI es la fuente de verdad de rutas y esquemas; aquí están las convenciones únicas, las métricas con su fórmula, la matriz pantalla → necesidad → endpoint y la cobertura de S1. Todo lo que no sale del plan, de las decisiones o del oráculo va marcado **PROVISIONAL** y apunta a su bloqueo en `docs/estado/bloqueos/`.
@@ -25,6 +25,19 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 | C1 v1.2 (puerta 1b) | 11-oct-2026 | Aplica K35 a K44 (`decisiones.md` §K) y la sección «Para C1» de `docs/estado/p1c/U1-1.2.md` contra el esquema 1.3 de S1 (migraciones 00001, 00002 y 00003). Parámetros configurables (K44): cada clave de `app_setting` del inventario de S1 se lee con su valor vigente y su valor inicial y se cambia o restablece por clave; tabla generada en §11.7. Operaciones nuevas: `getSecuritySettings` y `updateSecuritySettings` (N-320), `getAlertSettings` y `updateAlertSettings` (N-323), `dismissTelegramChatCandidate` (N-324), `getDataSettings` y `updateDataSettings` (N-325), `getHealthSettings` y `updateHealthSettings` (N-326); N-321 y N-322 entran en las de comparador y precios; N-327 en `createHealthProfile` y `updateHealthProfile`. K36: `HealthProfile` con el ajuste por persona y el de la casa. K38, K39 y K43: sin marcas (N-023, N-042, N-064, N-120, N-226, N-230, N-297, N-300, N-311 y N-313 FIRMES en §10). `info.version` 1.2.0. Detalle en «C1 v1.2 (puerta 1b)», abajo. |
 | C1 v1.2 · corrección r1 | 11-oct-2026 | Hallazgo A-01 de `docs/estado/p1c/REVISION-C1-r1.md` (C1-23, K43). `params_json` de `Notification` y `NotificationUpdate` declara las propiedades `send_time` (`type: string`, patrón `HH:MM` de 24 horas) y `advance_days` (`type: integer`, `minimum: 0`), sin valor por omisión; `weekday` y `day_of_month` siguen por `additionalProperties: true` y la marca de lugar `x-provisional` (bloqueo `S1-parametros-avisos`) se queda. Detalle al final de §11.7. `verify_c1.py` comprueba C1-23. Sin cambios de rutas, operaciones, cifras ni versión (`info.version` 1.2.0). |
 | C1 v1.2, ronda 3 (P1d) | 11-oct-2026 | Hallazgos bajos N-01, N-02, N-03, B-02, B-03, B-04, B-05 e I-01 de `docs/estado/p1c/REVISION-C1-r2.md`. N-01: una sola constante de versión (`info.version` 1.2.0) para los encabezados generados de `openapi.yaml`, `routes.go` y los extractos. N-02: `minimum: 0` en `goal_adjust_lose_kcal` y `goal_adjust_gain_kcal` de `HealthProfileCreate` y `HealthProfileUpdate` (K36). N-03: el estado de la tarjeta (N-205) cita RN-26 y S3-08 (K18) en vez de un archivo de bloqueo. B-02: `NotificationUpdate` ya no lleva la marca de lugar en el esquema entero (`is_enabled` es FIRME); la llevan `params_json` y sus claves `send_time` y `advance_days`, en `Notification` y en `NotificationUpdate` (bloqueo `S1-parametros-avisos`). B-03: la descripción de `params_json` dice que los umbrales y los días antes del pago viven en `app_setting` desde 1.3 y que ahí quedan `send_time`, `advance_days`, `weekday` y `day_of_month`, con valor FIRME (decisión F) en las dos últimas. B-04: el mensaje de `verify_c1.py` sobre la regla del domingo dice FIRME (K38). B-05: el reporte de C1 v1.2 trae los comandos completos de verificación. I-01: esta cabecera dice puerta 1b aplicada, esquema 1.3 y U1 1.2. La nota de `send_time` en la 00003 dice que lo propone S7 en WF-3 (K31, puerta 4). Sin cambios de rutas, operaciones, cifras ni versión (`info.version` 1.2.0). |
+| C1 v1.3 (puerta 2) | 11-oct-2026 | Aplica las respuestas de Axel de la puerta 2 (`docs/estado/puerta2/RESPUESTAS.md`: lo recomendado de `PUERTA-2.md` más Q2-11 B) contra el esquema 1.4 de S1 (migraciones 00001 a 00004). Reportes y avisos: hora, día y anticipación pasan a `app_setting` con lectura y cambio por clave (operaciones nuevas `getReportSettings` y `updateReportSettings`; `AlertSettings` suma tres claves); `params_json` ya no declara `send_time` ni `advance_days`. Rango por clave en el cambio (`minimum`, `maximum`, `pattern`) y tipo nuevo `SettingParameterTime`. `Credit.missing_terms` con `vat` (5 datos) y `credit.vat_included`. Alcance `scope` en `CostShareRuleUpdate` (§7.2). Lista de compras con tienda asignada, fecha de visita y totales de Q2-42 A; comparativa con `cheapest_store_id`; acumulados de T-2; décimas del avance de una meta; segunda tienda de la tarjeta 5; tienda del escenario. Detalle en «C1 v1.3 (puerta 2)», abajo. `info.version` = 1.3.0. |
+
+### C1 v1.3 (puerta 2)
+
+- **Entradas**: el generador aplica `00001` a `00004_puerta2.sql` (esquema 1.4). `parse_schema.py` lee además `@param_rango` (rango aprobado que se suma a su clave) y `@param_sin_valor_cerrado` (un `@param_sin_valor` que ya tiene clave), y toma la última `@col_note` de cada columna. El rango de cada clave no se copia: se prueba contra la base temporal (cada valor con un `UPDATE` que se deshace), así `minimum`, `maximum` y el patrón de la hora salen de los disparadores de S1 y el generador se detiene si el patrón no coincide con la base.
+- **Reportes y avisos (Q2-11 B, K47; Q2-72 y Q2-73, K50)**: `getReportSettings` y `updateReportSettings` (`/api/v1/settings/reports`, N-296 y N-297) leen y cambian por clave `reports.daily_send_time` (21:30), `reports.weekly_weekday` (7) y `reports.weekly_send_time` (19:00), `reports.monthly_day_of_month` (1; en un mes más corto sale el último día, Q2-66 B) y `reports.monthly_send_time` (08:00). `AlertSettings` suma `alerts.send_time` (09:00), `alerts.stale_prices_advance_days` (1) y `alerts.meal_plan_missing_weekday` (7), y sus operaciones cubren además N-298 y N-300. `Notification.params_json` y `NotificationUpdate.params_json` ya no declaran `send_time` ni `advance_days` y pierden la marca de lugar: el bloqueo `S1-parametros-avisos` está resuelto. `updateNotification` sigue para activo y parámetros propios (hoy solo `scopes` de `budget_threshold`).
+- **Rangos (Q2-74, Q2-77, Q2-66 B)**: cada clave del `PATCH` declara su rango (§11.7, columna «Rango (cambio)»): día de la semana de 1 a 7, día del mes de 1 a 31, `comparator.timeout_seconds` de 1 a 30, `price.stale_after_days` de 1 o más, horas con el patrón `HH:MM` de 00:00 a 23:59 y los demás enteros de 0 o más. `price.zero_weight_after_days` ≥ `price.stale_after_days` la valida la API (422) y el motor de precios. Tipo nuevo `SettingParameterTime`.
+- **Otras claves (Q2-75, Q2-76)**: `optimizer.date_window_days` (7) en `parameters` de `getOptimizerSettings` y `updateOptimizerSettings`, y deja de ser campo propio de esos dos esquemas (sigue en `ScenarioRequest` y en `constraints_used`); `ocr.timeout_seconds` (30) en `DataSettings` (sección propuesta por S1).
+- **IVA de un crédito (Q2-67 opción 1, K46)**: `Credit`, `CreditCreate` y `CreditUpdate` traen `vat_included` (`true` = la tasa ya incluye IVA; `false` = se suma `vat_on_interest_bp`; ausente = falta capturar). `Credit.missing_terms` lista 5 datos: `annual_rate`, `rate_base`, `vat`, `min_payment_pct_bp` y `min_payment_fixed_cents`.
+- **Reparto (Q2-68 C)**: `CostShareRuleUpdate.scope` (`onward` o `all`), obligatorio con `parts` y sin valor por omisión (§7.2).
+- **Lista de compras (Q2-39 a Q2-42 A, S4 1.5)**: `ShoppingListItem.assigned_store_id` (tienda asignada, rige la agrupación); `recommended_store_id` es la recomendación de S5 por precio y en vertical `market` no rige la agrupación; `estimated_price_cents` es el costo con la cotización que rige; `groups[].store_id` es la tienda asignada (ausente = «sin mercado dado de alta»), `groups[].visit_date` es nuevo, y los totales suman solo los artículos con precio. Orden de los grupos: mercado, cadena y el grupo sin tienda al final.
+- **Comparativa (S5 1.5, §7.4)**: `BasketComparison.cheapest_store_id` (primera tienda completa; ausente si ninguna) y `stores[].difference_vs_cheapest_cents` solo en tiendas completas; `stores[]` lleva primero las completas; `identical_count` cuenta renglones.
+- **Inicio, metas y comparador**: `AccrualVsCash.months[]` suma `cumulative_accrued_cents` y `cumulative_cash_cents` (Q2-65 A); `SavingsGoal.progress_tenths_pct` (Q2-17 C); `DashboardBestBasket.second_store_id` (Q2-86 A); `Scenario.store_id` (Q2-33 (b)).
 
 ### C1 v1.2 (puerta 1b)
 
@@ -297,6 +310,17 @@ En P-06, con diciembre a la vista, se cambia el monto a 2,517.37: `PATCH /api/v1
 
   El 8 (solo diciembre) y el 9 (desde enero) se eliminan: si se quedaran, enero seguiría en 1,947.50 y el monto no regiría «en adelante», y el 10 sin fin se traslaparía con los dos (409). Respuesta **200** (abreviada): `{"id": 10, "category_id": 5, "amount_cents": 251737, "valid_from_date": "2026-11-01", "is_single_month": false, "following_month_amount_cents": 251737, …}`.
 
+### 7.2 Reparto: alcance de un cambio de partes (`scope`, Q2-68 C)
+
+Al cambiar las partes de una regla de reparto (`updateCostShareRule` con `parts`) la pantalla pregunta el alcance, como el presupuesto en K2 (RN-03 1.4; P-26.12). `CostShareRuleUpdate.scope` es obligatorio cuando viene `parts`, no tiene valor por omisión y no se acepta sin `parts` (422 `validation_failed` en los dos casos). Cambiar solo `name` o `notes` no lleva `scope`.
+
+| `scope` | En pantalla | Qué hace |
+|---|---|---|
+| `onward` | «Solo los nuevos» | Cambia las partes de la regla. Los gastos ya guardados conservan sus partes, que están congeladas en `expense_share` (S1 1.4); los que se capturen después usan las nuevas. |
+| `all` | «También los ya capturados» | Cambia las partes y el motor de reparto recalcula con ellas el `expense_share` de los gastos ya capturados, en la misma transacción, y `audit_log` lo registra. Qué gastos abarca (los que usan la regla en el gasto o en un renglón, o también los que la toman por su categoría o por ser la de por defecto) es PROVISIONAL: bloqueo `C1-reparto-alcance`. |
+
+Ejemplo ilustrativo (cifras sintéticas): «Conjunto 50/50» pasa a 60/40. Un gasto ya guardado de $100.00 con esa regla tiene 5000 y 5000 en `expense_share`. Con `onward` se queda así y un gasto nuevo de $100.00 queda en 6000 y 4000; con `all`, si el gasto queda dentro del alcance, pasa a 6000 y 4000.
+
 ## 8. Vistas de base de datos (tabla, tablero, calendario, galería)
 
 `GET /api/v1/views/{entity}?mode=table|board|calendar|gallery` (decisión G) aplica los filtros globales, `q`, `status`, `sort` y la paginación únicos, y responde `ViewPage` = `Page` + `mode` + `groups`. En **tablero**, `group_by` elige la columna y cada grupo trae `count`, `total_cents` (Σ del importe principal) y `share_bp`; en **calendario**, `date_field` elige la fecha y los grupos son días; en **galería**, cada registro trae `image_attachment_id` cuando hay foto. La vista elegida, filtros y columnas visibles se recuerdan en el dispositivo (U1 §2.5 y su supuesto 2); no hay vistas guardadas compartidas en esta versión.
@@ -345,7 +369,7 @@ Las 6 tarjetas de Inicio › Resumen (U1 N-020 a N-025, U3) y las métricas de s
 | M-08 | Participación de Karen (N-026) | su parte devengada de la despensa del mes; sus compras vivas; sus partes de pagos del mes con estado; deuda viva = Σ partes pendientes | mes en curso | — | person, expense, expense_share, credit_purchase, credit_purchase_share, scheduled_payment, scheduled_payment_share, credit_payment | GET `/api/v1/persons/{person_id}/participation` | oct-2026: parte devengada **749.86** (`periodos[0].devengado.karen`); su parte del pago del 30-oct **374.93** (R-11) |
 | M-09 | Presupuesto por categoría (N-081, N-027) | por categoría: plan, real (parte del hogar devengada), plan − real, % usado y estado (umbrales de M-01) | mes (`period`) | `period` | budget, category, period, expense, expense_share | GET `/api/v1/budget/categories` | marcador (plan por categoría lo captura Axel) |
 | M-10 | Flujo por quincena (N-090) | por quincena (24 hacia adelante): ingresos, partes del hogar de pagos, fijos y venideros, variable estimado (método de S2), ahorro planificado, saldo y saldo acumulado; efectivo | desde Q1 del mes en curso | — | income, planned_item, expense, expense_share, scheduled_payment, scheduled_payment_share, credit_payment, savings_goal | GET `/api/v1/cash-flow/fortnights` | Q2 oct-2026: pagos de crédito, parte del hogar **598.82** (R-13) |
-| M-11 | Devengado contra efectivo (N-091, N-028) | por mes: devengado y efectivo (totales y partes); diferencia acumulada = devengado acumulado − efectivo acumulado (no se rotula deuda viva; `criterios-invariante-deuda`) | mes en curso a +11 | — | expense, expense_share, planned_item, scheduled_payment, scheduled_payment_share, credit_purchase | GET `/api/v1/cash-flow/accrual-vs-cash` | oct-2026: devengado **1,947.50**, efectivo **973.75**, diferencia acumulada 973.75 (R-45); totales P1–P6 14,362.48 / 13,103.78 (R-51, R-52) |
+| M-11 | Devengado contra efectivo (N-091, N-028) | por mes: devengado y efectivo (totales y partes); al cierre de cada mes, con el mismo origen para los tres (desde el primer evento de las entradas, S2-interfaz §3.2; Q2-25 A y Q2-65 A): devengado acumulado `cumulative_accrued_cents` = Σ devengado desde el primer evento hasta el cierre del mes, efectivo acumulado `cumulative_cash_cents` = Σ efectivo en el mismo tramo, y diferencia acumulada `cumulative_difference_cents` = devengado acumulado − efectivo acumulado (no se rotula deuda viva; `criterios-invariante-deuda`). El origen no es el primer mes visible: los meses anteriores a la ventana cuentan, así que la cima de T-2 es el devengado acumulado sea cual sea el mes en curso | mes en curso a +11 | — | expense, expense_share, planned_item, scheduled_payment, scheduled_payment_share, credit_purchase | GET `/api/v1/cash-flow/accrual-vs-cash` | oct-2026 (P1): devengado **1,947.50**, efectivo **973.75**, acumulados 1,947.50 y 973.75, diferencia acumulada 973.75 (R-45). Ventana que empieza en nov-2026 (reloj en nov-2026): su primer mes (P2) trae devengado 1,947.50 y efectivo 1,947.50 (R-46), y acumulados **3,895.00** y **2,921.25** (oct + nov; diferencia 973.75); sumar solo lo visible daría 1,947.50 y 1,947.50. mar-2027 (P6): acumulados **14,362.48** y **13,103.78** = totales P1–P6 (R-51, R-52), diferencia acumulada 1,258.70 (R-50). Cifras sumadas de `periodos[i]` de `oraculo/model.json` (Decimal) |
 | M-12 | Deuda viva a una fecha (N-092) | Σ de lo que queda por pagar después de la fecha (capital + intereses) de las compras hechas hasta esa fecha; total, por línea y por compra (motor S3) | fecha elegida | `date` | credit_purchase, scheduled_payment, credit | GET `/api/v1/debt/live` | 10-abr-2027: **6,293.44** (R-53 = 1,258.70 R-54 + 5,034.74 R-55) |
 | M-13 | Calendario unificado de pagos (N-192, N-027) | pagos de todas las líneas en el rango con partes y estado; promociones vigentes y cortes de tarjeta | mes visible o hoy..+60 | `period`, `credit_id`, `family` | scheduled_payment, scheduled_payment_share, credit_payment, credit_purchase, promotion, credit_statement | GET `/api/v1/scheduled-payments`, GET `/api/v1/calendar/events` | pagos de la despensa 1: 30-oct, 15-nov, 30-nov y 15-dic-2026 por **973.75** (R-13 a R-16) |
 | M-14 | Plan contra real por mes (N-085, N-028) | por mes (máx. 12): plan total y real total (o de una categoría) | 12 meses | `category_id` | budget, category, expense, expense_share | GET `/api/v1/budget/monthly-trend` | marcador (plan lo captura Axel) |
@@ -568,12 +592,12 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 | P-26.06 | N-322 | E | Parámetros de precios | GET `/api/v1/settings/prices` · PATCH `/api/v1/settings/prices` | OK |
 | P-26.07 | N-294 | L | Recetario y nutrición | GET `/api/v1/meal-slots` · GET `/api/v1/settings/recipes` | OK |
 | P-26.07 | N-295 | E | Recargar base nutricional | POST `/api/v1/nutrition-facts/reload` | OK |
-| P-26.08 | N-296 | L | Reportes programados | GET `/api/v1/jobs` · GET `/api/v1/notifications` | OK |
-| P-26.08 | N-297 | E | Editar reportes programados | PATCH `/api/v1/jobs/{job_id}` · PATCH `/api/v1/notifications/{notification_id}` · PUT `/api/v1/notifications/{notification_id}/recipients` | FIRME (K43) · dónde viven `send_time` y `advance_days`: PROVISIONAL `S1-parametros-avisos` |
+| P-26.08 | N-296 | L | Reportes programados | GET `/api/v1/jobs` · GET `/api/v1/notifications` · GET `/api/v1/settings/reports` | OK |
+| P-26.08 | N-297 | E | Editar reportes programados | PATCH `/api/v1/jobs/{job_id}` · PATCH `/api/v1/notifications/{notification_id}` · PUT `/api/v1/notifications/{notification_id}/recipients` · PATCH `/api/v1/settings/reports` | FIRME (K43, K47) |
 | P-26.08 | N-248 | E | Generar reporte mensual | POST `/api/v1/reports/monthly` | OK |
-| P-26.09 | N-298 | L | Alertas | GET `/api/v1/notifications` | OK |
+| P-26.09 | N-298 | L | Alertas | GET `/api/v1/notifications` · GET `/api/v1/settings/alerts` | OK |
 | P-26.09 | N-299 | L | Registro de chat | GET `/api/v1/notification-recipients` · GET `/api/v1/telegram-chat-candidates` · PATCH `/api/v1/notification-recipients/{recipient_id}` | OK |
-| P-26.09 | N-300 | E | Editar alertas y probar | PATCH `/api/v1/notifications/{notification_id}` · PUT `/api/v1/notifications/{notification_id}/recipients` · POST `/api/v1/notifications/{notification_id}/test` | FIRME (K43) · dónde viven `send_time` y `advance_days`: PROVISIONAL `S1-parametros-avisos` |
+| P-26.09 | N-300 | E | Editar alertas y probar | PATCH `/api/v1/notifications/{notification_id}` · PUT `/api/v1/notifications/{notification_id}/recipients` · POST `/api/v1/notifications/{notification_id}/test` · PATCH `/api/v1/settings/alerts` | FIRME (K43, K47) |
 | P-26.09 | N-316 | E | Confirmar chat detectado | POST `/api/v1/telegram-chat-candidates/{candidate_id}/confirm` | OK |
 | P-26.09 | N-323 | E | Umbrales del presupuesto y anticipación del pago próximo | GET `/api/v1/settings/alerts` · PATCH `/api/v1/settings/alerts` | OK |
 | P-26.09 | N-324 | E | Descartar chat detectado | DELETE `/api/v1/telegram-chat-candidates/{candidate_id}` | OK |
@@ -599,8 +623,8 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 ## 11. Cobertura
 
 ### 11.1 Resumen
-- Necesidades de U1: **211** (N-001 a N-327). Con operación: **208**. Locales sin API (U1): **3** (N-003, N-301, N-317). Sin endpoint por bloqueo: **0**. Con cobertura parcial por un bloqueo abierto de §13: **0**. FIRMES desde la puerta 1b (antes con marca): **10**; en 2 de ellas solo queda pendiente dónde viven `send_time` y `advance_days` (bloqueo abierto `S1-parametros-avisos`, §13).
-- Operaciones del contrato: **210** en **167** rutas. Con al menos una N-xxx: **209**. Excepciones técnicas sin N-xxx: **1** (§11.2). N-xxx citadas por el contrato que no existen en U1: **0**.
+- Necesidades de U1: **211** (N-001 a N-327). Con operación: **208**. Locales sin API (U1): **3** (N-003, N-301, N-317). Sin endpoint por bloqueo: **0**. Con cobertura parcial por un bloqueo abierto de §13: **0**. FIRMES desde la puerta 1b (antes con marca): **10**; en 0 de ellas solo queda pendiente dónde viven `send_time` y `advance_days` (bloqueo abierto `S1-parametros-avisos`, §13).
+- Operaciones del contrato: **212** en **168** rutas. Con al menos una N-xxx: **211**. Excepciones técnicas sin N-xxx: **1** (§11.2). N-xxx citadas por el contrato que no existen en U1: **0**.
 - Pantallas de la matriz de U1 §3.29: **41** (Global, P-00 a P-25 y P-26.01 a P-26.14); filas de la matriz: **236**.
 - Tablas de S1: **55**; con al menos una operación: **55** (§11.4). `idempotency_key` es infraestructura de S6: la declaran en `x-tablas` las **41** operaciones con `Idempotency-Key` (§1 punto 8).
 
@@ -625,8 +649,8 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | `user_account` | 7 | `login`, `getCurrentSession`, `changeOwnPassword`, `listUsers`, `listSessions` … |
 | `device_session` | 9 | `login`, `logout`, `getCurrentSession`, `changeOwnPassword`, `listUsers` … |
 | `login_attempt` | 1 | `login` |
-| `app_setting` | 26 | `login`, `getDashboardBestBasket`, `getProjectionSettings`, `updateProjectionSettings`, `suggestRecipeWithAi` … |
-| `audit_log` | 95 | `changeOwnPassword`, `revokeSession`, `revokeSessions`, `createExpense`, `getExpense` … |
+| `app_setting` | 28 | `login`, `getDashboardBestBasket`, `getProjectionSettings`, `updateProjectionSettings`, `suggestRecipeWithAi` … |
+| `audit_log` | 96 | `changeOwnPassword`, `revokeSession`, `revokeSessions`, `createExpense`, `getExpense` … |
 | `idempotency_key` | 41 | `createExpense`, `duplicateExpense`, `markExpensePaid`, `uploadExpenseAttachment`, `createTicketScan` … |
 | `period` | 10 | `getDashboardMonthVsPlan`, `listPeriods`, `getBudgetMonth`, `getBudgetByCategory`, `getBudgetFortnights` … |
 | `cost_share_rule` | 21 | `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary`, `getExpenseMonthlyTrend` … |
@@ -643,9 +667,9 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | `promotion` | 12 | `listCalendarEvents`, `queryView`, `confirmTicketScan`, `listCreditPurchases`, `createCreditPurchase` … |
 | `planned_item` | 18 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getBudgetMonth`, `getBudgetFortnights`, `getCashFlowFortnights` … |
 | `income` | 13 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getBudgetMonth` … |
-| `expense` | 40 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
-| `expense_item` | 18 | `getDashboardBestBasket`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
-| `expense_share` | 27 | `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow`, `getPersonParticipation`, `listExpenses` … |
+| `expense` | 41 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
+| `expense_item` | 19 | `getDashboardBestBasket`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
+| `expense_share` | 28 | `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow`, `getPersonParticipation`, `listExpenses` … |
 | `attachment` | 19 | `queryView`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
 | `price` | 25 | `queryView`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `deleteAttachment`, `getTicketScan` … |
 | `credit_purchase` | 46 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
@@ -689,8 +713,8 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | P-26.05 | Créditos y condiciones (incluye promociones) | N-283, N-284, N-285, N-286, N-287, N-288, N-289, N-321 | `listCredits`, `getCredit`, `previewAvailability`, `listCreditTermRates`, `queryView`, `listPromotions`, `getOptimizerSettings`, `createCredit`, `updateCredit`, `createCreditTermRate`, `updateCreditTermRate`, `deleteCreditTermRate`, `createPromotion`, `updatePromotion`, `deletePromotion`, `updateOptimizerSettings` |
 | P-26.06 | Tiendas y precios (incluye mercados y membresía Sam's) | N-290, N-291, N-292, N-293, N-322 | `queryView`, `listStores`, `listProductGroups`, `getPriceSources`, `getPriceSettings`, `listJobs`, `createStore`, `updateStore`, `setStoreProductGroups`, `updatePriceSettings`, `importProfeco` |
 | P-26.07 | Recetas | N-294, N-295 | `listMealSlots`, `getRecipeSettings`, `reloadNutritionBase` |
-| P-26.08 | Reportes y frecuencias | N-296, N-297, N-248 | `listJobs`, `listNotifications`, `updateJob`, `updateNotification`, `setNotificationRecipients`, `generateMonthlyReport` |
-| P-26.09 | Notificaciones | N-298, N-299, N-300, N-316, N-323, N-324 | `listNotifications`, `listNotificationRecipients`, `listTelegramChatCandidates`, `updateNotificationRecipient`, `updateNotification`, `setNotificationRecipients`, `sendTestNotification`, `confirmTelegramChatCandidate`, `getAlertSettings`, `updateAlertSettings`, `dismissTelegramChatCandidate` |
+| P-26.08 | Reportes y frecuencias | N-296, N-297, N-248 | `listJobs`, `listNotifications`, `getReportSettings`, `updateJob`, `updateNotification`, `setNotificationRecipients`, `updateReportSettings`, `generateMonthlyReport` |
+| P-26.09 | Notificaciones | N-298, N-299, N-300, N-316, N-323, N-324 | `listNotifications`, `getAlertSettings`, `listNotificationRecipients`, `listTelegramChatCandidates`, `updateNotificationRecipient`, `updateNotification`, `setNotificationRecipients`, `sendTestNotification`, `updateAlertSettings`, `confirmTelegramChatCandidate`, `dismissTelegramChatCandidate` |
 | P-26.10 | Apariencia | N-301 | Sin API: el tema vive en el dispositivo (N-301, Local) |
 | P-26.11 | Datos y respaldos | N-302, N-305, N-306, N-308, N-303, N-304, N-307, N-325 | `listJobs`, `listBackups`, `getSeedStatus`, `listAiProviders`, `getSystemStatus`, `createBackup`, `restoreBackup`, `previewPlannedItemsImport`, `importPlannedItems`, `updateAiProvider`, `getDataSettings`, `updateDataSettings` |
 | P-26.12 | Personas y reparto | N-309, N-310 | `listPersons`, `listCostShareRules`, `updatePerson`, `updateCostShareRule` |
@@ -738,49 +762,60 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 
 ### 11.7 Parámetros operativos configurables (K44) → operaciones de settings
 
-Todo parámetro operativo es una clave de `app_setting` del hogar que nace con el valor decidido (K44; RN-29 de `reglas-negocio.md` 1.3). Esta tabla sale de las anotaciones `@param` de las migraciones y de los esquemas de settings de `openapi.yaml`; no se escribe a mano. `parse_schema.py` compara cada valor inicial con la siembra real y se detiene si no coinciden.
+Todo parámetro operativo es una clave de `app_setting` del hogar que nace con el valor decidido (K44; RN-29 de `reglas-negocio.md` 1.4). Esta tabla sale de las anotaciones `@param` de las migraciones y de los esquemas de settings de `openapi.yaml`; no se escribe a mano. `parse_schema.py` compara cada valor inicial con la siembra real y se detiene si no coinciden.
 
-- **Lectura**: el `GET /api/v1/settings/…` de la sección trae `parameters`, un objeto por clave de `app_setting` (`SettingParameterInteger` o `SettingParameterIntegerList`) con `value` (vigente), `initial_value` (sembrado; `null` si no lo hay), `is_initial`, `value_type` y `unit`.
-- **Cambio**: el `PATCH` de la misma ruta recibe `parameters` con el valor nuevo por clave. Un valor vacío, `null` o de otro tipo responde 422 `validation_failed` y no se sustituye por otro. Solo se valida tipo y signo (entero mayor o igual a 0, como los disparadores `trg_app_setting_param_int_*` de 00003); no hay topes mínimos ni máximos hasta la puerta 2.
+- **Lectura**: el `GET /api/v1/settings/…` de la sección trae `parameters`, un objeto por clave de `app_setting` (`SettingParameterInteger`, `SettingParameterIntegerList` o `SettingParameterTime`) con `value` (vigente), `initial_value` (sembrado; `null` si no lo hay), `is_initial`, `value_type` y `unit`.
+- **Cambio**: el `PATCH` de la misma ruta recibe `parameters` con el valor nuevo por clave. Un valor vacío, `null` o de otro tipo responde 422 `validation_failed` y no se sustituye por otro. Se valida el tipo y el rango de la clave, el de la columna «Rango (cambio)»: es el de los disparadores de S1 (`trg_app_setting_param_int_*` de 00003; `trg_app_setting_param_range_*` y `trg_app_setting_param_time_*` de 00004) y lo declara la propiedad de la clave en el `PATCH` (`minimum`, `maximum` o `pattern`; puerta 2, K50). Fuera de rango: 422 `validation_failed`.
 - **Restablecer** es un campo, no una operación: `reset_parameters` lista las claves que vuelven a su `initial_value`. Una clave no puede venir a la vez en `parameters` y en `reset_parameters` (422 `validation_failed`). Un mismo `PATCH` cambia unos y restablece otros, y `audit_log` registra el cambio.
-- **Quién usa el valor vigente**: `login`, `changeOwnPassword` y la renovación de la sesión (`auth.*`, `session.max_age_days`); la frescura y el peso de los precios (`price.stale_after_days`, `price.zero_weight_after_days`, RN-12); `importProfeco`; `compareScenarios` (503 `unavailable`); `uploadExpenseAttachment` (413 con el máximo en el mensaje); la purga de `idempotency_key`; `suggested_kcal_target` (`health.*` y el ajuste por persona de `health_profile`, RN-17); los avisos de presupuesto y de pago próximo (`alerts.*`).
+- **Quién usa el valor vigente**: `login`, `changeOwnPassword` y la renovación de la sesión (`auth.*`, `session.max_age_days`); la frescura y el peso de los precios (`price.stale_after_days`, `price.zero_weight_after_days`, RN-12); `importProfeco`; `compareScenarios` (503 `unavailable`); `uploadExpenseAttachment` (413 con el máximo en el mensaje); la purga de `idempotency_key`; `suggested_kcal_target` (`health.*` y el ajuste por persona de `health_profile`, RN-17); los avisos de presupuesto y de pago próximo y la hora, la anticipación y el día de los demás avisos (`alerts.*`); los reportes programados (`reports.*`, S7); la ventana de fechas del comparador (`optimizer.date_window_days`) y el OCR (`ocr.timeout_seconds`).
 
-| Clave de `app_setting` | Tipo | Unidad | Valor inicial | Decisión | Sección de Ajustes (propuesta de K44) | Sembrada en | Lectura | Cambio y «restablecer» |
-|---|---|---|---|---|---|---|---|---|
-| `auth.max_failed_attempts` | entero | intentos | `5` | Decisión A, K11 | Cuenta y roles | 00001 | `getSecuritySettings` | `updateSecuritySettings` |
-| `auth.lockout_window_minutes` | entero | minutos | `15` | Decisión A, K11 | Cuenta y roles | 00001 | `getSecuritySettings` | `updateSecuritySettings` |
-| `auth.password_min_length` | entero | caracteres | `12` | K6 | Cuenta y roles | 00003 | `getSecuritySettings` | `updateSecuritySettings` |
-| `session.max_age_days` | entero | días | `90` | K11 | Cuenta y roles | 00002 | `getSecuritySettings` | `updateSecuritySettings` |
-| `price.stale_after_days` | entero | días | `30` | Decisión E, K22 | Tiendas y precios | 00001 | `getPriceSettings` | `updatePriceSettings` |
-| `price.zero_weight_after_days` | entero | días | `90` | K22, K40 | Tiendas y precios | 00003 | `getPriceSettings` | `updatePriceSettings` |
-| `price.profeco_import_max_gb` | entero | GB | `1` | K6 | Tiendas y precios | 00003 | `getPriceSettings` | `updatePriceSettings` |
-| `comparator.timeout_seconds` | entero | segundos | `5` | K43 | Créditos y condiciones | 00003 | `getOptimizerSettings` | `updateOptimizerSettings` |
-| `attachment.max_size_mb` | entero | MB | `10` | K43 | Datos y respaldos | 00003 | `getDataSettings` | `updateDataSettings` |
-| `idempotency.retention_hours` | entero | horas | `24` | K6 | Datos y respaldos | 00002 | `getDataSettings` | `updateDataSettings` |
-| `health.goal_adjust_lose_kcal` | entero | kcal | `0` | K36 | Salud y metas de ahorro | 00003 | `getHealthSettings` | `updateHealthSettings` |
-| `health.goal_adjust_gain_kcal` | entero | kcal | `0` | K36 | Salud y metas de ahorro | 00003 | `getHealthSettings` | `updateHealthSettings` |
-| `alerts.budget_warning_pct` | entero | % del presupuesto | `80` | Decisión F, K44 | Notificaciones | 00003 | `getAlertSettings` | `updateAlertSettings` |
-| `alerts.budget_limit_pct` | entero | % del presupuesto | `100` | Decisión F, K44 | Notificaciones | 00003 | `getAlertSettings` | `updateAlertSettings` |
-| `alerts.payment_due_days_before` | lista de enteros | días antes del pago | `[1, 0]` | Decisión F, K44 | Notificaciones | 00003 | `getAlertSettings` | `updateAlertSettings` |
+| Clave de `app_setting` | Tipo | Unidad | Valor inicial | Rango (cambio) | Decisión | Sección de Ajustes (propuesta de K44) | Sembrada en | Lectura | Cambio y «restablecer» |
+|---|---|---|---|---|---|---|---|---|---|
+| `auth.max_failed_attempts` | entero | intentos | `5` | `minimum: 0` | Decisión A, K11 | Cuenta y roles | 00001 | `getSecuritySettings` | `updateSecuritySettings` |
+| `auth.lockout_window_minutes` | entero | minutos | `15` | `minimum: 0` | Decisión A, K11 | Cuenta y roles | 00001 | `getSecuritySettings` | `updateSecuritySettings` |
+| `auth.password_min_length` | entero | caracteres | `12` | `minimum: 0` | K6 | Cuenta y roles | 00003 | `getSecuritySettings` | `updateSecuritySettings` |
+| `session.max_age_days` | entero | días | `90` | `minimum: 0` | K11 | Cuenta y roles | 00002 | `getSecuritySettings` | `updateSecuritySettings` |
+| `price.stale_after_days` | entero | días | `30` | `minimum: 1` | Decisión E, K22 | Tiendas y precios | 00001 | `getPriceSettings` | `updatePriceSettings` |
+| `price.zero_weight_after_days` | entero | días | `90` | `minimum: 0` | K22, K40 | Tiendas y precios | 00003 | `getPriceSettings` | `updatePriceSettings` |
+| `price.profeco_import_max_gb` | entero | GB | `1` | `minimum: 0` | K6 | Tiendas y precios | 00003 | `getPriceSettings` | `updatePriceSettings` |
+| `comparator.timeout_seconds` | entero | segundos | `5` | `minimum: 1`, `maximum: 30` | K43 | Créditos y condiciones | 00003 | `getOptimizerSettings` | `updateOptimizerSettings` |
+| `attachment.max_size_mb` | entero | MB | `10` | `minimum: 0` | K43 | Datos y respaldos | 00003 | `getDataSettings` | `updateDataSettings` |
+| `idempotency.retention_hours` | entero | horas | `24` | `minimum: 0` | K6 | Datos y respaldos | 00002 | `getDataSettings` | `updateDataSettings` |
+| `health.goal_adjust_lose_kcal` | entero | kcal | `0` | `minimum: 0` | K36 | Salud y metas de ahorro | 00003 | `getHealthSettings` | `updateHealthSettings` |
+| `health.goal_adjust_gain_kcal` | entero | kcal | `0` | `minimum: 0` | K36 | Salud y metas de ahorro | 00003 | `getHealthSettings` | `updateHealthSettings` |
+| `alerts.budget_warning_pct` | entero | % del presupuesto | `80` | `minimum: 0` | Decisión F, K44 | Notificaciones | 00003 | `getAlertSettings` | `updateAlertSettings` |
+| `alerts.budget_limit_pct` | entero | % del presupuesto | `100` | `minimum: 0` | Decisión F, K44 | Notificaciones | 00003 | `getAlertSettings` | `updateAlertSettings` |
+| `alerts.payment_due_days_before` | lista de enteros | días antes del pago | `[1, 0]` | elementos `minimum: 0` | Decisión F, K44 | Notificaciones | 00003 | `getAlertSettings` | `updateAlertSettings` |
+| `reports.daily_send_time` | hora HH:MM | hora del centro de México, de 00:00 a 23:59 | `"21:30"` | `pattern: ^([01][0-9]\|2[0-3]):[0-5][0-9]$` | Q2-72 (K50), K31 punto 1, lugar K47 | Reportes y frecuencias | 00004 | `getReportSettings` | `updateReportSettings` |
+| `reports.weekly_weekday` | entero | día de la semana ISO 8601, de 1 a 7 (7 = domingo) | `7` | `minimum: 1`, `maximum: 7` | Decisión F, lugar K47 | Reportes y frecuencias | 00004 | `getReportSettings` | `updateReportSettings` |
+| `reports.weekly_send_time` | hora HH:MM | hora del centro de México, de 00:00 a 23:59 | `"19:00"` | `pattern: ^([01][0-9]\|2[0-3]):[0-5][0-9]$` | Q2-72 (K50), K31 punto 1, lugar K47 | Reportes y frecuencias | 00004 | `getReportSettings` | `updateReportSettings` |
+| `reports.monthly_day_of_month` | entero | día del mes, de 1 a 31 (en un mes más corto sale su último día, Q2-66 B) | `1` | `minimum: 1`, `maximum: 31` | Decisión F, Q2-66 B, lugar K47 | Reportes y frecuencias | 00004 | `getReportSettings` | `updateReportSettings` |
+| `reports.monthly_send_time` | hora HH:MM | hora del centro de México, de 00:00 a 23:59 | `"08:00"` | `pattern: ^([01][0-9]\|2[0-3]):[0-5][0-9]$` | Q2-72 (K50), K31 punto 1, lugar K47 | Reportes y frecuencias | 00004 | `getReportSettings` | `updateReportSettings` |
+| `alerts.send_time` | hora HH:MM | hora del centro de México, de 00:00 a 23:59 | `"09:00"` | `pattern: ^([01][0-9]\|2[0-3]):[0-5][0-9]$` | Q2-73 (K50), K31 punto 2, K43, lugar K47 | Notificaciones | 00004 | `getAlertSettings` | `updateAlertSettings` |
+| `alerts.stale_prices_advance_days` | entero | días antes del día de despensa, 0 o más | `1` | `minimum: 0` | Q2-73 (K50), K31 punto 2, K43, lugar K47 | Notificaciones | 00004 | `getAlertSettings` | `updateAlertSettings` |
+| `alerts.meal_plan_missing_weekday` | entero | día de la semana ISO 8601, de 1 a 7 (7 = domingo) | `7` | `minimum: 1`, `maximum: 7` | Decisión F, lugar K47 | Notificaciones | 00004 | `getAlertSettings` | `updateAlertSettings` |
+| `optimizer.date_window_days` | entero | días antes y después de la fecha (fecha ± días), 0 o más | `7` | `minimum: 0` | Q2-75 (K50) | Créditos y condiciones | 00004 | `getOptimizerSettings` | `updateOptimizerSettings` |
+| `ocr.timeout_seconds` | entero | segundos por imagen, 0 o más | `30` | `minimum: 0` | Q2-76 (K50); sección: propuesta S1 | Datos y respaldos | 00004 | `getDataSettings` | `updateDataSettings` |
 
 Parámetros que existen sin valor sembrado o que viven en otra tabla (no se inventa un valor):
 
 | Parámetro | Para qué | Por qué no tiene valor sembrado aquí |
 |---|---|---|
 | optimizer.min_available_buffer_cents, optimizer.max_live_purchases, optimizer.zero_debt_by_date | restricciones duras del comparador | las captura Axel en Ajustes «Créditos y condiciones» (K16); mientras falten, el comparador avisa «faltan restricciones» y no recomienda |
-| optimizer.date_window_days | «fecha ± días» de los escenarios | valor no dado; lo propone S3 con Axel |
-| notification.params_json send_time | hora de envío (HH:MM, America/Mexico_City) del resumen diario y de los avisos con hora | clave aprobada en K43 sin valor; lo propone S7 (WF-3, K31, puerta 4). Si vive en params_json (K43) o en app_setting (K44) es PROVISIONAL, bloqueo S1-parametros-avisos |
-| notification.params_json advance_days | anticipación en días del aviso de precios viejos antes del día de despensa | clave aprobada en K43 sin valor; lo propone S7 (WF-3, K31, puerta 4). Si vive en params_json (K43) o en app_setting (K44) es PROVISIONAL, bloqueo S1-parametros-avisos |
-| notification.params_json weekday (weekly_summary y meal_plan_missing) | día de la semana del resumen semanal y del aviso de plan de comidas sin armar (1 = lunes … 7 = domingo, ISO 8601) | vive en otra tabla: valor 7 (domingo) de la decisión F, sembrado por 00001 en notification.params_json y configurable en Ajustes; no se siembra en app_setting. Si vive en params_json (como send_time, K43) o en app_setting (K44, como alerts.payment_due_days_before) es PROVISIONAL, bloqueo S1-parametros-avisos |
-| notification.params_json day_of_month (monthly_report) | día del mes en que se genera el reporte mensual en PDF | vive en otra tabla: valor 1 (día 1) de la decisión F, sembrado por 00001 en notification.params_json y configurable en Ajustes; no se siembra en app_setting. Si vive en params_json (como send_time, K43) o en app_setting (K44, como alerts.payment_due_days_before) es PROVISIONAL, bloqueo S1-parametros-avisos |
 | reportes, respaldos, cabeceras, PDF y permisos | cinco de los ocho valores operativos de K31 | sin valor; los proponen S6 y WF-4 y se aprueban en la puerta 4 (K31) |
 | ventana de la cola sin conexión | tiempo máximo que una captura espera en la cola del teléfono | no existe: K9 no pone caducidad (las claves de expense y weight_entry no se purgan); si se quiere un límite, lo propone la PWA en WF-3 |
 
-Validación de las claves de K43 en `params_json` de `Notification` y `NotificationUpdate` (`updateNotification`). El tipo y el rango son FIRMES (K43); solo su lugar es PROVISIONAL, bloqueo `S1-parametros-avisos` (§13):
+Reglas de rango que no caben en una sola clave (`@param_rango` de las migraciones; las valida la API con 422 `validation_failed`):
 
-- `send_time`: `type: string`, `pattern: ^([01][0-9]|2[0-3]):[0-5][0-9]$`, sin valor por omisión.
-- `advance_days`: `type: integer`, `minimum: 0`, sin valor por omisión.
-- `weekday` y `day_of_month` (decisión F) no se declaran como propiedades: entran por `additionalProperties: true` con el valor que sembró la 00001.
+- `price.zero_weight_after_days`: igual o mayor que price.stale_after_days (Q2-77; lo valida el motor de precios); decisión Q2-77 (K50).
+
+Parámetros que antes no tenían valor o vivían en `notification.params_json` y ya son claves de `app_setting` (`@param_sin_valor_cerrado`):
+
+- optimizer.date_window_days: clave sembrada con 7 (Q2-75, K50) por la 00004.
+- notification.params_json send_time: claves reports.daily_send_time, reports.weekly_send_time, reports.monthly_send_time y alerts.send_time (Q2-72, Q2-73, K47) de la 00004.
+- notification.params_json advance_days: clave alerts.stale_prices_advance_days = 1 (Q2-73, K47) de la 00004.
+- notification.params_json weekday (weekly_summary y meal_plan_missing): claves reports.weekly_weekday y alerts.meal_plan_missing_weekday = 7 (decisión F, K47) de la 00004.
+- notification.params_json day_of_month (monthly_report): clave reports.monthly_day_of_month = 1 (decisión F, Q2-66 B, K47) de la 00004.
 
 ## 12. Índice de operaciones
 
@@ -818,7 +853,7 @@ Validación de las claves de K43 en `params_json` de `Notification` y `Notificat
 | PUT `/api/v1/categories/order` | `reorderCategories` | Ajustes | N-282 | audit_log, category |
 | PATCH `/api/v1/categories/{category_id}` | `updateCategory` | Ajustes | N-282 | audit_log, category, cost_share_rule |
 | GET `/api/v1/cost-share-rules` | `listCostShareRules` | Ajustes | N-309, N-051, N-052, N-281 | cost_share_rule, cost_share_rule_part, person |
-| PATCH `/api/v1/cost-share-rules/{cost_share_rule_id}` | `updateCostShareRule` | Ajustes | N-310 | audit_log, cost_share_rule, cost_share_rule_part |
+| PATCH `/api/v1/cost-share-rules/{cost_share_rule_id}` | `updateCostShareRule` | Ajustes | N-310 | audit_log, cost_share_rule, cost_share_rule_part, expense, expense_item, expense_share |
 | DELETE `/api/v1/credit-payments/{credit_payment_id}` | `deleteCreditPayment` | Créditos | N-210 | audit_log, credit_payment |
 | GET `/api/v1/credit-purchases` | `listCreditPurchases` | Créditos | N-202, N-215 | credit_payment, credit_purchase, credit_purchase_share, expense, promotion, scheduled_payment |
 | POST `/api/v1/credit-purchases` | `createCreditPurchase` | Créditos | N-218 | audit_log, credit, credit_purchase, credit_purchase_share, credit_term_rate, expense, expense_share, idempotency_key, person, promotion, scheduled_payment, scheduled_payment_share |
@@ -953,8 +988,8 @@ Validación de las claves de K43 en `params_json` de `Notification` y `Notificat
 | GET `/api/v1/sessions` | `listSessions` | Ajustes | N-271 | device_session, user_account |
 | POST `/api/v1/sessions/revoke` | `revokeSessions` | Ajustes | N-272 | audit_log, device_session |
 | DELETE `/api/v1/sessions/{session_id}` | `revokeSession` | Ajustes | N-272 | audit_log, device_session |
-| GET `/api/v1/settings/alerts` | `getAlertSettings` | Ajustes | N-323 | app_setting |
-| PATCH `/api/v1/settings/alerts` | `updateAlertSettings` | Ajustes | N-323 | app_setting, audit_log |
+| GET `/api/v1/settings/alerts` | `getAlertSettings` | Ajustes | N-298, N-323 | app_setting |
+| PATCH `/api/v1/settings/alerts` | `updateAlertSettings` | Ajustes | N-300, N-323 | app_setting, audit_log |
 | GET `/api/v1/settings/data` | `getDataSettings` | Ajustes | N-325 | app_setting |
 | PATCH `/api/v1/settings/data` | `updateDataSettings` | Ajustes | N-325 | app_setting, audit_log |
 | GET `/api/v1/settings/health` | `getHealthSettings` | Ajustes | N-326 | app_setting |
@@ -966,6 +1001,8 @@ Validación de las claves de K43 en `params_json` de `Notification` y `Notificat
 | GET `/api/v1/settings/projection` | `getProjectionSettings` | Ajustes | N-318 | app_setting |
 | PATCH `/api/v1/settings/projection` | `updateProjectionSettings` | Ajustes | N-319 | app_setting, audit_log |
 | GET `/api/v1/settings/recipes` | `getRecipeSettings` | Ajustes | N-294 | meal_slot, nutrition_fact, recipe |
+| GET `/api/v1/settings/reports` | `getReportSettings` | Ajustes | N-296 | app_setting |
+| PATCH `/api/v1/settings/reports` | `updateReportSettings` | Ajustes | N-297 | app_setting, audit_log |
 | GET `/api/v1/settings/security` | `getSecuritySettings` | Ajustes | N-320 | app_setting |
 | PATCH `/api/v1/settings/security` | `updateSecuritySettings` | Ajustes | N-320 | app_setting, audit_log |
 | GET `/api/v1/shopping-list` | `getShoppingList` | Compras y tiendas | N-150, N-073 | inventory_item, meal_plan_entry, presentation, price, product, product_group, recipe_ingredient, shopping_list, shopping_list_item, store, store_product_group |
@@ -1001,9 +1038,14 @@ Validación de las claves de K43 en `params_json` de `Notification` y `Notificat
 
 | Tema | Qué queda PROVISIONAL en C1 | Bloqueo |
 |---|---|---|
-| Lugar de los parámetros de los avisos | dónde viven `send_time` y `advance_days` (claves FIRMES de K43, todavía sin valor sembrado) y `weekday` (7) y `day_of_month` (1) de la decisión F: hoy en `notification.params_json` (`Notification` y `NotificationUpdate`); si la respuesta los pasa a `app_setting`, saldrán por una operación de settings con valor inicial y «restablecer» (N-297, N-300) | `S1-parametros-avisos` (abierto, de S1) |
+| Alcance «también los ya capturados» de un cambio de reparto | qué gastos recalcula `scope=all` de `updateCostShareRule` (`CostShareRuleUpdate.scope`, §7.2) es PROVISIONAL | `C1-reparto-alcance` (abierto, de C1) |
+| Hora de los reportes y `job.schedule` | cómo se relaciona `schedule` de los jobs de los reportes (`JobUpdate`, `updateJob`) con las claves `reports.*` de `updateReportSettings` es PROVISIONAL | `C1-hora-reportes-job` (abierto, de C1) |
+| «No incluye IVA» sin porcentaje | `Credit.missing_terms` lista `vat` con `vat_included` = 0 y sin `vat_on_interest_bp` (lectura en uso de S3 1.5 §5.3); PROVISIONAL | `S3-iva-lectura` (abierto, pregunta 2) |
+| Edición de un gasto anterior después de «solo los nuevos» | `updateExpense` recalcula sus partes con la regla vigente (opción en uso, RN-03 1.4); PROVISIONAL | `S1-reparto-edicion-gasto` (abierto) |
 
 Cerrados en la puerta 1 y ya sin marca: filtro familia (K5), lista de compras (K1), huecos U1 ↔ S1 (K2, K3, K4), parámetros técnicos (K6), campos calculados (K7), quincena y semana (K8), inicio de sesión y sesión (K11), tasas (K12), tope por persona (K13), reposición de la parte externa (K15), restricciones del comparador (K16), puntaje (K17), promedios diario y mensual (K20), meses 7 a 12 (K21), frescura de precios (K22) y escala de actividad (K23). Cerrados en la puerta 1b (C1 v1.2) y ya sin marca: valores de K31 que tocan a C1 (K43: adjunto de 10 MB, comparador de 5 s, claves `send_time` y `advance_days`, «casillas sin armar»), ajuste por objetivo de la meta de kcal (K36), semana por omisión de `getMealPlanWeek` (K38; la lista de compras sigue con `week` obligatoria, R3-01), promedio semanal (K39) y parámetros configurables (K44, §11.7).
+
+Cerrados en la puerta 2 (C1 v1.3) y ya sin marca: lugar de la hora, el día y la anticipación de reportes y avisos (`S1-parametros-avisos`, Q2-11 B, K47), sus valores (Q2-72, Q2-73), la ventana de fechas y el OCR (Q2-75, Q2-76), los rangos (Q2-74, Q2-77, Q2-66 B), el IVA de un crédito (`U4-iva-credito`, Q2-67), el alcance de un cambio de reparto como pregunta (`U4-reparto-retroactivo`, Q2-68 C), la tienda asignada de la lista (`S4-asignacion-mercado`, Q2-39 a Q2-42) y los acumulados de T-2 (`U3-t2-acumulados`, Q2-65).
 
 ## 14. Inconsistencias S1 ↔ U1 encontradas (sin tocar sus archivos)
 

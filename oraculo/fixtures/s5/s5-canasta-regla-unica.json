@@ -13,10 +13,7 @@
       "ruta": "§7.3 de S5-interfaz.md y REVISION-contrato-S4S5-r4.md"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
-    "que": "pregunta 2: desempate (aquí no interviene; la recomendación es única por unidad base)"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "today": "2026-10-12",

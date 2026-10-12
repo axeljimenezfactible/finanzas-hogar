@@ -4,3 +4,15 @@ Qué falta: ¿el resumen del mes cuenta solo las metas y fondos activos o tambi�
 Opciones: A) solo activas, el mismo conjunto que la lista `goals` (lectura de trabajo): una meta archivada deja de sumar a «ahorrado» y a «aportado del mes»; B) todas, activas o no, para `saved_cents` y `contributed_this_month_cents`, y solo activas para `planned_this_month_cents`: el ahorro de una meta archivada sigue a la vista en Inicio pero no aparece en la lista de metas.
 Impacto: `month_summary.saved_cents` y `month_summary.contributed_this_month_cents` quedan PROVISIONAL. Las dos opciones dan lo mismo si no hay metas inactivas con movimientos. La fixture `s2-metas` ya era PROVISIONAL (`S2-metas`). No toca cifras canon (el oráculo no trae ahorro).
 Cómo seguí: la interfaz usa la opción A con la marca PROVISIONAL y deja firmes las demás fórmulas de §3.13 que salen de M-07: aportado = solo depósitos del mes de hoy con fecha ≤ hoy; planificado = Σ `planned_monthly_cents` no nulos de las activas.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-15 · ¿El resumen del mes cuenta solo metas y fondos activos o también inactivos con saldo?
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «A) solo activas, el mismo conjunto que la lista `goals` (lectura de trabajo): una meta archivada deja de sumar a «ahorrado» y a «aportado del mes»»
+- **Consecuencia** (el archivo no la separa por opción; es su «Impacto»)**:** Impacto: `month_summary.saved_cents` y `month_summary.contributed_this_month_cents` quedan PROVISIONAL. Las dos opciones dan lo mismo si no hay metas inactivas con movimientos. La fixture `s2-metas` ya era PROVISIONAL (`S2-metas`). No toca cifras canon (el oráculo no trae ahorro).
+- **Qué cambia:** `month_summary.saved_cents` y `month_summary.contributed_this_month_cents` (`S2-interfaz.md` §3.13) quedan FIRMES con A; la tarjeta «Ahorro» de Inicio y la pantalla de Metas suman lo mismo (la marca PROVISIONAL de la tarjeta «Ahorro» se quita en WF-3); la fixture `s2-metas` sigue PROVISIONAL por `S2-metas` hasta que se apliquen las respuestas Q2-16 a Q2-18.
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

@@ -255,7 +255,9 @@ func (l *ledger) monthly() map[int]*agg {
 }
 
 // windowed reparte el devengo en ventanas: n ventanas consecutivas desde la que contiene la fecha.
-// periods ya comprobó que las ventanas son ascendentes y disjuntas (PROVISIONAL, S2-ventanas).
+// periods ya comprobó que las ventanas son contiguas, ascendentes y disjuntas (§2.12). La parte k
+// sigue a la ventana y no al mes, aunque la ventana no dure un mes: PROVISIONAL (bloqueo S2-ventanas,
+// pregunta 4, caso 2; §3.2), es la regla en uso y no está decidida.
 func (l *ledger) windowed(ws []Window) []*agg {
 	out := make([]*agg, len(ws))
 	for i := range out {
@@ -297,19 +299,19 @@ func uncovered(ws []Window, d Date) bool {
 	return !d.After(hi)
 }
 
-// checkCovered rechaza con invalid_argument un costo o un pago anterior a la primera ventana o
-// en un hueco entre ventanas. PROVISIONAL (docs/estado/bloqueos/S2-ventanas.md): §3.2 pide que
-// cumulative_diff_cents incluya lo anterior no pedido, pero §2.12 y §3.2 no dicen cómo se devenga
-// un costo que no cae en ninguna ventana; mientras Axel decide, la regla es la del oráculo.
+// checkCovered rechaza con invalid_argument un costo o un pago anterior a la primera ventana
+// (§2.12 regla 2, FIRME, Q2-25 = A) o en un hueco entre ventanas (regla 3, FIRME, Q2-26 = H1).
+// Con la regla 4 (contiguas) ya no queda hueco; la regla 3 se comprueba aparte porque es FIRME y
+// la 4 es PROVISIONAL.
 func (l *ledger) checkCovered(ws []Window) error {
 	for i := range l.costs {
 		if d := l.costs[i].date; uncovered(ws, d) {
-			return errf(CodeInvalidArgument, "windows: costo del %s antes de la primera ventana o en un hueco entre ventanas (PROVISIONAL, S2-ventanas)", d)
+			return errf(CodeInvalidArgument, "windows: costo del %s antes de la primera ventana o en un hueco entre ventanas (§2.12 reglas 2 y 3)", d)
 		}
 	}
 	for i := range l.cash {
 		if d := l.cash[i].date; uncovered(ws, d) {
-			return errf(CodeInvalidArgument, "windows: pago del %s antes de la primera ventana o en un hueco entre ventanas (PROVISIONAL, S2-ventanas)", d)
+			return errf(CodeInvalidArgument, "windows: pago del %s antes de la primera ventana o en un hueco entre ventanas (§2.12 reglas 2 y 3)", d)
 		}
 	}
 	return nil
@@ -475,15 +477,19 @@ func (l *ledger) periods(spec PeriodSpec) ([]PeriodSummary, error) {
 		if w.End.Before(w.Start) {
 			return nil, errf(CodeInvalidArgument, "ventana %q termina antes de empezar", w.Label)
 		}
-		// PROVISIONAL (docs/estado/bloqueos/S2-ventanas.md, pregunta 3): las ventanas van en orden
-		// ascendente y disjuntas. El devengo en «n ventanas consecutivas» y la diferencia acumulada
-		// como suma corrida solo valen en ese orden; desordenadas, traslapadas o contenidas cambian
-		// cifras sin regla escrita, así que se rechazan (start[i] ≤ end[i−1]).
+		// §2.12 regla 1 (FIRME, Q2-27 = O1): ascendentes y disjuntas; se rechazan desordenadas,
+		// traslapadas (aunque sea un día) y contenidas (start[i] ≤ end[i−1]).
 		if i == 0 {
 			continue
 		}
-		if prev := spec.Windows[i-1]; !w.Start.After(prev.End) {
-			return nil, errf(CodeInvalidArgument, "ventana %q empieza el %s y la anterior %q termina el %s: van ascendentes y disjuntas (PROVISIONAL, S2-ventanas)", w.Label, w.Start, prev.Label, prev.End)
+		prev := spec.Windows[i-1]
+		if !w.Start.After(prev.End) {
+			return nil, errf(CodeInvalidArgument, "ventana %q empieza el %s y la anterior %q termina el %s: van ascendentes y disjuntas (§2.12 regla 1)", w.Label, w.Start, prev.Label, prev.End)
+		}
+		// §2.12 regla 4, PROVISIONAL (bloqueo S2-ventanas, pregunta 4, caso 1; Q2-01 = A): contiguas.
+		// Un hueco sin eventos que cruza un devengo mandaría la parte del hueco a la ventana siguiente.
+		if w.Start.ord() != prev.End.ord()+1 {
+			return nil, errf(CodeInvalidArgument, "ventana %q empieza el %s y la anterior %q termina el %s: van contiguas, sin hueco (§2.12 regla 4, PROVISIONAL, S2-ventanas)", w.Label, w.Start, prev.Label, prev.End)
 		}
 	}
 	if err := l.checkCovered(spec.Windows); err != nil {

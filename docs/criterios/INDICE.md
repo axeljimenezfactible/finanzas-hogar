@@ -1,6 +1,6 @@
 # Índice de criterios de aceptación · Finanzas Hogar (Etapa B)
 
-Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas, conteo propio con `tools/conteo.py`, cambios en §11 y correcciones de la revisión r1 de criterios (A-01 a A-03, M-01, M-02) y de la revisión r2 (hallazgos 1 a 4, fila de §11) la ronda 4 de P1d (hallazgos A a G de la revisión r3, I-02, B-01 de r2 de C1 y U3-01; filas de §11) y la ronda 5 de P1e (hallazgos H-1 a H-6 de la revisión r4; filas de §11); versión 1.1 del 10-oct-2026 con filas y totales de la puerta 1 y conteo reconciliado por el integrador de P1, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
+Versión 1.3 (11-oct-2026, flujo P2c, puerta 2, agente `criterios-puerta2`: respuestas de la puerta 2 aplicadas a S1, S2, S4, S5, S7, C1, U3 y U4; §6, §10 y §12 al día; sin criterios nuevos ni quitados). Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas, conteo propio con `tools/conteo.py`, cambios en §11 y correcciones de la revisión r1 de criterios (A-01 a A-03, M-01, M-02) y de la revisión r2 (hallazgos 1 a 4, fila de §11) la ronda 4 de P1d (hallazgos A a G de la revisión r3, I-02, B-01 de r2 de C1 y U3-01; filas de §11) y la ronda 5 de P1e (hallazgos H-1 a H-6 de la revisión r4; filas de §11); versión 1.1 del 10-oct-2026 con filas y totales de la puerta 1 y conteo reconciliado por el integrador de P1, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
 
 ## 1. Cómo usar estos archivos
 - **Un archivo por ítem** (18 + este índice). Cada uno trae: 1 Objetivo · 2 Criterios numerados `<ID>-nn` (enunciado medible, «Verifica» con comando o cálculo, «Evidencia», severidad) · 3 No aceptable · 4 Umbrales numéricos · 5 Trazabilidad.
@@ -65,7 +65,7 @@ Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 d
 12. **Ventanas del oráculo (10 al 9) frente al mes calendario:** las decisiones B fijan el mes calendario como periodo base y P1–P6 de `model.json` van del día 10 al 9. Las 12 cifras de devengado y efectivo coinciden con oct-2026…mar-2027 solo porque la semilla no tiene eventos entre los días 1 y 9 de un mes. S1-09 pide la prueba de equivalencia con el oráculo y S2-09 la nota de que depende de la semilla (hallazgo H-07 de la ronda 1).
 
 ## 6. Bloqueos escritos (`docs/estado/bloqueos/`)
-**Estado** = lo que dice el propio archivo: «RESUELTO» si trae la sección «Respuesta de Axel» (puerta 1 del 11-oct-2026 o puerta 1b); sin esa sección el bloqueo está abierto y la marca PROVISIONAL se conserva. Hoy, de los 25 de esta tabla, 24 están resueltos o respondidos y 1 está **abierto**: `S1-parametros-avisos.md` (C1-22, U4-12, S7-04, S7-08 y S7-10 lo citan con la marca PROVISIONAL sobre el lugar de `send_time`, `advance_days`, `weekday` y `day_of_month`: los CUATRO figuran en la excepción de U4-12 y C1-22 (columna «clave» `notification.params_json`, PROVISIONAL solo en el lugar, citando el bloqueo; `weekday` = 7 y `day_of_month` = 1 con valor inicial FIRME de la decisión F y «restablecer»; `send_time` y `advance_days` sin valor inicial, lo propone S7, K31, puerta 4), S7-04 y S7-08 leen el día de `weekday` y S7-10 el de `day_of_month`; los valores iniciales no cambian en ninguna opción, y los umbrales 80 y 100 % y los días antes del pago ya no son parte del bloqueo: son claves `alerts.*` de `app_setting` sembradas en 00003, decisión F y K44). Cuando traiga «Respuesta de Axel», se quitan esas marcas y la excepción de C1-22 y U4-12.
+**Estado** = lo que dice el propio archivo, y la regla se aplica por pregunta: «RESUELTO» si trae la sección «Respuesta de Axel» (puerta 1 del 11-oct-2026 o puerta 1b) y todas sus preguntas tienen respuesta; sin esa sección el bloqueo está abierto, y con respuesta parcial (línea «Estado del bloqueo (puerta 2): ABIERTO» o «Estado» ABIERTO en la pregunta) sigue abierta la pregunta que esa línea nombra. En ambos casos la marca PROVISIONAL de esa pregunta se conserva; la de una pregunta respondida se quita. Hoy, de los 25 de esta tabla, los 25 están resueltos o respondidos: `S1-parametros-avisos.md` se resolvió en la puerta 2 (Q2-11 = B, K47: las claves `reports.*` y `alerts.*` de `app_setting`, con valores iniciales FIRMES por Q2-72 y Q2-73, K50) y C1-22, U4-12, S7-04, S7-08 y S7-10 ya no llevan marca PROVISIONAL sobre el lugar ni sobre los valores. Los bloqueos que abrió o dejó abiertos la puerta 2 están en `docs/estado/bloqueos/INDICE.md` (el conteo vigente de resueltos y abiertos está allí, no aquí); los que hoy sostienen una marca PROVISIONAL en los criterios son: `S2-ventanas` pregunta 4 (S2-09, S2-16), `S2-flujo-quincenal` (S2-10), `S2-ahorro-quincenal` (S2-10), `S2-metas-vencida` (S2-12), `S4-presentacion-respaldo` (S4-03), `S4-empates-sin-confirmar` (S4-10), `S5-carrito-comparativa`, `S5-carritos-detalle`, `S5-carritos-granel` y `S5-profeco-filtro` (S5-03, S5-05, S5-13), `S5-terminos` (S5-07, NO CUMPLE en el fondo), `S5-motor-oraculo-reglas` y `S5-precio-vigente-captura` (marcas del motor y el oráculo, S5-13; abiertos en P2c), `U4-reparto-preseleccion` (U4-05; abierto, se pregunta en la puerta 4) y `C1-hora-reportes-job`, `C1-reparto-alcance`, `S3-iva-lectura` y `S1-reparto-edicion-gasto` (C1-15).
 
 | Archivo | Pregunta para Axel | Criterios afectados | Estado |
 |---|---|---|---|
@@ -93,7 +93,7 @@ Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 d
 | `U2a-rosas-ximena-bodega.md` | Karen 333° y Bodega Aurrera 356° con refuerzo | U2-02, U2-08 | RESUELTO (K41) |
 | `U2a-walmart-oscuro.md` | Walmart oscuro en L 0.716 | U2-08 | RESUELTO (K42) |
 | `C1-valores-k31.md` | cuatro valores de C1 (adjunto, comparador, hora y anticipación, casillas sin armar) | C1-23, S3-12, S6-10, U4-12 | RESUELTO (K43 y K44) |
-| `S1-parametros-avisos.md` | dónde viven los parámetros de programación de avisos: `send_time`, `advance_days`, `weekday` (7) y `day_of_month` (1), en `notification.params_json` (opción A, K43 al pie de la letra) o en claves de `app_setting` (K44; opciones B y C, que cambiarían C1 v1.2, U4 y S7); los umbrales 80 y 100 % y los días antes del pago ya no están aquí: son claves `alerts.*` de `app_setting` (decisión F, K44) | C1-22, U4-12, S7-04, S7-08, S7-10 | **ABIERTO** (11-oct-2026, sin «Respuesta de Axel»; la marca PROVISIONAL sobre el lugar de esos cuatro parámetros se conserva) |
+| `S1-parametros-avisos.md` | dónde viven los parámetros de programación de avisos: `send_time`, `advance_days`, `weekday` (7) y `day_of_month` (1), en `notification.params_json` (opción A, K43 al pie de la letra) o en claves de `app_setting` (K44; opciones B y C, que cambiarían C1 v1.2, U4 y S7); los umbrales 80 y 100 % y los días antes del pago ya no están aquí: son claves `alerts.*` de `app_setting` (decisión F, K44) | C1-22, U4-12, S7-04, S7-08, S7-10 | RESUELTO (puerta 2, 11-oct-2026: Q2-11 = B, todo en `app_setting`, K47; se quitaron las marcas) |
 
 ## 7. Trazabilidad con `docs/plan/decisiones.md`
 | Sección de decisiones | Frases cubiertas | Archivos |
@@ -124,26 +124,26 @@ Origen: `docs/estado/wf0/REVISION-r1.md` §5, hallazgos H-06, H-07 y H-08 (sever
 | H-07 · periodos | S1-09 ya no pide insertar P1–P6 (ventanas del 10 al 9): pide los meses calendario oct-2026…mar-2027 con sus quincenas, el rechazo de la ventana por el `CHECK` y la prueba de equivalencia con el oráculo (12 de 12 cifras). S2-09 y las notas de R-45…R-50 (`S2.md` §6 (e), `S3.md` §6 (d)) dicen que la equivalencia depende de la semilla; S2-06 usa una etiqueta de mes calendario; S2-03, S2-07 y el §4 de S2, C1-09, C3-09 y S7-02 (consumidores de R-45…R-50) aclaran que P1–P6 son oct-2026…mar-2027. | `S1.md` (S1-09, §3, §5), `S2.md` (S2-03, S2-06, S2-07, S2-09, §4, nota (e)), `S3.md` (nota (d)), `C1.md` (C1-09), `C3.md` (C3-09), `S7.md` (S7-02) |
 | H-08 · trazabilidad | Los 35 criterios que no aparecían en la sección 5 de su archivo tienen ahora su línea (al plan, a decisiones o al protocolo; lo que no deriva de una frase se marca «convención propia del directorio»). Todo criterio de los 18 archivos aparece ya en su sección 5 (248 de 248). | C1-04; S1-15; U1-14; C2-09, C2-10, C2-11; C3-03, C3-10, C3-11; P3-13; S2-08, S2-09, S2-14, S2-16; S3-04, S3-11, S3-20; S4-06, S4-15; S5-13; S6-08, S6-10, S6-15, S6-16; S7-14; S8-08; U3-08, U3-10, U3-12; U4-07, U4-09, U4-10, U4-11; U5-06, U5-12 |
 
-## 10. Conteo reconciliado (11-oct-2026; puerta 1 por el agente `integrador-p1`, actualizado en P1c por `criterios-1.2`)
+## 10. Conteo reconciliado (11-oct-2026; puerta 1 por el agente `integrador-p1`, actualizado en P1c por `criterios-1.2` y en P2c por `criterios-puerta2`)
 Conteo propio por script sobre los 18 archivos (no incluye este índice): `python3 -I docs/criterios/tools/conteo.py` cuenta las líneas que empiezan con `**<ID>-nn` seguidas de la severidad entre paréntesis, comprueba que no haya IDs repetidos, que cada archivo traiga la lista «Cambios de la versión» de su versión y que las tablas de §2 y de esta sección coincidan fila por fila y en el total. Coincide con `docs/criterios/tools/traza.py` (261 criterios definidos) y `refs.py` (261 IDs citados, 0 inexistentes). La versión de cada archivo es la de su línea 3: pasan a 1.2 los archivos tocados en P1c; los demás siguen en 1.1.
 
 | Archivo | Criterios (alta / media / baja) | Versión |
 |---|---|---|
-| `S1.md` | 17 (12 / 5 / 0) | 1.1 |
-| `S2.md` | 16 (13 / 3 / 0) | 1.2 |
+| `S1.md` | 17 (12 / 5 / 0) | 1.2 |
+| `S2.md` | 16 (13 / 3 / 0) | 1.3 |
 | `S3.md` | 20 (17 / 3 / 0) | 1.2 |
-| `S4.md` | 15 (11 / 4 / 0) | 1.2 |
-| `S5.md` | 13 (10 / 3 / 0) | 1.2 |
+| `S4.md` | 15 (11 / 4 / 0) | 1.3 |
+| `S5.md` | 13 (10 / 3 / 0) | 1.3 |
 | `S6.md` | 16 (12 / 4 / 0) | 1.2 |
-| `S7.md` | 14 (12 / 2 / 0) | 1.2 |
+| `S7.md` | 14 (12 / 2 / 0) | 1.3 |
 | `S8.md` | 11 (8 / 3 / 0) | 1.1 |
 | `WF4-operacion.md` | 12 (10 / 2 / 0) | 1.1 |
 | `U1.md` | 16 (10 / 6 / 0) | 1.2 |
 | `U2.md` | 14 (10 / 4 / 0) | 1.2 |
-| `U3.md` | 12 (8 / 4 / 0) | 1.2 |
-| `U4.md` | 13 (10 / 3 / 0) | 1.2 |
+| `U3.md` | 12 (8 / 4 / 0) | 1.3 |
+| `U4.md` | 13 (10 / 3 / 0) | 1.3 |
 | `U5.md` | 13 (10 / 3 / 0) | 1.2 |
-| `C1.md` | 23 (21 / 2 / 0) | 1.2 |
+| `C1.md` | 23 (21 / 2 / 0) | 1.3 |
 | `C2.md` | 12 (8 / 4 / 0) | 1.2 |
 | `C3.md` | 11 (9 / 2 / 0) | 1.1 |
 | `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.3 |
@@ -194,3 +194,20 @@ Respuestas de la puerta 1b aplicadas (decisiones K35 a K44) y hallazgos bajos B-
 | Revisión r4, H-5 (decisión F, K31) | S7-10: el valor inicial de la **hora** lo propone el agente (PROVISIONAL, K31); `day_of_month` = 1 es FIRME | `S7.md` (S7-10) |
 | Revisión r4, H-6 (K38, K44) | U3 §5 suma «decisiones K38 → U3-01»; K38 aplica al destino de la tarjeta (4) (P-10), su contenido sigue U1 N-023 «Semana en curso»; U3 no necesita K44 (no fija ni lee umbrales ni días) | `U3.md` (U3-01, §5) |
 | Conteo (rondas 4 y 5) | Sin criterios nuevos ni quitados: total **261 (201 / 60)** sin cambio; §2 y §10 no cambian | este índice |
+
+## 12. Cambios de la versión 1.3 (11-oct-2026, flujo P2c, agente `criterios-puerta2`)
+Respuestas de la puerta 2 aplicadas (`docs/estado/puerta2/RESPUESTAS.md`; decisiones K46 a K52): modo «lo recomendado + excepciones», sin excepciones; Q2-11 = B, Q2-64 = A y Q2-96 = A explícitas; las preguntas sin recomendación siguen PROVISIONAL con la opción en uso. Cada archivo tocado trae su lista «Cambios de la versión 1.3» (S1 trae la 1.2). **Sin criterios nuevos ni quitados: total 261 (201 / 60 / 0), ids y severidades iguales.** Corrección de la ronda 1 (`REVISION-criterios-r1`, flujo P2c, agente `correccion-criterios-r1`): U4-05 deja la preselección del diálogo de alcance como PROVISIONAL (bloqueo `U4-reparto-preseleccion`), y C1-15, S5-13 e INDICE §6 nombran las marcas abiertas de `S1-reparto-edicion-gasto`, `S5-motor-oraculo-reglas` y `S5-precio-vigente-captura`; ids y severidades no cambian.
+
+| Origen | Qué cambió | Archivos y criterios |
+|---|---|---|
+| Q2-11 = B (K47), Q2-72 y Q2-73 (K50) | Hora, día, anticipación y día del mes de reportes y avisos son claves `reports.*` y `alerts.*` de `app_setting`, sembradas en la migración 00004 con valor inicial FIRME (21:30, domingo 19:00, día 1 a las 08:00, avisos a las 09:00, 1 día); se quitan las marcas PROVISIONAL y la excepción de `notification.params_json` | `S7.md` (S7-04, S7-08, S7-10), `C1.md` (C1-22, C1-23), `U4.md` (U4-12), `S1.md` (S1-13, S1-16) |
+| Q2-74 a Q2-77 (K50) | Comparador de 1 a 30 s, `optimizer.date_window_days` = 7, `ocr.timeout_seconds` = 30, rango de frescura (S ≥ 1, Z ≥ S, peso (Z − días) ÷ (Z − S + 1)); la lista mínima de U4-12 pasa de 16 a 18 parámetros | `C1.md` (C1-22, C1-23), `U4.md` (U4-12), `S5.md` (S5-04, S5-06), `S1.md` (S1-16) |
+| Esquema 1.4 y C1 1.3 | `credit.vat_included` y `missing_terms` de 5 datos (Q2-67); C1 v1.3 con `info.version` 1.3.0 y 212 operaciones; `S1-02` hasta 00004 con el ciclo `up`, `down-to 0` y `up` | `C1.md` (C1-13, C1-21), `S1.md` (S1-02, S1-10) |
+| Q2-09 = A (R5-1), Q2-68 = C, Q2-70 = a | Regla general de vista previa para las 14 secciones; alcance del reparto; cálculo de P-26.14 | `U4.md` (U4-05) |
+| Q2-65 = A, Q2-86 = A | T-2 con los acumulados de C1 en una sola variante; la tarjeta 5 nombra la segunda tienda (`second_store_id`) | `U3.md` (U3-01, U3-05) |
+| S2 1.3 (Q2-13 a Q2-27; Q2-01 caso 1 = A) | Ventanas contiguas, ascendentes y disjuntas: la contigüidad es PROVISIONAL (`S2-ventanas` pregunta 4, caso 1) y el caso 2 (ventanas que no duran un mes) queda sin decidir; `provisional` siempre `null`; metas con tres estados y meta vencida PROVISIONAL; `variable_estimated_cents` y `savings_planned_cents` PROVISIONALES | `S2.md` (S2-09, S2-10, S2-12, S2-14, S2-16) |
+| S4 1.5 (Q2-06 a Q2-08, Q2-39 a Q2-46) | Cotización por elección (`choice_store`, `choice_presentation`); presentación de respaldo PROVISIONAL (`S4-presentacion-respaldo`); orden de las listas; reglas de mercado FIRMES; empates `propuesto` siguen PROVISIONALES | `S4.md` (S4-03, S4-06, S4-10, S4-12, S4-15) |
+| S5 1.5 (Q2-02 a Q2-05, Q2-47 a Q2-63) | Una sola «mejor tienda» en los dos modos; granel PROVISIONAL (`S5-carritos-granel`); lectura PROFECO como regla técnica; filtro y liga normalizada PROVISIONALES «en uso A»; orden de listas | `S5.md` (S5-03, S5-05, S5-12, S5-13) |
+| Q2-64 = A y puerta 2 bis (K48; K53 por registrar en P2d) | `docs/estado/S5-terminos.md` existe con 3 veredictos «no verificado» (desafío anti-robot): S5-07 queda **NO CUMPLE en el fondo**, no se marca cumplido; la lectura asistida sigue apagada; Axel respondió que la aplicación no leerá sitios de tiendas (K53) y eso se registra en P2d | `S5.md` (S5-07, §3, §4) |
+| PROPUESTAS (no añadidas) | (1) al registrar K53, reformular o retirar S5-07 con la firma de Axel; (2) un criterio C1 para la importación del agente externo de precios, cuando P2d la defina; (3) criterios propios para Q2-67 (IVA), Q2-69 (a) y Q2-82 (atajos) si Axel los quiere | este índice |
+| Conteo | Total **261 (201 / 60)** sin cambio; §2 y §10 solo cambian en versiones | este índice |

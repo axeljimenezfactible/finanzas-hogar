@@ -17,7 +17,7 @@ def _renglon(budgets, cat, m):
 
 def _banderas(D, actual, plan):
     """used_pct = HALF_UP(actual·100/plan); banderas con comparación exacta en enteros (S2-11)."""
-    if plan is None or plan == 0:  # plan 0: PROVISIONAL (S2-presupuesto-total)
+    if plan is None or plan == 0:  # plan 0: sin porcentaje ni banderas (FIRME, Q2-20 = A)
         return None, False, False, 'no_plan'
     used = hu(Fraction(actual * 100, plan))
     w = actual * 100 >= D.warn * plan

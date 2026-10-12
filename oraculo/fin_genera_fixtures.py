@@ -297,12 +297,14 @@ fx('s2-semana', 'Semanas de lunes a domingo (K8, ISO 8601): 14-oct-2026, 10-oct-
    fijos={'mie-14-oct': {'week': '2026-W42', 'week_start': '2026-10-12', 'week_end': '2026-10-18'},
           'sab-10-oct': {'week': '2026-W41', 'week_start': '2026-10-05', 'week_end': '2026-10-11'},
           'vie-1-ene': {'week': '2026-W53', 'week_start': '2026-12-28', 'week_end': '2027-01-03', 'fortnight': '2027-01-q1'}})
-fx('s2-zona-medianoche', 'Hoy en America/Mexico_City (UTC−6 todo el año) cerca de la medianoche; resto calculado por el oráculo',
-   [F('criterio', 'S2-14'), F('manual', 'instante de verano sin horario de verano')],
+fx('s2-zona-medianoche', 'Hoy en America/Mexico_City (UTC−6 todo el año) cerca de la medianoche; un instante con desfase +00:00 o −06:00 '
+   'en lugar de «Z» es invalid_date (§1.1, REVISION-S2-r3 B1); resto calculado por el oráculo',
+   [F('criterio', 'S2-14'), F('manual', 'instante de verano sin horario de verano'), F('manual', 'S2-interfaz §1.1: instante RFC 3339 en UTC con «Z»')],
    [('antes', 'calendario', {'now': '2026-10-31T05:59:59Z'}), ('despues', 'calendario', {'now': '2026-10-31T06:00:00Z'}),
-    ('verano', 'calendario', {'now': '2027-07-01T05:30:00Z'}), ('dos-formas', 'calendario', {'date': '2026-10-31', 'now': '2026-10-31T06:00:00Z'})],
+    ('verano', 'calendario', {'now': '2027-07-01T05:30:00Z'}), ('dos-formas', 'calendario', {'date': '2026-10-31', 'now': '2026-10-31T06:00:00Z'}),
+    ('desfase-cero', 'calendario', {'now': '2026-10-31T05:59:59+00:00'}), ('desfase-cdmx', 'calendario', {'now': '2026-10-31T00:30:00-06:00'})],
    fijos={'antes': {'today': '2026-10-30', 'fortnight': '2026-10-q2'}, 'despues': {'today': '2026-10-31'}, 'verano': {'today': '2027-06-30'},
-          'dos-formas': {'error': 'invalid_argument'}})
+          'dos-formas': {'error': 'invalid_argument'}, 'desfase-cero': {'error': 'invalid_date'}, 'desfase-cdmx': {'error': 'invalid_date'}})
 fx('s2-promedios', 'Promedios diario, semanal (K39) y mensual (R-56, R-57) con los meses calendario',
    [F('criterio', 'S2-08'), F('decision', 'K20'), F('decision', 'K39'), F('regla', 'RN-27'), F('model.json', 'horizonte.promedio_mensual_efectivo'), F('model.json', 'horizonte.promedio_mensual_devengado')],
    [('oct-2026-efectivo', 'promedios', {'month': '2026-10', 'basis': 'cash'}), ('nov-2026-efectivo', 'promedios', {'month': '2026-11', 'basis': 'cash'}),
@@ -343,12 +345,12 @@ for ident, f in ((9, '2027-05-10'), (10, '2027-07-10'), (11, '2027-09-10')):
     g['expense_date'] = f
     g['projected'] = True
     cad_g.append(g)
-fx('s2-proyeccion-7-12-cadencia', 'Proyección con el interruptor encendido y una cadencia de prueba (opción A del bloqueo); todo calculado por el oráculo',
+fx('s2-proyeccion-7-12-cadencia', 'Proyección con el interruptor encendido y una cadencia de prueba (valores de la opción A del bloqueo; FIRME desde la '
+   'puerta 2, Q2-21 a Q2-24: provisional null en los 12 meses); todo calculado por el oráculo',
    [F('criterio', 'S2-09'), F('decision', 'K21'), F('model.json', 'despensas[1]'), F('model.json', 'papel[2]')],
    [('proyeccion', 'proyeccion', {'from': '2026-10'})],
    datos={'$ref': '_datos/semilla-oraculo.json', 'parche': {'params': {'repeat_cadence_enabled': True}, 'cadence': {'purchases': cad_p, 'expenses': cad_g}}},
-   provisional={'bloqueo': 'docs/estado/bloqueos/S2-proyeccion-interruptor.md', 'que': 'cadencia de los meses 7–12 con el interruptor encendido'},
-   fijos={'proyeccion': {f'months[{j}].provisional': (['S2-proyeccion-interruptor'] if j >= 6 else None) for j in range(12)} | {'repeat_cadence_enabled': True}})
+   fijos={'proyeccion': {f'months[{j}].provisional': None for j in range(12)} | {'repeat_cadence_enabled': True}})
 HOGAR = {'parts': [], 'rest_person': 'axel'}
 CONJ = {'parts': [{'person': 'karen', 'pct_bp': 5000}], 'rest_person': 'axel'}
 SUELDO = {'id': 1, 'kind': 'income', 'description': 'Sueldo (dato de fixture)', 'amount_cents': 1200000, 'second_half_amount_cents': 1250000,
@@ -369,15 +371,15 @@ fx('s2-proyeccion-csv', 'Proyección apagada con partidas de fixture (sueldo qui
           {'months[0].income_cents': 2450000, 'months[4].income_cents': 2450000, 'months[0].planned_expense_cents': 800000,
            'months[3].planned_expense_cents': 1100001, 'months[3].accrued.total_cents': 1221638, 'months[3].accrued.by_person.karen': 169887,
            'months[4].accrued.total_cents': 1201737}})
-fx('s2-liga-provisional', 'Sueldo quincenal con una captura del 14-oct ligada a la ocurrencia del 15-oct (lectura de trabajo 3A); resto calculado por el oráculo',
+fx('s2-liga-provisional', 'Sueldo quincenal con una captura del 14-oct ligada a la ocurrencia del 15-oct (FIRME desde la puerta 2, Q2-14 = A: '
+   'provisional null; el id de la fixture se conserva); resto calculado por el oráculo',
    [F('criterio', 'S2-09'), F('criterio', 'S2-10'), F('manual', 'captura del 2026-10-14 de fixture')],
    [('flujo', 'flujo_quincenal', {'from': '2026-10-q1', 'count': 2}), ('proyeccion', 'proyeccion', {'from': '2026-10'})],
    datos={'$ref': '_datos/semilla-oraculo.json', 'parche': {'planned_items': [SUELDO], 'incomes': [
        {'id': 1, 'person': 'axel', 'kind': 'fixed', 'amount_cents': 1195000, 'income_date': '2026-10-14', 'planned_item_id': 1}]}},
-   provisional={'bloqueo': 'docs/estado/bloqueos/S2-flujo-quincenal.md', 'que': 'liga ocurrencia ↔ captura'},
-   fijos={'flujo': {'[0].provisional': ['S2-flujo-quincenal'], '[1].provisional': None, '[0].income.expected_cents': 0, '[0].income.fixed_cents': 1195000,
+   fijos={'flujo': {'[0].provisional': None, '[1].provisional': None, '[0].income.expected_cents': 0, '[0].income.fixed_cents': 1195000,
                     '[1].income.expected_cents': 1250000},
-          'proyeccion': {f'months[{j}].provisional': (['S2-flujo-quincenal'] if j == 0 else None) for j in range(12)} | {'months[0].income_cents': 2445000}})
+          'proyeccion': {f'months[{j}].provisional': None for j in range(12)} | {'months[0].income_cents': 2445000}})
 fl = {}
 for j in range(16):
     k, i = divmod(j, 4)
@@ -438,21 +440,38 @@ MOVS = [{'goal_id': 2, 'movement_date': '2026-10-05', 'kind': 'deposit', 'amount
         {'goal_id': 5, 'movement_date': '2026-10-01', 'kind': 'deposit', 'amount_cents': 5000}]
 
 
-def sin_estado(calc):
-    for g in calc.get('goals', []):
-        g.pop('state', None)
-    return calc
-
-
-fx('s2-metas', 'Metas: meses exactos, residuo de centavos (RN-18: 50.0 %), meta cumplida, fondo sin monto y una archivada; resto calculado por el oráculo (state no se compara)',
+fx('s2-metas', 'Metas: meses exactos, residuo de centavos (RN-18: 50.0 %), meta cumplida, fondo sin monto y una archivada; FIRME desde la puerta 2 '
+   '(Q2-15 a Q2-18), state incluido; resto calculado por el oráculo',
    [F('criterio', 'S2-12'), F('regla', 'RN-18'), F('model.json', 'horizonte.deuda_viva_10_abr')],
    [('metas', 'metas', {})],
    datos={'$ref': '_datos/semilla-oraculo.json', 'parche': {'savings_goals': METAS, 'savings_movements': MOVS}},
-   provisional={'bloqueo': 'docs/estado/bloqueos/S2-metas.md', 'que': 'months_left (opción 1A), needed_monthly_cents y plan; resumen solo con activas (S2-metas-resumen)'},
-   recorte={'metas': sin_estado},
-   fijos={'metas': {'goals[1].saved_cents': 314672, 'goals[1].progress_tenths_pct': 500, 'goals[1].progress_pct': 50,
+   fijos={'metas': {'goals[0].state': 'in_progress', 'goals[1].state': 'in_progress', 'goals[2].state': 'achieved', 'goals[3].state': 'in_progress','goals[1].saved_cents': 314672, 'goals[1].progress_tenths_pct': 500, 'goals[1].progress_pct': 50,
                     'goals[2].plan': [], 'goals[2].needed_monthly_cents': 0, 'goals[3].target_cents': None, 'goals[3].progress_pct': None,
                     'goals[3].needed_monthly_cents': None, 'goals[3].plan': [], 'goals[3].saved_cents': 50000}})
+
+# Meta vencida sin cumplir (P2c, puerta 2): state y months_left FIRMES (Q2-16 = A, Q2-18 = A); needed_monthly_cents y plan
+# de la vencida PROVISIONALES (bloqueo S2-metas-vencida: todo el restante en el mes de hoy). Hoy = 2026-10-11.
+VENCIDAS = [{'id': 1, 'name': 'Vencida este mes', 'kind': 'goal', 'target_cents': 500, 'target_date': '2026-10-05', 'planned_monthly_cents': None, 'start_date': '2026-01-01', 'is_active': True},
+            {'id': 2, 'name': 'Vencida el mes anterior', 'kind': 'goal', 'target_cents': 500, 'target_date': '2026-09-30', 'planned_monthly_cents': None, 'start_date': '2026-01-01', 'is_active': True},
+            {'id': 3, 'name': 'Fondo cumplido sin fecha', 'kind': 'fund', 'target_cents': 500, 'target_date': None, 'planned_monthly_cents': None, 'start_date': '2026-01-01', 'is_active': True},
+            {'id': 4, 'name': 'Fondo con fecha pasada', 'kind': 'fund', 'target_cents': None, 'target_date': '2026-09-30', 'planned_monthly_cents': None, 'start_date': '2026-01-01', 'is_active': True},
+            {'id': 5, 'name': 'Fondo sin monto ni fecha', 'kind': 'fund', 'target_cents': None, 'target_date': None, 'planned_monthly_cents': None, 'start_date': '2026-01-01', 'is_active': True}]
+MOVS_V = [{'goal_id': 1, 'movement_date': '2026-10-01', 'kind': 'deposit', 'amount_cents': 100},
+          {'goal_id': 2, 'movement_date': '2026-10-01', 'kind': 'deposit', 'amount_cents': 100},
+          {'goal_id': 3, 'movement_date': '2026-10-01', 'kind': 'deposit', 'amount_cents': 600}]
+fv = {}
+for i, (st, ml, nd, pl) in enumerate([('overdue', 1, 400, [{'month': '2026-10', 'cents': 400}]), ('overdue', 0, 400, [{'month': '2026-10', 'cents': 400}]),
+                                       ('achieved', None, None, []), ('overdue', 0, None, []), ('in_progress', None, None, [])]):
+    fv |= {f'goals[{i}].state': st, f'goals[{i}].months_left': ml, f'goals[{i}].needed_monthly_cents': nd, f'goals[{i}].plan': pl}
+fx('s2-metas-vencida', 'Metas vencidas y fondos: target_date anterior a hoy en el mes de hoy (months_left 1) y en el mes anterior (months_left 0), '
+   'fondo con monto cumplido sin fecha (achieved), fondo sin monto con fecha pasada (overdue) y fondo sin monto ni fecha (in_progress); '
+   'la vencida sin cumplir pone todo el restante en el mes de hoy (PROVISIONAL, S2-metas-vencida); cifras a mano',
+   [F('criterio', 'S2-12'), F('regla', 'RN-18'), F('manual', 'S2-interfaz §3.13: months_left, state y meta vencida; restante 500 − 100 = 400')],
+   [('metas', 'metas', {})],
+   datos={'$ref': '_datos/semilla-oraculo.json', 'parche': {'savings_goals': VENCIDAS, 'savings_movements': MOVS_V}},
+   provisional={'bloqueo': 'docs/estado/bloqueos/S2-metas-vencida.md',
+                'que': 'needed_monthly_cents y plan de una meta vencida sin cumplir (todo el restante en el mes de hoy, regla en uso)'},
+   fijos={'metas': fv})
 
 # ---- Errores de entrada (correccion-S2-r1: hallazgos M1 y M2 de REVISION-S2-r1) ----
 ctl = {}
@@ -469,19 +488,43 @@ ERR_ORDEN = {'desordenadas-p2-p1': [VENT[1], VENT[0]],
 fx('s2-ventanas-sin-cubrir', 'Ventanas que no cubren un costo o un pago: una sola ventana posterior al primer evento (P2), un hueco con solo pagos (P1 y P3) '
    'y un hueco con solo un costo (el 10-dic-2026) dan invalid_argument; también ventanas que no van ascendentes y disjuntas: [P2, P1], [P3, P1, P2], '
    'P1 + X (2026-10-25 a 2026-12-09), P1 + Y (empieza el 2026-11-09, el último día de P1) y A (2026-10-10 a 2027-01-09) con B (2026-11-10 a 2026-12-09) '
-   'dentro (reglas PROVISIONALES del bloqueo S2-ventanas); control: P1 y P2 contiguas = R-45 y R-46',
-   [F('criterio', 'S2-03'), F('criterio', 'S2-16'), F('manual', 'reglas PROVISIONALES de docs/estado/bloqueos/S2-ventanas.md (preguntas 1 a 3)'),
-    F('model.json', 'periodos[0]'), F('model.json', 'periodos[1]')],
+   'dentro (§2.12 reglas 1 a 3, FIRMES); puerta 2: un hueco sin eventos (2026-11-16 a 2026-11-29) que cruza el devengo de la despensa 1 es '
+   'invalid_argument (regla 4, PROVISIONAL) y [d = 2026-10-10, r = 2026-10-11 a 2026-11-09] da 292125 al 2026-11-09 (§3.2 caso 2, PROVISIONAL); '
+   'control: P1 y P2 contiguas = R-45 y R-46',
+   [F('criterio', 'S2-03'), F('criterio', 'S2-16'), F('manual', 'S2-interfaz §2.12 reglas 1 a 4 y §3.2 (docs/estado/bloqueos/S2-ventanas.md, preguntas 1 a 4)'),
+    F('manual', 'REVISION-S2-r3 M1: [d, r] = 389500 devengado − 97375 pagado = 292125'), F('model.json', 'periodos[0]'), F('model.json', 'periodos[1]')],
    [('control-p1-p2', 'periodos', {'windows': VENT[:2]}), ('solo-p2', 'periodos', {'windows': [VENT[1]]}),
     ('hueco-con-pagos', 'periodos', {'windows': [VENT[0], VENT[2]]}),
     ('hueco-con-costo', 'periodos', {'windows': [{'label': 'A', 'start': '2026-10-10', 'end': '2026-12-09'},
                                                  {'label': 'B', 'start': '2026-12-11', 'end': '2027-01-09'}]})]
-   + [(k, 'periodos', {'windows': v}) for k, v in ERR_ORDEN.items()],
+   + [(k, 'periodos', {'windows': v}) for k, v in ERR_ORDEN.items()]
+   + [('hueco-sin-eventos', 'periodos', {'windows': [{'label': 'A1', 'start': '2026-10-10', 'end': '2026-11-15'},
+                                                    {'label': 'C1', 'start': '2026-11-30', 'end': '2027-01-09'}]}),
+      ('d-r-caso-2', 'periodos', {'windows': [{'label': 'd', 'start': '2026-10-10', 'end': '2026-10-10'},
+                                             {'label': 'r', 'start': '2026-10-11', 'end': '2026-11-09'}]})],
    provisional={'bloqueo': 'docs/estado/bloqueos/S2-ventanas.md',
-                'que': 'rechazo de un costo o un pago antes de la primera ventana o en un hueco entre ventanas, y de ventanas que no van '
-                       'ascendentes y disjuntas (start[i] ≤ end[i−1])'},
+                'que': 'pregunta 4: contigüidad de las ventanas (caso 1, regla 4 de §2.12) y devengo con ventanas que no duran un mes (caso 2, §3.2)'},
    fijos={'control-p1-p2': ctl, 'solo-p2': {'error': 'invalid_argument'}, 'hueco-con-pagos': {'error': 'invalid_argument'},
-          'hueco-con-costo': {'error': 'invalid_argument'}} | {k: {'error': 'invalid_argument'} for k in ERR_ORDEN})
+          'hueco-con-costo': {'error': 'invalid_argument'}, 'hueco-sin-eventos': {'error': 'invalid_argument'},
+          'd-r-caso-2': {'[1].cumulative_diff_cents': 292125}} | {k: {'error': 'invalid_argument'} for k in ERR_ORDEN})
+# Puerta 2 (REVISION-S2-r3 M1, consulta A + C): la semilla sin despensas a crédito más un gasto de contado de 100000 el 2026-10-10 con
+# accrual_months 2. Va en su propia fixture porque el hueco de A + C debe quedar sin eventos y la semilla tiene pagos en él.
+VA, VB, VC = ({'label': l, 'start': a, 'end': b} for l, a, b in (('A', '2026-10-10', '2026-11-09'), ('B', '2026-11-10', '2026-12-09'),
+                                                                   ('C', '2026-12-10', '2027-01-09')))
+fx('s2-ventanas-a-mas-c', 'Ventanas A y C con un hueco sin eventos (B) que cruza un devengo de 2 meses: invalid_argument (§2.12 regla 4, PROVISIONAL); '
+   'control A, B y C contiguas: A 50000/100000/−50000, B devenga 50000 y C 0 con diferencia 0; en meses [oct, dic] diciembre devenga 0. '
+   'Datos de REVISION-S2-r3 M1: la semilla sin despensas a crédito más un gasto de contado de 100000 el 2026-10-10 con accrual_months 2; cifras a mano',
+   [F('criterio', 'S2-03'), F('criterio', 'S2-16'), F('manual', 'S2-interfaz §2.12 regla 4 y REVISION-S2-r3 M1: 100000 / 2 = 50000 por mes')],
+   [('a-mas-c', 'periodos', {'windows': [VA, VC]}), ('a-b-c', 'periodos', {'windows': [VA, VB, VC]}),
+    ('meses-oct-dic', 'periodos', {'months': ['2026-10', '2026-12']})],
+   datos={'$ref': '_datos/semilla-oraculo.json', 'parche': {
+       'categories': CATS, 'credit_purchases': [],
+       'expenses': [g for g in GASTOS if g['category'] != 'despensa'] + [gasto_fx(7, 'despensa', 100000, '2026-10-10') | {'accrual_months': 2}]}},
+   provisional={'bloqueo': 'docs/estado/bloqueos/S2-ventanas.md', 'que': 'pregunta 4, caso 1: contigüidad de las ventanas (regla 4 de §2.12)'},
+   fijos={'a-mas-c': {'error': 'invalid_argument'},
+          'a-b-c': {'[0].accrued.total_cents': 50000, '[0].cash.total_cents': 100000, '[0].cumulative_diff_cents': -50000,
+                    '[1].accrued.total_cents': 50000, '[2].accrued.total_cents': 0, '[2].cumulative_diff_cents': 0},
+          'meses-oct-dic': {'[1].accrued.total_cents': 0}})
 fx('s2-rango-devengo-0', 'Gasto de fixture del 5-dic-2026 con accrual_months 0 explícito: fuera del rango 1–24 (S2-interfaz §2.4); ausente o null valdría 1',
    [F('criterio', 'S2-03'), F('manual', 'S2-interfaz §2.4: accrual_months entero 1–24')],
    [('dic-2026', 'periodos', {'months': ['2026-12']})],

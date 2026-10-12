@@ -185,7 +185,8 @@ func s5Profeco(input, args json.RawMessage) (any, error) {
 		Duplicates     int64 `json:"duplicates"`
 		Coverage       []cov `json:"coverage"`
 		Rejections     []rej `json:"rejections"`
-	}{r.Read, r.Rejected, r.FilteredOut, r.Skipped, r.Loaded + r.LoadedProposed, r.LoadedProposed,
+	}{r.Read, r.Rejected, r.FilteredOut, r.Skipped, r.Loaded, r.LoadedProposed, // §11: Read = Rejected + FilteredOut + Skipped + Loaded + LoadedProposed + Duplicates
+
 		r.Duplicates, []cov{}, []rej{}}
 	for _, c := range r.Coverage {
 		out.Coverage = append(out.Coverage, cov{c.Chain, c.Municipality, c.PriceCount})
@@ -218,7 +219,7 @@ func s5Links(path string, presID map[string]int64) (*profeco.Links, error) {
 		}
 		if _, err := strconv.ParseInt(r[col], 10, 64); err != nil {
 			id, ok := presID[r[col]]
-			if !ok {
+			if !ok { // PROVISIONAL, bloqueo S5-motor-oraculo-reglas pregunta 5: el oráculo omite el registro (skipped)
 				return nil, fmt.Errorf("%w: %s", precios.ErrUnknownPresentation, r[col])
 			}
 			r[col] = strconv.FormatInt(id, 10)

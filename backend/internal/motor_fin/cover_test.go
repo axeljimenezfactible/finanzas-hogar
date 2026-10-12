@@ -56,7 +56,7 @@ func TestErrores(t *testing.T) {
 		{"arg", "metas", `{"x":1}`, CodeUnknownField, seed},
 		{"periodos", "periodos", `{"months":["2026-10"],"windows":[]}`, CodeInvalidArgument, seed},
 		{"vacío", "periodos", `{"months":[]}`, CodeInvalidArgument, seed},
-		// PROVISIONAL (docs/estado/bloqueos/S2-ventanas.md): costo o pago antes de la primera ventana o en un hueco.
+		// §2.12 reglas 2 y 3 (FIRMES, Q2-25 = A y Q2-26 = H1): costo o pago antes de la primera ventana o en un hueco.
 		{"ventana posterior", "periodos", `{"windows":[{"label":"P2","start":"2026-11-10","end":"2026-12-09"}]}`, CodeInvalidArgument, seed},
 		{"hueco con pagos", "periodos", `{"windows":[{"label":"P1","start":"2026-10-10","end":"2026-11-09"},{"label":"P3","start":"2026-12-10","end":"2027-01-09"}]}`, CodeInvalidArgument, seed},
 		{"hueco con costo", "periodos", `{"windows":[{"label":"A","start":"2026-10-10","end":"2026-12-09"},{"label":"B","start":"2026-12-11","end":"2027-01-09"}]}`, CodeInvalidArgument, seed},
@@ -178,8 +178,8 @@ func TestRangoConteos(t *testing.T) {
 }
 
 // TestVentanasOrden: ventanas que no van ascendentes y disjuntas (start[i] ≤ end[i−1]) son
-// invalid_argument por la regla de orden y no por la de cobertura (PROVISIONAL,
-// docs/estado/bloqueos/S2-ventanas.md, pregunta 3; hallazgo M1 de REVISION-S2-r2). Con la
+// invalid_argument por la regla de orden y no por la de cobertura (§2.12 regla 1, FIRME desde la
+// puerta 2, Q2-27 = O1; hallazgo M1 de REVISION-S2-r2). Con la
 // semilla, todos los eventos caen dentro de alguna ventana pedida, así que sin la regla de orden
 // estas consultas darían cifras (las incorrectas que reportó la revisión).
 func TestVentanasOrden(t *testing.T) {
@@ -205,4 +205,81 @@ func TestVentanasOrden(t *testing.T) {
 		eq(t, fmt.Sprintf("P%d devengado", i+1), Cents(qc(t, out, fmt.Sprintf("[%d].accrued.total_cents", i))), mc(t, fmt.Sprintf("periodos[%d].devengado.total", i)))
 		eq(t, fmt.Sprintf("P%d diferencia", i+1), Cents(qc(t, out, fmt.Sprintf("[%d].cumulative_diff_cents", i))), mc(t, fmt.Sprintf("periodos[%d].diferencia_acumulada", i)))
 	}
+}
+
+// TestVentanasContiguas: §2.12 regla 4, PROVISIONAL (bloqueo S2-ventanas, pregunta 4, caso 1;
+// Q2-01 = A): toda lista con hueco es invalid_argument aunque el hueco no tenga eventos. Datos de
+// REVISION-S2-r3 M1: la semilla sin despensas a crédito más un gasto de contado de 100000 el
+// 2026-10-10 con accrual_months 2. Caso 2 (PROVISIONAL, sin decidir): [d, r] da 292125 al 2026-11-09.
+func TestVentanasContiguas(t *testing.T) {
+	seed := seedFromModel(t)
+	s := clone(t, seed)
+	var keep []any
+	for _, e := range s["expenses"].([]any) {
+		if e.(M)["category"] != "despensa" {
+			keep = append(keep, e)
+		}
+	}
+	g := cashExp(7, "despensa", 100000, "2026-10-10", "variable")
+	g["accrual_months"] = 2
+	s["expenses"], s["credit_purchases"] = append(keep, g), []any{}
+	w := func(l, a, b string) string { return `{"label":"` + l + `","start":"` + a + `","end":"` + b + `"}` }
+	a, b, c := w("A", "2026-10-10", "2026-11-09"), w("B", "2026-11-10", "2026-12-09"), w("C", "2026-12-10", "2027-01-09")
+	_, e := Eval(mustJSON(t, s), "periodos", []byte(`{"windows":[`+a+","+c+`]}`))
+	if e == nil || e.Code != CodeInvalidArgument || !strings.Contains(e.Detail, "contiguas") {
+		t.Errorf("A + C: se esperaba invalid_argument por la regla 4 y salió %v", e)
+	}
+	abc := q(t, s, "periodos", `{"windows":[`+a+","+b+","+c+`]}`)
+	eq(t, "A, B y C", sp(qc(t, abc, "[0].accrued.total_cents"), qc(t, abc, "[0].cash.total_cents"), qc(t, abc, "[0].cumulative_diff_cents"),
+		qc(t, abc, "[1].accrued.total_cents"), qc(t, abc, "[2].accrued.total_cents"), qc(t, abc, "[2].cumulative_diff_cents")),
+		"50000 100000 -50000 50000 0 0")
+	eq(t, "meses oct y dic: dic sin devengo", qc(t, q(t, s, "periodos", `{"months":["2026-10","2026-12"]}`), "[1].accrued.total_cents"), 0)
+	dr := q(t, seed, "periodos", `{"windows":[`+w("d", "2026-10-10", "2026-10-10")+","+w("r", "2026-10-11", "2026-11-09")+`]}`)
+	eq(t, "[d, r] al 2026-11-09", qc(t, dr, "[1].cumulative_diff_cents"), 292125)
+	eq(t, "[P1] al 2026-11-09", Cents(qc(t, q(t, seed, "periodos", `{"windows":[`+a+`]}`), "[0].cumulative_diff_cents")), mc(t, "periodos[0].diferencia_acumulada"))
+}
+
+// TestInstanteZ: un instante va en UTC con «Z» (§1.1, K12); otro desfase es invalid_date, como en
+// el oráculo (REVISION-S2-r3 B1).
+func TestInstanteZ(t *testing.T) {
+	seed := seedFromModel(t)
+	for _, v := range []string{`"2026-10-31T05:59:59+00:00"`, `"2026-10-31T00:30:00-06:00"`, `"2026-10-31T05:59:59"`, `"2026-13-01T00:00:00Z"`, `123`} {
+		if _, e := Eval(mustJSON(t, seed), "calendario", []byte(`{"now":`+v+`}`)); e == nil || e.Code != CodeInvalidDate {
+			t.Errorf("calendario now %s: se esperaba invalid_date y salió %v", v, e)
+		}
+	}
+	s := clone(t, seed)
+	delete(s["params"].(M), "today")
+	s["params"].(M)["now"] = "2026-10-11T18:00:00-06:00"
+	if _, e := Eval(mustJSON(t, s), "metas", []byte(`{}`)); e == nil || e.Code != CodeInvalidDate {
+		t.Errorf("params.now con desfase: se esperaba invalid_date y salió %v", e)
+	}
+	s["params"].(M)["now"] = "2026-10-12T00:00:00.5Z"
+	eq(t, "fracción de segundo con Z", leaf(t, q(t, s, "calendario", `{"now":"2026-10-12T00:00:00.5Z"}`), "today"), "2026-10-11")
+}
+
+// TestMetasEstado: §3.13 (FIRMES, Q2-16 = A y Q2-18 = A) y la meta vencida sin cumplir
+// (PROVISIONAL, bloqueo S2-metas-vencida: todo el restante en el mes de hoy). Hoy = 2026-10-11.
+func TestMetasEstado(t *testing.T) {
+	s := seedFromModel(t)
+	push(s, "savings_goals",
+		M{"id": 1, "kind": "goal", "target_cents": 500, "target_date": "2026-10-05", "start_date": "2026-01-01"},
+		M{"id": 2, "kind": "goal", "target_cents": 500, "target_date": "2026-09-30", "start_date": "2026-01-01"},
+		M{"id": 3, "kind": "fund", "target_cents": 500, "start_date": "2026-01-01"},
+		M{"id": 4, "kind": "fund", "target_date": "2026-09-30", "start_date": "2026-01-01"},
+		M{"id": 5, "kind": "fund", "start_date": "2026-01-01"})
+	push(s, "savings_movements", M{"goal_id": 1, "movement_date": "2026-10-01", "kind": "deposit", "amount_cents": 100},
+		M{"goal_id": 2, "movement_date": "2026-10-01", "kind": "deposit", "amount_cents": 100},
+		M{"goal_id": 3, "movement_date": "2026-10-01", "kind": "deposit", "amount_cents": 600})
+	r := q(t, s, "metas", `{}`)
+	row := func(i int) string {
+		p := fmt.Sprintf("goals[%d].", i)
+		return sp(leaf(t, r, p+"state"), leaf(t, r, p+"months_left"), leaf(t, r, p+"needed_monthly_cents"), len(leaf(t, r, p+"plan").([]any)))
+	}
+	eq(t, "vencida este mes", row(0), "overdue 1 400 1")
+	eq(t, "vencida mes anterior", row(1), "overdue 0 400 1")
+	eq(t, "vencida: plan", sp(leaf(t, r, "goals[1].plan[0].month"), qc(t, r, "goals[1].plan[0].cents")), "2026-10 400")
+	eq(t, "fondo cumplido sin fecha", row(2), "achieved null null 0")
+	eq(t, "fondo con fecha pasada", row(3), "overdue 0 null 0")
+	eq(t, "fondo sin monto ni fecha", row(4), "in_progress null null 0")
 }

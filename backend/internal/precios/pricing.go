@@ -211,7 +211,8 @@ func (b *Book) AddPrice(p PriceObs) error {
 	return nil
 }
 
-// later dice si a es posterior a b (fecha observada y, a igual fecha, created_at; supuesto S-8).
+// later dice si a es posterior a b (fecha observada y, a igual fecha, created_at; supuesto S-8). Con el mismo created_at
+// no es posterior, así que queda el primero de la entrada (PROVISIONAL, bloqueo S5-precio-vigente-captura pregunta 1).
 func later(a, b PriceObs) bool {
 	if !a.ObservedDate.Equal(b.ObservedDate) {
 		return a.ObservedDate.After(b.ObservedDate)
@@ -223,8 +224,8 @@ func later(a, b PriceObs) bool {
 type Current struct {
 	Price      *PriceObs // último precio regular de fuente que compite (o nil: «sin precio»)
 	Weight     Weight
-	References []PriceObs // último de cada fuente de referencia (profeco, site_assisted)
-	Promotion  *PriceObs  // promoción vigente: solo en su observed_date (PROVISIONAL S5-reglas-comparativa p3)
+	References []PriceObs // último de cada fuente de referencia (profeco, site_assisted); PROVISIONAL, bloqueo S5-motor-oraculo-reglas pregunta 3 (§6)
+	Promotion  *PriceObs  // promoción vigente: solo en su observed_date (FIRME, puerta 2, Q2-61 = A)
 }
 
 // CurrentPrice evalúa el precio vigente en la fecha at (hoy o la fecha de despensa).
@@ -260,6 +261,13 @@ func (b *Book) CurrentPrice(pres, store string, at time.Time) Current {
 	for _, r := range refs {
 		cur.References = append(cur.References, r)
 	}
-	sort.Slice(cur.References, func(i, j int) bool { return cur.References[i].Source < cur.References[j].Source })
+	// §15.2: por observed_date descendente y luego por source (orden de bytes).
+	sort.Slice(cur.References, func(i, j int) bool {
+		ri, rj := cur.References[i], cur.References[j]
+		if !ri.ObservedDate.Equal(rj.ObservedDate) {
+			return ri.ObservedDate.After(rj.ObservedDate)
+		}
+		return ri.Source < rj.Source
+	})
 	return cur
 }

@@ -13,10 +13,7 @@
       "ruta": "S5-03"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
-    "que": "pregunta 2: desempate por renglones recomendados, luego precios viejos, luego orden de `stores` (opción A)"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "today": "2026-10-12",

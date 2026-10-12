@@ -115,6 +115,7 @@
       "filtered_out": 3,
       "skipped": 0,
       "loaded": 4,
+      "loaded_proposed": 0,
       "duplicates": 1,
       "coverage": [
         {

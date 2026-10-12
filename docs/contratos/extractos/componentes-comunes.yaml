@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.2.0 · componentes comunes. Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.3.0 · componentes comunes. Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · componentes comunes"
-  version: "1.2.0"
+  version: "1.3.0"
   description: "Componentes que comparten todos los extractos: parámetros, encabezados, respuestas, seguridad y los esquemas base (Error, Page, MoneyCents, Date, DateTime y los que ellos referencian)."
 paths: {}
 components:

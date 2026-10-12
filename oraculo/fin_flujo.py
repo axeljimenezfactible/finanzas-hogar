@@ -1,7 +1,8 @@
 """Oráculo S2 · flujo por quincena y ocurrencias planificadas (S2-interfaz.md §2.7, §3.11; S2-10, M-02, M-10).
 
-PROVISIONAL (docs/estado/bloqueos/S2-flujo-quincenal.md): la liga ocurrencia ↔ captura usa la lectura de trabajo (3A):
-captura con el mismo planned_item_id en la misma quincena (weekly, fortnightly) o en el mismo mes (monthly, yearly, once).
+FIRME desde la puerta 2 (Q2-14 = A; S2-flujo-quincenal pregunta 3): la liga ocurrencia ↔ captura es una captura con el
+mismo planned_item_id en la misma quincena (weekly, fortnightly) o en el mismo mes (monthly, yearly, once). Por eso
+`provisional` queda en None en cada quincena; el campo se conserva para marcas futuras.
 """
 import datetime as dt
 from collections import Counter
@@ -9,7 +10,6 @@ from collections import Counter
 from fin_comun import (ErrorMotor, como_datos, lim_mes, lim_quincena, mapa, mes_de, mes_mas, q_mas, q_txt, quincena_de,
                        ultimo)
 
-BLOQUEO_LIGA = 'S2-flujo-quincenal'
 
 
 def ocurrencias(it, a, b):
@@ -59,7 +59,7 @@ def capturas(D):
 
 
 def ligada(it, d, cap):
-    """Lectura de trabajo PROVISIONAL (S2-flujo-quincenal, opción 3A)."""
+    """Liga ocurrencia ↔ captura (FIRME, Q2-14 = A)."""
     if it['freq'] in ('weekly', 'fortnightly'):
         a, b, _ = lim_quincena(quincena_de(d))
     else:
@@ -83,11 +83,9 @@ def flujo_quincenal(datos, desde, n):
         fijo = sum(x['amount'] for x in D.incomes if x['kind'] == 'fixed' and a <= x['date'] <= b)
         extra = sum(x['amount'] for x in D.incomes if x['kind'] == 'extra' and a <= x['date'] <= b)
         esperado = plan_fu = pend_occ = 0
-        prov = False
         for it in partidas_vivas(D):
             for d, monto in ocurrencias(it, a, b):
                 lig = ligada(it, d, cap)
-                prov = prov or lig
                 if it['kind'] == 'income':
                     esperado += 0 if lig else monto
                 else:
@@ -123,7 +121,8 @@ def flujo_quincenal(datos, desde, n):
                           credit_payments=dict(by_person=mapa(D, by), household_cents=hogar, external_informative_cents=inf,
                                                household_paid_cents=pagado, household_pending_cents=hogar - pagado),
                           fixed_upcoming=dict(planned_cents=plan_fu, paid_cents=fu_pag, pending_cents=fu_pend),
+                          # None mientras sigan PROVISIONALES: S2-flujo-quincenal pregunta 1 (Q2-12 sin respuesta) y S2-ahorro-quincenal.
                           variable_spent_cents=var, variable_estimated_cents=None, savings_planned_cents=None,
                           spent_cents=gastado, committed_cents=comprometido, balance_cents=saldo, cumulative_balance_cents=acum,
-                          provisional=[BLOQUEO_LIGA] if prov else None))
+                          provisional=None))
     return filas

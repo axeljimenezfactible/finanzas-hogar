@@ -13,10 +13,7 @@
       "ruta": "§14.1 y §7.3 de S5-interfaz.md"
     }
   ],
-  "provisional": {
-    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
-    "que": "pregunta 2: desempate por precio del paquete, orden de `stores` y orden del catálogo (opción A)"
-  },
+  "provisional": null,
   "entradas": {
     "datos": {
       "today": "2026-10-12",

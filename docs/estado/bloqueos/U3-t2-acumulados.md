@@ -14,3 +14,15 @@ Opciones:
 Impacto: quedan PROVISIONAL las capas de T-2, sus etiquetas finales («Devengado acumulado», «Efectivo acumulado»), su resumen de una frase y las cifras de capas de A-11. No dependen del bloqueo: la tabla mensual de T-2 (devengado, efectivo, partes del hogar y de Karen, `cumulative_difference_cents`), la fila «Total», la línea «Hoy», los meses 7 a 12 ni el resto de U3. Si se elige A, la solicitud a C1 está en U3 §15 y en `docs/estado/wf1/correccion-U3-r2.md`.
 
 Cómo seguí: U3 1.2 especifica en T-2 las variantes A (a) y B (b), las dos con la marca PROVISIONAL que cita este archivo. También prohíbe mezclar orígenes y suma a A-11 una corrida con reloj en nov-2026, con los esperados de las dos variantes. Ninguna cifra canon cambia y no se tocó C1.
+
+## Respuesta de Axel (puerta 2, 11-oct-2026)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado/puerta2/PUERTA-2.md` §8. Modo de respuesta elegido por Axel: «lo recomendado + excepciones» (se aprueba en bloque la opción recomendada; hasta ahora no hay excepciones por id). Las letras son las de este archivo, salvo donde se indica.
+
+### Q2-65 · ¿Cómo se alimenta la gráfica T-2 «Devengado contra efectivo»?
+- **Respuesta:** **A** (la recomendada, aprobada en bloque)
+- **Texto de la opción (literal del archivo):** «C1 agrega `cumulative_accrued_cents` y `cumulative_cash_cents` (`x-calculado`, motor S2, mismo origen que `diferencia_acumulada`; así `cumulative_difference_cents` = `cumulative_accrued_cents` − `cumulative_cash_cents`). C1-datos M-11 los nombra.»
+- **Consecuencia:** la cima es el devengado acumulado de DESIGN §8.3 sea cual sea el mes en curso, y las cifras se comprueban con cualquier reloj (nov-2026: 2,921.25 y 3,895.00; mar-2027: 13,103.78 y 14,362.48, R-52 y R-51). Costo: dos campos más en el contrato, en el generador de C1 y en la salida de S2, que ya suma esos acumulados para sacar la diferencia.
+- **Qué cambia:** C1 agrega `cumulative_accrued_cents` y `cumulative_cash_cents` a `AccrualVsCash.months[]` (x-calculado, motor S2; M-11 de `C1-datos.md`; generador `c1gen`; solicitud en U3 §15 y `docs/estado/wf1/correccion-U3-r2.md`); S2 los entrega; U3 deja T-2 con una sola variante (capas, etiquetas «Devengado acumulado» y «Efectivo acumulado», resumen y cifras de capas de A-11, corrida con reloj en nov-2026: 2,921.25 y 3,895.00).
+- **Estado:** RESUELTO
+
+**Estado del bloqueo (puerta 2): RESUELTO**

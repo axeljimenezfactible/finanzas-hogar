@@ -57,6 +57,9 @@ def _de(d, pres, store, hoy):
 
 
 def vigente(d, pres, store, hoy):
+    # S-8: a igual fecha rige el created_at más reciente, comparado como instante (pre_comun.instante resta la zona).
+    # Con el mismo instante desempata `n` (queda el último de la entrada); el motor en uso deja el primero:
+    # PROVISIONAL, bloqueo S5-precio-vigente-captura pregunta 1 (también en `refs` y `pr` de current_price).
     c = [p for p in _de(d, pres, store, hoy) if not p['promo'] and p['source'] in COMPITEN]
     return max(c, key=lambda p: (p['date'], p['created'], p['n'])) if c else None
 
@@ -68,7 +71,9 @@ def current_price(d, pres, store):
         raise ErrorMotor('unknown_store', store)
     v = vigente(d, pres, store, d.today)
     refs = sorted([p for p in _de(d, pres, store, d.today) if not p['promo'] and p['source'] not in COMPITEN],
-                  key=lambda p: (p['date'], p['created'], p['n']), reverse=True)
+                  key=lambda p: (p['created'], p['n']), reverse=True)
+    refs.sort(key=lambda p: (-p['date'].toordinal(), p['source'].encode('utf-8')))  # §15.2: fecha descendente y luego source
+    # todas las referencias hasta hoy; el motor en uso da solo la más reciente de cada fuente (PROVISIONAL, bloqueo S5-motor-oraculo-reglas pregunta 3)
     pro = [p for p in _de(d, pres, store, d.today) if p['promo'] and p['source'] in COMPITEN and p['date'] == d.today]
     pr = max(pro, key=lambda p: (p['created'], p['n'])) if pro else None
     f = lambda p: {'price_cents': p['cents'], 'observed_date': p['date'].isoformat()}
@@ -130,27 +135,32 @@ def quote_for(d, product, store, pres):
 
 # ---------- §7.2 compra contra carrito ----------
 def _agrupa(cart):
+    """Misma presentación en varias líneas con precios distintos: aquí lo emparejado y el excedente toman el precio
+    promedio (importe exacto ÷ cantidad). PROVISIONAL (bloqueo S5-motor-oraculo-reglas pregunta 2): el motor en uso consume en orden de captura."""
     g = {}
     for ln in cart['lines']:
-        e = g.setdefault(ln['pres'], {'pres': ln['pres'], 'qty': 0, 'total': 0, 'unit': ln['unit'], 'exacto': 0})
+        e = g.setdefault(ln['pres'], {'pres': ln['pres'], 'qty': 0, 'unit': ln['unit'], 'exacto': 0})
         e['qty'] += ln['qty']
-        e['exacto'] += ln['qty'] * ln['unit']  # importe exacto en milésimas de centavo, sin redondeo
-        e['total'] += half_up(Fraction(ln['qty'] * ln['unit'], 1000))
+        e['exacto'] += ln['qty'] * ln['unit']  # importe exacto en milésimas de centavo, sin redondeo por línea
     return list(g.values())
 
 
 def _piezas(qty):
+    """Renglón a granel = 1 pieza (supuesto S-11). PROVISIONAL (bloqueo S5-motor-oraculo-reglas pregunta 1): aquí se cuenta cada
+    línea de rows[] (emparejada y excedente por separado); el motor en uso cuenta la presentación agrupada del paso 1."""
     return qty // 1000 if qty % 1000 == 0 else 1
 
 
 def _unit(e):
-    return Fraction(e['total'] * 1000, e['qty'])
+    """Precio exacto por presentación (centavos, fracción) = importe exacto ÷ cantidad; granel PROVISIONAL
+    (bloqueo S5-carritos-granel, §7.2 paso 8): nada se redondea antes de publicar."""
+    return Fraction(e['exacto'], e['qty'])
 
 
 def _linea(d, st, pres, qty, unit):
-    tot = half_up(Fraction(qty * unit.numerator, 1000 * unit.denominator))
-    return {'store': st, 'presentation': pres, 'quantity_milli': qty, 'total_cents': tot,
-            'base_unit_price_cents': half_up(exacto_base(d, pres, unit))}
+    exacto = Fraction(qty * unit.numerator, 1000 * unit.denominator)  # importe exacto de la línea, en centavos
+    return {'store': st, 'presentation': pres, 'quantity_milli': qty, 'total_cents': half_up(exacto),
+            'base_unit_price_cents': half_up(exacto_base(d, pres, unit)), '_x': exacto}
 
 
 def _ganador(vals):
@@ -158,6 +168,15 @@ def _ganador(vals):
     m = min(v for _, v in vals)
     g = [s for s, v in vals if v == m]
     return g[0] if len(g) == 1 else None
+
+
+def _diferencias(lista):
+    """§7.4: la más barata es la primera completa (missing_count 0); su total es la referencia de las completas.
+    Las incompletas, y todas si ninguna está completa, llevan diferencia null. Devuelve la más barata o None."""
+    barata = next((s for s in lista if s['missing_count'] == 0), None)
+    for s in lista:
+        s['difference_vs_cheapest_cents'] = s['total_cents'] - barata['total_cents'] if barata is not None and s['missing_count'] == 0 else None
+    return barata
 
 
 def compare_carts(d, base, others):
@@ -225,13 +244,17 @@ def compare_carts(d, base, others):
             'missing_count': 0, 'stale_count': 0, 'difference_vs_cheapest_cents': 0, 'assumes_membership': False, '_i': i}
            for i, c in enumerate(codes)]
     idx = {tienda[c]: i for i, c in enumerate(codes)}
+    # §7.2 paso 8 (PROVISIONAL, bloqueo S5-carritos-granel): total e idénticos = HALF_UP de la suma exacta, un solo redondeo
+    exacto = [[Fraction(0), Fraction(0)] for _ in codes]
     for r in filas:
         for ln in r['lines']:
-            s = ult[idx[ln['store']]]
-            s['total_cents'] += ln['total_cents']
-            s['piece_count'] += _piezas(ln['quantity_milli'])
+            i = idx[ln['store']]
+            ult[i]['piece_count'] += _piezas(ln['quantity_milli'])
+            exacto[i][0] += ln['_x']
             if r['kind'] == 'identical':
-                s['identical_total_cents'] += ln['total_cents']
+                exacto[i][1] += ln['_x']
+    for i, (tot, ident) in enumerate(exacto):
+        ult[i]['total_cents'], ult[i]['identical_total_cents'] = half_up(tot), half_up(ident)
     for r in rows_i:
         for ln in r['lines']:
             ult[idx[ln['store']]]['identical_count'] += 1
@@ -246,13 +269,12 @@ def compare_carts(d, base, others):
         s['missing_count'] = sum(1 for pr in productos if not any(d.pres[e['pres']]['product'] == pr for e in gr[c]))
         st = d.stores[tienda[c]]
         s['assumes_membership'] = st['requires'] and not st['has']
-    minimo = min(s['total_cents'] for s in ult)
-    for s in ult:
-        s['difference_vs_cheapest_cents'] = s['total_cents'] - minimo
-    ult.sort(key=lambda s: (s['total_cents'], s['_i']))
+    # §7.4 (H-r3-04, Q2-05 = A): completas por total, luego incompletas por total; a igual total, la base y luego others
+    ult.sort(key=lambda s: (s['missing_count'] > 0, s['total_cents'], s['_i']))
+    _diferencias(ult)
     # winners[] en el orden de stores[] (convención 1 de oraculo-S5.md), también con count 0
     ganan = [{'store': s['store'], 'count': sum(1 for r in rows_i if r['winner_store'] == s['store'])} for s in ult]
-    limpia = lambda r: {k: v for k, v in r.items() if not k.startswith('_')}
+    limpia = lambda r: {k: ([limpia(x) for x in v] if k == 'lines' else v) for k, v in r.items() if not k.startswith('_')}
     return {'stores': [limpia(s) for s in ult], 'identical_pieces': sum(_piezas(r['_q']) for r in rows_i), 'winners': ganan,
             'ties': sum(1 for r in rows_i if r['winner_store'] is None), 'rows': [limpia(r) for r in filas]}
 
@@ -320,12 +342,9 @@ def compare_basket(d):
                       'recommended_presentation': None if q is None else q['presentation'],
                       'estimated_price_cents': None if q is None else estimado,
                       'is_stale_price': False if q is None else q['is_stale'], 'prices': prices})
-    lista_est = sorted(est.values(), key=lambda s: (s['total_cents'], -s['_rec'], s['stale_count'], s['_i']))
-    completas = [s for s in lista_est if s['missing_count'] == 0]
-    barata = completas[0] if completas else None
-    ref = barata['total_cents'] if barata else (min(s['total_cents'] for s in lista_est) if lista_est else 0)
-    for s in lista_est:
-        s['difference_vs_cheapest_cents'] = s['total_cents'] - ref
+    # §7.4: completas y luego incompletas, cada grupo por total; empate (FIRME, Q2-60 = A): más recomendados, menos viejos, orden de stores
+    lista_est = sorted(est.values(), key=lambda s: (s['missing_count'] > 0, s['total_cents'], -s['_rec'], s['stale_count'], s['_i']))
+    barata = _diferencias(lista_est)
     return {'stores': [{k: v for k, v in s.items() if not k.startswith('_')} for s in lista_est], 'items': items,
             'cheapest_store': None if barata is None else barata['store']}
 
@@ -372,8 +391,11 @@ def next_visit(d, store, desde):
 
 # ---------- §10 precios viejos ----------
 def stale_prices_for_plan(d, products, asignadas, fecha_despensa):
-    stale, sin = [], []
+    stale, sin, vistos = [], [], set()
     for pr in products:
+        if pr in vistos:  # §15.2: en el orden de products[], sin repetidos
+            continue
+        vistos.add(pr)
         if pr not in d.products:
             raise ErrorMotor('invalid_argument', pr)
         st = asignadas.get(pr)

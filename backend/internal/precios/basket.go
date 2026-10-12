@@ -18,7 +18,7 @@ type option struct {
 }
 
 // adjCmp compara el precio por unidad base ajustado = (precio / contenido) ÷ peso como
-// fracción exacta (§7.1, PROVISIONAL bloqueo S5-reglas-comparativa, pregunta 1, opción A).
+// fracción exacta (§7.1, FIRME, puerta 2, Q2-59 = A).
 // Solo se llama con pesos > 0 (candidatos que compiten).
 func adjCmp(a, b option) int {
 	return cmpRatBig(a.price.PriceCents, a.weight.Frac.Den, a.pres.SizeMilli, a.weight.Frac.Num,
@@ -56,7 +56,7 @@ func (b *Book) candidates(prod Product, store, pres string, at time.Time) []opti
 
 // quoteLess es el orden de §14.1: (1) menor precio por unidad base ajustado; (2) menor precio
 // del paquete; (3) la tienda que va antes en stores; (4) la presentación que va antes en el
-// catálogo. Los pasos 2 a 4 son PROVISIONALES (bloqueo S5-reglas-comparativa, pregunta 2).
+// catálogo. Los pasos 2 a 4 son el desempate FIRME de la puerta 2 (Q2-60 = A).
 func (b *Book) quoteLess(x, y option) bool {
 	if c := adjCmp(x, y); c != 0 {
 		return c < 0
@@ -264,17 +264,13 @@ func (b *Book) CompareBasket(list []ListItem) (*BasketComparison, error) {
 		out.opts = append(out.opts, opts)
 	}
 	out.Stores = rankStores(totals)
-	for i := range out.Stores {
-		if len(list) > 0 && out.Stores[i].MissingCount == 0 {
-			out.CheapestStore = &out.Stores[i].Store // la primera completa (§7.4)
-			break
-		}
+	if len(out.Stores) > 0 && out.Stores[0].MissingCount == 0 {
+		out.CheapestStore = &out.Stores[0].Store // la primera completa (§7.4); null si ninguna lo está
 	}
 	return out, nil
 }
 
-// CompareExpense (§7.2, API basket = expense; PROVISIONAL, bloqueo S5-carrito-comparativa,
-// pregunta 1, opción A): cotiza cada otra tienda con sus precios vigentes que compiten para los
+// CompareExpense (§7.2, API basket = expense; FIRME, puerta 2, Q2-47 = A): cotiza cada otra tienda con sus precios vigentes que compiten para los
 // productos y cantidades de la compra base, con la presentación de §7.3, y llama a CompareCarts.
 // La fecha y la fuente de cada carrito cotizado son las de su precio más antiguo; una tienda sin
 // ningún precio que compita para la compra no se cotiza (supuesto S5-go-3).

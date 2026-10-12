@@ -71,9 +71,9 @@ def libro(D, gastos, compras):
 def sin_cubrir(tramos, d):
     """d cae antes de la primera ventana o en un hueco entre ventanas: no está en ninguna y no es posterior a la última.
 
-    PROVISIONAL (docs/estado/bloqueos/S2-ventanas.md): §3.2 pide que la diferencia acumulada incluya lo anterior no
-    pedido, pero §2.12 y §3.2 no dicen cómo se devenga un costo que no cae en ninguna ventana; mientras Axel decide,
-    un costo o un pago así es invalid_argument. Lo posterior a la última ventana no entra en ningún tramo."""
+    FIRME desde la puerta 2 (§2.12 regla 2, Q2-25 = A: desde el primer evento; regla 3, Q2-26 = H1: sin eventos en un
+    hueco): un costo o un pago así es invalid_argument. Lo posterior a la última ventana no entra en ningún tramo.
+    Con la regla 4 (contiguas, PROVISIONAL) ya no queda hueco, pero la regla 3 se comprueba aparte porque es FIRME."""
     if any(a <= d <= b for _, a, b in tramos):
         return False
     return d <= max(b for _, _, b in tramos)
@@ -82,15 +82,25 @@ def sin_cubrir(tramos, d):
 def desordenadas(tramos):
     """Etiqueta de la primera ventana que no empieza después de que terminaron todas las anteriores; None si van bien.
 
-    PROVISIONAL (docs/estado/bloqueos/S2-ventanas.md, pregunta 3): el devengo «n ventanas consecutivas» y la diferencia
-    acumulada solo están definidos con ventanas en orden cronológico y sin días compartidos. Fuera de orden, traslapadas
-    o una dentro de otra cambian cifras sin regla escrita: se rechazan. Se compara cada inicio con el fin más tardío
-    visto hasta ahí."""
+    FIRME desde la puerta 2 (§2.12 regla 1, Q2-27 = O1): fuera de orden, traslapadas (aunque sea un día) o una dentro de
+    otra se rechazan. Se compara cada inicio con el fin más tardío visto hasta ahí."""
     ultimo_fin = None
     for etiqueta_v, inicio, fin in tramos:
         if ultimo_fin is not None and inicio <= ultimo_fin:
             return etiqueta_v
         ultimo_fin = fin if ultimo_fin is None else max(ultimo_fin, fin)
+    return None
+
+
+def con_hueco(tramos):
+    """Etiqueta de la primera ventana que no empieza justo el día siguiente al fin de la anterior; None si no hay hueco.
+
+    PROVISIONAL (§2.12 regla 4; docs/estado/bloqueos/S2-ventanas.md, pregunta 4, caso 1; Q2-01 = A): toda lista con
+    hueco es invalid_argument aunque el hueco no tenga eventos, porque un devengo que lo cruza mandaría la parte del
+    hueco a la ventana siguiente (REVISION-S2-r3 M1). Se mide en días: la distancia entre fin e inicio debe ser 1."""
+    for (_, _, fin), (etiqueta_v, inicio, _) in zip(tramos, tramos[1:]):
+        if (inicio - fin).days != 1:
+            return etiqueta_v
     return None
 
 
@@ -100,17 +110,23 @@ def resumen(D, tramos, modo, lb):
         desordenada = desordenadas(tramos)
         if desordenada is not None:
             raise ErrorMotor('invalid_argument', f'windows: la ventana {desordenada!r} no empieza después de todas las anteriores; '
-                                                 'van ascendentes y disjuntas (PROVISIONAL, S2-ventanas)')
+                                                 'van ascendentes y disjuntas (§2.12 regla 1)')
+        hueco = con_hueco(tramos)
+        if hueco is not None:
+            raise ErrorMotor('invalid_argument', f'windows: la ventana {hueco!r} no empieza el día siguiente al fin de la '
+                                                 'anterior; van contiguas (§2.12 regla 4, PROVISIONAL, S2-ventanas)')
         for tipo, lista in (('costo', lb['costos']), ('pago', lb['caja'])):
             for e in lista:
                 if sin_cubrir(tramos, e['date']):
                     raise ErrorMotor('invalid_argument', f"windows: {tipo} del {e['date']} antes de la primera ventana o en un "
-                                                         'hueco entre ventanas (PROVISIONAL, S2-ventanas)')
+                                                         'hueco entre ventanas (§2.12 reglas 2 y 3)')
     asignado = defaultdict(list)
     for c in lb['costos']:
         if modo == 'mes':
             k0 = mes_n(mes_de(c['date']))
         else:
+            # La parte j sigue a la ventana y no al mes, aunque la ventana no dure un mes: PROVISIONAL (S2-ventanas,
+            # pregunta 4, caso 2; §3.2), regla en uso sin decidir.
             k0 = next((i for i, (_, a, b) in enumerate(tramos) if a <= c['date'] <= b), None)
             if k0 is None:
                 continue  # posterior a la última ventana (sin_cubrir ya rechazó lo anterior y los huecos)
