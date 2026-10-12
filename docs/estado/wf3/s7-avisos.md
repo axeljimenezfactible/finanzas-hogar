@@ -1,0 +1,56 @@
+# s7-avisos · WF-3a «Construcción» · reporte
+
+Agente s7-avisos (Opus) · 12-oct-2026 · base: HEAD fae1890 (P2d, K53). Sin `git add` ni `commit`; ningún Telegram enviado; `openclaw.json` real no se leyó; `getUpdates` no se llamó.
+
+## Hecho
+- **`backend/internal/telegram/`**: cliente HTTP solo a `https://api.telegram.org` (`sendMessage` en JSON con `chat_id` y `text`, **sin `parse_mode`**); `Mensaje()` pone el encabezado en mayúsculas; `Split()` divide en trozos de ≤ 4096 unidades UTF-16 cortando en salto de línea (límite vigente de `sendMessage`: «1-4096 characters after entities parsing», core.telegram.org/bots/api#sendmessage; `sendDocument` 50 MB, constante para s7-pdf). Token: `FileToken(~/.openclaw/openclaw.json)` lo lee **en cada envío** de `bots.multix.botToken` (K30); errores claros sin contenido; el token se quita de cualquier error (URL de transporte y descripción de Telegram). Destinatarios: suscripciones activas de titular y co-titular; Karen (external) rechazada (422 `not_allowed`) en la lista, en la confirmación y en el envío; persona sin chat se omite y se reporta. Candidatos (K4): `RegistrarActualizacion` (objeto `Update` oficial → candidato pendiente, solo `chat_id` y nombre), `ConfirmarCandidato` (persona + `confirmed_at` + `notification_recipient` en una transacción, con `audit_log`), `MaskChatID` («•••» y 4 últimos).
+- **`backend/internal/reportes/avisos/`**: motor de avisos. Lee en **cada** revisión `reports.daily_send_time`, `reports.weekly_send_time`, `reports.weekly_weekday`, `alerts.send_time`, `alerts.stale_prices_advance_days`, `alerts.meal_plan_missing_weekday`, `alerts.budget_warning_pct`, `alerts.budget_limit_pct`, `alerts.payment_due_days_before` (ninguna hora ni día en el código ni en `params_json`). Jobs `daily_summary`, `weekly_summary` y `alerts` en el planificador de base, cada minuto, idempotentes por `notification_delivery (dedupe_key, recipient_id)`: `daily_summary:<fecha>`, `weekly_summary:<semana ISO>`, `payment_due:<scheduled_payment.id>:<fecha>`, `budget_threshold:<mes>:<category:id|total>:<umbral>`, `stale_prices:<despensa>`, `meal_plan_missing:<lunes>`. Las 4 alertas: pago próximo (días de la lista), presupuesto 80/100 % por categoría y total (si se rebasan los dos a la vez sale el mayor y el menor queda `skipped`; respeta `scopes`), precios viejos (anticipación antes de la despensa), plan sin armar (K43: día × desayuno/comida/cena con alguna persona sin receta ni «fuera»; total = 7 × tiempos obligatorios = 21). Cifras: `dominio.SumExpenses` (la misma función de `getExpenseTotals`), `scheduled_payment` (calculado por motor_cred), `meal_plan_entry`. `Probar()` = disparo manual con el texto real + pie «Mensaje de prueba enviado desde Ajustes.».
+- **`backend/internal/api/avisos/`**: las 10 operaciones (`listNotifications`, `updateNotification`, `setNotificationRecipients`, `listNotificationRecipients`, `updateNotificationRecipient`, `sendTestNotification`, `listTelegramChatCandidates`, `confirmTelegramChatCandidate`, `dismissTelegramChatCandidate`, `listNotificationDeliveries`) con `audit_log` en cada cambio, paginación de base, errores de C1; `Register` (producción: cliente real) y `RegisterWith(Options)` (pruebas: servidor falso). `updateNotification` rechaza con 422 `send_time`, `advance_days`, `weekday`, `day_of_month`, `days_before`, `thresholds_pct` en `params_json` (K47) y valida `scopes`. Nunca devuelve `chat_id` completo.
+- **`ops/telegram-disparo.md`**: comando de disparo manual (resumen diario y alerta de pago) para S7-07, probado contra el servidor falso.
+- Bloqueos nuevos: `docs/estado/bloqueos/S7-convivencia-multix.md`, `S7-ruta-token.md`, `S7-fuentes-avisos.md`.
+
+## Archivos
+`backend/internal/telegram/{cliente.go,token.go,destinatarios.go,cliente_test.go,destinatarios_test.go}`; `backend/internal/reportes/avisos/{ajustes.go,fuente.go,textos.go,motor.go,alertas.go,comun_test.go,alertas_test.go,resumen_test.go}`; `backend/internal/api/avisos/{avisos.go,envios.go,avisos_test.go}`; `ops/telegram-disparo.md`; `docs/estado/bloqueos/S7-{convivencia-multix,ruta-token,fuentes-avisos}.md`; este reporte.
+
+## Verificación (desde `/home/deepsec/finanzas-hogar/backend`)
+- **S7-04** `go test ./internal/reportes/... -run Resumen -count=1 -v` → PASS `TestResumen` (planificador real con reloj simulado): diario 21:29 → 0, 21:30 → 2 (Axel y Ximena), 21:31 y 23:59 → 0; texto = `getExpenseTotals` del día y del mes («Gastos de hoy: 2 gastos por $802.35», «Gastos del mes (oct 2026): 4 gastos por $1,852.35»); con `reports.daily_send_time` = 22:15 → 21:30 nada y 22:15 sale, restablecido → 21:30; semanal sábado → 0, domingo 18:59 → 0, 19:00 → 2, 19:05 → 0, cifras = `getExpenseTotals?period=2026-W42`; con `reports.weekly_weekday` = 3 y 20:00 → miércoles sí, domingo no; restablecido (7, 19:00) → domingo; `params_json` de `daily_summary` y `weekly_summary` = `{}`. `grep -rn "21:30\|19:00" internal/reportes` (sin `_test`) → 0 líneas.
+- **S7-05** `go test ./internal/telegram/... -count=1 -v` → PASS `TestTextoPlano` (cuerpo sin `parse_mode`, con `chat_id` y `text`; `reporte_mensual_2026_10.pdf` íntegro; encabezado en mayúsculas), `TestMensajeLargo` (12,296 bytes → 3 trozos ≤ 4096 UTF-16; al juntarlos sale el original).
+- **S7-06** `grep -rn "[0-9]\{8,10\}:[A-Za-z0-9_-]\{30,\}" /home/deepsec/finanzas-hogar --include='*' -I | wc -l` → **0** (en zsh hay que citar `--include`); `TestToken`: token falso (armado en partes, no literal) leído del archivo falso, 0 apariciones en errores HTTP, de transporte (URL quitada) y registro; sin clave → «no trae la clave bots.multix.botToken»; JSON roto → «no es JSON válido»; inexistente → «no existe»; nunca el contenido. ACL real: WF4-01.
+- **S7-07** (de este agente solo el disparo contra el falso) `go test ./internal/api/avisos/ -run TestOp_sendTestNotification -v` → 202, `status: sent`, `http_status: 200` para `daily_summary` y `payment_due`; sin `parse_mode`; token fuera de `s.Logs`. El envío real lo hace el orquestador con `ops/telegram-disparo.md`.
+- **S7-08** `go test ./internal/reportes/... -run Alerta -count=1 -v` → PASS `TestAlerta_Matriz` (11 fechas × pago/precios, **0 diferencias**: pago 2026-10-30 → 29 y 30, nada el 28 ni el 31; pago 2027-02-28 → 27 y 28, nada el 26 ni el 1-mar; precios con despensa 17-oct → solo el 16; 08:59 → nada; doble corrida → sin duplicados; presupuesto 80 % y 100 % de categoría una vez cada uno, total 100 % una vez con el 80 % anotado `skipped`), `TestAlerta_Plan` (21 armadas con «fuera» → 0; una casilla sin receta ni «fuera» → «1 de 21»; sábado → 0), `TestAlerta_Configuracion` (con `updateAlertSettings` real: `alerts.send_time` 10:15, anticipación 2, plan el viernes, umbral 70, días [2] → la matriz cambia; `reset_parameters` → 1, "09:00", 7, 80, 100, [1, 0] y la matriz de febrero vuelve; ningún `params_json` trae `send_time`, `advance_days`, `weekday`, `day_of_month`, `days_before` ni `thresholds_pct`).
+- **S7-09** `go test ./internal/telegram/... -run Destinatarios -count=1 -v` → PASS: Axel con chat sale y Ximena sin chat se omite y se reporta; Karen rechazada (lista y confirmación; aun suscrita a mano no sale); mensaje de un chat nuevo → candidato pendiente que no recibe; confirmado por Ximena → destinatario, salen los dos; segunda confirmación → 409. Vía con MultiX: **bloqueo `S7-convivencia-multix`** (recomendada A: MultiX reenvía el `Update` al servicio).
+- **S7-12** `go test ./internal/reportes/... -run Formato -v` → PASS: 14 textos, 49 líneas, 17 cifras que cumplen `^\$-?[0-9]{1,3}(,[0-9]{3})*\.[0-9]{2}$` (incluye $1,234,567.89), 0 fechas ISO, encabezados en mayúsculas; fechas «Vie 30 oct 2026» y «19-oct-2026». Muestra: «RESUMEN DEL DÍA / Lun 12 oct 2026 / Gastos de hoy: 0 gastos por $0.00», «PAGO PRÓXIMO / Mañana, Vie 30 oct 2026, vence un pago de $973.75 (Kueski).», «PRESUPUESTO AL 80 % / Total del mes lleva $4,000.50 de $5,000.00 en oct 2026.», «PLAN DE COMIDAS SIN ARMAR / La semana del 19-oct-2026 al 25-oct-2026 tiene 1 de 21 casillas sin armar.».
+- **S7-14** `go vet ./internal/reportes/... ./internal/telegram/...` limpio; `go test -cover`: `reportes/avisos` 77.3 %, `telegram` 80.0 % (`api/avisos` 84.3 %); `grep -rn "http://\|https://" internal/reportes internal/telegram --include='*.go' | grep -v _test.go` → solo `internal/telegram/cliente.go:20: const APIBase = "https://api.telegram.org"`. `reportes/avisos` no hace red (usa la interfaz `Enviador`).
+- Operaciones: 10 de 10 con `TestOp_<operationId>` (2xx y 4xx: 400, 401, 404, 409, 422), respuestas validadas contra `openapi.yaml` por `testutil`.
+- Global: `go test ./... -count=1` → exit 0; `make verify-wf3-contrato` → 0 («216 operaciones en 172 rutas, 0 diferencias»); `make verify-wf3` y `make verify-all GOOSE=…` → **exit 2 solo por `FALLA gofmt: internal/reportes/vistas.go`**, archivo de s7-pdf (fuera de mi alcance; build y vet sin errores). `gofmt -l` de mis tres paquetes → vacío.
+
+## Supuestos (todos marcados)
+- PROVISIONAL `S7-ruta-token`: se acepta también `channels.telegram.bots.multix.botToken`.
+- PROVISIONAL `S7-fuentes-avisos`: día de despensa, presupuesto devengado y precios viejos sin fuente → esas alertas se omiten y se anotan (evaluadores probados con fixtures); la alerta (4) revisa la semana del lunes siguiente; jobs por minuto; sin reintento automático de `failed`.
+- PROVISIONAL (K31, puerta 4) **contenido de los resúmenes** (propuesta): diario = fecha, gastos de hoy, gastos del mes, pagos de los próximos 7 días; semanal = rango de la semana ISO, gastos de la semana, gastos del mes, pagos de los próximos 7 días, casillas sin armar de la semana siguiente. Justificación: son las tres preguntas de cada noche (cuánto gasté, cómo va el mes, qué viene) y en la semanal se añade lo que hay que preparar (plan); todas las cifras salen de funciones ya aprobadas (`SumExpenses`, `scheduled_payment`, K43).
+- `sendTestNotification` a una persona del hogar sin chat → 409 `conflict`; a Karen → 422 `not_allowed`. El aviso de prueba de `monthly_report` es solo texto (el PDF es de s7-pdf).
+- `job_id` de las 4 alertas apunta al job `alerts`.
+
+## Bloqueos
+`docs/estado/bloqueos/S7-convivencia-multix.md`, `S7-ruta-token.md`, `S7-fuentes-avisos.md`.
+
+## Pendientes
+- Integrador: línea `avisos.Register,` con `import "finanzas-hogar/internal/api/avisos"` en `backend/cmd/finanzas/areas.go`.
+- s7-pdf: `gofmt -w backend/internal/reportes/vistas.go` (rompe `verify-wf3` y `verify-all`).
+- api-presupuesto: función exportada de uso devengado por categoría y total del mes (para `FuenteBD.Presupuesto`).
+- api-compras-b: carga exportada de `precios.Book` desde la base (para `FuenteBD.PreciosViejos`).
+- Respuesta de Axel a los tres bloqueos; S7-07 real (orquestador).
+
+## Propuestas para Axel
+| Tema | Opción recomendada | Costo | Riesgo |
+|---|---|---|---|
+| Chat de Ximena con MultiX | A: MultiX reenvía al servicio el mensaje de un chat nuevo | cambio pequeño en MultiX | bajo |
+| Día de despensa | C: clave `alerts.grocery_weekday` en Ajustes | migración 00005 | bajo |
+| Ruta del token | dejar las dos rutas hasta WF4-01 | ninguno | ninguno |
+| Contenido de resúmenes | aprobar la propuesta de arriba en la puerta 4 | ninguno | ninguno |
+
+## Paquetes instalados
+Ninguno.
+
+## Consumo aproximado
+~56 acciones; ~270 KB leídos; ~115 KB escritos.

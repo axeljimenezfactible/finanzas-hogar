@@ -1,0 +1,85 @@
+[
+  {
+    "id": "FV-01",
+    "componentes": [
+      "Avisos",
+      "Botón",
+      "Estados",
+      "Hoja"
+    ],
+    "tipos": [
+      "foco-transicion"
+    ],
+    "resumen": "el anillo de foco del Botón aparece con transición (DESIGN §7.0 y §4.5: sin transición)",
+    "solicitud": {
+      "archivo": "frontend/src/componentes/Boton.tsx",
+      "cambio": "En estilosBoton cambiar 'transition-colors duration-150' por 'transition-[color,background-color,border-color] duration-150' (transition-colors incluye outline-color) o agregar 'focus-visible:transition-none'."
+    }
+  },
+  {
+    "id": "FV-02",
+    "componentes": [
+      "Gráfica"
+    ],
+    "tipos": [
+      "tamano"
+    ],
+    "elemento_contiene": "Ver como tabla",
+    "resumen": "«Ver como tabla» (summary) mide 20 px de alto: menos que el área táctil de 44 px (§4.6, §9.3) y que el mínimo de 24 px de WCAG 2.2",
+    "solicitud": {
+      "archivo": "frontend/src/componentes/Grafica.tsx",
+      "cambio": "En el <summary> agregar 'inline-flex min-h-9 items-center coarse:min-h-11 px-1' para que mida 36 px (fino) o 44 px (grueso)."
+    }
+  },
+  {
+    "id": "FV-03",
+    "componentes": [
+      "Gráfica"
+    ],
+    "tipos": [
+      "texto",
+      "borde-fuera",
+      "borde-dentro"
+    ],
+    "estados": [
+      "hover",
+      "presionado",
+      "foco"
+    ],
+    "motivo": "fuera de los tokens",
+    "resumen": "la descripción emergente de ECharts usa los colores por omisión (fondo #FFFFFF, texto #6D6E73, borde #B7B9BE) también en oscuro; §7.7 pide ui.surface.raised, ui.text.default, radius.md y shadow.1",
+    "solicitud": {
+      "archivo": "frontend/src/componentes/Grafica.tsx",
+      "cambio": "En setOption agregar tooltip: { backgroundColor: css('--ui-surface-raised'), borderColor: css('--ui-border-divider'), textStyle: { color: css('--ui-text-default'), fontFamily: 'Inter, ui-sans-serif, system-ui', fontSize: 14 }, extraCssText: 'border-radius: 8px; box-shadow: var(--ui-shadow-1);' } junto al trigger y valueFormatter actuales."
+    }
+  },
+  {
+    "id": "FV-04",
+    "componentes": [
+      "Gráfica"
+    ],
+    "tipos": [
+      "fuera-de-tokens"
+    ],
+    "resumen": "al pasar el puntero ECharts recolorea símbolos y leyenda con variantes aclaradas u oscurecidas de la serie, que no están en C2; §7.7 dice que las demás series no se atenúan",
+    "solicitud": {
+      "archivo": "frontend/src/componentes/Grafica.tsx",
+      "cambio": "En cada serie de setOption agregar emphasis: { disabled: true } (DESIGN §7.7: la descripción y la guía vertical bastan; las series no cambian de color). Comprobar con «npm run verificar:variantes»: FV-04 debe pasar a CERRADO."
+    }
+  },
+  {
+    "id": "FV-05",
+    "componentes": [
+      "Campo",
+      "Chip"
+    ],
+    "tipos": [
+      "deshabilitado-estilo"
+    ],
+    "resumen": "Campo y ChipSeleccionable deshabilitados no traen el estilo de §7.0 (relleno ui.surface.disabled, texto ui.text.disabled, borde punteado)",
+    "solicitud": {
+      "archivo": "frontend/src/componentes/Campo.tsx y frontend/src/componentes/Chip.tsx",
+      "cambio": "Agregar a estilosControl (Campo) y al chip seleccionable: 'disabled:cursor-not-allowed disabled:border-dashed disabled:border-border-control disabled:bg-surface-disabled disabled:text-text-disabled' (y quitar hover:* en disabled)."
+    }
+  }
+]

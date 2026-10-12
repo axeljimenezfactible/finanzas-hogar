@@ -1,0 +1,8 @@
+# Bloqueo WF3-ajustes-registro · Registro de P-26 entre dos agentes
+
+- Fase: WF-3a, agente `front-ajustes-b` (12-oct-2026). Estado: **RESUELTO entre áreas en WF-3a** (queda la PROPUESTA A para la base).
+- **Qué falta (PREGUNTA):** P-26 Ajustes lo construyen dos agentes (`front-ajustes-a`, secciones 01 a 07; `front-ajustes-b`, secciones 08 a 14), pero el registro de la base (`frontend/src/app/registro.ts` y `src/shell/Layout.tsx`) guarda **un componente por id** (`PANTALLAS_REGISTRADAS['P-26']`) y une los índices con `Object.assign` en el orden del glob: si las dos áreas exportan `P-26`, gana la última (`ajustes-b`) y la otra queda tapada.
+- **Lo que quedó:** `ajustes-a` registra `P-26` (`P26Ajustes.tsx`: columna de las 14 secciones, «‹ Ajustes» y título) y junta las secciones de todas las áreas con `import.meta.glob('../*/secciones-ajustes.ts')`; `ajustes-b` exporta `secciones` 08 a 14 en `frontend/src/pantallas/ajustes-b/secciones-ajustes.ts` y su `indice.ts` no registra pantallas (nada se tapa).
+- **Opciones:** (A) cambio de una línea en la base: en `Layout.tsx`, `const Pantalla = PANTALLAS_REGISTRADAS[p.id === 'P-26' && params.seccion ? `P-26.${params.seccion}` : p.id] ?? PANTALLAS_REGISTRADAS[p.id]`, y las dos áreas exportan solo `P-26.nn` (el despacho sobra); (B) quedarse con el despacho de `ajustes-b` y que `ajustes-a` exporte `P-26.01` … `P-26.07` (sin `P-26`); (C) un solo agente dueño de `P-26` que importe las secciones del otro.
+- **Recomendación:** A (sin acoplar dos áreas; el despacho se borra después).
+- **Impacto:** solo el registro de pantallas; ninguna ruta del contrato ni dirección cambia (`/ajustes/:seccion` sigue igual, bloqueo `WF3-frontend-rutas`).

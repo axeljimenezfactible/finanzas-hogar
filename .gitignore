@@ -23,3 +23,17 @@ datos/semilla/profeco/db/*.sqlite*
 **/node_modules/
 # Configuración local de Obsidian (bóveda de Axel): no es parte del proyecto.
 .obsidian/
+
+# WF-3a (integrador-backend, 12-oct-2026): certificado y llave de mkcert (ops/mkcert.md) y datos del servidor de desarrollo
+# (ops/dev-run.sh: adjuntos, reportes, respaldos, HOME aislado, PID y logs). Nunca se versionan.
+datos/certs/
+datos/dev/
+
+# WF-3a (integrador-wf3a, 12-oct-2026): lo que pide el cierre de WF-3a, explícito aunque *.db, frontend/.gitignore y las líneas
+# de arriba ya lo cubren: bases de datos, certificados, dependencias, compilados y salidas de Playwright.
+datos/*.db
+datos/*.db-*
+frontend/node_modules/
+frontend/dist/
+playwright-report/
+test-results/

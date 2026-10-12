@@ -11,6 +11,8 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 
 > **Estado al 11-oct-2026 (puerta 2): 21 de los 27 bloqueos abiertos quedaron RESUELTOS y 6 siguen ABIERTOS.** Axel contestó en modo «lo recomendado + excepciones» (`docs/estado/puerta2/RESPUESTAS.md`): la opción recomendada de `PUERTA-2.md` es la respuesta, más tres respuestas explícitas (Q2-11 = B, Q2-64 = A, Q2-96 = A). Las preguntas «sin recomendación» (Q2-48, Q2-50 a Q2-52, Q2-56 a Q2-58) quedan **sin respuesta, PROVISIONAL con la opción en uso, y pasan a WF-3**; Q2-12 (la recomendada es «C o A», dos opciones) y la pregunta 4 de `S2-ventanas` (Q2-01, casos 1 y 2: el caso 1 con la regla 1A como PROVISIONAL y el caso 2 sin recomendación) también quedan abiertos. Cada archivo trae al final «Respuesta de Axel (puerta 2, 11-oct-2026)» y/o «Puerta 2 (11-oct-2026): sin respuesta», y la línea «Estado del bloqueo (puerta 2)». Detalle en la sección «Respuestas de la puerta 2 (11-oct-2026)» al final y en `docs/plan/decisiones.md` §K46 a §K52. Después de las respuestas, P2c abrió 4 bloqueos nuevos (`S2-ahorro-quincenal`, `S2-metas-vencida`, `S4-presentacion-respaldo` y `S5-carritos-granel`, los 4 ABIERTOS; ver «Bloqueos nuevos de P2c»; al cierre de P2c son 13, todos ABIERTOS) y la Pista 3 abrió 2 (`P3-contraste-chip-hover` y `P3-huecos-componentes`).
 
+> **Estado al 12-oct-2026 (cierre de WF-3a): 40 bloqueos nuevos, todos ABIERTOS** (3 de la semilla y 37 de los demás agentes de WF-3a; tablas al final). El código corre con la opción PROVISIONAL de cada uno. Los de la columna K31 se deciden en la puerta 4; los demás, en WF-3b o WF-4. Detalle: `docs/estado/wf3/INTEGRACION-wf3a.md`.
+
 ## Resumen
 
 **Conteo al 11-oct-2026, cierre de P1c (integrador `integrador-p1c`):** esta carpeta tiene **43 archivos de bloqueo** (sin contar este índice): **42 resueltos y 1 abierto**. **Conteo al cierre de WF-1 (integrador `integrador-wf1`, 11-oct-2026):** 69 archivos, **42 resueltos y 27 abiertos** (`S1-parametros-avisos` de P1c y 26 nuevos de WF-1). **Conteo al cierre de P2c (puerta 2, 11-oct-2026, agente `bloqueos-respuestas`):** 69 archivos, **63 resueltos y 6 abiertos** (`S2-flujo-quincenal`, `S2-ventanas`, `S5-carrito-comparativa`, `S5-carritos-detalle`, `S5-profeco-filtro` y `S5-terminos`). **Conteo al 11-oct-2026, noche (corrección `correccion-bloqueos-r2`, con la carpeta en disco):** 75 archivos, **63 resueltos y 12 abiertos**: los 69 de arriba (63 y 6), más 4 que abrió P2c después de las respuestas (`S2-ahorro-quincenal`, `S2-metas-vencida`, `S4-presentacion-respaldo`, `S5-carritos-granel`) y 2 de la Pista 3 (`P3-contraste-chip-hover`, `P3-huecos-componentes`). Las 12 abiertas: las 6 de WF-1, las 4 de P2c y las 2 de la Pista 3. Las cifras de esta carpeta cambian si otro agente abre o cierra un bloqueo; la fuente es la carpeta, no este párrafo. **Conteo al cierre de P2c (integrador `integrador-p2c`, 11-oct-2026, noche, con la carpeta en disco):** 84 archivos, **63 resueltos y 21 abiertos**: las 6 de WF-1, **13 de P2c** (los 4 de arriba más 9 que abrieron `C1-puerta2` y las correcciones de la ronda; ver «Bloqueos nuevos de P2c») y las 2 de la Pista 3. `S5-terminos` sigue ABIERTO en su archivo: la lectura del 11-oct-2026 quedó «no verificado» por desafío anti-robot y Axel contestó en la puerta 2 bis («Ignóralo», `docs/estado/puerta2/RESPUESTAS.md`), que se registra como K53 en P2d; hasta entonces no se cierra aquí. **Conteo al 12-oct-2026, madrugada (P2d; `p2c-remanentes`, con la carpeta en disco):** 85 archivos, **64 resueltos y 21 abiertos**: `k53-aplicar` abrió `S5-agente-externo` (ABIERTO, se pregunta en la puerta 4) y cerró `S5-terminos` con K53 (línea «Estado del bloqueo (puerta 2 bis): RESUELTO»). Las 21 abiertas: 5 de WF-1, 13 de P2c, 1 de P2d y 2 de la Pista 3. Si P2d cambia esos dos archivos después de esta medición, manda la carpeta.
@@ -525,3 +527,57 @@ Lo dio de alta `p2c-remanentes` con la carpeta en disco. El archivo lo escribió
 | `S5-agente-externo.md` | `k53-aplicar`, al registrar K53 (Q2-64, puerta 2 bis) | (a) Peso de los precios del agente externo en la comparativa; (b) qué puede escribir el agente; (c) si sus recetas entran como borrador. Y las que salieron contra el esquema 1.4: (d) valor de `price.source`, (e) credencial de servicio y (f) borrador y origen de una receta | Por pregunta, en el archivo. PROPUESTA del orquestador para (a) a (d) y de `k53-aplicar` para (e); (f) sin propuesta | (a) compiten como `manual`; (b) solo productos, presentaciones, precios y recetas; (c) borrador; (d) la (d2), `site_assisted`; (e) solo el transporte `serviceToken` de C1 1.4 | C1, S1, S5, WF-3, puerta 4 |
 
 `S5-terminos` (WF-1) quedó **RESUELTO por K53** en su línea «Estado del bloqueo (puerta 2 bis)». Lo que K53 dejó abierto vive en `S5-agente-externo`.
+
+## Bloqueos de la semilla de WF-3a (12-oct-2026)
+
+Los abrió el agente `semilla` con el nombre `semilla-*.md`; `correccion-backend-core-r1` los renombró a `S6-semilla-*.md` para que los encuentre `ls docs/estado/bloqueos/S6-*` (criterio S6-16, hallazgo M3 de REVISION-backend-core-r1) y los dio de alta aquí. El contenido no cambió; las opciones, lo PROVISIONAL y el impacto completos están en cada archivo. No decidí nada.
+
+| Archivo | Lo abrió | Pregunta para Axel | Opciones | Qué queda PROVISIONAL | Fase que lo usa |
+|---|---|---|---|---|---|
+| `S6-semilla-despensas-futuras.md` | `semilla` | ¿Las despensas 2, 3 y 4 (10-dic-2026, 10-feb-2027, 10-abr-2027) se siembran como compras a crédito activas sin gasto, o las crea la proyección? | A: 4 `credit_purchase` con sus 16 pagos de `motor_cred`; B: solo la despensa 1; C: A con `status = 'cancelled'` | A (cambia cifras sembradas: deuda viva al 10-abr-2027 = $6,293.44, igual al oráculo) | S6 (WF-3), C3-09 |
+| `S6-semilla-sucursales-municipio.md` | `semilla` | ¿En qué alcaldía o municipio y estado están las sucursales Bodega Aurrera Vallejo y Walmart Acueducto de Guadalupe? | A: Axel las captura en Ajustes; B: Axel las dicta y van a la semilla; C: suponerlas (descartada) | Sucursales sin municipio; 0 precios de la muestra PROFECO cargados | S5/S6 (PROFECO) |
+| `S6-semilla-catalogo-alias.md` | `semilla` | ¿Dónde viven los sinónimos y los nombres de ticket del catálogo una vez sembrado? | A: se leen de `productos.json`; B: migración nueva con tablas de alias; C: no usarlos | No se guardan en la base (el esquema 1.4 no tiene columna) | S5 (OCR y búsqueda) |
+
+## Bloqueos nuevos de WF-3a (12-oct-2026, para WF-3b, la puerta 4 y WF-4)
+
+Los dio de alta `integrador-wf3a` al cerrar WF-3a. Son 37 archivos, más los 3 de la semilla de la sección anterior: **40 bloqueos nuevos de WF-3a, todos ABIERTOS**. El código ya funciona con la opción marcada PROVISIONAL en cada archivo, que cita su bloqueo; ninguno inventa una cifra (los motores y sus oráculos no se tocaron). La pregunta exacta, las opciones y el impacto están en cada archivo. Los valores operativos de la puerta 4 (K31) con su propuesta están resumidos en `docs/estado/wf3/INTEGRACION-wf3a.md` §7.
+
+| Archivo | Lo abrió | Tema (pregunta para Axel o para el siguiente flujo) | K31 | Fase que lo usa |
+|---|---|---|---|---|
+| `C3-matriz.md` | `integrador-frontend-c3` | 5 preguntas de la matriz C3 v0.9: fila P-26, 7 filas con «implementado = no», 7 operaciones que el frontend no llama, regla de «probado» y semilla sin datos de octubre | — | WF-3b (firma de C3) |
+| `S6-adjuntos.md` | `auth-sistema` | Factor de «10 MB», tipos admitidos (JPG, PNG, WebP y PDF; ¿HEIC?), `kind` por omisión y 409 al borrar | sí | puerta 4 |
+| `S6-ajustes-api.md` | `api-ajustes` | 6 puntos de Ajustes que C1, S1, RN y U4 no fijan (p. ej. `PlannedItem.next_date`) | — | puerta 4 |
+| `S6-comidas-calculos.md` | `api-comidas-salud` | Cálculos de comidas y salud que C1 y S4 no fijan | — | puerta 4 |
+| `S6-compras-a-motores.md` | `api-compras-a` | Cómo la API de compras (parte a) alimenta y lee los motores S4 y S5 | — | puerta 4 |
+| `S6-compras-b-fuentes.md` | `api-compras-b` | Veredicto de cada cadena con sitio y fuentes de precio tras K53 | — | puerta 4 |
+| `S6-compras-b-nutricion.md` | `api-compras-b` | Recarga de la base de nutrición, recetario e inventario | — | puerta 4 |
+| `S6-creditos.md` | `api-creditos` | Decisiones PROVISIONALES de la API de créditos | — | puerta 4 |
+| `S6-gastos-inicio.md` | `api-gastos-inicio` | Reparto RN-03 fuera del motor y huecos de gastos e Inicio (§15.4 y §15.5 esperan a Axel) | — | puerta 4 |
+| `S6-importar-partidas-csv.md` | `api-ajustes` | Correspondencia de columnas de `gastos_fijos_ingresos.csv` (plan §8.2) | — | puerta 4 |
+| `S6-presupuesto-motor.md` | `api-presupuesto` | Entradas del motor S2 desde la base | — | puerta 4 |
+| `S6-presupuesto-periodos.md` | `api-presupuesto` | Cuándo se llena la tabla `period` | — | puerta 4 |
+| `S6-presupuesto-quincenas.md` | `api-presupuesto` | Plan de la quincena en `getBudgetFortnights` | — | puerta 4 |
+| `S6-respaldos.md` | `auth-sistema` | Hora (03:15) y retención (30) del respaldo; qué conserva una restauración | sí | puerta 4 y WF-4 |
+| `S6-sistema.md` | `auth-sistema` | Decisiones abiertas de autenticación y sistema (entre ellas Android y `.local`) | sí | puerta 4 y WF-4 |
+| `S6-valores-operativos-base.md` | `backend-base` | Respaldo, argon2id, cabeceras, límites de cuerpo, job de purga de idempotencia, rutas por omisión y campo desconocido = 400 | sí | puerta 4 |
+| `S7-convivencia-multix.md` | `s7-avisos` | Cómo detectar el chat de Ximena sin chocar con MultiX | — | puerta 4 |
+| `S7-estado-cuenta-fechas.md` | `s7-pdf` | Fechas de pago del estado de cuenta de Karen en C1 | — | puerta 4 |
+| `S7-fuentes-avisos.md` | `s7-avisos` | Día de despensa, fuentes de otras áreas para las alertas, semana que revisa la alerta 4, cadencia y reintentos | sí | puerta 4 |
+| `S7-lualatex.md` | `s7-pdf` | `lualatex` sin `luaotfload` (fuentes OpenType) en la máquina de casa | — | WF-4 |
+| `S7-reporte-mensual-secciones.md` | `s7-pdf` | Secciones del reporte mensual que dependen de otras áreas y signo negativo | sí | puerta 4 |
+| `S7-ruta-token.md` | `s7-avisos` | Ruta exacta de la clave del token en `openclaw.json` (K30) | — | WF-4 y S7-07 |
+| `WF3-ajustes-a.md` | `front-ajustes-a` | Ajustes, secciones 01 a 07 | — | WF-3b |
+| `WF3-ajustes-compra-ejemplo.md` | `correccion-frontend-areas-r1` | Intereses de la compra de ejemplo en P-26.05 (vistas previas 6 y 7) | — | WF-3b |
+| `WF3-ajustes-muestra-tema.md` | `front-ajustes-b` | Muestra de tarjeta en claro y oscuro (P-26.10) | — | WF-3b |
+| `WF3-ajustes-precios-conteo.md` | `correccion-frontend-areas-r1` | Conteo de precios que pasan de fresco a viejo en P-26.06 | — | WF-3b |
+| `WF3-ajustes-registro.md` | `front-ajustes-b` | Registro de P-26 entre dos agentes | — | WF-3b |
+| `WF3-comidas-compras-interfaz.md` | `front-comidas-compras` | Interfaz PROVISIONAL de P-10 a P-16 | — | WF-3b |
+| `WF3-creditos-salud-reportes.md` | `front-creditos-salud-reportes` | P-17 a P-21 y P-23 a P-25 | — | WF-3b |
+| `WF3-frontend-k31.md` | `frontend-base` | Sondeo de `/health` (15 s), reintento de la cola (30 s), copia de lecturas y cola al cerrar sesión | sí | puerta 4 |
+| `WF3-frontend-rutas.md` | `frontend-base` | Direcciones (URL) de las pantallas | — | WF-3b |
+| `WF3-frontend-servidor.md` | `frontend-base` | Cómo sirve el servidor la PWA: mismo origen, respaldo SPA, `Cache-Control`, tipo del manifiesto y CSP | sí | WF-3b y WF-4 |
+| `WF3-gastos-contrato.md` | `front-gastos-presupuesto` | Huecos de C1 v1.4 para P-02, P-04 y P-05 | — | WF-3b |
+| `WF3-gastos-ticket-credito.md` | `front-gastos-presupuesto` | Pagar con crédito desde P-05 | — | WF-3b |
+| `WF3-inicio-tiendas.md` | `front-inicio` | Color de tienda sin código en C1 | — | WF-3b |
+| `WF3-inicio-vacios.md` | `front-inicio` | Reglas de «vacío» y destinos de P-01 que C1 y U3 no fijan | — | WF-3b |
+| `WF3-integrador-red.md` | `integrador-backend` | IP fija 192.168.50.56, nombre `finanzas.local` permanente y CA en el sistema | — | WF-4 |

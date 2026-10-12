@@ -1,0 +1,63 @@
+// Textos visibles del área Gastos y Presupuesto, en español de México (U5-07, protocolo §8). Mismo estilo que src/textos/es-MX.ts.
+export const t = {
+  comun: {
+    periodo: 'Periodo', mesAnterior: 'Mes anterior', mesSiguiente: 'Mes siguiente', monto: 'Monto', fecha: 'Fecha', nota: 'Nota', concepto: 'Concepto', descripcion: 'Descripción', categoria: 'Categoría', persona: 'Persona', tipo: 'Tipo', formaPago: 'Forma de pago', tienda: 'Tienda o comercio', reparto: 'Reparto', estado: 'Estado', eliminar: 'Eliminar', confirmarEliminar: '¿Eliminar este registro? No se puede deshacer desde aquí.', eliminado: 'Registro eliminado', guardado: 'Cambios guardados', todos: 'Todos', ninguna: 'Sin asignar', hogar: 'Hogar', karen: 'Karen', conjunto: 'Conjunto', si: 'Sí', no: 'No',
+    usado: (p: string) => `${p} usado`, rebasado: 'rebasado', delPlan: (p: string) => `${p} del plan`,
+  },
+  tipos: { fixed: 'Fijo', variable: 'Variable', upcoming: 'Venidero' } as Record<string, string>,
+  estadosPresupuesto: { normal: 'Normal', warning: 'Aviso', exceeded: 'Excedido' } as Record<string, string>,
+  p02: {
+    registrar: 'Registrar gasto', fotoTicket: 'Foto de ticket', filtros: 'Filtros', familia: 'Familia', conTicket: 'Con ticket', quitarFiltros: 'Quitar filtros',
+    vacio: (m: string) => `Sin gastos en ${m}`, sinCoincidencias: 'Ningún gasto coincide',
+    totales: 'Totales del filtro', numero: 'Gastos', sumaMontos: 'Suma de montos', parteHogar: 'Parte del hogar', parteKaren: 'Parte de Karen',
+    gastoPeriodo: 'Gasto del hogar en el periodo', contraAnterior: (d: string, mas: boolean) => `${d} ${mas ? 'más' : 'menos'} que el periodo anterior`, igualAnterior: 'Igual que el periodo anterior',
+    promDiario: 'Promedio diario', promSemanal: 'Promedio semanal', promMensual: 'Promedio mensual', mayorCategoria: 'Categoría con mayor gasto',
+    tendencia: 'Gasto del hogar por mes', resumenTendencia: 'Parte del hogar devengada por mes, las 6 categorías con más gasto y «Otras».', otras: 'Otras',
+    mostrarMas: 'Mostrar más', galeriaSinFoto: 'Ticket adjunto', venidero: 'Venidero',
+  },
+  p04: {
+    noExiste: 'Este gasto ya no existe', duplicar: 'Duplicar', duplicado: 'Gasto duplicado con fecha de hoy', marcarPagado: 'Marcar como pagado', marcado: 'Venidero marcado como pagado',
+    montoReal: 'Monto real', fechaReal: 'Fecha real', confirmarEliminar: '¿Eliminar este gasto? Queda copia en la bitácora.', eliminado: 'Gasto eliminado',
+    adjuntar: 'Adjuntar ticket', adjuntado: 'Ticket adjuntado', conTicket: 'Este gasto tiene ticket adjunto.', verTicketPendiente: 'Ver ticket aún no está disponible en esta versión.',
+    compraCredito: 'Abrir compra a crédito', propiedades: 'Propiedades', repartoTitulo: 'Reparto', parteHogar: 'Parte del hogar', parteKaren: 'Parte de Karen',
+    devengo: 'Devengo', efectivo: 'Efectivo', renglones: 'Renglones del ticket', producto: 'Producto', cantidad: 'Cantidad', precioUnitario: 'Precio unitario', importe: 'Importe', sinRenglones: 'Este gasto no viene de un ticket.', mesesDevengo: 'Meses de devengo',
+  },
+  p05: {
+    pasos: ['Foto', 'Lectura', 'Revisar', 'Confirmar'], paso: (n: number, nombre: string) => `Paso ${n} de 4 · ${nombre}`,
+    tomarFoto: 'Tomar foto', galeria: 'Elegir de la galería', leyendo: 'Leyendo el ticket…', noSeLeyo: 'No se pudo leer · Repetir foto o capturar a mano', repetir: 'Repetir foto', aMano: 'Capturar a mano',
+    porConfirmar: 'Tickets por confirmar', ningunoPorConfirmar: 'No hay tickets por confirmar', conBorrador: 'Con borrador', abrir: 'Abrir',
+    encabezado: 'Encabezado', total: 'Total del ticket', renglones: 'Renglones', texto: 'Texto leído', cantidad: 'Cantidad', precio: 'Precio unitario', importe: 'Importe', cuenta: 'Cuenta', confianza: 'Confianza',
+    niveles: { high: 'Alta', medium: 'Media', low: 'Baja' } as Record<string, string>, agregarRenglon: 'Agregar renglón', quitarRenglon: 'Quitar renglón', renglon: (n: number) => `Renglón ${n}`,
+    guardarDespues: 'Guardar para después', guardadoDespues: 'Correcciones guardadas como borrador', confirmar: 'Confirmar ticket', cancelar: 'Cancelar', cuadra: 'La suma de los renglones cuadra con el total.', noCuadra: (d: string) => `La suma de los renglones difiere del total por ${d}; se guardará como «Ajuste del ticket».`,
+    creditoPendiente: 'Pagar con crédito desde el ticket aún no está disponible en esta versión.',
+    falta: 'Elige la categoría y escribe un total mayor que cero.',
+  },
+  p06: {
+    ajustar: 'Ajustar presupuesto', alcance: 'Alcance', soloEste: 'Solo este mes', enAdelante: 'De este mes en adelante', antes: 'Antes', despues: 'Después', ajustado: 'Presupuesto ajustado',
+    ingreso: 'Ingreso del mes', plan: 'Plan de gasto', ahorro: 'Ahorro planificado', sinAsignar: 'Sin asignar', real: 'Real', restante: 'Restante', diasRestantes: (n: number) => (n === 1 ? 'Queda 1 día' : `Quedan ${n} días`),
+    vacio: 'Sin presupuesto definido', alertas: 'Alertas activas', alerta: (c: string, p: string, f: string) => `${c}: ${p} usado desde el ${f}`,
+    planCol: 'Plan', realCol: 'Real', diferencia: 'Diferencia', pctUsado: '% usado', numGastos: 'Gastos', verGastos: 'Ver gastos', total: 'Total',
+    quincenas: 'Quincenas del mes', quincena: (h: number) => `Quincena ${h}`, despensa: 'Despensa devengada', fechaCompra: 'Fecha de compra', totalIntereses: 'Total con intereses', devengadoMes: 'Devengado en el mes', sinDespensa: 'No hay despensa que devengue este mes.',
+    tendencia: 'Plan contra real por mes', resumenTendencia: 'Plan total y real total por mes calendario.', sinEventos: 'Sin eventos de dinero este mes',
+  },
+  p07: {
+    simular: 'Simular compra', interruptor: 'Repetir la despensa bimestral y el papel (meses 7 a 12)', modoA: 'Solo lo contratado', modoB: 'Con la despensa y el papel repetidos', modo: (m: string) => `Proyección: ${m}`,
+    vacio: 'Faltan datos para proyectar: ingreso esperado (Ajustes › Ingresos)', irAjustes: 'Ir a Ajustes › Ingresos',
+    saldoQuincena: 'Saldo de la quincena en curso', saldoAcumulado: 'Saldo acumulado al final', diferenciaAcumulada: 'Diferencia acumulada a 12 meses', deudaViva: 'Deuda viva', fechaDeuda: 'Fecha de deuda viva', deudaNota: (f: string) => `Lo que queda por pagar después del ${f}`,
+    supuestos: 'Supuestos de la proyección', verSupuestos: 'Ver supuestos', metodo: 'Método del gasto variable', variable: 'Gasto variable estimado', partidas: 'Partidas consideradas', frecuencias: { weekly: 'Semanal', fortnightly: 'Quincenal', monthly: 'Mensual', yearly: 'Anual', once: 'Una vez' } as Record<string, string>,
+    quincenasTitulo: 'Flujo por quincena', pago: 'Día de pago', ingreso: 'Ingreso', esperado: 'esperado', creditos: 'Pagos de crédito', fijos: 'Fijos y venideros', variableCol: 'Variable estimado', ahorroCol: 'Ahorro', saldo: 'Saldo', acumulado: 'Acumulado', real: 'Real', proyectado: 'Proyectado',
+    mesesTitulo: 'Devengado contra efectivo', mes: 'Mes', devengado: 'Devengado', efectivoCol: 'Efectivo', diferenciaCol: 'Diferencia acumulada', resumenGrafica: 'Devengado y efectivo por mes durante 12 meses, parte total.',
+  },
+  p08: {
+    capturar: 'Capturar quincena', extra: 'Registrar ingreso extra', capturada: 'Quincena capturada', registrado: 'Ingreso registrado', vacio: 'Sin ingreso esperado', irAjustes: 'Ir a Ajustes › Ingresos',
+    capturado: 'Capturado', esperadoPendiente: 'Esperado pendiente', extras: 'Extras', total: 'Total del mes', quincenas: 'Quincenas', estados: { expected: 'Esperada', captured: 'Capturada' } as Record<string, string>, quincenaDel: (f: string) => `Quincena del ${f}`,
+    sinExtras: 'Sin ingresos extra este mes', tendencia: 'Ingreso por mes', resumenTendencia: 'Quincenas y extras por mes.', fijo: 'Quincenas', soloAxel: 'Ingreso de Axel', conceptoQuincena: 'Quincena',
+  },
+  p09: {
+    aportar: 'Registrar aportación', retirar: 'Registrar retiro', nuevaMeta: 'Nueva meta', vacio: 'Aún no hay metas', registrado: 'Movimiento registrado',
+    ahorrado: 'Ahorrado total', aportadoMes: 'Aportado este mes', contraPlan: (p: string) => `Planificado: ${p}`, metas: 'Metas y fondo', movimientos: 'Movimientos de ahorro', sinMovimientos: 'Sin movimientos en este periodo',
+    destino: 'Destino', meta: 'Monto meta', fechaMeta: 'Fecha meta', avance: 'Avance', mensualPlan: 'Aportación mensual planificada', mensualNecesaria: 'Aportación mensual necesaria',
+    estados: { in_progress: 'En ruta', achieved: 'Cumplida', overdue: 'Atrasada' } as Record<string, string>, tipos: { deposit: 'Aportación', withdrawal: 'Retiro' } as Record<string, string>, fondo: 'Fondo',
+    tendencia: 'Ahorro por mes', resumenTendencia: 'Ahorrado al cierre, aportado y planificado por mes.', alCierre: 'Ahorrado al cierre', aportado: 'Aportado', planificado: 'Planificado',
+  },
+}

@@ -10,6 +10,8 @@
 #   make verify-criterios  docs/criterios/tools/verif_final.sh: conteos (y conteo.py contra INDICE.md), trazabilidad, citas y cifras canon (18 archivos)
 #   make verify-wf1   go test con cobertura K25, oráculos S2 a S5 con compara.py, recetario, tokens C2, contraste, U4 y paquete
 #   make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios + verify-wf1
+#   make verify-wf3   WF-3: Go, cobertura K25, contrato C1 e interfaz (todavía fuera de verify-all)
+#   make verify-wf3-final  verify-wf3 + S6-13 (secretos) + S6-09 (respaldo) + S6-11/12/14 contra el servidor de bash ops/dev-run.sh
 #   make clean        borra los temporales de este Makefile
 #
 # Requisitos: GNU Make y bash; sqlite3 >= 3.37 (tablas STRICT); Go 1.27 o posterior (go.mod: go 1.27);
@@ -51,7 +53,9 @@ AWK_DOWN   := '/^-- \+goose Down/{s=1;next} /^-- \+goose Up/{s=0} s'
 RM_TMP     := rm -rf "$(TMP)"; rmdir "$(TMP_ROOT)" 2>/dev/null || true
 
 .PHONY: help verify-wf0 verify-sql verify-go verify-color verify-openapi verify-c1 verify-s1 verify-u1 verify-criterios verify-all clean \
-        verify-wf1 verify-wf1-cobertura verify-wf1-oraculos verify-wf1-recetario verify-wf1-tokens verify-wf1-u4 verify-wf1-paquete
+        verify-wf1 verify-wf1-cobertura verify-wf1-oraculos verify-wf1-recetario verify-wf1-tokens verify-wf1-u4 verify-wf1-paquete \
+        verify-wf3 verify-wf3-go verify-wf3-cobertura verify-wf3-contrato verify-wf3-frontend \
+        verify-wf3-final verify-wf3-secretos verify-wf3-respaldo verify-wf3-servidor
 
 help:
 	@echo "Finanzas Hogar · objetivos de make"
@@ -62,6 +66,8 @@ help:
 	@echo "  make verify-criterios  docs/criterios/tools/verif_final.sh (18 archivos de criterios)"
 	@echo "  make verify-wf1   go test -cover (K25), oráculos S2 a S5, recetario, tokens C2, contraste, U4 unido y paquete"
 	@echo "  make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios + verify-wf1"
+	@echo "  make verify-wf3   WF-3: go build/vet/gofmt/tidy/test, cobertura K25, contrato C1 (rutas y respuestas) e interfaz (no entra en verify-all)"
+	@echo "  make verify-wf3-final  verify-wf3 + verify-wf3-secretos (S6-13) + verify-wf3-respaldo (S6-09) + verify-wf3-servidor (S6-11, S6-12, S6-14; servidor de bash ops/dev-run.sh corriendo)"
 	@echo "  make clean        borra datos/tmp/verify-wf0, backend/bin y las carpetas __pycache__"
 
 verify-wf0: verify-sql verify-go verify-color verify-openapi
@@ -305,6 +311,114 @@ verify-wf1-paquete:
 	k=0; if command -v pdftotext > /dev/null; then for f in *.pdf; do k=$$((k + $$(pdftotext "$$f" - | grep -c '/api/v1' || true))); done; fi; \
 	test "$$k" = 0 || { echo "   FALLA: los PDF citan /api/v1 $$k veces"; exit 1; }; \
 	echo "   solo pdf, png, md, json, css y docx; sin scripts ni código; pdftotext: 0 menciones de /api/v1"
+
+# ---- WF-3 «Construcción» (agente backend-base, 12-oct-2026). verify-all todavía NO los incluye. ----
+#   make verify-wf3   verify-wf3-go + verify-wf3-cobertura + verify-wf3-contrato + verify-wf3-frontend
+WF3_TMP        := $(TMP_ROOT)/verify-wf3
+WF3_SIN_UMBRAL := api auth jobs reportes telegram
+
+verify-wf3: verify-wf3-go verify-wf3-cobertura verify-wf3-contrato verify-wf3-frontend
+	@rm -rf "$(WF3_TMP)"; rmdir "$(TMP_ROOT)" 2>/dev/null || true
+	@echo "== WF-3: verificación completa OK (Go, cobertura K25, contrato C1 e interfaz)"
+
+verify-wf3-go:
+	@echo "== WF-3 Go (S6-01): go build, go vet, gofmt, go mod tidy -diff y go test ./..."
+	@cd "$(ROOT)/backend" && echo "   $$($(GO) version); go.mod: $$(grep '^go ' go.mod)" && $(GO) build ./... && $(GO) vet ./... && echo "   go build ./... y go vet ./...: sin errores"
+	@cd "$(ROOT)/backend" && out="$$($(GOFMT) -l .)" && if [ -n "$$out" ]; then echo "   FALLA gofmt: $$out"; exit 1; fi && echo "   gofmt -l .: sin archivos por formatear"
+	@cd "$(ROOT)/backend" && $(GO) mod tidy -diff > /dev/null && echo "   go mod tidy -diff: sin cambios"
+	@mkdir -p "$(WF3_TMP)"; cd "$(ROOT)/backend" && $(GO) test ./... -count=1 > "$(WF3_TMP)/gotest.log" 2>&1 || { cat "$(WF3_TMP)/gotest.log"; exit 1; }; \
+	echo "   go test ./...: $$(grep -c '^ok' "$(WF3_TMP)/gotest.log") paquetes OK, $$(grep -c 'no test files' "$(WF3_TMP)/gotest.log" || true) sin pruebas"
+
+verify-wf3-cobertura:
+	@echo "== WF-3 cobertura (S6-02, K25): >= $(COVER_MIN) % en $(K25_RAICES); sin umbral en $(WF3_SIN_UMBRAL)"
+	@mkdir -p "$(WF3_TMP)"; cd "$(ROOT)/backend" && f=0; for p in $(K25_RAICES) $(WF3_SIN_UMBRAL); do \
+	  if [ ! -d "internal/$$p" ]; then echo "   INFO        $$p todavía no existe"; continue; fi; \
+	  $(GO) test -count=1 -coverprofile="$(WF3_TMP)/$$p.cov" ./internal/$$p/... > "$(WF3_TMP)/$$p.log" 2>&1 || { cat "$(WF3_TMP)/$$p.log"; exit 1; }; \
+	  pct=$$($(GO) tool cover -func="$(WF3_TMP)/$$p.cov" | tail -1 | awk '{v=$$NF; sub(/%/, "", v); print v}'); \
+	  case " $(K25_RAICES) " in \
+	    *" $$p "*) if awk -v c="$$pct" -v m=$(COVER_MIN) 'BEGIN { exit !(c + 0 >= m) }'; then echo "   K25 OK      $$p $$pct %"; else echo "   K25 FALLA   $$p $$pct % (< $(COVER_MIN) %)"; f=1; fi ;; \
+	    *) echo "   sin umbral  $$p $$pct %" ;; \
+	  esac; \
+	done; exit $$f
+
+verify-wf3-contrato:
+	@echo "== WF-3 contrato (S6-03, S6-04): build.py --check, rutas del servidor = openapi.yaml y respuestas validadas con kin-openapi"
+	@cd "$(ROOT)" && $(PYTHON) -I "$(C1GEN)/build.py" --check | grep -E 'DIFIERE|RESULTADO' | sed 's/^/   /'
+	@cd "$(ROOT)/backend" && $(GO) test ./internal/api/ -count=1 -v -run 'TestRutasIgualesAlContrato|TestContratoSinSesionYEsqueleto' 2>&1 | grep -E '^(--- |ok|FAIL)|S6-03' | sed 's/^/   /'
+
+verify-wf3-frontend:
+	@echo "== WF-3 interfaz: script «verify» de frontend/package.json (lo define frontend-base) o, si no hay, npm run build"
+	@if [ ! -f "$(ROOT)/frontend/package.json" ]; then echo "   frontend/package.json no existe todavía: se omite"; \
+	elif grep -q '"verify"' "$(ROOT)/frontend/package.json"; then cd "$(ROOT)/frontend" && npm run --silent verify; \
+	else cd "$(ROOT)/frontend" && npm run --silent build; fi
+
+# ---- WF-3a cierre (agente integrador-backend, 12-oct-2026) ----
+#   make verify-wf3-secretos  S6-13: grep de llaves, tokens y contraseñas en backend/ (0 coincidencias)
+#   make verify-wf3-respaldo  S6-09: finanzas respaldo (VACUUM INTO) sobre una copia de la base de desarrollo, restauración,
+#                             integrity_check y conteos por tabla (sin la base de desarrollo: base vacía migrada)
+#   make verify-wf3-servidor  S6-11, S6-12 y S6-14 contra el servidor de desarrollo YA corriendo (bash ops/dev-run.sh)
+#   make verify-wf3-final     verify-wf3 + los tres anteriores (cierre de WF-3a; necesita el servidor corriendo)
+WF3_HOST   ?= finanzas.local
+WF3_PORT   ?= 8443
+WF3_DEV_DB ?= $(ROOT)/datos/finanzas-dev.db
+MKCERT     ?= mkcert
+CURL       ?= curl
+
+verify-wf3-final: verify-wf3 verify-wf3-secretos verify-wf3-respaldo verify-wf3-servidor
+	@rm -rf "$(WF3_TMP)"; rmdir "$(TMP_ROOT)" 2>/dev/null || true
+	@echo "== WF-3a: cierre OK (verify-wf3, S6-13, S6-09 y servidor: S6-11, S6-12, S6-14)"
+
+verify-wf3-secretos:
+	@echo "== WF-3 secretos (S6-13): grep de api_key, sk-ant, bot<número> y password = \"…\" en backend/ (*.go, *.yaml, *.sql, *.env)"
+	@hits=$$( { grep -rn -i 'api[_-]\?key\|sk-ant\|bot[0-9]\{6,\}\|password *= *"' "$(ROOT)/backend" --include='*.go' --include='*.yaml' --include='*.sql' --include='*.env' || true; } | wc -l); \
+	if [ "$$hits" != 0 ]; then echo "   FALLA S6-13: $$hits coincidencias (revísalas con el grep literal de S6-13; aquí no se imprimen por si son secretos)"; exit 1; fi; \
+	echo "   S6-13 grep: 0 coincidencias"
+
+verify-wf3-respaldo:
+	@echo "== WF-3 respaldo (S6-09): VACUUM INTO + integrity_check + restauración en datos/tmp y conteos por tabla"
+	@rm -rf "$(WF3_TMP)/s609"; mkdir -p "$(WF3_TMP)/s609/respaldos"; cd "$(ROOT)/backend" && $(GO) build -o "$(WF3_TMP)/s609/finanzas" ./cmd/finanzas
+	@O="$(WF3_TMP)/s609/origen.db"; R="$(WF3_TMP)/s609/restaura.db"; \
+	if [ -f "$(WF3_DEV_DB)" ]; then $(SQLITE) "$(WF3_DEV_DB)" ".backup '$$O'"; echo "   origen: copia de $(WF3_DEV_DB) (.backup; la base de desarrollo no se toca)"; \
+	else "$(WF3_TMP)/s609/finanzas" migrate -db "$$O" > /dev/null; echo "   origen: base vacía migrada (no existe $(WF3_DEV_DB); la crea bash ops/dev-run.sh)"; fi; \
+	"$(WF3_TMP)/s609/finanzas" respaldo -db "$$O" -respaldos "$(WF3_TMP)/s609/respaldos" -tmp "$(WF3_TMP)/s609" -tipo manual \
+	  | grep -E '^(respaldo|integrity_check|restauración)' | sed -E 's/(sha256 [0-9a-f]{12})[0-9a-f]+/\1…/; s#$(ROOT)/##; s/^/   /'; \
+	cp "$$(ls "$(WF3_TMP)/s609/respaldos/"*.db | head -1)" "$$R"; \
+	ic=$$($(SQLITE) "$$R" 'PRAGMA integrity_check;'); [ "$$ic" = ok ] || { echo "   FALLA S6-09: integrity_check de la restaurada = $$ic"; exit 1; }; \
+	n=0; d=0; filas=0; while read -r t; do \
+	  a=$$($(SQLITE) "$$O" "SELECT COUNT(*) FROM \"$$t\""); b=$$($(SQLITE) "$$R" "SELECT COUNT(*) FROM \"$$t\""); \
+	  n=$$((n + 1)); filas=$$((filas + b)); if [ "$$a" != "$$b" ]; then d=$$((d + 1)); echo "   DIFIERE $$t: origen $$a, restaurada $$b"; fi; \
+	done < <($(SQLITE) "$$O" "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name"); \
+	[ "$$d" = 0 ] || { echo "   FALLA S6-09: $$d tablas con conteos distintos"; exit 1; }; \
+	echo "   S6-09 restaurada en datos/tmp: integrity_check = ok; $$n tablas, $$filas filas, 0 diferencias de conteo"
+
+verify-wf3-servidor:
+	@echo "== WF-3 servidor (S6-11, S6-12, S6-14) en https://$(WF3_HOST):$(WF3_PORT)/ (arranque: bash ops/dev-run.sh)"
+	@command -v $(MKCERT) > /dev/null || { echo "   FALLA S6-11: falta mkcert (ops/mkcert.md §1)"; exit 1; }
+	@ss -ltn 'sport = :$(WF3_PORT)' | grep -q LISTEN || { echo "   FALLA: nada escucha en :$(WF3_PORT); arranca el servidor con: bash ops/dev-run.sh"; exit 1; }
+	@ca="$$($(MKCERT) -CAROOT)/rootCA.pem"; u="https://$(WF3_HOST):$(WF3_PORT)"; \
+	echo "   S6-11 mkcert $$($(MKCERT) -version); $(WF3_HOST) resuelve a $$(getent hosts $(WF3_HOST) | awk '{print $$1}' | head -1)"; \
+	code=$$($(CURL) --cacert "$$ca" -sS -o /dev/null -w '%{http_code}' "$$u/"); \
+	case "$$code" in 200|302) echo "   S6-11 curl con la CA de mkcert: $$code";; *) echo "   FALLA S6-11: curl dio $$code"; exit 1;; esac; \
+	san=$$(openssl s_client -connect $(WF3_HOST):$(WF3_PORT) -servername $(WF3_HOST) < /dev/null 2> /dev/null | openssl x509 -noout -ext subjectAltName | tail -1 | sed 's/^ *//'); \
+	case "$$san" in *"DNS:$(WF3_HOST)"*) echo "   S6-11 subjectAltName: $$san";; *) echo "   FALLA S6-11: el certificado no trae DNS:$(WF3_HOST) ($$san)"; exit 1;; esac; \
+	echo "   S6-11 Chrome Android con la CA instalada: NO VERIFICADO (manual de Axel, ops/mkcert.md §4)"
+	@ca="$$($(MKCERT) -CAROOT)/rootCA.pem"; u="https://$(WF3_HOST):$(WF3_PORT)"; mkdir -p "$(WF3_TMP)"; \
+	$(CURL) --cacert "$$ca" -sS "$$u/manifest.webmanifest" > "$(WF3_TMP)/manifest.json"; \
+	icons=$$($(PYTHON) -I -c 'import json,sys; m=json.load(open(sys.argv[1])); s={i["sizes"] for i in m["icons"]}; assert m.get("name") and m.get("start_url") and m.get("display") == "standalone" and {"192x192", "512x512"} <= s, "manifiesto incompleto"; print(" ".join(i["src"] for i in m["icons"]))' "$(WF3_TMP)/manifest.json"); \
+	for i in $$icons; do c=$$($(CURL) --cacert "$$ca" -sS -o /dev/null -w '%{http_code} %{content_type}' "$$u$$i"); case "$$c" in "200 image/png"*) ;; *) echo "   FALLA S6-12: ícono $$i da $$c"; exit 1;; esac; done; \
+	sw=$$($(CURL) --cacert "$$ca" -sS -o /dev/null -w '%{http_code}' "$$u/sw.js"); [ "$$sw" = 200 ] || { echo "   FALLA S6-12: sw.js da $$sw"; exit 1; }; \
+	echo "   S6-12 manifest.webmanifest: name, start_url, display standalone e íconos 192 y 512 autoalojados ($$icons, image/png); sw.js 200"; \
+	bruto=$$( { grep -rn 'https\?://' "$(ROOT)/frontend/dist" --include='*.html' --include='*.css' || true; } | { grep -v 'localhost\|finanzas.local' || true; } | wc -l); \
+	ext=$$(find "$(ROOT)/frontend/dist" \( -name '*.html' -o -name '*.css' \) -exec sed -E 's#/\*![^*]*\*/##g' {} + | { grep -oE 'https?://[A-Za-z0-9.-]+' || true; } | { grep -v 'localhost\|finanzas.local' || true; } | sort -u | tr '\n' ' '); \
+	[ -z "$$ext" ] || { echo "   FALLA S6-12: cargas de terceros en dist/*.html o *.css: $$ext"; exit 1; }; \
+	echo "   S6-12 grep literal en dist (*.html, *.css): $$bruto renglones (solo comentarios de licencia /*! … */, que no cargan nada); 0 cargas de terceros"
+	@l=$$(ss -ltn 'sport = :$(WF3_PORT)' | awk 'NR > 1 {print $$4}' | sort -u); \
+	for a in $$l; do case "$$a" in 192.168.50.*:$(WF3_PORT)|127.0.0.1:$(WF3_PORT)) ;; *) echo "   FALLA S6-14: escucha en $$a (comodín o fuera de la LAN)"; exit 1;; esac; done; \
+	echo "   S6-14 ss -ltn :$(WF3_PORT): solo $$(echo $$l)"; \
+	ts=$$(ip -br addr show tailscale0 2> /dev/null | awk '{print $$3}' | cut -d/ -f1); \
+	if [ -z "$$ts" ]; then echo "   S6-14 sin interfaz tailscale0"; \
+	elif $(CURL) -k -sS -m 3 -o /dev/null "https://$$ts:$(WF3_PORT)/" 2> /dev/null; then echo "   FALLA S6-14: responde en Tailscale $$ts"; exit 1; \
+	else echo "   S6-14 Tailscale $$ts:$(WF3_PORT): no responde (no escucha ahí)"; fi
 
 verify-all: verify-wf0 verify-c1 verify-s1 verify-u1 verify-criterios verify-wf1
 	@$(RM_TMP)

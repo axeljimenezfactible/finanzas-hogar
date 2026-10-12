@@ -1,0 +1,46 @@
+<<define "preambulo">>% Plantilla común de los reportes de Finanzas Hogar (S7). Sin cifras fijas: todo llega del motor/API.
+% Motor: lualatex. Tipografía: Inter (SIL OFL 1.1) instalada localmente con TeX Live (texlive-fontsextra), en Type 1
+% con codificación T1 (PROVISIONAL, bloqueo docs/estado/bloqueos/S7-lualatex.md: falta luaotfload para OpenType).
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=2cm,includefoot]{geometry}
+\usepackage[T1]{fontenc}
+\renewcommand*\familydefault{Inter-TLF}
+\usepackage{textcomp}
+\usepackage[table]{xcolor}
+\usepackage{tabularx,booktabs,array}
+\usepackage{fancyhdr}
+% Colores: tokens de docs/contratos/C2-tokens.json (S7-13), nunca de la paleta del reporte previo (decisión G).
+\definecolor{fhText}{HTML}{222325}% color.neutral.950
+\definecolor{fhMuted}{HTML}{66676E}% color.neutral.700
+\definecolor{fhBrand}{HTML}{46487B}% color.brand.800
+\definecolor{fhBrandSurface}{HTML}{F9FAFF}% color.brand.50
+\definecolor{fhHead}{HTML}{F2F2F4}% color.neutral.100
+\definecolor{fhRule}{HTML}{D1D2D8}% color.neutral.300
+\definecolor{fhPage}{HTML}{FFFFFF}% color.base.white
+\arrayrulecolor{fhRule}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\color{fhMuted}\footnotesize << tex .Footer >>}
+\fancyfoot[R]{\color{fhMuted}\footnotesize Página \thepage}
+\setlength{\parindent}{0pt}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+<<end>>
+<<define "cuerpo">>\begin{document}
+\pagecolor{fhPage}\color{fhText}
+\colorbox{fhBrandSurface}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\vspace{6pt}{\Large\bfseries\color{fhBrand} << tex .Title >>}\par\vspace{3pt}{\color{fhText}<<range .Subtitle>><<if .Kind>>\mbox{<< tex .Text >>}<<else>><< tex .Text >><<end>><<end>>}\par\vspace{6pt}}}
+\par\vspace{12pt}
+<<range .Sections>>{\large\bfseries\color{fhBrand} << tex .Title >>}\par\vspace{4pt}
+<<if .Note>>{\small\color{fhMuted} << tex .Note >>}\par\vspace{4pt}
+<<end>>\begin{tabularx}{\textwidth}{<< .Spec >>}
+\toprule
+\rowcolor{fhHead}<<range $i, $c := .Cols>><<if $i>> & <<end>>\textbf{<< tex $c >>}<<end>> \\
+\midrule
+<<range .Rows>><<range $i, $c := .>><<if $i>> & <<end>><<if $c.Kind>>\mbox{<< tex $c.Text >>}<<else>><< tex $c.Text >><<end>><<end>> \\
+<<end>>\bottomrule
+\end{tabularx}
+\par\vspace{12pt}
+<<end>><<if .Note>>{\small\color{fhMuted} << tex .Note >>}\par
+<<end>>\end{document}
+<<end>>

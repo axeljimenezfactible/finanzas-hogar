@@ -4,6 +4,7 @@
 Regenera, desde el esquema de S1 y las necesidades de U1, los tres archivos de C1 que no se editan a mano:
   docs/contratos/openapi.yaml       OpenAPI 3.1.1 (contrato C1)
   backend/internal/api/routes.go    rutas del enrutador, idénticas a las del contrato (S6-03)
+  backend/internal/api/types_gen.go tipos Go de components/schemas y metadatos por operación (gen8_types.py, WF-3)
   docs/contratos/C1-datos.md        documento de C1, armado desde c1_plantilla.md (incluye la matriz §10)
   docs/contratos/extractos/         un extracto por etiqueta, componentes-comunes.yaml e INDICE.md (protocolo-agentes §4)
 El esquema sale de TODAS las migraciones de backend/db/migrations/ aplicadas en orden (C1 v1.1).
@@ -34,9 +35,9 @@ def ext_files(root):
 
 
 SOURCES = ['c1paths.py', 'parse_schema.py', 'gen1_base.py', 'gen2_schemas.py', 'gen3_ops.py', 'gen4_build.py', 'gen5_go.py', 'gen6_c1.py',
-           'gen7_extractos.py', 'c1_plantilla.md', 'c1_inconsistencias.md']
-STAGES = ['parse_schema.py', 'gen4_build.py', 'gen5_go.py', 'gen6_c1.py', 'gen7_extractos.py']
-OUTPUTS = ['docs/contratos/openapi.yaml', 'backend/internal/api/routes.go', 'docs/contratos/C1-datos.md']
+           'gen7_extractos.py', 'gen8_types.py', 'c1_plantilla.md', 'c1_inconsistencias.md']
+STAGES = ['parse_schema.py', 'gen4_build.py', 'gen5_go.py', 'gen6_c1.py', 'gen7_extractos.py', 'gen8_types.py']
+OUTPUTS = ['docs/contratos/openapi.yaml', 'backend/internal/api/routes.go', 'docs/contratos/C1-datos.md', 'backend/internal/api/types_gen.go']
 
 
 def sha12(path):

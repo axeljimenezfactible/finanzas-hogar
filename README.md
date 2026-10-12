@@ -2,6 +2,8 @@
 
 Sistema web de control financiero del hogar de Axel y Ximena. Corre en la máquina de casa, solo en la red local, y se usa desde el navegador del escritorio y como aplicación instalada (PWA) en sus teléfonos Android.
 
+**Estado al 12-oct-2026, WF-3a «Construcción»:** el servidor Go atiende las 216 operaciones de C1 v1.4, y las 216 pasan su prueba de contrato. Corre por HTTPS (mkcert) solo en la red de casa, en `https://finanzas.local:8443`, con la semilla real. Ya funcionan el inicio de sesión, los respaldos con restauración probada, los avisos por Telegram (sin envío real todavía) y el reporte mensual en PDF. El frontend tiene las 41 pantallas de U1, la PWA instalable y la cola sin conexión, con 149 pruebas de Playwright que pasan. Los criterios S6 y S7 cumplen, salvo dos pruebas manuales: el envío real por Telegram (S7-07, orquestador) y la instalación en Android (S6-11, Axel). El backend quedó **aprobado**. El frontend **no quedó aprobado** tras 3 rondas: le quedan 1 hallazgo alto y 5 medios, casi todos en sus componentes base, y no tocan cifras. C3 queda como borrador v0.9 sin firma: 35 de 42 pantallas implementadas, 42 de 42 probadas y 0 capturadas. Hay 40 bloqueos nuevos, todos con una opción PROVISIONAL en el código. Detalle, pendientes de WF-3b y WF-4 y propuestas para la puerta 4: [`docs/estado/wf3/INTEGRACION-wf3a.md`](docs/estado/wf3/INTEGRACION-wf3a.md).
+
 **Estado al 12-oct-2026, P2d (K53):** la aplicación no leerá sitios de tiendas: se retiró la lectura asistida, y un agente externo (la sesión de Claude Code de Axel con Claude in Chrome) meterá precios, productos y recetas por la API (C1 v1.4), con el peso de esos datos PROVISIONAL hasta la puerta 4 (`docs/estado/bloqueos/S5-agente-externo.md`).
 
 **Estado al 11-oct-2026, puerta 2:** Etapa B. Axel contestó la puerta 2 (98 preguntas) en modo «lo recomendado + excepciones», sin excepciones. Las preguntas sin recomendación quedan PROVISIONAL con la opción en uso y pasan a WF-3 o a la puerta 4 (`docs/estado/puerta2/RESPUESTAS.md`). El flujo P2c las aplicó: esquema 1.4 (migración 00004, con los parámetros de avisos y reportes en `app_setting`), C1 v1.3, contratos S2 1.3, S3 1.5, S4 1.5 y S5 1.5, motores S2 y S5 con sus oráculos, U3 1.5, U4 1.6 y criterios 1.3. `make verify-all` pasa completo. Tras 3 rondas quedan **sin aprobar** los bloqueos, S1, los contratos de motores y el motor S5: les quedan hallazgos medios y bajos, y el alto que compartían ya pasa. **Los términos de las tiendas quedaron «no verificado»** por un desafío anti-robot y se escalaron a Axel. Axel contestó en la puerta 2 bis que la aplicación no leerá sitios de tiendas: un agente externo traerá precios, productos y recetas. Es K53 y se registra en P2d. El paquete para Claude Design no se regeneró, porque U4 trae 2 rutas `/api/v1` que el filtro del script no quita. Bloqueos: 84 archivos, 63 resueltos y 21 abiertos. Detalle: [`docs/estado/p2c/INTEGRACION.md`](docs/estado/p2c/INTEGRACION.md). La Pista 3 (K45) sigue en curso.
@@ -36,10 +38,10 @@ Las decisiones cerradas de Axel están en [`docs/plan/decisiones.md`](docs/plan/
 
 ```
 finanzas-hogar/
-├── Makefile                         verificación (verify-wf0, verify-c1, verify-s1, verify-u1, verify-criterios, verify-wf1, verify-all) y limpieza
+├── Makefile                         verificación (verify-wf0, verify-c1, verify-s1, verify-u1, verify-criterios, verify-wf1, verify-all, verify-wf3 y verify-wf3-final) y limpieza
 ├── README.md
 ├── backend/                         Go, módulo finanzas-hogar (go 1.27; K28); solo biblioteca estándar y modernc.org/sqlite
-│   ├── cmd/finanzas/main.go         servidor mínimo: GET /health y GET /openapi.yaml; las demás rutas responden 501
+│   ├── cmd/finanzas/                servidor (serve, migrate, semilla, respaldo): 216 operaciones de C1 v1.4, TLS y la PWA de frontend/dist
 │   ├── cmd/motores/                 binario común de los motores: motores <s2|s3|s4|s5> dump --fixtures … --out … (correr desde la raíz)
 │   ├── db/migrations/               00001 (esquema 1.1), 00002 (1.2) y 00003 (1.3): 55 tablas STRICT
 │   ├── db/tools/                    s1_verifica.py (make verify-s1) y gen_dict.py
@@ -65,11 +67,14 @@ finanzas-hogar/
 │       ├── wf0/, p1/, p1c/          reportes, revisiones, correcciones e INTEGRACION.md de cada flujo
 │       ├── wf1/                     reportes de WF-1, revisiones REVISION-*-rN, correcciones e INTEGRACION.md
 │       └── bloqueos/                preguntas para Axel (una por archivo) e INDICE.md
+├── frontend/                        WF-3a: Vite 8, React 19, TypeScript, Tailwind 4, Radix, TanStack Table 9, dnd-kit, ECharts 6 y PWA;
+│                                    src/ (shell, api, cola, componentes, vistas-bd, pantallas/<área>), pruebas/ (Playwright) y scripts/
+├── ops/                             WF-3a: dev-run.sh y dev-stop.sh (servidor de desarrollo), mkcert.md, runbook.md (borrador) y telegram-disparo.md
 └── oraculo/                         model.json y verify3.json (canon, no se editan), oráculos fin_/cred_/rec_/pre_*.py,
                                      compara.py, fixtures/s2..s5 y salidas/
 ```
 
-`frontend/`, `ops/`, `docs/design/salida/` y `docs/design/capturas-u5/` siguen vacías (git no las guarda); se llenan en la Pista 3, WF-3 y WF-4. `datos/tmp/` es solo para temporales de verificación y nunca entra al repositorio; las descargas crudas (`datos/semilla/*/raw/`, ≈ 13 GB) y la base de PROFECO (`profeco/db/`, ≈ 17 GB) tampoco.
+`docs/design/capturas-u5/` sigue vacía (la llena WF-3b). `datos/certs/` (certificado de mkcert), `datos/dev/` y `datos/*.db` (servidor y base de desarrollo) nunca entran al repositorio. `datos/tmp/` es solo para temporales de verificación y nunca entra al repositorio; las descargas crudas (`datos/semilla/*/raw/`, ≈ 13 GB) y la base de PROFECO (`profeco/db/`, ≈ 17 GB) tampoco.
 
 ## Versiones vigentes de los artefactos (11-oct-2026, puerta 2)
 
@@ -113,6 +118,15 @@ Detalle, verificaciones, rondas extra, interrupción y continuación, hallazgos,
 - `DESIGN.md`, tokens C2 compilados con Style Dictionary (reproducibles), contraste de componentes sin pares bajo umbral, U3 y U4.
 - Paquete para Claude Design en `docs/design/entrada/` con `LEEME.md` paso a paso para Axel.
 
+## Qué entregó WF-3a
+
+Detalle por agente, criterios S6 y S7, cobertura, operación → prueba, pantallas, hallazgos abiertos, bloqueos, propuestas para la puerta 4 y consumo: [`docs/estado/wf3/INTEGRACION-wf3a.md`](docs/estado/wf3/INTEGRACION-wf3a.md). En corto:
+
+- **Servidor Go** (`backend/cmd/finanzas`, `backend/internal/api/<área>`, `auth`, `jobs`, `respaldo`, `adjuntos`, `semilla`, `telegram`, `reportes`). Tiene 216 de 216 operaciones con prueba de contrato contra `openapi.yaml`. La cobertura K25 se cumple en dominio, motor_fin, motor_cred, recetas y precios. Los motores y sus cifras no se tocaron.
+- **Frontend** (`frontend/`). Tiene las 41 pantallas de U1, la PWA instalable con la cola sin conexión y el tema claro, oscuro y del sistema; las fuentes y los íconos están autoalojados (0 hosts externos). Las 149 pruebas de Playwright con la API simulada pasan, y la prueba de humo de Inicio contra el servidor real cuadra con el oráculo.
+- **C3 v0.9** (`docs/contratos/C3-integracion.md`): borrador sin firma generado por `frontend/scripts/c3-integracion.py`. La firma va en WF-3b.
+- **Operación** (`ops/`): servidor de desarrollo con `bash ops/dev-run.sh` y `bash ops/dev-stop.sh`, mkcert y el borrador del runbook para WF-4.
+
 ## Cómo correr la verificación
 
 Desde la raíz del repositorio:
@@ -124,6 +138,8 @@ make verify-s1       # backend/db/tools/s1_verifica.py: esquema 1.3, oráculo, n
 make verify-u1       # docs/design/tools/verificar_u1.py: U1 1.2
 make verify-criterios  # docs/criterios/tools/verif_final.sh: los 18 archivos de criterios
 make verify-all      # todo lo anterior
+make verify-wf3      # WF-3: Go, cobertura K25, contrato C1 e interfaz (build, rutas, hosts y Playwright; ~5 min; todavía fuera de verify-all)
+make verify-wf3-final  # verify-wf3 + secretos (S6-13), respaldo (S6-09) y servidor (S6-11, S6-12, S6-14); necesita bash ops/dev-run.sh
 make clean           # borra los temporales si una verificación falló a medias
 ```
 
@@ -158,6 +174,7 @@ Para la colorimetría sin make, copia el script a un árbol espejo (`<espejo>/do
 3. **WF-1 «Motores y sistema de diseño» (integrado el 11-oct-2026).** Motores S2 a S5 con oráculos, recetario, catálogo, PROFECO y OCR, `DESIGN.md`, tokens C2, U3, U4 y el paquete para Claude Design: [`docs/estado/wf1/INTEGRACION.md`](docs/estado/wf1/INTEGRACION.md). `make verify-wf1` lo comprueba.
 4. **Puerta 2 (aplicada el 11-oct-2026, flujo P2c).** Axel contestó las 98 preguntas en modo «lo recomendado + excepciones», sin excepciones (`docs/estado/puerta2/RESPUESTAS.md`; `docs/plan/decisiones.md` §K46 a §K52). P2c aplicó: esquema 1.4, C1 v1.3, contratos S2 1.3, S3 1.5, S4 1.5 y S5 1.5, motores S2 y S5, U3 1.5, U4 1.6 y criterios 1.3. Lo que no se aprobó, los bloqueos y los pendientes para WF-3 y la Pista 3 están en [`docs/estado/p2c/INTEGRACION.md`](docs/estado/p2c/INTEGRACION.md). Sigue P2d (registrar K53, la aplicación no lee sitios de tiendas) y después WF-3; el orquestador se detiene en la puerta 4.
 5. **Pista 3 (Claude Design por Artifacts), la ejecuta el orquestador (K45, sustituye a K35).** Sin navegador y sin subir archivos: los agentes escriben en disco el sistema de diseño y los artboards de todas las pantallas de U1 con cifras sintéticas, y solo el orquestador los publica con la herramienta Artifact; hay hasta 3 vueltas revisadas por agentes, cada una copiada en `docs/design/salida/iter-N/`, y la exportación final va en `docs/design/salida/final/`. `docs/design/entrada/` queda como brief de referencia. La puerta 3 es al final: Axel abre la URL privada del lienzo y aprueba la referencia visual. Plan técnico: [`docs/design/pista3-plan.md`](docs/design/pista3-plan.md). Después vienen WF-3 (backend, frontend y verificación visual; puerta 4) y WF-4 (operación, semilla, seguridad e informe final).
+6. **WF-3a «Construcción» (integrado el 12-oct-2026).** Servidor Go, frontend y PWA, pruebas de contrato y C3 v0.9 en borrador: [`docs/estado/wf3/INTEGRACION-wf3a.md`](docs/estado/wf3/INTEGRACION-wf3a.md). **Siguiente: WF-3b**, con las capturas de U5, los flujos F-1 a F-6 contra el servidor y la firma de C3. Antes conviene decidir si se corrige el frontend (§7 de la integración) y los 5 puntos de `docs/estado/bloqueos/C3-matriz.md`. Después vienen la puerta 4 (valores K31, §9) y WF-4 (instalación con systemd).
 
 Lo que WF-1 debe tomar de los flujos anteriores (insumos, pendientes y solicitudes abiertas) está en [`docs/estado/wf0/INTEGRACION.md`](docs/estado/wf0/INTEGRACION.md) §5 y §7, [`docs/estado/p1/INTEGRACION.md`](docs/estado/p1/INTEGRACION.md) §7 y [`docs/estado/p1c/INTEGRACION.md`](docs/estado/p1c/INTEGRACION.md) §7.
 

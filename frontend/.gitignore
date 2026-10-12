@@ -1,0 +1,16 @@
+node_modules/
+dist/
+dev-dist/
+test-results/
+playwright-report/
+# Generados por «npm run preparar» (fuente: docs/contratos y docs/design/fuentes)
+src/estilos/tokens.css
+src/estilos/tailwind.theme.css
+src/estilos/colores-manifest.json
+src/api/esquema.gen.ts
+src/mocks/operaciones.gen.json
+public/fonts/
+public/icons/
+public/favicon.svg
+src/mocks/sinteticos.gen.json
+storybook-static/
