@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Barra lateral y Buscar · móvil</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link)} a:hover{color:var(--ui-text-link-hover)}
+.i{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:var(--icon-stroke-user-units-sm);stroke-linecap:round;stroke-linejoin:round}
+.i-md{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.row{display:flex;align-items:center}
+.nav-a{flex:1;min-width:0;display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-touch-min);padding:0 var(--space-2);border-radius:var(--radius-sm);color:var(--ui-text-secondary);text-decoration:none}
+.nav-a svg{color:var(--ui-icon-default)}
+.nav-a[aria-current="page"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.nav-a[aria-current="page"] svg{color:var(--ui-icon-selected)}
+.sub .nav-a{padding-left:calc(var(--space-2) + var(--space-4))}
+.ib{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);flex:none;border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default);cursor:pointer;text-decoration:none}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-1);padding:var(--space-1);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md)}
+.seg button{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--size-touch-min);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-secondary);font:inherit;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.cmd{display:flex;align-items:center;gap:var(--space-3);min-height:var(--size-touch-min);padding:var(--space-1) var(--space-3);border-radius:var(--radius-sm);color:var(--ui-text-default);text-decoration:none}
+.cmd.on{background:var(--ui-surface-hover)}
+.cmd svg{color:var(--ui-icon-default)}
+.cmd span{display:flex;flex-direction:column}
+.grp{margin:0;padding:var(--space-2) var(--space-3) var(--space-1);color:var(--ui-text-secondary)}
+.bb{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-0);flex:1;min-width:var(--size-bottombar-item-min-width);height:var(--size-bottombar-item-height);color:var(--ui-text-secondary);text-decoration:none}
+.pill{display:inline-flex;align-items:center;justify-content:center;width:var(--size-bottombar-indicator-width);height:var(--size-bottombar-indicator-height);border-radius:var(--radius-full)}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+</style>
+</helmet>
+<div style="width:412px;box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-6);background:var(--ui-surface-card)">
+
+  <section aria-label="Panel de secciones abierto" style="position:relative;width:412px;height:915px;overflow:hidden;box-sizing:border-box;background:var(--ui-surface-page)">
+    <div aria-hidden="true" style="display:flex;flex-direction:column;height:100%">
+      <header style="display:flex;align-items:center;gap:var(--space-1);height:var(--layout-topbar-height-mobile);padding:0 var(--space-1)">
+        <span class="ib"><svg class="i i-md" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg></span>
+        <span class="small" style="color:var(--ui-text-secondary)">‹ Créditos</span>
+      </header>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);padding:0 var(--space-4)">
+        <span class="title-1">Kueski Pay</span>
+        <span class="small" style="display:flex;gap:var(--space-4);color:var(--ui-text-secondary)"><span style="color:var(--ui-text-default);font-weight:var(--font-weight-medium)">Resumen</span><span>Detalle</span><span>Tendencias</span><span>Calendario</span></span>
+        <span class="body">Disponible hoy <span class="money" style="font-weight:var(--font-weight-semibold)">$6,881.60</span></span>
+      </div>
+      <nav style="margin-top:auto;display:flex;height:var(--layout-bottombar-height);background:var(--ui-surface-raised);border-top:var(--border-width-default) solid var(--ui-border-divider)" class="caption">
+        <span class="bb">Inicio</span><span class="bb">Comidas</span><span class="bb">+</span><span class="bb">Compras</span><span class="bb">Buscar</span>
+      </nav>
+    </div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:var(--ui-overlay-scrim)"></div>
+    <nav role="dialog" aria-modal="true" aria-label="Secciones" class="small" style="position:absolute;top:0;bottom:0;left:0;width:var(--layout-sidebar-mobile-width);box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-2);background:var(--ui-surface-card);box-shadow:var(--shadow-2)">
+      <div class="row" style="gap:var(--space-2)">
+        <button type="button" aria-haspopup="menu" aria-expanded="false" class="row" style="flex:1;min-width:0;gap:var(--space-2);min-height:var(--size-touch-min);padding:0 var(--space-2);border:0;background:transparent;color:var(--ui-text-default);font:inherit;cursor:pointer">
+          <span class="caption" aria-hidden="true" style="display:inline-flex;align-items:center;justify-content:center;width:var(--size-avatar);height:var(--size-avatar);flex:none;border-radius:var(--radius-full);background:var(--ui-surface-hover);box-shadow:0 0 0 var(--border-width-focus) var(--ui-person-axel);font-weight:var(--font-weight-medium)">A</span>
+          <span style="display:flex;flex-direction:column;align-items:flex-start"><span style="font-weight:var(--font-weight-semibold)">Finanzas Hogar</span><span class="caption" style="color:var(--ui-text-secondary)">Axel · Co-titular</span></span>
+        </button>
+        <a class="ib" href="../creditos/creditos-p18-credito-m.dc.html" aria-label="Cerrar panel"><svg class="i i-md" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></a>
+      </div>
+      <ul aria-label="Acciones">
+        <li><a class="nav-a" href="#"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Buscar</a></li>
+        <li><a class="nav-a" href="shell-p03-registrar-gasto-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Registrar gasto</a></li>
+      </ul>
+      <ul style="border-top:var(--border-width-default) solid var(--ui-border-divider);padding-top:var(--space-2)">
+        <li class="row"><a class="nav-a" href="../inicio/inicio-p01-resumen-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</a></li>
+        <li class="row"><a class="nav-a" href="../gastos/gastos-p02-todos-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>Gastos</a><button type="button" class="ib" aria-expanded="false" aria-label="Desplegar Gastos"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></li>
+        <li class="row"><a class="nav-a" href="../presupuesto/presupuesto-p06-mes-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>Presupuesto</a><button type="button" class="ib" aria-expanded="false" aria-label="Desplegar Presupuesto"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></li>
+        <li class="row"><a class="nav-a" href="../comidas/comidas-p10-semana-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Comidas</a><button type="button" class="ib" aria-expanded="false" aria-label="Desplegar Comidas"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></li>
+        <li class="row"><a class="nav-a" href="../compras/compras-p13-lista-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>Compras y tiendas</a><button type="button" class="ib" aria-expanded="false" aria-label="Desplegar Compras y tiendas"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></li>
+        <li class="row"><a class="nav-a" href="../creditos/creditos-p17-lineas-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>Créditos</a><button type="button" class="ib" aria-expanded="true" aria-label="Plegar Créditos"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></li>
+        <li><ul class="sub" aria-label="Créditos">
+          <li><a class="nav-a" href="../creditos/creditos-p17-lineas-m.dc.html">Todas las líneas</a></li>
+          <li><a class="nav-a" href="#">Banorte Oro</a></li>
+          <li><a class="nav-a" href="#">Crédito Coppel</a></li>
+          <li><a class="nav-a" href="../creditos/creditos-p18-credito-m.dc.html" aria-current="page">Kueski Pay</a></li>
+          <li><a class="nav-a" href="#">Préstamo personal</a></li>
+          <li><a class="nav-a" href="../creditos/creditos-p20-comparador-m.dc.html">Comparador de escenarios</a></li>
+        </ul></li>
+        <li class="row"><a class="nav-a" href="../salud-reportes/salud-p21-salud-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.050 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>Salud</a></li>
+        <li class="row"><a class="nav-a" href="../salud-reportes/reportes-p23-centro-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 18v-1"/><path d="M12 18v-6"/><path d="M16 18v-3"/></svg>Reportes</a><button type="button" class="ib" aria-expanded="false" aria-label="Desplegar Reportes"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></li>
+        <li class="row"><a class="nav-a" href="../ajustes/ajustes-p26-indice-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.730l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Ajustes</a><button type="button" class="ib" aria-expanded="false" aria-label="Desplegar Ajustes"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></li>
+      </ul>
+      <div role="group" aria-label="Tema" style="margin-top:auto">
+        <div class="seg caption">
+          <button type="button" aria-pressed="true"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>Sistema</button>
+          <button type="button" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>Claro</button>
+          <button type="button" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>Oscuro</button>
+        </div>
+      </div>
+    </nav>
+  </section>
+
+  <section aria-label="Buscar con comandos" style="width:412px;height:915px;box-sizing:border-box;display:flex;flex-direction:column;background:var(--ui-surface-raised)">
+    <div class="row" style="gap:var(--space-2);height:var(--layout-topbar-height-mobile);padding:0 var(--space-2) 0 var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider)">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--ui-icon-default)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <label for="q-m" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Buscar o escribir un comando</label>
+      <input id="q-m" class="body" type="search" role="combobox" aria-expanded="true" aria-controls="cmd-m" aria-activedescendant="m-gasto" value="/" style="flex:1;min-width:0;border:0;background:transparent;color:var(--ui-text-default);font:inherit;padding:var(--space-2) 0">
+      <a class="row small" href="../inicio/inicio-p01-resumen-m.dc.html" style="min-height:var(--size-touch-min);padding:0 var(--space-3);color:var(--ui-text-secondary);text-decoration:none;font-weight:var(--font-weight-medium)">Cancelar</a>
+    </div>
+    <div id="cmd-m" role="listbox" aria-label="Comandos" class="small" style="flex:1;display:flex;flex-direction:column;padding:var(--space-2);overflow:hidden">
+      <div role="group" aria-labelledby="mg-reg" style="display:flex;flex-direction:column">
+        <p id="mg-reg" class="grp caption">Registrar</p>
+        <a id="m-gasto" role="option" aria-selected="true" class="cmd on" href="shell-p03-registrar-gasto-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span>/gasto · Registrar gasto<span class="caption" style="color:var(--ui-text-secondary)">g, gastar</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="../gastos/gastos-p05-ticket-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>/ticket · Capturar ticket<span class="caption" style="color:var(--ui-text-secondary)">t, foto, ocr</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="../presupuesto/presupuesto-p08-ingresos-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><span>/ingreso · Registrar ingreso extra<span class="caption" style="color:var(--ui-text-secondary)">extra</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="../presupuesto/presupuesto-p08-ingresos-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><span>/quincena · Capturar quincena de Axel<span class="caption" style="color:var(--ui-text-secondary)">q, sueldo</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="../creditos/creditos-p19-compra-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg><span>/credito · Registrar compra a crédito<span class="caption" style="color:var(--ui-text-secondary)">kueski, msi, compra a credito</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="#"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>/pago · Marcar pago de crédito<span class="caption" style="color:var(--ui-text-secondary)">abono</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="../presupuesto/presupuesto-p09-ahorro-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/><path d="M16 10h.01"/><path d="M2 8v1a2 2 0 0 0 2 2h1"/></svg><span>/ahorro · Registrar movimiento de ahorro<span class="caption" style="color:var(--ui-text-secondary)">aportar, retiro</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="shell-p22-registrar-peso-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a2 2 0 0 0-1.905 1.46L2.1 18.5A2 2 0 0 0 4 21h16a2 2 0 0 0 1.925-2.54L19.4 9.5A2 2 0 0 0 17.48 8Z"/></svg><span>/peso · Registrar peso<span class="caption" style="color:var(--ui-text-secondary)">p, bascula</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="../compras/compras-p13-lista-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg><span>/lista · Agregar artículo a la lista de compras<span class="caption" style="color:var(--ui-text-secondary)">comprar</span></span></a>
+      </div>
+      <div role="group" aria-labelledby="mg-ir" style="display:flex;flex-direction:column">
+        <p id="mg-ir" class="grp caption">Ir a</p>
+        <a role="option" aria-selected="false" class="cmd" href="#"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>/ir · Ir a cualquier página<span class="caption" style="color:var(--ui-text-secondary)">nombre de la página</span></span></a>
+      </div>
+      <div role="group" aria-labelledby="mg-her" style="display:flex;flex-direction:column">
+        <p id="mg-her" class="grp caption">Herramientas</p>
+        <a role="option" aria-selected="false" class="cmd" href="#"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><span>/tema · Alternar tema<span class="caption" style="color:var(--ui-text-secondary)">claro, oscuro</span></span></a>
+        <a role="option" aria-selected="false" class="cmd" href="shell-p00-entrar-m.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg><span>/salir · Cerrar sesión<span class="caption" style="color:var(--ui-text-secondary)">cerrar sesion</span></span></a>
+      </div>
+    </div>
+    <nav aria-label="Navegación principal" class="caption" style="display:flex;height:var(--layout-bottombar-height);background:var(--ui-surface-raised);border-top:var(--border-width-default) solid var(--ui-border-divider)">
+      <a class="bb" href="../inicio/inicio-p01-resumen-m.dc.html"><span class="pill"><svg class="i i-md" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Inicio</a>
+      <a class="bb" href="../comidas/comidas-p10-semana-m.dc.html"><span class="pill"><svg class="i i-md" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>Comidas</a>
+      <a class="bb" href="shell-p03-registrar-gasto-m.dc.html" aria-label="Registrar gasto"><span style="display:inline-flex;align-items:center;justify-content:center;width:var(--size-bottombar-add);height:var(--size-bottombar-add);border-radius:var(--radius-full);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)"><svg class="i i-md" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span></a>
+      <a class="bb" href="../compras/compras-p13-lista-m.dc.html"><span class="pill"><svg class="i i-md" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>Compras</a>
+      <a class="bb" href="#" aria-current="page" style="color:var(--ui-text-default);font-weight:var(--font-weight-medium)"><span class="pill" style="background:var(--ui-surface-selected);color:var(--ui-icon-selected)"><svg class="i i-md" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>Buscar</a>
+    </nav>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":1854}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { usuario: 'Axel', lineas: ['Banorte Oro', 'Crédito Coppel', 'Kueski Pay', 'Préstamo personal'], disponibleKueski: '$6,881.60', tema: 'sistema' };
+  }
+}
+</script>
+</body>
+</html>

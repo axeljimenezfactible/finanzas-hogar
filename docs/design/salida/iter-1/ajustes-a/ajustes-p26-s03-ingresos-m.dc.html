@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Ajustes · Ingresos</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box}
+body{font-variant-numeric:tabular-nums;margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link);text-decoration:underline}
+a:hover{color:var(--ui-text-link-hover)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+h1,h2,h3,p,ul,dl,dd{margin:0;padding:0}
+ul{list-style:none}
+.i{width:var(--size-icon-sm);height:var(--size-icon-sm);fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.m{width:var(--breakpoint-phone);min-height:915px;display:flex;flex-direction:column}
+.tbar{display:flex;align-items:center;gap:var(--space-2);min-height:var(--layout-topbar-height-mobile);padding:0 var(--space-4);background:var(--ui-surface-card);border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.tbar h1{flex:1}
+.bk{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-touch-min);color:var(--ui-text-link)}
+.mn{display:flex;flex-direction:column;gap:var(--space-6);padding:var(--space-4)}
+.blk{display:flex;flex-direction:column;gap:var(--space-3)}
+.bh{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2) var(--space-4);padding:var(--space-3) 0;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.row .tx{flex:1 1 220px;min-width:0;display:flex;flex-direction:column}
+.row .cn{flex:0 1 300px;min-width:0;max-width:100%;display:flex;flex-direction:column;gap:var(--space-1)}
+.m .row .cn{flex:1 1 100%}
+.lb{font-weight:var(--font-weight-medium)}
+.inw{display:flex;align-items:center;gap:var(--space-1);min-height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field)}
+.inw:hover{border-color:var(--ui-border-control-hover)}
+.inw:focus-within{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.inw input,.inw select{flex:1;min-width:0;border:0;background:transparent;color:inherit;font:inherit;min-height:calc(var(--size-control-coarse) - var(--space-1));outline:0}
+.inw select{cursor:pointer}
+.inw .af{color:var(--ui-text-secondary)}
+.inw.on{border-color:var(--ui-border-selected)}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.tn{font-variant-numeric:tabular-nums}
+.ro{min-height:var(--size-control-coarse);display:flex;align-items:center}
+.hp{color:var(--ui-text-secondary)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--size-control-coarse);padding:0 var(--space-3);border-radius:var(--radius-sm);border:var(--border-width-default) solid var(--ui-border-control);background:transparent;color:var(--ui-text-default);font:inherit;font-weight:var(--font-weight-medium);cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.btn[disabled]{background:var(--ui-surface-disabled);color:var(--ui-text-disabled);border:var(--border-width-default) dashed var(--ui-border-control);cursor:default}
+.pv{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);background:var(--ui-surface-raised)}
+.ba{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3)}
+.ba>div{flex:1 1 140px;min-width:0;display:flex;flex-direction:column}
+.ba .af{flex:0 0 auto;color:var(--ui-icon-default)}
+.ch{display:inline-flex;align-items:center;gap:var(--space-1);white-space:nowrap}
+.ch:before{content:"";width:var(--space-2);height:var(--space-2);border-radius:var(--radius-full);background:var(--ui-person-axel)}
+</style>
+</helmet>
+<div class="m body"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ic-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /></symbol><symbol id="ic-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol><symbol id="ic-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol><symbol id="ic-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol><symbol id="ic-circle-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <line x1="12" x2="12" y1="8" y2="12" /> <line x1="12" x2="12.01" y1="16" y2="16" /></symbol><symbol id="ic-menu" viewBox="0 0 24 24"><path d="M4 5h16" /> <path d="M4 12h16" /> <path d="M4 19h16" /></symbol><symbol id="ic-plus" viewBox="0 0 24 24"><path d="M5 12h14" /> <path d="M12 5v14" /></symbol></defs></svg><header class="tbar"><a class="bk" href="ajustes-p26-indice-m.dc.html"><svg class="i" aria-hidden="true"><use href="#ic-chevron-left"/></svg>Ajustes</a><h1 class="title-3">Ingresos</h1></header><main class="mn"><p class="hp">El ingreso quincenal esperado de Axel (quincena del 15 y del 30 o último día) y desde cuándo rige. Ximena no aporta ingresos al modelo.</p><section class="blk" aria-labelledby="f4"><div class="bh"><h2 class="title-3" id="f4">Ingreso quincenal esperado de Axel</h2></div><div class="row"><div class="tx"><span class="lb">Persona</span><span class="hp caption">Titular. El esquema solo admite al titular en ingresos.</span></div><div class="cn"><div class="ro"><span class="ch">Axel</span></div></div></div><div class="row"><div class="tx"><span class="lb">Frecuencia</span><span class="hp caption">Quincenal.</span></div><div class="cn"><div class="ro">Quincenal: días 15 y 30 (o último día)</div></div></div><div class="row"><div class="tx"><label class="lb" for="f1">Monto de la quincena del 15</label><span class="hp caption">Dinero.</span></div><div class="cn"><div class="inw"><span class="af">$</span><input id="f1" type="text" class="num" value="14,260.00"></div></div></div><div class="row"><div class="tx"><label class="lb" for="f2">Monto de la quincena del 30 (si es distinto)</label><span class="hp caption">Vacío = igual a la del 15.</span></div><div class="cn"><div class="inw on"><span class="af">$</span><input id="f2" type="text" class="num" value="14,950.00"></div></div></div><div class="row"><div class="tx"><label class="lb" for="f3">Rige desde</label><span class="hp caption">Fecha.</span></div><div class="cn"><div class="inw"><input id="f3" type="text" value="01-oct-2026"></div></div></div><div class="row"><div class="tx"><span class="lb">Ximena</span></div><div class="cn"><div class="ro">No aporta ingresos al modelo</div></div></div><div class="pv" role="status"><span class="lb caption">Vista previa · Quincena del 30</span><div class="ba"><div><span class="hp caption">Antes</span><span class="tn">Desde 01-oct-2026: quincena del 15 $14,260.00, del 30 $14,780.00; esperado del mes $29,040.00</span></div><svg class="i af" aria-hidden="true"><use href="#ic-arrow-right"/></svg><div><span class="hp caption">Después</span><span class="tn lb">Desde 01-oct-2026: quincena del 15 $14,260.00, del 30 $14,950.00; esperado del mes $29,210.00</span></div></div><p class="caption">Presupuesto (P-06) y Flujo y proyección (P-07) se recalculan.</p><p class="hp caption">Se guarda al salir del campo · Esc descarta</p></div></section><section class="blk" aria-labelledby="f5"><div class="bh"><h2 class="title-3" id="f5">Ingresos extra</h2></div><div class="row"><div class="tx"><span class="lb">Registrar ingreso extra</span><span class="hp caption">Los extras se capturan a mano en Ingresos (P-08).</span></div><div class="cn"><a class="btn" href="../presupuesto/presupuesto-p08-ingresos-m.dc.html">Ir a Ingresos</a></div></div></section></main></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":1860}}'>class Component extends DCLogic { renderVals() { return {}; } }</script>
+</body>
+</html>

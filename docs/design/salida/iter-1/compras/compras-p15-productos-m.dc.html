@@ -1,0 +1,70 @@
+<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><title>Productos y precios · móvil</title><script src="./support.js"></script><link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css"></head><body><x-dc><helmet><style>*{box-sizing:border-box}
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);font-size:14px;line-height:20px}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+a{color:var(--ui-text-link);text-decoration:underline}
+a:hover{color:var(--ui-text-link-hover)}
+button,input,select{font:inherit;color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.i{flex:none;display:block;fill:none;stroke:currentColor;stroke-width:var(--icon-stroke);stroke-linecap:round;stroke-linejoin:round}
+.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.r1{text-align:right}
+.sec{color:var(--ui-text-secondary)}
+.cap{font-size:12px;line-height:16px}
+.med{font-weight:var(--font-weight-medium)}
+.t3{font-size:16px;line-height:24px;font-weight:var(--font-weight-semibold)}
+.cl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:none;font-weight:var(--font-weight-medium);text-decoration:none;cursor:pointer;color:var(--ui-text-default);white-space:nowrap}
+.e .btn{min-height:var(--size-control-fine)}
+.bp,a.bp{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.bp:hover,a.bp:hover{background:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+.bs{border-color:var(--ui-border-control)}
+.bs:hover,a.bs:hover{background:var(--ui-surface-hover);border-color:var(--ui-border-control-hover);color:var(--ui-text-default)}
+.bt{color:var(--ui-text-secondary)}
+.bt:hover,a.bt:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.bs[aria-pressed=true]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected)}
+.ib{width:var(--size-control-coarse);padding:0}
+.e .ib{width:var(--size-control-fine)}
+.mk{width:var(--size-mark-category);height:var(--size-mark-category);flex:none}
+.mw{background:var(--ui-store-walmart)}
+.mb{background:var(--ui-store-bodega-aurrera)}
+.ms{background:var(--ui-store-sams-club)}
+.mm{background:var(--ui-store-market)}
+.bd{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);font-size:12px;line-height:16px;white-space:nowrap}
+.bw{background:var(--ui-role-warning-surface);color:var(--ui-role-warning)}
+.bg{background:var(--ui-role-success-surface);color:var(--ui-role-success)}
+.bn{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.tabs{display:flex;gap:var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-touch-min);padding:0 var(--space-1);color:var(--ui-text-secondary);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--ui-text-default)}
+.tab[aria-current=page]{color:var(--ui-text-default);border-bottom-color:var(--ui-border-selected);font-weight:var(--font-weight-semibold)}
+.co .i{margin-top:2px}
+.co.w .i{color:var(--ui-role-warning)}
+.co.x .i{color:var(--ui-role-error)}
+.co.ok .i{color:var(--ui-role-success)}
+.co:not(.w):not(.x):not(.ok) .i{color:var(--ui-role-info)}
+.fld{display:flex;flex-direction:column;gap:var(--space-1)}
+.fld input,.fld select{min-height:var(--size-control-coarse);padding:0 var(--space-3);background:var(--ui-surface-field);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm)}
+.e .fld input,.e .fld select{min-height:var(--size-control-fine)}
+.side .it[aria-current=page] .i{color:var(--ui-icon-selected)}
+.side .sub{padding-left:var(--space-4);display:flex;flex-direction:column;gap:var(--space-1)}
+.main{flex:999 1 560px;min-width:0;padding:var(--space-6) var(--space-8) var(--space-12);display:flex;flex-direction:column;gap:var(--space-6);max-width:1400px}
+.g{display:grid;gap:var(--space-4)}
+.fl{display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center}
+.m{display:flex;flex-direction:column;background:var(--ui-surface-page)}
+.top{display:flex;align-items:center;gap:var(--space-2);height:var(--layout-topbar-height-mobile);padding:0 var(--space-2) 0 var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.top h1{flex:1;min-width:0}
+.mc{display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-4)}
+.cta{margin-top:auto;padding:var(--space-3) var(--space-4);border-top:var(--border-width-default) solid var(--ui-border-divider);display:flex;gap:var(--space-2)}
+.cta .btn{flex:1}
+.bot{display:flex;justify-content:space-around;align-items:center;height:var(--layout-bottombar-height);background:var(--ui-surface-raised);border-top:var(--border-width-default) solid var(--ui-border-divider)}
+.bot a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:var(--size-bottombar-item-min-width);min-height:var(--size-bottombar-item-height);color:var(--ui-text-secondary);text-decoration:none;font-size:12px;line-height:16px}
+.bot a[aria-current=page]{color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.bot a[aria-current=page] .i{color:var(--ui-icon-selected)}
+.bot .add{width:var(--size-bottombar-add);height:var(--size-bottombar-add);min-width:0;border-radius:var(--radius-full);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.mi{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-2);align-items:center;min-height:64px;padding:var(--space-2) 0;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.inb{display:flex;gap:var(--space-1);align-items:center}</style></helmet>
+<div class="m" style="width:412px;min-height:1320px"><header class="top"><button class="btn bt ib" type="button" aria-label="Abrir menú"><svg class="i " width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/></svg></button><h1 class="t3 cl">Productos y precios · móvil</h1></header><main class="mc"><div class="fl" style="flex-wrap:nowrap"><div class="fld" style="flex:1"><label for="q" class="sr">Buscar producto</label><input id="q" type="search" placeholder="Buscar producto o marca"></div><button class="btn bs ib" type="button" aria-label="Filtrar"><svg class="i " width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></svg></button><button class="btn bt ib" type="button" aria-label="Más acciones: foto de ticket, nuevo producto"><svg class="i " width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button></div><nav class="tabs" aria-label="Subsecciones"><a class="tab" href="#">Resumen</a><a class="tab" href="#" aria-current="page">Detalle</a><a class="tab" href="#">Tendencias</a></nav><div class="fl"><span class="bd bg"><svg class="i " width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>32 frescos</span><span class="bd bw"><svg class="i " width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>1 viejo</span><span class="bd bn">0 sin precio</span></div><ul aria-label="Productos"><sc-for list="{{rows}}" as="r" hint-placeholder-count="6"><li class="mi"><span style="min-width:0"><span class="med cl" style="display:block">{{r.n}}</span><span class="cap sec cl" style="display:block">{{r.sub}}</span></span><span class="r1"><span class="n med" style="display:block">{{r.best}}</span><span class="cap sec inb" style="justify-content:flex-end"><span class="mk {{r.bk}}" aria-hidden="true"></span><span>{{r.bs}}</span></span></span></li></sc-for></ul><button class="btn bt" type="button">Mostrar 21 más</button></main><div class="cta"><a class="btn bs" href="../gastos/gastos-p05-ticket-m.dc.html"><svg class="i " width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>Foto de ticket</a><button class="btn bp" type="button"><svg class="i " width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="M12 5v14"/></svg>Capturar precio</button></div><nav class="bot" aria-label="Destinos principales"><a href="../inicio/inicio-p01-resumen-m.dc.html"><svg class="i " width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/> <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</a><a href="../comidas/comidas-p10-semana-m.dc.html"><svg class="i " width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/> <path d="M7 2v20"/> <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Comidas</a><a class="add" href="../shell/shell-p03-registrar-gasto-m.dc.html" aria-label="Registrar gasto"><svg class="i " width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="M12 5v14"/></svg></a><a href="compras-p13-lista-m.dc.html" aria-current="page"><svg class="i " width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="m2.05 2.05 1.099-.028a1 1 0 0 1 1.008.815l2.69 14.347A1 1 0 0 0 7.83 18H18"/> <path d="M4.563 5h16.435a1 1 0 0 1 .981 1.204l-1.026 6.226A2 2 0 0 1 18.962 14H6.25"/> <circle cx="18" cy="20" r="2"/> <circle cx="8" cy="20" r="2"/></svg>Compras</a><a href="#"><svg class="i " width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/> <circle cx="11" cy="11" r="8"/></svg>Buscar</a></nav></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 412, "height": 1320}}'>class Component extends DCLogic { renderVals() { return {"rows":[{"n":"Jitomate saladet","sub":"sin marca · Verduras","pres":"1 kg","best":"$31.30 / kg","bs":"Tianguis de la Narvarte","bk":"mm","last":"$31.30","ld":"1 kg · 13 oct · ticket","viejo":false,"fresco":true,"sel":true,"cls":"sel","selx":"true"},{"n":"Cebolla blanca","sub":"sin marca · Verduras","pres":"1 kg, bolsa 3 kg","best":"$27.60 / kg","bs":"Mercado Portales","bk":"mm","last":"$29.40","ld":"1 kg · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Aguacate Hass","sub":"sin marca · Frutas","pres":"1 kg","best":"$74.70 / kg","bs":"Bodega Aurrera","bk":"mb","last":"$76.60","ld":"1 kg · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Limón con semilla","sub":"sin marca · Frutas","pres":"1 kg","best":"$29.10 / kg","bs":"Tianguis de la Narvarte","bk":"mm","last":"$32.80","ld":"1 kg · 21 oct · ticket","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Papa blanca","sub":"sin marca · Verduras","pres":"1 kg, bolsa 5 kg","best":"$22.80 / kg","bs":"Sam's Club · con membresía","bk":"ms","last":"$26.10","ld":"1 kg · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Zanahoria","sub":"sin marca · Verduras","pres":"1 kg","best":"$19.10 / kg","bs":"Mercado Portales","bk":"mm","last":"$20.10","ld":"1 kg · 20 oct · ticket","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Plátano tabasco","sub":"sin marca · Frutas","pres":"1 kg","best":"$22.30 / kg","bs":"Tianguis de la Narvarte","bk":"mm","last":"$24.10","ld":"1 kg · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Manzana roja","sub":"sin marca · Frutas","pres":"1 kg, bolsa 2.5 kg","best":"$47.00 / kg","bs":"Walmart","bk":"mw","last":"$49.20","ld":"1 kg · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Espinaca","sub":"sin marca · Verduras","pres":"manojo 250 g","best":"$65.60 / kg","bs":"Tianguis de la Narvarte","bk":"mm","last":"$18.40","ld":"manojo 250 g · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Calabacita","sub":"sin marca · Verduras","pres":"1 kg","best":"$29.60 / kg","bs":"Bodega Aurrera","bk":"mb","last":"$29.60","ld":"1 kg · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Tomate verde","sub":"sin marca · Verduras","pres":"1 kg","best":"$26.70 / kg","bs":"Tianguis de la Narvarte","bk":"mm","last":"$29.90","ld":"1 kg · 19 oct · manual","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"},{"n":"Chile serrano","sub":"sin marca · Verduras","pres":"1 kg","best":"$51.70 / kg","bs":"Mercado Portales","bk":"mm","last":"$53.60","ld":"1 kg · 21 oct · ticket","viejo":false,"fresco":true,"sel":false,"cls":"","selx":"false"}]}; } }</script></body></html>

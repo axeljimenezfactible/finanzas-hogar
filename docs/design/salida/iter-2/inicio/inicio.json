@@ -1,0 +1,74 @@
+{
+  "boards": {
+    "inicio/inicio-p01-resumen-m.dc.html": {
+      "w": 412,
+      "h": 1840,
+      "title": "P-01 · Inicio › Resumen · móvil",
+      "page": "inicio",
+      "is_interactive": false
+    },
+    "inicio/inicio-p01-resumen-e.dc.html": {
+      "w": 1440,
+      "h": 1250,
+      "title": "P-01 · Inicio › Resumen · escritorio",
+      "page": "inicio",
+      "expand": "fill",
+      "is_interactive": false
+    },
+    "inicio/inicio-p01-detalle-m.dc.html": {
+      "w": 412,
+      "h": 4250,
+      "title": "P-01 · Inicio › Detalle · móvil",
+      "page": "inicio",
+      "is_interactive": false
+    },
+    "inicio/inicio-p01-detalle-e.dc.html": {
+      "w": 1440,
+      "h": 3000,
+      "title": "P-01 · Inicio › Detalle · escritorio",
+      "page": "inicio",
+      "expand": "fill",
+      "is_interactive": false
+    },
+    "inicio/inicio-p01-tendencias-m.dc.html": {
+      "w": 412,
+      "h": 2450,
+      "title": "P-01 · Inicio › Tendencias · móvil",
+      "page": "inicio",
+      "is_interactive": false
+    },
+    "inicio/inicio-p01-tendencias-e.dc.html": {
+      "w": 1440,
+      "h": 1950,
+      "title": "P-01 · Inicio › Tendencias · escritorio",
+      "page": "inicio",
+      "expand": "fill",
+      "is_interactive": false
+    },
+    "inicio/inicio-p01-calendario-m.dc.html": {
+      "w": 412,
+      "h": 3050,
+      "title": "P-01 · Inicio › Calendario · móvil",
+      "page": "inicio",
+      "is_interactive": false
+    },
+    "inicio/inicio-p01-calendario-e.dc.html": {
+      "w": 1440,
+      "h": 1600,
+      "title": "P-01 · Inicio › Calendario · escritorio",
+      "page": "inicio",
+      "expand": "fill",
+      "is_interactive": false
+    }
+  },
+  "order": [
+    "inicio/inicio-p01-resumen-m.dc.html",
+    "inicio/inicio-p01-resumen-e.dc.html",
+    "inicio/inicio-p01-detalle-m.dc.html",
+    "inicio/inicio-p01-detalle-e.dc.html",
+    "inicio/inicio-p01-tendencias-m.dc.html",
+    "inicio/inicio-p01-tendencias-e.dc.html",
+    "inicio/inicio-p01-calendario-m.dc.html",
+    "inicio/inicio-p01-calendario-e.dc.html"
+  ]
+}

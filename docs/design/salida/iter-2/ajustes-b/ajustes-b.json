@@ -1,0 +1,125 @@
+{
+ "boards": {
+  "ajustes/ajustes-p26-s08-reportes-m.dc.html": {
+   "w": 412,
+   "h": 1508,
+   "title": "P-26.08 · Reportes y frecuencias · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s08-reportes-e.dc.html": {
+   "w": 1440,
+   "h": 2265,
+   "title": "P-26.08 · Reportes y frecuencias · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill"
+  },
+  "ajustes/ajustes-p26-s09-notificaciones-m.dc.html": {
+   "w": 412,
+   "h": 1823,
+   "title": "P-26.09 · Notificaciones · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s09-notificaciones-e.dc.html": {
+   "w": 1440,
+   "h": 2280,
+   "title": "P-26.09 · Notificaciones · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill"
+  },
+  "ajustes/ajustes-p26-s10-apariencia-m.dc.html": {
+   "w": 412,
+   "h": 915,
+   "title": "P-26.10 · Apariencia · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s10-apariencia-e.dc.html": {
+   "w": 1440,
+   "h": 972,
+   "title": "P-26.10 · Apariencia · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill"
+  },
+  "ajustes/ajustes-p26-s11-datos-respaldos-m.dc.html": {
+   "w": 412,
+   "h": 3251,
+   "title": "P-26.11 · Datos y respaldos · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s11-datos-respaldos-e.dc.html": {
+   "w": 1440,
+   "h": 2946,
+   "title": "P-26.11 · Datos y respaldos · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill"
+  },
+  "ajustes/ajustes-p26-s12-personas-reparto-m.dc.html": {
+   "w": 412,
+   "h": 1502,
+   "title": "P-26.12 · Personas y reparto · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s12-personas-reparto-e.dc.html": {
+   "w": 1440,
+   "h": 1902,
+   "title": "P-26.12 · Personas y reparto · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill"
+  },
+  "ajustes/ajustes-p26-s13-salud-metas-m.dc.html": {
+   "w": 412,
+   "h": 3896,
+   "title": "P-26.13 · Salud y metas de ahorro · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s13-salud-metas-e.dc.html": {
+   "w": 1440,
+   "h": 2577,
+   "title": "P-26.13 · Salud y metas de ahorro · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill"
+  },
+  "ajustes/ajustes-p26-s14-inventario-m.dc.html": {
+   "w": 412,
+   "h": 2102,
+   "title": "P-26.14 · Inventario · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s14-inventario-e.dc.html": {
+   "w": 1440,
+   "h": 1762,
+   "title": "P-26.14 · Inventario · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill"
+  }
+ },
+ "order": [
+  "ajustes/ajustes-p26-s08-reportes-m.dc.html",
+  "ajustes/ajustes-p26-s08-reportes-e.dc.html",
+  "ajustes/ajustes-p26-s09-notificaciones-m.dc.html",
+  "ajustes/ajustes-p26-s09-notificaciones-e.dc.html",
+  "ajustes/ajustes-p26-s10-apariencia-m.dc.html",
+  "ajustes/ajustes-p26-s10-apariencia-e.dc.html",
+  "ajustes/ajustes-p26-s11-datos-respaldos-m.dc.html",
+  "ajustes/ajustes-p26-s11-datos-respaldos-e.dc.html",
+  "ajustes/ajustes-p26-s12-personas-reparto-m.dc.html",
+  "ajustes/ajustes-p26-s12-personas-reparto-e.dc.html",
+  "ajustes/ajustes-p26-s13-salud-metas-m.dc.html",
+  "ajustes/ajustes-p26-s13-salud-metas-e.dc.html",
+  "ajustes/ajustes-p26-s14-inventario-m.dc.html",
+  "ajustes/ajustes-p26-s14-inventario-e.dc.html"
+ ]
+}

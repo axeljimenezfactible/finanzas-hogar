@@ -1,0 +1,74 @@
+{
+ "boards": {
+  "creditos/creditos-p17-lineas-m.dc.html": {
+   "w": 412,
+   "h": 2200,
+   "title": "P-17 · Todas las líneas · móvil",
+   "page": "creditos",
+   "is_interactive": true
+  },
+  "creditos/creditos-p17-lineas-e.dc.html": {
+   "w": 1440,
+   "h": 2600,
+   "title": "P-17 · Todas las líneas · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "creditos/creditos-p18-credito-m.dc.html": {
+   "w": 412,
+   "h": 1800,
+   "title": "P-18 · Crédito · móvil",
+   "page": "creditos",
+   "is_interactive": true
+  },
+  "creditos/creditos-p18-credito-e.dc.html": {
+   "w": 1440,
+   "h": 1300,
+   "title": "P-18 · Crédito · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "creditos/creditos-p19-compra-m.dc.html": {
+   "w": 412,
+   "h": 2250,
+   "title": "P-19 · Compra a crédito · móvil",
+   "page": "creditos",
+   "is_interactive": true
+  },
+  "creditos/creditos-p19-compra-e.dc.html": {
+   "w": 1440,
+   "h": 1700,
+   "title": "P-19 · Compra a crédito · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "creditos/creditos-p20-comparador-m.dc.html": {
+   "w": 412,
+   "h": 2400,
+   "title": "P-20 · Comparador de escenarios · móvil",
+   "page": "creditos",
+   "is_interactive": false
+  },
+  "creditos/creditos-p20-comparador-e.dc.html": {
+   "w": 1440,
+   "h": 1850,
+   "title": "P-20 · Comparador de escenarios · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": false
+  }
+ },
+ "order": [
+  "creditos/creditos-p17-lineas-m.dc.html",
+  "creditos/creditos-p17-lineas-e.dc.html",
+  "creditos/creditos-p18-credito-m.dc.html",
+  "creditos/creditos-p18-credito-e.dc.html",
+  "creditos/creditos-p19-compra-m.dc.html",
+  "creditos/creditos-p19-compra-e.dc.html",
+  "creditos/creditos-p20-comparador-m.dc.html",
+  "creditos/creditos-p20-comparador-e.dc.html"
+ ]
+}

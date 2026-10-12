@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Inicio · Resumen</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--ui-text-link-hover)}
+*{box-sizing:border-box}
+a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ic24{width:var(--size-icon-md);height:var(--size-icon-md)}
+.n{font-variant-numeric:tabular-nums}
+.t2{color:var(--ui-text-secondary)}
+.row{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+.card{background:var(--ui-surface-card);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-0)}
+.cl{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);color:var(--ui-text-default);text-decoration:none}
+.cl:hover{color:var(--ui-text-default);border-color:var(--ui-border-control-hover)}
+.go{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-touch-min);color:var(--ui-text-link);text-decoration:underline;font-weight:var(--font-weight-medium)}
+.bd{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);width:max-content}
+.bd .ic{width:var(--space-4);height:var(--space-4)}
+.bw{color:var(--ui-role-warning);background:var(--ui-role-warning-surface)}
+.bi{color:var(--ui-role-info);background:var(--ui-role-info-surface)}
+.bic{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default)}
+.tabs{display:flex;gap:var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider);overflow-x:auto}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-touch-min);color:var(--ui-text-secondary);text-decoration:none;border-bottom:var(--border-width-focus) solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.inc{color:var(--ui-role-income)} .exp{color:var(--ui-role-expense)} .sav{color:var(--ui-role-savings)}
+.dot{width:var(--size-viz-marker);height:var(--size-viz-marker);border-radius:var(--radius-full);flex:none}
+.sq{width:var(--size-viz-marker);height:var(--size-viz-marker);flex:none}
+.meter{display:block;height:var(--size-meter-height);border-radius:var(--radius-full);background:var(--ui-viz-track);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:var(--radius-full);background:var(--ui-viz-meter)}
+.bb{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:var(--size-bottombar-item-min-width);height:var(--size-bottombar-item-height);color:var(--ui-text-secondary);text-decoration:none}
+.pill{display:flex;align-items:center;justify-content:center;width:var(--size-bottombar-indicator-width);height:var(--size-bottombar-indicator-height);border-radius:var(--radius-full)}
+</style>
+</helmet>
+<div style="width:412px;min-height:1840px;box-sizing:border-box;display:flex;flex-direction:column;background:var(--ui-surface-page)">
+  <header style="display:flex;align-items:center;justify-content:space-between;height:var(--layout-topbar-height-mobile);padding:0 var(--space-2)">
+    <a class="bic" href="../shell/shell-barra-lateral-m.dc.html" aria-label="Abrir menú"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M4 6h16M4 18h16"/></svg></a>
+    <span class="small t2">Finanzas Hogar</span>
+    <button class="bic" type="button" aria-label="Más acciones: Foto de ticket"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></svg></button>
+  </header>
+  <main style="display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-2) var(--space-4) var(--space-6)">
+    <h1 class="title-1" style="display:flex;align-items:center;gap:var(--space-2);margin:0"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</h1>
+    <div class="tabs small" role="tablist" aria-label="Subsecciones de Inicio">
+      <a class="tab" role="tab" aria-selected="true" href="inicio-p01-resumen-m.dc.html">Resumen</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-detalle-m.dc.html">Detalle</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-tendencias-m.dc.html">Tendencias</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-calendario-m.dc.html">Calendario</a>
+    </div>
+    <section aria-label="Resumen del hogar" style="display:flex;flex-direction:column;gap:var(--space-4)">
+      <a class="card cl" href="../presupuesto/presupuesto-p06-mes-m.dc.html">
+        <span class="small t2 row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>Mes contra plan</span>
+        <span class="row" style="align-items:baseline"><span class="title-2 n">$7,060.22</span><span class="small t2">te quedan</span></span>
+        <span class="small t2 n">$20,525.78 de $27,586.00 · 74 %</span>
+        <span class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="74" aria-valuetext="74 % del plan"><span style="width:74%"></span></span>
+        <span class="small t2">Faltan 11 días del mes</span>
+        <span class="go small">Ver presupuesto<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <a class="card cl" href="../presupuesto/presupuesto-p07-flujo-m.dc.html">
+        <span class="small t2 row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM10 12a2 2 0 1 0 4 0a2 2 0 1 0-4 0M6 12h.01M18 12h.01"/></svg>Flujo de la quincena</span>
+        <span class="caption t2">Del 16 al 31 oct</span>
+        <span class="row" style="align-items:baseline"><span class="title-2 n">$6,045.50</span><span class="small t2">al cierre</span></span>
+        <span class="small n inc row" style="gap:var(--space-1)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M17 17H7V7"/></svg>Entra +$15,520.00</span>
+        <span class="small n exp row" style="gap:var(--space-1)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg>Ya salió −$5,589.55 · Por pagar −$3,884.95</span>
+        <span class="bd bi caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 16v-4M12 8h.01"/></svg>Ingreso esperado</span>
+        <span class="go small">Ver flujo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <a class="card cl" href="../creditos/creditos-p18-credito-m.dc.html">
+        <span class="small t2 row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5M16 2v4M8 2v4M3 10h5M17.5 17.5 16 16.3V14M10 16a6 6 0 1 0 12 0a6 6 0 1 0-12 0"/></svg>Próximo pago</span>
+        <span class="title-2 n">$1,861.58</span>
+        <span class="small t2">Vie 30 oct 2026 · Kueski Pay</span>
+        <span class="small t2 n">Hogar $1,026.25 · Karen $835.33</span>
+        <span class="small t2">Faltan 9 días · 2 pagos este día</span>
+        <span style="display:block;border-top:var(--border-width-default) solid var(--ui-border-divider)"></span>
+        <span class="small row"><span class="n">Disponible hoy $6,881.60 · Lectura B</span><span class="bd bi caption" aria-label="Reposición de capital pendiente de confirmar con Kueski"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 16v-4M12 8h.01"/></svg>Pendiente confirmar</span></span>
+        <span class="go small">Ver crédito<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <a class="card cl" href="../comidas/comidas-p10-semana-m.dc.html">
+        <span class="small t2 row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Comidas de la semana</span>
+        <span class="caption t2">Lun 19 al Dom 25 oct</span>
+        <span class="row" style="align-items:baseline"><span class="title-2 n">$1,062.20</span><span class="small t2">costo de la semana</span></span>
+        <span class="small t2">2 casillas sin armar</span>
+        <span class="small t2 n row"><span class="dot" style="background:var(--ui-person-axel)" aria-hidden="true"></span>Axel · 2,542 kcal al día de 2,364 · 7 de 7 días</span>
+        <span class="small t2 n row"><span class="dot" style="background:var(--ui-person-ximena)" aria-hidden="true"></span>Ximena · 1,587 kcal al día de 1,900 · 7 de 7 días</span>
+        <span class="go small">Ver plan<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <a class="card cl" href="../compras/compras-p14-canasta-m.dc.html">
+        <span class="small t2 row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>Mejor canasta</span>
+        <span class="row"><span class="sq" style="background:var(--ui-store-bodega-aurrera)" aria-hidden="true"></span><span class="title-2 n">Bodega Aurrera $1,551.70</span></span>
+        <span class="small t2 n">$86.60 menos que Walmart</span>
+        <span class="small t2">23 de 24 artículos con precio</span>
+        <span class="bd bw caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01"/></svg>2 precios viejos</span>
+        <span class="go small">Comparar canasta<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <a class="card cl" href="../presupuesto/presupuesto-p09-ahorro-m.dc.html">
+        <span class="small t2 row"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zM16 10h.01M2 8v1a2 2 0 0 0 2 2h1"/></svg>Ahorro y metas</span>
+        <span class="row" style="align-items:baseline"><span class="title-2 n sav">$41,730.00</span><span class="small t2">ahorrado</span></span>
+        <span class="small t2 n">Este mes $1,750.00 de $2,000.00</span>
+        <span class="small t2 n row">Laptop nueva · 42 % · 17-ene-2027<span class="bd bw caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01"/></svg>Atrasada</span></span>
+        <span class="go small">Ver ahorro<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+    </section>
+  </main>
+  <nav aria-label="Navegación principal" style="margin-top:auto;display:flex;justify-content:space-around;align-items:center;height:var(--layout-bottombar-height);background:var(--ui-surface-raised);border-top:var(--border-width-default) solid var(--ui-border-divider)">
+    <a class="bb" aria-current="page" href="inicio-p01-resumen-m.dc.html"><span class="pill" style="background:var(--ui-surface-selected);color:var(--ui-icon-selected)"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="caption" style="color:var(--ui-text-default);font-weight:var(--font-weight-medium)">Inicio</span></a>
+    <a class="bb" href="../comidas/comidas-p10-semana-m.dc.html"><span class="pill"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span><span class="caption">Comidas</span></a>
+    <a class="bb" href="../shell/shell-p03-registrar-gasto-m.dc.html" aria-label="Registrar gasto"><span style="display:flex;align-items:center;justify-content:center;width:var(--size-bottombar-add);height:var(--size-bottombar-add);border-radius:var(--radius-full);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></span></a>
+    <a class="bb" href="../compras/compras-p13-lista-m.dc.html"><span class="pill"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span><span class="caption">Compras</span></a>
+    <a class="bb" href="#"><span class="pill"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg></span><span class="caption">Buscar</span></a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":1840}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

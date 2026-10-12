@@ -280,12 +280,12 @@ SIN_ARMAR = sum(1 for r in PLANSEM for tn in ("desayuno", "comida", "cena") if a
 COSTO_SEM = sum(sum(v) for v in SEMCOST.values())
 # ---------------- inventario
 INV = [("arroz","unidad",650,"g",400,None),("aceite","unidad",700,"ml",300,None),("azucar","unidad",900,"g",300,None),("frijol","unidad",0,"g",300,None),("pasta","unidad",400,"g",400,None),
- ("atun","unidad",280,"g",280,None),("cafe","unidad",120,"g",100,None),("leche","ritmo",1500,"ml",None,3500),("huevo","ritmo",6,"pza",None,18),("tortilla","ritmo",700,"g",None,1400),
+ ("atun","unidad",280,"g",280,None),("cafe","unidad",120,"g",100,None),("leche","ritmo",1500,"ml",2000,3500),("huevo","ritmo",6,"pza",12,18),("tortilla","ritmo",700,"g",1000,1400),
  ("papel","ritmo",5,"pza",None,2),("croquetas","ritmo",2600,"g",None,900),("jabon-trastes","ritmo",400,"ml",None,150),("detergente","ritmo",1200,"ml",None,500)]
 INVL, STK, RIT = [], {}, {}
 for (pid, modo, ex, un, um, cons) in INV:
     dias = None if modo == "unidad" else round(ex / (cons / 7.0), 1)
-    estado = "agotado" if ex == 0 else ("reponer" if (modo == "unidad" and ex <= um) or (modo == "ritmo" and dias < 7) else "suficiente")
+    estado = "agotado" if ex == 0 else ("reponer" if um is not None and ex <= um else "suficiente")  # K7 / U4 P-26.14: nivel vacío = sin aviso, nunca «reponer»
     if modo == "unidad": STK[pid] = ex
     else: RIT[pid] = (cons, ex, dias)
     h = h8("inv" + pid)
@@ -417,7 +417,9 @@ for r in FQ:
 HECHOS = con_q(2026, 10, 2, 16, 21) + sum(p["hogar_cents"] for p in pag_q(2026, 10, 2) if p["hogar_estado"] == "pagada" and int(p["fecha"][8:]) <= 21)
 COMPR = con_q(2026, 10, 2, 22, 31) + sum(p["hogar_cents"] for p in pag_q(2026, 10, 2) if p["hogar_estado"] != "pagada")
 ING_Q2 = FQ[1]["ingresos_cents"]; CIERRE = ING_Q2 - HECHOS - COMPR
-FQ[1].update(pagos_credito_cents=sum(p["hogar_cents"] for p in pag_q(2026, 10, 2)), gasto_contado_o_fijo_cents=con_q(2026, 10, 2)); FQ[1]["saldo_cents"] = ING_Q2 - FQ[1]["pagos_credito_cents"] - FQ[1]["gasto_contado_o_fijo_cents"] - FQ[1]["ahorro_planificado_cents"]
+FQ[1].update(pagos_credito_cents=sum(p["hogar_cents"] for p in pag_q(2026, 10, 2)), gasto_contado_o_fijo_cents=con_q(2026, 10, 2)); FQ[1]["saldo_cents"] = ING_Q2 - FQ[1]["pagos_credito_cents"] - FQ[1]["gasto_contado_o_fijo_cents"]
+# quincena en curso: con el bloqueo S2-ahorro-quincenal abierto (U3 §3 D-2, S2-interfaz 1.3 §3.11) el variable estimado y el ahorro planificado van en null y no entran a ningún saldo
+FQ[1]["variable_estimado_cents"] = None; FQ[1]["ahorro_planificado_cents"] = None
 acc = SALDO_INI
 for r in FQ: acc += r["saldo_cents"]; r["saldo_acumulado_cents"] = acc
 # ---------------- proyección 12 meses (devengado contra efectivo)

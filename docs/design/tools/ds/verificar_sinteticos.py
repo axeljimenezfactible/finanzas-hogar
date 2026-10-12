@@ -145,12 +145,20 @@ ok(len(PR) >= 30 and sum(1 for e in pp if e["viejo"]) >= 5 and all(e["viejo"] ==
 ok(len(D["tiendas"]) == 5 and any(t["tipo"] == "mercado" for t in D["tiendas"]) and any(t["tipo"] == "tianguis" for t in D["tiendas"]) and all(t["visita"] for t in D["tiendas"] if t["tipo"] in ("mercado", "tianguis")), "tiendas: Walmart, Bodega Aurrera, Sam's Club y 2 mercados con día de visita")
 # ---- salud
 S = D["salud"]["perfiles"]; ok(all(len(p["historial_peso"]) == 8 and all(h["imc"] == round(h["peso_kg"] / (p["altura_cm"] / 100.0) ** 2, 1) for h in p["historial_peso"]) for p in S), "salud: 8 semanas de peso por persona; IMC recalculado coincide")
+# ---- inventario: K7 / U4 P-26.14, nivel vacío = sin aviso (nunca «reponer»)
+IA = D["inventario"]["articulos"]
+ok(all(not (a["estado"] == "reponer" and a["umbral_reposicion"] is None) for a in IA) and all(a["estado"] == "reponer" for a in IA if a["producto_id"] in ("huevo", "leche", "tortilla")) and all(a["umbral_reposicion"] is not None and a["umbral_reposicion"] >= a["existencia"] for a in IA if a["producto_id"] in ("huevo", "leche", "tortilla")), "inventario: ningún artículo «reponer» tiene nivel vacío; huevo, leche y tortilla traen nivel mayor o igual que su existencia")
+ok(all(a["estado"] == ("agotado" if a["existencia"] == 0 else ("reponer" if a["umbral_reposicion"] is not None and a["existencia"] <= a["umbral_reposicion"] else "suficiente")) for a in IA) and D["inventario"]["resumen"] == {e: sum(1 for a in IA if a["estado"] == e) for e in ("agotado", "reponer", "suficiente")} and D["inventario"]["resumen"] == {"agotado": 1, "reponer": 5, "suficiente": 8}, "inventario: estado = regla «agotado si 0; reponer si existencia ≤ nivel»; resumen recalculado 1 / 5 / 8")
 # ---- proyección y deuda
 PQ = D["proyeccion"]; ok(len(PQ["meses"]) == 12 and len(PQ["flujo_por_quincena"]) == 24, "proyección: 12 meses y 24 quincenas")
 acc = PQ["saldo_inicial_cents"]; good = True
 for r in PQ["flujo_por_quincena"]:
-    s = r["ingresos_cents"] - r["pagos_credito_cents"] - r["gasto_contado_o_fijo_cents"] - r["variable_estimado_cents"] - r["ahorro_planificado_cents"]; acc += s; good &= (s == r["saldo_cents"] and acc == r["saldo_acumulado_cents"])
+    s = r["ingresos_cents"] - r["pagos_credito_cents"] - r["gasto_contado_o_fijo_cents"] - (r["variable_estimado_cents"] or 0) - (r["ahorro_planificado_cents"] or 0); acc += s; good &= (s == r["saldo_cents"] and acc == r["saldo_acumulado_cents"])
 ok(good, "flujo por quincena: saldo = ingresos − egresos; el acumulado encadena desde el saldo inicial")
+# quincena en curso (16 a 31 oct): bloqueo S2-ahorro-quincenal abierto (U3 §3 D-2, S2-interfaz 1.3 §3.11)
+qc = PQ["flujo_por_quincena"][1]; fq = D["inicio"]["tarjetas"]["flujo_quincenal"]
+ok(qc["quincena"] == "2026-10-q2" and qc["variable_estimado_cents"] is None and qc["ahorro_planificado_cents"] is None, "quincena en curso: variable_estimado_cents y ahorro_planificado_cents van en null (bloqueo S2-ahorro-quincenal abierto; la pantalla muestra «—»)")
+ok(qc["saldo_cents"] == qc["ingresos_cents"] - qc["pagos_credito_cents"] - qc["gasto_contado_o_fijo_cents"] == fq["closing_balance_cents"] == 604550 and qc["saldo_acumulado_cents"] == PQ["flujo_por_quincena"][0]["saldo_acumulado_cents"] + qc["saldo_cents"] == 1282778, "quincena en curso: el saldo no resta el ahorro y cuadra con la tarjeta 2 del Resumen ($6,045.50); el acumulado es $12,827.78")
 dif = 0; good = True
 for m in PQ["meses"]: dif += m["devengado_total_cents"] - m["efectivo_total_cents"]; good &= (m["devengado_total_cents"] == m["devengado_hogar_cents"] + m["devengado_karen_cents"] and m["diferencia_acumulada_cents"] == dif)
 ok(good, "devengado contra efectivo: total = hogar + Karen; la diferencia acumulada encadena mes a mes")

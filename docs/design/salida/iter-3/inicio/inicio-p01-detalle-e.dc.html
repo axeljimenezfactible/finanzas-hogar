@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Inicio · Detalle</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--ui-text-link-hover)}
+*{box-sizing:border-box}
+a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ic24{width:var(--size-icon-md);height:var(--size-icon-md)}
+.n{font-variant-numeric:tabular-nums}
+.t2{color:var(--ui-text-secondary)}
+.row{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+.card{background:var(--ui-surface-card);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-0)}
+.cl{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);color:var(--ui-text-default);text-decoration:none}
+.cl:hover{color:var(--ui-text-default);border-color:var(--ui-border-control-hover)}
+.go{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-touch-min);color:var(--ui-text-link);text-decoration:underline;font-weight:var(--font-weight-medium)}
+.bd{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);width:max-content}
+.bd .ic{width:var(--space-4);height:var(--space-4)}
+.bw{color:var(--ui-role-warning);background:var(--ui-role-warning-surface)}
+.bi{color:var(--ui-role-info);background:var(--ui-role-info-surface)}
+.bic{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default)}
+.tabs{display:flex;gap:var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider);overflow-x:auto}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-touch-min);color:var(--ui-text-secondary);text-decoration:none;border-bottom:var(--border-width-focus) solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.inc{color:var(--ui-role-income)} .exp{color:var(--ui-role-expense)} .sav{color:var(--ui-role-savings)}
+.dot{width:var(--size-viz-marker);height:var(--size-viz-marker);border-radius:var(--radius-full);flex:none}
+.sq{width:var(--size-viz-marker);height:var(--size-viz-marker);flex:none}
+.meter{display:block;height:var(--size-meter-height);border-radius:var(--radius-full);background:var(--ui-viz-track);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:var(--radius-full);background:var(--ui-viz-meter)}
+.nv{display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-sidebar-item);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-secondary);text-decoration:none;flex:1;font:inherit}
+.nv:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.nv[aria-current="page"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.nv[aria-current="page"] svg{color:var(--ui-icon-selected)}
+.chv{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-width:var(--size-sidebar-item);height:var(--size-sidebar-item);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default);font:inherit}
+.av{display:inline-flex;align-items:center;justify-content:center;width:var(--size-avatar);height:var(--size-avatar);border-radius:var(--radius-full);background:var(--ui-surface-hover);border:var(--border-width-focus) solid var(--ui-person-axel);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.b2{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--size-control-fine);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-default);font:inherit;font-weight:var(--font-weight-medium);text-decoration:none}
+.b2:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.bp{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--size-control-fine);padding:0 var(--space-3);border-radius:var(--radius-sm);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary);font-weight:var(--font-weight-medium);text-decoration:none}
+.bp:hover{background:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+.cle{padding:var(--space-6);flex:1 1 18rem;min-width:0}
+.cle .go{margin-top:auto}
+.sk{display:block;background:var(--ui-skeleton-on-card);border-radius:var(--radius-sm)}
+.err{color:var(--ui-role-error)}
+.pnl{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);flex:1 1 28rem;min-width:0}
+.pnl h2{margin:0}
+.li{display:flex;align-items:center;gap:var(--space-3);min-height:var(--size-agenda-row);border-top:var(--border-width-default) solid var(--ui-border-divider);color:var(--ui-text-default);text-decoration:none}
+.li:hover{background:var(--ui-surface-hover-subtle);color:var(--ui-text-default)}
+.col{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
+.pr{display:flex;justify-content:space-between;gap:var(--space-3);padding:var(--space-1) 0;border-top:var(--border-width-default) solid var(--ui-border-divider)}
+.trk{fill:var(--ui-viz-track)} .rr{fill:var(--ui-chart-1)} .pmk{fill:var(--ui-viz-baseline)}
+.mk{width:var(--size-viz-marker);height:var(--size-viz-marker);flex:none}
+.st-walmart{fill:var(--ui-store-walmart)} .st-bodega{fill:var(--ui-store-bodega-aurrera)} .st-sams{fill:var(--ui-store-sams-club)} .st-market{fill:var(--ui-store-market)}
+.fr{display:flex;gap:var(--space-2);align-items:flex-start;padding:var(--space-3);border-radius:var(--radius-md);background:var(--ui-role-info-surface);color:var(--ui-text-default)}
+.fr .ic{color:var(--ui-role-info)}
+.box{display:flex;flex-direction:column;gap:var(--space-1);flex:1 1 9rem;padding:var(--space-3);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md)}
+.bsel{color:var(--ui-text-default);background:var(--ui-surface-selected)}
+.bs{color:var(--ui-role-success);background:var(--ui-role-success-surface)}
+.seg{display:inline-flex;border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);overflow:hidden}
+.seg button,.bf{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--size-touch-min);padding:0 var(--space-3);border:0;background:transparent;color:var(--ui-text-secondary);font:inherit}
+.bf{border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.seg button[aria-pressed="true"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+
+.seg button,.bf{min-height:var(--size-control-fine)}</style>
+</helmet>
+<div style="display:flex;flex-wrap:wrap;align-items:stretch;min-height:3000px;background:var(--ui-surface-page)">
+  <nav aria-label="Secciones" style="flex:1 1 var(--layout-sidebar-width);display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-3) var(--space-2);background:var(--ui-surface-card);border-right:var(--border-width-default) solid var(--ui-border-divider)">
+    <div class="row" style="justify-content:space-between;padding:0 0 var(--space-2) var(--space-2)">
+      <span class="small" style="font-weight:var(--font-weight-semibold)">Finanzas Hogar</span>
+      <button class="chv" type="button" aria-haspopup="menu" aria-label="Menú de Axel: Cuenta, Apariencia, Cerrar sesión"><span class="av caption">A</span><span class="small">Axel</span></button>
+    </div>
+    <a class="nv small" href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg><span style="flex:1">Buscar</span><span class="caption t2">Ctrl+K</span></a>
+    <a class="nv small" href="../shell/shell-p03-registrar-gasto-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg><span>Registrar gasto</span></a>
+    <span style="display:block;height:var(--space-2)"></span>
+    <a class="nv small" aria-current="page" href="inicio-p01-resumen-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Inicio</span></a>
+    <sc-for list="{{ nav }}" as="it" hint-placeholder-count="8">
+      <div style="display:flex;align-items:center;gap:var(--space-1)">
+        <a class="nv small" href="{{ it.href }}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ it.d }}"/></svg><span>{{ it.name }}</span></a>
+        <sc-if value="{{ it.kids }}" hint-placeholder-val="{{ true }}"><button class="chv" type="button" aria-expanded="false" aria-label="{{ it.lbl }}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></sc-if>
+      </div>
+    </sc-for>
+    <div class="row" style="margin-top:auto;padding-top:var(--space-4)">
+      <button class="nv small" type="button" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>Tema oscuro</button>
+      <button class="chv" type="button" aria-label="Colapsar barra lateral"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM9 3v18"/></svg></button>
+    </div>
+  </nav>
+  <main style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column">
+    <header class="row" style="justify-content:space-between;min-height:var(--layout-topbar-height-desktop);padding:0 clamp(var(--space-4),4vw,var(--space-12));border-bottom:var(--border-width-default) solid var(--ui-border-divider)">
+      <nav aria-label="Migas de pan" class="small t2"><span aria-current="page">Inicio</span></nav>
+      <div class="row">
+        <a class="b2 small" href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg>Buscar<span class="caption t2">Ctrl+K</span></a>
+        <a class="bp small" href="../shell/shell-p03-registrar-gasto-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>Registrar gasto</a>
+        <button class="bic" type="button" aria-label="Más acciones: Foto de ticket"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></svg></button>
+      </div>
+    </header>
+    <div style="width:100%;max-width:76rem;margin:0 auto;padding:var(--space-6) clamp(var(--space-4),4vw,var(--space-12)) var(--space-12);display:flex;flex-direction:column;gap:var(--space-6)">
+    <h1 class="title-1" style="display:flex;align-items:center;gap:var(--space-2);margin:0"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</h1>
+    <div class="tabs small" role="tablist" aria-label="Subsecciones de Inicio">
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-resumen-e.dc.html">Resumen</a>
+      <a class="tab" role="tab" aria-selected="true" href="inicio-p01-detalle-e.dc.html">Detalle</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-tendencias-e.dc.html">Tendencias</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-calendario-e.dc.html">Calendario</a>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <div class="seg small" role="group" aria-label="Periodo"><button type="button" aria-pressed="true">Mes</button><button type="button" aria-pressed="false">1.ª quincena</button><button type="button" aria-pressed="false">2.ª quincena</button></div>
+      <div class="row" role="group" aria-label="Filtros">
+        <button class="bf small" type="button">Persona</button><button class="bf small" type="button">Familia</button><button class="bf small" type="button">Categoría</button><button class="bf small" type="button">Tienda</button><button class="bf small" type="button">Crédito</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-4) var(--space-6)">
+      <section class="card pnl" aria-labelledby="d1">
+        <h2 id="d1" class="title-3">Presupuesto por categoría</h2>
+        <p class="caption t2" style="margin:0">Las 5 categorías con mayor % usado · octubre 2026 · la marca vertical es el plan</p>
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+          <div class="col">
+            <div class="row" style="justify-content:space-between"><span class="small">{{ c.name }}</span><sc-if value="{{ c.warn }}" hint-placeholder-val="{{ true }}"><span class="bd bw caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01"/></svg>{{ c.badge }}</span></sc-if></div>
+            <svg viewBox="0 0 100 8" preserveAspectRatio="none" role="img" aria-label="{{ c.aria }}" style="width:100%;height:var(--size-meter-height);display:block"><rect width="100" height="8" class="trk"/><rect width="{{ c.w }}" height="8" class="rr"/><rect x="{{ c.x }}" width="0.6" height="8" class="pmk"/></svg>
+            <span class="small t2 n">{{ c.txt }}</span>
+          </div>
+        </sc-for>
+        <a class="go small" href="../presupuesto/presupuesto-p06-mes-e.dc.html">Ver todo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </section>
+      <section class="card pnl" aria-labelledby="d2">
+        <h2 id="d2" class="title-3">Quincena en curso</h2>
+        <p class="caption t2" style="margin:0">Del 16 al 31 oct 2026 · parte del hogar</p>
+        <div class="small n">
+          <div class="pr"><span class="row">Ingresos<span class="bd bi caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 16v-4M12 8h.01"/></svg>Esperado</span></span><span>$15,520.00</span></div>
+          <div class="pr"><span>Pagos de crédito (parte del hogar)</span><span>$3,362.55</span></div>
+          <div class="pr"><span>Fijos y venideros</span><span>$6,111.95</span></div>
+          <div class="pr"><span>Gasto variable estimado</span><span>$0.00</span></div>
+          <div class="pr"><span>Ahorro planificado</span><span>$1,000.00</span></div>
+          <div class="pr" style="font-weight:var(--font-weight-medium)"><span>Saldo de la quincena</span><span>$5,045.50</span></div>
+          <div class="pr"><span>Saldo acumulado</span><span>$11,827.78</span></div>
+        </div>
+        <a class="go small" href="../presupuesto/presupuesto-p07-flujo-e.dc.html">Ver todo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </section>
+      <section class="card pnl" aria-labelledby="d3">
+        <h2 id="d3" class="title-3">Pagos y disponible</h2>
+        <p class="caption t2" style="margin:0">Vencidos: ninguno · Próximos 5 pendientes, de hoy al 20 dic 2026</p>
+        <div>
+          <sc-for list="{{ pagos }}" as="p" hint-placeholder-count="5">
+            <a class="li" href="../creditos/creditos-p18-credito-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--ui-icon-default);stroke-dasharray:3 2.2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/></svg><span class="col" style="flex:1"><span class="small">{{ p.l1 }}</span><span class="caption t2 n">{{ p.s }}</span></span><span class="col" style="align-items:flex-end"><span class="small n">{{ p.m }}</span><span class="caption t2">Pendiente</span></span></a>
+          </sc-for>
+        </div>
+        <span class="small" style="font-weight:var(--font-weight-medium)">Disponible de Kueski Pay</span>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-3)">
+          <div class="box"><span class="caption t2">Lectura A</span><span class="small n">$11,440.00</span><span class="caption t2 n">Mínimo del horizonte $11,440.00</span></div>
+          <div class="box" style="border-color:var(--ui-border-selected)"><span class="row"><span class="caption t2">Lectura B</span><span class="bd bsel caption">Activa</span></span><span class="small n">$6,881.60</span><span class="caption t2 n">Mínimo del horizonte $6,881.60</span></div>
+        </div>
+        <div class="fr small" role="status"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 16v-4M12 8h.01"/></svg>Reposición de capital pendiente de confirmar con Kueski</div>
+        <a class="go small" href="../creditos/creditos-p17-lineas-e.dc.html">Ver todo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </section>
+      <section class="card pnl" aria-labelledby="d4">
+        <h2 id="d4" class="title-3">Comidas de hoy</h2>
+        <p class="caption t2" style="margin:0">Mié 21 oct 2026 · por tiempo y persona</p>
+        <sc-for list="{{ comidas }}" as="m" hint-placeholder-count="4">
+          <div class="col" style="padding-top:var(--space-2);border-top:var(--border-width-default) solid var(--ui-border-divider)">
+            <span class="caption t2">{{ m.t }}</span>
+            <span class="small row" style="flex-wrap:nowrap"><span class="dot" style="background:var(--ui-person-axel)" aria-hidden="true"></span><span style="flex:1">{{ m.a }}</span><span class="caption t2 n">{{ m.ak }}</span></span>
+            <span class="small row" style="flex-wrap:nowrap"><span class="dot" style="background:var(--ui-person-ximena)" aria-hidden="true"></span><span style="flex:1">{{ m.x }}</span><span class="caption t2 n">{{ m.xk }}</span></span>
+          </div>
+        </sc-for>
+        <a class="go small" href="../comidas/comidas-p10-semana-e.dc.html">Ver todo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </section>
+      <section class="card pnl" aria-labelledby="d5">
+        <h2 id="d5" class="title-3">Diferencias de precio</h2>
+        <p class="caption t2" style="margin:0">Lista de la semana · los 5 artículos con mayor diferencia y la tienda más barata</p>
+        <sc-for list="{{ difs }}" as="r" hint-placeholder-count="5">
+          <div class="pr" style="align-items:center"><span class="col"><span class="small">{{ r.p }}</span><span class="caption t2 row" style="gap:var(--space-1)"><svg viewBox="0 0 10 10" class="mk" aria-hidden="true"><rect width="10" height="10" class="{{ r.sc }}"/></svg>{{ r.s }}</span></span><span class="small n">{{ r.d }}</span></div>
+        </sc-for>
+        <span class="small" style="font-weight:var(--font-weight-medium)">Total por tienda</span>
+        <sc-for list="{{ tiendas }}" as="t" hint-placeholder-count="5">
+          <div class="pr" style="align-items:center"><span class="small row" style="gap:var(--space-1)"><svg viewBox="0 0 10 10" class="mk" aria-hidden="true"><rect width="10" height="10" class="{{ t.sc }}"/></svg>{{ t.s }}</span><span class="col" style="align-items:flex-end"><span class="small n">{{ t.d }}</span><span class="caption t2 n">{{ t.c }}</span></span></div>
+        </sc-for>
+        <a class="go small" href="../compras/compras-p14-canasta-e.dc.html">Ver todo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </section>
+      <section class="card pnl" aria-labelledby="d6">
+        <h2 id="d6" class="title-3">Metas</h2>
+        <div class="col">
+          <div class="row" style="justify-content:space-between"><span class="small">Laptop nueva</span><span class="bd bi caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 16v-4M12 8h.01"/></svg>En curso</span></div>
+          <span class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42.4" aria-valuetext="42.4 % de la meta"><span style="width:42.4%;background:var(--ui-role-savings)"></span></span>
+          <span class="small n">42.4 % · $6,150.00 de $14,500.00</span>
+          <span class="caption t2 n">Aportación mensual necesaria $2,783.34 · fecha meta 17-ene-2027</span>
+        </div>
+        <div class="col">
+          <div class="row" style="justify-content:space-between"><span class="small">Viaje a Oaxaca</span><span class="bd bi caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 16v-4M12 8h.01"/></svg>En curso</span></div>
+          <span class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="78.3" aria-valuetext="78.3 % de la meta"><span style="width:78.3%;background:var(--ui-role-savings)"></span></span>
+          <span class="small n">78.3 % · $14,100.00 de $18,000.00</span>
+          <span class="caption t2 n">Aportación mensual necesaria $650.00 · fecha meta 17-abr-2027</span>
+        </div>
+        <a class="go small" href="../presupuesto/presupuesto-p09-ahorro-e.dc.html">Ver todo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </section>
+      <section class="card pnl" aria-labelledby="d7" style="flex-basis:100%">
+        <h2 id="d7" class="title-3 row"><span class="dot" style="background:var(--ui-person-karen)" aria-hidden="true"></span>Participación de Karen</h2>
+        <span class="small n">Su parte de la despensa este mes: $1,402.98</span>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-4) var(--space-8)">
+          <div class="col" style="flex:1 1 18rem">
+            <span class="small" style="font-weight:var(--font-weight-medium)">Sus compras a crédito</span>
+            <div class="pr"><span class="col"><span class="small">Mercado Libre · audífonos de Karen</span><span class="caption t2 n">19-oct-2026 · total $1,606.53 · Pagos 0 de 2</span></span><span class="col" style="align-items:flex-end"><span class="small n">$1,606.53</span><span class="caption t2">saldo</span></span></div>
+          </div>
+          <div class="col" style="flex:1 1 18rem">
+            <span class="small" style="font-weight:var(--font-weight-medium)">Sus pagos de este mes</span>
+            <div class="pr" style="align-items:center"><span class="small">Jue 15 oct 2026</span><span class="row"><span class="small n">$381.84</span><span class="bd bs caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M9 12l2 2 4-4"/></svg>Pagado</span></span></div>
+            <div class="pr" style="align-items:center"><span class="small">Vie 30 oct 2026</span><span class="row"><span class="small n">$381.84</span><span class="caption t2">Pendiente</span></span></div>
+            <div class="pr" style="align-items:center"><span class="small">Vie 30 oct 2026</span><span class="row"><span class="small n">$453.49</span><span class="caption t2">Pendiente</span></span></div>
+          </div>
+        </div>
+        <span class="small n" style="font-weight:var(--font-weight-medium)">Lo que debe en la línea: $3,802.33</span>
+        <p class="small t2" style="margin:0">Karen paga directo a Kueski su parte; su parte es informativa y repone la línea cuando paga</p>
+        <a class="go small" href="../salud-reportes/reportes-p25-karen-e.dc.html">Estado de cuenta de Karen<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </section>
+    </div>
+    <a class="go small" href="../gastos/gastos-p02-todos-e.dc.html">Ver todos los gastos con estos filtros<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+
+    <section aria-labelledby="estados-detalle" style="display:flex;flex-direction:column;gap:var(--space-3)">
+      <h2 id="estados-detalle" class="title-3" style="margin:0">Estados</h2>
+      <p class="small t2" style="margin:0">Cada panel pide sus datos por separado; los demás siguen visibles. Ejemplo con «Presupuesto por categoría».</p>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-6)">
+        <div class="card cl cle">
+          <span class="caption t2">Vacío</span>
+          <span class="small t2 row"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--ui-icon-default)"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>Aún no hay presupuesto por categoría</span>
+          <a class="go small" href="../ajustes/ajustes-p26-s02-presupuesto-e.dc.html">Capturar presupuesto<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+        </div>
+        <div class="card cl cle" aria-busy="true" aria-label="Presupuesto por categoría cargando">
+          <span class="caption t2">Carga</span>
+          <span class="sk" style="width:70%;height:var(--space-3)"></span><span class="sk" style="width:100%;height:var(--space-2)"></span>
+          <span class="sk" style="width:55%;height:var(--space-3)"></span><span class="sk" style="width:100%;height:var(--space-2)"></span>
+          <span class="sk" style="width:65%;height:var(--space-3)"></span><span class="sk" style="width:100%;height:var(--space-2)"></span>
+          <span class="caption t2">5 filas esqueleto; nunca cifras provisionales</span>
+        </div>
+        <div class="card cl cle">
+          <span class="caption t2">Error</span>
+          <span class="small" style="display:flex;align-items:flex-start;gap:var(--space-2)"><svg class="ic err" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 8v4M12 16h.01"/></svg>No se pudo cargar el presupuesto por categoría. Revisa que estés en la red de casa.</span>
+          <button class="b2 small" type="button" style="align-self:flex-start;margin-top:auto"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></svg>Reintentar</button>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const n = (name, href, d, kids) => ({ name, href: '../' + href + '-e.dc.html', d, kids, lbl: 'Desplegar ' + name });
+    const nav = [
+      n('Gastos', 'gastos/gastos-p02-todos', 'M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1ZM16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11', true),
+      n('Presupuesto', 'presupuesto/presupuesto-p06-mes', 'M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4', true),
+      n('Comidas', 'comidas/comidas-p10-semana', 'M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7', true),
+      n('Compras y tiendas', 'compras/compras-p13-lista', 'M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12', true),
+      n('Créditos', 'creditos/creditos-p17-lineas', 'M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20', true),
+      n('Salud', 'salud-reportes/salud-p21-salud', 'M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7ZM3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27', false),
+      n('Reportes', 'salud-reportes/reportes-p23-centro', 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M8 18v-1M12 18v-6M16 18v-3', true),
+      n('Ajustes', 'ajustes/ajustes-p26-s01-cuenta-roles', 'M14 17H5M19 7h-9M14 17a3 3 0 1 0 6 0a3 3 0 1 0-6 0M4 7a3 3 0 1 0 6 0a3 3 0 1 0-6 0', true)
+    ];
+    const cats = [
+      ['Mascotas', '$1,098.60', '$1,000.00', 110, 'Rebasaste el plan', 109860, 100000],
+      ['Vivienda', '$7,200.00', '$7,200.00', 100, 'Rebasaste el plan', 720000, 720000],
+      ['Frutas y verduras (mercado)', '$1,685.50', '$1,800.00', 94, 'Vas en 94 %', 168550, 180000],
+      ['Despensa común', '$1,650.98', '$2,000.00', 83, 'Vas en 83 %', 165098, 200000],
+      ['Súper de la semana', '$2,521.90', '$3,200.00', 79, '', 252190, 320000]
+    ].map(([name, r, p, pct, badge, rc, pc]) => ({ name, badge, warn: badge !== '', txt: r + ' de ' + p + ' · ' + pct + ' %', w: rc / 7200, x: Math.min(pc / 7200, 99.4), aria: name + ': ' + r + ' de ' + p + ', ' + pct + ' %' }));
+    const pagos = [
+      ['Vie 30 oct 2026', 'Kueski Pay', '$954.60', 'Hogar $572.76 · Karen $381.84'],
+      ['Vie 30 oct 2026', 'Kueski Pay', '$906.98', 'Hogar $453.49 · Karen $453.49'],
+      ['Vie 6 nov 2026', 'Banorte Oro', '$6,104.85', 'Hogar $6,104.85'],
+      ['Dom 15 nov 2026', 'Kueski Pay', '$906.98', 'Hogar $453.49 · Karen $453.49'],
+      ['Dom 15 nov 2026', 'Kueski Pay', '$803.27', 'Hogar $0.00 · Karen $803.27']
+    ].map(([f, l, m, s]) => ({ l1: f + ' · ' + l, m, s }));
+    const comidas = [
+      ['Desayuno', 'Yogur con manzana y avena', '347 kcal · $18.52', 'Yogur con manzana y avena', '347 kcal · $18.52'],
+      ['Comida', 'Fuera', '—', 'Picadillo de res con papa', '743 kcal · $34.38'],
+      ['Cena', 'Tacos de pollo con guacamole (2 porciones)', '1,662 kcal · $62.18', 'Tacos de pollo con guacamole', '831 kcal · $31.09'],
+      ['Colación', 'Avena con plátano y canela', '404 kcal · $9.46', 'Avena con plátano y canela', '404 kcal · $9.46']
+    ].map(([t, a, ak, x, xk]) => ({ t, a: 'Axel · ' + a, ak, x: 'Ximena · ' + x, xk }));
+    const S = { 'walmart': ['Walmart', 'st-walmart'], 'bodega-aurrera': ['Bodega Aurrera', 'st-bodega'], 'sams-club': ["Sam's Club", 'st-sams'], 'mercado-portales': ['Mercado Portales', 'st-market'], 'tianguis-narvarte': ['Tianguis de la Narvarte', 'st-market'] };
+    const difs = [['Yogur natural', 'walmart', '$29.70'], ['Pechuga de pollo', 'sams-club', '$17.60'], ['Atún en agua', 'sams-club', '$14.00'], ['Huevo blanco', 'tianguis-narvarte', '$13.20'], ['Tortilla de maíz', 'tianguis-narvarte', '$7.20']].map(([p, s, d]) => ({ p, s: S[s][0], sc: S[s][1], d }));
+    const tiendas = [['walmart', '$1,638.30', '24 de 24 con precio'], ['bodega-aurrera', '$1,551.70', '23 de 24 con precio'], ['sams-club', '$496.90', '4 de 24 con precio'], ['mercado-portales', '$468.50', '11 de 24 con precio'], ['tianguis-narvarte', '$561.70', '12 de 24 con precio']].map(([s, d, c]) => ({ s: S[s][0], sc: S[s][1], d, c }));
+
+    return { nav, cats, pagos, comidas, difs, tiendas };
+  }
+}
+</script>
+</body>
+</html>

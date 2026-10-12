@@ -59,7 +59,7 @@ a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var
 .seg button[aria-pressed="true"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
 </style>
 </helmet>
-<div style="width:412px;min-height:4250px;box-sizing:border-box;display:flex;flex-direction:column;background:var(--ui-surface-page)">
+<div style="width:412px;min-height:4298px;box-sizing:border-box;display:flex;flex-direction:column;background:var(--ui-surface-page)">
   <header style="display:flex;align-items:center;justify-content:space-between;height:var(--layout-topbar-height-mobile);padding:0 var(--space-2)">
     <a class="bic" href="../shell/shell-barra-lateral-m.dc.html" aria-label="Abrir menú"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M4 6h16M4 18h16"/></svg></a>
     <span class="small t2">Finanzas Hogar</span>
@@ -97,11 +97,12 @@ a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var
           <div class="pr"><span class="row">Ingresos<span class="bd bi caption"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 16v-4M12 8h.01"/></svg>Esperado</span></span><span>$15,520.00</span></div>
           <div class="pr"><span>Pagos de crédito (parte del hogar)</span><span>$3,362.55</span></div>
           <div class="pr"><span>Fijos y venideros</span><span>$6,111.95</span></div>
-          <div class="pr"><span>Gasto variable estimado</span><span>$0.00</span></div>
-          <div class="pr"><span>Ahorro planificado</span><span>$1,000.00</span></div>
-          <div class="pr" style="font-weight:var(--font-weight-medium)"><span>Saldo de la quincena</span><span>$5,045.50</span></div>
-          <div class="pr"><span>Saldo acumulado</span><span>$11,827.78</span></div>
+          <div class="pr"><span>Gasto variable estimado</span><span>—</span></div>
+          <div class="pr"><span>Ahorro planificado</span><span>—</span></div>
+          <div class="pr" style="font-weight:var(--font-weight-medium)"><span>Saldo de la quincena</span><span>$6,045.50</span></div>
+          <div class="pr"><span>Saldo acumulado</span><span>$12,827.78</span></div>
         </div>
+        <p class="caption t2" style="margin:0">Gasto variable estimado y ahorro planificado: pendientes de definir. No se restan de ningún saldo.</p>
         <a class="go small" href="../presupuesto/presupuesto-p07-flujo-m.dc.html">Ver todo<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
       </section>
       <section class="card pnl" aria-labelledby="d3">
@@ -192,7 +193,7 @@ a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var
   </nav>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":4250}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":4298}}'>
 class Component extends DCLogic {
   renderVals() {
     const cats = [

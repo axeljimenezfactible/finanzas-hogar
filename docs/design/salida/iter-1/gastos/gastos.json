@@ -1,0 +1,57 @@
+{
+ "boards": {
+  "gastos/gastos-p02-todos-m.dc.html": {
+   "w": 412,
+   "h": 2870,
+   "title": "P-02 · Todos los gastos · móvil",
+   "page": "gastos",
+   "is_interactive": true
+  },
+  "gastos/gastos-p02-todos-e.dc.html": {
+   "w": 1440,
+   "h": 2200,
+   "title": "P-02 · Todos los gastos · escritorio",
+   "page": "gastos",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "gastos/gastos-p04-gasto-m.dc.html": {
+   "w": 412,
+   "h": 1960,
+   "title": "P-04 · Gasto · móvil",
+   "page": "gastos",
+   "is_interactive": true
+  },
+  "gastos/gastos-p04-gasto-e.dc.html": {
+   "w": 1440,
+   "h": 2200,
+   "title": "P-04 · Gasto · escritorio",
+   "page": "gastos",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "gastos/gastos-p05-ticket-m.dc.html": {
+   "w": 412,
+   "h": 1790,
+   "title": "P-05 · Capturar ticket · móvil",
+   "page": "gastos",
+   "is_interactive": true
+  },
+  "gastos/gastos-p05-ticket-e.dc.html": {
+   "w": 1440,
+   "h": 1600,
+   "title": "P-05 · Capturar ticket · escritorio",
+   "page": "gastos",
+   "expand": "fill",
+   "is_interactive": true
+  }
+ },
+ "order": [
+  "gastos/gastos-p02-todos-m.dc.html",
+  "gastos/gastos-p02-todos-e.dc.html",
+  "gastos/gastos-p04-gasto-m.dc.html",
+  "gastos/gastos-p04-gasto-e.dc.html",
+  "gastos/gastos-p05-ticket-m.dc.html",
+  "gastos/gastos-p05-ticket-e.dc.html"
+ ]
+}

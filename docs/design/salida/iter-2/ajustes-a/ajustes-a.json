@@ -1,0 +1,142 @@
+{
+ "boards": {
+  "ajustes/ajustes-p26-indice-m.dc.html": {
+   "w": 412,
+   "h": 1900,
+   "title": "P-26 · Ajustes · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-indice-e.dc.html": {
+   "w": 1440,
+   "h": 2130,
+   "title": "P-26 · Ajustes · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s01-cuenta-roles-m.dc.html": {
+   "w": 412,
+   "h": 4860,
+   "title": "P-26.01 · Cuenta y roles · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s01-cuenta-roles-e.dc.html": {
+   "w": 1440,
+   "h": 3840,
+   "title": "P-26.01 · Cuenta y roles · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s02-presupuesto-m.dc.html": {
+   "w": 412,
+   "h": 7940,
+   "title": "P-26.02 · Presupuesto · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s02-presupuesto-e.dc.html": {
+   "w": 1440,
+   "h": 4610,
+   "title": "P-26.02 · Presupuesto · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s03-ingresos-m.dc.html": {
+   "w": 412,
+   "h": 2030,
+   "title": "P-26.03 · Ingresos · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s03-ingresos-e.dc.html": {
+   "w": 1440,
+   "h": 2090,
+   "title": "P-26.03 · Ingresos · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s05-creditos-condiciones-m.dc.html": {
+   "w": 412,
+   "h": 7600,
+   "title": "P-26.05 · Créditos y condiciones · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s05-creditos-condiciones-e.dc.html": {
+   "w": 1440,
+   "h": 8510,
+   "title": "P-26.05 · Créditos y condiciones · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s06-tiendas-precios-m.dc.html": {
+   "w": 412,
+   "h": 5220,
+   "title": "P-26.06 · Tiendas y precios · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s06-tiendas-precios-e.dc.html": {
+   "w": 1440,
+   "h": 4210,
+   "title": "P-26.06 · Tiendas y precios · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s07-recetas-m.dc.html": {
+   "w": 412,
+   "h": 5300,
+   "title": "P-26.07 · Recetas · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s07-recetas-e.dc.html": {
+   "w": 1440,
+   "h": 3300,
+   "title": "P-26.07 · Recetas · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s04-categorias-m.dc.html": {
+   "w": 412,
+   "h": 5160,
+   "title": "P-26.04 · Categorías · móvil",
+   "page": "ajustes",
+   "is_interactive": false
+  },
+  "ajustes/ajustes-p26-s04-categorias-e.dc.html": {
+   "w": 1440,
+   "h": 2180,
+   "title": "P-26.04 · Categorías · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false
+  }
+ },
+ "order": [
+  "ajustes/ajustes-p26-indice-m.dc.html",
+  "ajustes/ajustes-p26-indice-e.dc.html",
+  "ajustes/ajustes-p26-s01-cuenta-roles-m.dc.html",
+  "ajustes/ajustes-p26-s01-cuenta-roles-e.dc.html",
+  "ajustes/ajustes-p26-s02-presupuesto-m.dc.html",
+  "ajustes/ajustes-p26-s02-presupuesto-e.dc.html",
+  "ajustes/ajustes-p26-s03-ingresos-m.dc.html",
+  "ajustes/ajustes-p26-s03-ingresos-e.dc.html",
+  "ajustes/ajustes-p26-s04-categorias-m.dc.html",
+  "ajustes/ajustes-p26-s04-categorias-e.dc.html",
+  "ajustes/ajustes-p26-s05-creditos-condiciones-m.dc.html",
+  "ajustes/ajustes-p26-s05-creditos-condiciones-e.dc.html",
+  "ajustes/ajustes-p26-s06-tiendas-precios-m.dc.html",
+  "ajustes/ajustes-p26-s06-tiendas-precios-e.dc.html",
+  "ajustes/ajustes-p26-s07-recetas-m.dc.html",
+  "ajustes/ajustes-p26-s07-recetas-e.dc.html"
+ ]
+}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Registrar peso · escritorio</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link)} a:hover{color:var(--ui-text-link-hover)}
+.i{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:var(--icon-stroke-user-units-sm);stroke-linecap:round;stroke-linejoin:round}
+.money{font-variant-numeric:tabular-nums}
+.lbl{font-weight:var(--font-weight-medium)}
+.nav-a{display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-sidebar-item);padding:0 var(--space-2);border-radius:var(--radius-sm);color:var(--ui-text-secondary);text-decoration:none}
+.nav-a[aria-current="page"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.f{display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
+.fld{display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-control-fine);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field);color:var(--ui-text-default);box-sizing:border-box;width:100%}
+.fld:hover{border-color:var(--ui-border-control-hover)}
+.fld input{flex:1;min-width:0;border:0;background:transparent;color:var(--ui-text-default);font:inherit;padding:0}
+.fld input:focus-visible{outline:none}
+.seg{display:grid;gap:var(--space-1);padding:var(--space-1);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md)}
+.seg>*{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:calc(var(--size-control-fine) - var(--space-2));border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-secondary);font:inherit;cursor:pointer}
+.seg>[aria-pressed="true"]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.mark{width:var(--size-mark-category);height:var(--size-mark-category);border-radius:var(--radius-full);flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--size-control-fine);padding:0 var(--space-3);border-radius:var(--radius-sm);border:var(--border-width-default) solid transparent;font:inherit;font-weight:var(--font-weight-medium);text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.btn-primary:hover{background:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+.btn-text{background:transparent;color:var(--ui-text-secondary)}
+.btn-text:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.ib{display:inline-flex;align-items:center;justify-content:center;width:var(--size-control-fine);height:var(--size-control-fine);border-radius:var(--radius-sm);color:var(--ui-icon-default);text-decoration:none}
+.ib:hover{background:var(--ui-surface-hover)}
+.st{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);background:var(--ui-surface-card)}
+.toast{display:flex;gap:var(--space-2);align-items:flex-start;padding:var(--space-3);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);background:var(--ui-surface-raised);box-shadow:var(--shadow-2)}
+.spin{animation:gira 1s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.spin{animation:none}}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+</style>
+</helmet>
+<div style="min-height:900px;display:grid;background:var(--ui-surface-page)">
+  <div aria-hidden="true" inert style="grid-area:1/1;display:flex;flex-wrap:wrap;align-items:stretch">
+    <nav class="small" style="flex:1 1 var(--layout-sidebar-width);display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-2);background:var(--ui-surface-card);border-right:var(--border-width-default) solid var(--ui-border-divider)">
+      <span class="nav-a" style="color:var(--ui-text-default);font-weight:var(--font-weight-semibold)">Finanzas Hogar</span>
+      <div style="display:flex;flex-direction:column">
+        <a class="nav-a" href="#">Buscar</a>
+        <a class="nav-a" href="shell-p03-registrar-gasto-e.dc.html">Registrar gasto</a>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <a class="nav-a" href="../inicio/inicio-p01-resumen-e.dc.html">Inicio</a>
+        <a class="nav-a" href="../gastos/gastos-p02-todos-e.dc.html">Gastos</a>
+        <a class="nav-a" href="../presupuesto/presupuesto-p06-mes-e.dc.html">Presupuesto</a>
+        <a class="nav-a" href="../comidas/comidas-p10-semana-e.dc.html">Comidas</a>
+        <a class="nav-a" href="../compras/compras-p13-lista-e.dc.html">Compras y tiendas</a>
+        <a class="nav-a" href="../creditos/creditos-p17-lineas-e.dc.html">Créditos</a>
+        <a class="nav-a" href="../salud-reportes/salud-p21-salud-e.dc.html" aria-current="page">Salud</a>
+        <a class="nav-a" href="../salud-reportes/reportes-p23-centro-e.dc.html">Reportes</a>
+        <a class="nav-a" href="../ajustes/ajustes-p26-indice-e.dc.html">Ajustes</a>
+      </div>
+    </nav>
+    <div style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) var(--space-6)">
+      <span class="small" style="color:var(--ui-text-secondary)">Finanzas Hogar › Salud</span>
+      <span class="title-1">Salud</span>
+      <span class="small" style="display:flex;gap:var(--space-4);color:var(--ui-text-secondary)"><span style="color:var(--ui-text-default);font-weight:var(--font-weight-medium)">Resumen</span><span>Detalle</span><span>Tendencias</span></span>
+    </div>
+  </div>
+
+  <div style="grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:var(--space-6);padding:var(--space-12) var(--space-6);background:var(--ui-overlay-scrim)">
+    <section role="dialog" aria-modal="true" aria-labelledby="t-dlg" style="width:100%;max-width:var(--layout-dialog-width-short);box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-6);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-lg);background:var(--ui-surface-raised);box-shadow:var(--shadow-2)">
+      <div style="display:flex;align-items:center;gap:var(--space-2)">
+        <h2 id="t-dlg" class="title-2" style="margin:0;flex:1">Registrar peso</h2>
+        <a class="ib" href="../salud-reportes/salud-p21-salud-e.dc.html" aria-label="Cerrar" title="Cerrar (Esc)"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></a>
+      </div>
+      <div class="f small" role="group" aria-labelledby="l-persona-e">
+        <span id="l-persona-e" class="lbl">Persona</span>
+        <div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <button type="button" aria-pressed="false"><span class="mark" aria-hidden="true" style="background:var(--ui-person-axel)"></span>Axel</button>
+          <button type="button" aria-pressed="true"><span class="mark" aria-hidden="true" style="background:var(--ui-person-ximena)"></span>Ximena</button>
+        </div>
+      </div>
+      <div class="f">
+        <label for="peso-e" class="small lbl">Peso</label>
+        <div class="fld" style="min-height:var(--size-control-primary-sheet);outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)">
+          <input id="peso-e" class="title-2 money" type="text" inputmode="decimal" autocomplete="off" aria-required="true" aria-describedby="antes-e" value="" style="font-weight:var(--font-weight-semibold)">
+          <span class="body" aria-hidden="true" style="color:var(--ui-text-secondary)">kg</span>
+        </div>
+        <p id="antes-e" class="small money" style="margin:0;color:var(--ui-text-secondary)">Antes: 62.8 kg el 19-oct-2026</p>
+      </div>
+      <div class="f">
+        <label for="fecha-p" class="small lbl">Fecha</label>
+        <div class="fld body"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" style="color:var(--ui-icon-default)"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg><input id="fecha-p" type="text" value="21-oct-2026"></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:var(--space-2);padding-top:var(--space-2);border-top:var(--border-width-default) solid var(--ui-border-divider)">
+        <a class="btn btn-text small" href="../salud-reportes/salud-p21-salud-e.dc.html">Cancelar</a>
+        <a class="btn btn-primary small" href="../salud-reportes/salud-p21-salud-e.dc.html" title="Guardar (Ctrl+Enter)">Guardar</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-estados" style="width:100%;max-width:var(--layout-dialog-width-long);box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--ui-surface-page)">
+      <h2 id="t-estados" class="title-3" style="margin:0">Estados</h2>
+      <div class="small" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)">
+        <div class="st"><span class="lbl">Vacío</span><span style="color:var(--ui-text-secondary)">No aplica: es un formulario.</span></div>
+        <div class="st"><span class="lbl">Carga</span><span class="btn btn-primary" aria-busy="true" style="align-self:flex-start"><svg class="i spin" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Guardar</span><span class="caption" style="color:var(--ui-text-secondary)">Guardar en espera.</span></div>
+        <div class="st"><span class="lbl">Error junto al campo</span><div class="fld" style="border-color:var(--ui-border-error)"><span class="body" style="margin-left:auto;color:var(--ui-text-secondary)">kg</span></div><span style="display:flex;gap:var(--space-1);align-items:center;color:var(--ui-role-error)"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>Escribe el peso en kilos.</span></div>
+        <div class="st" style="gap:var(--space-3)">
+          <div class="toast" role="status"><span style="display:flex;color:var(--ui-role-success)"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><span>Peso guardado · <a href="#">Deshacer</a></span></div>
+          <div class="toast" role="status"><span style="display:flex;color:var(--ui-role-success)"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><span>Peso guardado en el teléfono · Se enviará al volver a la red de casa · <a href="#">Deshacer</a></span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { persona: 'Ximena', ultimoPesoKg: 62.8, ultimoPesoFecha: '2026-10-19', fecha: '21-oct-2026' };
+  }
+}
+</script>
+</body>
+</html>

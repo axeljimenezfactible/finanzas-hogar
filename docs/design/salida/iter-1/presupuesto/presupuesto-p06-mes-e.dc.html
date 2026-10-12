@@ -1,0 +1,231 @@
+<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><title>Presupuesto del mes</title><script src="./support.js"></script><link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css"></head><body><x-dc><helmet><style>*{box-sizing:border-box}
+button,input,select,textarea{font-family:inherit;font-size:inherit;line-height:inherit}
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);font-variant-numeric:tabular-nums}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:var(--ui-text-link);text-decoration:underline}
+a:hover{color:var(--ui-text-link-hover)}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);fill:none;stroke:currentColor;stroke-width:var(--icon-stroke-user-units-sm);stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.md{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.med{font-weight:var(--font-weight-medium)}
+.semi{font-weight:var(--font-weight-semibold)}
+.row{display:flex;align-items:center;gap:var(--space-2)}
+.wrapr{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
+.sp{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.col{display:flex;flex-direction:column;gap:var(--space-2)}
+.grow{flex:1 1 0;min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--size-control-coarse);padding:0 var(--space-3);border-radius:var(--radius-sm);border:var(--border-width-default) solid var(--ui-border-control);background:none;color:var(--ui-text-default);font-weight:var(--font-weight-medium);text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--ui-surface-hover);border-color:var(--ui-border-control-hover);color:var(--ui-text-default)}
+.btn.pri{background:var(--ui-action-primary-bg);border-color:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.btn.pri:hover{background:var(--ui-action-primary-bg-hover);border-color:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+.btn.txt{border-color:transparent;color:var(--ui-text-secondary)}
+.btn.txt:hover{color:var(--ui-text-default)}
+.btn.icb{width:var(--size-touch-min);padding:0;border-color:transparent;color:var(--ui-icon-default)}
+.card{background:var(--ui-surface-card);border-radius:var(--radius-md);padding:var(--space-4)}
+.card.flat{background:none;border:var(--border-width-default) solid var(--ui-border-divider)}
+.kpi{display:flex;flex-direction:column;gap:var(--space-1);background:var(--ui-surface-card);border-radius:var(--radius-md);padding:var(--space-4)}
+.kpi .v{font-variant-numeric:tabular-nums;white-space:nowrap}
+.grid{display:grid;gap:var(--space-4)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tabs{display:flex;gap:var(--space-4);overflow-x:auto;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-control-coarse);padding:0 var(--space-1);color:var(--ui-text-secondary);text-decoration:none;white-space:nowrap;border-bottom:var(--border-width-focus) solid transparent}
+.tab:hover{color:var(--ui-text-default)}
+.tab[aria-current]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.tw{overflow-x:auto}
+.bdg{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);white-space:nowrap}
+.bdg .ic{width:var(--space-4);height:var(--space-4)}
+.bw{background:var(--ui-role-warning-surface);color:var(--ui-role-warning)}
+.bn{border:var(--border-width-default) solid var(--ui-border-divider);color:var(--ui-text-default)}
+.tw-warn{color:var(--ui-role-warning)}
+.meter{position:relative;height:var(--size-meter-height);border-radius:var(--radius-full);background:var(--ui-viz-track);overflow:hidden}
+.fill{height:100%;border-radius:var(--radius-full);background:var(--ui-viz-meter)}
+.fill.w{background:var(--ui-role-warning)}
+.tick{position:absolute;top:0;bottom:0;width:var(--size-viz-gap);background:var(--ui-viz-baseline)}
+.t80{left:80%}
+.band{display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-3);border-radius:var(--radius-md);background:var(--ui-role-warning-surface);color:var(--ui-text-default)}
+.band .ic{color:var(--ui-role-warning)}
+.band.err{background:var(--ui-role-error-surface)}
+.band.err .ic{color:var(--ui-role-error)}
+.band.inf{background:var(--ui-role-info-surface)}
+.band.inf .ic{color:var(--ui-role-info)}
+.fld{display:flex;flex-direction:column;gap:var(--space-1)}
+.fld input,.fld select,.fld textarea{min-height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field);color:var(--ui-text-default)}
+.fld input:hover,.fld select:hover{border-color:var(--ui-border-control-hover)}
+.opt{display:flex;align-items:center;gap:var(--space-3);min-height:var(--size-touch-min)}
+.opt input{width:var(--size-checkbox);height:var(--size-checkbox);margin:0;accent-color:var(--ui-action-primary-bg)}
+.sk{background:var(--ui-skeleton-on-card);border-radius:var(--radius-sm);height:var(--space-4)}
+.sk.h{height:var(--space-8)}
+.est{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-radius:var(--radius-md);background:var(--ui-surface-card)}
+.dot{display:inline-block;width:var(--size-mark-category);height:var(--size-mark-category);border-radius:var(--radius-full);flex:none}
+.app{display:flex;flex-wrap:wrap}
+.side{flex:1 1 var(--layout-sidebar-width);background:var(--ui-surface-card);padding:var(--space-2)}
+.side nav{display:flex;flex-direction:column;gap:var(--space-1)}
+.side-h{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);padding:var(--space-2)}
+.avatar{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);padding:0;border:0;border-radius:var(--radius-full);background:none;color:var(--ui-text-default);font-weight:var(--font-weight-medium);cursor:pointer}
+.avatar span{display:inline-flex;align-items:center;justify-content:center;width:var(--size-avatar);height:var(--size-avatar);border-radius:var(--radius-full);background:var(--ui-surface-hover);box-shadow:0 0 0 var(--border-width-focus) var(--ui-person-axel)}
+.nl{display:flex;flex-direction:column;gap:var(--space-1)}
+.nl.sub{padding-left:var(--space-4)}
+.frow{display:flex;align-items:center;gap:var(--space-1)}
+.item{flex:1;display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-touch-min);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:none;color:var(--ui-text-secondary);text-decoration:none;cursor:pointer;width:100%}
+.item .ic{color:var(--ui-icon-default)}
+.item:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.item[aria-current]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.item[aria-current] .ic{color:var(--ui-icon-selected)}
+.chev{display:inline-flex;align-items:center;justify-content:center;flex:none;width:var(--size-touch-min);height:var(--size-touch-min);padding:0;border:0;border-radius:var(--radius-sm);background:none;color:var(--ui-icon-default);cursor:pointer}
+.chev:hover{background:var(--ui-surface-hover)}
+.chev[aria-expanded="true"] .ic{transform:rotate(90deg)}
+.side-f{display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-2);padding-top:var(--space-2);border-top:var(--border-width-default) solid var(--ui-border-divider)}
+.tema{display:flex;gap:var(--space-1)}
+.tema .chev[aria-pressed="true"]{background:var(--ui-surface-selected);color:var(--ui-icon-selected)}
+.main{flex:999 1 560px;min-width:0;padding:var(--space-6) var(--space-8) var(--space-12)}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-6)}
+.crumbs{display:flex;align-items:center;gap:var(--space-1);flex-wrap:wrap}
+.crumbs a{color:var(--ui-text-secondary)}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-4)}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
+details>summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);min-height:var(--size-touch-min);cursor:pointer;list-style:none;font-weight:var(--font-weight-medium)}
+details>summary::-webkit-details-marker{display:none}
+details[open]>summary .ic{transform:rotate(90deg)}
+.lst>li{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) 0;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.lst>li:last-child{border-bottom:0}
+.tbl{display:flex;flex-direction:column}
+.tr{display:grid;column-gap:var(--space-3);align-items:center;padding:var(--space-1) var(--space-3);border-bottom:var(--border-width-default) solid var(--ui-border-divider);min-height:var(--size-control-fine)}
+.tr>*{min-width:0}
+.tr.hd{color:var(--ui-text-secondary);font-weight:var(--font-weight-medium);white-space:nowrap}
+.tr.hv:hover{background:var(--ui-surface-hover-subtle)}
+.tr.ft{font-weight:var(--font-weight-semibold);border-bottom:0}
+.rt{text-align:right;justify-self:end}
+.k6{grid-template-columns:minmax(0,2.2fr) minmax(0,.8fr) repeat(3,minmax(0,1fr)) minmax(0,2.4fr) minmax(0,1fr) minmax(0,.6fr)}
+@media (max-width:767px){.main{padding:var(--space-4)}.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.cols2{grid-template-columns:minmax(0,1fr)!important}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+@media (max-width:767px){.chart .yax,.plot{height:var(--size-chart-height-compact)}}</style></helmet>
+<div class="app"><div class="side"><nav aria-label="Secciones">
+<div class="side-h"><p class="small semi">Finanzas Hogar</p><button class="avatar caption" type="button" aria-label="Axel, menú de cuenta"><span>A</span></button></div>
+<ul class="nl"><li><button class="item small" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0 -16 0"/></svg>Buscar</button></li><li><a class="item small" href="../shell/shell-p03-registrar-gasto-e.dc.html" style="text-decoration:none"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>Registrar gasto</a></li></ul>
+<ul class="nl"><sc-for list="{{nav}}" as="n" hint-placeholder-count="9"><li>
+<div class="frow"><a class="item small" href="{{n.href}}" style="text-decoration:none"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{n.d}}"/></svg>{{n.label}}</a>
+<sc-if value="{{n.hasSub}}" hint-placeholder-val="{{ true }}"><button class="chev" type="button" aria-expanded="{{n.exp}}" aria-label="{{n.aria}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></sc-if></div>
+<sc-if value="{{n.open}}" hint-placeholder-val="{{ false }}"><ul class="nl sub"><sc-for list="{{n.subs}}" as="s" hint-placeholder-count="4">
+<sc-if value="{{s.cur}}" hint-placeholder-val="{{ false }}"><li><a class="item small" href="{{s.href}}" aria-current="page" style="text-decoration:none">{{s.label}}</a></li></sc-if>
+<sc-if value="{{s.other}}" hint-placeholder-val="{{ true }}"><li><a class="item small" href="{{s.href}}" style="text-decoration:none">{{s.label}}</a></li></sc-if>
+</sc-for></ul></sc-if></li></sc-for></ul>
+<div class="side-f"><div class="tema" role="group" aria-label="Tema"><button class="chev" type="button" aria-pressed="true" aria-label="Tema del sistema"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2ZM8 21L16 21M12 17L12 21"/></svg></button><button class="chev" type="button" aria-pressed="false" aria-label="Tema claro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M12 2v2M12 20v2m4.93 4.93 1.41 1.41m17.66 17.66 1.41 1.41M2 12h2M20 12h2m6.34 17.66-1.41 1.41m19.07 4.93-1.41 1.41"/></svg></button><button class="chev" type="button" aria-pressed="false" aria-label="Tema oscuro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></button></div><button class="chev" type="button" aria-label="Colapsar barra lateral"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2ZM9 3v18"/></svg></button></div>
+</nav></div>
+<main class="main"><div class="wrap">
+<header class="col" style="gap:var(--space-3)">
+<nav class="crumbs small" aria-label="Migas"><a href="../presupuesto/presupuesto-p06-mes-e.dc.html">Presupuesto</a><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page">Presupuesto del mes</span></nav>
+<div class="head"><div class="wrapr" style="gap:var(--space-4)"><h1 class="title-1">Presupuesto del mes</h1>
+<div class="row" role="group" aria-label="Selector de mes"><button class="btn icb" type="button" aria-label="Mes anterior"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><span class="body med num">{{mesLabel}}</span><button class="btn icb" type="button" aria-label="Mes siguiente"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></div>
+<div class="acts"><a class="btn" href="../gastos/gastos-p02-todos-e.dc.html">Ver gastos de la categoría</a><a class="btn pri" href="#ajustar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zm15 5 4 4"/></svg>Ajustar presupuesto</a><button class="btn icb" type="button" aria-label="Más acciones"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></div></div>
+<p class="small mute">{{hoyTexto}}</p>
+<nav class="tabs small" aria-label="Subsecciones"><a class="tab" href="#" aria-current="page">Resumen</a><a class="tab" href="#">Detalle</a><a class="tab" href="#">Tendencias</a><a class="tab" href="#">Calendario</a></nav>
+</header>
+
+<section aria-label="Resumen del mes"><div class="grid g3">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="6"><div class="kpi"><span class="small mute">{{k.label}}</span><span class="title-2 num semi v">{{k.value}}</span><span class="small mute">{{k.sub}}</span></div></sc-for>
+</div>
+<div class="card" style="margin-top:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2)"><div class="sp"><span class="small med">Real contra plan del mes</span><span class="small num">{{usadoTexto}}</span></div>
+<div class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{usadoPct}}" aria-valuetext="{{usadoTexto}}"><div class="fill" style="{{usadoStyle}}"></div><span class="tick t80"></span></div>
+<p class="caption mute">La marca vertical señala el aviso al 80 %. El real es la parte del hogar devengada; los gastos venideros no cuentan hasta que se marquen como pagados.</p></div></section>
+
+<div class="grid g2 cols2" style="align-items:start">
+<section class="card" aria-labelledby="h-alertas" style="display:flex;flex-direction:column;gap:var(--space-2)"><h2 class="title-3" id="h-alertas">Alertas activas</h2><p class="small mute">Categorías con 80 % o más del plan en oct-2026.</p>
+<ul class="lst"><sc-for list="{{alertas}}" as="a" hint-placeholder-count="4"><li><div class="sp"><span class="med">{{a.nombre}}</span><span class="bdg bw small"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01"/></svg>{{a.badge}}</span></div><span class="small mute">{{a.texto}}</span></li></sc-for></ul></section>
+<div class="col" style="gap:var(--space-4)">
+<section class="card" aria-labelledby="h-quin" style="display:flex;flex-direction:column;gap:var(--space-3)"><h2 class="title-3" id="h-quin">Quincenas del mes</h2>
+<sc-for list="{{quincenas}}" as="q" hint-placeholder-count="2"><div class="col" style="gap:var(--space-1)"><div class="sp"><span class="med">{{q.nombre}}</span><span class="small num">{{q.pctTexto}}</span></div>
+<div class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{q.pct}}" aria-valuetext="{{q.pctTexto}}"><div class="{{q.fillClass}}" style="{{q.fillStyle}}"></div><span class="tick t80"></span></div>
+<span class="small mute num">Real {{q.real}} de {{q.plan}} del plan · {{q.rango}}</span></div></sc-for></section>
+<section class="card" aria-labelledby="h-desp" style="display:flex;flex-direction:column;gap:var(--space-3)"><h2 class="title-3" id="h-desp">Despensa devengada</h2>
+<sc-for list="{{despensa}}" as="d" hint-placeholder-count="1"><div class="col"><p class="small">Compra del {{d.fecha}} a crédito: la mitad se devenga en cada mes.</p>
+<dl class="grid g2" style="margin:0"><div><dt class="small mute">Total con intereses</dt><dd class="body num semi" style="margin:0">{{d.total}}</dd></div><div><dt class="small mute">Devengado en el mes</dt><dd class="body num semi" style="margin:0">{{d.mes}}</dd></div>
+<div><dt class="small mute row"><span class="dot" style="background:var(--ui-person-shared)"></span>Parte del hogar</dt><dd class="body num" style="margin:0">{{d.hogar}}</dd></div><div><dt class="small mute row"><span class="dot" style="background:var(--ui-person-karen)"></span>Parte de Karen</dt><dd class="body num" style="margin:0">{{d.karen}}</dd></div></dl></div></sc-for></section>
+</div></div>
+
+<section aria-labelledby="h-cat" class="col" style="gap:var(--space-3)"><div class="sp" style="flex-wrap:wrap"><h2 class="title-2" id="h-cat">Plan contra real por categoría</h2>
+<div class="wrapr" role="group" aria-label="Vista"><button class="btn" type="button" aria-pressed="true" style="background:var(--ui-surface-selected);border-color:var(--ui-border-selected)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18M9 3v18M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2Z"/></svg>Tabla</button><button class="btn" type="button" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h5a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-5a1 1 0 0 1 1 -1ZM15 3h5a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-5a1 1 0 0 1 1 -1ZM15 14h5a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-5a1 1 0 0 1 1 -1ZM4 14h5a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-5a1 1 0 0 1 1 -1Z"/></svg>Tablero</button><button class="btn txt" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h20M6 12h12M9 19h6"/></svg>Ordenar: % usado</button><button class="btn txt" type="button">Agrupar por tipo</button></div></div>
+<div class="tw"><div class="tbl" role="table" aria-label="Plan, real y porcentaje usado por categoría en {{mesLabel}}" style="min-width:calc(var(--space-12)*17)">
+<div class="tr hd k6 small" role="row"><span role="columnheader">Categoría</span><span role="columnheader">Tipo</span><span class="rt" role="columnheader">Plan</span><span class="rt" role="columnheader">Real</span><span class="rt" role="columnheader">Diferencia</span><span role="columnheader">% usado (avisos al 80 y 100 %)</span><span role="columnheader">Estado</span><span class="rt" role="columnheader">Gastos</span></div>
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="13"><div class="tr hv k6" role="row">
+<div class="col" role="rowheader" style="gap:0"><span class="med small">{{c.nombre}}</span><sc-if value="{{c.hayVenidero}}" hint-placeholder-val="{{ false }}"><span class="caption mute num">Venidero {{c.venidero}}: aún no cuenta</span></sc-if></div>
+<span class="small mute" role="cell">{{c.tipo}}</span><span class="rt small num" role="cell">{{c.plan}}</span><span class="rt small num" role="cell">{{c.real}}</span>
+<span class="rt small num" role="cell"><sc-if value="{{c.rebasa}}" hint-placeholder-val="{{ false }}"><span class="tw-warn row" style="justify-content:flex-end"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01"/></svg>{{c.dif}} rebasado</span></sc-if><sc-if value="{{c.noRebasa}}" hint-placeholder-val="{{ true }}">{{c.dif}}</sc-if></span>
+<div class="row" role="cell"><div class="meter grow"><div class="{{c.fillClass}}" style="{{c.fillStyle}}"></div><span class="tick t80"></span></div><span class="small num {{c.pctClass}}" style="min-width:calc(var(--space-12)*2)">{{c.pctTexto}}</span></div>
+<span role="cell"><span class="{{c.bdgClass}} small">{{c.bdgText}}</span></span><span class="rt small num" role="cell">{{c.n}}</span></div></sc-for>
+<div class="tr ft k6 small" role="row"><span role="rowheader">Total de 13 categorías</span><span></span><span class="rt num" role="cell">{{tot.plan}}</span><span class="rt num" role="cell">{{tot.real}}</span><span class="rt num" role="cell">{{tot.dif}}</span><span class="num" role="cell">{{tot.pct}}</span><span></span><span></span></div></div></div></section>
+
+<section id="ajustar" class="col" style="gap:var(--space-3)"><h2 class="title-2">Ajustar presupuesto</h2>
+<div class="card flat" role="dialog" aria-labelledby="dlg-t" style="max-width:var(--layout-dialog-width-short);display:flex;flex-direction:column;gap:var(--space-4)">
+<h3 class="title-3" id="dlg-t">Ajustar presupuesto de Mascotas</h3>
+<div class="fld"><label class="small med" for="f-cat">Categoría</label><select id="f-cat"><option selected>Mascotas</option><option>Vivienda</option><option>Frutas y verduras (mercado)</option></select></div>
+<div class="fld"><label class="small med" for="f-monto">Monto mensual nuevo</label><input id="f-monto" type="text" inputmode="decimal" value="{{dlg.monto}}" aria-describedby="f-monto-h"><span class="caption mute num" id="f-monto-h">Plan actual {{dlg.actual}} · real de {{mesLabel}} {{dlg.real}}</span></div>
+<fieldset style="border:0;margin:0;padding:0" class="col" aria-label="Alcance del cambio"><legend class="small med" style="padding:0">Alcance del cambio</legend>
+<label class="opt"><input type="radio" name="alcance" value="onward" checked><span>De este mes en adelante</span></label><label class="opt"><input type="radio" name="alcance" value="this_month"><span>Solo este mes</span></label></fieldset>
+<div class="band inf" role="status"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0M12 16v-4M12 8h.01"/></svg><p class="small num">De este mes en adelante: {{mesLabel}} y los siguientes quedan en {{dlg.monto}}. Plan total del mes: antes {{dlg.antes}}, después {{dlg.despues}}.</p></div>
+<div class="acts" style="justify-content:flex-end"><button class="btn txt" type="button">Cancelar</button><button class="btn pri" type="button">Confirmar</button></div></div></section>
+
+<section class="col" style="gap:var(--space-3)" aria-labelledby="h-est"><h2 class="title-2" id="h-est">Estados</h2>
+<div class="grid g3 cols2">
+<div class="est"><span class="small med">Vacío</span><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><p class="small">Sin presupuesto definido</p><a class="btn pri" href="#ajustar">Ajustar presupuesto</a></div>
+<div class="est" aria-busy="true"><span class="small med">Carga</span><div class="sk h"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><p class="caption mute">Esqueleto de la tabla; nunca cifras provisionales.</p></div>
+<div class="est"><span class="small med">Error</span><div class="band err" role="alert"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0M12 8L12 12M12 16L12.01 16"/></svg><p class="small">No se pudo cargar el presupuesto de {{mesLabel}}. Lo que capturaste no se perdió.</p></div><button class="btn" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></svg>Reintentar</button></div>
+</div></section>
+</div></main></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2650}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const ICON={"credit-card":"M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2ZM2 10L22 10M6 14h2","file-chart-column":"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2zM14 2v5a1 1 0 0 0 1 1h5M8 18v-1M12 18v-6M16 18v-3","heart-pulse":"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27","house":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z","receipt":"M12 17V7M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z","settings":"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0","shopping-cart":"m2.05 2.05 1.099-.028a1 1 0 0 1 1.008.815l2.69 14.347A1 1 0 0 0 7.83 18H18M4.563 5h16.435a1 1 0 0 1 .981 1.204l-1.026 6.226A2 2 0 0 1 18.962 14H6.25M16 20a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M6 20a2 2 0 1 0 4 0a2 2 0 1 0 -4 0","utensils":"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7","wallet":"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"};
+    const CURSUB='Presupuesto del mes';
+    const MIN='−';
+const money=(c)=>{const n=Math.abs(c);return (c<0?MIN:'')+'$'+String(Math.floor(n/100)).replace(/\B(?=(\d{3})+(?!\d))/g,',')+'.'+String(n%100).padStart(2,'0');};
+const plus=(c)=>(c>0?'+':'')+money(c);
+const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DIA=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const fd=(iso)=>{const p=iso.split('-').map(Number);return p[2]+'-'+MES[p[1]-1]+'-'+p[0];};
+const fdl=(iso)=>{const p=iso.split('-').map(Number);return DIA[new Date(Date.UTC(p[0],p[1]-1,p[2])).getUTCDay()]+' '+p[2]+' '+MES[p[1]-1]+' '+p[0];};
+const fm=(ym)=>{const p=ym.split('-').map(Number);return MES[p[1]-1]+'-'+p[0];};
+const pct=(a,b)=>Math.floor((200*a+b)/(2*b));
+    const NAVS=[
+['Inicio','house','../inicio/inicio-p01-resumen-e.dc.html',[]],
+['Gastos','receipt','../gastos/gastos-p02-todos-e.dc.html',[['Todos los gastos','../gastos/gastos-p02-todos-e.dc.html'],['Capturar ticket','../gastos/gastos-p05-ticket-e.dc.html']]],
+['Presupuesto','wallet','../presupuesto/presupuesto-p06-mes-e.dc.html',[['Presupuesto del mes','../presupuesto/presupuesto-p06-mes-e.dc.html'],['Flujo y proyección','../presupuesto/presupuesto-p07-flujo-e.dc.html'],['Ingresos','../presupuesto/presupuesto-p08-ingresos-e.dc.html'],['Ahorro y metas','../presupuesto/presupuesto-p09-ahorro-e.dc.html']]],
+['Comidas','utensils','../comidas/comidas-p10-semana-e.dc.html',[['Plan de la semana','../comidas/comidas-p10-semana-e.dc.html'],['Recetario','../comidas/comidas-p11-recetario-e.dc.html']]],
+['Compras y tiendas','shopping-cart','../compras/compras-p13-lista-e.dc.html',[['Lista de compras','../compras/compras-p13-lista-e.dc.html']]],
+['Créditos','credit-card','../creditos/creditos-p17-lineas-e.dc.html',[['Todas las líneas','../creditos/creditos-p17-lineas-e.dc.html']]],
+['Salud','heart-pulse','../salud-reportes/salud-p21-salud-e.dc.html',[]],
+['Reportes','file-chart-column','../salud-reportes/reportes-p23-centro-e.dc.html',[['Centro de reportes','../salud-reportes/reportes-p23-centro-e.dc.html']]],
+['Ajustes','settings','../ajustes/ajustes-p26-indice-e.dc.html',[]]];
+const nav=NAVS.map((s)=>{const open=s[0]==='Presupuesto';return {label:s[0],d:ICON[s[1]],href:s[2],hasSub:s[3].length>0,open:open,exp:open,aria:(open?'Plegar ':'Desplegar ')+s[0],subs:s[3].map((x)=>({label:x[0],href:x[1],cur:x[0]===CURSUB,other:x[0]!==CURSUB}))};});
+    const CAT=[{"id":"vivienda","nombre":"Vivienda","tipo":"fijo","plan_cents":720000,"real_cents":720000,"diferencia_cents":0,"usado_pct":100,"estado":"excedido","num_gastos":1,"venidero_cents":0,"cruzo_80":"2026-10-01","cruzo_100":"2026-10-01"},{"id":"servicios","nombre":"Servicios y suscripciones","tipo":"fijo","plan_cents":260000,"real_cents":156600,"diferencia_cents":103400,"usado_pct":60,"estado":"normal","num_gastos":4,"venidero_cents":92270,"cruzo_80":null,"cruzo_100":null},{"id":"despensa-comun","nombre":"Despensa común","tipo":"variable","plan_cents":200000,"real_cents":165098,"diferencia_cents":34902,"usado_pct":83,"estado":"aviso","num_gastos":2,"venidero_cents":0,"cruzo_80":"2026-10-18","cruzo_100":null},{"id":"super","nombre":"Súper de la semana","tipo":"variable","plan_cents":320000,"real_cents":252190,"diferencia_cents":67810,"usado_pct":79,"estado":"normal","num_gastos":3,"venidero_cents":0,"cruzo_80":null,"cruzo_100":null},{"id":"mercado","nombre":"Frutas y verduras (mercado)","tipo":"variable","plan_cents":180000,"real_cents":168550,"diferencia_cents":11450,"usado_pct":94,"estado":"aviso","num_gastos":5,"venidero_cents":0,"cruzo_80":"2026-10-20","cruzo_100":null},{"id":"transporte","nombre":"Transporte","tipo":"variable","plan_cents":260000,"real_cents":178600,"diferencia_cents":81400,"usado_pct":69,"estado":"normal","num_gastos":3,"venidero_cents":0,"cruzo_80":null,"cruzo_100":null},{"id":"salud","nombre":"Salud","tipo":"variable","plan_cents":130000,"real_cents":93640,"diferencia_cents":36360,"usado_pct":72,"estado":"normal","num_gastos":2,"venidero_cents":85000,"cruzo_80":null,"cruzo_100":null},{"id":"restaurantes","nombre":"Restaurantes y café","tipo":"variable","plan_cents":180000,"real_cents":76650,"diferencia_cents":103350,"usado_pct":43,"estado":"normal","num_gastos":3,"venidero_cents":0,"cruzo_80":null,"cruzo_100":null},{"id":"ocio","nombre":"Ocio","tipo":"variable","plan_cents":90000,"real_cents":46500,"diferencia_cents":43500,"usado_pct":52,"estado":"normal","num_gastos":1,"venidero_cents":0,"cruzo_80":null,"cruzo_100":null},{"id":"mantenimiento","nombre":"Hogar y mantenimiento","tipo":"variable","plan_cents":110000,"real_cents":38990,"diferencia_cents":71010,"usado_pct":35,"estado":"normal","num_gastos":1,"venidero_cents":0,"cruzo_80":null,"cruzo_100":null},{"id":"personal","nombre":"Ropa y personal","tipo":"variable","plan_cents":100000,"real_cents":45900,"diferencia_cents":54100,"usado_pct":46,"estado":"normal","num_gastos":2,"venidero_cents":0,"cruzo_80":null,"cruzo_100":null},{"id":"mascotas","nombre":"Mascotas","tipo":"variable","plan_cents":100000,"real_cents":109860,"diferencia_cents":-9860,"usado_pct":110,"estado":"excedido","num_gastos":2,"venidero_cents":0,"cruzo_80":"2026-10-21","cruzo_100":"2026-10-21"},{"id":"seguros","nombre":"Seguros","tipo":"fijo","plan_cents":108600,"real_cents":0,"diferencia_cents":108600,"usado_pct":0,"estado":"normal","num_gastos":0,"venidero_cents":108600,"cruzo_80":null,"cruzo_100":null}];
+    const P={"resumen":{"mes":"2026-10","ingreso_mes_cents":3113000,"plan_gasto_cents":2758600,"ahorro_planificado_cents":200000,"sin_asignar_cents":154400,"real_cents":2052578,"restante_cents":706022,"usado_pct":74,"estado":"normal","dias_que_faltan":11,"ingreso_mes_fmt":"$31,130.00","plan_gasto_fmt":"$27,586.00","ahorro_planificado_fmt":"$2,000.00","sin_asignar_fmt":"$1,544.00","real_fmt":"$20,525.78","restante_fmt":"$7,060.22"},"quincenas":[{"quincena":"2026-10-q1","real_cents":1494853,"plan_cents":1711600},{"quincena":"2026-10-q2","real_cents":557725,"plan_cents":1047000}],"despensa_devengada":[{"compra_id":"kc1","fecha":"2026-10-12","total_con_intereses_cents":362792,"devengado_mes_cents":181396,"hogar_mes_cents":90698,"karen_mes_cents":90698}],"alertas":[{"categoria_id":"vivienda","nombre":"Vivienda","usado_pct":100,"umbral":100,"cruzo":"2026-10-01"},{"categoria_id":"despensa-comun","nombre":"Despensa común","usado_pct":83,"umbral":80,"cruzo":"2026-10-18"},{"categoria_id":"mercado","nombre":"Frutas y verduras (mercado)","usado_pct":94,"umbral":80,"cruzo":"2026-10-20"},{"categoria_id":"mascotas","nombre":"Mascotas","usado_pct":110,"umbral":100,"cruzo":"2026-10-21"}]};
+    const R=P.resumen;
+    const usadoTexto=R.usado_pct+' % del plan usado · faltan '+R.dias_que_faltan+' días';
+    const kpis=[
+      {label:'Ingreso del mes',value:money(R.ingreso_mes_cents),sub:'Quincenas capturadas o esperadas, más extras'},
+      {label:'Plan de gasto',value:money(R.plan_gasto_cents),sub:'Suma del presupuesto de 13 categorías'},
+      {label:'Ahorro planificado',value:money(R.ahorro_planificado_cents),sub:'Fondo y 2 metas, aportación mensual'},
+      {label:'Sin asignar',value:money(R.sin_asignar_cents),sub:'Ingreso menos plan menos ahorro'},
+      {label:'Real',value:money(R.real_cents),sub:R.usado_pct+' % del plan usado'},
+      {label:'Restante',value:money(R.restante_cents),sub:'Plan menos real'}];
+    const alertas=P.alertas.map((a)=>({nombre:a.nombre,badge:a.umbral>=100?'Rebasada':'Aviso al 80 %',texto:a.usado_pct+' % del plan usado · cruzó el '+a.umbral+' % el '+fd(a.cruzo)}));
+    const QN={'2026-10-q1':['1.ª quincena','1-oct al 15-oct'],'2026-10-q2':['2.ª quincena (en curso)','16-oct al 31-oct']};
+    const quincenas=P.quincenas.map((q)=>{const p=pct(q.real_cents,q.plan_cents);return {nombre:QN[q.quincena][0],rango:QN[q.quincena][1],real:money(q.real_cents),plan:money(q.plan_cents),pct:p,pctTexto:p+' % usado',fillClass:p>=80?'fill w':'fill',fillStyle:'width:'+Math.min(p,100)+'%'};});
+    const despensa=P.despensa_devengada.map((d)=>({fecha:fd(d.fecha),total:money(d.total_con_intereses_cents),mes:money(d.devengado_mes_cents),hogar:money(d.hogar_mes_cents),karen:money(d.karen_mes_cents)}));
+    const sorted=CAT.slice().sort((a,b)=>b.usado_pct-a.usado_pct);
+    const BD={normal:['bdg bn','Normal'],aviso:['bdg bw','Aviso'],excedido:['bdg bw','Excedido']};
+    const cats=sorted.map((c)=>({nombre:c.nombre,tipo:c.tipo==='fijo'?'Fijo':'Variable',plan:money(c.plan_cents),real:money(c.real_cents),dif:money(c.diferencia_cents),rebasa:c.diferencia_cents<0,noRebasa:c.diferencia_cents>=0,hayVenidero:c.venidero_cents>0,venidero:money(c.venidero_cents),fillClass:c.usado_pct>=80?'fill w':'fill',fillStyle:'width:'+Math.min(c.usado_pct,100)+'%',pctClass:c.usado_pct>=80?'tw-warn':'',pctTexto:c.usado_pct+' % usado',bdgClass:BD[c.estado][0],bdgText:BD[c.estado][1],n:c.num_gastos}));
+    const tot={plan:money(R.plan_gasto_cents),real:money(R.real_cents),dif:money(R.restante_cents),pct:R.usado_pct+' % usado'};
+    const mas=CAT.find((c)=>c.id==='mascotas');
+    const nuevo=mas.real_cents;
+    const dlg={monto:money(nuevo).replace('$',''),actual:money(mas.plan_cents),real:money(mas.real_cents),antes:money(R.plan_gasto_cents),despues:money(R.plan_gasto_cents-mas.plan_cents+nuevo)};
+    dlg.monto=money(nuevo);
+    return {nav:nav,mesLabel:fm(R.mes),hoyTexto:'Hoy: '+fdl('2026-10-21')+' · faltan '+R.dias_que_faltan+' días del mes',kpis:kpis,usadoTexto:usadoTexto,usadoPct:R.usado_pct,usadoStyle:'width:'+Math.min(R.usado_pct,100)+'%',alertas:alertas,quincenas:quincenas,despensa:despensa,cats:cats,tot:tot,dlg:dlg};
+  }
+}
+</script></body></html>

@@ -1,0 +1,118 @@
+<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><title>Ingresos</title><script src="./support.js"></script><link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css"></head><body><x-dc><helmet><style>*{box-sizing:border-box}
+button,input,select,textarea{font-family:inherit;font-size:inherit;line-height:inherit}
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);font-variant-numeric:tabular-nums}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:var(--ui-text-link);text-decoration:underline}
+a:hover{color:var(--ui-text-link-hover)}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);fill:none;stroke:currentColor;stroke-width:var(--icon-stroke-user-units-sm);stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.md{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.med{font-weight:var(--font-weight-medium)}
+.semi{font-weight:var(--font-weight-semibold)}
+.row{display:flex;align-items:center;gap:var(--space-2)}
+.sp{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.col{display:flex;flex-direction:column;gap:var(--space-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--size-control-coarse);padding:0 var(--space-3);border-radius:var(--radius-sm);border:var(--border-width-default) solid var(--ui-border-control);background:none;color:var(--ui-text-default);font-weight:var(--font-weight-medium);text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--ui-surface-hover);border-color:var(--ui-border-control-hover);color:var(--ui-text-default)}
+.btn.pri{background:var(--ui-action-primary-bg);border-color:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.btn.pri:hover{background:var(--ui-action-primary-bg-hover);border-color:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+.btn.txt{border-color:transparent;color:var(--ui-text-secondary)}
+.btn.txt:hover{color:var(--ui-text-default)}
+.btn.icb{width:var(--size-touch-min);padding:0;border-color:transparent;color:var(--ui-icon-default)}
+.card{background:var(--ui-surface-card);border-radius:var(--radius-md);padding:var(--space-4)}
+.kpi{display:flex;flex-direction:column;gap:var(--space-1);background:var(--ui-surface-card);border-radius:var(--radius-md);padding:var(--space-4)}
+.tabs{display:flex;gap:var(--space-4);overflow-x:auto;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-control-coarse);padding:0 var(--space-1);color:var(--ui-text-secondary);text-decoration:none;white-space:nowrap;border-bottom:var(--border-width-focus) solid transparent}
+.tab:hover{color:var(--ui-text-default)}
+.tab[aria-current]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.bdg{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);white-space:nowrap}
+.bdg .ic{width:var(--space-4);height:var(--space-4)}
+.bs{background:var(--ui-role-success-surface);color:var(--ui-role-success)}
+.bi{background:var(--ui-role-info-surface);color:var(--ui-role-info)}
+.bn{border:var(--border-width-default) solid var(--ui-border-divider);color:var(--ui-text-default)}
+.fld{display:flex;flex-direction:column;gap:var(--space-1)}
+.fld input,.fld select,.fld textarea{min-height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field);color:var(--ui-text-default)}
+.fld input:hover,.fld select:hover{border-color:var(--ui-border-control-hover)}
+.mroot{width:412px;box-sizing:border-box;min-height:915px;display:flex;flex-direction:column;background:var(--ui-surface-page)}
+.mtop{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);height:var(--layout-topbar-height-mobile);padding:0 var(--space-2);flex:none}
+.mmain{flex:1;display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-2) var(--space-4) var(--space-6)}
+.bbar{display:flex;justify-content:space-around;align-items:center;height:var(--layout-bottombar-height);background:var(--ui-surface-raised);border-top:var(--border-width-default) solid var(--ui-border-divider);flex:none}
+.bd{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;min-width:var(--size-bottombar-item-min-width);height:var(--size-bottombar-item-height);color:var(--ui-text-secondary);text-decoration:none;background:none;border:0}
+.bd:hover{color:var(--ui-text-default)}
+.bd .plus{display:inline-flex;align-items:center;justify-content:center;width:var(--size-bottombar-add);height:var(--size-bottombar-add);border-radius:var(--radius-full);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+details>summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);min-height:var(--size-touch-min);cursor:pointer;list-style:none;font-weight:var(--font-weight-medium)}
+details>summary::-webkit-details-marker{display:none}
+details[open]>summary .ic{transform:rotate(90deg)}
+.lst>li{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3) 0;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.lst>li:last-child{border-bottom:0}
+@media (max-width:767px){.main{padding:var(--space-4)}.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.cols2{grid-template-columns:minmax(0,1fr)!important}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+@media (max-width:767px){.chart .yax,.plot{height:var(--size-chart-height-compact)}}</style></helmet>
+<div class="mroot">
+<header class="mtop"><a class="btn icb" href="../shell/shell-barra-lateral-m.dc.html" aria-label="Abrir menú"><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg></a><a class="small" href="../presupuesto/presupuesto-p06-mes-m.dc.html" style="display:inline-flex;align-items:center;min-height:var(--size-touch-min)">‹ Presupuesto</a><button class="btn icb" type="button" aria-label="Más acciones"><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg></button></header>
+<main class="mmain">
+<div class="col" style="gap:var(--space-3)"><h1 class="title-1">Ingresos</h1>
+<div class="row" role="group" aria-label="Selector de mes"><button class="btn icb" type="button" aria-label="Mes anterior"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><span class="body med num">{{mesLabel}}</span><button class="btn icb" type="button" aria-label="Mes siguiente"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
+<a class="btn pri body" href="#capturar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zm15 5 4 4"/></svg>Capturar quincena</a><a class="btn body" href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>Registrar ingreso extra</a>
+<nav class="tabs small" aria-label="Subsecciones"><a class="tab" href="#">Resumen</a><a class="tab" href="#" aria-current="page">Detalle</a><a class="tab" href="#">Tendencias</a><a class="tab" href="#">Calendario</a></nav></div>
+
+<section aria-label="Totales del mes" class="col" style="gap:var(--space-3)"><sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div class="kpi" style="flex-direction:row;align-items:center;justify-content:space-between;gap:var(--space-3)"><div class="col" style="gap:0"><span class="small med">{{k.label}}</span><span class="caption mute">{{k.sub}}</span></div><span class="title-3 num semi">{{k.value}}</span></div></sc-for></section>
+
+<section class="card col" aria-labelledby="h-t"><h2 class="title-3" id="h-t">Quincenas y extras</h2>
+<ul class="lst"><sc-for list="{{filas}}" as="f" hint-placeholder-count="4"><li>
+<div class="sp"><span class="med">{{f.concepto}}</span><span class="num semi">{{f.monto}}</span></div>
+<div class="sp"><span class="small mute num">{{f.fecha}}</span><span class="{{f.bdg}} small">{{f.estado}}</span></div>
+<div class="sp"><span class="small mute">{{f.nota}}</span><button class="btn icb" type="button" aria-label="{{f.aria}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zm15 5 4 4"/></svg></button></div></li></sc-for></ul>
+<div class="sp" style="border-top:var(--border-width-default) solid var(--ui-border-divider);padding-top:var(--space-3)"><span class="small med">Total del mes</span><span class="small num med">{{total}}</span></div></section>
+
+<section id="capturar" class="card col" role="form" aria-labelledby="h-f" style="gap:var(--space-4)"><div style="display:flex;justify-content:center"><span style="width:var(--size-sheet-handle-width);height:var(--size-sheet-handle-height);border-radius:var(--radius-full);background:var(--ui-border-control)"></span></div>
+<h2 class="title-3" id="h-f">Capturar quincena</h2>
+<div class="fld"><label class="small med" for="f-fecha">Fecha de la quincena</label><input id="f-fecha" type="date" value="{{form.iso}}"></div>
+<div class="fld"><label class="small med" for="f-monto">Monto</label><input id="f-monto" type="text" inputmode="decimal" value="{{form.monto}}" aria-describedby="f-monto-h"><span class="caption mute" id="f-monto-h">Prellenado con el monto esperado de Ajustes › Ingresos.</span></div>
+<div class="fld"><label class="small med" for="f-nota">Nota (opcional)</label><input id="f-nota" type="text" placeholder="Por ejemplo: incluye bono"></div>
+<button class="btn pri body" type="button" style="min-height:var(--size-control-primary-sheet)">Guardar</button><button class="btn txt body" type="button">Cancelar</button></section>
+</main>
+<nav class="bbar caption" aria-label="Navegación principal">
+<a class="bd" href="../inicio/inicio-p01-resumen-m.dc.html"><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</a>
+<a class="bd" href="../comidas/comidas-p10-semana-m.dc.html"><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Comidas</a>
+<a class="bd" href="../shell/shell-p03-registrar-gasto-m.dc.html" aria-label="Registrar gasto"><span class="plus"><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></span></a>
+<a class="bd" href="../compras/compras-p13-lista-m.dc.html"><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="m2.05 2.05 1.099-.028a1 1 0 0 1 1.008.815l2.69 14.347A1 1 0 0 0 7.83 18H18M4.563 5h16.435a1 1 0 0 1 .981 1.204l-1.026 6.226A2 2 0 0 1 18.962 14H6.25M16 20a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M6 20a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></svg>Compras</a>
+<a class="bd" href="#"><svg class="ic md" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0 -16 0"/></svg>Buscar</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":1850}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const MIN='−';
+const money=(c)=>{const n=Math.abs(c);return (c<0?MIN:'')+'$'+String(Math.floor(n/100)).replace(/\B(?=(\d{3})+(?!\d))/g,',')+'.'+String(n%100).padStart(2,'0');};
+const plus=(c)=>(c>0?'+':'')+money(c);
+const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DIA=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const fd=(iso)=>{const p=iso.split('-').map(Number);return p[2]+'-'+MES[p[1]-1]+'-'+p[0];};
+const fdl=(iso)=>{const p=iso.split('-').map(Number);return DIA[new Date(Date.UTC(p[0],p[1]-1,p[2])).getUTCDay()]+' '+p[2]+' '+MES[p[1]-1]+' '+p[0];};
+const fm=(ym)=>{const p=ym.split('-').map(Number);return MES[p[1]-1]+'-'+p[0];};
+const pct=(a,b)=>Math.floor((200*a+b)/(2*b));
+    const I={"esperado":{"q15_cents":1426000,"q30_cents":1478000,"rige_desde":"2026-10-01"},"quincenas":[{"fecha":"2026-10-15","estado":"capturada","monto_cents":1426000,"capturada_por":"axel","capturada_el":"2026-10-15T18:42:00-06:00"},{"fecha":"2026-10-30","estado":"esperada","monto_cents":1478000,"capturada_por":null,"capturada_el":null}],"extras":[{"fecha":"2026-10-04","concepto":"Venta de bicicleta usada","monto_cents":135000},{"fecha":"2026-10-18","concepto":"Reembolso de seguro dental","monto_cents":74000}],"total_mes_cents":3113000};
+    const cap=I.quincenas.filter((q)=>q.estado==='capturada').reduce((s,q)=>s+q.monto_cents,0);
+    const esp=I.quincenas.filter((q)=>q.estado==='esperada').reduce((s,q)=>s+q.monto_cents,0);
+    const ext=I.extras.reduce((s,x)=>s+x.monto_cents,0);
+    const kpis=[
+      {label:'Capturado',value:money(cap),sub:'1 quincena'},
+      {label:'Esperado pendiente',value:money(esp),sub:'1 quincena sin capturar'},
+      {label:'Extras',value:money(ext),sub:I.extras.length+' ingresos extra'},
+      {label:'Total del mes',value:money(I.total_mes_cents),sub:'Capturado, esperado y extras'}];
+    const filas=[];
+    I.quincenas.forEach((q)=>{const dia=Number(q.fecha.slice(8));const ok=q.estado==='capturada';
+      filas.push({iso:q.fecha,fecha:fdl(q.fecha),concepto:'Quincena del '+dia,estado:ok?'Capturada':'Esperada',bdg:ok?'bdg bs':'bdg bn',monto:money(q.monto_cents),nota:ok?'Axel · '+fd(q.capturada_el.slice(0,10))+' '+q.capturada_el.slice(11,16):'Sin capturar · monto esperado',aria:'Editar quincena del '+dia});});
+    I.extras.forEach((x)=>filas.push({iso:x.fecha,fecha:fdl(x.fecha),concepto:x.concepto,estado:'Extra',bdg:'bdg bi',monto:money(x.monto_cents),nota:'Ingreso extra',aria:'Editar '+x.concepto}));
+    filas.sort((a,b)=>a.iso<b.iso?-1:1);
+    const q30=I.quincenas.find((q)=>q.estado==='esperada');
+    return {mesLabel:fm('2026-10'),kpis:kpis,filas:filas,total:money(I.total_mes_cents),form:{iso:q30.fecha,monto:money(q30.monto_cents)}};
+  }
+}
+</script></body></html>

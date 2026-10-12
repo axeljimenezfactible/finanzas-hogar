@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Inicio · Tendencias</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--ui-text-link-hover)}
+*{box-sizing:border-box}
+a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ic24{width:var(--size-icon-md);height:var(--size-icon-md)}
+.n{font-variant-numeric:tabular-nums}
+.t2{color:var(--ui-text-secondary)}
+.row{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+.card{background:var(--ui-surface-card);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-0)}
+.cl{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);color:var(--ui-text-default);text-decoration:none}
+.cl:hover{color:var(--ui-text-default);border-color:var(--ui-border-control-hover)}
+.go{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-touch-min);color:var(--ui-text-link);text-decoration:underline;font-weight:var(--font-weight-medium)}
+.bd{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);width:max-content}
+.bd .ic{width:var(--space-4);height:var(--space-4)}
+.bw{color:var(--ui-role-warning);background:var(--ui-role-warning-surface)}
+.bi{color:var(--ui-role-info);background:var(--ui-role-info-surface)}
+.bic{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default)}
+.tabs{display:flex;gap:var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider);overflow-x:auto}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-touch-min);color:var(--ui-text-secondary);text-decoration:none;border-bottom:var(--border-width-focus) solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.inc{color:var(--ui-role-income)} .exp{color:var(--ui-role-expense)} .sav{color:var(--ui-role-savings)}
+.dot{width:var(--size-viz-marker);height:var(--size-viz-marker);border-radius:var(--radius-full);flex:none}
+.sq{width:var(--size-viz-marker);height:var(--size-viz-marker);flex:none}
+.meter{display:block;height:var(--size-meter-height);border-radius:var(--radius-full);background:var(--ui-viz-track);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:var(--radius-full);background:var(--ui-viz-meter)}
+.nv{display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-sidebar-item);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-secondary);text-decoration:none;flex:1;font:inherit}
+.nv:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.nv[aria-current="page"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.nv[aria-current="page"] svg{color:var(--ui-icon-selected)}
+.chv{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-width:var(--size-sidebar-item);height:var(--size-sidebar-item);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default);font:inherit}
+.av{display:inline-flex;align-items:center;justify-content:center;width:var(--size-avatar);height:var(--size-avatar);border-radius:var(--radius-full);background:var(--ui-surface-hover);border:var(--border-width-focus) solid var(--ui-person-axel);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.b2{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--size-control-fine);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-default);font:inherit;font-weight:var(--font-weight-medium);text-decoration:none}
+.b2:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.bp{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--size-control-fine);padding:0 var(--space-3);border-radius:var(--radius-sm);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary);font-weight:var(--font-weight-medium);text-decoration:none}
+.bp:hover{background:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+.cle{padding:var(--space-6);flex:1 1 18rem;min-width:0}
+.cle .go{margin-top:auto}
+.sk{display:block;background:var(--ui-skeleton-on-card);border-radius:var(--radius-sm)}
+.err{color:var(--ui-role-error)}
+.ax{fill:var(--ui-text-secondary);font-variant-numeric:tabular-nums} .lb{fill:var(--ui-text-default);font-variant-numeric:tabular-nums}
+.te{text-anchor:end} .tm{text-anchor:middle}
+.gr,.bl,.hoy{stroke-width:1} .gr{stroke:var(--ui-viz-grid)} .bl,.hoy{stroke:var(--ui-viz-baseline)}
+.c1f{fill:var(--ui-chart-1)} .c2f{fill:var(--ui-chart-2)} .pst{stroke:var(--ui-surface-card);stroke-width:1.5}
+.ln{fill:none;stroke-width:var(--size-viz-line);stroke-linecap:round;stroke-linejoin:round}
+.s1l{stroke:var(--ui-chart-1)} .s2l{stroke:var(--ui-chart-2);stroke-dasharray:var(--viz-series-2-dash)} .pr{stroke-dasharray:var(--viz-series-5-dash)}
+.ar1{fill:color-mix(in srgb,var(--ui-chart-1) 20%,var(--ui-surface-card))}
+.mk1,.mk2,.mkpa,.mkpx{stroke:var(--ui-surface-card);stroke-width:2} .mk1{fill:var(--ui-chart-1)} .mk2{fill:var(--ui-chart-2)} .mkpa{fill:var(--ui-person-axel)} .mkpx{fill:var(--ui-person-ximena)}
+.pa{stroke:var(--ui-person-axel)} .px{stroke:var(--ui-person-ximena);stroke-dasharray:var(--viz-series-2-dash)} .pm{stroke-dasharray:var(--viz-series-3-dash);stroke-width:1.5}
+.fig{margin:0;display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);flex:1 1 28rem;min-width:0}
+.cap{display:flex;flex-direction:column;gap:var(--space-1)}
+.lg{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4)}
+.lgk{display:inline-flex;align-items:center;gap:var(--space-2)}
+.lgm{width:var(--space-6);height:var(--space-3);flex:none}
+.tb{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-touch-min);padding:0;border:0;background:transparent;color:var(--ui-text-link);text-decoration:underline;font:inherit;align-self:flex-start}
+</style>
+</helmet>
+<div style="display:flex;flex-wrap:wrap;align-items:stretch;min-height:1950px;background:var(--ui-surface-page)">
+  <nav aria-label="Secciones" style="flex:1 1 var(--layout-sidebar-width);display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-3) var(--space-2);background:var(--ui-surface-card);border-right:var(--border-width-default) solid var(--ui-border-divider)">
+    <div class="row" style="justify-content:space-between;padding:0 0 var(--space-2) var(--space-2)">
+      <span class="small" style="font-weight:var(--font-weight-semibold)">Finanzas Hogar</span>
+      <button class="chv" type="button" aria-haspopup="menu" aria-label="Menú de Axel: Cuenta, Apariencia, Cerrar sesión"><span class="av caption">A</span><span class="small">Axel</span></button>
+    </div>
+    <a class="nv small" href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg><span style="flex:1">Buscar</span><span class="caption t2">Ctrl+K</span></a>
+    <a class="nv small" href="../shell/shell-p03-registrar-gasto-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg><span>Registrar gasto</span></a>
+    <span style="display:block;height:var(--space-2)"></span>
+    <a class="nv small" aria-current="page" href="inicio-p01-resumen-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Inicio</span></a>
+    <sc-for list="{{ nav }}" as="it" hint-placeholder-count="8">
+      <div style="display:flex;align-items:center;gap:var(--space-1)">
+        <a class="nv small" href="{{ it.href }}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ it.d }}"/></svg><span>{{ it.name }}</span></a>
+        <sc-if value="{{ it.kids }}" hint-placeholder-val="{{ true }}"><button class="chv" type="button" aria-expanded="false" aria-label="{{ it.lbl }}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></sc-if>
+      </div>
+    </sc-for>
+    <div class="row" style="margin-top:auto;padding-top:var(--space-4)">
+      <button class="nv small" type="button" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>Tema oscuro</button>
+      <button class="chv" type="button" aria-label="Colapsar barra lateral"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM9 3v18"/></svg></button>
+    </div>
+  </nav>
+  <main style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column">
+    <header class="row" style="justify-content:space-between;min-height:var(--layout-topbar-height-desktop);padding:0 clamp(var(--space-4),4vw,var(--space-12));border-bottom:var(--border-width-default) solid var(--ui-border-divider)">
+      <nav aria-label="Migas de pan" class="small t2"><span aria-current="page">Inicio</span></nav>
+      <div class="row">
+        <a class="b2 small" href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg>Buscar<span class="caption t2">Ctrl+K</span></a>
+        <a class="bp small" href="../shell/shell-p03-registrar-gasto-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>Registrar gasto</a>
+        <button class="bic" type="button" aria-label="Más acciones: Foto de ticket"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></svg></button>
+      </div>
+    </header>
+    <div style="width:100%;max-width:76rem;margin:0 auto;padding:var(--space-6) clamp(var(--space-4),4vw,var(--space-12)) var(--space-12);display:flex;flex-direction:column;gap:var(--space-6)">
+    <h1 class="title-1" style="display:flex;align-items:center;gap:var(--space-2);margin:0"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</h1>
+    <div class="tabs small" role="tablist" aria-label="Subsecciones de Inicio">
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-resumen-e.dc.html">Resumen</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-detalle-e.dc.html">Detalle</a>
+      <a class="tab" role="tab" aria-selected="true" href="inicio-p01-tendencias-e.dc.html">Tendencias</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-calendario-e.dc.html">Calendario</a>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-4) var(--space-6)">
+      <figure class="card fig">
+        <figcaption class="cap"><span class="small t2">Plan contra real por mes</span><span class="caption t2">Últimos 12 meses · Todas las categorías</span><span class="small t2 n">En oct 2026: real $20,525.78 de un plan de $27,586.00</span></figcaption>
+<svg class="caption" viewBox="0 0 500 280" role="img" aria-label="Columnas de real y plan por mes; datos de mayo a octubre de 2026" style="width:100%;height:auto;display:block"><defs><pattern id="pt1e" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" class="c2f"/><line x1="0" y1="0" x2="0" y2="6" class="pst"/></pattern></defs><line x1="52" y1="256" x2="492" y2="256" class="bl"/><text x="46" y="260" class="ax te">$0</text><line x1="52" y1="175" x2="492" y2="175" class="gr"/><text x="46" y="179" class="ax te">$10 mil</text><line x1="52" y1="93" x2="492" y2="93" class="gr"/><text x="46" y="97" class="ax te">$20 mil</text><line x1="52" y1="12" x2="492" y2="12" class="gr"/><text x="46" y="16" class="ax te">$30 mil</text><text x="70" y="272" class="ax tm">nov</text><text x="107" y="272" class="ax tm">dic</text><text x="144" y="272" class="ax tm">ene</text><text x="180" y="272" class="ax tm">feb</text><text x="217" y="272" class="ax tm">mar</text><text x="254" y="272" class="ax tm">abr</text><text x="290" y="272" class="ax tm">may</text><path d="M277 256V66Q277 62 281 62H285Q289 62 289 66V256Z" class="c1f"/><path d="M291 256V53Q291 49 295 49H300Q304 49 304 53V256Z" fill="url(#pt1e)"/><text x="327" y="272" class="ax tm">jun</text><path d="M314 256V48Q314 44 318 44H322Q326 44 326 48V256Z" class="c1f"/><path d="M328 256V53Q328 49 332 49H336Q340 49 340 53V256Z" fill="url(#pt1e)"/><text x="364" y="272" class="ax tm">jul</text><path d="M350 256V61Q350 57 354 57H359Q363 57 363 61V256Z" class="c1f"/><path d="M365 256V48Q365 44 369 44H373Q377 44 377 48V256Z" fill="url(#pt1e)"/><text x="400" y="272" class="ax tm">ago</text><path d="M387 256V38Q387 34 391 34H395Q399 34 399 38V256Z" class="c1f"/><path d="M401 256V48Q401 44 405 44H410Q414 44 414 48V256Z" fill="url(#pt1e)"/><text x="437" y="272" class="ax tm">sep</text><path d="M424 256V56Q424 52 428 52H432Q436 52 436 56V256Z" class="c1f"/><path d="M438 256V48Q438 44 442 44H446Q450 44 450 48V256Z" fill="url(#pt1e)"/><text x="474" y="272" class="ax tm">oct</text><path d="M460 256V93Q460 89 464 89H469Q473 89 473 93V256Z" class="c1f"/><path d="M475 256V36Q475 32 479 32H483Q487 32 487 36V256Z" fill="url(#pt1e)"/><text x="162" y="134" class="ax tm">Sin datos de nov a abr</text></svg>
+        <div class="lg small"><span class="lgk"><svg class="lgm" viewBox="0 0 24 12" aria-hidden="true"><rect x="6" width="12" height="12" class="c1f"/></svg>Real</span><span class="lgk"><svg class="lgm" viewBox="0 0 24 12" aria-hidden="true"><rect x="6" width="12" height="12" fill="url(#pt1e)"/></svg>Plan</span></div>
+        <button class="tb small" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>Ver como tabla</button>
+      </figure>
+      <figure class="card fig">
+        <figcaption class="cap"><span class="small t2">Devengado contra efectivo</span><span class="caption t2">Oct 2026 a sep 2027 · acumulado desde oct 2026</span><span class="small t2 n">Hasta sep 2027, con proyección desde abr 2027: devengado acumulado $242,520.65 y efectivo acumulado $257,740.56</span></figcaption>
+<svg class="caption" viewBox="0 0 500 280" role="img" aria-label="Área apilada de efectivo acumulado con la línea de devengado acumulado, de octubre de 2026 a septiembre de 2027" style="width:100%;height:auto;display:block"><line x1="60" y1="256" x2="488" y2="256" class="bl"/><text x="54" y="260" class="ax te">$0</text><line x1="60" y1="176" x2="488" y2="176" class="gr"/><text x="54" y="180" class="ax te">$100 mil</text><line x1="60" y1="96" x2="488" y2="96" class="gr"/><text x="54" y="100" class="ax te">$200 mil</text><line x1="60" y1="16" x2="488" y2="16" class="gr"/><text x="54" y="20" class="ax te">$300 mil</text><polygon points="60,256 60,231 99,204 138,181 177,159 216,136 255,114 293,102 332,91 371,79 410,69 449,60 488,50 488,256" class="ar1"/><polyline points="60,231 99,204 138,181 177,159 216,136 255,114 293,102" class="ln s1l"/><polyline points="293,102 332,91 371,79 410,69 449,60 488,50" class="ln s1l pr"/><polyline points="60,235 99,213 138,192 177,170 216,148 255,126 293,114 332,103 371,91 410,82 449,72 488,62" class="ln s2l"/><circle cx="60" cy="231" r="5" class="mk1"/><rect x="55" y="230" width="10" height="10" class="mk2"/><text x="60" y="272" class="ax tm">oct</text><circle cx="99" cy="204" r="5" class="mk1"/><rect x="94" y="208" width="10" height="10" class="mk2"/><text x="99" y="272" class="ax tm">nov</text><circle cx="138" cy="181" r="5" class="mk1"/><rect x="133" y="187" width="10" height="10" class="mk2"/><text x="138" y="272" class="ax tm">dic</text><circle cx="177" cy="159" r="5" class="mk1"/><rect x="172" y="165" width="10" height="10" class="mk2"/><text x="177" y="272" class="ax tm">ene</text><circle cx="216" cy="136" r="5" class="mk1"/><rect x="211" y="143" width="10" height="10" class="mk2"/><text x="216" y="272" class="ax tm">feb</text><circle cx="255" cy="114" r="5" class="mk1"/><rect x="250" y="121" width="10" height="10" class="mk2"/><text x="255" y="272" class="ax tm">mar</text><circle cx="293" cy="102" r="5" class="mk1"/><rect x="288" y="109" width="10" height="10" class="mk2"/><text x="293" y="272" class="ax tm">abr</text><circle cx="332" cy="91" r="5" class="mk1"/><rect x="327" y="98" width="10" height="10" class="mk2"/><text x="332" y="272" class="ax tm">may</text><circle cx="371" cy="79" r="5" class="mk1"/><rect x="366" y="86" width="10" height="10" class="mk2"/><text x="371" y="272" class="ax tm">jun</text><circle cx="410" cy="69" r="5" class="mk1"/><rect x="405" y="77" width="10" height="10" class="mk2"/><text x="410" y="272" class="ax tm">jul</text><circle cx="449" cy="60" r="5" class="mk1"/><rect x="444" y="67" width="10" height="10" class="mk2"/><text x="449" y="272" class="ax tm">ago</text><circle cx="488" cy="50" r="5" class="mk1"/><rect x="483" y="57" width="10" height="10" class="mk2"/><text x="488" y="272" class="ax tm">sep</text><line x1="85" y1="16" x2="85" y2="256" class="hoy"/><text x="89" y="26" class="lb">Hoy</text><line x1="293" y1="16" x2="293" y2="256" class="gr"/><text x="297" y="26" class="ax">Proyección</text><text x="177" y="149" class="ax tm">Pagado por adelantado</text></svg>
+        <div class="lg small n"><span class="lgk"><svg class="lgm" viewBox="0 0 24 12" aria-hidden="true"><line x1="0" y1="6" x2="24" y2="6" class="ln s1l"/><circle cx="12" cy="6" r="4" class="mk1"/></svg>Efectivo acumulado $257,740.56</span><span class="lgk"><svg class="lgm" viewBox="0 0 24 12" aria-hidden="true"><line x1="0" y1="6" x2="24" y2="6" class="ln s2l"/><rect x="8" y="2" width="8" height="8" class="mk2"/></svg>Devengado acumulado $242,520.65</span></div>
+        <p class="caption t2 n" style="margin:0">Pagado por adelantado: la diferencia acumulada al cierre de sep 2027 es −$15,219.91, así que la capa de devengado sin pagar vale cero. Meses 7 a 12 (trazo discontinuo): proyección con solo compromisos contratados (interruptor apagado).</p>
+        <button class="tb small" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>Ver como tabla</button>
+      </figure>
+      <figure class="card fig">
+        <figcaption class="cap"><span class="small t2">Deuda viva proyectada</span><span class="caption t2">Oct 2026 a sep 2027 · todas las líneas · al cierre de cada mes</span><span class="small t2 n">Deuda viva al cierre de oct 2026: $42,744.75; al cierre de sep 2027: $0.00</span></figcaption>
+<svg class="caption" viewBox="0 0 500 280" role="img" aria-label="Línea de deuda viva al cierre de cada mes, de octubre de 2026 a septiembre de 2027" style="width:100%;height:auto;display:block"><line x1="56" y1="256" x2="484" y2="256" class="bl"/><text x="50" y="260" class="ax te">$0</text><line x1="56" y1="138" x2="484" y2="138" class="gr"/><text x="50" y="142" class="ax te">$25 mil</text><line x1="56" y1="20" x2="484" y2="20" class="gr"/><text x="50" y="24" class="ax te">$50 mil</text><polyline points="56,54 95,110 134,123 173,148 212,156 251,181 289,202 328,219 367,235 406,242 445,249 484,256" class="ln s1l"/><circle cx="56" cy="54" r="5" class="mk1"/><text x="56" y="272" class="ax tm">oct</text><circle cx="95" cy="110" r="5" class="mk1"/><text x="95" y="272" class="ax tm">nov</text><circle cx="134" cy="123" r="5" class="mk1"/><text x="134" y="272" class="ax tm">dic</text><circle cx="173" cy="148" r="5" class="mk1"/><text x="173" y="272" class="ax tm">ene</text><circle cx="212" cy="156" r="5" class="mk1"/><text x="212" y="272" class="ax tm">feb</text><circle cx="251" cy="181" r="5" class="mk1"/><text x="251" y="272" class="ax tm">mar</text><circle cx="289" cy="202" r="5" class="mk1"/><text x="289" y="272" class="ax tm">abr</text><circle cx="328" cy="219" r="5" class="mk1"/><text x="328" y="272" class="ax tm">may</text><circle cx="367" cy="235" r="5" class="mk1"/><text x="367" y="272" class="ax tm">jun</text><circle cx="406" cy="242" r="5" class="mk1"/><text x="406" y="272" class="ax tm">jul</text><circle cx="445" cy="249" r="5" class="mk1"/><text x="445" y="272" class="ax tm">ago</text><circle cx="484" cy="256" r="5" class="mk1"/><text x="484" y="272" class="ax tm">sep</text><text x="64" y="52" class="lb">$42,744.75</text><text x="484" y="246" class="lb te">$0.00</text></svg>
+        <button class="tb small" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>Ver como tabla</button>
+      </figure>
+      <figure class="card fig">
+        <figcaption class="cap"><span class="small t2">Costo semanal y kcal de comidas</span><span class="caption t2">Últimas 12 semanas, de lunes a domingo</span></figcaption>
+        <div class="cap"><span class="small">Costo por semana</span><span class="small t2 n">Semana Lun 12 al Dom 18 oct: costo $732.90</span></div>
+<svg class="caption" viewBox="0 0 500 240" role="img" aria-label="Línea del costo de comidas por semana, 12 semanas" style="width:100%;height:auto;display:block"><line x1="52" y1="216" x2="484" y2="216" class="bl"/><text x="46" y="220" class="ax te">$0</text><line x1="52" y1="118" x2="484" y2="118" class="gr"/><text x="46" y="122" class="ax te">$500</text><line x1="52" y1="20" x2="484" y2="20" class="gr"/><text x="46" y="24" class="ax te">$1 mil</text><polyline points="52,56 91,78 131,77 170,33 209,37 248,30 288,64 327,42 366,29 405,74 445,53 484,72" class="ln s1l"/><circle cx="52" cy="56" r="5" class="mk1"/><text x="52" y="232" class="ax tm">27 jul</text><circle cx="91" cy="78" r="5" class="mk1"/><circle cx="131" cy="77" r="5" class="mk1"/><text x="131" y="232" class="ax tm">10 ago</text><circle cx="170" cy="33" r="5" class="mk1"/><circle cx="209" cy="37" r="5" class="mk1"/><text x="209" y="232" class="ax tm">24 ago</text><circle cx="248" cy="30" r="5" class="mk1"/><circle cx="288" cy="64" r="5" class="mk1"/><text x="288" y="232" class="ax tm">7 sep</text><circle cx="327" cy="42" r="5" class="mk1"/><circle cx="366" cy="29" r="5" class="mk1"/><text x="366" y="232" class="ax tm">21 sep</text><circle cx="405" cy="74" r="5" class="mk1"/><circle cx="445" cy="53" r="5" class="mk1"/><text x="445" y="232" class="ax tm">5 oct</text><circle cx="484" cy="72" r="5" class="mk1"/><text x="366" y="19" class="lb tm">$952.70</text><text x="91" y="98" class="lb tm">$706.30</text><text x="484" y="92" class="lb te">$732.90</text></svg>
+        <div class="cap"><span class="small">kcal al día por persona</span><span class="small t2 n">Semana Lun 12 al Dom 18 oct: Axel 2,255 kcal al día con meta de 2,364; Ximena 1,771 kcal al día con meta de 1,900</span></div>
+<svg class="caption" viewBox="0 0 500 240" role="img" aria-label="Líneas de kcal al día de Axel y Ximena con su meta, 12 semanas; eje desde 1,600" style="width:100%;height:auto;display:block"><line x1="52" y1="216" x2="380" y2="216" class="bl"/><text x="46" y="220" class="ax te">1,600</text><line x1="52" y1="138" x2="380" y2="138" class="gr"/><text x="46" y="142" class="ax te">2,000</text><line x1="52" y1="59" x2="380" y2="59" class="gr"/><text x="46" y="63" class="ax te">2,400</text><line x1="52" y1="66" x2="380" y2="66" class="ln pa pm"/><polyline points="52,72 82,51 112,83 141,50 171,83 201,69 231,54 261,66 291,95 320,88 350,105 380,88" class="ln pa"/><circle cx="52" cy="72" r="5" class="mkpa"/><circle cx="82" cy="51" r="5" class="mkpa"/><circle cx="112" cy="83" r="5" class="mkpa"/><circle cx="141" cy="50" r="5" class="mkpa"/><circle cx="171" cy="83" r="5" class="mkpa"/><circle cx="201" cy="69" r="5" class="mkpa"/><circle cx="231" cy="54" r="5" class="mkpa"/><circle cx="261" cy="66" r="5" class="mkpa"/><circle cx="291" cy="95" r="5" class="mkpa"/><circle cx="320" cy="88" r="5" class="mkpa"/><circle cx="350" cy="105" r="5" class="mkpa"/><circle cx="380" cy="88" r="5" class="mkpa"/><text x="388" y="92" class="lb">Axel 2,255</text><text x="388" y="70" class="ax">Meta 2,364</text><line x1="52" y1="157" x2="380" y2="157" class="ln px pm"/><polyline points="52,137 82,185 112,175 141,156 171,158 201,146 231,152 261,168 291,147 320,195 350,186 380,182" class="ln px"/><rect x="47" y="132" width="10" height="10" class="mkpx"/><rect x="77" y="180" width="10" height="10" class="mkpx"/><rect x="107" y="170" width="10" height="10" class="mkpx"/><rect x="136" y="151" width="10" height="10" class="mkpx"/><rect x="166" y="153" width="10" height="10" class="mkpx"/><rect x="196" y="141" width="10" height="10" class="mkpx"/><rect x="226" y="147" width="10" height="10" class="mkpx"/><rect x="256" y="163" width="10" height="10" class="mkpx"/><rect x="286" y="142" width="10" height="10" class="mkpx"/><rect x="315" y="190" width="10" height="10" class="mkpx"/><rect x="345" y="181" width="10" height="10" class="mkpx"/><rect x="375" y="177" width="10" height="10" class="mkpx"/><text x="388" y="186" class="lb">Ximena 1,771</text><text x="388" y="161" class="ax">Meta 1,900</text><text x="52" y="232" class="ax tm">27 jul</text><text x="112" y="232" class="ax tm">10 ago</text><text x="171" y="232" class="ax tm">24 ago</text><text x="231" y="232" class="ax tm">7 sep</text><text x="291" y="232" class="ax tm">21 sep</text><text x="350" y="232" class="ax tm">5 oct</text></svg>
+        <div class="lg small"><span class="lgk"><svg class="lgm" viewBox="0 0 24 12" aria-hidden="true"><line x1="0" y1="6" x2="24" y2="6" class="ln pa"/><circle cx="12" cy="6" r="4" class="mkpa"/></svg>Axel</span><span class="lgk"><svg class="lgm" viewBox="0 0 24 12" aria-hidden="true"><line x1="0" y1="6" x2="24" y2="6" class="ln px"/><rect x="8" y="2" width="8" height="8" class="mkpx"/></svg>Ximena</span><span class="lgk"><svg class="lgm" viewBox="0 0 24 12" aria-hidden="true"><line x1="0" y1="6" x2="24" y2="6" class="ln pa pm"/></svg>Meta (mismo color, punteada)</span></div>
+        <button class="tb small" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>Ver como tabla</button>
+      </figure>
+    </div>
+
+    <section class="card" aria-labelledby="estados-tendencias" style="display:flex;flex-wrap:wrap;gap:var(--space-4) var(--space-8);padding:var(--space-6)">
+      <h2 id="estados-tendencias" class="title-3" style="margin:0;flex-basis:100%">Estados</h2>
+      <div style="flex:1 1 14rem;display:flex;flex-direction:column;gap:var(--space-2)"><span class="caption t2">Vacío · Plan contra real</span><span class="small t2">Aún no hay presupuesto capturado</span><a class="go small" href="../ajustes/ajustes-p26-s02-presupuesto-e.dc.html">Capturar presupuesto</a></div>
+      <div style="flex:1 1 14rem;display:flex;flex-direction:column;gap:var(--space-2)" aria-busy="true" aria-label="Gráfica cargando"><span class="caption t2">Carga</span><span class="sk" style="height:var(--space-12)"></span><span class="caption t2">Esqueleto del alto final, sin ejes falsos</span></div>
+      <div style="flex:1 1 14rem;display:flex;flex-direction:column;gap:var(--space-2)"><span class="caption t2">Error</span><span class="small" style="display:flex;align-items:flex-start;gap:var(--space-2)"><svg class="ic err" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 8v4M12 16h.01"/></svg>No se pudo cargar la gráfica. Revisa que estés en la red de casa.</span><button class="b2 small" type="button" style="align-self:flex-start"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></svg>Reintentar</button></div>
+    </section>
+
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1950}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const n = (name, href, d, kids) => ({ name, href: '../' + href + '-e.dc.html', d, kids, lbl: 'Desplegar ' + name });
+    const nav = [
+      n('Gastos', 'gastos/gastos-p02-todos', 'M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1ZM16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11', true),
+      n('Presupuesto', 'presupuesto/presupuesto-p06-mes', 'M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4', true),
+      n('Comidas', 'comidas/comidas-p10-semana', 'M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7', true),
+      n('Compras y tiendas', 'compras/compras-p13-lista', 'M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12', true),
+      n('Créditos', 'creditos/creditos-p17-lineas', 'M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20', true),
+      n('Salud', 'salud-reportes/salud-p21-salud', 'M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7ZM3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27', false),
+      n('Reportes', 'salud-reportes/reportes-p23-centro', 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M8 18v-1M12 18v-6M16 18v-3', true),
+      n('Ajustes', 'ajustes/ajustes-p26-s01-cuenta-roles', 'M14 17H5M19 7h-9M14 17a3 3 0 1 0 6 0a3 3 0 1 0-6 0M4 7a3 3 0 1 0 6 0a3 3 0 1 0-6 0', true)
+    ];
+
+    return { nav };
+  }
+}
+</script>
+</body>
+</html>

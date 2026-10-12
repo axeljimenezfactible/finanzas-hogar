@@ -17,14 +17,14 @@
     },
     "inicio/inicio-p01-detalle-m.dc.html": {
       "w": 412,
-      "h": 4250,
+      "h": 4298,
       "title": "P-01 · Inicio › Detalle · móvil",
       "page": "inicio",
       "is_interactive": false
     },
     "inicio/inicio-p01-detalle-e.dc.html": {
       "w": 1440,
-      "h": 3000,
+      "h": 3032,
       "title": "P-01 · Inicio › Detalle · escritorio",
       "page": "inicio",
       "expand": "fill",
