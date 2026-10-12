@@ -2,8 +2,8 @@
  "pantalla": "P-26.14",
  "combinacion": "escritorio-oscuro",
  "alcance": "body",
- "evaluados": 74,
- "pares_unicos": 14,
+ "evaluados": 83,
+ "pares_unicos": 15,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
@@ -55,6 +55,22 @@
    ]
   },
   {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-settings size-5 shrink-0 t"
+    }
+   ]
+  },
+  {
    "tipo": "ui",
    "subtipo": "seleccion",
    "fg": "#C9CFFF",
@@ -102,7 +118,7 @@
    "umbral": 3,
    "grande": false,
    "razon": 7.975,
-   "elementos": 3,
+   "elementos": 11,
    "ejemplos": [
     {
      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
@@ -113,8 +129,8 @@
      "texto": "lucide lucide-plus size-5 text-icon-defa"
     },
     {
-     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
-     "texto": "lucide lucide-monitor size-5 text-icon-d"
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-house lucide-home size-5 s"
     }
    ]
   },

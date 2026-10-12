@@ -315,3 +315,31 @@ C-157,Aviso breve,icono · info,claro,rol info sobre ui.surface.raised,color.rol
 C-157,Aviso breve,icono · info,oscuro,rol info sobre ui.surface.raised,color.role.info.dark,color.neutral.900,#6BC3FD,#36363A,6.21,interfaz 3,3.0,true,igual
 C-158,Lo que flota,borde,claro,ui.border.divider sobre ui.surface.raised,color.neutral.200,color.neutral.50,#E5E6E9,#FAFAFB,1.19,decorativo,exento,exento,nuevo
 C-158,Lo que flota,borde,oscuro,ui.border.divider sobre ui.surface.raised,color.neutral.800,color.neutral.900,#4D4E53,#36363A,1.44,decorativo,exento,exento,nuevo
+C-159,Barómetro,verde · tramo del arco,claro,rol success sobre ui.surface.card,color.role.success.light,color.neutral.100,#207B3E,#F2F2F4,4.73,interfaz 3,3.0,true,igual
+C-159,Barómetro,verde · tramo del arco,oscuro,rol success sobre ui.surface.card,color.role.success.dark,color.neutral.900,#7ECF90,#36363A,6.42,interfaz 3,3.0,true,igual
+C-160,Barómetro,amarillo · tramo del arco,claro,rol warning sobre ui.surface.card,color.role.warning.light,color.neutral.100,#8B5D00,#F2F2F4,5.12,interfaz 3,3.0,true,igual
+C-160,Barómetro,amarillo · tramo del arco,oscuro,rol warning sobre ui.surface.card,color.role.warning.dark,color.neutral.900,#E5AE5B,#36363A,6.03,interfaz 3,3.0,true,igual
+C-161,Barómetro,rojo · tramo del arco,claro,rol error sobre ui.surface.card,color.role.error.light,color.neutral.100,#A34449,#F2F2F4,5.39,interfaz 3,3.0,true,igual
+C-161,Barómetro,rojo · tramo del arco,oscuro,rol error sobre ui.surface.card,color.role.error.dark,color.neutral.900,#FC9999,#36363A,5.81,interfaz 3,3.0,true,igual
+C-162,Barómetro,verde · valor sobre la pista,claro,rol success sobre ui.viz.track,color.role.success.light,color.neutral.200,#207B3E,#E5E6E9,4.24,interfaz 3,3.0,true,nuevo
+C-162,Barómetro,verde · valor sobre la pista,oscuro,rol success sobre ui.viz.track,color.role.success.dark,color.neutral.800,#7ECF90,#4D4E53,4.43,interfaz 3,3.0,true,nuevo
+C-163,Barómetro,amarillo · valor sobre la pista,claro,rol warning sobre ui.viz.track,color.role.warning.light,color.neutral.200,#8B5D00,#E5E6E9,4.59,interfaz 3,3.0,true,nuevo
+C-163,Barómetro,amarillo · valor sobre la pista,oscuro,rol warning sobre ui.viz.track,color.role.warning.dark,color.neutral.800,#E5AE5B,#4D4E53,4.16,interfaz 3,3.0,true,nuevo
+C-164,Barómetro,rojo · valor sobre la pista,claro,rol error sobre ui.viz.track,color.role.error.light,color.neutral.200,#A34449,#E5E6E9,4.83,interfaz 3,3.0,true,nuevo
+C-164,Barómetro,rojo · valor sobre la pista,oscuro,rol error sobre ui.viz.track,color.role.error.dark,color.neutral.800,#FC9999,#4D4E53,4.01,interfaz 3,3.0,true,nuevo
+C-165,Barómetro,verde · insignia de estado,claro,rol success sobre superficie de rol success,color.role.success.light,color.role.success.surface-light,#207B3E,#E3FAE6,4.81,texto 4.5,4.5,true,igual
+C-165,Barómetro,verde · insignia de estado,oscuro,rol success sobre superficie de rol success,color.role.success.dark,color.role.success.surface-dark,#7ECF90,#0A421E,6.19,texto 4.5,4.5,true,igual
+C-166,Barómetro,amarillo · insignia de estado,claro,rol warning sobre superficie de rol warning,color.role.warning.light,color.role.warning.surface-light,#8B5D00,#FFF0DC,5.11,texto 4.5,4.5,true,igual
+C-166,Barómetro,amarillo · insignia de estado,oscuro,rol warning sobre superficie de rol warning,color.role.warning.dark,color.role.warning.surface-dark,#E5AE5B,#4C3000,6.09,texto 4.5,4.5,true,igual
+C-167,Barómetro,rojo · insignia de estado,claro,rol error sobre superficie de rol error,color.role.error.light,color.role.error.surface-light,#A34449,#FFEEED,5.37,texto 4.5,4.5,true,igual
+C-167,Barómetro,rojo · insignia de estado,oscuro,rol error sobre superficie de rol error,color.role.error.dark,color.role.error.surface-dark,#FC9999,#5A2124,6.05,texto 4.5,4.5,true,igual
+C-168,Barómetro,dígito,claro,ui.text.default sobre ui.surface.card,color.neutral.900,color.neutral.100,#36363A,#F2F2F4,10.75,texto grande 3,3.0,true,igual
+C-168,Barómetro,dígito,oscuro,ui.text.default sobre ui.surface.card,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto grande 3,3.0,true,igual
+C-169,Barómetro,texto de las marcas y segunda línea del dígito,claro,ui.text.secondary sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-169,Barómetro,texto de las marcas y segunda línea del dígito,oscuro,ui.text.secondary sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-170,Barómetro,marca de umbral,claro,ui.viz.baseline sobre ui.surface.card,color.neutral.600,color.neutral.100,#808189,#F2F2F4,3.46,interfaz 3,3.0,true,igual
+C-170,Barómetro,marca de umbral,oscuro,ui.viz.baseline sobre ui.surface.card,color.neutral.400,color.neutral.900,#B7B8C0,#36363A,6.08,interfaz 3,3.0,true,igual
+C-171,Barómetro,aguja sobre la pista,claro,ui.text.default sobre ui.viz.track,color.neutral.900,color.neutral.200,#36363A,#E5E6E9,9.63,interfaz 3,3.0,true,igual
+C-171,Barómetro,aguja sobre la pista,oscuro,ui.text.default sobre ui.viz.track,color.neutral.100,color.neutral.800,#F2F2F4,#4D4E53,7.42,interfaz 3,3.0,true,igual
+C-172,Barómetro,pista del valor,claro,ui.viz.track sobre ui.surface.card,color.neutral.200,color.neutral.100,#E5E6E9,#F2F2F4,1.11,decorativo,exento,exento,nuevo
+C-172,Barómetro,pista del valor,oscuro,ui.viz.track sobre ui.surface.card,color.neutral.800,color.neutral.900,#4D4E53,#36363A,1.44,decorativo,exento,exento,nuevo

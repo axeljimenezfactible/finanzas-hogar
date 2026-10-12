@@ -1,6 +1,6 @@
 # DESIGN.md · Finanzas Hogar
 
-Versión 1.0 en construcción (11-oct-2026, WF-1). Secciones 1 a 6: agente U2b-1-design. Secciones 7 a 10: agente U2b-2. Fuentes de verdad: `docs/plan/plan.md` §4 (esqueleto y método), `docs/plan/decisiones.md` §G, §I y §K, criterios `docs/criterios/U2.md` 1.2, colorimetría 1.2 (`docs/design/colorimetria.md`) y sus tokens `docs/contratos/C2-colores.json` (190 tokens). Este documento **no define ningún color nuevo**: todo hex citado sale de `C2-colores.json` y lo comprueba `docs/design/fuentes/scripts/verificar.py`. Los nombres de token están en inglés corto (identificadores de código); todo lo demás, en español de México.
+Versión 1.1 (12-oct-2026, WF-3c, agente `u3-v2`, decisión K54): §8.9 «Barómetro» nuevo, dos filas nuevas en §8.2 (barras en % del plan y barómetro) y §7.6 sin el tope de 6 tarjetas del Resumen; **ningún token nuevo**. Corrección r1 (12-oct-2026, agente `correccion-especificacion-r1`, hallazgo M-3 de `docs/estado/wf3/REVISION-especificacion-r1.md`): los 14 pares del barómetro (con la marca de umbral, la aguja y la pista) quedan en §10.5 como C-159 a C-172 y los calcula y comprueba `contraste_componentes.py`. Versión 1.0 en construcción (11-oct-2026, WF-1). Secciones 1 a 6: agente U2b-1-design. Secciones 7 a 10: agente U2b-2. Fuentes de verdad: `docs/plan/plan.md` §4 (esqueleto y método), `docs/plan/decisiones.md` §G, §I y §K, criterios `docs/criterios/U2.md` 1.2, colorimetría 1.2 (`docs/design/colorimetria.md`) y sus tokens `docs/contratos/C2-colores.json` (190 tokens). Este documento **no define ningún color nuevo**: todo hex citado sale de `C2-colores.json` y lo comprueba `docs/design/fuentes/scripts/verificar.py`. Los nombres de token están en inglés corto (identificadores de código); todo lo demás, en español de México.
 
 Matiz aprobado: **C · Índigo 280°** (decisiones §I). Referencia visual única: **Notion** (decisiones §G).
 
@@ -21,7 +21,7 @@ Notion es la única referencia visual (decisiones §G). De Notion se toma: barra
 | P5 | **Cifras exactas y legibles** | Dinero `$1,258.68` (U1 §0.4) con cifras tabulares (§3.4); nunca se trunca ni se parte (U1 §6.1 regla 5); nunca se anima (§6.4). | `$99,999.99` completo en la tarjeta más estrecha a 360 px. |
 | P6 | **Calma** | Densidad cómoda, sombras leves solo en claro (§4.5), movimiento corto (§6), sin rojos ni destellos salvo error y acción crítica. | Revisión de U5 contra §2 y §6. |
 | P7 | **Claro y oscuro de primera** | Tema por defecto según el sistema, con interruptor (decisiones §G); cada token de color tiene variante clara y oscura. | Toda captura de U5 existe en los dos temas. |
-| P8 | **Accesible por cálculo** | WCAG 2.2 AA mínimo, calculado: texto ≥ 4.5:1; texto grande, interfaz y gráficas ≥ 3:1 (decisiones §G). | Dos tablas oficiales, 0 bajo umbral: `contraste.csv` (paleta: 202 pares, §2.8) y `contraste-componentes.csv` (componentes: 316 combinaciones, §10.5). |
+| P8 | **Accesible por cálculo** | WCAG 2.2 AA mínimo, calculado: texto ≥ 4.5:1; texto grande, interfaz y gráficas ≥ 3:1 (decisiones §G). | Dos tablas oficiales, 0 bajo umbral: `contraste.csv` (paleta: 202 pares, §2.8) y `contraste-componentes.csv` (componentes: 344 combinaciones, §10.5). |
 
 ### 1.3 Tono de voz
 
@@ -792,7 +792,7 @@ Selector de vista (pestañas con icono: `table-2` tabla, `kanban` tablero, `cale
 
 ### 7.6 Tarjetas de métrica
 
-**Anatomía.** Etiqueta (`font.size.small`, `ui.text.secondary`, sin dos puntos); cifra principal (`font.size.title-2`, `font.weight.semibold`, `tabular-nums`; neutra en `ui.text.default` o de rol con signo e icono, §3.3); dato secundario opcional (uno a 360, uno más a 412; comparación contra un periodo con nombre, «12 % más que septiembre», con signo, icono y color de rol); y opcionalmente una **barra de avance** o una mini serie (12 puntos, serie 1, sin ejes, desde 768). El Resumen lleva ≤ 6 tarjetas en orden fijo (decisiones §G).
+**Anatomía.** Etiqueta (`font.size.small`, `ui.text.secondary`, sin dos puntos); cifra principal (`font.size.title-2`, `font.weight.semibold`, `tabular-nums`; neutra en `ui.text.default` o de rol con signo e icono, §3.3); dato secundario opcional (uno a 360, uno más a 412; comparación contra un periodo con nombre, «12 % más que septiembre», con signo, icono y color de rol); y opcionalmente una **barra de avance** o una mini serie (12 puntos, serie 1, sin ejes, desde 768). Desde K54 el Resumen de Inicio es un tablero de control (U3 2.0) sin tope de tarjetas y con el orden de U3 §2.4; antes llevaba ≤ 6 tarjetas en orden fijo (decisiones §G).
 
 **Barra de avance** (presupuesto, metas): pista `ui.viz.track` de 8 px con `radius.full`; llenado `ui.viz.meter` bajo el primer umbral; desde el primer umbral de alerta (`alerts.*` de `app_setting`, 80 % inicial y configurable, K44) el llenado pasa a `color.role.warning.light` / `.dark` con `triangle-alert` y el texto «80 % usado»; desde el segundo (100 % inicial) se agrega «rebasado» y el excedente `−$230.00` (§3.3). El llenado nunca pasa del ancho de la pista: el excedente se dice en texto. Los umbrales se leen de Ajustes, nunca se fijan en el componente.
 
@@ -1015,6 +1015,8 @@ Reglas para toda gráfica de la app, del PDF de reportes y de la Pista 3. Siguen
 | Pregunta | Forma | Reglas |
 |---|---|---|
 | ¿Cuánto en cada categoría? (gasto por categoría, presupuesto contra real) | **barras horizontales** | orden descendente por monto (personas y tiendas en su orden fijo); una sola serie en `color.chart.1.light` / `.dark` sin patrón; el plan, como marca vertical de 2 px en `ui.viz.baseline` sobre la barra del real |
+| ¿Qué tan cerca de su plan va cada categoría? (1.1, U3 G-3) | **barras horizontales en % del plan** | largo = % usado que llega de C1; marcas verticales en los umbrales de Ajustes (`alerts.*`, K44): la primera de 1 px con trazo 4 · 4 y la segunda de 2 px, en `ui.viz.baseline`, cada una con su «[n] %» en texto; desde el primer umbral la barra va en `ui.role.warning` con `triangle-alert` y texto; orden descendente por %; eje de 0 % al mayor entre 100 % y el mayor % a la vista |
+| ¿Qué parte de su tope lleva una sola razón? (1.1, capacidad de endeudamiento, U3 B-1) | **barómetro** (§8.9) | una sola cifra con tramos de rol; nunca para comparar varias cosas ni para el tiempo (para eso, líneas) |
 | ¿Cómo cambia en el tiempo? (gasto mensual, peso, kcal, precio) | **líneas** | eje X en el tiempo; marcadores en cada punto con ≤ 12 puntos y, con más, solo en el último y en el enfocado; el eje Y puede no empezar en cero (peso) y entonces se rotula |
 | ¿Cuánto en cada mes? (pocas series) | **columnas** | máximo 3 series agrupadas; más series pasan a líneas |
 | ¿Cuánto se ha devengado y cuánto se ha pagado? | **área apilada** (§8.3) | — |
@@ -1066,6 +1068,54 @@ El patrón se dibuja con trazo de 1.5 px en el color de la superficie sobre el r
 ### 8.8 No se hace
 
 Doble eje; 3D; arcoíris o colores generados fuera de C2; dona con más de 5 partes o para el tiempo; montos solo en la descripción emergente; animación de entrada o de cambio de cifras (§6.4); atenuar o repintar series al filtrar; texto en el color de la serie; color como único portador de significado.
+
+
+### 8.9 Barómetro (1.1, K54)
+
+Para una sola razón contra dos umbrales; hoy, solo la capacidad de endeudamiento de Inicio (U3 B-1): pagos de crédito del mes ÷ ingreso del mes, con verde, amarillo y rojo (K54). Es una tarjeta de métrica (§7.6) con un arco en lugar de la barra de avance. **Numeración**: el texto de K54 la llama «§8.5», pero ese número ya es «Etiquetas de dinero siempre en texto» y lo citan muchos documentos; para no renumerar, el barómetro entra como §8.9 (PROVISIONAL, bloqueo `docs/estado/bloqueos/U3-tablero-barometro.md` punto 6).
+
+| Parte | Especificación | Tokens |
+|---|---|---|
+| Arco de escala | semicírculo de 180°, de 0 % (izquierda) a la escala máxima que llega de C1 (derecha); tres tramos separados por 2 px del color de la superficie (§8.1): verde de 0 al primer umbral, amarillo hasta el segundo, rojo hasta el final | `ui.role.success`, `ui.role.warning`, `ui.role.error`; grosor `size.meter.height` |
+| Pista del valor | arco concéntrico interior de 0 a la escala máxima | `ui.viz.track`, grosor `size.meter.height` |
+| Valor | sobre la pista, de 0 al valor, en el color del tramo donde cae el valor | `ui.role.success` · `ui.role.warning` · `ui.role.error` |
+| Aguja | del centro al arco de escala, extremo redondeado, con eje circular en el centro | `ui.text.default`, grosor `size.viz.line`; eje de `size.viz.marker` con anillo de 2 px de `ui.surface.card` |
+| Marcas de umbral | marca radial en cada límite de tramo y su «[n] %» fuera del arco | marca de 1 px en `ui.viz.baseline`; texto `font.size.caption`, `ui.text.secondary`, `tabular-nums` |
+| Dígito | debajo del centro, «[n] %»; en la línea siguiente, «de [tope] % de tope» | `font.size.title-1`, `font.weight.bold`, `tabular-nums`, `ui.text.default` (neutro: el estado lo dicen el arco y la insignia); segunda línea `font.size.small`, `ui.text.secondary` |
+| Insignia de estado | icono + palabra del color + frase: «Verde · dentro del rango» (`circle-check`), «Amarillo · cerca del tope» (`triangle-alert`), «Rojo · arriba del tope» (`circle-alert`) | insignia de rol (§7.4): texto `ui.role.<rol>` sobre `ui.role.<rol>-surface` |
+
+**Reglas.**
+- El valor, los dos umbrales, la escala máxima y el estado llegan de C1 (U3 §2.6). El componente no fija 30 ni 40 ni calcula el estado: con otros umbrales en Ajustes (K44), los tramos y las marcas se mueven solos.
+- Un valor mayor que la escala deja la aguja al final y el dígito dice la cifra exacta; el dígito nunca se recorta.
+- Sin dato (por ejemplo, sin ingreso): arco con tramos y marcas, sin valor ni aguja; dígito «—» y el motivo con su acción (§7.14).
+- Sin animación: la aguja se dibuja en su lugar (§6.4), también con movimiento reducido.
+- El color nunca va solo (§2.10, K27): el estado lo dicen la insignia con icono y palabra y las marcas con su texto. Con `forced-colors: active`, el arco usa `CanvasText` y los tramos se reconocen por sus marcas y su texto.
+- **Excepción de K54 a §2.4**: aquí el rol error marca el tramo rojo («arriba del tope»), aunque §2.4 lo reserva para validación y avisos, porque Axel pidió verde, amarillo y rojo. Los montos de la línea secundaria siguen §3.3: un negativo va en advertencia, nunca en error.
+
+**Tamaños.** Alto del bloque `size.chart.height-compact` en < 768 y `size.chart.height` desde 768 (§7.7). El arco ocupa el ancho de la tarjeta menos su relleno y deja lugar al dígito y a la insignia; «100 %» cabe completo a 360 px (P5).
+
+**Accesibilidad.** `role="meter"`, `aria-valuemin` = 0, `aria-valuemax` = escala máxima, `aria-valuenow` = valor y `aria-valuetext` con título, valor, tope y estado, por ejemplo «Capacidad de endeudamiento 27 % de 40 %: verde» (cifra sintética). El arco es decorativo (`aria-hidden`), porque el medidor ya da el valor; la insignia es texto.
+
+**Pares de contraste** (numerados en §10.5 como C-159 a C-172; los calcula `docs/design/tools/contraste_componentes.py` desde `docs/contratos/C2-tokens.json`, claro y oscuro, truncados a 2 decimales como `contraste.csv` (§2.1), y los comprueba `make verify-wf1-tokens`. El primer cálculo de `u3-v2` redondeaba en lugar de truncar; por eso algunas cifras bajan 0.01. Ningún par queda bajo su mínimo):
+
+| Id | Par | Mínimo | Claro | Oscuro |
+|---|---|---|---|---|
+| C-159 | `ui.role.success` sobre `ui.surface.card` (tramo verde) | interfaz 3 | 4.73 | 6.42 |
+| C-160 | `ui.role.warning` sobre `ui.surface.card` (tramo amarillo) | interfaz 3 | 5.12 | 6.03 |
+| C-161 | `ui.role.error` sobre `ui.surface.card` (tramo rojo) | interfaz 3 | 5.39 | 5.81 |
+| C-162 | `ui.role.success` sobre `ui.viz.track` (valor sobre su pista) | interfaz 3 | 4.24 | 4.43 |
+| C-163 | `ui.role.warning` sobre `ui.viz.track` | interfaz 3 | 4.59 | 4.16 |
+| C-164 | `ui.role.error` sobre `ui.viz.track` | interfaz 3 | 4.83 | 4.01 |
+| C-165 | `ui.role.success` sobre `ui.role.success-surface` (insignia) | texto 4.5 | 4.81 | 6.19 |
+| C-166 | `ui.role.warning` sobre `ui.role.warning-surface` | texto 4.5 | 5.11 | 6.09 |
+| C-167 | `ui.role.error` sobre `ui.role.error-surface` | texto 4.5 | 5.37 | 6.05 |
+| C-168 | `ui.text.default` (dígito) sobre `ui.surface.card` | texto grande 3 | 10.75 | 10.75 |
+| C-169 | `ui.text.secondary` (texto de las marcas y «de [tope] % de tope») sobre `ui.surface.card` | texto 4.5 | 5.03 | 7.97 |
+| C-170 | `ui.viz.baseline` (marca de umbral) sobre `ui.surface.card` | interfaz 3 | 3.46 | 6.08 |
+| C-171 | `ui.text.default` (aguja) sobre `ui.viz.track` | interfaz 3 | 9.63 | 7.42 |
+| C-172 | `ui.viz.track` (pista del valor) sobre `ui.surface.card` | decorativo | 1.11 | 1.44 |
+
+Las superficies de rol sobre la tarjeta dan de 1.00 a 1.04: por eso los tramos usan el color pleno de rol y no su superficie, que no se vería. **Sin tokens nuevos**: todo sale de C2 (`ui.role.*`, `ui.viz.*`, `ui.text.*`, `size.*`, `font.*`).
 
 ## 9. Accesibilidad y puntos de quiebre
 
@@ -1196,7 +1246,7 @@ Reglas: cada token lleva `$description` en español de México que cita su secci
 
 ### 10.5 Pares de contraste que calcula U2d
 
-Lista explícita de los pares por componente y estado que usan las secciones 2.9 y 7. La calcula `docs/design/tools/contraste_componentes.py` (U2d), que lee `docs/contratos/C2-tokens.json` como única fuente (C2-05), con la fórmula de §2.1 truncada a 2 decimales como `contraste.csv`, y escribe `docs/design/contraste-componentes.csv` (con `--check` comprueba que el archivo en disco es idéntico). **Hay dos tablas oficiales de contraste:** `docs/design/contraste.csv` para los pares de paleta (colorimetría, 202 pares) y `docs/design/contraste-componentes.csv` para los pares de componente de esta lista; juntas cubren todos los pares usados. **158 pares × 2 temas = 316 combinaciones**: 304 con umbral (texto 4.5:1; texto grande e interfaz 3:1) y 12 decorativas, listadas y exentas (divisores, pista de avance, retícula, esqueletos, borde de lo que flota). 50 combinaciones aún no están en `contraste.csv`. Se espera 0 bajo umbral (U2-04); si U2d encuentra alguna, abre un bloqueo con el par y no cambia ningún token por su cuenta. La resolución por tema sale de las referencias de `C2-tokens.json`: un semántico `ui.<x>` usa sus hojas `light` y `dark`; «rol X» usa `ui.role.<rol>`; «superficie de rol X», `ui.role.<rol>-surface`; «persona», «tienda» y «serie», `ui.person.<id>`, `ui.store.<id>` y `ui.chart.<n>`; «acción crítica», `ui.critical`. Las columnas «Claro» y «Oscuro» de esta tabla y la tabla de §7.1 son cruce secundario: si no coinciden con C2, el script avisa y sale con código 1.
+Lista explícita de los pares por componente y estado que usan las secciones 2.9 y 7. La calcula `docs/design/tools/contraste_componentes.py` (U2d), que lee `docs/contratos/C2-tokens.json` como única fuente (C2-05), con la fórmula de §2.1 truncada a 2 decimales como `contraste.csv`, y escribe `docs/design/contraste-componentes.csv` (con `--check` comprueba que el archivo en disco es idéntico). **Hay dos tablas oficiales de contraste:** `docs/design/contraste.csv` para los pares de paleta (colorimetría, 202 pares) y `docs/design/contraste-componentes.csv` para los pares de componente de esta lista; juntas cubren todos los pares usados. **172 pares × 2 temas = 344 combinaciones**: 330 con umbral (texto 4.5:1; texto grande e interfaz 3:1) y 14 decorativas, listadas y exentas (divisores, pista de avance, pista del barómetro, retícula, esqueletos, borde de lo que flota). 58 combinaciones aún no están en `contraste.csv`. C-159 a C-172 son los pares del barómetro (§8.9, K54), sumados en la corrección r1 de la especificación. Se espera 0 bajo umbral (U2-04); si U2d encuentra alguna, abre un bloqueo con el par y no cambia ningún token por su cuenta. La resolución por tema sale de las referencias de `C2-tokens.json`: un semántico `ui.<x>` usa sus hojas `light` y `dark`; «rol X» usa `ui.role.<rol>`; «superficie de rol X», `ui.role.<rol>-surface`; «persona», «tienda» y «serie», `ui.person.<id>`, `ui.store.<id>` y `ui.chart.<n>`; «acción crítica», `ui.critical`. Las columnas «Claro» y «Oscuro» de esta tabla y la tabla de §7.1 son cruce secundario: si no coinciden con C2, el script avisa y sale con código 1.
 
 | Id | Componente | Estado · elemento | Par | Tipo y umbral | Claro: primer plano / fondo | Oscuro: primer plano / fondo | En `contraste.csv` (claro · oscuro) |
 |---|---|---|---|---|---|---|---|
@@ -1358,6 +1408,20 @@ Lista explícita de los pares por componente y estado que usan las secciones 2.9
 | C-156 | Aviso breve | icono · warning | rol warning sobre `ui.surface.raised` | interfaz 3 | `color.role.warning.light` / `color.neutral.50` | `color.role.warning.dark` / `color.neutral.900` | sí · sí |
 | C-157 | Aviso breve | icono · info | rol info sobre `ui.surface.raised` | interfaz 3 | `color.role.info.light` / `color.neutral.50` | `color.role.info.dark` / `color.neutral.900` | sí · sí |
 | C-158 | Lo que flota | borde | `ui.border.divider` sobre `ui.surface.raised` | decorativo | `color.neutral.200` / `color.neutral.50` | `color.neutral.800` / `color.neutral.900` | no · no |
+| C-159 | Barómetro | verde · tramo del arco | rol success sobre `ui.surface.card` | interfaz 3 | `color.role.success.light` / `color.neutral.100` | `color.role.success.dark` / `color.neutral.900` | sí · sí |
+| C-160 | Barómetro | amarillo · tramo del arco | rol warning sobre `ui.surface.card` | interfaz 3 | `color.role.warning.light` / `color.neutral.100` | `color.role.warning.dark` / `color.neutral.900` | sí · sí |
+| C-161 | Barómetro | rojo · tramo del arco | rol error sobre `ui.surface.card` | interfaz 3 | `color.role.error.light` / `color.neutral.100` | `color.role.error.dark` / `color.neutral.900` | sí · sí |
+| C-162 | Barómetro | verde · valor sobre la pista | rol success sobre `ui.viz.track` | interfaz 3 | `color.role.success.light` / `color.neutral.200` | `color.role.success.dark` / `color.neutral.800` | no · no |
+| C-163 | Barómetro | amarillo · valor sobre la pista | rol warning sobre `ui.viz.track` | interfaz 3 | `color.role.warning.light` / `color.neutral.200` | `color.role.warning.dark` / `color.neutral.800` | no · no |
+| C-164 | Barómetro | rojo · valor sobre la pista | rol error sobre `ui.viz.track` | interfaz 3 | `color.role.error.light` / `color.neutral.200` | `color.role.error.dark` / `color.neutral.800` | no · no |
+| C-165 | Barómetro | verde · insignia de estado | rol success sobre superficie de rol success | texto 4.5 | `color.role.success.light` / `color.role.success.surface-light` | `color.role.success.dark` / `color.role.success.surface-dark` | sí · sí |
+| C-166 | Barómetro | amarillo · insignia de estado | rol warning sobre superficie de rol warning | texto 4.5 | `color.role.warning.light` / `color.role.warning.surface-light` | `color.role.warning.dark` / `color.role.warning.surface-dark` | sí · sí |
+| C-167 | Barómetro | rojo · insignia de estado | rol error sobre superficie de rol error | texto 4.5 | `color.role.error.light` / `color.role.error.surface-light` | `color.role.error.dark` / `color.role.error.surface-dark` | sí · sí |
+| C-168 | Barómetro | dígito | `ui.text.default` sobre `ui.surface.card` | texto grande 3 | `color.neutral.900` / `color.neutral.100` | `color.neutral.100` / `color.neutral.900` | sí · sí |
+| C-169 | Barómetro | texto de las marcas y segunda línea del dígito | `ui.text.secondary` sobre `ui.surface.card` | texto 4.5 | `color.neutral.700` / `color.neutral.100` | `color.neutral.300` / `color.neutral.900` | sí · sí |
+| C-170 | Barómetro | marca de umbral | `ui.viz.baseline` sobre `ui.surface.card` | interfaz 3 | `color.neutral.600` / `color.neutral.100` | `color.neutral.400` / `color.neutral.900` | sí · sí |
+| C-171 | Barómetro | aguja sobre la pista | `ui.text.default` sobre `ui.viz.track` | interfaz 3 | `color.neutral.900` / `color.neutral.200` | `color.neutral.100` / `color.neutral.800` | sí · sí |
+| C-172 | Barómetro | pista del valor | `ui.viz.track` sobre `ui.surface.card` | decorativo | `color.neutral.200` / `color.neutral.100` | `color.neutral.800` / `color.neutral.900` | no · no |
 
 ### 10.6 Medidas de componente (propuestas de U2b-2 para `C2-tokens.json`)
 

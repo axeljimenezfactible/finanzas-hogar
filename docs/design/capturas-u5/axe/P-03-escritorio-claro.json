@@ -14,7 +14,7 @@
  "resumen": {
   "violaciones": 0,
   "serias_o_criticas": 0,
-  "incompletos": 1,
+  "incompletos": 2,
   "pasadas": 26,
   "no_aplican": 37
  },
@@ -45,6 +45,447 @@
      ],
      "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
      "message": "Check that focusable elements are not tabbable in the current state"
+    }
+   ]
+  },
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      ".-translate-y-1\\/2.-translate-x-1\\/2[data-prueba=\"barometro-marca\"]:nth-child(2)"
+     ],
+     "html": "<span data-prueba=\"barometro-marca\" class=\"absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-caption text-text-secondary tabular-nums\" style=\"left: 50%; top: 1.81818%;\">30 %</span>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      ".-translate-y-1\\/2.-translate-x-1\\/2[data-prueba=\"barometro-marca\"]:nth-child(3)"
+     ],
+     "html": "<span data-prueba=\"barometro-marca\" class=\"absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-caption text-text-secondary tabular-nums\" style=\"left: 74.5%; top: 13.7541%;\">40 %</span>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(54 264)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" transform=\"translate(54 264)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(54 218.4)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(54 218.4)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$5 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(54 172.8)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(54 172.8)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$10 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(54 127.2)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(54 127.2)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$15 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(54 81.6)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(54 81.6)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$20 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(54 36)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(54 36)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$25 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(75.1667 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(75.1667 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">nov-2025</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(180.5 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(180.5 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">mar-2026</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(285.8333 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(285.8333 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">jul-2026</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(361 115)\"][x=\"30\"][y=\"7\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" x=\"30\" y=\"7\" transform=\"translate(361 115)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Ingreso</text>",
+     "message": "Element's background color could not be determined because it is overlapped by another element"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(361 137)\"][x=\"30\"][y=\"7\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" x=\"30\" y=\"7\" transform=\"translate(361 137)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Gasto</text>",
+     "message": "Element's background color could not be determined because it is overlapped by another element"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(361 159)\"][x=\"30\"][y=\"7\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" xml:space=\"preserve\" x=\"30\" y=\"7\" transform=\"translate(361 159)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Pagos de crédito</text>",
+     "message": "Element's background color could not be determined because it is overlapped by another element"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(41 264)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(41 264)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">0 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(41 226)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(41 226)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">10 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(41 188)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(41 188)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">20 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(41 150)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(41 150)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">30 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(41 112)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(41 112)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">40 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(41 74)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(41 74)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">50 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(41 36)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(41 36)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">60 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(62.7083 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(62.7083 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">abr-2026</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(144.9583 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(144.9583 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">jul-2026</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(227.2083 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(227.2083 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">oct-2026</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(309.4583 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(309.4583 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">ene-2027</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(227.2083 247.4)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" xml:space=\"preserve\" y=\"-4\" transform=\"translate(227.2083 247.4)\" fill=\"#36363a\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">2 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(283 137)\"][x=\"30\"][y=\"7\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" xml:space=\"preserve\" x=\"30\" y=\"7\" transform=\"translate(283 137)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Capacidad de endeudamiento</text>",
+     "message": "Element's background color could not be determined because it is overlapped by another element"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(383 150)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" xml:space=\"preserve\" transform=\"translate(383 150)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">30 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(383 112)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" xml:space=\"preserve\" transform=\"translate(383 112)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">40 %</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(227.2083 31)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" transform=\"translate(227.2083 31)\" fill=\"#66676e\" y=\"-4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Hoy</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 264)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" transform=\"translate(52 264)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 231.4286)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 231.4286)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$3 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 198.8571)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 198.8571)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$6 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 166.2857)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 166.2857)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$9 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 133.7143)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 133.7143)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$12 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 101.1429)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 101.1429)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$15 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 68.5714)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 68.5714)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$18 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "div[_echarts_instance_=\"ec_1791844929239\"] > div:nth-child(1) > svg[version=\"1.1\"][baseProfile=\"full\"][width=\"498\"] > g > text[transform=\"translate(52 36)\"][text-anchor=\"end\"][fill=\"#66676e\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 36)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$21 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(73.25 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(73.25 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">oct-2026</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(152.75 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(152.75 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">ene-2027</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(232.25 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(232.25 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">abr-2027</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(311.75 272)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(311.75 272)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">jul-2027</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(73.25 59.2949)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" y=\"-4\" transform=\"translate(73.25 59.2949)\" fill=\"#36363a\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$18,025.47</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(285.25 255)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"-4\" transform=\"translate(285.25 255)\" fill=\"#36363a\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0.00</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(364.75 255)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" y=\"-4\" transform=\"translate(364.75 255)\" fill=\"#36363a\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0.00</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(368 137)\"][x=\"30\"][y=\"7\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" xml:space=\"preserve\" x=\"30\" y=\"7\" transform=\"translate(368 137)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Deuda viva total</text>",
+     "message": "Element's background color could not be determined because it is overlapped by another element"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 232)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" transform=\"translate(52 232)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 204)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 204)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$3 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 176)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 176)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$6 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 148)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 148)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$9 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 120)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 120)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$12 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 92)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 92)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$15 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(52 64)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 64)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$18 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "div[_echarts_instance_=\"ec_1791844929240\"] > div:nth-child(1) > svg[version=\"1.1\"][baseProfile=\"full\"][width=\"498\"] > g > text[transform=\"translate(52 36)\"][text-anchor=\"end\"][fill=\"#66676e\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 36)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$21 mil</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(77.5833 240)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(77.5833 240)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">oct-2026</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(183.0833 240)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(183.0833 240)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">ene-2027</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(288.5833 240)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(288.5833 240)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">abr-2027</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(394.0833 240)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(394.0833 240)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">jul-2027</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(376.5 31)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"-4\" transform=\"translate(376.5 31)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Proyección</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(40 270.4)\"][x=\"30\"][y=\"7\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" xml:space=\"preserve\" x=\"30\" y=\"7\" transform=\"translate(40 270.4)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Efectivo acumulado $19,397.22</text>",
+     "message": "Element's background color could not be determined because it is overlapped by another element"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(263 270.4)\"][x=\"30\"][y=\"7\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" xml:space=\"preserve\" x=\"30\" y=\"7\" transform=\"translate(263 270.4)\" fill=\"#66676e\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Diferencia acumulada $0.00</text>",
+     "message": "Element's background color could not be determined because it is overlapped by another element"
+    },
+    {
+     "target": [
+      "text[transform=\"translate(77.5833 31)\"]"
+     ],
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" transform=\"translate(77.5833 31)\" fill=\"#66676e\" y=\"-4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Hoy</text>",
+     "message": "Element's background color could not be determined because element contains an image node"
     }
    ]
   }

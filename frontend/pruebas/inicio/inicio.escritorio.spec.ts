@@ -3,20 +3,17 @@ import { expect, test, type Locator, type Page } from '@playwright/test'
 import { ApiFalsa } from '../apoyo/api-falsa'
 import { instalarInicio } from './datos'
 const reloj = (page: Page, iso = '2026-10-10T12:00:00-06:00') => page.clock.setFixedTime(new Date(iso))
-const tarjeta = (page: Page, n: number) => page.locator(`[data-prueba="tarjeta-${n}"]`)
+const tarjeta = (page: Page, n: number | string) => page.locator(`[data-prueba="tarjeta-${n}"]`)
+// Desde U3 2.0 (K54) el Resumen es el tablero (pruebas en tablero.escritorio.spec.ts); las tarjetas 2, 4, 5 y 6 siguen en «Más del hogar».
 
-test('P-01 Resumen: 6 tarjetas en orden, cifras de la semilla y una petición por tarjeta', async ({ page, context }) => {
+test('P-01 Más del hogar: tarjetas 2, 4, 5 y 6 en orden, cifras de la semilla y una petición por tarjeta', async ({ page, context }) => {
   const reg: string[] = []
   await new ApiFalsa().instalar(context); await instalarInicio(context, {}, reg); await reloj(page)
   await page.goto('/inicio')
   await expect(page.getByRole('heading', { level: 1, name: 'Inicio' })).toBeVisible()
-  const tarjetas = page.getByTestId('resumen').locator('[data-prueba^="tarjeta-"]')
-  await expect(tarjetas).toHaveCount(6)
-  expect(await tarjetas.evaluateAll((t) => t.map((x) => x.getAttribute('data-prueba')))).toEqual([1, 2, 3, 4, 5, 6].map((n) => `tarjeta-${n}`))
-  const t3 = tarjeta(page, 3)
-  for (const txt of ['$973.75', 'Vie 30 oct 2026 · Kueski', 'Hogar $598.82 · Karen $374.93', 'Faltan 20 días', 'Disponible hoy $6,905.50 · Lectura B', 'Pendiente confirmar']) await expect(t3).toContainText(txt)
-  await expect(tarjeta(page, 1)).toContainText('Llevas $1,197.64 gastado')
-  await expect(tarjeta(page, 1)).toContainText('Capturar presupuesto')
+  const tarjetas = page.getByTestId('mas-del-hogar').locator('[data-prueba^="tarjeta-"]')
+  await expect(tarjetas).toHaveCount(4)
+  expect(await tarjetas.evaluateAll((t) => t.map((x) => x.getAttribute('data-prueba')))).toEqual([2, 4, 5, 6].map((n) => `tarjeta-${n}`))
   await expect(tarjeta(page, 2)).toContainText('Del 1 al 15 oct')
   await expect(tarjeta(page, 2)).toContainText('Ingreso esperado')
   await expect(tarjeta(page, 4)).toContainText('Aún no hay plan para esta semana')
@@ -27,7 +24,7 @@ test('P-01 Resumen: 6 tarjetas en orden, cifras de la semilla y una petición po
   expect(reg).toContain('/api/v1/dashboard/best-basket?week=2026-W41')
   expect(reg.filter((r) => r.startsWith('/api/v1/settings/alerts'))).toHaveLength(1)
   // A-08 y A-09: cada tarjeta es un solo enlace ≥ 44 px; sin desplazamiento horizontal.
-  for (let n = 1; n <= 6; n++) {
+  for (const n of [2, 4, 5, 6]) {
     const t = tarjeta(page, n)
     expect(await t.evaluate((x) => x.tagName)).toBe('A')
     await expect(t.locator('a, button')).toHaveCount(0)
@@ -42,21 +39,21 @@ test('P-01 Resumen: 6 tarjetas en orden, cifras de la semilla y una petición po
 test('P-01 estados: una tarjeta con falla no tumba las demás y «Reintentar» la recupera', async ({ page, context }) => {
   await new ApiFalsa().instalar(context); await instalarInicio(context, { '/api/v1/dashboard/month-vs-plan': 500 }); await reloj(page)
   await page.goto('/inicio')
-  await expect(tarjeta(page, 1)).toContainText('No se pudo cargar el presupuesto del mes. Revisa que estés en la red de casa.')
-  await expect(tarjeta(page, 1).getByRole('link', { name: 'Ver presupuesto' })).toBeVisible()
-  await expect(tarjeta(page, 3)).toContainText('$973.75')
+  await expect(tarjeta(page, 'K-1')).toContainText('No se pudo cargar el gasto del mes. Revisa que estés en la red de casa.')
+  await expect(tarjeta(page, 'K-1').getByRole('link', { name: 'Ver presupuesto' })).toBeVisible()
+  await expect(tarjeta(page, 'K-3')).toContainText('Pagos de octubre: $973.75 · 1 pago')
   await context.unrouteAll({ behavior: 'ignoreErrors' })
   await new ApiFalsa().instalar(context); await instalarInicio(context)
-  await tarjeta(page, 1).getByRole('button', { name: 'Reintentar' }).click()
-  await expect(tarjeta(page, 1)).toContainText('Llevas $1,197.64 gastado')
+  await tarjeta(page, 'K-1').getByRole('button', { name: 'Reintentar' }).click()
+  await expect(tarjeta(page, 'K-1')).toContainText('Llevas $1,197.64 gastado')
 })
 
-test('P-01 A-17: el Jue 29 oct 2026 el pago dice «Vence mañana»', async ({ page, context }) => {
+test('P-01 A-17: el Jue 29 oct 2026 el pago de K-4 dice «Vence mañana»', async ({ page, context }) => {
   await new ApiFalsa().instalar(context)
   await instalarInicio(context, { '/api/v1/dashboard/next-payment': { next_payment: { due_date: '2026-10-30', credit_id: 1, amount_cents: 97375, household_share_cents: 59882, external_share_cents: 37493, days_left: 1, payment_count: 1, is_overdue: false }, availability: [] } })
   await reloj(page, '2026-10-29T12:00:00-06:00')
   await page.goto('/inicio')
-  await expect(tarjeta(page, 3)).toContainText('Vence mañana')
+  await expect(tarjeta(page, 'K-4')).toContainText('Vie 30 oct 2026 · Kueski · $973.75 · Vence mañana')
 })
 
 test('P-01 Detalle: D-3 con tres pagos y sin pedir vencidos (A-16), lecturas A y B, y participación de Karen', async ({ page, context }) => {
@@ -113,7 +110,7 @@ test('F-1 desde Inicio: 3 toques y Inicio vuelve a pedir el mes y la quincena; F
   const reg: string[] = []
   await new ApiFalsa().instalar(context); await instalarInicio(context, {}, reg); await reloj(page)
   await page.goto('/inicio')
-  await expect(tarjeta(page, 3)).toContainText('$973.75')
+  await expect(tarjeta(page, 'K-4')).toContainText('$973.75')
   const antes = reg.filter((r) => r.startsWith('/api/v1/dashboard/month-vs-plan')).length
   let toques = 0
   const tocar = async (l: Locator) => { if (page.viewportSize()!.width < 768) await l.tap(); else await l.click(); toques++ }
@@ -128,6 +125,6 @@ test('F-1 desde Inicio: 3 toques y Inicio vuelve a pedir el mes y la quincena; F
   await tarjeta(page, 5).click()
   await expect(page).toHaveURL(/\/compras\/comparar$/)
   await page.goBack()
-  await tarjeta(page, 3).click()
+  await tarjeta(page, 'K-4').getByRole('link', { name: /Vie 30 oct 2026/ }).click()
   await expect(page).toHaveURL(/\/creditos\/1$/)
 })

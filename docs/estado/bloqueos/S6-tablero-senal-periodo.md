@@ -1,0 +1,17 @@
+# Bloqueo S6-tablero-senal-periodo · qué meses mira la sugerencia de presupuesto cuando `period` es posterior al mes en curso (RN-31, C1 v1.5)
+
+Abierto el 12-oct-2026 por el agente `correccion-tablero-backend-r1` (WF-3c), por el hallazgo M-1 de `docs/estado/wf3/REVISION-tablero-backend-r1.md`. Lo contesta Axel en la **puerta 4**. Mientras tanto rige la opción PROVISIONAL (a), que vive en un solo lugar: `getBudgetSignals` en `backend/internal/api/tablero/tablero.go` (variable `closed`). Complementa el punto 5 de `C1-tablero` (formato de `period`), que no se reabre.
+
+**Qué falta.** RN-31 y el esquema `BudgetSignals` de C1 v1.5 dicen que se miran «los `budget.signal_months` meses **cerrados** anteriores al mes pedido; **el mes en curso no cuenta**». C1 deja pedir cualquier mes en `period`, pero no dice qué pasa cuando la ventana alcanza el mes en curso o meses de proyección. Sin regla, con `period=2027-01` (hoy es 12-oct-2026) la ventana es oct, nov y dic de 2026 y la señal salía `cut` con gasto que todavía no ocurre.
+
+| Opción | Qué hace | Ventaja | Riesgo |
+|---|---|---|---|
+| **(a) PROVISIONAL** | La ventana sigue siendo los N meses anteriores a `period`, pero solo cuentan los **cerrados** (anteriores al mes en curso). El mes en curso y los de proyección no se miran: no salen en `months` y la racha no se completa, así que la señal es `none`. Con `period` igual al mes en curso (el caso por omisión) no cambia nada. | Es la lectura literal de RN-31 («meses cerrados», «el mes en curso no cuenta»). Nunca sugiere con gasto que no ha ocurrido. Sin cambio de C1 ni de esquema: sigue respondiendo 200. | `period` futuro no da sugerencia; una fila puede traer `months` con menos de `months_considered` meses o vacío. |
+| (b) | 422 `out_of_range` en `period` si es posterior al mes siguiente al en curso. Además, con `period` = mes siguiente, el mes en curso no cuenta (como en a). | Avisa al que pide un mes que no tiene sentido. | Cambia la respuesta de C1 (un 422 nuevo en `getBudgetSignals`, por `c1gen`); con `period` = mes siguiente igual hace falta la regla (a). |
+| (c) | La ventana se recorre hacia atrás: los N **últimos meses cerrados** anteriores a `period` (con `period=2027-01` serían jul, ago y sep de 2026). | Siempre hay sugerencia si hay historia. | La misma sugerencia sale para cualquier `period` futuro; `months` ya no son «los N meses anteriores al mes pedido». |
+
+**Impacto.** Solo afecta a quien pida `getBudgetSignals` con `period` posterior al mes en curso; la PWA hoy pide el mes en curso (sin `period`), donde las tres opciones dan lo mismo. No cambia ninguna cifra del motor S2: `actual_cents`, `planned_cents` y `used_pct` de los meses cerrados son los mismos. Cambiar a (b) toca el generador de C1 (`backend/internal/api/c1gen/`) y `monthParam`; cambiar a (c) toca solo el ciclo de `getBudgetSignals`. Sin migración.
+
+**Pruebas.** `TestOp_getBudgetSignals_PeriodoFuturo` (`backend/internal/api/tablero/tablero_datos_test.go`): con `period=2026-11` mira solo ago y sep y da `none` (sin el corte, Transporte daba `cut` con el 0 % de octubre en curso); con `2027-01` y `2027-02`, filas sin meses y `none`; con `2026-10` sigue mirando jul–sep.
+
+**Pregunta para Axel.** Si pides la sugerencia de un mes que todavía no llega, ¿prefieres que no sugiera nada (a), que el sistema diga que ese mes no se puede pedir (b) o que use los últimos meses ya cerrados (c)?

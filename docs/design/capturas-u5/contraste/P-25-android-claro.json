@@ -41,7 +41,7 @@
    "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "input#_r_c_",
+     "nodo": "input#_r_d_",
      "texto": ""
     }
    ]
@@ -337,7 +337,7 @@
      "texto": "O un rango"
     },
     {
-     "nodo": "input#_r_c_",
+     "nodo": "input#_r_d_",
      "texto": "2026-10"
     }
    ]

@@ -2,8 +2,8 @@
  "pantalla": "P-26.01",
  "combinacion": "escritorio-claro",
  "alcance": "body",
- "evaluados": 324,
- "pares_unicos": 16,
+ "evaluados": 557,
+ "pares_unicos": 17,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
@@ -46,7 +46,7 @@
    "umbral": 3,
    "grande": false,
    "razon": 3.466,
-   "elementos": 30,
+   "elementos": 62,
    "ejemplos": [
     {
      "nodo": "tbody > tr.border-b.border-border-divider > td.px-2.py-1 > button.inline-flex.select-none",
@@ -110,7 +110,7 @@
    "umbral": 3,
    "grande": false,
    "razon": 5.035,
-   "elementos": 3,
+   "elementos": 11,
    "ejemplos": [
     {
      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
@@ -121,8 +121,24 @@
      "texto": "lucide lucide-plus size-5 text-icon-defa"
     },
     {
-     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
-     "texto": "lucide lucide-monitor size-5 text-icon-d"
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-house lucide-home size-5 s"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.161,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-settings size-5 shrink-0 t"
     }
    ]
   },
@@ -266,7 +282,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 10.76,
-   "elementos": 215,
+   "elementos": 407,
    "ejemplos": [
     {
      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",

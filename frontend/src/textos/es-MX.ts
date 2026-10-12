@@ -21,4 +21,11 @@ export const textos = {
   vacio: { generico: 'Aún no hay datos', grafica: 'Aún no hay datos para este periodo' },
   pendiente: { titulo: 'Pantalla en construcción', cuerpo: (id: string) => `La pantalla ${id} la construye su área en WF-3.` },
   grafica: { tablaAlterna: 'Ver como tabla', otros: 'Otros' },
+  /** Barómetro (DESIGN §8.9, U3 B-1): palabra del color y frase; el estado llega de C1, el componente no lo calcula. */
+  barometro: {
+    estados: { normal: 'Verde · dentro del rango', warning: 'Amarillo · cerca del tope', exceeded: 'Rojo · arriba del tope' },
+    colores: { normal: 'verde', warning: 'amarillo', exceeded: 'rojo' },
+    deTope: (n: number) => `de ${n} % de tope`,
+    sinDato: '—',
+  },
 } as const

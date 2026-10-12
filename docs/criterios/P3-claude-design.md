@@ -1,6 +1,9 @@
 # P3 · Pista 3, Claude Design — Criterios de aceptación
 
-Versión 1.3 (11-oct-2026, cierre de WF-1; agente `aplicar-k45`; **sustituye K35 por K45**) · Escrito en WF-0 por el agente «criterios»; ronda 1 de revisión de WF-0 (ver `INDICE.md` §9); respuestas de la puerta 1 (`docs/plan/decisiones.md` §K) aplicadas por el agente «criterios-UC-1.1»; versión 1.2 en P1c, P1d y P1e · Los evalúan los agentes Sonnet que revisan cada vuelta de la Pista 3 (uno por área) y, en la puerta 4, el revisor de WF-3. **La Pista 3 la ejecuta el orquestador con la herramienta Artifact** (K45: tipos Design System y Design), sin navegador; Axel solo abre la URL privada del lienzo al final para aprobar la referencia visual (puerta 3). Plan técnico: `docs/design/pista3-plan.md`. Convención de evidencia, severidades y comandos: ver `INDICE.md`.
+Versión 1.4 (12-oct-2026, WF-3c, agente `u3-v2`, K54: P3-08 sin el tope de 6 tarjetas). Versión 1.3 (11-oct-2026, cierre de WF-1; agente `aplicar-k45`; **sustituye K35 por K45**) · Escrito en WF-0 por el agente «criterios»; ronda 1 de revisión de WF-0 (ver `INDICE.md` §9); respuestas de la puerta 1 (`docs/plan/decisiones.md` §K) aplicadas por el agente «criterios-UC-1.1»; versión 1.2 en P1c, P1d y P1e · Los evalúan los agentes Sonnet que revisan cada vuelta de la Pista 3 (uno por área) y, en la puerta 4, el revisor de WF-3. **La Pista 3 la ejecuta el orquestador con la herramienta Artifact** (K45: tipos Design System y Design), sin navegador; Axel solo abre la URL privada del lienzo al final para aprobar la referencia visual (puerta 3). Plan técnico: `docs/design/pista3-plan.md`. Convención de evidencia, severidades y comandos: ver `INDICE.md`.
+
+**Cambios de la versión 1.4 (12-oct-2026, WF-3c, agente `u3-v2`; mismos 13 ids y severidades, 10 alta / 3 media):**
+- **P3-08 (K54)**: «Resumen con ≤ 6 tarjetas» pasa a «Resumen con la estructura vigente de U3», que desde K54 es el tablero de control. Un artboard anterior a K54 con 6 tarjetas vale como referencia de estilo, no de estructura. §4 al día.
 
 **Cambios de la versión 1.3 (11-oct-2026, cierre de WF-1, agente `aplicar-k45`):**
 - **K45 sustituye a K35**: la Pista 3 ya no la ejecuta Axel en el sitio aparte; la ejecuta el orquestador con Artifacts. Mismos 13 ids y mismas severidades (10 alta / 3 media).
@@ -73,7 +76,7 @@ Nota sobre rutas: el plan técnico no fija dónde quedan el reporte del orquesta
 - Verifica: `ls /home/deepsec/finanzas-hogar/docs/estado/P3-iter-*-*.md | wc -l` = áreas × vueltas; cada archivo con la tabla artboard × regla; recálculo independiente de 10 pares de contraste por el revisor.
 - Evidencia: `docs/estado/P3-iter-N-<area>.md`.
 
-**P3-08 (alta) · Respeto de las decisiones en lo maquetado.** Los artboards de la versión aprobada respetan las decisiones: Resumen con ≤ 6 tarjetas; 14 secciones de Ajustes; barra lateral colapsable; texto en español de México; dinero `$1,234.56` con cifras tabulares; fechas `10-oct-2026`; paleta de C2 (matiz índigo 280°); **Notion como única referencia**. Lo que no cumpla queda marcado «no adoptar» en la referencia visual.
+**P3-08 (alta) · Respeto de las decisiones en lo maquetado.** Los artboards de la versión aprobada respetan las decisiones: Resumen con la estructura vigente de U3 (desde K54, tablero de control; un artboard anterior a K54 con 6 tarjetas vale como referencia de estilo, no de estructura); 14 secciones de Ajustes; barra lateral colapsable; texto en español de México; dinero `$1,234.56` con cifras tabulares; fechas `10-oct-2026`; paleta de C2 (matiz índigo 280°); **Notion como única referencia**. Lo que no cumpla queda marcado «no adoptar» en la referencia visual.
 - Verifica: lista de comprobación de 8 puntos (los de este criterio) por área y vuelta en `P3-iter-N-<area>.md`; `grep -rnoE '\$[0-9]{4,}\.[0-9]{2}' /home/deepsec/finanzas-hogar/docs/design/salida/iter-N/project --include='*.dc.html'` = 0 (montos de 1,000 o más sin separador de miles).
 - Evidencia: línea `P3-08`.
 
@@ -116,7 +119,7 @@ Nota sobre rutas: el plan técnico no fija dónde quedan el reporte del orquesta
 - 0 apariciones de las 8 cifras canon del reporte y de las 3 de la regresión Kueski (973.75, 1,258.70 y 883.77) en artboards, datos sintéticos y exportación; las fechas, en revisión manual (P3-12).
 - Anchos 412 (móvil) y 1440 (escritorio); un artboard por pantalla y ancho (P3-06).
 - Contraste texto ≥ 4.5:1, UI ≥ 3:1 en los dos temas (P3-07).
-- ≤ 6 tarjetas en Resumen; 14 secciones de Ajustes (P3-08).
+- Resumen como tablero de control de U3 2.0 (K54; antes ≤ 6 tarjetas); 14 secciones de Ajustes (P3-08).
 - 4 secciones F1–F4 en la referencia visual (P3-10).
 
 ## 5. Trazabilidad

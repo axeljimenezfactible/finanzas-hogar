@@ -2,6 +2,8 @@
 
 Sistema web de control financiero del hogar de Axel y Ximena. Corre en la máquina de casa, solo en la red local, y se usa desde el navegador del escritorio y como aplicación instalada (PWA) en sus teléfonos Android.
 
+**Estado al 12-oct-2026, WF-3c (Inicio como tablero de control, K54):** Inicio › Resumen ya es un tablero de control. Arriba va el gasto real del mes, y junto a él el ingreso, los créditos y los pagos próximos. El **barómetro de capacidad de endeudamiento** divide los pagos de crédito del mes entre el ingreso neto: verde hasta 30 %, amarillo hasta 40 % y rojo arriba, con umbrales que se pueden cambiar. Debajo hay 6 gráficas para anticiparse y «Más del hogar». Para eso se hicieron U3 2.0, DESIGN 1.1 (sin tokens nuevos), el esquema 1.5 (migración 00005) y C1 v1.5.0 (221 operaciones, 176 rutas y 267 esquemas). El servidor de desarrollo ya habla **HTTP/2** y las 164 capturas se regeneraron con el tablero. `make verify-all` pasa. `make verify-wf3` falla solo en U5-04, con 2 pares del dibujo del barómetro que son un falso positivo comprobado. **Faltan aprobaciones:** la especificación y el backend quedaron con 1 medio cada uno tras 3 rondas, y C3 v1.3 volvió sin firma con 4 altos. El frontend sí quedó aprobado. Detalle y propuesta de una ronda acotada: [`docs/estado/wf3/INTEGRACION-wf3c.md`](docs/estado/wf3/INTEGRACION-wf3c.md) y `docs/estado/bloqueos/WF3c-ronda3-escalamiento.md`.
+
 **Estado al 12-oct-2026, WF-3b (verificación visual y C3):** las 41 pantallas de U1 ya tienen sus **164 capturas reales**: la aplicación en marcha con la semilla, en Android 412×915 táctil y en escritorio 1440×900, en claro y en oscuro. Cada captura trae su axe-core (0 violaciones serias o críticas), su contraste medido en el DOM (20,919 pares y 0 bajo umbral) y sus hosts (solo `finanzas.local`). Todo está versionado en `docs/design/capturas-u5/`. Los flujos de U1 se probaron de extremo a extremo contra el servidor real, en copias aisladas de la base. También se probó la cola sin conexión (U5-13: sin duplicados y con reenvío idempotente). Las 111 cifras de pantalla cuadran con el oráculo (C3-09). **U5 no quedó aprobado tras 3 rondas:** quedan 2 hallazgos medios. Uno es la barra lateral sin iconos de sección. El otro, la marca «capturado» en C3, ya está resuelto en C3 v1.2. **C3 v1.2 sigue sin firma tras 3 rondas:** pasan 7 de 8 flujos y F-3 «Comparar canasta» por la ruta A falla con la semilla, porque la lista del plan no tiene precios de ingredientes. Los dos casos se escalaron a Axel con opciones; la recomendada es una corrección y una verificación acotadas. Dentro del flujo se cerraron los 2 medios que el frontend arrastraba de WF-3a bis. La semilla aplicó las decisiones PROVISIONALES del orquestador: gastos proyectados y precios de Walmart. `make verify-wf3` (ahora con `verify-u5`, la evidencia U5 sin servidor) y `make verify-all` pasan. Hay 8 bloqueos nuevos (137 archivos en total). Para la puerta 4 quedan pendientes S6-11 en los Android (Axel), S7-07 con envío real (orquestador) y los valores K31. Detalle: [`docs/estado/wf3/INTEGRACION-wf3b.md`](docs/estado/wf3/INTEGRACION-wf3b.md).
 
 **Estado al 12-oct-2026, WF-3a bis (ronda acotada de corrección del frontend):** el servidor Go atiende las 216 operaciones de C1 v1.4, y las 216 pasan su prueba de contrato. Corre por HTTPS (mkcert) solo en la red de casa, en `https://finanzas.local:8443`, con la semilla real más una **semilla de desarrollo** (`finanzas semilla --desarrollo`, con montos de las fixtures del oráculo S2): 5 de las 6 tarjetas de Inicio ya muestran cifras. El backend quedó **aprobado**. El frontend corrigió el hallazgo alto y los medios de la ronda 3: objetivos táctiles, gráficas accesibles, barra inferior, edición en grupo con `Ctrl+/` y las necesidades de U1 que no tenían llamada. Aun así, **no quedó aprobado tras 5 rondas**: le quedan 2 hallazgos medios (fechas de P-10 y errores sin aviso en Ajustes 01–07) y varios bajos, ninguno toca cifras. Playwright con la API simulada da 230 pruebas que pasan, 4 omitidas y 1 que falla en cada corrida completa (`correccion-bis.escritorio.spec.ts:79`). Por esa prueba, `make verify-wf3` queda en rojo; `make verify-all` pasa. C3 v0.95 sigue sin firma: 42 de 42 pantallas implementadas y probadas, 0 capturadas (eso es WF-3b). Hay 4 bloqueos nuevos (129 archivos en total). Detalle: [`docs/estado/wf3/INTEGRACION-wf3a.md`](docs/estado/wf3/INTEGRACION-wf3a.md), §15 «WF-3a bis».
@@ -80,6 +82,16 @@ finanzas-hogar/
 
 ## Versiones vigentes de los artefactos (11-oct-2026, puerta 2)
 
+> **Cambios del 12-oct-2026 (WF-3c, K54)**, la tabla todavía no los refleja:
+>
+> - Esquema 1.5 (`00005_tablero.sql`), diccionario y reglas 1.5.
+> - C1 v1.5.0: 221 operaciones, 176 rutas y 267 esquemas.
+> - U3 2.0 y DESIGN 1.1.
+> - Criterios: U3 1.4, U5 1.3, P3 1.4, C1 1.5 y S1 1.3.
+> - C3 v1.3, sin firma.
+>
+> Ver `docs/estado/wf3/INTEGRACION-wf3c.md` §4 y §5.
+
 | Artefacto | Versión | Ruta | Estado (puerta 2, P2c) |
 |---|---|---|---|
 | Modelo de datos (S1) | esquema 1.4 | `backend/db/migrations/00001_esquema.sql` a `00004_puerta2.sql`, `docs/contratos/diccionario-datos.md` 1.4, `docs/contratos/reglas-negocio.md` 1.4 | **no aprobado** tras 3 rondas en P2c (el alto, `verify-c1` roto, ya pasa; quedan 7 bajos): 55 tablas STRICT, 152 índices, 79 disparadores, 29 reglas; 10 claves nuevas de `app_setting` (Q2-11 B, K47 y K50) y `credit.vat_included` (Q2-67) |
@@ -138,6 +150,24 @@ Criterios U5 y C3 uno por uno, rondas, hallazgos abiertos, bloqueos, pendientes 
 - **C3 v1.2** (`docs/contratos/C3-integracion.md`): 41 pantallas implementadas, probadas y capturadas; 7 de 8 flujos; sin firma.
 - **Semilla**: gastos proyectados de la fixture S2 (devengado contra efectivo P1 a P6 = `model.json`) y 36 precios de Walmart, PROVISIONAL (`WF3a-bis-semilla-dev`).
 
+## Qué entregó WF-3c
+
+Inicio como tablero de control (K54). Detalle, rondas, hallazgos abiertos, bloqueos y consumo: [`docs/estado/wf3/INTEGRACION-wf3c.md`](docs/estado/wf3/INTEGRACION-wf3c.md). En corto:
+
+- **Especificación:** K54 en `docs/plan/decisiones.md`; U3 2.0, con K-1 a K-4, el barómetro B-1 y las gráficas G-1 a G-6; DESIGN 1.1, §8.9 «Barómetro»; esquema 1.5 (`backend/db/migrations/00005_tablero.sql`, 5 claves de `app_setting`); C1 v1.5.0, con 5 operaciones nuevas.
+- **Servidor:**
+  - `backend/internal/api/tablero/`, los pagos por mes en `api/creditos/tablero.go` y K-1 con la comparación contra el mes anterior;
+  - HTTP/2 por ALPN (`cmd/finanzas/tls.go`, prueba `tls_h2_test.go`).
+- **Pantalla:** `frontend/src/pantallas/inicio/Tablero.tsx`, `frontend/src/componentes/Barometro.tsx` y la barra lateral con los iconos de sección.
+- **Capturas:** las 164 se regeneraron, más 16 de las subsecciones de P-01 en `docs/design/capturas-u5/evidencia/inicio-subsecciones/`.
+- **Abierto:**
+  - la especificación (M-R3-1) y el backend (M-2) no se aprobaron;
+  - C3 v1.3 sin firma: 4 pruebas de flujos quedaron viejas con el nuevo Inicio, a `updateDashboardSettings` le falta su pantalla, y la «deuda viva total» de K-3 ($18,999.22) no es la del oráculo ($3,895.00);
+  - P-01 Detalle mide 475 px en Android;
+  - `verify-wf3` falla en U5-04 por un falso positivo.
+  
+  La salida está en `docs/estado/bloqueos/WF3c-ronda3-escalamiento.md`.
+
 ## Cómo correr la verificación
 
 Desde la raíz del repositorio:
@@ -189,6 +219,11 @@ Para la colorimetría sin make, copia el script a un árbol espejo (`<espejo>/do
 5. **Pista 3 (Claude Design por Artifacts), la ejecuta el orquestador (K45, sustituye a K35).** Sin navegador y sin subir archivos: los agentes escriben en disco el sistema de diseño y los artboards de todas las pantallas de U1 con cifras sintéticas, y solo el orquestador los publica con la herramienta Artifact; hay hasta 3 vueltas revisadas por agentes, cada una copiada en `docs/design/salida/iter-N/`, y la exportación final va en `docs/design/salida/final/`. `docs/design/entrada/` queda como brief de referencia. La puerta 3 es al final: Axel abre la URL privada del lienzo y aprueba la referencia visual. Plan técnico: [`docs/design/pista3-plan.md`](docs/design/pista3-plan.md). Después vienen WF-3 (backend, frontend y verificación visual; puerta 4) y WF-4 (operación, semilla, seguridad e informe final).
 6. **WF-3a «Construcción» (integrado el 12-oct-2026).** Servidor Go, frontend y PWA, pruebas de contrato y C3 v0.9 en borrador: [`docs/estado/wf3/INTEGRACION-wf3a.md`](docs/estado/wf3/INTEGRACION-wf3a.md). **Siguiente: WF-3b**, con las capturas de U5, los flujos F-1 a F-6 contra el servidor y la firma de C3. WF-3a bis (12-oct-2026) ya corrigió el frontend y aplicó las decisiones del orquestador sobre `docs/estado/bloqueos/C3-matriz.md` (§15 de la integración). Antes de WF-3b falta decidir si se cierran los 2 medios que quedan y la prueba que falla en la corrida completa (§15.8). Después vienen la puerta 4 (valores K31, §9) y WF-4 (instalación con systemd).
 7. **WF-3b «Verificación visual y C3» (integrado el 12-oct-2026).** Capturas U5, flujos contra el servidor real y C3 v1.2: [`docs/estado/wf3/INTEGRACION-wf3b.md`](docs/estado/wf3/INTEGRACION-wf3b.md). **Siguiente: puerta 4.** Axel decide los dos escalamientos de ronda 3, `docs/estado/bloqueos/U5-ronda3-escalamiento.md` y `C3-ronda3-escalamiento.md` (se recomienda la A en los dos), prueba S6-11 en sus Android y confirma los valores K31. El orquestador hace S7-07 con el envío real por Telegram. Después viene WF-4, la instalación con systemd.
+8. **WF-3c «Inicio como tablero de control» (integrado el 12-oct-2026).** K54 con U3 2.0, DESIGN 1.1, esquema 1.5, C1 v1.5, API, pantalla, HTTP/2 y capturas: [`docs/estado/wf3/INTEGRACION-wf3c.md`](docs/estado/wf3/INTEGRACION-wf3c.md). **Siguiente:** el orquestador decide `WF3c-ronda3-escalamiento`; se propone una ronda acotada «WF-3c bis» antes de la puerta 4. En la puerta 4, Axel contesta:
+   - qué es la «deuda viva total»;
+   - dónde se editan los parámetros del tablero;
+   - qué pasa con las líneas archivadas;
+   - los valores PROVISIONALES de K54, junto con lo que ya estaba pendiente de WF-3b.
 
 Lo que WF-1 debe tomar de los flujos anteriores (insumos, pendientes y solicitudes abiertas) está en [`docs/estado/wf0/INTEGRACION.md`](docs/estado/wf0/INTEGRACION.md) §5 y §7, [`docs/estado/p1/INTEGRACION.md`](docs/estado/p1/INTEGRACION.md) §7 y [`docs/estado/p1c/INTEGRACION.md`](docs/estado/p1c/INTEGRACION.md) §7.
 

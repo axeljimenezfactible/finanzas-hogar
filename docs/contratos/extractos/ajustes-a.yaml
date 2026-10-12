@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «ajustes-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.0 · extracto «ajustes-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto ajustes-a"
-  version: "1.4.0"
+  version: "1.5.0"
   description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -440,6 +440,108 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/planned-items/{planned_item_id}:
+    patch:
+      operationId: "updatePlannedItem"
+      tags:
+        - "Ajustes"
+      summary: "Editar o desactivar partida"
+      description: "Edita o desactiva una partida (is_active = false). En el ingreso esperado: montos de cada quincena (amount_cents, second_half_amount_cents) y fecha desde la que rigen (N-280)."
+      x-necesidades:
+        - "N-278"
+        - "N-280"
+      x-tablas:
+        - "audit_log"
+        - "planned_item"
+      parameters:
+        - name: "planned_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (planned_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlannedItemUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlannedItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/imports/planned-items/preview:
+    post:
+      operationId: "previewPlannedItemsImport"
+      tags:
+        - "Ajustes"
+      summary: "Vista previa de gastos_fijos_ingresos.csv"
+      description: "No escribe nada."
+      x-necesidades:
+        - "N-304"
+      x-tablas:
+        - "category"
+        - "cost_share_rule"
+        - "credit"
+        - "person"
+        - "planned_item"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              required:
+                - "file"
+              properties:
+                file:
+                  type: "string"
+                  contentMediaType: "application/octet-stream"
+                  description: "Archivo gastos_fijos_ingresos.csv (plantilla de plan.md §8.2). Tipos admitidos: text/csv."
+            encoding:
+              file:
+                contentType: "text/csv"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportPreview"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "413":
+          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
+        "415":
+          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
 components:
   securitySchemes:
     cookieAuth:
@@ -822,6 +924,135 @@ components:
         - "amount_cents"
         - "frequency"
         - "start_date"
+    PlannedItemUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de partida planificada (tabla `planned_item`)."
+      x-tabla: "planned_item"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "income"
+            - "fixed_expense"
+            - "upcoming_expense"
+          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
+        second_half_amount_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales · null borra el valor"
+        frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+            - "yearly"
+            - "once"
+          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
+        interval_count:
+          type: "integer"
+          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
+        end_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Última fecha posible, inclusive. NULL = sin fin · null borra el valor"
+        category_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Categoría del gasto · null borra el valor"
+        person_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general · null borra el valor"
+        cost_share_rule_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto · null borra el valor"
+        payment_method:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+            - null
+          description: "Cómo se pagará cada ocurrencia. NULL = sin definir · null borra el valor"
+        credit_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Crédito con que se planea pagar (despensa con Kueski) · null borra el valor"
+        term_count:
+          type:
+            - "integer"
+            - "null"
+          description: "Plazo planeado en pagos (4 quincenas) · null borra el valor"
+        accrual_months:
+          type: "integer"
+          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    ImportPreview:
+      type: "object"
+      description: "Vista previa de la importación de gastos_fijos_ingresos.csv (N-304)."
+      properties:
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Renglón del CSV."
+            properties:
+              line_no:
+                type: "integer"
+                description: "Renglón."
+              planned_item:
+                $ref: "#/components/schemas/PlannedItemCreate"
+                description: "Partida que se crearía."
+              errors:
+                type: "array"
+                items:
+                  $ref: "componentes-comunes.yaml#/components/schemas/FieldError"
+                description: "Errores del renglón."
+            required:
+              - "line_no"
+              - "errors"
+            x-calculado: true
+          description: "Uno por renglón."
+        valid_count:
+          type: "integer"
+          description: "Renglones válidos."
+        error_count:
+          type: "integer"
+          description: "Renglones con error."
+      required:
+        - "rows"
+        - "valid_count"
+        - "error_count"
+      x-calculado: true
     ProjectionSettings:
       type: "object"
       description: "Ajuste de la proyección de los meses 7 a 12 (N-318, K21)."

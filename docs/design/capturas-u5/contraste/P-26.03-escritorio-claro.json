@@ -2,8 +2,8 @@
  "pantalla": "P-26.03",
  "combinacion": "escritorio-claro",
  "alcance": "body",
- "evaluados": 73,
- "pares_unicos": 10,
+ "evaluados": 82,
+ "pares_unicos": 11,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
@@ -62,7 +62,7 @@
    "umbral": 3,
    "grande": false,
    "razon": 5.035,
-   "elementos": 3,
+   "elementos": 11,
    "ejemplos": [
     {
      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
@@ -73,8 +73,24 @@
      "texto": "lucide lucide-plus size-5 text-icon-defa"
     },
     {
-     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
-     "texto": "lucide lucide-monitor size-5 text-icon-d"
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-house lucide-home size-5 s"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.161,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-settings size-5 shrink-0 t"
     }
    ]
   },

@@ -2,14 +2,14 @@
  "pantalla": "P-01",
  "combinacion": "escritorio-claro",
  "alcance": "body",
- "evaluados": 104,
- "pares_unicos": 22,
+ "evaluados": 605,
+ "pares_unicos": 30,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
   "deshabilitados": 0,
-  "ui_sin_limite_visible": 16,
-  "graficos_marcas_no_medibles_en_dom": 0
+  "ui_sin_limite_visible": 22,
+  "graficos_marcas_no_medibles_en_dom": 156
  },
  "bajos": [],
  "indeterminados_detalle": [],
@@ -31,6 +31,22 @@
    ]
   },
   {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#457723",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": true,
+   "razon": 4.796,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.flex.items-center",
+     "texto": "+$24,500.00"
+    }
+   ]
+  },
+  {
    "tipo": "icono",
    "subtipo": null,
    "fg": "#457723",
@@ -38,8 +54,12 @@
    "umbral": 3,
    "grande": false,
    "razon": 4.796,
-   "elementos": 1,
+   "elementos": 2,
    "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.flex.items-center > svg.lucide.lucide-arrow-down-left",
+     "texto": "lucide lucide-arrow-down-left"
+    },
     {
      "nodo": "span.flex.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-arrow-down-left",
      "texto": "lucide lucide-arrow-down-left size-5 tex"
@@ -65,6 +85,38 @@
   {
    "tipo": "texto",
    "subtipo": null,
+   "fg": "#207B3E",
+   "bg": "#E3FAE6",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 4.814,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-B-1\"] > div.flex.flex-col > span.inline-flex.h-6",
+     "texto": "Verde · dentro del rango"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#207B3E",
+   "bg": "#E3FAE6",
+   "umbral": 3,
+   "grande": false,
+   "razon": 4.814,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > div.flex.flex-col > span.inline-flex.h-6 > svg.lucide.lucide-circle-check",
+     "texto": "lucide lucide-circle-check lucide-check-"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
    "fg": "#00767B",
    "bg": "#F2F2F4",
    "umbral": 3,
@@ -73,7 +125,7 @@
    "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-6\"] > span.flex.flex-wrap > span.flex.items-center",
+     "nodo": "div.grid.grid-cols-1 > a[data-prueba=\"tarjeta-6\"] > span.flex.flex-wrap > span.flex.items-center",
      "texto": "$3,146.72"
     }
    ]
@@ -102,19 +154,19 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 4.962,
-   "elementos": 3,
+   "elementos": 5,
    "ejemplos": [
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.inline-flex.h-6",
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.h-6",
      "texto": "Ingreso esperado"
     },
     {
-     "nodo": "a[data-prueba=\"tarjeta-3\"] > span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6",
-     "texto": "Pendiente confirmar"
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.h-6",
+     "texto": "Ingreso esperado"
     },
     {
-     "nodo": "a[data-prueba=\"tarjeta-6\"] > span.flex.flex-wrap > span.hidden.phone:inline-flex > span.inline-flex.h-6",
-     "texto": "En curso"
+     "nodo": "a[data-prueba=\"tarjeta-K-3\"] > span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6",
+     "texto": "Pendiente confirmar"
     }
    ]
   },
@@ -126,18 +178,18 @@
    "umbral": 3,
    "grande": false,
    "razon": 4.962,
-   "elementos": 3,
+   "elementos": 5,
    "ejemplos": [
     {
-     "nodo": "a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "texto": "lucide lucide-info"
+    },
+    {
+     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
     },
     {
      "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6 > svg.lucide.lucide-info",
-     "texto": "lucide lucide-info"
-    },
-    {
-     "nodo": "span.flex.flex-wrap > span.hidden.phone:inline-flex > span.inline-flex.h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
     }
    ]
@@ -150,19 +202,19 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 5.035,
-   "elementos": 28,
+   "elementos": 148,
    "ejemplos": [
     {
      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
      "texto": "Axel"
     },
     {
-     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.flex.items-center",
-     "texto": "Mes contra plan"
+     "nodo": "section[data-prueba=\"tablero\"] > div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-1\"] > span.flex.items-center",
+     "texto": "Gasto del mes"
     },
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.flex.flex-wrap > span.text-small.text-text-secondary",
-     "texto": "te quedan"
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-1\"] > span.flex.flex-wrap > span.text-small.text-text-secondary",
+     "texto": "gastado en octubre"
     }
    ]
   },
@@ -174,7 +226,7 @@
    "umbral": 3,
    "grande": false,
    "razon": 5.035,
-   "elementos": 9,
+   "elementos": 20,
    "ejemplos": [
     {
      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
@@ -185,8 +237,24 @@
      "texto": "lucide lucide-plus size-5 text-icon-defa"
     },
     {
-     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
-     "texto": "lucide lucide-monitor size-5 text-icon-d"
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-receipt size-5 shrink-0 te"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.147,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-house lucide-home size-5 s"
     }
    ]
   },
@@ -198,19 +266,19 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 5.161,
-   "elementos": 6,
+   "elementos": 15,
    "ejemplos": [
     {
-     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.mt-auto.inline-flex",
+     "nodo": "section[data-prueba=\"tablero\"] > div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-1\"] > span.mt-auto.inline-flex",
      "texto": "Ver presupuesto"
     },
     {
-     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.mt-auto.inline-flex",
-     "texto": "Ver flujo"
+     "nodo": "section[data-prueba=\"tablero\"] > div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-B-1\"] > span.mt-auto.inline-flex",
+     "texto": "Ver créditos"
     },
     {
-     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-3\"] > span.mt-auto.inline-flex",
-     "texto": "Ver crédito"
+     "nodo": "section[data-prueba=\"tablero\"] > div.min-w-0.tablet:col-span-8 > section[data-prueba=\"tarjeta-K-4\"] > a.inline-flex.min-h-11",
+     "texto": "Ver calendario"
     }
    ]
   },
@@ -222,18 +290,18 @@
    "umbral": 3,
    "grande": false,
    "razon": 5.161,
-   "elementos": 6,
+   "elementos": 9,
    "ejemplos": [
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-1\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
      "texto": "lucide lucide-chevron-right size-5"
     },
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-B-1\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
      "texto": "lucide lucide-chevron-right size-5"
     },
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-3\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
+     "nodo": "div.min-w-0.tablet:col-span-8 > section[data-prueba=\"tarjeta-K-4\"] > a.inline-flex.min-h-11 > svg.lucide.lucide-chevron-right",
      "texto": "lucide lucide-chevron-right size-5"
     }
    ]
@@ -289,12 +357,44 @@
   {
    "tipo": "texto",
    "subtipo": null,
+   "fg": "#7E509D",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": true,
+   "razon": 5.334,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-3\"] > span.flex.flex-wrap > span.flex.items-center",
+     "texto": "$18,999.22"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#7E509D",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.334,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-K-3\"] > span.flex.flex-wrap > span.flex.items-center > svg.lucide.lucide-credit-card",
+     "texto": "lucide lucide-credit-card"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
    "fg": "#66676E",
    "bg": "#FAFAFB",
    "umbral": 4.5,
    "grande": false,
    "razon": 5.397,
-   "elementos": 4,
+   "elementos": 5,
    "ejemplos": [
     {
      "nodo": "nav.hidden.text-small > ol.flex.gap-1 > li > a.hover:underline",
@@ -307,6 +407,22 @@
     {
      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
      "texto": "Tendencias"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "span.flex.flex-wrap > span.flex.flex-col > span.inline-flex.h-6 > svg.lucide.lucide-circle-dashed",
+     "texto": "lucide lucide-circle-dashed"
     }
    ]
   },
@@ -337,7 +453,7 @@
    "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "ul.mt-2.flex > li > div.flex.items-center > a.flex.h-8",
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > span.truncate",
      "texto": "Inicio"
     }
    ]
@@ -374,7 +490,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 10.76,
-   "elementos": 14,
+   "elementos": 357,
    "ejemplos": [
     {
      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",
@@ -401,16 +517,16 @@
    "elementos": 5,
    "ejemplos": [
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.flex.flex-wrap > span.flex.items-center",
-     "texto": "$802.36"
+     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-1\"] > span.flex.flex-wrap > span.flex.items-center",
+     "texto": "$1,197.64"
     },
     {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.flex.items-center",
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > div.flex.flex-col > div.flex.flex-col > span[data-prueba=\"barometro-digito\"]",
+     "texto": "2 %"
+    },
+    {
+     "nodo": "div.grid.grid-cols-1 > a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.flex.items-center",
      "texto": "$12,000.00"
-    },
-    {
-     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-3\"] > span.flex.flex-wrap > span.flex.items-center",
-     "texto": "$973.75"
     }
    ]
   },
@@ -454,11 +570,31 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 11.533,
-   "elementos": 1,
+   "elementos": 2,
    "ejemplos": [
     {
      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
      "texto": "Resumen"
+    },
+    {
+     "nodo": "h2#mas-del-hogar",
+     "texto": "Más del hogar"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#000000",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 18.783,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto",
+     "texto": "block h-auto w-full overflow-visible for"
     }
    ]
   }

@@ -2,7 +2,7 @@
 """U2d · Contraste de componentes (WCAG 2.x) para Finanzas Hogar.
 
 Calcula el contraste de TODOS los pares componente x estado x tema que
-DESIGN.md §10.5 enumera (158 pares x 2 temas = 316 combinaciones) y escribe
+DESIGN.md §10.5 enumera (172 pares x 2 temas = 344 combinaciones) y escribe
 docs/design/contraste-componentes.csv.
 
 Fuentes (solo lectura):
@@ -46,7 +46,7 @@ SALIDA = RAIZ / "docs/design/contraste-componentes.csv"
 
 UMBRAL_TEXTO = Decimal("4.5")
 UMBRAL_INTERFAZ = Decimal("3.0")
-ESPERADOS = {"pares": 158, "combinaciones": 316, "con_umbral": 304, "decorativas": 12, "no_en_csv": 50}
+ESPERADOS = {"pares": 172, "combinaciones": 344, "con_umbral": 330, "decorativas": 14, "no_en_csv": 58}  # +14 pares del barometro (DESIGN §8.9, K54)
 COLUMNAS = ["id", "componente", "estado", "tema", "par", "token_frente", "token_fondo",
             "hex_frente", "hex_fondo", "razon", "tipo", "umbral", "cumple", "cruce_contraste_csv"]
 

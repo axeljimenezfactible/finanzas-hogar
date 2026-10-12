@@ -34,6 +34,66 @@ export const textosInicio = {
     titulo: 'Ahorro y metas', ahorrado: 'ahorrado', esteMes: (a: string, p: string) => `Este mes ${a} de ${p}`, meta: (n: string, p: string, f: string) => `${n} · ${p} · ${f}`,
     estados: { in_progress: 'En curso', overdue: 'Vencida', achieved: 'Cumplida' }, accion: 'Ver ahorro', sinAhorro: 'Aún no tienes fondo ni metas de ahorro', accionVacio: 'Crear meta', falla: `No se pudo cargar el ahorro. ${red}`,
   },
+  /** Tablero de control (U3 2.0 §2, K54). */
+  tablero: {
+    region: 'Tablero de control', masDelHogar: 'Más del hogar',
+    servidorViejo: 'Disponible cuando el servidor se actualice',
+    comparar: (cifra: string, dif: number, m: string) => (dif > 0 ? `${cifra} más que ${m}` : dif < 0 ? `${cifra} menos que ${m}` : `Igual que ${m}`),
+    sinDatosDe: (m: string) => `Sin datos de ${m}`,
+    k1: {
+      titulo: 'Gasto del mes', gastadoEn: (m: string) => `gastado en ${m}`, dePlan: (n: string, p: string, r: string) => `${n} de ${p} · te quedan ${r}`, rebasado: (m: string) => `${m} rebasado`,
+      delPlan: (n: string) => `${n} del plan`, efectivo: (m: string) => `Pagado en efectivo ${m}`, gastado: 'Gastado', enEfectivo: 'Efectivo', barra: 'Avance del plan',
+      vasEn: (n: number) => `Vas en ${n} %`, rebasaste: 'Rebasaste el plan', rebasadas: (n: number) => (n === 1 ? '1 categoría rebasada' : `${n} categorías rebasadas`),
+      sinPlan: (m: string) => `Aún no hay presupuesto para ${m}`, llevas: (r: string) => `Llevas ${r} gastado`,
+      accion: 'Ver presupuesto', accionVacio: 'Capturar presupuesto', falla: `No se pudo cargar el gasto del mes. ${red}`,
+    },
+    k2: {
+      titulo: 'Ingreso del mes', deQuincenas: 'de quincenas', extra: (m: string) => `Extra este mes ${m}`, sinExtra: 'Sin extra este mes',
+      capturadas: (n: number, m: number) => `${n} de ${m} quincenas capturadas`, esperado: 'Ingreso esperado', faltaIngreso: 'Falta tu ingreso quincenal',
+      accion: 'Ver ingresos', accionVacio: 'Capturar ingreso', falla: `No se pudo cargar el ingreso del mes. ${red}`,
+    },
+    k3: {
+      titulo: 'Créditos', deudaViva: 'deuda viva total', pagosDe: (m: string, total: string, n?: number) => `Pagos de ${m}: ${total}${n === undefined ? '' : n === 1 ? ' · 1 pago' : ` · ${n} pagos`}`,
+      faltaPagar: (m: string) => `Falta pagar ${m}`, sinPagos: (m: string) => `Sin pagos en ${m}`, sinCreditos: 'Aún no hay créditos', disponibleSinDato: 'Disponible hoy —',
+      accion: 'Ver créditos', accionVacio: 'Agregar crédito', falla: `No se pudieron cargar los créditos. ${red}`,
+    },
+    k4: {
+      titulo: 'Pagos próximos', hayMas: 'Hay más pagos en Calendario', sinPagos: 'Sin pagos en los próximos 30 días', sinCreditos: 'Aún no hay créditos',
+      fila: (f: string, l: string, m: string) => `${f} · ${l} · ${m}`, accion: 'Ver calendario', accionVacio: 'Agregar crédito', falla: `No se pudieron cargar los pagos. ${red}`,
+    },
+    b1: {
+      titulo: 'Capacidad de endeudamiento', valorTexto: (n: string, tope: number, color: string) => `Capacidad de endeudamiento ${n} de ${tope} %: ${color}`,
+      sinValorTexto: (tope: number) => `Capacidad de endeudamiento sin dato, tope ${tope} %`,
+      pagosDe: (p: string, i: string) => `Pagos ${p} de un ingreso de ${i}`, teCaben: (m: string) => `Te caben ${m} más al mes antes del rojo`, arriba: (m: string) => `${m} arriba del tope`,
+      conKaren: (n: number) => `Con la parte de Karen: ${n} %`, sinCreditos: 'Sin créditos activos', esperado: 'Ingreso esperado', faltaIngreso: 'Falta tu ingreso del mes para calcular la capacidad',
+      accion: 'Ver créditos', accionVacio: 'Capturar ingreso', falla: `No se pudo calcular la capacidad de endeudamiento. ${red}`,
+    },
+    g1: {
+      titulo: 'Ingreso, gasto y pagos por mes', subtitulo: (a: string, b: string) => `De ${a} a ${b}`, ingreso: 'Ingreso', gasto: 'Gasto', pagos: 'Pagos de crédito', quincenas: 'Quincenas', extras: 'Extras',
+      nota: 'Los pagos de crédito pagan compras que ya cuentan en el gasto de su mes; no se suman al gasto',
+      resumen: (m: string, i: string, g: string, p: string) => `En ${m}: ingreso ${i}, gasto ${g} y pagos de crédito ${p}`,
+      vacio: 'Aún no hay meses con ingreso ni gasto', accionVacio: 'Capturar ingreso',
+    },
+    g2: {
+      titulo: 'Deuda viva por línea', subtitulo: (f: string) => `Al ${f}`, linea: 'Línea', monto: 'Deuda viva', resumen: (t: string, l: string, m: string) => `Deuda viva hoy: ${t}; la mayor, ${l} con ${m}`, vacio: 'No hay deudas vivas',
+    },
+    g3: {
+      titulo: 'Presupuesto por categoría', subtitulo: (m: string) => `Mes de ${m}`, etiqueta: (c: string, r: string, p: string, n: string) => `${c} · ${r} de ${p} · ${n}`, vasEn: (n: number) => `Vas en ${n} %`, rebasada: 'Rebasada',
+      subir: 'Sugerencia: subir presupuesto', recortar: 'Sugerencia: recortar presupuesto',
+      motivo: (c: string, n: number, arriba: boolean, m: number) => `${c}: ${n} meses seguidos ${arriba ? 'arriba' : 'abajo'} del plan por más de ${m} %`,
+      marca: (n: number) => `${n} %`, verTodas: 'Ver todas', sinPlan: (n: number) => (n === 1 ? '1 categoría con gasto y sin plan' : `${n} categorías con gasto y sin plan`),
+      resumen: (m: string, n: number, w: number, x: number) => `En ${m}: ${n} ${n === 1 ? 'categoría' : 'categorías'} arriba de ${w} % y ${x} ${x === 1 ? 'rebasada' : 'rebasadas'}`,
+      categoria: 'Categoría', real: 'Real', plan: 'Plan', usado: '% del plan', sugerencia: 'Sugerencia', ninguna: 'Sin sugerencia', abrir: (c: string) => `Ver gastos de ${c}`,
+      vacio: 'Aún no hay presupuesto por categoría', accionVacio: 'Capturar presupuesto',
+    },
+    g6: {
+      titulo: 'Tendencia del barómetro', serie: 'Capacidad de endeudamiento', nota: 'Proyección con pagos programados e ingreso esperado', faltaIngreso: '— · Falta ingreso',
+      estado: 'Estado', capacidad: 'Capacidad', proyeccion: 'Proyección', si: 'Sí', no: 'No', punto: (m: string, n: number, e: string) => `${m}, ${n} %: ${e}`,
+      resumen: (m: string, n: string, e: string, mm: string, nn: string) => `${m}: ${n} (${e}); el mayor de la proyección es ${mm} con ${nn}`,
+      resumenSinProyeccion: (m: string, n: string, e: string) => `${m}: ${n} (${e})`,
+      vacio: 'Falta tu ingreso para calcular la capacidad', accionVacio: 'Capturar ingreso',
+    },
+  },
   detalle: {
     filtrar: 'Filtrar', filtros: 'Filtros', periodo: 'Periodo', mes: 'Mes', q1: '1.ª quincena', q2: '2.ª quincena', persona: 'Persona', familia: 'Familia', credito: 'Crédito', categoria: 'Categoría', tienda: 'Tienda',
     familias: { household: 'Hogar', external: 'Karen', joint: 'Conjunto' }, noUsa: (f: string) => `Este bloque no usa el filtro ${f}`, verGastos: 'Ver todos los gastos con estos filtros', listo: 'Listo', limpiar: 'Quitar filtros',

@@ -79,6 +79,58 @@ func TestOp_getDashboardMonthVsPlan(t *testing.T) {
 	want(t, s.Anonymous(t).Do("GET", "/api/v1/dashboard/month-vs-plan", nil), 401)
 }
 
+// C1 v1.5 (K-1 del tablero, K54; M-01 ampliada): efectivo del mes, mes anterior con sus diferencias y conteos de
+// categorías en warning y exceeded. Agente api-tablero (WF-3c).
+func TestOp_getDashboardMonthVsPlan_C1v15(t *testing.T) {
+	s, c, f := inicioFx(t)
+	var mv api.DashboardMonthVsPlan
+	res := c.Do("GET", "/api/v1/dashboard/month-vs-plan", nil)
+	want(t, res, 200)
+	mv = api.DashboardMonthVsPlan{} // los campos ausentes no deben arrastrar la respuesta anterior
+	res.JSON(t, &mv)
+	// Octubre, todo de contado: devengado del hogar 1,000.00 (Despensa al 50 % con Karen + Varios) y efectivo 1,500.00
+	// (M-11 del motor S2 cuenta lo pagado de contado completo). Septiembre sin datos: sin cifras ni diferencias.
+	if mv.CashCents == nil || *mv.CashCents != 150000 || mv.PreviousMonth == nil || *mv.PreviousMonth != "2026-09" ||
+		mv.PreviousActualCents != nil || mv.PreviousCashCents != nil || mv.ActualDifferenceCents != nil || mv.CashDifferenceCents != nil {
+		t.Fatalf("sin mes anterior: %+v", mv)
+	}
+	if mv.CategoriesWarningCount == nil || *mv.CategoriesWarningCount != 0 || mv.CategoriesExceededCount == nil || *mv.CategoriesExceededCount != 0 {
+		t.Fatalf("sin plan no hay categorías en aviso: %+v", mv)
+	}
+	// Septiembre: Varios 300.00 de contado (todo del hogar).
+	newExpense(t, c, map[string]any{"category_id": f.varios, "amount_cents": 30000, "expense_date": "2026-09-20", "payment_method": "cash", "accrual_months": 1}, 511)
+	// Planes de octubre: Despensa 600.00 (parte del hogar 500.00 → 83 %, warning) y Varios 400.00 (500.00 → 125 %, exceeded).
+	ins(t, s.DB, `INSERT INTO budget (category_id, amount_cents, valid_from_date) VALUES (?, 60000, '2026-10-01')`, f.despensa)
+	ins(t, s.DB, `INSERT INTO budget (category_id, amount_cents, valid_from_date) VALUES (?, 40000, '2026-10-01')`, f.varios)
+	res = c.Do("GET", "/api/v1/dashboard/month-vs-plan", nil)
+	want(t, res, 200)
+	mv = api.DashboardMonthVsPlan{} // los campos ausentes no deben arrastrar la respuesta anterior
+	res.JSON(t, &mv)
+	if mv.PreviousActualCents == nil || *mv.PreviousActualCents != 30000 || *mv.PreviousCashCents != 30000 ||
+		*mv.ActualDifferenceCents != 70000 || *mv.CashDifferenceCents != 120000 {
+		t.Fatalf("con mes anterior: %+v", mv)
+	}
+	if *mv.CategoriesWarningCount != 1 || *mv.CategoriesExceededCount != 1 {
+		t.Fatalf("conteos: warning %d exceeded %d", *mv.CategoriesWarningCount, *mv.CategoriesExceededCount)
+	}
+	// En noviembre el mes anterior es octubre y las diferencias son negativas (nada gastado aún en noviembre); en
+	// septiembre el mes anterior (agosto) no tiene datos y no hay diferencias.
+	res = c.Do("GET", "/api/v1/dashboard/month-vs-plan?period=2026-11", nil)
+	want(t, res, 200)
+	mv = api.DashboardMonthVsPlan{} // los campos ausentes no deben arrastrar la respuesta anterior
+	res.JSON(t, &mv)
+	if *mv.PreviousMonth != "2026-10" || *mv.PreviousActualCents != 100000 || *mv.ActualDifferenceCents != -100000 || *mv.CashDifferenceCents != -150000 || *mv.CashCents != 0 {
+		t.Fatalf("noviembre: %+v", mv)
+	}
+	res = c.Do("GET", "/api/v1/dashboard/month-vs-plan?period=2026-09", nil)
+	want(t, res, 200)
+	mv = api.DashboardMonthVsPlan{} // los campos ausentes no deben arrastrar la respuesta anterior
+	res.JSON(t, &mv)
+	if *mv.PreviousMonth != "2026-08" || mv.PreviousActualCents != nil || *mv.CashCents != 30000 {
+		t.Fatalf("septiembre: %+v", mv)
+	}
+}
+
 func TestOp_getDashboardFortnightFlow(t *testing.T) {
 	s, c, _ := inicioFx(t)
 	var ff api.DashboardFortnightFlow

@@ -2,8 +2,8 @@
  "pantalla": "P-09",
  "combinacion": "escritorio-oscuro",
  "alcance": "body",
- "evaluados": 63,
- "pares_unicos": 15,
+ "evaluados": 72,
+ "pares_unicos": 16,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
@@ -31,6 +31,22 @@
     {
      "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.whitespace-nowrap.text-title-2",
      "texto": "$3,146.72"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-wallet size-5 shrink-0 tex"
     }
    ]
   },
@@ -90,7 +106,7 @@
    "umbral": 3,
    "grande": false,
    "razon": 7.975,
-   "elementos": 3,
+   "elementos": 11,
    "ejemplos": [
     {
      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
@@ -101,8 +117,8 @@
      "texto": "lucide lucide-plus size-5 text-icon-defa"
     },
     {
-     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
-     "texto": "lucide lucide-monitor size-5 text-icon-d"
+     "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+     "texto": "lucide lucide-house lucide-home size-5 s"
     }
    ]
   },

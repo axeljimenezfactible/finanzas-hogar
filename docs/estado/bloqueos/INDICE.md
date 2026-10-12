@@ -607,3 +607,30 @@ Los dio de alta el flujo WF-3b «Verificación visual y C3»; los registra `inte
 | `U5-contraste-ui-controles.md` | `u5-capturas` | Qué cuenta como «componente de UI» en el 3:1 de U5-04 (campo, selección, botón); A PROVISIONAL: contar los tres subtipos | — | puerta 4 (DESIGN/C2) |
 | `U5-nombres-propios.md` | `revisor-u5-r1` | Si se aceptan en pantalla Claude, Ollama, Tesseract y las siglas API, CSV, PDF y OCR (U5-07) | — | puerta 4 |
 | `U5-tipografia-tres-tamanos.md` | `revisor-u5-r1` | «Máximo tres tamaños por pantalla» de DESIGN §3.2 contra los 4 a 5 tamaños que piden sus propios componentes; A PROVISIONAL: solo el área de contenido | — | puerta 4 (DESIGN) |
+
+## Bloqueos nuevos de WF-3c (12-oct-2026, para la puerta 4)
+
+Los abrió el flujo WF-3c, «Inicio como tablero de control» (K54), y los registra `integrador-wf3c`. Son **14 archivos nuevos y todos están ABIERTOS**. Con esta tabla se cierran los bajos B-3 (`REVISION-tablero-backend-r3.md`) y B-r1-4 (`REVISION-especificacion-r3.md`), porque el índice no tenía filas del tablero.
+
+Mientras no haya respuesta, el código y los documentos corren con la opción PROVISIONAL de cada archivo. Ninguno toca valores K31. Las cifras de los motores no cambian, y las del tablero salen de RN-30 y RN-31 sobre los motores S2 y S3.
+
+| Archivo | Lo abrió | Tema (pregunta para Axel o para el siguiente flujo) | K31 | Fase que lo usa |
+|---|---|---|---|---|
+| `U3-tablero-barometro.md` | `u3-v2` | Qué entra en la capacidad de endeudamiento, que es lo FIRME de K54. Hay 4 preguntas: (1) qué es el ingreso mensual neto: (a) las quincenas capturadas más las esperadas, sin extras; (2) qué pagos cuentan: (a) solo la parte del hogar; (3) redondeo: (a) entero con ROUND_HALF_UP, ≤ 30 verde, 31 a 40 amarillo, ≥ 41 rojo; (4) escala del arco: (a) 0 a 60 %. B-R3-1: la justificación del punto 4 trae una cuenta errónea. | — | puerta 4 |
+| `U3-tablero-horizonte.md` | `u3-v2` | Cuántos meses ve cada gráfica. G-1: (a) 11 meses anteriores más el actual. G-6: (a) 6 anteriores, el actual y 5 siguientes. Petición: (a) una sola, de 17 meses. | — | puerta 4 |
+| `U3-tablero-mas-del-hogar.md` | `u3-v2` | Qué pasa con las tarjetas 2, 4, 5 y 6 de U3 1.x: (a) siguen sin cambio bajo «Más del hogar». Las tarjetas 1 y 3 pasan a K-1, K-3 y K-4. | — | puerta 4 |
+| `U3-tablero-recordatorio.md` | `u3-v2` | «Pagos próximos» (K-4). N: (a) 5 (`dashboard.payment_reminder_count`, de 1 a 20). Rango: (a) los vencidos y luego de hoy a hoy + 30 días. Forma: (a) una fila por pago. | — | puerta 4 |
+| `U3-tablero-senal-presupuesto.md` | `u3-v2` | Sugerencia de subir o recortar el presupuesto (G-3, RN-31): (a) 3 meses cerrados (`budget.signal_months`); (a) margen de 10 % (`budget.signal_margin_pct`); (a) un mes sin plan corta la racha. | — | puerta 4 |
+| `C1-tablero.md` | `s1-c1-v15` | Lo que C1 v1.5 y el esquema 1.5 fijan sin decisión. (1) Sección de Ajustes de las 5 claves: (a) Presupuesto, P-26.02. (2) Rangos de los disparadores de la 00005. (3) Necesidades de U1 de las 5 operaciones nuevas. (4) Nombre de la clave del recordatorio: (a) `dashboard.payment_reminder_count`. (5) Formato de `period` en `getDashboardDebtCapacity` y `getBudgetSignals`: (a) solo `AAAA-MM`, y una quincena responde 422. | — | puerta 4 (U4 y U1 pueden cerrar los puntos 1 y 3) |
+| `S6-tablero-sin-datos.md` | `api-tablero` | Cuándo un mes «no tiene datos»: (a) devengado y efectivo del hogar = 0, en `dominio.MonthHasData`; (b) antes del primer gasto o pago registrado. | — | puerta 4 |
+| `S6-tablero-senal-periodo.md` | `correccion-tablero-backend-r1` | Qué meses mira `getBudgetSignals` cuando `period` es posterior al mes en curso: (a) solo los cerrados, y entonces la señal es `none`; (b) 422 `out_of_range`. B-5 pide que C1 lo diga. | — | puerta 4 |
+| `S6-tablero-lineas-archivadas.md` | `correccion-tablero-backend-r1` | Si los pagos de una línea archivada cuentan en el barómetro y en las gráficas: (a) sí, en los meses en que hubo pagos, y es la PROVISIONAL **sin aplicar en el código**; (b) solo las líneas activas, que es lo que hace hoy el código. Es el hallazgo M-2, abierto tras 3 rondas (ver `WF3c-ronda3-escalamiento`, punto 2). | — | orquestador (salida i o ii) y puerta 4 |
+| `C3-ajustes-tablero.md` | `c3-tablero` | `updateDashboardSettings` (N-278) no tiene pantalla. Opciones: un apartado «Parámetros del tablero» en P-26.02, una excepción justificada, u otra sección. Es el H-3 de C3. | — | puerta 4 (U4) |
+| `WF3c-barra-iconos-seccion.md` | `front-tablero` | 4 iconos de sección de la barra lateral que DESIGN §5.4 no nombra: Presupuesto `wallet`, Salud `heart-pulse`, Reportes y Gastos. A) confirmarlos; B) Gastos con `arrow-up-right`; C) otros. | — | puerta 4 (DESIGN) |
+| `WF3c-tablero-interfaz.md` | `front-tablero` | 3 puntos de interfaz que U3 2.0 no cierra. (1) K-4 dice «hay más pagos» sin número. (2) K-3 sin «Reintentar» dentro de la tarjeta-enlace. (3) La insignia de K-1 es solo texto. | — | puerta 4 |
+| `WF3c-barometro-sin-dato.md` | `correccion-tablero-frontend-r2` | Rol accesible del barómetro sin dato: A) `role="img"` con su texto, que es lo que está hecho; B) `sr-only`. DESIGN §8.9 debe fijarlo. | — | puerta 4 (DESIGN) |
+| `WF3c-ronda3-escalamiento.md` | `integrador-wf3c` | Lo que WF-3c no aprobó. Especificación: M-R3-1, la escala de G-6. Backend: M-2. C3 v1.3 devuelto: H-1 a H-5. `make verify-wf3` sale con EXIT 2 por U5-04: 2 pares del `<svg>` raíz del barómetro, un falso positivo comprobado. P-01 Detalle mide 475 px en Android. La PROPUESTA es una ronda acotada, «WF-3c bis». | — | orquestador, antes de la puerta 4 |
+
+**Actualizado en WF-3c:** `C3-flujos.md`. En el punto 2, el orquestador decidió de forma PROVISIONAL la opción (c): la ruta A de F-3 exige una lista vigente con todos sus precios en al menos una tienda, y U1 §4 F-3 ya lo dice. Además, `c3-tablero` dejó la nota de las 4 pruebas de flujos que el Inicio de U3 2.0 dejó viejas.
+
+**Conteo de WF-3c:** 14 archivos nuevos (14 abiertos) y 1 actualizado (`C3-flujos.md`, sigue abierto).

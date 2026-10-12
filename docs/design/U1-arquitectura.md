@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Fase | U1 «Arquitectura de información» (Pista 2, flujo WF-0) |
-| Agente | U1-arquitectura (v1.0) · U1-1.1 (v1.1) · U1-1.2 (v1.2) |
+| Agente | U1-arquitectura (v1.0) · U1-1.1 (v1.1) · U1-1.2 (v1.2) · `u3-v2` (12-oct-2026, F-3) y `correccion-especificacion-r1` (12-oct-2026, P-01 y F-4 por K54; sin cambio de versión ni de necesidades) |
 | Versión | **1.2** (11-oct-2026): respuestas de la puerta 1b (`decisiones.md` K35 a K44) sobre la 1.1 (respuestas de la puerta 1, §K, y hallazgos R2-05 y R3-01) |
 | Fecha | 10-oct-2026 (v1.0) · 11-oct-2026 (v1.1 y v1.2) |
 | Estado | v1.0 aprobada en la puerta 1 (K34); v1.1 cerrada en el flujo P1; v1.2 para revisión |
@@ -206,14 +206,14 @@ Fuera de la barra: P-00 Iniciar sesión · P-22 Registrar peso (hoja que se abre
 
 ## 2. Inventario de pantallas (b)
 
-**Regla de subsecciones** (decisión G, dashboard minimalista): **Resumen** reúne como máximo 6 tarjetas con las cifras clave; **Detalle** es la base de datos de la página con sus vistas tabla, tablero o galería (o el contenido principal si no es base de datos); **Tendencias** son gráficas en el tiempo; **Calendario** es la vista calendario de la misma base de datos. El detalle se pide bajo demanda: tocar una tarjeta lleva a su detalle. No todas las pantallas tienen las cuatro.
+**Regla de subsecciones** (decisión G, dashboard minimalista; para Inicio, K54): **Resumen** reúne las cifras clave en pocas tarjetas (decisión G: como máximo 6), salvo en Inicio, donde el Resumen es el tablero de control de U3 2.0 (K54, decisión 3: sin tope de 6 tarjetas); **Detalle** es la base de datos de la página con sus vistas tabla, tablero o galería (o el contenido principal si no es base de datos); **Tendencias** son gráficas en el tiempo; **Calendario** es la vista calendario de la misma base de datos. El detalle se pide bajo demanda: tocar una tarjeta lleva a su detalle. No todas las pantallas tienen las cuatro.
 
 ### 2.1 Qué es cada pantalla
 
 | Id | Nombre | Sección | Propósito | Subsecciones (* por defecto) | Vistas de base de datos | Componentes clave |
 |---|---|---|---|---|---|---|
 | P-00 | Iniciar sesión | — | Entrar con usuario y contraseña; sesión larga por dispositivo | — | — | Formulario usuario y contraseña, mensaje de bloqueo |
-| P-01 | Inicio | Inicio | Ver el estado del hogar en 6 tarjetas y bajar al detalle | Resumen* · Detalle · Tendencias · Calendario | Calendario (eventos del hogar) | 6 tarjetas en orden fijo: Mes vs plan, Flujo quincenal, Próximo pago y disponible, Comidas de la semana, Mejor canasta, Ahorro. Bloque «Participación de Karen» (Detalle). 4 gráficas (Tendencias). Calendario del hogar |
+| P-01 | Inicio | Inicio | Ver el estado del hogar en el tablero de control (K54) y bajar al detalle | Resumen* · Detalle · Tendencias · Calendario | Calendario (eventos del hogar) | Resumen = tablero de control de U3 2.0 (K54): indicadores K-1 Gasto del mes, K-2 Ingreso del mes, K-3 Créditos y K-4 Pagos próximos; B-1 barómetro de capacidad de endeudamiento; gráficas G-1 a G-6; Más del hogar con Flujo quincenal, Comidas de la semana, Mejor canasta y Ahorro. Bloque «Participación de Karen» (Detalle). 4 gráficas (Tendencias). Calendario del hogar |
 | P-02 | Todos los gastos | Gastos | Consultar, filtrar y corregir gastos | Resumen · Detalle* · Tendencias · Calendario | Tabla*, tablero (por categoría), calendario, galería (tickets) | Barra de vista con filtros (persona, familia, categoría, tienda, forma de pago, tipo, periodo), fila de totales, edición en el lugar |
 | P-03 | Registrar gasto | Hoja global | Registrar un gasto en ≤ 3 toques | — | — | Selector de tipo (Gasto · Ingreso · Peso · Ticket), monto con teclado numérico, 6 chips de categoría + «Más», «Más opciones» (fecha, persona, reparto, forma de pago, tienda, nota, adjunto), Guardar |
 | P-04 | Gasto | Gastos | Ver y editar un gasto, su reparto y su ticket | — | Tabla (renglones) | Propiedades editables, bloque de reparto con partes hogar y Karen, renglones del ticket, adjunto, nota (bloques) |
@@ -247,7 +247,7 @@ La acción primaria es única por pantalla y siempre visible (en móvil, en el e
 | Id | Acción primaria | Secundarias | Vacío | Carga | Error |
 |---|---|---|---|---|---|
 | P-00 | Entrar | Ninguna (la recuperación de contraseña no se hace en pantalla; la define S6 en el runbook) | — | Botón en espera, campos bloqueados | «Usuario o contraseña incorrectos». Bloqueo: «Demasiados intentos. Vuelve a intentar a las HH:MM». Sin servidor: franja G-07 |
-| P-01 | Registrar gasto | Foto de ticket; Capturar quincena (solo los días 15 y 30 si falta); cambiar subsección | Cada tarjeta se vacía por separado con texto guía y la acción que la llena (p. ej. «Sin presupuesto del mes · Definir presupuesto») | Esqueleto de las 6 tarjetas con su forma; nunca `$0.00` provisional | Por tarjeta: «No se pudo calcular · Reintentar»; las demás siguen visibles |
+| P-01 | Registrar gasto | Foto de ticket; Capturar quincena (solo los días 15 y 30 si falta); cambiar subsección | Cada bloque del tablero (U3 2.0 §7) se vacía por separado con texto guía y la acción que lo llena (p. ej. «Sin presupuesto del mes · Definir presupuesto») | Esqueleto de cada bloque del tablero con su forma; nunca `$0.00` provisional | Por bloque: «No se pudo calcular · Reintentar»; las demás siguen visibles |
 | P-02 | Registrar gasto | Foto de ticket; Filtrar; Ordenar; Agrupar; cambiar vista | «Sin gastos en oct-2026 · Registrar gasto». Con filtros: «Ningún gasto coincide · Quitar filtros» | Esqueleto de 8 filas | Fila de error con Reintentar. Edición fallida: el valor vuelve al anterior con aviso |
 | P-03 | Guardar | Cambiar tipo (Ingreso, Peso, Ticket); Más opciones; Cerrar | No aplica (formulario) | Guardar en espera; la hoja no se cierra hasta confirmar | Lo capturado se conserva. Mensaje junto al campo (monto ≤ 0, falta categoría) o general «No se guardó · Reintentar» |
 | P-04 | Adjuntar ticket (si no tiene) o Ver ticket | Duplicar; Marcar como pagado (solo venideros); Eliminar (con confirmación); Abrir compra a crédito | — | Esqueleto de propiedades | «Este gasto ya no existe» (lo borró el otro usuario) + Volver |
@@ -454,7 +454,25 @@ Como en Notion: se toca el valor, se cambia y se guarda solo. Lo calculado nunca
 
 ### 3.3 P-01 Inicio
 
-**Resumen (6 tarjetas, orden fijo).** Cada tarjeta lleva a su detalle: Mes vs plan → P-06; Flujo quincenal → P-07; Próximo pago → P-18 de esa línea; Comidas → P-10; Mejor canasta → P-14; Ahorro → P-09.
+**Resumen = tablero de control de U3 2.0 (K54, decisión 3).** Hasta U3 1.5 eran 6 tarjetas en orden fijo; K54 retira ese tope en Inicio. Cada bloque lleva a su detalle (U3 2.0 §2): K-1 Gasto del mes → P-06; K-2 Ingreso del mes → P-08; K-3 Créditos → P-17; K-4 Pagos próximos → P-18 de la línea de cada pago y, con su enlace, al Calendario de Inicio; B-1 barómetro → P-17; cada gráfica G-1 a G-6 lleva a la pantalla que indica U3 2.0 §2, y el desglose en cadena sigue U3 §2.2. En Más del hogar siguen Flujo quincenal → P-07, Comidas → P-10, Mejor canasta → P-14 y Ahorro → P-09.
+
+**Necesidades del tablero (K54).** El tablero no agrega pantallas. Cada bloque se apoya en necesidades que ya existen; las cinco operaciones nuevas de C1 v1.5 cuelgan de la necesidad vigente más cercana mientras U1 no tenga necesidades propias del tablero (PROVISIONAL, bloqueo `C1-tablero`, punto 3).
+
+| Bloque de U3 2.0 | Qué necesita | Necesidad de U1 | Operación de C1 v1.5 |
+|---|---|---|---|
+| K-1 Gasto del mes | Real devengado y efectivo del mes contra el plan y contra el mes anterior; categorías en aviso y rebasadas | N-020 (ampliada en C1 v1.5) | `getDashboardMonthVsPlan` |
+| K-2 Ingreso del mes | Quincenas y extras del mes y del mes anterior | N-100 | `getIncomeMonth` |
+| K-3 Créditos | Deuda viva, pagos del mes (monto y cuántos), parte del hogar sin pagar y disponible con la lectura activa | N-191 y N-022 | `getCreditTotals` y `getDashboardNextPayment` |
+| K-4 Pagos próximos | Los N pagos siguientes, primero los vencidos, con fecha, línea, monto y estado; N sale de Ajustes | N-192 y N-022; N en N-275 (PROVISIONAL, bloqueo `C1-tablero`, punto 3) | `listScheduledPayments` y `getDashboardSettings` |
+| B-1 Barómetro | Pagos de crédito del mes ÷ ingreso del mes, umbrales, escala y estado (RN-30) | N-022 (PROVISIONAL, bloqueo `C1-tablero`, punto 3) | `getDashboardDebtCapacity` |
+| G-1 y G-6 | Ingreso, gasto, pagos de crédito y razón de endeudamiento por mes | N-028 (PROVISIONAL, bloqueo `C1-tablero`, punto 3) | `getDashboardMonthlyOverview` |
+| G-2 Deuda viva por línea | Deuda viva de hoy por línea | N-092 y N-190 | `getLiveDebt` y `listCredits` |
+| G-3 Presupuesto por categoría | % usado por categoría y la sugerencia subir o recortar (RN-31) | N-081; la sugerencia en N-027 (PROVISIONAL, bloqueo `C1-tablero`, punto 3) | `getBudgetByCategory` y `getBudgetSignals` |
+| G-4 (= T-2) y G-5 (= T-3) | Devengado contra efectivo; deuda viva proyectada | N-091 y N-194 | `getAccrualVsCash` y `getDebtTrend` |
+| Más del hogar | Tarjetas Flujo quincenal, Comidas de la semana, Mejor canasta y Ahorro (PROVISIONAL, bloqueo `U3-tablero-mas-del-hogar`) | N-021, N-023, N-024 y N-025 | las de la tabla siguiente |
+| Parámetros del tablero | Las cinco claves de K54 en Ajustes: leer y cambiar (PROVISIONAL, bloqueo `C1-tablero`, punto 3) | N-275 y N-278 | `getDashboardSettings` y `updateDashboardSettings` |
+
+Las filas N-020 a N-025 siguientes describen las cifras que siguen vigentes; desde K54 las muestran K-1, K-3, K-4 y Más del hogar, no 6 tarjetas.
 
 | Id | Tipo | Métrica o lista | Definición | Actualización |
 |---|---|---|---|---|
@@ -941,6 +959,8 @@ Por lo tanto: 1 (abrir) + 1 (categoría) + 1 (guardar) = **3 toques** ≤ 3. Es 
 
 **Ruta A, la lista de esta semana (desde Inicio):**
 
+**Condición de la ruta A** (PROVISIONAL, 12-oct-2026, agente `u3-v2`: el orquestador eligió la opción (c) del punto 2 de `docs/estado/bloqueos/C3-flujos.md`; la ratifica Axel en la puerta 4; bloqueo abierto `C3-flujos`): la ruta A **exige una lista vigente con artículos y con todos sus precios en al menos una tienda**. Si a la lista le falta algún precio en todas las tiendas, ninguna tienda puede ser la más barata (S5 §7.4, Q2-60 = A): la tarjeta «Mejor canasta» (U3 §2.5, tarjeta 5) muestra su vacío y su acción lleva a P-15 Productos y precios con «Registrar precios», no a P-14, y la ruta A no aplica hasta capturar esos precios. Con la semilla tal cual, la lista del plan no cumple la condición; la prueba de la ruta A usa una lista que sí la cumple (F-3A3 de `pendientes.spec.ts`, 3 toques).
+
 | Paso | Pantalla | Qué hace la persona | Qué hace el sistema | Toques |
 |---|---|---|---|---|
 | 1 | P-01 → P-14 | Toca la tarjeta «Mejor canasta» | Abre Comparar canasta con la lista vigente (§0.2), en Resumen: total por tienda, diferencia, cobertura, precios viejos y membresía Sam's (N-160, N-161, N-163, N-164) | 1 |
@@ -961,7 +981,7 @@ Resultado esperado con la semilla: Bodega Aurrera $3,094.50 contra Walmart $3,23
 
 | Paso | Pantalla | Qué hace la persona | Qué hace el sistema | Toques |
 |---|---|---|---|---|
-| 1 | P-01 → P-18 | Toca la tarjeta «Próximo pago» | Abre la línea de ese pago en Resumen: deuda viva, disponible A y B con aviso «pendiente confirmar», próximo pago (N-200, N-201) | 1 |
+| 1 | P-01 → P-18 | Toca el pago en K-4 («Pagos próximos» del tablero, K54) | Abre la línea de ese pago en Resumen: deuda viva, disponible A y B con aviso «pendiente confirmar», próximo pago (N-200, N-201) | 1 |
 | 2 | P-18 | Toca la pestaña «Calendario» | Agenda de pagos de la línea (N-208). Con la semilla, la primera fila es «Vie 30 oct 2026 · $973.75 · hogar $598.82 · Karen $374.93 · pendiente» | **2** |
 | 3 | P-18 → G-06 | Toca un pago | Vista previa: compra de origen, capital repuesto, estado de cada parte | 3 |
 | 4 | G-06 | Opcional: «Marcar pago» → marca la parte del hogar o la de Karen → «Guardar» | Marca la parte como pagada y recalcula el disponible (N-210, motor S3) | 6 |
@@ -1034,7 +1054,7 @@ Nada se guarda sin el paso 7 (confirmación humana, decisión E). Si la lectura 
 | F-1 Registrar gasto | Inicio → «+» → categoría → Guardar | **3** |
 | F-2 Planear la semana | Comidas → copiar semana anterior → 4 cambios → generar lista | 12 (semana nueva completa: 30) |
 | F-3 Comparar canasta | Tarjeta «Mejor canasta» → Detalle → Usar tienda | 3 (solo ver: 1) |
-| F-4 Ver crédito y calendario | Tarjeta «Próximo pago» → Calendario | 2 |
+| F-4 Ver crédito y calendario | Pago en K-4 → Calendario | 2 |
 | F-5 Ver o generar reporte | ☰ → Reportes → mes | 3 para ver; 5 para generar y descargar |
 | F-6 Capturar peso | «+» → Peso → Guardar | 3 |
 | F-7 Compra a crédito con comparador | ☰ → Créditos → Simular compra → Usar escenario → Guardar | 6 (desde una canasta: 5) |
@@ -1134,7 +1154,7 @@ Nada se guarda sin el paso 7 (confirmación humana, decisión E). Si la lectura 
 |---|---|---|---|---|---|
 | Barra lateral | Panel desde ☰, 85 % del ancho, con fondo atenuado | Igual que 360 | Panel superpuesto desde ☰, ancho fijo (U2) | Fija y colapsable (Ctrl+\) | Fija; páginas de texto con ancho máximo de lectura |
 | Barra inferior (G-05) | Sí, 5 destinos | Sí | No; «+ Registrar» pasa a la barra superior | No | No |
-| Tarjetas del Resumen (≤ 6) | 1 columna, orden fijo | 1 columna; cada tarjeta suma 1 dato secundario | 2 columnas (3 filas) | 3 columnas (2 filas) | 3 columnas (2 filas) con más aire |
+| Tarjetas del Resumen (en Inicio, los bloques del tablero de U3 2.0 §2.4, K54) | 1 columna, orden fijo | 1 columna; cada tarjeta suma 1 dato secundario | 2 columnas (3 filas) | 3 columnas (2 filas) | 3 columnas (2 filas) con más aire |
 | Pestañas de subsección | Con desplazamiento horizontal | Con desplazamiento horizontal | Fila completa | Fila completa | Fila completa |
 | Tabla | Filas compactas de 2 líneas (título y cifra; 1 propiedad debajo); el resto en la vista previa | Filas compactas + 1 propiedad más | Hasta 5 columnas | Completa, columnas configurables | Completa |
 | Tablero | 1 columna visible; se cambia deslizando o con el selector de grupo | Igual que 360 | 2 columnas visibles | 3 a 4 | Todas las que quepan |
@@ -1164,7 +1184,7 @@ Nada se guarda sin el paso 7 (confirmación humana, decisión E). Si la lectura 
 | Pantalla | Móvil 412 | Escritorio 1440 | Acción primaria | Bajo demanda |
 |---|---|---|---|---|
 | P-00 | Formulario a todo el ancho | Formulario centrado de ancho fijo | Entrar | — |
-| P-01 | 6 tarjetas en 1 columna; barra inferior con «+» | 6 tarjetas en 3 × 2; barra lateral fija | Registrar gasto | Detalle de cada tarjeta al tocarla; Detalle, Tendencias y Calendario en pestañas |
+| P-01 | Bloques del tablero en 1 columna, en el orden de U3 2.0 §2.4 (K54); barra inferior con «+» | Rejilla del tablero de U3 2.0 §2.4; barra lateral fija | Registrar gasto | Detalle de cada bloque al tocarlo; Detalle, Tendencias y Calendario en pestañas |
 | P-02 | Filas compactas (descripción y monto; categoría y fecha debajo); filtros en hoja | Tabla completa con fila de totales; vista previa lateral | Registrar gasto | Propiedades extra en la vista previa; Resumen y Tendencias en pestañas |
 | P-03 | Hoja inferior a pantalla completa con teclado numérico | Diálogo centrado | Guardar | «Más opciones» |
 | P-04 | Página completa; 4 propiedades + «Mostrar N más» | Panel lateral o página; propiedades en 2 columnas | Adjuntar ticket o Ver ticket | Renglones plegados con su total |
@@ -1210,7 +1230,7 @@ Nada se guarda sin el paso 7 (confirmación humana, decisión E). Si la lectura 
 | Diseño visual con Claude Design (Pista 3) | **Decidido** (K45, 11-oct-2026; sustituye a K35): lo ejecuta el orquestador con la herramienta Artifact, sin navegador ni subida de archivos; `docs/design/entrada/` queda como brief de referencia, los agentes de la Pista 3 leen también este documento (pantallas, barra lateral, menú «/» y flujos; `docs/design/pista3-plan.md` §3) y las copias de cada vuelta van en `docs/design/salida/iter-N/`. Historia (K35, sustituida): lo ejecuta Axel con el paquete de `docs/design/entrada/` que se entrega al cierre de WF-1; lo que descargue va en `docs/design/salida/`. El orquestador no abre la herramienta. U1 no entra como archivo en el paquete: sus pantallas llegan por U3, U4 y DESIGN.md | `decisiones.md` K45 (antes K35) |
 | Reglas de devengo, reparto, promedios, costo de receta, meta de kcal, IMC, frescura ponderada | Las fijan S1, S2, S4 y S5 en `reglas-negocio.md`; U1 solo muestra el resultado | `docs/contratos/reglas-negocio.md` |
 | Campos, validaciones y valores por defecto de Ajustes (hora del resumen diario, anticipación de alertas) | U4; los parámetros operativos siguen las reglas comunes de §2.3 (K44) | `docs/design/U4-ajustes.md` |
-| Especificación de las 6 tarjetas | U3, a partir de N-020 a N-026 | `docs/design/U3-dashboard.md` |
+| Especificación del tablero de control (K54; antes 6 tarjetas) | U3 2.0, a partir de las necesidades de §3.3 (N-020 a N-029 y las que reutiliza el tablero) | `docs/design/U3-dashboard.md` |
 | Endpoints de cada necesidad | C1 llena la columna de 3.29 | `docs/contratos/C1-datos.md`, `openapi.yaml` |
 
 Observación para S1 y S2: el efectivo de las ventanas P1 a P6 de `model.json` (del día 10 al día 9) coincide al centavo con los meses calendario oct-2026 a mar-2027, porque las compras caen el día 10 y los pagos el 15 y el 30. Con un devengo que asigne cada despensa al mes de compra y al siguiente, la proyección por mes calendario de N-091 reproduce los totales canon de $14,362.48 (devengado) y $13,103.78 (efectivo).

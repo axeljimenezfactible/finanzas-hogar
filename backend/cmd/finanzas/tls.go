@@ -44,6 +44,12 @@ func parseAddrs(list string) ([]string, error) {
 	return out, nil
 }
 
+// alpnProtos son los protocolos que el servidor ofrece por ALPN: HTTP/2 primero y HTTP/1.1 para los clientes que no
+// lo hablan (WF-3c, api-tablero). Sin NextProtos el listener TLS no anuncia h2 y todo cae a HTTP/1.1; con h2 el tablero
+// de Inicio hace sus peticiones en paralelo sobre una sola conexión. http.Server ya trae el manejador de h2
+// (TLSNextProto) porque su TLSConfig es nil (newHTTPServer); el TLS lo pone el listener de serveAll.
+var alpnProtos = []string{"h2", "http/1.1"}
+
 // loadTLS carga el certificado de mkcert (finanzas.local); el certificado real lo emite el integrador (ops/mkcert.md).
 func loadTLS(certFile, keyFile string) (*tls.Config, error) {
 	if certFile == "" || keyFile == "" {
@@ -53,7 +59,7 @@ func loadTLS(certFile, keyFile string) (*tls.Config, error) {
 	if err != nil {
 		return nil, fmt.Errorf("certificado de mkcert: %w", err)
 	}
-	return &tls.Config{Certificates: []tls.Certificate{cert}, MinVersion: tls.VersionTLS12}, nil
+	return &tls.Config{Certificates: []tls.Certificate{cert}, MinVersion: tls.VersionTLS12, NextProtos: alpnProtos}, nil
 }
 
 func newHTTPServer(h http.Handler) *http.Server {

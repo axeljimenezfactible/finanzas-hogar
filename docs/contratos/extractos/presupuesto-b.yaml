@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «presupuesto-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.0 · extracto «presupuesto-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto presupuesto-b"
-  version: "1.4.0"
+  version: "1.5.0"
   description: "Extracto de la etiqueta «Presupuesto» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -832,6 +832,18 @@ components:
         total_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "captured + expected_pending + extras."
+        previous_month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes anterior. Nuevo en C1 v1.5 (K54)."
+        previous_fortnights_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Quincenas del mes anterior (capturadas más esperadas). Ausente sin datos."
+        previous_extras_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Extras del mes anterior. Ausente sin datos."
+        fortnights_difference_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Quincenas del mes − quincenas del mes anterior, con signo. Ausente si falta el mes anterior."
       required:
         - "month"
         - "fortnights"

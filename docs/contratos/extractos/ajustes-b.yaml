@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «ajustes-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.0 · extracto «ajustes-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto ajustes-b"
-  version: "1.4.0"
+  version: "1.5.0"
   description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -11,108 +11,6 @@ tags:
   - name: "Ajustes"
     description: "Las 14 secciones de Ajustes, sesiones y sistema."
 paths:
-  /api/v1/planned-items/{planned_item_id}:
-    patch:
-      operationId: "updatePlannedItem"
-      tags:
-        - "Ajustes"
-      summary: "Editar o desactivar partida"
-      description: "Edita o desactiva una partida (is_active = false). En el ingreso esperado: montos de cada quincena (amount_cents, second_half_amount_cents) y fecha desde la que rigen (N-280)."
-      x-necesidades:
-        - "N-278"
-        - "N-280"
-      x-tablas:
-        - "audit_log"
-        - "planned_item"
-      parameters:
-        - name: "planned_item_id"
-          in: "path"
-          required: true
-          description: "Id del registro (planned_item_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PlannedItemUpdate"
-      responses:
-        "200":
-          description: "Correcto."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PlannedItem"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-  /api/v1/imports/planned-items/preview:
-    post:
-      operationId: "previewPlannedItemsImport"
-      tags:
-        - "Ajustes"
-      summary: "Vista previa de gastos_fijos_ingresos.csv"
-      description: "No escribe nada."
-      x-necesidades:
-        - "N-304"
-      x-tablas:
-        - "category"
-        - "cost_share_rule"
-        - "credit"
-        - "person"
-        - "planned_item"
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: "object"
-              required:
-                - "file"
-              properties:
-                file:
-                  type: "string"
-                  contentMediaType: "application/octet-stream"
-                  description: "Archivo gastos_fijos_ingresos.csv (plantilla de plan.md §8.2). Tipos admitidos: text/csv."
-            encoding:
-              file:
-                contentType: "text/csv"
-      responses:
-        "200":
-          description: "Correcto."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ImportPreview"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "413":
-          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
-        "415":
-          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
   /api/v1/imports/planned-items:
     post:
       operationId: "importPlannedItems"
@@ -519,6 +417,238 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/cost-share-rules:
+    get:
+      operationId: "listCostShareRules"
+      tags:
+        - "Ajustes"
+      summary: "Reglas de reparto"
+      description: "Reglas de reparto."
+      x-necesidades:
+        - "N-309"
+        - "N-051"
+        - "N-052"
+        - "N-281"
+      x-tablas:
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "person"
+      parameters:
+        - name: "is_template"
+          in: "query"
+          required: false
+          description: "true (por defecto) = reglas reutilizables (Hogar, Karen, Conjunto 50/50)."
+          schema:
+            type: "boolean"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CostShareRulePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/cost-share-rules/{cost_share_rule_id}:
+    patch:
+      operationId: "updateCostShareRule"
+      tags:
+        - "Ajustes"
+      summary: "Editar reparto por defecto"
+      description: "P. ej. el % del Conjunto (50/50 por defecto, decisión B). Un cambio de parts lleva su alcance en scope (Q2-68 C, RN-03; C1-datos §7.2): onward no toca los gastos ya guardados (sus partes están congeladas en expense_share); all recalcula con las partes nuevas las de los gastos ya capturados. parts sin scope: 422 validation_failed."
+      x-necesidades:
+        - "N-310"
+      x-tablas:
+        - "audit_log"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+      parameters:
+        - name: "cost_share_rule_id"
+          in: "path"
+          required: true
+          description: "Id del registro (cost_share_rule_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CostShareRuleUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CostShareRule"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/stores:
+    post:
+      operationId: "createStore"
+      tags:
+        - "Ajustes"
+      summary: "Nueva tienda o mercado"
+      description: "Mercado: visit_weekday obligatorio. La lectura asistida nace desactivada y no se activa: no aplica desde K53 (la aplicación no lee sitios de tiendas)."
+      x-necesidades:
+        - "N-292"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Store"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/stores/{store_id}:
+    patch:
+      operationId: "updateStore"
+      tags:
+        - "Ajustes"
+      summary: "Editar tienda"
+      description: "Desde K53 la aplicación no lee sitios de tiendas: assisted_reading_enabled = true responde siempre 409 `assisted_reading_not_allowed`, porque ningún veredicto la habilita (docs/estado/S5-terminos.md queda como registro histórico)."
+      x-necesidades:
+        - "N-292"
+      x-tablas:
+        - "audit_log"
+        - "store"
+      parameters:
+        - name: "store_id"
+          in: "path"
+          required: true
+          description: "Id del registro (store_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Store"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/stores/{store_id}/product-groups:
+    put:
+      operationId: "setStoreProductGroups"
+      tags:
+        - "Ajustes"
+      summary: "Qué se compra en la tienda"
+      description: "Qué se compra en la tienda."
+      x-necesidades:
+        - "N-292"
+      x-tablas:
+        - "audit_log"
+        - "product_group"
+        - "store_product_group"
+      parameters:
+        - name: "store_id"
+          in: "path"
+          required: true
+          description: "Id del registro (store_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdList"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
 components:
   securitySchemes:
     cookieAuth:
@@ -532,6 +662,13 @@ components:
       description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
       x-provisional: true
   schemas:
+    BasisPoints:
+      type: "integer"
+      minimum: 0
+      maximum: 10000
+      description: "Porcentaje en puntos base: 10000 = 100 %, 5000 = 50 %."
+      examples:
+        - 5000
     Person:
       type: "object"
       description: "Persona (tabla `person`). Persona que participa en el dinero del hogar: el titular (Axel), la co-titular (Ximena) o una participante externa sin cuenta (Karen). Campos ausentes = sin valor (NULL)."
@@ -604,19 +741,48 @@ components:
             - "null"
           description: "notes · null borra el valor"
       minProperties: 1
-    PlannedItem:
+    CostShareRulePart:
       type: "object"
-      description: "Partida planificada (tabla `planned_item`). Ingreso o gasto esperado con su periodicidad: sueldo quincenal, renta, despensa bimestral con Kueski, gastos venideros. Los motores proyectan sus ocurrencias, no se guardan una por una. Campos ausentes = sin valor (NULL)."
-      x-tabla: "planned_item"
+      description: "Parte de una regla de reparto (tabla `cost_share_rule_part`). Parte de una persona dentro de una regla: un porcentaje o un monto fijo. Lo que no se asigna aquí va a la persona del resto. Campos ausentes = sin valor (NULL)."
+      x-tabla: "cost_share_rule_part"
       required:
         - "id"
-        - "kind"
-        - "description"
-        - "amount_cents"
-        - "frequency"
-        - "interval_count"
-        - "start_date"
-        - "accrual_months"
+        - "rule_id"
+        - "person_id"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        rule_id:
+          type: "integer"
+          description: "Regla a la que pertenece"
+        person_id:
+          type: "integer"
+          description: "Persona de la parte"
+        pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje en puntos base: 5000 = 50.00 % (Conjunto 50/50: Karen 5000)"
+        fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto fijo en centavos (parte fija de Karen en despensas futuras: 119150)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    CostShareRule:
+      type: "object"
+      description: "Regla de reparto (tabla `cost_share_rule`). Cómo se divide un monto entre el hogar Axel–Ximena (a nombre del titular) y la participante externa: hogar, Karen o conjunto con su porcentaje. Las partes con porcentaje o monto fijo van en cost_share_rule_part y el resto cae en remainder_person_id. Campos ausentes = sin valor (NULL)."
+      x-tabla: "cost_share_rule"
+      required:
+        - "id"
+        - "name"
+        - "remainder_person_id"
+        - "is_template"
+        - "is_default"
         - "is_active"
         - "created_at"
         - "updated_at"
@@ -624,66 +790,18 @@ components:
         id:
           type: "integer"
           description: "id"
-        kind:
+        name:
           type: "string"
-          enum:
-            - "income"
-            - "fixed_expense"
-            - "upcoming_expense"
-          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
-        description:
-          type: "string"
-          description: "Concepto"
-        amount_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
-        second_half_amount_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales"
-        frequency:
-          type: "string"
-          enum:
-            - "weekly"
-            - "fortnightly"
-            - "monthly"
-            - "yearly"
-            - "once"
-          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
-        interval_count:
+          description: "Nombre visible (Hogar, Karen, Conjunto 50/50)"
+        remainder_person_id:
           type: "integer"
-          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
-        start_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
-        end_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Última fecha posible, inclusive. NULL = sin fin"
-        category_id:
-          type: "integer"
-          description: "Categoría del gasto"
-        person_id:
-          type: "integer"
-          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general"
-        cost_share_rule_id:
-          type: "integer"
-          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto"
-        payment_method:
-          type: "string"
-          enum:
-            - "cash"
-            - "debit"
-            - "transfer"
-            - "credit"
-          description: "Cómo se pagará cada ocurrencia. NULL = sin definir"
-        credit_id:
-          type: "integer"
-          description: "Crédito con que se planea pagar (despensa con Kueski)"
-        term_count:
-          type: "integer"
-          description: "Plazo planeado en pagos (4 quincenas)"
-        accrual_months:
-          type: "integer"
-          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
+          description: "Persona que recibe el resto del monto y absorbe los centavos de redondeo (en el hogar, el titular)"
+        is_template:
+          type: "boolean"
+          description: "1 = regla reutilizable que se ofrece en capturas. 0 = regla de un solo uso (renglón «mixto» por cantidad)"
+        is_default:
+          type: "boolean"
+          description: "1 = regla que aplica cuando ni el gasto ni su categoría traen regla (Hogar)"
         is_active:
           type: "boolean"
           description: "is_active"
@@ -696,217 +814,56 @@ components:
         updated_at:
           $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
           description: "updated_at"
-        next_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Próxima ocurrencia desde hoy."
+        parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePart"
+          description: "Partes de la regla (cost_share_rule_part)."
           x-calculado: true
-    PlannedItemCreate:
+    CostShareRulePartInput:
       type: "object"
-      additionalProperties: false
-      description: "Alta de partida planificada (tabla `planned_item`)."
-      x-tabla: "planned_item"
+      description: "Parte de una regla de reparto (entrada)."
       properties:
-        kind:
-          type: "string"
-          enum:
-            - "income"
-            - "fixed_expense"
-            - "upcoming_expense"
-          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
-        description:
-          type: "string"
-          description: "Concepto"
-        amount_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
-        second_half_amount_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales"
-        frequency:
-          type: "string"
-          enum:
-            - "weekly"
-            - "fortnightly"
-            - "monthly"
-            - "yearly"
-            - "once"
-          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
-        interval_count:
-          type: "integer"
-          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
-        start_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
-        end_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Última fecha posible, inclusive. NULL = sin fin"
-        category_id:
-          type: "integer"
-          description: "Categoría del gasto"
         person_id:
           type: "integer"
-          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general"
-        cost_share_rule_id:
-          type: "integer"
-          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto"
-        payment_method:
-          type: "string"
-          enum:
-            - "cash"
-            - "debit"
-            - "transfer"
-            - "credit"
-          description: "Cómo se pagará cada ocurrencia. NULL = sin definir"
-        credit_id:
-          type: "integer"
-          description: "Crédito con que se planea pagar (despensa con Kueski)"
-        term_count:
-          type: "integer"
-          description: "Plazo planeado en pagos (4 quincenas)"
-        accrual_months:
-          type: "integer"
-          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        notes:
-          type: "string"
-          description: "notes"
+          description: "Persona (cost_share_rule_part.person_id)."
+        pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje (cost_share_rule_part.pct_bp)."
+        fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto fijo (cost_share_rule_part.fixed_cents)."
       required:
-        - "kind"
-        - "description"
-        - "amount_cents"
-        - "frequency"
-        - "start_date"
-    PlannedItemUpdate:
+        - "person_id"
+      additionalProperties: false
+    CostShareRuleUpdate:
       type: "object"
       additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de partida planificada (tabla `planned_item`)."
-      x-tabla: "planned_item"
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de regla de reparto (tabla `cost_share_rule`)."
+      x-tabla: "cost_share_rule"
       properties:
-        kind:
+        name:
           type: "string"
-          enum:
-            - "income"
-            - "fixed_expense"
-            - "upcoming_expense"
-          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
-        description:
-          type: "string"
-          description: "Concepto"
-        amount_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
-        second_half_amount_cents:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-            - type: "null"
-          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales · null borra el valor"
-        frequency:
-          type: "string"
-          enum:
-            - "weekly"
-            - "fortnightly"
-            - "monthly"
-            - "yearly"
-            - "once"
-          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
-        interval_count:
-          type: "integer"
-          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
-        start_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
-        end_date:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
-            - type: "null"
-          description: "Última fecha posible, inclusive. NULL = sin fin · null borra el valor"
-        category_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Categoría del gasto · null borra el valor"
-        person_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general · null borra el valor"
-        cost_share_rule_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto · null borra el valor"
-        payment_method:
-          type:
-            - "string"
-            - "null"
-          enum:
-            - "cash"
-            - "debit"
-            - "transfer"
-            - "credit"
-            - null
-          description: "Cómo se pagará cada ocurrencia. NULL = sin definir · null borra el valor"
-        credit_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Crédito con que se planea pagar (despensa con Kueski) · null borra el valor"
-        term_count:
-          type:
-            - "integer"
-            - "null"
-          description: "Plazo planeado en pagos (4 quincenas) · null borra el valor"
-        accrual_months:
-          type: "integer"
-          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
-        is_active:
-          type: "boolean"
-          description: "is_active"
+          description: "Nombre visible (Hogar, Karen, Conjunto 50/50)"
         notes:
           type:
             - "string"
             - "null"
           description: "notes · null borra el valor"
-      minProperties: 1
-    ImportPreview:
-      type: "object"
-      description: "Vista previa de la importación de gastos_fijos_ingresos.csv (N-304)."
-      properties:
-        rows:
+        parts:
           type: "array"
           items:
-            type: "object"
-            description: "Renglón del CSV."
-            properties:
-              line_no:
-                type: "integer"
-                description: "Renglón."
-              planned_item:
-                $ref: "#/components/schemas/PlannedItemCreate"
-                description: "Partida que se crearía."
-              errors:
-                type: "array"
-                items:
-                  $ref: "componentes-comunes.yaml#/components/schemas/FieldError"
-                description: "Errores del renglón."
-            required:
-              - "line_no"
-              - "errors"
-            x-calculado: true
-          description: "Uno por renglón."
-        valid_count:
-          type: "integer"
-          description: "Renglones válidos."
-        error_count:
-          type: "integer"
-          description: "Renglones con error."
-      required:
-        - "rows"
-        - "valid_count"
-        - "error_count"
-      x-calculado: true
+            $ref: "#/components/schemas/CostShareRulePartInput"
+          description: "Reemplaza las partes de la regla (cost_share_rule_part). El resto y los centavos van a remainder_person_id."
+        scope:
+          type: "string"
+          enum:
+            - "onward"
+            - "all"
+          x-entrada: true
+          x-provisional: true
+          description: "Alcance del cambio de partes (Q2-68 C, RN-03; C1-datos §7.2): onward = «solo los nuevos»: los gastos ya guardados conservan sus partes congeladas en expense_share; all = «también los ya capturados»: el motor de reparto recalcula con las partes nuevas el expense_share de los gastos ya capturados. Obligatorio si viene parts y solo se acepta con parts (si no, 422 validation_failed). Sin valor por omisión: la pantalla pregunta el alcance en cada cambio (P-26.12). Qué gastos abarca all es PROVISIONAL: bloqueo C1-reparto-alcance."
+      minProperties: 1
     ImportResult:
       type: "object"
       description: "Resultado de la importación."
@@ -1075,6 +1032,222 @@ components:
             - "null"
           description: "notes · null borra el valor"
       minProperties: 1
+    Store:
+      type: "object"
+      description: "Tienda (tabla `store`). Cadena (Walmart, Bodega Aurrera, Sam's Club), sucursal de una cadena, o mercado o tianguis con su día de visita. La membresía y el permiso de lectura asistida viven en la cadena. Campos ausentes = sin valor (NULL)."
+      x-tabla: "store"
+      required:
+        - "id"
+        - "kind"
+        - "name"
+        - "assisted_reading_enabled"
+        - "requires_membership"
+        - "has_membership"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "chain"
+            - "branch"
+            - "market"
+          description: "chain = cadena, branch = sucursal de una cadena, market = mercado o tianguis"
+        parent_id:
+          type: "integer"
+          description: "Cadena de la sucursal. Solo en branch"
+        name:
+          type: "string"
+          description: "Nombre: cadena (Bodega Aurrera), sucursal (Vallejo) o mercado"
+        profeco_name:
+          type: "string"
+          description: "Nombre en PROFECO para cruzar precios: cadena_comercial en cadenas, nombre_comercial en sucursales"
+        website_url:
+          type: "string"
+          description: "Sitio de la cadena. Solo en chain"
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Lectura asistida del sitio de la cadena. No aplica desde K53: la aplicación no lee sitios de tiendas; queda en false y true responde 409 assisted_reading_not_allowed. La columna sigue en el esquema 1.4 hasta que S1 la retire (bloqueo S5-agente-externo)."
+        address:
+          type: "string"
+          description: "Dirección (sucursal o mercado)"
+        municipality:
+          type: "string"
+          description: "Municipio o alcaldía, para cruzar con PROFECO"
+        state:
+          type: "string"
+          description: "Entidad federativa"
+        visit_weekday:
+          type: "integer"
+          description: "Día de visita del mercado: 1 = lunes … 7 = domingo (ISO 8601)"
+        requires_membership:
+          type: "boolean"
+          description: "1 = la cadena exige membresía (Sam's Club)"
+        has_membership:
+          type: "boolean"
+          description: "1 = la casa ya tiene la membresía (hoy Sam's = 0 y se evalúa)"
+        membership_annual_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo anual de la membresía en centavos (lo captura Axel en Ajustes)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        product_group_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Qué se compra ahí (store_product_group)."
+          x-calculado: true
+        assisted_reading_verdict:
+          type: "string"
+          enum:
+            - "allowed"
+            - "denied"
+            - "missing"
+          description: "Veredicto de términos del sitio. No aplica desde K53: la aplicación no lee sitios de tiendas; docs/estado/S5-terminos.md queda como registro histórico y ningún veredicto habilita la lectura asistida."
+          x-calculado: true
+    StoreCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de tienda (tabla `store`)."
+      x-tabla: "store"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "chain"
+            - "branch"
+            - "market"
+          description: "chain = cadena, branch = sucursal de una cadena, market = mercado o tianguis"
+        parent_id:
+          type: "integer"
+          description: "Cadena de la sucursal. Solo en branch"
+        name:
+          type: "string"
+          description: "Nombre: cadena (Bodega Aurrera), sucursal (Vallejo) o mercado"
+        profeco_name:
+          type: "string"
+          description: "Nombre en PROFECO para cruzar precios: cadena_comercial en cadenas, nombre_comercial en sucursales"
+        website_url:
+          type: "string"
+          description: "Sitio de la cadena. Solo en chain"
+        address:
+          type: "string"
+          description: "Dirección (sucursal o mercado)"
+        municipality:
+          type: "string"
+          description: "Municipio o alcaldía, para cruzar con PROFECO"
+        state:
+          type: "string"
+          description: "Entidad federativa"
+        visit_weekday:
+          type: "integer"
+          description: "Día de visita del mercado: 1 = lunes … 7 = domingo (ISO 8601)"
+        requires_membership:
+          type: "boolean"
+          description: "1 = la cadena exige membresía (Sam's Club)"
+        has_membership:
+          type: "boolean"
+          description: "1 = la casa ya tiene la membresía (hoy Sam's = 0 y se evalúa)"
+        membership_annual_fee_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo anual de la membresía en centavos (lo captura Axel en Ajustes)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "kind"
+        - "name"
+    StoreUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de tienda (tabla `store`)."
+      x-tabla: "store"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "chain"
+            - "branch"
+            - "market"
+          description: "chain = cadena, branch = sucursal de una cadena, market = mercado o tianguis"
+        parent_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Cadena de la sucursal. Solo en branch · null borra el valor"
+        name:
+          type: "string"
+          description: "Nombre: cadena (Bodega Aurrera), sucursal (Vallejo) o mercado"
+        profeco_name:
+          type:
+            - "string"
+            - "null"
+          description: "Nombre en PROFECO para cruzar precios: cadena_comercial en cadenas, nombre_comercial en sucursales · null borra el valor"
+        website_url:
+          type:
+            - "string"
+            - "null"
+          description: "Sitio de la cadena. Solo en chain · null borra el valor"
+        assisted_reading_enabled:
+          type: "boolean"
+          description: "Lectura asistida del sitio de la cadena. No aplica desde K53: la aplicación no lee sitios de tiendas; queda en false y true responde 409 assisted_reading_not_allowed. La columna sigue en el esquema 1.4 hasta que S1 la retire (bloqueo S5-agente-externo)."
+        address:
+          type:
+            - "string"
+            - "null"
+          description: "Dirección (sucursal o mercado) · null borra el valor"
+        municipality:
+          type:
+            - "string"
+            - "null"
+          description: "Municipio o alcaldía, para cruzar con PROFECO · null borra el valor"
+        state:
+          type:
+            - "string"
+            - "null"
+          description: "Entidad federativa · null borra el valor"
+        visit_weekday:
+          type:
+            - "integer"
+            - "null"
+          description: "Día de visita del mercado: 1 = lunes … 7 = domingo (ISO 8601) · null borra el valor"
+        requires_membership:
+          type: "boolean"
+          description: "1 = la cadena exige membresía (Sam's Club)"
+        has_membership:
+          type: "boolean"
+          description: "1 = la casa ya tiene la membresía (hoy Sam's = 0 y se evalúa)"
+        membership_annual_fee_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Costo anual de la membresía en centavos (lo captura Axel en Ajustes) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
     IdList:
       type: "object"
       description: "Lista de ids (reemplazo completo)."
@@ -1232,3 +1405,13 @@ components:
               items:
                 $ref: "#/components/schemas/Person"
       description: "Página de Person con la envoltura única (Page)."
+    CostShareRulePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/CostShareRule"
+      description: "Página de CostShareRule con la envoltura única (Page)."

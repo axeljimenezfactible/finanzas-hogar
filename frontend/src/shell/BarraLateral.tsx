@@ -1,7 +1,7 @@
 // G-01 Barra lateral (U1 §1.2, DESIGN §7.9): 9 secciones en orden fijo, ▸ despliega, nombre abre la primera
 // subpágina; Créditos lista sus líneas; colapsable (‹‹ o Ctrl+\) y panel flotante al acercar el puntero al borde.
 import { useState } from 'react'
-import { ChevronRight, ChevronsLeft, LogOut, Monitor, Moon, Plus, Search, Sun, UserRound } from 'lucide-react'
+import { ChevronRight, ChevronsLeft, CreditCard, FileChartColumn, HeartPulse, Home, LogOut, Monitor, Moon, Plus, Receipt, Search, Settings, ShoppingCart, Sun, UserRound, Utensils, Wallet, type LucideIcon } from 'lucide-react'
 import { ICONO_MD } from '../componentes/Icono'
 import { textos } from '../textos/es-MX'
 import { usarConsulta } from '../api/consulta'
@@ -12,6 +12,11 @@ import { useSesion } from '../app/sesion'
 import { ponerTema, siguienteTema, useTema } from '../app/tema'
 import { cn } from '../componentes/utils'
 import { abrirMenu, abrirRegistro, cambiar, useShell } from './estado'
+/** Icono de cada sección (DESIGN §5.4 y §7.9; U5-06 #10): el mismo mapa que la barra inferior (`house` = Home, `utensils`,
+ *  `shopping-cart`), `credit-card` (Deuda / crédito) y `settings` (Ajustes). §5.4 no nombra el de Gastos, Presupuesto, Salud ni
+ *  Reportes: PROVISIONAL (bloqueo WF3c-barra-iconos-seccion) con el de su sección de Ajustes (`wallet`, `heart-pulse`,
+ *  `file-chart-column`) y `receipt` (ejemplo de §5.2) para Gastos. */
+export const ICONO_SECCION: Record<IdSeccion, LucideIcon> = { inicio: Home, gastos: Receipt, presupuesto: Wallet, comidas: Utensils, compras: ShoppingCart, creditos: CreditCard, salud: HeartPulse, reportes: FileChartColumn, ajustes: Settings }
 const leerAbiertas = (): Record<string, boolean> => { try { return JSON.parse(localStorage.getItem('fh-barra-abiertas') ?? '{}') } catch { return {} } }
 const fila = 'flex h-8 w-full items-center gap-2 rounded-sm px-2 text-small text-text-default hover:bg-surface-hover coarse:h-11'
 export function InterruptorTema() {
@@ -56,6 +61,7 @@ export function ContenidoBarra({ conPlegar = false }: { conPlegar?: boolean }) {
       <ul className="mt-2 flex flex-1 flex-col gap-1 overflow-y-auto">
         {SECCIONES.map((s) => {
           const nombre = textos.secciones[s.id]
+          const Icono = ICONO_SECCION[s.id]
           const hijos = hijosDe(s.id)
           const abierta = abiertas[s.id] ?? (s.id !== 'ajustes' && actual?.seccion === s.id)
           return (
@@ -66,7 +72,9 @@ export function ContenidoBarra({ conPlegar = false }: { conPlegar?: boolean }) {
                     <ChevronRight aria-hidden className={cn('size-5 transition-transform duration-150', abierta && 'rotate-90')} />
                   </button>
                 ) : <span className="size-8 shrink-0 coarse:size-11" />}
-                <Enlace a={rutaDe(PRIMERA[s.id], { seccion: '01' })} className={cn(fila, 'font-medium')} aria-current={actual?.seccion === s.id && !hijos.length ? 'page' : undefined}>{nombre}</Enlace>
+                <Enlace a={rutaDe(PRIMERA[s.id], { seccion: '01' })} className={cn(fila, 'font-medium')} aria-current={actual?.seccion === s.id && !hijos.length ? 'page' : undefined}>
+                  <Icono aria-hidden data-prueba="icono-seccion" className={cn('size-5 shrink-0', actual?.seccion === s.id ? 'text-icon-selected' : 'text-icon-default')} /><span className="truncate">{nombre}</span>
+                </Enlace>
               </div>
               {abierta && hijos.length > 0 && (
                 <ul className="ml-8 flex flex-col gap-1">

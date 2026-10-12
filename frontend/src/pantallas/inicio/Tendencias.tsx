@@ -50,7 +50,8 @@ function T1() {
       ] })} />
   }}</Estados>
 }
-function T2() {
+/** T-2; en el tablero es G-4 sin cambio (U3 2.0 §2.1), con la misma petición. */
+export function T2({ id = 't2' }: { id?: string }) {
   const c = useInicio(), ancho = usarMedia(TABLET)
   const q = usarConsulta('get', '/api/v1/cash-flow/accrual-vs-cash')
   return <Estados consulta={q} falla={G.falla} esqueleto={esqueleto}>{(d) => {
@@ -61,7 +62,7 @@ function T2() {
     const adelantado = m.filter((x) => x.cumulative_difference_cents < 0).map((x) => mes(x.month))
     const suma = (k: 'accrued_cents' | 'cash_cents' | 'accrued_household_cents' | 'accrued_external_cents' | 'cash_household_cents' | 'cash_external_cents') => dinero(m.reduce((a, x) => a + x[k], 0))
     const C = G.t2.columnas
-    return <FiguraGrafica id="t2" titulo={G.t2.titulo} subtitulo={G.t2.subtitulo(mes(m[0].month), mes(u.month))} dependencias={[d, ancho]}
+    return <FiguraGrafica id={id} titulo={G.t2.titulo} subtitulo={G.t2.subtitulo(mes(m[0].month), mes(u.month))} dependencias={[d, ancho]}
       resumen={G.t2.resumen(mes(u.month), m[6] ? mes(m[6].month) : t.comun.sinDato, dinero(u.cumulative_accrued_cents), dinero(u.cumulative_cash_cents))}
       notas={[d.projection_mode === 'with_repeat_cadence' ? G.t2.conRepetidas : G.t2.sinRepetidas, ...adelantado.map(G.t2.adelantadoEn)]}
       tabla={{ columnas: [G.mes, C.devengadoMes, C.efectivoMes, G.t2.diferencia, G.t2.devengado, G.t2.efectivo, C.devHogar, C.devKaren, C.efeHogar, C.efeKaren],
@@ -82,19 +83,20 @@ function T2() {
       ] } }} />
   }}</Estados>
 }
-function T3() {
+/** T-3; en el tablero es G-5 sin filtro de crédito (U3 2.0 §2.1). */
+export function T3({ id = 't3', sinFiltros = false }: { id?: string; sinFiltros?: boolean }) {
   const c = useInicio(), ancho = usarMedia(TABLET)
   const [sel, setSel] = useState<number[]>([])
   const q = usarConsulta('get', '/api/v1/credits/debt-trend', { consulta: { credit_id: sel.length ? sel : undefined } })
   const creditos = listaDe(c.creditos), elegidos = creditos.filter((x) => sel.includes(x.id))
-  const filtros = <Chips etiqueta={t.detalle.credito} todas={G.sinFiltro} valor={sel} alCambiar={setSel} opciones={creditos.map((x) => ({ valor: x.id, texto: x.name }))} />
+  const filtros = sinFiltros ? undefined : <Chips etiqueta={t.detalle.credito} todas={G.sinFiltro} valor={sel} alCambiar={setSel} opciones={creditos.map((x) => ({ valor: x.id, texto: x.name }))} />
   return <Estados consulta={q} falla={G.falla} esqueleto={esqueleto}>{(d) => {
     const m = d.months
     if (!m.length || m.every((x) => x.live_debt_cents === 0)) return <VacioGrafica titulo={G.t3.titulo} texto={<><CircleCheck aria-hidden className="size-5 text-role-success" />{G.t3.vacio}</>} accion={filtros} />
     const u = m[m.length - 1], cs = m.map((x) => mes(x.month))
     const series = elegidos.length ? elegidos.map((cr) => ({ nombre: cr.name, v: m.map((x) => x.credits.find((y) => y.credit_id === cr.id)?.live_debt_cents ?? null) })) : [{ nombre: G.t3.total, v: m.map((x) => x.live_debt_cents) }]
     const MARC = ['circle', 'rect', 'triangle', 'diamond'], TRAZO: (string | number[])[] = ['solid', [8, 4], [2, 4], [8, 4, 2, 4]]
-    return <FiguraGrafica id="t3" titulo={G.t3.titulo} subtitulo={G.ultimos12(elegidos.length ? elegidos.map((x) => x.name).join(', ') : G.t3.total)} filtros={filtros} dependencias={[d, ancho, sel.join()]}
+    return <FiguraGrafica id={id} titulo={G.t3.titulo} subtitulo={G.ultimos12(elegidos.length ? elegidos.map((x) => x.name).join(', ') : G.t3.total)} filtros={filtros} dependencias={[d, ancho, sel.join()]}
       resumen={elegidos.length ? G.t3.resumenFiltro(mes(u.month), series.map((s) => `${s.nombre} ${s.v[s.v.length - 1] !== null ? dinero(s.v[s.v.length - 1]!) : t.comun.sinDato}`).join(' · ')) : G.t3.resumen(mes(m[0].month), dinero(m[0].live_debt_cents), mes(u.month), dinero(u.live_debt_cents))}
       tabla={{ columnas: [G.mes, ...series.map((s) => s.nombre), G.t3.interesesPagados, G.t3.interesesPorPagar], filas: m.map((x, i) => [mes(x.month), ...series.map((s) => (s.v[i] !== null ? dinero(s.v[i]!) : t.comun.sinDato)), dinero(x.interest_paid_cents), dinero(x.interest_pending_cents)]) }}
       opcion={() => ({ ...ejes(cs, compacto, ancho), series: series.slice(0, 8).map((s, i) => ({ name: s.nombre, type: 'line', symbol: MARC[i % 4], symbolSize: 8, lineStyle: { color: token(`--ui-chart-${i + 1}`), width: 2, type: TRAZO[i % 4] }, itemStyle: { color: token(`--ui-chart-${i + 1}`) }, label: { position: 'top' }, data: conEtiquetas(s.v, (v) => dinero(v)) })) })} />

@@ -1,0 +1,332 @@
+{
+ "pantalla": "P-01",
+ "subseccion": "calendario",
+ "combinacion": "escritorio-oscuro",
+ "url": "/inicio?sub=calendario",
+ "dimensiones_pagina": {
+  "ancho": 1440,
+  "alto": 900
+ },
+ "puntero_grueso": false,
+ "tema": {
+  "esperado": "oscuro",
+  "fondo_body": "rgb(34, 35, 37)",
+  "fondo_token_c2": "rgb(34, 35, 37)",
+  "coincide": true,
+  "data_theme": null
+ },
+ "axe": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 0,
+  "reglas": []
+ },
+ "contraste": {
+  "alcance": "body",
+  "evaluados": 102,
+  "pares_unicos": 14,
+  "bajo_umbral": 0,
+  "indeterminados": 0,
+  "excluidos": {
+   "deshabilitados": 0,
+   "ui_sin_limite_visible": 49,
+   "graficos_marcas_no_medibles_en_dom": 0
+  },
+  "bajos": [],
+  "indeterminados_detalle": [],
+  "pares": [
+   {
+    "tipo": "ui",
+    "subtipo": "boton",
+    "fg": "#B7B8C0",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": false,
+    "razon": 7.962,
+    "elementos": 3,
+    "ejemplos": [
+     {
+      "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+      "texto": "Foto de ticket"
+     },
+     {
+      "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+      "texto": "Filtrar"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > div[data-prueba=\"mes\"] > div.flex.flex-wrap > button.inline-flex.select-none",
+      "texto": "Hoy"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#D1D2D8",
+    "bg": "#36363A",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 7.975,
+    "elementos": 5,
+    "ejemplos": [
+     {
+      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
+      "texto": "Axel"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > div[data-prueba=\"mes\"] > div.flex.flex-wrap > span.rounded-sm.border",
+      "texto": "1.ª quincena · del 1 al 15"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > div[data-prueba=\"mes\"] > div.flex.flex-wrap > span.rounded-sm.bg-surface-hover-subtle",
+      "texto": "2.ª quincena · del 16 al 31"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#D1D2D8",
+    "bg": "#36363A",
+    "umbral": 3,
+    "grande": false,
+    "razon": 7.975,
+    "elementos": 12,
+    "ejemplos": [
+     {
+      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
+      "texto": "lucide lucide-search size-5 text-icon-de"
+     },
+     {
+      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-plus",
+      "texto": "lucide lucide-plus size-5 text-icon-defa"
+     },
+     {
+      "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+      "texto": "lucide lucide-receipt size-5 shrink-0 te"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#C9CFFF",
+    "bg": "#303258",
+    "umbral": 3,
+    "grande": false,
+    "razon": 8.041,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+      "texto": "lucide lucide-house lucide-home size-5 s"
+     }
+    ]
+   },
+   {
+    "tipo": "ui",
+    "subtipo": "seleccion",
+    "fg": "#C9CFFF",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": false,
+    "razon": 10.375,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Calendario"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#C9CFFF",
+    "bg": "#222325",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 10.375,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "tr > td.h-24.border > button.flex.h-full > span.tabular-nums.font-bold",
+      "texto": "12"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#D1D2D8",
+    "bg": "#222325",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 10.427,
+    "elementos": 12,
+    "ejemplos": [
+     {
+      "nodo": "nav.hidden.text-small > ol.flex.gap-1 > li > a.hover:underline",
+      "texto": "Inicio"
+     },
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Resumen"
+     },
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Detalle"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#D1D2D8",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": false,
+    "razon": 10.427,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "ul.flex.min-w-0 > li.flex.flex-col > span.flex.items-center > svg.lucide.lucide-file-chart-column",
+      "texto": "lucide lucide-file-chart-column lucide-f"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#36363A",
+    "umbral": 3,
+    "grande": false,
+    "razon": 10.76,
+    "elementos": 11,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > button.absolute.top-2 > svg.lucide.lucide-chevrons-left",
+      "texto": "lucide lucide-chevrons-left size-6"
+     },
+     {
+      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > svg.lucide.lucide-user-round",
+      "texto": "lucide lucide-user-round lucide-user-2 s"
+     },
+     {
+      "nodo": "li > div.flex.items-center > button.inline-flex.size-8 > svg.lucide.lucide-chevron-right",
+      "texto": "lucide lucide-chevron-right size-5 trans"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#36363A",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 10.76,
+    "elementos": 33,
+    "ejemplos": [
+     {
+      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",
+      "texto": "Finanzas Hogar"
+     },
+     {
+      "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+      "texto": "Buscar"
+     },
+     {
+      "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+      "texto": "Registrar gasto"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#303258",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 10.902,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "li > div.flex.items-center > a.flex.h-8 > span.truncate",
+      "texto": "Inicio"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": false,
+    "razon": 14.068,
+    "elementos": 3,
+    "ejemplos": [
+     {
+      "nodo": "header.flex.flex-col > div.flex.items-center > button.ml-auto.hidden > svg.lucide.lucide-search",
+      "texto": "lucide lucide-search size-6"
+     },
+     {
+      "nodo": "div[data-prueba=\"mes\"] > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-chevron-left",
+      "texto": "lucide lucide-chevron-left size-6"
+     },
+     {
+      "nodo": "div[data-prueba=\"mes\"] > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-chevron-right",
+      "texto": "lucide lucide-chevron-right size-6"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": true,
+    "razon": 14.068,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+      "texto": "Inicio"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#222325",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 14.068,
+    "elementos": 17,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Calendario"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > div[data-prueba=\"mes\"] > div.flex.flex-wrap > h2.min-w-40.text-title-3",
+      "texto": "octubre 2026"
+     },
+     {
+      "nodo": "tr > td.h-24.border > button.flex.h-full > span.tabular-nums",
+      "texto": "1"
+     }
+    ]
+   }
+  ]
+ },
+ "hosts": [
+  "finanzas.local:8443"
+ ],
+ "texto_visible": "Saltar al contenido\nFinanzas Hogar\nAxel\nBuscar\nRegistrar gasto\nInicio\nGastos\nPresupuesto\nComidas\nCompras y tiendas\nCréditos\nSalud\nReportes\nAjustes\nTema: Según el sistema\nInicio\nInicio\nResumen\nDetalle\nTendencias\nCalendario\nFoto de ticket\nFiltrar\noctubre 2026\nHoy\n1.ª quincena · del 1 al 15\n2.ª quincena · del 16 al 31\nLun\tMar\tMié\tJue\tVie\tSáb\tDom\n\t\t\t\n1\n1.ª quincena\nEnvío del reporte mensual\n\t\n2\n\t\n3\n\t\n4\n\n\n5\n\t\n6\n\t\n7\n\t\n8\n\t\n9\n\t\n10\n\t\n11\n\n\n12\n\t\n13\n\t\n14\n\t\n15\n\t\n16\n2.ª quincena\n\t\n17\n\t\n18\n\n\n19\n\t\n20\n\t\n21\n\t\n22\n\t\n23\n\t\n24\n\t\n25\n\n\n26\n\t\n27\n\t\n28\n\t\n29\n\t\n30\nKueski · $973.75\n\t\n31\n\t\nLun 12 oct 2026\n\nSin eventos este día"
+}

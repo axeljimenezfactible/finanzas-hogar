@@ -60,6 +60,13 @@ function sinEncimar(op: echarts.EChartsCoreOption, ancho: number): echarts.EChar
   }
 }
 export interface Tabla { columnas: string[]; filas: string[][]; total?: string[] }
+/** Envoltorio de la tabla alterna (U5-06; axe `scrollable-region-focusable`). Oculta: solo `sr-only`, sin desplazamiento
+ *  (con `overflow-x-auto` quedaba una región desplazable sin foco). Visible: región desplazable con foco de teclado, anillo
+ *  de foco del token y nombre = título de la gráfica. La usan FiguraGrafica y FiguraBarras (Tablero). */
+export function ContenedorTabla({ comoTabla, titulo, children }: { comoTabla: boolean; titulo: string; children: ReactNode }) {
+  if (!comoTabla) return <div className="sr-only">{children}</div>
+  return <div role="region" aria-label={titulo} tabIndex={0} className="overflow-x-auto rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus">{children}</div>
+}
 interface Props { id: string; titulo: string; subtitulo: string; resumen: string; notas?: string[]; filtros?: ReactNode; opcion: () => echarts.EChartsCoreOption; tabla: Tabla; dependencias: unknown[] }
 export function FiguraGrafica({ id, titulo, subtitulo, resumen, notas, filtros, opcion, tabla, dependencias }: Props) {
   const [comoTabla, setComoTabla] = useState(false)
@@ -69,7 +76,7 @@ export function FiguraGrafica({ id, titulo, subtitulo, resumen, notas, filtros, 
     if (comoTabla || !ref.current) return
     const g = echarts.init(ref.current, null, { renderer: 'svg' })
     const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches
-    g.setOption({ animation: !reducido, aria: { enabled: true, decal: { show: false } }, textStyle: { fontFamily: 'Inter, ui-sans-serif, system-ui', color: token('--ui-text-secondary') }, ...sinEncimar(opcion(), ref.current.clientWidth) })
+    g.setOption({ animation: !reducido, aria: { enabled: true, label: { enabled: true, description: `${titulo}. ${resumen}` }, decal: { show: false } }, textStyle: { fontFamily: 'Inter, ui-sans-serif, system-ui', color: token('--ui-text-secondary') }, ...sinEncimar(opcion(), ref.current.clientWidth) })
     const ro = new ResizeObserver(() => g.resize())
     ro.observe(ref.current)
     return () => { ro.disconnect(); g.dispose() }
@@ -77,14 +84,14 @@ export function FiguraGrafica({ id, titulo, subtitulo, resumen, notas, filtros, 
   }, [comoTabla, tema, ...dependencias])
   const vacia = sinDatos(opcion())
   const tablaHtml = (
-    <div className={cn('overflow-x-auto', !comoTabla && 'sr-only')}>
+    <ContenedorTabla comoTabla={comoTabla} titulo={titulo}>
       <table className="w-full text-small tabular-nums">
         <caption className="sr-only">{titulo}</caption>
         <thead><tr>{tabla.columnas.map((c, i) => <th key={c} scope="col" className={cn('whitespace-nowrap px-2 py-1 font-medium text-text-secondary', i ? 'text-right' : 'text-left')}>{c}</th>)}</tr></thead>
         <tbody>{tabla.filas.map((f) => <tr key={f[0]} className="border-t border-border-divider">{f.map((v, i) => (i ? <td key={i} className="whitespace-nowrap px-2 py-1 text-right">{v}</td> : <th key={i} scope="row" className="whitespace-nowrap px-2 py-1 text-left font-normal">{v}</th>))}</tr>)}</tbody>
         {tabla.total && <tfoot><tr className="border-t border-border-control font-medium">{tabla.total.map((v, i) => (i ? <td key={i} className="px-2 py-1 text-right">{v}</td> : <th key={i} scope="row" className="px-2 py-1 text-left">{v}</th>))}</tr></tfoot>}
       </table>
-    </div>
+    </ContenedorTabla>
   )
   return (
     <figure data-prueba={`grafica-${id}`} className="flex min-w-0 flex-col gap-3 rounded-md border border-border-divider bg-surface-card p-4 tablet:p-6">

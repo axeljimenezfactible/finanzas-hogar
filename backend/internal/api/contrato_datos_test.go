@@ -147,6 +147,9 @@ func init() {
 	over["updateHealthSettings"] = settingsEcho("/api/v1/settings/health")
 	over["updateSecuritySettings"] = settingsEcho("/api/v1/settings/security")
 	over["updatePriceSettings"] = settingsEcho("/api/v1/settings/prices")
+	over["updateDashboardSettings"] = settingsEcho("/api/v1/settings/dashboard") // C1 v1.5, K54 (correccion-especificacion-r2)
+	// Llaves obligatorias from y to (AAAA-MM) del resumen mensual del tablero: el generador no saca un mes de «examples».
+	qover["getDashboardMonthlyOverview"] = map[string]string{"from": "2026-10", "to": "2026-12"}
 	over["generateMonthlyReport"] = func(k *K) any { return map[string]any{"month": "2026-10", "send_telegram": false} }
 }
 

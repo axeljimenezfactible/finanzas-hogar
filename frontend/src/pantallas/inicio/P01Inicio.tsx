@@ -1,4 +1,4 @@
-// P-01 Inicio (U1 §2.1–§2.2, §3.3; U3): Resumen · Detalle · Tendencias · Calendario. El cascarón pinta título, pestañas y «Registrar gasto».
+// P-01 Inicio (U1 §2.1–§2.2, §3.3; U3 2.0): Resumen (= tablero de control, K54) · Detalle · Tendencias · Calendario. El cascarón pinta título, pestañas y «Registrar gasto».
 import { useEffect } from 'react'
 import { Camera, Banknote } from 'lucide-react'
 import type { PropsPantalla } from '../../app/registro'
@@ -8,7 +8,7 @@ import { Boton } from '../../componentes/Boton'
 import { ProveedorInicio, useInicio } from './comun'
 import { esDiaDePago } from './fechas'
 import { textosInicio as t } from './textos'
-import Resumen from './Resumen'
+import Tablero from './Tablero'
 import Detalle from './Detalle'
 import Tendencias from './Tendencias'
 import Calendario from './Calendario'
@@ -27,7 +27,7 @@ export default function P01Inicio({ sub, consulta }: PropsPantalla) {
     <ProveedorInicio>
       <div className="flex flex-col gap-4">
         <Acciones />
-        {sub === 'detalle' ? <Detalle consulta={consulta} /> : sub === 'tendencias' ? <Tendencias /> : sub === 'calendario' ? <Calendario /> : <Resumen />}
+        {sub === 'detalle' ? <Detalle consulta={consulta} /> : sub === 'tendencias' ? <Tendencias /> : sub === 'calendario' ? <Calendario /> : <Tablero />}
       </div>
     </ProveedorInicio>
   )

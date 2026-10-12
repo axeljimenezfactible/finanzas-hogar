@@ -49,7 +49,7 @@
    "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "button#radix-_r_e_",
+     "nodo": "button#radix-_r_c_",
      "texto": "Más opciones"
     }
    ]
@@ -293,7 +293,7 @@
    "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "button#radix-_r_e_ > svg.lucide.lucide-ellipsis",
+     "nodo": "button#radix-_r_c_ > svg.lucide.lucide-ellipsis",
      "texto": "lucide lucide-ellipsis lucide-more-horiz"
     }
    ]

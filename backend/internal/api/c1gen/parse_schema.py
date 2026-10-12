@@ -114,7 +114,14 @@ for p in params:
     if p['type'] == 'entero':
         if _acepta(k, -1) or _acepta(k, '1') or _acepta(k, 1.5): raise SystemExit(f'parse_schema: {k}: la base acepta un valor que no es entero >= 0')
         lo = 0 if _acepta(k, 0) else 1 if _acepta(k, 1) else None
-        if lo is None: raise SystemExit(f'parse_schema: {k}: no acepta 0 ni 1; rango no previsto por el generador')
+        if lo is None:  # C1 v1.5 (K54): mínimo mayor que 1 (budget.signal_months, de 2 a 12): búsqueda entre 1 (rechazado) y el inicial
+            a, b = 1, p['initial']
+            if not isinstance(b, int) or b <= 1: raise SystemExit(f'parse_schema: {k}: no acepta 0 ni 1; rango no previsto por el generador')
+            while b - a > 1:
+                m = (a + b) // 2
+                if _acepta(k, m): b = m
+                else: a = m
+            lo = b
         p['minimum'] = lo
         if not _acepta(k, TOPE):
             a, b = p['initial'], TOPE

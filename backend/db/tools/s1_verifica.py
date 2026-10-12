@@ -24,6 +24,9 @@
 # PROG14 sustituye a PROG13 (los cuatro parámetros de avisos ya no son PROVISIONAL); DOWN14 prueba que el Down de la 00004 deja
 # el esquema 1.3, sus ajustes, sus avisos y sus créditos idénticos. S1-16 y K44 tratan como historia las marcas PROVISIONAL de
 # una migración anterior que citan un bloqueo que una migración posterior declara con «-- @resuelve» (00001 a 00003 no se editan).
+# Versión 1.5 (agente s1-c1-v15, WF-3c, K54): aplica también la 00005 (tablero de control). K44 cuenta 30 anotaciones @param (25 + 5 de
+# K54); K54 prueba las cinco claves nuevas con su valor inicial y sus rangos (negativas y positivas); PROG14 exige «sin PROVISIONAL»
+# solo en las filas de las claves de la 00004 (las de K54 tienen valores PROVISIONALES con bloqueo abierto, C1-tablero y U3-tablero-*).
 import datetime, functools, glob, json, os, re, shutil, sqlite3, subprocess, sys
 from fractions import Fraction
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -600,7 +603,7 @@ prov_res += [('migraciones', nm) for i_, t_ in enumerate(TXT) for l in t_.splitl
 k5 = ['S1-ajuste-objetivo-kcal', 'S1-fuentes-precio', 'criterios-promedios-redondeo', 'criterios-frescura-extremos', 'C1-valores-k31']
 notif13 = dict(x("SELECT code, params_json FROM notification WHERE code IN ('payment_due', 'budget_threshold')").fetchall())
 notif_ok = notif13 == {'payment_due': '{}', 'budget_threshold': '{"scopes": ["category", "total"]}'} and x('SELECT updated_at FROM notification ORDER BY rowid').fetchall() == [(r[-1],) for r in N12]
-ok44 = (len(cols13) == 2 and all(casa.get(k_) == v for k_, v in {**SEM13, **PREV}.items()) and all(anot.get(k_) == casa.get(k_) for k_ in anot) and len(anot) == 25
+ok44 = (len(cols13) == 2 and all(casa.get(k_) == v for k_, v in {**SEM13, **PREV}.items()) and all(anot.get(k_) == casa.get(k_) for k_ in anot) and len(anot) == 30
         and not acept13 and not rech13 and txt_ok and not prov_res and all(k_ in resueltos for k_ in k5) and notif_ok)
 out('K44', ok44, f"columnas nuevas de health_profile={cols13} · claves sembradas por la 00003 con su valor inicial={all(casa.get(k_) == v for k_, v in SEM13.items())} ({len(SEM13)}) · las 5 de 00001/00002 intactas={all(casa.get(k_) == v for k_, v in PREV.items())} · anotaciones @param={len(anot)}, iguales a lo sembrado={all(anot.get(k_) == casa.get(k_) for k_ in anot)}"
     f" · negativas: {len(NEG13)}, rechazadas {len(NEG13) - len(acept13)}, aceptadas por error {acept13} · positivas: {len(POS13)}, aceptadas {len(POS13) - len(rech13)}, rechazadas por error {rech13}"
@@ -629,9 +632,10 @@ cerr = {l.split(' | ')[0].strip() for l in re.findall(r'^-- @param_sin_valor_cer
 nv_l = [l.split(' | ')[0].strip() for l in re.findall(r'^-- @param_sin_valor (.+)$', mig, re.M)]
 nv_vivos = [n_ for n_ in nv_l if n_ not in cerr and any(k_ in n_ for k_ in ('send_time', 'advance_days', 'weekday', 'day_of_month', 'date_window_days'))]
 s44 = DIC.split('## Parámetros operativos de app_setting (K44)')[1].split('\n## ')[0]
-dic_p = all(f'| `{k_}` |' in s44 for k_ in SEM14) and 'PROVISIONAL' not in s44
+def _sin_prov14(sec_): return not any('PROVISIONAL' in l_ for l_ in sec_.splitlines() if any(f'`{k_}`' in l_ for k_ in SEM14))  # 1.5: solo las filas de la 00004
+dic_p = all(f'| `{k_}` |' in s44 for k_ in SEM14) and _sin_prov14(s44)
 rn29 = REG.split('\n## RN-29 ')[1].split('\n## ')[0]
-reg_p = all(f'`{k_}`' in rn29 for k_ in SEM14) and 'PROVISIONAL' not in rn29 and 'Q2-66' in rn29
+reg_p = all(f'`{k_}`' in rn29 for k_ in SEM14) and _sin_prov14(rn29) and 'Q2-66' in rn29
 blq = open(R + '/docs/estado/bloqueos/S1-parametros-avisos.md', encoding='utf-8').read()
 ok_pg = (prog == {'weekly_summary': '{}', 'meal_plan_missing': '{}', 'monthly_report': '{}'} and all(casa.get(k_) == v_ for k_, v_ in SEM14.items())
          and not nv_vivos and len(cerr) == 5 and dic_p and reg_p and 'Respuesta de Axel' in blq and RESUELVE.get('S1-parametros-avisos') == 3)
@@ -656,6 +660,18 @@ POS14 = [('dia_31', aj('reports.monthly_day_of_month', '31')), ('hora_medianoche
 acept14 = corre(NEG14, True); rech14 = corre(POS14, False)
 nul = one("SELECT count(*) FROM credit WHERE vat_included IS NULL")
 out('K47', not acept14 and not rech14 and has('credit.vat_included'), f"credit.vat_included={has('credit.vat_included')} (créditos capturados después de migrar, NULL = falta capturar: {nul}) · negativas: {len(NEG14)}, rechazadas {len(NEG14) - len(acept14)}, aceptadas por error {acept14} · positivas: {len(POS14)}, aceptadas {len(POS14) - len(rech14)}, rechazadas por error {rech14}")
+# ---------- K54 (1.5, 00005): cinco claves del tablero con su valor inicial y su rango (PROVISIONAL, bloqueo C1-tablero)
+SEM15 = {'debt.capacity_warning_pct': '30', 'debt.capacity_limit_pct': '40', 'dashboard.payment_reminder_count': '5', 'budget.signal_months': '3', 'budget.signal_margin_pct': '10'}
+NEG15 = [('umbral_0', aj('debt.capacity_warning_pct', '0')), ('tope_101', aj('debt.capacity_limit_pct', '101')), ('umbral_texto', aj('debt.capacity_warning_pct', '"30"')),
+ ('tope_decimal', aj('debt.capacity_limit_pct', '40.5')), ('pagos_0', aj('dashboard.payment_reminder_count', '0')), ('pagos_21', aj('dashboard.payment_reminder_count', '21')),
+ ('meses_1', aj('budget.signal_months', '1')), ('meses_13', aj('budget.signal_months', '13')), ('margen_0', aj('budget.signal_margin_pct', '0')), ('margen_51', aj('budget.signal_margin_pct', '51')),
+ ('alta_fuera_de_rango', "INSERT INTO app_setting (setting_key, value_json, user_account_id) VALUES ('budget.signal_months', '20', NULL)")]
+POS15 = [('umbral_1', aj('debt.capacity_warning_pct', '1')), ('tope_100', aj('debt.capacity_limit_pct', '100')), ('pagos_1_y_20', aj('dashboard.payment_reminder_count', '1') + '; ' + aj('dashboard.payment_reminder_count', '20')),
+ ('meses_2_y_12', aj('budget.signal_months', '2') + '; ' + aj('budget.signal_months', '12')), ('margen_1_y_50', aj('budget.signal_margin_pct', '1') + '; ' + aj('budget.signal_margin_pct', '50'))]
+acept15 = corre(NEG15, True); rech15 = corre(POS15, False)
+sem15_ok = all(casa.get(k_) == v_ for k_, v_ in SEM15.items())
+out('K54', sem15_ok and not acept15 and not rech15 and all(f'`{k_}`' in DIC and f'`{k_}`' in REG for k_ in SEM15),
+    f"claves de la 00005 con su valor inicial={sem15_ok} ({len(SEM15)}) · negativas: {len(NEG15)}, rechazadas {len(NEG15) - len(acept15)}, aceptadas por error {acept15} · positivas: {len(POS15)}, aceptadas {len(POS15) - len(rech15)}, rechazadas por error {rech15} · en diccionario y reglas={all(f'`{k_}`' in DIC and f'`{k_}`' in REG for k_ in SEM15)}")
 # ---------- AVISOS14: traspaso params_json <-> app_setting con valores que no son los iniciales y migración de vat_included
 av = sqlite3.connect(':memory:'); [av.executescript(u) for u in UPS[:3]]
 av.execute("UPDATE notification SET params_json = '{\"weekday\": 5}' WHERE code = 'weekly_summary'")

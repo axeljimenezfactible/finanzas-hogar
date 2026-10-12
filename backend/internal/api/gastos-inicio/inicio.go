@@ -69,6 +69,9 @@ func getDashboardMonthVsPlan(reg *api.Registry) api.HandlerFunc {
 			}
 			out.PlannedCents, out.UsedPct, out.RemainingCents, out.Status = api.Ptr(plan), api.Ptr(pct), api.Ptr(plan-out.ActualCents), api.Ptr(st)
 		}
+		if err := addMonthComparison(&out, fe, in, em); err != nil {
+			return err
+		}
 		// Días que faltan contando hoy: mes en curso = hasta el último día; mes pasado = 0; mes futuro = todos.
 		t, first, last := today(reg), dominio.MonthStart(ref.Year, ref.Month), dominio.MonthEnd(ref)
 		switch {
@@ -81,6 +84,50 @@ func getDashboardMonthVsPlan(reg *api.Registry) api.HandlerFunc {
 		}
 		return api.WriteJSON(w, http.StatusOK, out)
 	}
+}
+
+// addMonthComparison llena los campos opcionales que C1 v1.5 agrega a DashboardMonthVsPlan (M-01 ampliada; K-1
+// «Gasto del mes» del tablero, K54): el efectivo del hogar del mes (cash_household_cents de M-11), el mes anterior con
+// su real y su efectivo, las diferencias con signo y cuántas categorías activas del mes están en warning y en
+// exceeded (M-09, umbrales de getAlertSettings). Todo sale del motor S2 (mf.BudgetMonth y mf.PlanVsActual); aquí
+// solo se resta. Un mes anterior sin datos deja ausentes sus cifras y las diferencias (dominio.MonthHasData,
+// PROVISIONAL, bloqueo S6-tablero-sin-datos). Agente api-tablero (WF-3c).
+func addMonthComparison(out *api.DashboardMonthVsPlan, fe *dominio.FinEngine, in mf.Input, em mf.Month) error {
+	bm, err := mf.BudgetMonth(in, em)
+	if err != nil {
+		return err
+	}
+	cash := int64(bm.CashHouseholdCents)
+	out.CashCents = api.Ptr(cash)
+	var warning, exceeded int64
+	for _, l := range bm.Categories { // el motor ya deja fuera las categorías inactivas
+		if _, ok := fe.CategoryID[l.Category]; !ok {
+			continue
+		}
+		switch l.State {
+		case "warning":
+			warning++
+		case "exceeded":
+			exceeded++
+		}
+	}
+	out.CategoriesWarningCount, out.CategoriesExceededCount = api.Ptr(warning), api.Ptr(exceeded)
+	prev := em.Add(-1)
+	out.PreviousMonth = api.Ptr(prev.String())
+	pr, err := mf.PlanVsActual(in, prev, 1, "")
+	if err != nil {
+		return err
+	}
+	pbm, err := mf.BudgetMonth(in, prev)
+	if err != nil {
+		return err
+	}
+	pa, pc := int64(pr[0].ActualCents), int64(pbm.CashHouseholdCents)
+	if dominio.MonthHasData(pa, pc) {
+		out.PreviousActualCents, out.PreviousCashCents = api.Ptr(pa), api.Ptr(pc)
+		out.ActualDifferenceCents, out.CashDifferenceCents = api.Ptr(out.ActualCents-pa), api.Ptr(cash-pc)
+	}
+	return nil
 }
 
 func getDashboardFortnightFlow(reg *api.Registry) api.HandlerFunc {

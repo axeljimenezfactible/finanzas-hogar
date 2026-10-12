@@ -37,6 +37,13 @@ EXCEPCIONES_NO_LLAMADA = {
 }
 
 
+# Operaciones con pantalla en U1 que el frontend todavía NO llama y para las que nadie autorizó una excepción: se muestran en la
+# tabla con su motivo y el script sigue saliendo con 1 (no se admiten como excepción técnica; WF-3c c3-tablero, bloqueo C3-ajustes-tablero).
+PENDIENTES_PANTALLA = {
+    'updateDashboardSettings': 'PANTALLA PENDIENTE, no es excepción: U1 §3.3 (fila «Parámetros del tablero», N-275 y N-278, que §3.29 cuelga de P-26.02) pide leer y cambiar las cinco claves de K54 en Ajustes, pero ninguna pantalla de `frontend/src` llama PATCH `/api/v1/settings/dashboard` (solo Inicio lee `getDashboardSettings`) · bloqueo `docs/estado/bloqueos/C3-ajustes-tablero.md`',
+}
+
+
 def leer(p):
     return Path(p).read_text(encoding='utf-8')
 
@@ -190,7 +197,12 @@ def capturas(i, carpeta):
             malas.append(f'{f.name}: ancho {ancho} px (U5-01 pide {ANCHO[disp]})')
     if malas:
         return 'no', f'{4 - len(malas)}/4: ' + '; '.join(malas) + ' · ' + ', '.join(rutas)
-    return 'sí', '4/4: ' + ', '.join(rutas)
+    extra = ''
+    if i == 'P-01':
+        sub = RAIZ / 'docs/design/capturas-u5/evidencia/inicio-subsecciones'
+        n = sum(1 for s in ('resumen', 'detalle', 'tendencias', 'calendario') for d, tm in COMBOS if (sub / f'P-01-{s}-{d}-{tm}.png').is_file())
+        extra = f' · además las 4 subsecciones (Resumen, Detalle, Tendencias, Calendario) × 4 combinaciones: {n}/16 en `docs/design/capturas-u5/evidencia/inicio-subsecciones/P-01-<subsección>-<dispositivo>-<tema>.png` (U5-06; subcarpeta que no cuenta en U5-01)'
+    return 'sí', '4/4: ' + ', '.join(rutas) + extra
 
 
 # ---------- matriz ----------
@@ -296,7 +308,7 @@ def tabla(r):
             '| Operación | Filas donde aparece | Necesidades cubiertas por otra operación llamada | Motivo |', '|---|---|---|---|']
     for o, f in r['no_llamadas']:
         cub = '; '.join(f'{n}: {", ".join(v) or "SIN COBERTURA"}' for n, v in r['cobertura'][o].items())
-        exc.append(f"| {o} | {', '.join(f)} | {cub} | {EXCEPCIONES_NO_LLAMADA.get(o, 'SIN JUSTIFICAR (ver bloqueo C3-matriz)')} |")
+        exc.append(f"| {o} | {', '.join(f)} | {cub} | {EXCEPCIONES_NO_LLAMADA.get(o) or PENDIENTES_PANTALLA.get(o, 'SIN JUSTIFICAR (ver bloqueo C3-matriz)')} |")
     if not r['no_llamadas']:
         exc.append('| (ninguna) | — | — | — |')
     if r['sin_justificar']:

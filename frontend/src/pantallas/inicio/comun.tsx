@@ -81,7 +81,9 @@ export type Persona = Esquemas['Person']
 type Lista<T> = { items: T[]; next_cursor?: string | null }
 export interface Compartido {
   hoy: string
-  alertas: EstadoConsulta<{ parameters: { 'alerts.payment_due_days_before': { value: number[] | null } } }>
+  alertas: EstadoConsulta<{ parameters: { 'alerts.payment_due_days_before': { value: number[] | null }; 'alerts.budget_warning_pct'?: { value: number | null }; 'alerts.budget_limit_pct'?: { value: number | null } } }>
+  /** getDashboardSettings (C1 v1.5, K54): N de «Pagos próximos»; se lee una sola vez, como las alertas (U3 §1.2). */
+  ajustesTablero: EstadoConsulta<Respuesta<'/api/v1/settings/dashboard', 'get'>>
   personas: EstadoConsulta<Lista<Persona>>
   creditos: EstadoConsulta<Lista<Esquemas['Credit']>>
   tiendas: EstadoConsulta<Lista<Esquemas['Store']>>
@@ -95,6 +97,7 @@ export const useInicio = () => useContext(Ctx)!
 export function ProveedorInicio({ children }: { children: ReactNode }) {
   const hoy = hoyISO()
   const alertas = usarConsulta('get', '/api/v1/settings/alerts')
+  const ajustesTablero = usarConsulta('get', '/api/v1/settings/dashboard')
   const personas = usarConsulta('get', '/api/v1/persons', { consulta: { limit: 200 } })
   const creditos = usarConsulta('get', '/api/v1/credits', { consulta: { limit: 200 } })
   const tiendas = usarConsulta('get', '/api/v1/stores', { consulta: { limit: 200 } })
@@ -103,7 +106,7 @@ export function ProveedorInicio({ children }: { children: ReactNode }) {
   const flujo = usarConsulta('get', '/api/v1/dashboard/fortnight-flow', { consulta: { period: quincenaDe(hoy) } })
   const plan = usarConsulta('get', '/api/v1/dashboard/month-vs-plan', { consulta: { period: mesDe(hoy) } })
   usarRecargaAlCambiar(plan.recargar, flujo.recargar)
-  const valor = { hoy, alertas, personas, creditos, tiendas, categorias, proximo, flujo, plan } as Compartido
+  const valor = { hoy, alertas, ajustesTablero, personas, creditos, tiendas, categorias, proximo, flujo, plan } as Compartido
   return <Ctx.Provider value={valor}>{children}</Ctx.Provider>
 }
 export const listaDe = <T,>(c: EstadoConsulta<Lista<T>>): T[] => (Array.isArray(c.datos?.items) ? c.datos.items : [])

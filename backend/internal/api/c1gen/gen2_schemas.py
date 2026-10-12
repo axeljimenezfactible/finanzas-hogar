@@ -143,7 +143,7 @@ S['SavingsMovement'] = entity_read('savings_movement')
 S['SavingsMovementCreate'] = entity_write('savings_movement'); S['SavingsMovementUpdate'] = entity_write('savings_movement', include={'savings_goal_id', 'movement_date', 'amount_cents', 'notes'}, update=True)
 S['SavingsSummary'] = O('Fondo y totales (N-110).', saved_total_cents='r:MoneyCents:Σ aportaciones − Σ retiros de fondo y metas.', goals=A(O('Por destino.', savings_goal_id='i:Fondo o meta.', saved_cents='r:MoneyCents:Ahorrado.'), 'Por destino.'), contributed_month_cents='r:MoneyCents:Aportado en el mes en curso.', planned_month_cents='r:MoneyCents:Σ planned_monthly_cents de fondo y metas activas.')
 S['SavingsMonthlyTrend'] = O('Tendencia de ahorro (N-114).', months=A(O('Mes.', month='r:Month:Mes.', saved_end_cents='r:MoneyCents:Ahorrado al cierre.', contributed_cents='r:MoneyCents:Aportado.', planned_cents='r:MoneyCents:Planificado.'), 'Máximo 12 meses.'))
-# ---------- Inicio: 6 tarjetas ----------
+# ---------- Inicio: tablero de control (K54; antes 6 tarjetas) ----------
 S['DashboardMonthVsPlan'] = O('Tarjeta «Mes vs plan» (N-020, métrica M-01). Fórmulas: real = Σ parte del hogar devengada en el mes (motor S2); plan = Σ monto del renglón de budget vigente en el mes (RN-22) de las categorías activas; % usado = real ÷ plan × 100 entero ROUND_HALF_UP; restante = plan − real; estado normal < 80, warning ≥ 80, exceeded ≥ 100; días que faltan contando hoy. Sin plan: used_pct y status ausentes («—»).', month='r:Month:Mes en curso.', actual_cents='r:MoneyCents:Real.', planned_cents_='r:MoneyCents:Plan.', used_pct_='i:% usado.', remaining_cents_='r:MoneyCents:Restante.', status_=STATUS3, days_left='i:Días que faltan contando hoy.')
 S['DashboardFortnightFlow'] = O('Tarjeta «Flujo quincenal» (N-021, métrica M-02), efectivo y parte del hogar (motor S2). Fórmulas: ingresos = quincena capturada (o esperada, con income_is_expected) + extras con fecha en la quincena; egresos hechos = salidas de efectivo hasta hoy (contado + partes del hogar pagadas); comprometido = partes del hogar de pagos pendientes de la quincena + fijos y venideros sin pagar; saldo al cierre = ingresos − egresos hechos − comprometido. Quincena del 1 al 15 o del 16 al último día (K8).', start_date='r:Date:Inicio de la quincena.', end_date='r:Date:Fin.', income_cents='r:MoneyCents:Ingresos.', income_is_expected='b:true si la quincena aún no se captura.', spent_cents='r:MoneyCents:Egresos hechos.', committed_cents='r:MoneyCents:Comprometido.', closing_balance_cents='r:MoneyCents:Saldo al cierre.')
 NEXTPAY = O('Próximo pago (N-022 a).', due_date='r:Date:Fecha.', credit_id='i:Línea.', amount_cents='r:MoneyCents:Monto total (si caen varios el mismo día, la suma).', household_share_cents='r:MoneyCents:Parte del hogar.', external_share_cents='r:MoneyCents:Parte de Karen.', days_left='i:Días que faltan (negativo si está vencido).', payment_count='i:Pagos que caen ese día.', is_overdue='b:true si es un pago pendiente con fecha anterior a hoy («sin marcar como pagado»).')
@@ -508,4 +508,73 @@ S['AiProviders'] = O('Proveedores de IA (N-306).', providers=A(ref('AiProvider')
 S['AiProviderUpdate'] = O('Activar o desactivar un proveedor (N-307).', False, is_enabled={'type': 'boolean', 'description': 'Nuevo valor (app_setting ai.local_model_enabled o ai.claude_api_enabled).', 'x-app-setting': 'ai.local_model_enabled | ai.claude_api_enabled'})
 S['AiProviderUpdate']['additionalProperties'] = False
 S['SystemStatus'] = O('Estado del servicio (N-308).', version='s:Versión del binario.', started_at='r:DateTime:En marcha desde.', database_size_bytes='i:Tamaño de la base de datos.')
+# C1 v1.5 (K54, tablero de control; U3 2.0 §2.6): esquemas nuevos y campos nuevos (opcionales) en tres esquemas existentes.
+TB = 'docs/design/U3-dashboard.md 2.0'
+def _setint(desc, key): return {'type': 'integer', 'description': desc + f' Valor vigente de app_setting {key} (K44; se cambia en updateDashboardSettings).', 'x-app-setting': key}
+S['DashboardDebtCapacity'] = O('Barómetro de capacidad de endeudamiento del tablero (U3 2.0 B-1, métrica M-20, RN-30; K54 decisiones 1 y 2). Capacidad usada = pagos del mes ÷ ingreso mensual neto × 100, entero ROUND_HALF_UP; estado con ese entero: normal (verde) si ratio_pct ≤ warning_pct, warning (amarillo) si ratio_pct ≤ limit_pct, exceeded (rojo) si ratio_pct > limit_pct. Ingreso de S2 y pagos de S3; la interfaz no calcula nada. PROVISIONAL (bloqueos U3-tablero-barometro y C1-tablero): ingreso sin extras, pagos con la parte del hogar, mes calendario y escala.',
+    month='r:Month:Mes medido (period; por omisión el mes en curso).',
+    income_cents_='r:MoneyCents:Ingreso mensual neto: quincenas de Axel del mes, capturadas más las esperadas sin capturar, sin extras (PROVISIONAL, bloqueo U3-tablero-barometro). Ausente sin quincena capturada ni esperada (sin datos no es cero).',
+    income_is_expected='b:true si alguna quincena de income_cents es esperada (sin capturar).',
+    extras_cents='r:MoneyCents:Extras del mes. Informativo: no entra al cociente.',
+    payments_cents='r:MoneyCents:Parte del hogar de los pagos programados con fecha en el mes, de todas las líneas, pagados o no; la misma cifra que CreditTotals.month_household_cents del mes en curso (PROVISIONAL, bloqueo U3-tablero-barometro).',
+    payments_total_cents='r:MoneyCents:Los mismos pagos con la parte de Karen (informativo).',
+    payment_count='i:Pagos programados con fecha en el mes.',
+    ratio_pct_='i:payments_cents ÷ income_cents × 100, entero ROUND_HALF_UP (RN-01). Ausente sin income_cents o con income_cents = 0.',
+    ratio_total_pct_='i:payments_total_cents ÷ income_cents × 100, entero ROUND_HALF_UP (informativo). Ausente igual que ratio_pct.',
+    warning_pct=_setint('Frontera entre verde y amarillo, en % (30 al sembrar, K54 decisión 2).', 'debt.capacity_warning_pct'),
+    limit_pct=_setint('Tope, en %: arriba es rojo (40 al sembrar, K54 decisión 2).', 'debt.capacity_limit_pct'),
+    scale_max_pct='i:Fin de la escala del dibujo, en %: el múltiplo de 10 igual o mayor que 1.5 × limit_pct (60 con 40). Solo dibujo (PROVISIONAL, bloqueo U3-tablero-barometro).',
+    status_='e:normal,warning,exceeded:Estado del barómetro con ratio_pct (fronteras inclusivas: 30 es normal y 40 es warning con los valores iniciales). Ausente sin ratio_pct.',
+    headroom_cents_='r:MoneyCents:Margen antes del rojo, con signo: limit_pct × income_cents ÷ 100 (ROUND_HALF_UP) − payments_cents; negativo = arriba del tope. Ausente sin income_cents.',
+    has_credits='b:true si hay al menos una línea de crédito activa; con false, payments_cents = 0 y ratio_pct = 0 (cifra real, no falta de dato).')
+S['DashboardDebtCapacity']['x-provisional'] = True
+_OVM = O('Mes del resumen.', month='r:Month:Mes.', is_projection='b:true si el mes es posterior al mes en curso (sin devengado ni efectivo).',
+    income_total_cents_='r:MoneyCents:Ingreso del mes = income_fortnights_cents + income_extras_cents. Ausente sin ingreso capturado ni esperado.',
+    income_fortnights_cents_='r:MoneyCents:Quincenas del mes, capturadas más esperadas sin capturar. Ausente igual.',
+    income_extras_cents_='r:MoneyCents:Extras del mes. Ausente igual.',
+    income_is_expected='b:true si alguna quincena del mes es esperada (sin capturar).',
+    accrued_cents_='r:MoneyCents:Devengado del hogar del mes (real de M-01, motor S2). Ausente en proyección y en meses sin datos.',
+    cash_cents_='r:MoneyCents:Efectivo del hogar del mes (cash_household_cents de M-11, motor S2). Ausente igual.',
+    planned_cents_='r:MoneyCents:Plan del mes (Σ renglón de budget vigente de las categorías activas, RN-22). Ausente sin plan.',
+    credit_payments_cents='r:MoneyCents:Parte del hogar de los pagos de crédito con fecha en el mes (la de RN-30).',
+    credit_payments_total_cents='r:MoneyCents:Los mismos pagos con la parte de Karen.',
+    debt_ratio_pct_='i:Capacidad usada del mes (RN-30): credit_payments_cents ÷ income_fortnights_cents × 100, entero ROUND_HALF_UP. Ausente sin ingreso.',
+    debt_status_='e:normal,warning,exceeded:Estado de debt_ratio_pct con warning_pct y limit_pct. Ausente sin debt_ratio_pct.')
+S['DashboardMonthlyOverview'] = O('Resumen mensual del tablero (U3 2.0 G-1 y G-6, métrica M-21; K54): ingreso, gasto devengado y efectivo, plan, pagos de crédito y capacidad de endeudamiento por mes, de `from` a `to` (máximo 24 meses). Motores S2 y S3. PROVISIONAL (bloqueos U3-tablero-barometro y C1-tablero): la capacidad sigue RN-30.',
+    warning_pct=_setint('Frontera entre verde y amarillo, en %.', 'debt.capacity_warning_pct'),
+    limit_pct=_setint('Tope, en %.', 'debt.capacity_limit_pct'),
+    months=A(_OVM, 'Un elemento por mes de `from` a `to`, en orden.'))
+S['DashboardMonthlyOverview']['x-provisional'] = True
+S['BudgetSignals'] = O('Sugerencia «subir o recortar presupuesto» por categoría (U3 2.0 G-3, métrica M-22, RN-31; K54, motor S2). Mira los months_considered meses cerrados anteriores al mes pedido: raise si en todos el % usado pasó de 100 + margin_pct; cut si en todos quedó abajo de 100 − margin_pct; none en otro caso. Un mes sin plan corta la racha; con plan y sin gasto cuenta 0 %. Solo sugiere: no cambia el presupuesto ni da un monto. PROVISIONAL (bloqueos U3-tablero-senal-presupuesto y C1-tablero): toda la regla.',
+    month='r:Month:Mes pedido (period; por omisión el mes en curso). No entra en la racha.',
+    months_considered=_setint('Meses cerrados que mira (3 al sembrar; PROVISIONAL, bloqueo U3-tablero-senal-presupuesto).', 'budget.signal_months'),
+    margin_pct=_setint('Margen en puntos de % usado (10 al sembrar; PROVISIONAL, bloqueo U3-tablero-senal-presupuesto).', 'budget.signal_margin_pct'),
+    rows=A(O('Categoría.', category_id='i:category.id (categoría activa).', signal='e:raise,cut,none:raise = subir presupuesto; cut = recortar; none = sin sugerencia.',
+             months=A(O('Mes mirado.', month='r:Month:Mes.', planned_cents_='r:MoneyCents:Plan de la categoría en el mes. Ausente sin plan.', actual_cents='r:MoneyCents:Real (parte del hogar devengada, M-09).', used_pct_='i:% usado = actual ÷ planned × 100, entero ROUND_HALF_UP. Ausente sin plan.'), 'Los meses mirados, del más antiguo al más reciente.')),
+           'Una fila por categoría activa.'))
+S['BudgetSignals']['x-provisional'] = True
+S['DashboardSettings'] = O('Parámetros del tablero de Inicio (K54, K44): umbrales del barómetro de capacidad de endeudamiento (K54 decisión 2), cuántos pagos muestra «Pagos próximos» y meses y margen de la sugerencia «subir o recortar presupuesto» (RN-30, RN-31). PROVISIONAL (bloqueo C1-tablero): la sección «Presupuesto» de Ajustes y los rangos; los valores 5, 3 y 10 dependen de los bloqueos U3-tablero-recordatorio y U3-tablero-senal-presupuesto.', False, parameters=params_read('Presupuesto'))
+S['DashboardSettings']['x-provisional'] = True
+S['DashboardSettingsUpdate'] = O('Cambio o «restablecer» de los parámetros del tablero (K44, C1 §11.7). debt.capacity_warning_pct tiene que quedar menor que debt.capacity_limit_pct con los valores que resultarían; si no, 422 validation_failed (PROVISIONAL, bloqueo C1-tablero).', False, **PWRITE('Presupuesto'))
+S['DashboardSettingsUpdate']['additionalProperties'] = False; S['DashboardSettingsUpdate']['minProperties'] = 1; S['DashboardSettingsUpdate']['x-provisional'] = True
+for _sn, _new in (('DashboardMonthVsPlan', dict(
+        cash_cents='r:MoneyCents:Efectivo del hogar del mes (cash_household_cents de M-11). Nuevo en C1 v1.5 (K54).',
+        previous_month='r:Month:Mes anterior al medido. Nuevo en C1 v1.5.',
+        previous_actual_cents='r:MoneyCents:Real del mes anterior. Ausente sin datos de ese mes.',
+        previous_cash_cents='r:MoneyCents:Efectivo del hogar del mes anterior. Ausente sin datos de ese mes.',
+        actual_difference_cents='r:MoneyCents:actual_cents − previous_actual_cents, con signo. Ausente si falta el mes anterior.',
+        cash_difference_cents='r:MoneyCents:cash_cents − previous_cash_cents, con signo. Ausente si falta el mes anterior.',
+        categories_warning_count='i:Categorías activas con estado warning en el mes (umbrales de getAlertSettings).',
+        categories_exceeded_count='i:Categorías activas con estado exceeded en el mes.')),
+    ('IncomeMonth', dict(
+        previous_month='r:Month:Mes anterior. Nuevo en C1 v1.5 (K54).',
+        previous_fortnights_cents='r:MoneyCents:Quincenas del mes anterior (capturadas más esperadas). Ausente sin datos.',
+        previous_extras_cents='r:MoneyCents:Extras del mes anterior. Ausente sin datos.',
+        fortnights_difference_cents='r:MoneyCents:Quincenas del mes − quincenas del mes anterior, con signo. Ausente si falta el mes anterior.')),
+    ('CreditTotals', dict(
+        month_payment_count='i:Pagos programados con fecha en el mes en curso. Nuevo en C1 v1.5 (K54).',
+        month_pending_household_cents='r:MoneyCents:Parte del hogar que falta pagar de los pagos del mes en curso. Nuevo en C1 v1.5 (K54).'))):
+    for _k, _v in _new.items():
+        assert _k not in S[_sn]['properties'], (_sn, _k)
+        S[_sn]['properties'][_k] = P(_v)  # opcionales: no entran en required (U3 2.0 §2.6)
 S['CategoryRead'] = None

@@ -161,3 +161,14 @@ Agente `k53-aplicar` (flujo P2d, 12-oct-2026). Aplica K53 (`docs/plan/decisiones
 - `verify_c1.py`:
   - Exige 1.4.0 y «C1 v1.4».
   - C1-02 acepta sin N-xxx solo `GET /openapi.yaml` y las 4 operaciones con `x-agente-externo`. Esas 4 llevan solo `serviceToken` y la etiqueta «Compras y tiendas», y ninguna otra operación acepta `serviceToken`.
+
+## C1 v1.5 (K54, tablero de control)
+
+Agente `s1-c1-v15` (flujo WF-3c, 12-oct-2026). Aplica K54 con las operaciones de `docs/design/U3-dashboard.md` 2.0 §2.6 contra el esquema 1.5 de S1 (`00005_tablero.sql`: cinco claves de `app_setting` y dos disparadores de rango). Reporte: `docs/estado/wf3/s1-c1-v15.md`. Lo no decidido es PROVISIONAL con el bloqueo `C1-tablero`.
+
+- `parse_schema.py`: el mínimo de una clave entera puede ser mayor que 1 (`budget.signal_months`, de 2 a 12): se busca entre 1 y el valor inicial con el mismo `SAVEPOINT`.
+- `gen2_schemas.py`: `DashboardDebtCapacity`, `DashboardMonthlyOverview`, `BudgetSignals`, `DashboardSettings` y `DashboardSettingsUpdate` (sección «Presupuesto»); 14 campos opcionales en `DashboardMonthVsPlan`, `IncomeMonth` y `CreditTotals`; `warning_pct`, `limit_pct`, `months_considered` y `margin_pct` con `x-app-setting`.
+- `gen3_ops.py`: `getDashboardDebtCapacity`, `getDashboardMonthlyOverview` y `getBudgetSignals` (etiqueta «Inicio»), `getDashboardSettings` y `updateDashboardSettings` (etiqueta «Ajustes»); sus N-xxx son PROVISIONALES (N-022, N-028, N-027, N-275 y N-278; bloqueo `C1-tablero`, punto 3).
+- `gen4_build.py`: `C1_VERSION` 1.5.0, textos de `info` y las llaves `OverviewFrom` (`from`) y `OverviewTo` (`to`).
+- `c1_plantilla.md`: cabecera, fila y detalle «C1 v1.5», llaves `from` y `to` en §6, métricas M-18 a M-22 en §9 y dos filas en §13.
+- `verify_c1.py`: exige 1.5.0 y «C1 v1.5».

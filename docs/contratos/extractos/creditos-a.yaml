@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «creditos-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.0 · extracto «creditos-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto creditos-a"
-  version: "1.4.0"
+  version: "1.5.0"
   description: "Extracto de la etiqueta «Créditos» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -569,6 +569,12 @@ components:
         interest_paid_year_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Intereses pagados en el año calendario."
+        month_payment_count:
+          type: "integer"
+          description: "Pagos programados con fecha en el mes en curso. Nuevo en C1 v1.5 (K54)."
+        month_pending_household_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte del hogar que falta pagar de los pagos del mes en curso. Nuevo en C1 v1.5 (K54)."
       required:
         - "live_debt_cents"
         - "fortnight_total_cents"

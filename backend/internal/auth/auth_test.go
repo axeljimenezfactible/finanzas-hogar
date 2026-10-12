@@ -22,6 +22,7 @@ import (
 	gastos "finanzas-hogar/internal/api/gastos-inicio"
 	"finanzas-hogar/internal/api/presupuesto"
 	reportesapi "finanzas-hogar/internal/api/reportes"
+	"finanzas-hogar/internal/api/tablero"
 	"finanzas-hogar/internal/auth"
 	"finanzas-hogar/internal/dominio"
 	"finanzas-hogar/internal/telegram"
@@ -291,7 +292,7 @@ func todasLasAreas(t *testing.T) []func(*api.Registry) {
 	}
 	cl := &telegram.Client{Base: tg.URL, Token: telegram.FileToken(cfg), HTTP: tg.Client()}
 	return []func(*api.Registry){auth.Register, gastos.Register, presupuesto.Register, comidas.Register, comprasa.Register,
-		comprasb.Register, creditos.Register, ajustes.Register, avisos.RegisterWith(avisos.Options{Enviador: cl}), reportesapi.Register}
+		comprasb.Register, creditos.Register, ajustes.Register, avisos.RegisterWith(avisos.Options{Enviador: cl}), reportesapi.Register, tablero.Register}
 }
 
 // S6-05: Axel y Ximena tienen los mismos permisos: con todas las áreas registradas (las del binario), cada operación

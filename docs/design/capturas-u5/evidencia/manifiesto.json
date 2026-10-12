@@ -66,11 +66,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 1841
+    "alto": 5235
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -78,13 +79,15 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 86,
+    "evaluados": 574,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -113,11 +116,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 1841
+    "alto": 5235
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -130,8 +134,10 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -289,11 +295,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 1841
+    "alto": 5235
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -301,13 +308,15 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 86,
-    "bajo_umbral": 0,
+    "evaluados": 574,
+    "bajo_umbral": 1,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -336,11 +345,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 900
+    "alto": 3029
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -348,13 +358,15 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 104,
+    "evaluados": 605,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -383,11 +395,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 900
+    "alto": 3029
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -395,13 +408,15 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 104,
-    "bajo_umbral": 0,
+    "evaluados": 605,
+    "bajo_umbral": 1,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -533,7 +548,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 88,
+    "evaluados": 97,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -579,7 +594,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 88,
+    "evaluados": 97,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -614,11 +629,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 1841
+    "alto": 5235
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -631,8 +647,10 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -661,11 +679,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 900
+    "alto": 3029
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -678,8 +697,10 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -708,11 +729,12 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 900
+    "alto": 3029
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
+    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -725,8 +747,10 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 18,
-    "importes_fuera_de_formato": [],
+    "importes": 253,
+    "importes_fuera_de_formato": [
+     "$0"
+    ],
     "fechas_iso": [],
     "ingles": [],
     "claves_internas": []
@@ -858,7 +882,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 309,
+    "evaluados": 318,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -904,7 +928,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 309,
+    "evaluados": 318,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1033,7 +1057,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 44,
+    "evaluados": 53,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1076,7 +1100,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 44,
+    "evaluados": 53,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1205,7 +1229,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 69,
+    "evaluados": 78,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1248,7 +1272,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 69,
+    "evaluados": 78,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1377,7 +1401,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 63,
+    "evaluados": 72,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1420,7 +1444,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 63,
+    "evaluados": 72,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1549,7 +1573,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 79,
+    "evaluados": 88,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1592,7 +1616,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 79,
+    "evaluados": 88,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1727,7 +1751,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 63,
+    "evaluados": 72,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1772,7 +1796,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 63,
+    "evaluados": 72,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1901,7 +1925,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 265,
+    "evaluados": 274,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -1944,7 +1968,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 265,
+    "evaluados": 274,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2073,7 +2097,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 363,
+    "evaluados": 372,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2116,7 +2140,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 363,
+    "evaluados": 372,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2245,7 +2269,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 146,
+    "evaluados": 155,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2288,7 +2312,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 146,
+    "evaluados": 155,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2417,7 +2441,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 46,
+    "evaluados": 55,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2460,7 +2484,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 46,
+    "evaluados": 55,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2595,7 +2619,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 46,
+    "evaluados": 55,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2640,7 +2664,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 46,
+    "evaluados": 55,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2769,7 +2793,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 1068,
+    "evaluados": 1077,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2812,7 +2836,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 1068,
+    "evaluados": 1077,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2941,7 +2965,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 51,
+    "evaluados": 60,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -2984,7 +3008,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 51,
+    "evaluados": 60,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3125,7 +3149,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 77,
+    "evaluados": 86,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3172,7 +3196,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 77,
+    "evaluados": 86,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3313,7 +3337,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 87,
+    "evaluados": 96,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3360,7 +3384,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 87,
+    "evaluados": 96,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3495,7 +3519,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 104,
+    "evaluados": 113,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3540,7 +3564,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 104,
+    "evaluados": 113,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3669,7 +3693,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 89,
+    "evaluados": 98,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3712,7 +3736,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 89,
+    "evaluados": 98,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3841,7 +3865,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 42,
+    "evaluados": 51,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -3884,7 +3908,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 42,
+    "evaluados": 51,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4185,7 +4209,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 70,
+    "evaluados": 79,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4228,7 +4252,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 70,
+    "evaluados": 79,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4363,7 +4387,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 127,
+    "evaluados": 136,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4408,7 +4432,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 127,
+    "evaluados": 136,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4543,7 +4567,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 91,
+    "evaluados": 100,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4588,7 +4612,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 91,
+    "evaluados": 100,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4717,7 +4741,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 58,
+    "evaluados": 67,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4760,7 +4784,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 58,
+    "evaluados": 67,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4795,7 +4819,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 4238
+    "alto": 7353
    },
    "cifras_visibles": [],
    "axe": {
@@ -4803,7 +4827,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 223,
+    "evaluados": 468,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4838,7 +4862,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 4683
+    "alto": 7620
    },
    "cifras_visibles": [],
    "axe": {
@@ -4846,7 +4870,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 258,
+    "evaluados": 489,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4881,7 +4905,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 2830
+    "alto": 4270
    },
    "cifras_visibles": [],
    "axe": {
@@ -4889,7 +4913,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 324,
+    "evaluados": 557,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4924,7 +4948,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 3100
+    "alto": 4433
    },
    "cifras_visibles": [],
    "axe": {
@@ -4932,7 +4956,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 366,
+    "evaluados": 578,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5061,7 +5085,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 84,
+    "evaluados": 93,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5104,7 +5128,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 84,
+    "evaluados": 93,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5233,7 +5257,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 73,
+    "evaluados": 82,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5276,7 +5300,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 73,
+    "evaluados": 82,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5405,7 +5429,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 101,
+    "evaluados": 110,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5448,7 +5472,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 101,
+    "evaluados": 110,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5586,7 +5610,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 124,
+    "evaluados": 133,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5632,7 +5656,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 124,
+    "evaluados": 133,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5761,7 +5785,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 144,
+    "evaluados": 153,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5804,7 +5828,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 144,
+    "evaluados": 153,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5933,7 +5957,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 629,
+    "evaluados": 638,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5976,7 +6000,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 629,
+    "evaluados": 638,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6105,7 +6129,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 117,
+    "evaluados": 126,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6148,7 +6172,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 117,
+    "evaluados": 126,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6277,7 +6301,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 128,
+    "evaluados": 137,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6320,7 +6344,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 128,
+    "evaluados": 137,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6449,7 +6473,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 78,
+    "evaluados": 87,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6492,7 +6516,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 78,
+    "evaluados": 87,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6621,7 +6645,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 126,
+    "evaluados": 135,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6664,7 +6688,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 126,
+    "evaluados": 135,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6793,7 +6817,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 118,
+    "evaluados": 127,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6836,7 +6860,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 118,
+    "evaluados": 127,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -6971,7 +6995,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 118,
+    "evaluados": 127,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -7016,7 +7040,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 118,
+    "evaluados": 127,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -7145,7 +7169,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 74,
+    "evaluados": 83,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -7188,7 +7212,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 74,
+    "evaluados": 83,
     "bajo_umbral": 0,
     "indeterminados": 0
    },

@@ -1,6 +1,6 @@
 # Índice de criterios de aceptación · Finanzas Hogar (Etapa B)
 
-Versión 1.4 (12-oct-2026, flujo P2d, agente `k53-aplicar`: K53 aplicada a S5-07 y a C1 v1.4; sin criterios nuevos ni quitados, 261 = 201 alta / 60 media). Versión 1.3 (11-oct-2026, flujo P2c, puerta 2, agente `criterios-puerta2`: respuestas de la puerta 2 aplicadas a S1, S2, S4, S5, S7, C1, U3 y U4; §6, §10 y §12 al día; sin criterios nuevos ni quitados). Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas, conteo propio con `tools/conteo.py`, cambios en §11 y correcciones de la revisión r1 de criterios (A-01 a A-03, M-01, M-02) y de la revisión r2 (hallazgos 1 a 4, fila de §11) la ronda 4 de P1d (hallazgos A a G de la revisión r3, I-02, B-01 de r2 de C1 y U3-01; filas de §11) y la ronda 5 de P1e (hallazgos H-1 a H-6 de la revisión r4; filas de §11); versión 1.1 del 10-oct-2026 con filas y totales de la puerta 1 y conteo reconciliado por el integrador de P1, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
+Versión 1.5 (12-oct-2026, WF-3c, agente `u3-v2`: K54 aplicada a U3, U5-06 y P3-08; sin criterios nuevos ni quitados, 261 = 201 alta / 60 media; §13). Versión 1.4 (12-oct-2026, flujo P2d, agente `k53-aplicar`: K53 aplicada a S5-07 y a C1 v1.4; sin criterios nuevos ni quitados, 261 = 201 alta / 60 media). Versión 1.3 (11-oct-2026, flujo P2c, puerta 2, agente `criterios-puerta2`: respuestas de la puerta 2 aplicadas a S1, S2, S4, S5, S7, C1, U3 y U4; §6, §10 y §12 al día; sin criterios nuevos ni quitados). Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas, conteo propio con `tools/conteo.py`, cambios en §11 y correcciones de la revisión r1 de criterios (A-01 a A-03, M-01, M-02) y de la revisión r2 (hallazgos 1 a 4, fila de §11) la ronda 4 de P1d (hallazgos A a G de la revisión r3, I-02, B-01 de r2 de C1 y U3-01; filas de §11) y la ronda 5 de P1e (hallazgos H-1 a H-6 de la revisión r4; filas de §11); versión 1.1 del 10-oct-2026 con filas y totales de la puerta 1 y conteo reconciliado por el integrador de P1, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
 
 ## 1. Cómo usar estos archivos
 - **Un archivo por ítem** (18 + este índice). Cada uno trae: 1 Objetivo · 2 Criterios numerados `<ID>-nn` (enunciado medible, «Verifica» con comando o cálculo, «Evidencia», severidad) · 3 No aceptable · 4 Umbrales numéricos · 5 Trazabilidad.
@@ -104,7 +104,7 @@ Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 d
 | D · Comida, salud e inventario | recetario 60; tiempos; salud, IMC, kcal; fuentes nutricionales; inventario híbrido; verticales de compra | S1, S4, U4, C1 |
 | E · Precios y tiendas | fuentes autorizadas, OCR con confirmación, lectura asistida desactivada hasta veredicto, PROFECO; frescura 30 d; Sam's membresía; unidad base | S1, S5, U4, C1 |
 | F · Reportes y avisos | diario, semanal, mensual PDF, vista web, estado de Karen; 4 alertas; canal MultiX texto plano | S2 (80/100 %), S7, U4, WF4 |
-| G · Interfaz | Notion, barra lateral, vistas, menú `/`, atajos; Android + escritorio, PWA, mkcert; ≤ 3 toques; tema del sistema; ≤ 6 tarjetas; 14 secciones; autoalojado; WCAG 2.2 AA | U1, U2, U3, U4, U5, C2, S6, P3 |
+| G · Interfaz | Notion, barra lateral, vistas, menú `/`, atajos; Android + escritorio, PWA, mkcert; ≤ 3 toques; tema del sistema; ≤ 6 tarjetas (sustituida por K54: tablero de control); 14 secciones; autoalojado; WCAG 2.2 AA | U1, U2, U3, U4, U5, C2, S6, P3 |
 | H · Infraestructura | máquina de casa, solo LAN; Go + SQLite + systemd; respaldos locales; IA opcional apagada; semilla | S6, S8, WF4, S1, S4 |
 | I · Pila y matiz | pila A; matiz C 280° y sus roles; botón primario; sin solver externo | U2, C2, S3, S6, P3 |
 | J · Puertas | puertas 1 a 4 | este índice §3, C3, P3 |
@@ -129,7 +129,7 @@ Conteo propio por script sobre los 18 archivos (no incluye este índice): `pytho
 
 | Archivo | Criterios (alta / media / baja) | Versión |
 |---|---|---|
-| `S1.md` | 17 (12 / 5 / 0) | 1.2 |
+| `S1.md` | 17 (12 / 5 / 0) | 1.3 |
 | `S2.md` | 16 (13 / 3 / 0) | 1.3 |
 | `S3.md` | 20 (17 / 3 / 0) | 1.2 |
 | `S4.md` | 15 (11 / 4 / 0) | 1.3 |
@@ -140,13 +140,13 @@ Conteo propio por script sobre los 18 archivos (no incluye este índice): `pytho
 | `WF4-operacion.md` | 12 (10 / 2 / 0) | 1.1 |
 | `U1.md` | 16 (10 / 6 / 0) | 1.2 |
 | `U2.md` | 14 (10 / 4 / 0) | 1.2 |
-| `U3.md` | 12 (8 / 4 / 0) | 1.3 |
+| `U3.md` | 12 (8 / 4 / 0) | 1.4 |
 | `U4.md` | 13 (10 / 3 / 0) | 1.3 |
-| `U5.md` | 13 (10 / 3 / 0) | 1.2 |
-| `C1.md` | 23 (21 / 2 / 0) | 1.4 |
+| `U5.md` | 13 (10 / 3 / 0) | 1.3 |
+| `C1.md` | 23 (21 / 2 / 0) | 1.5 |
 | `C2.md` | 12 (8 / 4 / 0) | 1.2 |
 | `C3.md` | 11 (9 / 2 / 0) | 1.1 |
-| `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.3 |
+| `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.4 |
 | **Total (18 archivos)** | **261 (201 / 60 / 0)** | |
 
 Reconciliación con los cambios de P1c (el total pasa de 257 a 261): C1 suma C1-22 y C1-23 (21 alta / 2 media) y U4 suma U4-12 y U4-13 (10 alta / 3 media); los demás archivos conservan su número de criterios (P3 sigue en 13: P3-03, P3-04, P3-05 y P3-11 cambian de contenido, no de cantidad). Los 257 de la versión 1.1 fueron: `S1–S8` y `WF4` = 134 (105 / 29), sin cambio; las diferencias con los reportes de P1 (`criterios-S-1.1.md` daba 248 y `criterios-UC-1.1.md` 256) eran U5-13, agregado en la ronda 1 de correcciones, y los cambios de U1 y C1.
@@ -212,3 +212,13 @@ Respuestas de la puerta 2 aplicadas (`docs/estado/puerta2/RESPUESTAS.md`; decisi
 | Q2-64 = A y puerta 2 bis (K48; K53, registrada en P2d) | `docs/estado/S5-terminos.md` existe con 3 veredictos «no verificado» (desafío anti-robot): S5-07 queda **NO CUMPLE en el fondo**, no se marca cumplido; la lectura asistida sigue apagada; Axel respondió que la aplicación no leerá sitios de tiendas (K53) y eso se registra en P2d | `S5.md` (S5-07, §3, §4). **P2d (12-oct-2026):** K53 registrada; S5-07 pasa a «No aplica desde K53» (`S5.md` 1.4), el bloqueo `S5-terminos` queda RESUELTO y se abre `S5-agente-externo` (puerta 4) |
 | PROPUESTAS (no añadidas) | (1) hecho en P2d: S5-07 se reformuló como «No aplica desde K53»; retirarlo del todo sigue pidiendo la firma de Axel; (2) un criterio C1 para la importación del agente externo: C1 v1.4 ya la define, pero el criterio no se añadió; (3) criterios propios para Q2-67 (IVA), Q2-69 (a) y Q2-82 (atajos) si Axel los quiere | este índice |
 | Conteo | Total **261 (201 / 60)** sin cambio; §2 y §10 solo cambian en versiones | este índice |
+
+## 13. Cambios de la versión 1.5 (12-oct-2026, WF-3c, agente `u3-v2`)
+Decisión K54 de Axel (`docs/plan/decisiones.md` §K): Inicio pasa a ser un tablero de control y se retira la regla «≤ 6 tarjetas» del Resumen. **Sin criterios nuevos ni quitados: total 261 (201 / 60 / 0), ids y severidades iguales.** Cada archivo tocado trae su lista de cambios de su versión nueva.
+
+| Origen | Qué cambió | Archivos y criterios |
+|---|---|---|
+| K54, decisiones 1 a 4 | Resumen = tablero de control: indicadores de gasto, ingreso, créditos y pagos próximos; barómetro de capacidad de endeudamiento con umbrales configurables 30 % y 40 %; al menos 6 gráficas; desglose en cadena; «Qué miro para prevenir» | `U3.md` 1.4 (U3-01, U3-02, U3-03, U3-04, U3-05, U3-07, U3-08, U3-11, U3-12, §1, §3 a §5) |
+| K54, decisión 3 | La lista visual y los artboards dejan el tope de 6 tarjetas | `U5.md` 1.3 (U5-06), `P3-claude-design.md` 1.4 (P3-08, §4) |
+| PROVISIONAL (puerta 4) | Ingreso neto, pagos que cuentan, redondeo y escala del barómetro; N y rango del recordatorio; horizonte de las gráficas; regla «subir o recortar»; tarjetas que se conservan | bloqueos `docs/estado/bloqueos/U3-tablero-*.md` (5), citados por U3-01 y U3-12 |
+| Conteo | Total **261 (201 / 60)** sin cambio; §2 sin cambio; §10 solo cambia en versiones (U3 1.4, U5 1.3, P3 1.4) | este índice |

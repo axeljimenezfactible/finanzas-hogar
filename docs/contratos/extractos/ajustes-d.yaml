@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «ajustes-d». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.0 · extracto «ajustes-d». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto ajustes-d"
-  version: "1.4.0"
+  version: "1.5.0"
   description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -11,359 +11,6 @@ tags:
   - name: "Ajustes"
     description: "Las 14 secciones de Ajustes, sesiones y sistema."
 paths:
-  /api/v1/credits:
-    post:
-      operationId: "createCredit"
-      tags:
-        - "Ajustes"
-      summary: "Nuevo crédito"
-      description: "Nuevo crédito. Si lo que quedaría guardado (el cuerpo o, en un cambio, el cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, responde 422 validation_failed con fields[].field = vat_on_interest_bp; la API no cambia el otro campo por su cuenta (CHECK de la 00004, Q2-67 opción 1; detalle en CreditCreate y CreditUpdate)."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "credit"
-        - "idempotency_key"
-        - "person"
-      parameters:
-        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreditCreate"
-      responses:
-        "201":
-          description: "Creado."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-            Idempotent-Replayed:
-              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Credit"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-  /api/v1/credits/{credit_id}:
-    patch:
-      operationId: "updateCredit"
-      tags:
-        - "Ajustes"
-      summary: "Editar crédito o interruptor A/B"
-      description: "Incluye availability_reading (A/B, B por defecto). Antes de cambiarlo la pantalla muestra previewAvailability. Si lo que quedaría guardado (el cuerpo o, en un cambio, el cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, responde 422 validation_failed con fields[].field = vat_on_interest_bp; la API no cambia el otro campo por su cuenta (CHECK de la 00004, Q2-67 opción 1; detalle en CreditCreate y CreditUpdate)."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "credit"
-      parameters:
-        - name: "credit_id"
-          in: "path"
-          required: true
-          description: "Id del registro (credit_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreditUpdate"
-      responses:
-        "200":
-          description: "Correcto."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Credit"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-  /api/v1/credits/{credit_id}/term-rates:
-    post:
-      operationId: "createCreditTermRate"
-      tags:
-        - "Ajustes"
-      summary: "Nueva tasa por plazo"
-      description: "Nueva tasa por plazo."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "credit_term_rate"
-        - "idempotency_key"
-      parameters:
-        - name: "credit_id"
-          in: "path"
-          required: true
-          description: "Id del registro (credit_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreditTermRateCreate"
-      responses:
-        "201":
-          description: "Creado."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-            Idempotent-Replayed:
-              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CreditTermRate"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-  /api/v1/credit-term-rates/{credit_term_rate_id}:
-    patch:
-      operationId: "updateCreditTermRate"
-      tags:
-        - "Ajustes"
-      summary: "Editar tasa"
-      description: "Editar tasa."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "credit_term_rate"
-      parameters:
-        - name: "credit_term_rate_id"
-          in: "path"
-          required: true
-          description: "Id del registro (credit_term_rate_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreditTermRateUpdate"
-      responses:
-        "200":
-          description: "Correcto."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CreditTermRate"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-    delete:
-      operationId: "deleteCreditTermRate"
-      tags:
-        - "Ajustes"
-      summary: "Eliminar tasa"
-      description: "Eliminar tasa."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "credit_term_rate"
-      parameters:
-        - name: "credit_term_rate_id"
-          in: "path"
-          required: true
-          description: "Id del registro (credit_term_rate_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      responses:
-        "204":
-          description: "Hecho, sin contenido."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-  /api/v1/promotions:
-    post:
-      operationId: "createPromotion"
-      tags:
-        - "Ajustes"
-      summary: "Nueva promoción"
-      description: "Nueva promoción."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "idempotency_key"
-        - "promotion"
-      parameters:
-        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PromotionCreate"
-      responses:
-        "201":
-          description: "Creado."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-            Idempotent-Replayed:
-              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Promotion"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-  /api/v1/promotions/{promotion_id}:
-    patch:
-      operationId: "updatePromotion"
-      tags:
-        - "Ajustes"
-      summary: "Editar promoción"
-      description: "Editar promoción."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "promotion"
-      parameters:
-        - name: "promotion_id"
-          in: "path"
-          required: true
-          description: "Id del registro (promotion_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PromotionUpdate"
-      responses:
-        "200":
-          description: "Correcto."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Promotion"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-    delete:
-      operationId: "deletePromotion"
-      tags:
-        - "Ajustes"
-      summary: "Eliminar promoción"
-      description: "Con compras que la usan responde 409 `in_use` (desactivar con is_active = false)."
-      x-necesidades:
-        - "N-289"
-      x-tablas:
-        - "audit_log"
-        - "promotion"
-      parameters:
-        - name: "promotion_id"
-          in: "path"
-          required: true
-          description: "Id del registro (promotion_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      responses:
-        "204":
-          description: "Hecho, sin contenido."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
   /api/v1/settings/optimizer:
     get:
       operationId: "getOptimizerSettings"
@@ -574,6 +221,385 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notifications:
+    get:
+      operationId: "listNotifications"
+      tags:
+        - "Ajustes"
+      summary: "Avisos y su configuración"
+      description: "Avisos y su configuración."
+      x-necesidades:
+        - "N-296"
+        - "N-298"
+      x-tablas:
+        - "job"
+        - "notification"
+        - "notification_subscription"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notifications/{notification_id}:
+    patch:
+      operationId: "updateNotification"
+      tags:
+        - "Ajustes"
+      summary: "Editar aviso"
+      description: "Activa o desactiva el aviso o el reporte y cambia sus parámetros propios. La hora, el día y la anticipación se cambian en updateReportSettings y updateAlertSettings (Q2-11 B, K47)."
+      x-necesidades:
+        - "N-297"
+        - "N-300"
+      x-tablas:
+        - "audit_log"
+        - "notification"
+      parameters:
+        - name: "notification_id"
+          in: "path"
+          required: true
+          description: "Id del registro (notification_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notifications/{notification_id}/recipients:
+    put:
+      operationId: "setNotificationRecipients"
+      tags:
+        - "Ajustes"
+      summary: "Destinatarios de un aviso"
+      description: "Lista completa de ids de destinatario (notification_recipient)."
+      x-necesidades:
+        - "N-297"
+        - "N-300"
+      x-tablas:
+        - "audit_log"
+        - "notification_recipient"
+        - "notification_subscription"
+      parameters:
+        - name: "notification_id"
+          in: "path"
+          required: true
+          description: "Id del registro (notification_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdList"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notifications/{notification_id}/test:
+    post:
+      operationId: "sendTestNotification"
+      tags:
+        - "Ajustes"
+      summary: "Enviar aviso de prueba"
+      description: "Envía ahora el aviso (p. ej. resumen diario o una alerta) a una persona: sirve de disparo manual. Texto plano, sin parse_mode."
+      x-necesidades:
+        - "N-300"
+      x-tablas:
+        - "notification"
+        - "notification_delivery"
+        - "notification_recipient"
+      parameters:
+        - name: "notification_id"
+          in: "path"
+          required: true
+          description: "Id del registro (notification_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestNotificationRequest"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationDelivery"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notification-recipients:
+    get:
+      operationId: "listNotificationRecipients"
+      tags:
+        - "Ajustes"
+      summary: "Registro de chat"
+      description: "Chats confirmados por persona. Nunca devuelve chat_id ni el token del bot. Los chats detectados pendientes están en listTelegramChatCandidates (N-299, K4)."
+      x-necesidades:
+        - "N-299"
+      x-tablas:
+        - "notification_recipient"
+        - "person"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRecipientPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/telegram-chat-candidates:
+    get:
+      operationId: "listTelegramChatCandidates"
+      tags:
+        - "Ajustes"
+      summary: "Chats detectados por confirmar"
+      description: "Chats que el bot detectó cuando alguien le escribió y que esperan confirmación (confirmed_at ausente): nombre que da Telegram, fecha y hora de detección y chat_id enmascarado (chat_id_masked). El chat_id completo nunca se devuelve (K4). Cada candidato trae su id, el que usan confirmTelegramChatCandidate (N-316) y dismissTelegramChatCandidate (N-324). Orden: -detected_at."
+      x-necesidades:
+        - "N-299"
+      x-tablas:
+        - "telegram_chat_candidate"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TelegramChatCandidatePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/telegram-chat-candidates/{candidate_id}/confirm:
+    post:
+      operationId: "confirmTelegramChatCandidate"
+      tags:
+        - "Ajustes"
+      summary: "Confirmar chat detectado"
+      description: "Liga el chat detectado a una persona (por omisión, la del usuario de la sesión): pone person_id y confirmed_at y crea su notification_recipient en la misma transacción (K4). Un chat ya confirmado responde 409 `conflict`."
+      x-necesidades:
+        - "N-316"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "notification_recipient"
+        - "person"
+        - "telegram_chat_candidate"
+      parameters:
+        - name: "candidate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (candidate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TelegramChatCandidateConfirm"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRecipient"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/telegram-chat-candidates/{candidate_id}:
+    delete:
+      operationId: "dismissTelegramChatCandidate"
+      tags:
+        - "Ajustes"
+      summary: "Descartar chat detectado"
+      description: "Descarta un chat detectado que nadie va a confirmar: borra su renglón de telegram_chat_candidate. No toca chats confirmados ni destinatarios (notification_recipient). Solo candidatos pendientes (confirmed_at ausente); uno ya confirmado o inexistente responde 404."
+      x-necesidades:
+        - "N-324"
+      x-tablas:
+        - "audit_log"
+        - "telegram_chat_candidate"
+      parameters:
+        - name: "candidate_id"
+          in: "path"
+          required: true
+          description: "Id del registro (candidate_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/notification-recipients/{recipient_id}:
+    patch:
+      operationId: "updateNotificationRecipient"
+      tags:
+        - "Ajustes"
+      summary: "Editar destinatario"
+      description: "Editar destinatario."
+      x-necesidades:
+        - "N-299"
+      x-tablas:
+        - "audit_log"
+        - "notification_recipient"
+      parameters:
+        - name: "recipient_id"
+          in: "path"
+          required: true
+          description: "Id del registro (recipient_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationRecipientUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRecipient"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
 components:
   securitySchemes:
     cookieAuth:
@@ -587,13 +613,18 @@ components:
       description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
       x-provisional: true
   schemas:
-    BasisPoints:
-      type: "integer"
-      minimum: 0
-      maximum: 10000
-      description: "Porcentaje en puntos base: 10000 = 100 %, 5000 = 50 %."
-      examples:
-        - 5000
+    IdList:
+      type: "object"
+      description: "Lista de ids (reemplazo completo)."
+      properties:
+        ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Ids en el orden deseado."
+          x-entrada: true
+      required:
+        - "ids"
     SettingParameterInteger:
       type: "object"
       x-calculado: true
@@ -632,690 +663,6 @@ components:
         is_initial:
           type: "boolean"
           description: "true si el valor vigente es igual al inicial."
-    Credit:
-      type: "object"
-      description: "Crédito (tabla `credit`). Crédito del titular: línea revolvente tipo Kueski, tarjeta bancaria, préstamo personal a plazo fijo o crédito de tienda con abonos. Guarda el límite, la lectura A/B, las fechas de corte y pago y las comisiones. Campos ausentes = sin valor (NULL)."
-      x-tabla: "credit"
-      required:
-        - "id"
-        - "name"
-        - "kind"
-        - "holder_person_id"
-        - "payment_frequency"
-        - "availability_reading"
-        - "availability_confirmed"
-        - "is_active"
-        - "created_at"
-        - "updated_at"
-      properties:
-        id:
-          type: "integer"
-          description: "id"
-        name:
-          type: "string"
-          description: "Nombre visible (Kueski Pay)"
-        kind:
-          type: "string"
-          enum:
-            - "revolving_line"
-            - "bank_card"
-            - "term_loan"
-            - "store_credit"
-          description: "revolving_line = línea revolvente tipo Kueski, bank_card = tarjeta bancaria, term_loan = préstamo personal a plazo fijo, store_credit = crédito de tienda con abonos"
-        lender:
-          type: "string"
-          description: "Institución que otorga el crédito"
-        holder_person_id:
-          type: "integer"
-          description: "Titular del crédito (Axel)"
-        credit_limit_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Límite de la línea (Kueski 1000000)"
-        payment_frequency:
-          type: "string"
-          enum:
-            - "weekly"
-            - "fortnightly"
-            - "monthly"
-          description: "Frecuencia de los pagos. fortnightly cae en los días 15 y 30 (o último día)"
-        first_payment_min_days:
-          type: "integer"
-          description: "Días mínimos entre la compra y el primer pago (Kueski 15, oráculo)"
-        availability_reading:
-          type: "string"
-          enum:
-            - "A"
-            - "B"
-          description: "Lectura del disponible (interruptor de Ajustes, solo aplica en revolving_line): B = el límite es el tope total (por defecto), A = el límite está libre en la fecha ancla y los pagos suman encima"
-        availability_confirmed:
-          type: "boolean"
-          description: "0 = mostrar el aviso «pendiente confirmar» con el acreedor"
-        reading_a_anchor_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fecha «hoy» de la lectura A: lo comprado hasta ese día ya está dentro del límite libre (Kueski 2026-10-10)"
-        statement_day:
-          type: "integer"
-          description: "Día de corte de la tarjeta"
-        payment_due_day:
-          type: "integer"
-          description: "Día límite de pago de la tarjeta"
-        annual_rate_num:
-          type: "integer"
-          description: "Numerador de la tasa anual ordinaria (tarjeta, préstamo)"
-        annual_rate_den:
-          type: "integer"
-          description: "Denominador de la tasa anual ordinaria"
-        vat_on_interest_bp:
-          $ref: "#/components/schemas/BasisPoints"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26)"
-        annual_fee_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Comisión anual"
-        late_fee_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Comisión por pago tardío"
-        opening_fee_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Comisión por apertura"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        notes:
-          type: "string"
-          description: "notes"
-        created_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "created_at"
-        updated_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "updated_at"
-        rate_base:
-          type: "string"
-          enum:
-            - "daily"
-            - "monthly"
-          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar"
-        min_payment_pct_bp:
-          $ref: "#/components/schemas/BasisPoints"
-          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar"
-        min_payment_fixed_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar"
-        annual_rate_decimals:
-          type: "integer"
-          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
-        vat_included:
-          type: "boolean"
-          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18)"
-          x-provisional: true
-        live_debt_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Deuda viva = capital + intereses por pagar (motor S3)."
-          x-calculado: true
-        available_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Disponible hoy: revolvente con la lectura activa; tarjeta = límite − saldo; préstamo y tienda: ausente."
-          x-calculado: true
-        next_payment_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Próximo pago con alguna parte pendiente."
-          x-calculado: true
-        next_payment_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Monto del próximo pago."
-          x-calculado: true
-        live_purchase_count:
-          type: "integer"
-          description: "Compras vivas (status active)."
-          x-calculado: true
-        annual_rate_pct:
-          type: "string"
-          description: "Tasa anual en porcentaje como se capturó: annual_rate_num/annual_rate_den redondeada ROUND_HALF_UP a annual_rate_decimals decimales (K12); ausente sin tasa o sin decimales."
-          x-calculado: true
-        missing_terms:
-          type: "array"
-          items:
-            type: "string"
-            enum:
-              - "annual_rate"
-              - "rate_base"
-              - "vat"
-              - "min_payment_pct_bp"
-              - "min_payment_fixed_cents"
-          description: "Datos del estado de cuenta que faltan para la fórmula general de tarjeta bancaria o crédito de tienda (K18, RN-26): son 5 desde C1 v1.3 (Q2-67 opción 1, K46): annual_rate, rate_base, vat, min_payment_pct_bp y min_payment_fixed_cents. vat sale mientras vat_included sea NULL (falta capturar si la tasa incluye IVA). Vacío = completo o no aplica. Con alguno, la pantalla muestra «falta capturar». Con vat_included = 0 y sin vat_on_interest_bp también sale vat: PROVISIONAL, bloqueo S3-iva-lectura (pregunta 2; lectura en uso de S3 1.5 §5.3)."
-          x-calculado: true
-          x-provisional: true
-    CreditCreate:
-      type: "object"
-      additionalProperties: false
-      description: "Alta de crédito (tabla `credit`). IVA (Q2-67 opción 1, CHECK de la 00004): vat_on_interest_bp con valor solo se admite con vat_included = false. Si la combinación que quedaría guardada (en el alta, la del cuerpo; en el Merge Patch, la del cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, la API responde 422 validation_failed con el detalle en fields[] (field = vat_on_interest_bp) y no guarda nada. Ejemplos: {\"vat_included\": true, \"vat_on_interest_bp\": 1600}; el alta {\"kind\": \"store_credit\", …, \"vat_on_interest_bp\": 1600} sin vat_included; y, sobre un crédito guardado con vat_included = false y vat_on_interest_bp = 1600, {\"vat_included\": true} o {\"vat_included\": null}. La API no cambia el otro campo por su cuenta: no vacía vat_on_interest_bp ni cambia vat_included (tampoco deduce false a partir del porcentaje). Para pasar a «la tasa ya incluye IVA» un crédito con porcentaje, el cambio manda {\"vat_included\": true, \"vat_on_interest_bp\": null}."
-      x-tabla: "credit"
-      properties:
-        name:
-          type: "string"
-          description: "Nombre visible (Kueski Pay)"
-        kind:
-          type: "string"
-          enum:
-            - "revolving_line"
-            - "bank_card"
-            - "term_loan"
-            - "store_credit"
-          description: "revolving_line = línea revolvente tipo Kueski, bank_card = tarjeta bancaria, term_loan = préstamo personal a plazo fijo, store_credit = crédito de tienda con abonos"
-        lender:
-          type: "string"
-          description: "Institución que otorga el crédito"
-        holder_person_id:
-          type: "integer"
-          description: "Titular del crédito (Axel)"
-        credit_limit_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Límite de la línea (Kueski 1000000)"
-        payment_frequency:
-          type: "string"
-          enum:
-            - "weekly"
-            - "fortnightly"
-            - "monthly"
-          description: "Frecuencia de los pagos. fortnightly cae en los días 15 y 30 (o último día)"
-        first_payment_min_days:
-          type: "integer"
-          description: "Días mínimos entre la compra y el primer pago (Kueski 15, oráculo)"
-        availability_reading:
-          type: "string"
-          enum:
-            - "A"
-            - "B"
-          description: "Lectura del disponible (interruptor de Ajustes, solo aplica en revolving_line): B = el límite es el tope total (por defecto), A = el límite está libre en la fecha ancla y los pagos suman encima"
-        availability_confirmed:
-          type: "boolean"
-          description: "0 = mostrar el aviso «pendiente confirmar» con el acreedor"
-        reading_a_anchor_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fecha «hoy» de la lectura A: lo comprado hasta ese día ya está dentro del límite libre (Kueski 2026-10-10)"
-        statement_day:
-          type: "integer"
-          description: "Día de corte de la tarjeta"
-        payment_due_day:
-          type: "integer"
-          description: "Día límite de pago de la tarjeta"
-        annual_rate_num:
-          type: "integer"
-          description: "Numerador de la tasa anual ordinaria (tarjeta, préstamo)"
-        annual_rate_den:
-          type: "integer"
-          description: "Denominador de la tasa anual ordinaria"
-        vat_on_interest_bp:
-          $ref: "#/components/schemas/BasisPoints"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26)"
-        annual_fee_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Comisión anual"
-        late_fee_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Comisión por pago tardío"
-        opening_fee_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Comisión por apertura"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        notes:
-          type: "string"
-          description: "notes"
-        rate_base:
-          type: "string"
-          enum:
-            - "daily"
-            - "monthly"
-          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar"
-        min_payment_pct_bp:
-          $ref: "#/components/schemas/BasisPoints"
-          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar"
-        min_payment_fixed_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar"
-        annual_rate_decimals:
-          type: "integer"
-          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato"
-        vat_included:
-          type: "boolean"
-          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18)"
-          x-provisional: true
-      required:
-        - "name"
-        - "kind"
-        - "holder_person_id"
-        - "payment_frequency"
-    CreditUpdate:
-      type: "object"
-      additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de crédito (tabla `credit`). IVA (Q2-67 opción 1, CHECK de la 00004): vat_on_interest_bp con valor solo se admite con vat_included = false. Si la combinación que quedaría guardada (en el alta, la del cuerpo; en el Merge Patch, la del cuerpo sobre lo ya guardado) trae vat_on_interest_bp con valor y vat_included = true, null o ausente, la API responde 422 validation_failed con el detalle en fields[] (field = vat_on_interest_bp) y no guarda nada. Ejemplos: {\"vat_included\": true, \"vat_on_interest_bp\": 1600}; el alta {\"kind\": \"store_credit\", …, \"vat_on_interest_bp\": 1600} sin vat_included; y, sobre un crédito guardado con vat_included = false y vat_on_interest_bp = 1600, {\"vat_included\": true} o {\"vat_included\": null}. La API no cambia el otro campo por su cuenta: no vacía vat_on_interest_bp ni cambia vat_included (tampoco deduce false a partir del porcentaje). Para pasar a «la tasa ya incluye IVA» un crédito con porcentaje, el cambio manda {\"vat_included\": true, \"vat_on_interest_bp\": null}."
-      x-tabla: "credit"
-      properties:
-        name:
-          type: "string"
-          description: "Nombre visible (Kueski Pay)"
-        kind:
-          type: "string"
-          enum:
-            - "revolving_line"
-            - "bank_card"
-            - "term_loan"
-            - "store_credit"
-          description: "revolving_line = línea revolvente tipo Kueski, bank_card = tarjeta bancaria, term_loan = préstamo personal a plazo fijo, store_credit = crédito de tienda con abonos"
-        lender:
-          type:
-            - "string"
-            - "null"
-          description: "Institución que otorga el crédito · null borra el valor"
-        holder_person_id:
-          type: "integer"
-          description: "Titular del crédito (Axel)"
-        credit_limit_cents:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-            - type: "null"
-          description: "Límite de la línea (Kueski 1000000) · null borra el valor"
-        payment_frequency:
-          type: "string"
-          enum:
-            - "weekly"
-            - "fortnightly"
-            - "monthly"
-          description: "Frecuencia de los pagos. fortnightly cae en los días 15 y 30 (o último día)"
-        first_payment_min_days:
-          type:
-            - "integer"
-            - "null"
-          description: "Días mínimos entre la compra y el primer pago (Kueski 15, oráculo) · null borra el valor"
-        availability_reading:
-          type: "string"
-          enum:
-            - "A"
-            - "B"
-          description: "Lectura del disponible (interruptor de Ajustes, solo aplica en revolving_line): B = el límite es el tope total (por defecto), A = el límite está libre en la fecha ancla y los pagos suman encima"
-        availability_confirmed:
-          type: "boolean"
-          description: "0 = mostrar el aviso «pendiente confirmar» con el acreedor"
-        reading_a_anchor_date:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
-            - type: "null"
-          description: "Fecha «hoy» de la lectura A: lo comprado hasta ese día ya está dentro del límite libre (Kueski 2026-10-10) · null borra el valor"
-        statement_day:
-          type:
-            - "integer"
-            - "null"
-          description: "Día de corte de la tarjeta · null borra el valor"
-        payment_due_day:
-          type:
-            - "integer"
-            - "null"
-          description: "Día límite de pago de la tarjeta · null borra el valor"
-        annual_rate_num:
-          type:
-            - "integer"
-            - "null"
-          description: "Numerador de la tasa anual ordinaria (tarjeta, préstamo) · null borra el valor"
-        annual_rate_den:
-          type:
-            - "integer"
-            - "null"
-          description: "Denominador de la tasa anual ordinaria · null borra el valor"
-        vat_on_interest_bp:
-          anyOf:
-            - $ref: "#/components/schemas/BasisPoints"
-            - type: "null"
-          description: "IVA que se suma a los intereses cuando la tasa no lo trae (1600 = 16 %). NULL = la tasa o la cotización ya incluye IVA (Kueski) Desde 1.4 (00004, Q2-67 opción 1) si la tasa ya incluye IVA lo dice `credit.vat_included`: este porcentaje conserva su significado y solo lleva valor cuando `vat_included` = 0; con `vat_included` = 1 es NULL, y con `vat_included` NULL el dato falta por capturar (RN-26) · null borra el valor"
-        annual_fee_cents:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-            - type: "null"
-          description: "Comisión anual · null borra el valor"
-        late_fee_cents:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-            - type: "null"
-          description: "Comisión por pago tardío · null borra el valor"
-        opening_fee_cents:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-            - type: "null"
-          description: "Comisión por apertura · null borra el valor"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        notes:
-          type:
-            - "string"
-            - "null"
-          description: "notes · null borra el valor"
-        rate_base:
-          type:
-            - "string"
-            - "null"
-          enum:
-            - "daily"
-            - "monthly"
-            - null
-          description: "Base con que el estado de cuenta aplica la tasa anual: daily = diaria, monthly = mensual. NULL = falta capturar · null borra el valor"
-        min_payment_pct_bp:
-          anyOf:
-            - $ref: "#/components/schemas/BasisPoints"
-            - type: "null"
-          description: "Porcentaje del pago mínimo que dice el estado de cuenta, en puntos base. NULL = falta capturar · null borra el valor"
-        min_payment_fixed_cents:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-            - type: "null"
-          description: "Mínimo fijo del pago mínimo que dice el estado de cuenta. NULL = falta capturar · null borra el valor"
-        annual_rate_decimals:
-          type:
-            - "integer"
-            - "null"
-          description: "Decimales con que se capturó el porcentaje de la tasa anual; la pantalla lo muestra así y los cálculos usan annual_rate_num/annual_rate_den. NULL = sin tasa o sin dato · null borra el valor"
-        vat_included:
-          type:
-            - "boolean"
-            - "null"
-          description: "¿La tasa anual o la cotización ya incluye IVA? 1 = sí, no se suma IVA aparte; 0 = no, se suma el de vat_on_interest_bp; NULL = falta capturar (S3 lo lista como `vat` en missing_terms de `bank_card` y `store_credit`). Los créditos que ya existían al migrar pasan con el significado de 1.3 (porcentaje con valor → 0; NULL → 1). Con 0 y vat_on_interest_bp NULL falta el porcentaje: PROVISIONAL (bloqueo abierto S3-iva-lectura, pregunta 2) `vat` también va en missing_terms y S3 dice «falta capturar»; no calcula con 0 % ni inventa un porcentaje (K18) · null borra el valor"
-          x-provisional: true
-      minProperties: 1
-    CreditTermRate:
-      type: "object"
-      description: "Tasa por plazo (tabla `credit_term_rate`). Tabla editable de tasas por plazo de un crédito, como fracción exacta del capital por todo el plazo con IVA incluido. Kueski: 2 quincenas = 53450/309450 (17.27 %), 4 quincenas = 80050/309450 (25.8685 %). Campos ausentes = sin valor (NULL)."
-      x-tabla: "credit_term_rate"
-      required:
-        - "id"
-        - "credit_id"
-        - "term_count"
-        - "rate_num"
-        - "rate_den"
-        - "source"
-        - "created_at"
-        - "updated_at"
-      properties:
-        id:
-          type: "integer"
-          description: "id"
-        credit_id:
-          type: "integer"
-          description: "Crédito"
-        term_count:
-          type: "integer"
-          description: "Plazo en número de pagos (2, 4, 6, 8, 10 o 12 quincenas en Kueski)"
-        rate_num:
-          type: "integer"
-          description: "Numerador: si viene de una cotización, los intereses en centavos (80050)"
-        rate_den:
-          type: "integer"
-          description: "Denominador: si viene de una cotización, el capital en centavos (309450). Una tasa tecleada como 25.8685 % se guarda 258685/1000000"
-        source:
-          type: "string"
-          enum:
-            - "quote"
-            - "manual"
-          description: "quote = sale de una cotización real, manual = tecleada en la tabla editable"
-        quote_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fecha de la cotización (2026-10-10)"
-        notes:
-          type: "string"
-          description: "notes"
-        created_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "created_at"
-        updated_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "updated_at"
-        rate_decimals:
-          type: "integer"
-          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato"
-        rate_pct:
-          type: "string"
-          description: "Tasa en porcentaje como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales (17.27 con 2; 25.8685 con 4); ausente si falta rate_decimals. El cálculo usa siempre la fracción rate_num/rate_den."
-          x-calculado: true
-    CreditTermRateCreate:
-      type: "object"
-      additionalProperties: false
-      description: "Alta de tasa por plazo (tabla `credit_term_rate`)."
-      x-tabla: "credit_term_rate"
-      properties:
-        term_count:
-          type: "integer"
-          description: "Plazo en número de pagos (2, 4, 6, 8, 10 o 12 quincenas en Kueski)"
-        rate_num:
-          type: "integer"
-          description: "Numerador: si viene de una cotización, los intereses en centavos (80050)"
-        rate_den:
-          type: "integer"
-          description: "Denominador: si viene de una cotización, el capital en centavos (309450). Una tasa tecleada como 25.8685 % se guarda 258685/1000000"
-        source:
-          type: "string"
-          enum:
-            - "quote"
-            - "manual"
-          description: "quote = sale de una cotización real, manual = tecleada en la tabla editable"
-        quote_date:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fecha de la cotización (2026-10-10)"
-        notes:
-          type: "string"
-          description: "notes"
-        rate_decimals:
-          type: "integer"
-          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato"
-      required:
-        - "term_count"
-        - "rate_num"
-        - "rate_den"
-        - "source"
-    CreditTermRateUpdate:
-      type: "object"
-      additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de tasa por plazo (tabla `credit_term_rate`)."
-      x-tabla: "credit_term_rate"
-      properties:
-        term_count:
-          type: "integer"
-          description: "Plazo en número de pagos (2, 4, 6, 8, 10 o 12 quincenas en Kueski)"
-        rate_num:
-          type: "integer"
-          description: "Numerador: si viene de una cotización, los intereses en centavos (80050)"
-        rate_den:
-          type: "integer"
-          description: "Denominador: si viene de una cotización, el capital en centavos (309450). Una tasa tecleada como 25.8685 % se guarda 258685/1000000"
-        source:
-          type: "string"
-          enum:
-            - "quote"
-            - "manual"
-          description: "quote = sale de una cotización real, manual = tecleada en la tabla editable"
-        quote_date:
-          anyOf:
-            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
-            - type: "null"
-          description: "Fecha de la cotización (2026-10-10) · null borra el valor"
-        notes:
-          type:
-            - "string"
-            - "null"
-          description: "notes · null borra el valor"
-        rate_decimals:
-          type:
-            - "integer"
-            - "null"
-          description: "Decimales con que se capturó o se leyó de la cotización el porcentaje (17.27 % → 2; 25.8685 % → 4). La pantalla redondea la fracción a esos decimales con HALF_UP; los cálculos usan rate_num/rate_den. NULL = sin dato · null borra el valor"
-      minProperties: 1
-    Promotion:
-      type: "object"
-      description: "Promoción (tabla `promotion`). Calendario de promociones capturado a mano: comercio, plazo, tasa (0 % casi siempre), compra mínima y vigencia. Campos ausentes = sin valor (NULL)."
-      x-tabla: "promotion"
-      required:
-        - "id"
-        - "merchant_name"
-        - "term_count"
-        - "rate_num"
-        - "rate_den"
-        - "min_purchase_cents"
-        - "valid_from"
-        - "valid_to"
-        - "is_active"
-        - "created_at"
-        - "updated_at"
-      properties:
-        id:
-          type: "integer"
-          description: "id"
-        credit_id:
-          type: "integer"
-          description: "Crédito al que aplica (Kueski). NULL = cualquiera"
-        merchant_name:
-          type: "string"
-          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
-        store_id:
-          type: "integer"
-          description: "Tienda registrada que corresponde al comercio, si existe"
-        term_count:
-          type: "integer"
-          description: "Plazo en pagos (4 quincenas)"
-        rate_num:
-          type: "integer"
-          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
-        rate_den:
-          type: "integer"
-          description: "Denominador de la tasa promocional"
-        min_purchase_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
-        valid_from:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Inicio de vigencia, inclusive"
-        valid_to:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
-        source_note:
-          type: "string"
-          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026)"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        created_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "created_at"
-        updated_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "updated_at"
-        rate_decimals:
-          type: "integer"
-          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
-        is_current:
-          type: "boolean"
-          description: "Vigente hoy."
-          x-calculado: true
-        rate_pct:
-          type: "string"
-          description: "Tasa promocional como se capturó (K12): rate_num/rate_den redondeada ROUND_HALF_UP a rate_decimals decimales; con tasa 0 la pantalla muestra «sin intereses» (N-287)."
-          x-calculado: true
-    PromotionCreate:
-      type: "object"
-      additionalProperties: false
-      description: "Alta de promoción (tabla `promotion`)."
-      x-tabla: "promotion"
-      properties:
-        credit_id:
-          type: "integer"
-          description: "Crédito al que aplica (Kueski). NULL = cualquiera"
-        merchant_name:
-          type: "string"
-          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
-        store_id:
-          type: "integer"
-          description: "Tienda registrada que corresponde al comercio, si existe"
-        term_count:
-          type: "integer"
-          description: "Plazo en pagos (4 quincenas)"
-        rate_num:
-          type: "integer"
-          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
-        rate_den:
-          type: "integer"
-          description: "Denominador de la tasa promocional"
-        min_purchase_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
-        valid_from:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Inicio de vigencia, inclusive"
-        valid_to:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
-        source_note:
-          type: "string"
-          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026)"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        rate_decimals:
-          type: "integer"
-          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato"
-      required:
-        - "merchant_name"
-        - "term_count"
-        - "valid_from"
-        - "valid_to"
-    PromotionUpdate:
-      type: "object"
-      additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de promoción (tabla `promotion`)."
-      x-tabla: "promotion"
-      properties:
-        credit_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Crédito al que aplica (Kueski). NULL = cualquiera · null borra el valor"
-        merchant_name:
-          type: "string"
-          description: "Comercio tal como lo anuncia la promoción (Chedraui)"
-        store_id:
-          type:
-            - "integer"
-            - "null"
-          description: "Tienda registrada que corresponde al comercio, si existe · null borra el valor"
-        term_count:
-          type: "integer"
-          description: "Plazo en pagos (4 quincenas)"
-        rate_num:
-          type: "integer"
-          description: "Numerador de la tasa promocional por todo el plazo. 0 = sin intereses"
-        rate_den:
-          type: "integer"
-          description: "Denominador de la tasa promocional"
-        min_purchase_cents:
-          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Compra mínima (200000 a 250000 en el tablero 2026)"
-        valid_from:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Inicio de vigencia, inclusive"
-        valid_to:
-          $ref: "componentes-comunes.yaml#/components/schemas/Date"
-          description: "Fin de vigencia, inclusive (Chedraui: solo 2026-10-30)"
-        source_note:
-          type:
-            - "string"
-            - "null"
-          description: "De dónde se tomó (tablero oficial de promociones Kueski 2026) · null borra el valor"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        rate_decimals:
-          type:
-            - "integer"
-            - "null"
-          description: "Decimales con que se capturó la tasa promocional (0 % → 0). NULL = sin dato · null borra el valor"
-      minProperties: 1
     OptimizerWeights:
       type: "object"
       description: "Pesos de los 4 objetivos (app_setting optimizer.weights; iguales y normalizados, decisión C)."
@@ -1672,6 +1019,238 @@ components:
           description: "Cuántas kcal se suman a la meta sugerida cuando el objetivo (goal) es gain. Es una magnitud: siempre se suma. maintain no ajusta. NULL = usa el valor de la casa (app_setting health.goal_adjust_gain_kcal, 0 al sembrar) · null borra el valor"
           minimum: 0
       minProperties: 1
+    Notification:
+      type: "object"
+      description: "Aviso (tabla `notification`). Cada aviso o reporte configurable: resúmenes diario y semanal, reporte mensual, pago próximo, presupuesto 80/100 %, precios viejos y plan sin armar. Esta migración crea los siete con los parámetros que ya decidió Axel. Campos ausentes = sin valor (NULL)."
+      x-tabla: "notification"
+      required:
+        - "id"
+        - "code"
+        - "name"
+        - "is_enabled"
+        - "params_json"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        code:
+          type: "string"
+          enum:
+            - "daily_summary"
+            - "weekly_summary"
+            - "monthly_report"
+            - "payment_due"
+            - "budget_threshold"
+            - "stale_prices"
+            - "meal_plan_missing"
+          description: "Clave del aviso"
+        name:
+          type: "string"
+          description: "Nombre en Ajustes"
+        is_enabled:
+          type: "boolean"
+          description: "1 = activo"
+        params_json:
+          type: "object"
+          additionalProperties: true
+          description: "Parámetros propios del aviso (objeto JSON). La hora, el día, la anticipación, los umbrales del presupuesto y los días antes del pago próximo no van aquí: son claves de `app_setting` (RN-29): `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` desde el esquema 1.3 (00003, K44), y `reports.*` (hora y día de los reportes), `alerts.send_time`, `alerts.stale_prices_advance_days` y `alerts.meal_plan_missing_weekday` desde el 1.4 (00004, Q2-11 B, K47); se leen y cambian en getReportSettings y getAlertSettings. Con los valores iniciales solo `budget_threshold` conserva un parámetro (`scopes`); los demás avisos quedan con `{}`. Los Down de la 00004 y de la 00003 los reponen aquí."
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        recipient_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Destinatarios suscritos (notification_subscription)."
+          x-calculado: true
+        job_id:
+          type: "integer"
+          description: "Job que lo programa."
+          x-calculado: true
+    NotificationUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Activa o desactiva un aviso o un reporte programado (N-297, N-300) y cambia sus parámetros propios (params_json). La hora, el día y la anticipación ya no van aquí (Q2-11 B, K47): son claves de app_setting con valor inicial y «restablecer» (K44), las de los reportes en updateReportSettings y las de los avisos en updateAlertSettings. is_enabled es FIRME."
+      x-tabla: "notification"
+      properties:
+        is_enabled:
+          type: "boolean"
+          description: "1 = activo"
+        params_json:
+          type: "object"
+          additionalProperties: true
+          description: "Parámetros propios del aviso (objeto JSON). La hora, el día, la anticipación, los umbrales del presupuesto y los días antes del pago próximo no van aquí: son claves de `app_setting` (RN-29): `alerts.budget_warning_pct`, `alerts.budget_limit_pct` y `alerts.payment_due_days_before` desde el esquema 1.3 (00003, K44), y `reports.*` (hora y día de los reportes), `alerts.send_time`, `alerts.stale_prices_advance_days` y `alerts.meal_plan_missing_weekday` desde el 1.4 (00004, Q2-11 B, K47); se leen y cambian en getReportSettings y getAlertSettings. Con los valores iniciales solo `budget_threshold` conserva un parámetro (`scopes`); los demás avisos quedan con `{}`. Los Down de la 00004 y de la 00003 los reponen aquí."
+      minProperties: 1
+    TestNotificationRequest:
+      type: "object"
+      description: "Enviar ahora un aviso de prueba a una persona (N-300); sirve para disparar a mano el resumen diario o una alerta."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Destinataria (Axel o Ximena)."
+      required:
+        - "person_id"
+    NotificationDelivery:
+      type: "object"
+      description: "Envío de aviso (tabla `notification_delivery`). Cada envío de un aviso a un destinatario, con clave para no mandar dos veces lo mismo y el resultado HTTP. Campos ausentes = sin valor (NULL)."
+      x-tabla: "notification_delivery"
+      required:
+        - "id"
+        - "notification_id"
+        - "recipient_id"
+        - "dedupe_key"
+        - "status"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        notification_id:
+          type: "integer"
+          description: "Aviso"
+        recipient_id:
+          type: "integer"
+          description: "Destinatario"
+        dedupe_key:
+          type: "string"
+          description: "Clave que evita repetir el mismo aviso (payment_due:42:2026-10-29)"
+        status:
+          type: "string"
+          enum:
+            - "pending"
+            - "sent"
+            - "failed"
+            - "skipped"
+          description: "Estado del envío"
+        message_text:
+          type: "string"
+          description: "Texto plano enviado (sin parse_mode)"
+        http_status:
+          type: "integer"
+          description: "Código HTTP de la API de Telegram"
+        error:
+          type: "string"
+          description: "Error resumido, sin token ni datos sensibles"
+        sent_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Momento del envío"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        notification_code:
+          type: "string"
+          description: "Clave del aviso."
+          x-calculado: true
+    NotificationRecipient:
+      type: "object"
+      description: "Destinatario (tabla `notification_recipient`). Destino de avisos de una persona: su chat de Telegram en el bot MultiX. El chat_id no es credencial. El token del bot nunca se guarda en la base. Campos ausentes = sin valor (NULL)."
+      x-tabla: "notification_recipient"
+      required:
+        - "id"
+        - "person_id"
+        - "channel"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        person_id:
+          type: "integer"
+          description: "Persona destinataria"
+        channel:
+          type: "string"
+          enum:
+            - "telegram"
+          description: "Canal (bot MultiX)"
+        label:
+          type: "string"
+          description: "Etiqueta (Celular de Ximena)"
+        verified_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo se comprobó con un mensaje de prueba"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        is_registered:
+          type: "boolean"
+          description: "true si tiene chat registrado y verificado."
+          x-calculado: true
+    TelegramChatCandidate:
+      type: "object"
+      description: "Chat de Telegram por confirmar (tabla `telegram_chat_candidate`). Chat que el bot detectó cuando alguien le escribió y que espera confirmación en Ajustes «Notificaciones». Guarda solo el chat_id y el nombre que da Telegram. Al confirmarlo se liga a la persona y la API crea su notification_recipient en la misma transacción; descartarlo borra el renglón. Campos ausentes = sin valor (NULL)."
+      x-tabla: "telegram_chat_candidate"
+      required:
+        - "id"
+        - "telegram_name"
+        - "detected_at"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        telegram_name:
+          type: "string"
+          description: "Nombre que da Telegram para ese chat"
+        detected_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo lo detectó el bot"
+        confirmed_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo la persona lo confirmó en Ajustes. NULL = pendiente"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se ligó al confirmar"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        chat_id_masked:
+          type: "string"
+          description: "chat_id enmascarado: «•••» y sus últimos 4 caracteres (p. ej. «•••4821»), para distinguir dos chats con el mismo nombre. El chat_id completo nunca se devuelve (C1-12, K4)."
+          x-calculado: true
+    TelegramChatCandidateConfirm:
+      type: "object"
+      description: "Confirmación de un chat detectado (N-316, K4)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona a quien se liga el chat; sin valor, la persona del usuario de la sesión."
+      additionalProperties: false
+    NotificationRecipientUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de destinatario (tabla `notification_recipient`)."
+      x-tabla: "notification_recipient"
+      properties:
+        label:
+          type:
+            - "string"
+            - "null"
+          description: "Etiqueta (Celular de Ximena) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+      minProperties: 1
     Job:
       type: "object"
       description: "Job programado (tabla `job`). Tarea programada del servicio (respaldos, resúmenes, alertas, purgas) con su horario y su último resultado. Campos ausentes = sin valor (NULL)."
@@ -1740,3 +1319,33 @@ components:
           type: "boolean"
           description: "1 = activo"
       minProperties: 1
+    NotificationPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Notification"
+      description: "Página de Notification con la envoltura única (Page)."
+    NotificationRecipientPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/NotificationRecipient"
+      description: "Página de NotificationRecipient con la envoltura única (Page)."
+    TelegramChatCandidatePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/TelegramChatCandidate"
+      description: "Página de TelegramChatCandidate con la envoltura única (Page)."

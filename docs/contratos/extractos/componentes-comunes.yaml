@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.4.0 · componentes comunes. Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.0 · componentes comunes. Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · componentes comunes"
-  version: "1.4.0"
+  version: "1.5.0"
   description: "Componentes que comparten todos los extractos: parámetros, encabezados, respuestas, seguridad y los esquemas base (Error, Page, MoneyCents, Date, DateTime y los que ellos referencian)."
 paths: {}
 components:
@@ -142,6 +142,20 @@ components:
         pattern: "^[0-9]{4}-W(0[1-9]|[1-4][0-9]|5[0-3])$"
         examples:
           - "2026-W42"
+    OverviewFrom:
+      name: "from"
+      in: "query"
+      required: true
+      description: "Llave del resumen mensual del tablero (getDashboardMonthlyOverview, K54): primer mes de la ventana, `AAAA-MM`. No es un filtro (C1-datos.md §6, «Llaves que no son filtros»). Obligatoria; `from` mayor que `to` o más de 24 meses responde 422 `validation_failed`."
+      schema:
+        $ref: "#/components/schemas/Month"
+    OverviewTo:
+      name: "to"
+      in: "query"
+      required: true
+      description: "Llave del resumen mensual del tablero (getDashboardMonthlyOverview, K54): último mes de la ventana, `AAAA-MM`, incluido; puede ser posterior al mes en curso (meses de proyección). Obligatoria."
+      schema:
+        $ref: "#/components/schemas/Month"
     Q:
       name: "q"
       in: "query"

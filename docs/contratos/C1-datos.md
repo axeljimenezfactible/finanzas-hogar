@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| Versión | **C1 v1.3** (11-oct-2026, puerta 2) · `info.version` 1.3.0 de `docs/contratos/openapi.yaml` |
-| Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2; v1.1 corrección r1: agente correccion-C1-r1; v1.1 corrección r4: agente correccion-C1-r4; v1.2: agente C1-v1.2; v1.2 corrección r1: agente correccion-C1-r1; v1.2 ronda 3 (P1d): agente correccion-C1-r3; v1.3: agente C1-puerta2 (P2c) |
-| Estado | Puerta 2 aplicada (C1 v1.3): respuestas de Axel de `docs/estado/puerta2/RESPUESTAS.md` sobre el esquema 1.4 de S1. Las preguntas sin recomendación quedan con la opción en uso y no cambian C1 |
-| Fuentes | `plan.md` §1, §3.4 (S6, S7), §3.5 (U1), §3.7; `decisiones.md`; esquema de S1, versión 1.4 (00001 a 00004: `backend/db/migrations/00001_esquema.sql`, `00002_puerta1.sql`, `00003_puerta1b.sql` y `00004_puerta2.sql`; `docs/contratos/diccionario-datos.md`, `docs/contratos/reglas-negocio.md`); U1 1.2 (`docs/design/U1-arquitectura.md`, necesidades N-xxx); puerta 2: `docs/estado/puerta2/PUERTA-2.md` y `RESPUESTAS.md`, contratos de motores S2 1.3, S4 1.5 y S5 1.5 (`docs/contratos/motores/`) y U3 1.3 |
-| Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): 172 rutas, 216 operaciones, 262 esquemas |
+| Versión | **C1 v1.5** (12-oct-2026, tablero de control K54) · `info.version` 1.5.0 de `docs/contratos/openapi.yaml` |
+| Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2; v1.1 corrección r1: agente correccion-C1-r1; v1.1 corrección r4: agente correccion-C1-r4; v1.2: agente C1-v1.2; v1.2 corrección r1: agente correccion-C1-r1; v1.2 ronda 3 (P1d): agente correccion-C1-r3; v1.3: agente C1-puerta2 (P2c); v1.4: agente k53-aplicar (P2d); v1.5: agente s1-c1-v15 (WF-3c) |
+| Estado | K54 aplicada (C1 v1.5): operaciones del tablero de control de U3 2.0 §2.6 sobre el esquema 1.5 de S1, con lo no decidido PROVISIONAL (bloqueos `C1-tablero` y `U3-tablero-*`). Puerta 2 bis aplicada (C1 v1.4). Puerta 2 aplicada (C1 v1.3): respuestas de Axel de `docs/estado/puerta2/RESPUESTAS.md` sobre el esquema 1.4 de S1. Las preguntas sin recomendación quedan con la opción en uso y no cambian C1 |
+| Fuentes | `plan.md` §1, §3.4 (S6, S7), §3.5 (U1), §3.7; `decisiones.md`; esquema de S1, versión 1.5 (00001 a 00005: `backend/db/migrations/00001_esquema.sql`, `00002_puerta1.sql`, `00003_puerta1b.sql`, `00004_puerta2.sql` y `00005_tablero.sql`; `docs/contratos/diccionario-datos.md`, `docs/contratos/reglas-negocio.md`); U1 1.2 (`docs/design/U1-arquitectura.md`, necesidades N-xxx); puerta 2: `docs/estado/puerta2/PUERTA-2.md` y `RESPUESTAS.md`, contratos de motores S2 1.3, S4 1.5 y S5 1.5 (`docs/contratos/motores/`) y U3 1.3 |
+| Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): 176 rutas, 221 operaciones, 267 esquemas |
 | Generador | Este documento, `openapi.yaml` y `backend/internal/api/routes.go` son archivos generados: no se editan a mano. Fuente: `backend/internal/api/c1gen/` (este texto sale de `c1_plantilla.md`; ver su `README.md`). Regenerar: `python3 -I backend/internal/api/c1gen/build.py`. Comprobar que nadie los editó a mano: `python3 -I backend/internal/api/c1gen/build.py --check`. Verificar C1-01 a C1-15, la matriz §10 y S6-03: `uv run --no-project --with pyyaml --with jsonschema python3 -I backend/internal/api/c1gen/verify_c1.py` |
 
 Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla **necesita**. El OpenAPI es la fuente de verdad de rutas y esquemas; aquí están las convenciones únicas, las métricas con su fórmula, la matriz pantalla → necesidad → endpoint y la cobertura de S1. Todo lo que no sale del plan, de las decisiones o del oráculo va marcado **PROVISIONAL** y apunta a su bloqueo en `docs/estado/bloqueos/`.
@@ -28,6 +28,20 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 | C1 v1.3 (puerta 2) | 11-oct-2026 | Aplica las respuestas de Axel de la puerta 2 (`docs/estado/puerta2/RESPUESTAS.md`: lo recomendado de `PUERTA-2.md` más Q2-11 B) contra el esquema 1.4 de S1 (migraciones 00001 a 00004). Reportes y avisos: hora, día y anticipación pasan a `app_setting` con lectura y cambio por clave (operaciones nuevas `getReportSettings` y `updateReportSettings`; `AlertSettings` suma tres claves); `params_json` ya no declara `send_time` ni `advance_days`. Rango por clave en el cambio (`minimum`, `maximum`, `pattern`) y tipo nuevo `SettingParameterTime`. `Credit.missing_terms` con `vat` (5 datos) y `credit.vat_included`. Alcance `scope` en `CostShareRuleUpdate` (§7.2). Lista de compras con tienda asignada, fecha de visita y totales de Q2-42 A; comparativa con `cheapest_store_id`; acumulados de T-2; décimas del avance de una meta; segunda tienda de la tarjeta 5; tienda del escenario. Detalle en «C1 v1.3 (puerta 2)», abajo. `info.version` = 1.3.0. |
 | C1 v1.4 (puerta 2 bis) | 12-oct-2026 | Aplica K53 (`docs/plan/decisiones.md` §K; puerta 2 bis): la aplicación no lee sitios de tiendas y un agente externo mete productos, presentaciones, precios y recetas por la API. Cuatro operaciones nuevas sin N-xxx: `getExternalAgentReference`, `importExternalCatalog`, `importExternalPrices` e `importExternalRecipes`, con la etiqueta «Compras y tiendas» y la marca `x-agente-externo`. Esquema de seguridad nuevo `serviceToken` y esquemas `External*`. La lectura asistida queda «no aplica desde K53» en `updateStore`, `updatePriceSettings` y sus esquemas. Remanentes de P2c: `SavingsGoal.status` según Q2-18 A (I-2) y `getCashFlowFortnights` según S2 1.3 §3.11 (I-6). Detalle en «C1 v1.4 (puerta 2 bis)», abajo. `info.version` = 1.4.0. |
 | C1 v1.4 · corrección r1 (P2d) | 12-oct-2026 | Hallazgos M-1 y M-2 de `docs/estado/p2c/REVISION-k53-r1.md` (agente `correccion-k53-r1`). `info.version` sigue en 1.4.0; no cambian rutas, parámetros ni tipos, solo textos. M-1: el tamaño máximo de los lotes del agente externo (500 productos, 500 precios y 100 recetas; 422 fuera de rango) era un supuesto sin fuente; ahora cita la pregunta (g) del bloqueo `S5-agente-externo` en `ExternalCatalogImport`, `ExternalPriceImport`, `ExternalRecipeImport` e `importExternalCatalog`. M-2: la prosa de `balance_cents` en `CashFlowFortnights` resta también el gasto variable registrado, como S2 1.3 §3.11 (`spent_cents` incluye `variable_spent_cents`), y aclara que ese dato no viene en la fila. |
+| C1 v1.5 (K54, tablero) | 12-oct-2026 | Aplica K54 (`docs/plan/decisiones.md` §K) con las operaciones que pide `docs/design/U3-dashboard.md` 2.0 §2.6, sobre el esquema 1.5 de S1 (migración `00005_tablero.sql`). Cinco operaciones nuevas (`getDashboardDebtCapacity`, `getDashboardMonthlyOverview`, `getBudgetSignals`, `getDashboardSettings`, `updateDashboardSettings`), 14 campos nuevos opcionales en `DashboardMonthVsPlan`, `IncomeMonth` y `CreditTotals`, cinco claves de `app_setting` con `x-app-setting`, las llaves `from` y `to` y las métricas M-18 a M-22. Detalle abajo |
+
+### C1 v1.5 (K54, tablero de control)
+
+Agente `s1-c1-v15` (flujo WF-3c, 12-oct-2026). Fuentes: K54 (palabras de Axel, decisiones 1 a 4 y propósito del sistema) y U3 2.0 §2.6 (agente `u3-v2`). Esquema de S1 1.5: la `00005_tablero.sql` solo siembra cinco claves de `app_setting` y sus dos disparadores de rango; no cambia tablas.
+
+- **Operaciones nuevas de la etiqueta «Inicio»** (la interfaz no calcula cifras; todo sale de S2 y S3):
+  - `getDashboardDebtCapacity` (GET `/api/v1/dashboard/debt-capacity`, `period` opcional): barómetro de capacidad de endeudamiento, M-20 y RN-30.
+  - `getDashboardMonthlyOverview` (GET `/api/v1/dashboard/monthly-overview`, llaves `from` y `to` obligatorias, máximo 24 meses): G-1 y G-6, M-21.
+  - `getBudgetSignals` (GET `/api/v1/budget/signals`, `period` opcional): sugerencia «subir o recortar presupuesto», M-22 y RN-31.
+- **Parámetros del tablero** (etiqueta «Ajustes», K44): `getDashboardSettings` y `updateDashboardSettings` (`/api/v1/settings/dashboard`) con `debt.capacity_warning_pct` = 30 y `debt.capacity_limit_pct` = 40 (FIRMES, K54 decisión 2), `dashboard.payment_reminder_count` = 5, `budget.signal_months` = 3 y `budget.signal_margin_pct` = 10. Los umbrales llegan también en las respuestas del barómetro y del resumen mensual (`warning_pct`, `limit_pct`, con `x-app-setting`).
+- **Campos nuevos** (opcionales, para no romper P-06, P-08 ni P-17): `DashboardMonthVsPlan` suma `cash_cents`, `previous_month`, `previous_actual_cents`, `previous_cash_cents`, `actual_difference_cents`, `cash_difference_cents`, `categories_warning_count` y `categories_exceeded_count`; `IncomeMonth` suma `previous_month`, `previous_fortnights_cents`, `previous_extras_cents` y `fortnights_difference_cents`; `CreditTotals` suma `month_payment_count` y `month_pending_household_cents`. Su fórmula, periodo y ejemplo del oráculo están en la fila M-01 de §9, ampliada para K-1 (corrección r2, C1-09).
+- **Lo PROVISIONAL** (bloqueo `C1-tablero`): la sección «Presupuesto» de las cinco claves, sus rangos (de 1 a 100 los umbrales con el amarillo menor que el tope, de 1 a 20 pagos, de 2 a 12 meses y de 1 a 50 puntos), las necesidades de U1 de las cinco operaciones (cuelgan de N-022, N-028, N-027, N-275 y N-278 hasta que U1 agregue las suyas), el nombre `dashboard.payment_reminder_count` y que `period` acepte solo `AAAA-MM`. Lo que mide el barómetro, N y la regla de la sugerencia siguen los bloqueos `U3-tablero-barometro`, `U3-tablero-recordatorio` y `U3-tablero-senal-presupuesto`.
+- **Error de validación.** U3 2.0 §2.6 escribe «400 `validation_failed`» para una ventana inválida; C1 usa 422 `validation_failed` para un parámetro bien formado con valor inválido (§3), y así queda.
 
 ### C1 v1.4 (puerta 2 bis)
 
@@ -192,12 +206,14 @@ Los seis filtros del plan (§3.7) tienen **una sola definición** en `components
 
 Además se reutilizan `q` (texto) y los parámetros de paginación. Los filtros propios de una entidad (`status`, `kind`, `source`, etc.) se documentan en cada operación.
 
-**Llaves que no son filtros.** Dos parámetros hablan de un periodo pero no filtran: dicen sobre qué recurso actúa la operación. Cada uno tiene una sola definición en `components/parameters`, su nombre no es el de ningún filtro y no acepta los demás formatos de `period`:
+**Llaves que no son filtros.** Cuatro parámetros hablan de un periodo pero no filtran: dicen sobre qué recurso actúa la operación. Cada uno tiene una sola definición en `components/parameters`, su nombre no es el de ningún filtro y no acepta los demás formatos de `period`:
 
 | Llave | Componente | Tipo y formato | Operaciones | Significado |
 |---|---|---|---|---|
 | `week` | `ListWeek` | semana ISO `2026-W42` (lunes a domingo, K8); obligatoria, sin valor por omisión | `getShoppingList`, `generateShoppingList`, `createShoppingListItem`, `updateShoppingListItem`, `assignShoppingListStore`, `listBaskets`, `getDashboardBestBasket`, `getBasketComparison` | La lista de compras semanal que se lee o se escribe: la que muestra la pantalla (R3-01). La semana que se abre por defecto la decide la PWA (U1 §0.2) |
 | `month` | `BudgetMonth` | `AAAA-MM`; sin valor, el mes en curso | `updateBudget` | El mes al que aplica un cambio de monto (§7.1, K2) |
+| `from` | `OverviewFrom` | `AAAA-MM`; obligatoria | `getDashboardMonthlyOverview` | Primer mes de la ventana del resumen mensual del tablero (K54); `from` ≤ `to` y máximo 24 meses, si no 422 |
+| `to` | `OverviewTo` | `AAAA-MM`; obligatoria; puede ser posterior al mes en curso | `getDashboardMonthlyOverview` | Último mes de la ventana, incluido; los meses posteriores al en curso son proyección |
 
 **Matriz recurso × filtro** (operaciones que admiten cada filtro; la última columna marca la llave `week` de la lista de compras, que no es filtro):
 
@@ -210,6 +226,8 @@ Además se reutilizan `q` (texto) y los parámetros de paginación. Los filtros 
 | `getDashboardFortnightFlow` | GET `/api/v1/dashboard/fortnight-flow` |  |  |  |  | ✓ |  |  |
 | `getDashboardWeekMeals` | GET `/api/v1/dashboard/week-meals` |  |  |  |  | ✓ |  |  |
 | `getDashboardBestBasket` | GET `/api/v1/dashboard/best-basket` |  |  |  |  |  |  | ✓ |
+| `getDashboardDebtCapacity` | GET `/api/v1/dashboard/debt-capacity` |  |  |  |  | ✓ |  |  |
+| `getBudgetSignals` | GET `/api/v1/budget/signals` |  |  |  |  | ✓ |  |  |
 | `listExpenses` | GET `/api/v1/expenses` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |
 | `getExpenseTotals` | GET `/api/v1/expenses/totals` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |
 | `getExpenseSummary` | GET `/api/v1/expenses/summary` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |
@@ -379,11 +397,11 @@ Otro valor de `group_by` o `date_field` responde 422 `validation_failed`. `query
 
 ## 9. Métricas del dashboard (fórmula, periodo, filtros, tablas, endpoint, ejemplo del oráculo)
 
-Las 6 tarjetas de Inicio › Resumen (U1 N-020 a N-025, U3) y las métricas de sus subsecciones. Periodo por defecto: **mes calendario**; la quincena es subperiodo. «Parte del hogar» = parte a nombre del titular; toda cifra de presupuesto, flujo y ahorro usa la parte del hogar (U1 §0.2). Los ejemplos usan cifras del oráculo (`oraculo/model.json`, identificadores R-nn de `docs/criterios/S3.md`) o un marcador cuando el oráculo no trae el dato. En la API van en centavos.
+Los bloques del tablero de Inicio › Resumen (U3 2.0, K54; antes 6 tarjetas, U1 N-020 a N-025) y las métricas de sus subsecciones. Periodo por defecto: **mes calendario**; la quincena es subperiodo. «Parte del hogar» = parte a nombre del titular; toda cifra de presupuesto, flujo y ahorro usa la parte del hogar (U1 §0.2). Los ejemplos usan cifras del oráculo (`oraculo/model.json`, identificadores R-nn de `docs/criterios/S3.md`) o un marcador cuando el oráculo no trae el dato. En la API van en centavos.
 
 | Id | Tarjeta o subsección | Fórmula | Periodo | Filtros | Tablas de origen | Endpoint | Ejemplo (oráculo) |
 |---|---|---|---|---|---|---|---|
-| M-01 | Mes vs plan (N-020) | real = Σ parte del hogar devengada en el mes (motor S2); plan = Σ `budget.amount_cents` del renglón vigente en el mes (RN-22) de las categorías activas; % usado = real ÷ plan × 100 entero ROUND_HALF_UP; restante = plan − real; estado normal < 80, aviso ≥ 80, excedido ≥ 100; días que faltan contando hoy | mes en curso (`period`) | `period` | budget, category, period, expense, expense_share, credit_purchase | GET `/api/v1/dashboard/month-vs-plan` | oct-2026: real (parte del hogar devengada) **1,197.64** = `periodos[0].devengado.axel` (P1 = oct-2026, hallazgo 4 de S1); plan: marcador (lo captura Axel) |
+| M-01 | Mes vs plan (N-020; K-1 «Gasto del mes» del tablero, K54) | real = Σ parte del hogar devengada en el mes (motor S2); plan = Σ `budget.amount_cents` del renglón vigente en el mes (RN-22) de las categorías activas; % usado = real ÷ plan × 100 entero ROUND_HALF_UP; restante = plan − real; estado normal < 80, aviso ≥ 80, excedido ≥ 100; días que faltan contando hoy. **Ampliada en C1 v1.5 (K-1 del tablero, K54; campos opcionales de `DashboardMonthVsPlan`)**: efectivo del hogar `cash_cents` = `cash_household_cents` de M-11 del mismo mes (contado + partes del hogar de pagos de crédito con fecha en el mes); mes anterior `previous_month` = el mes calendario anterior, y `previous_actual_cents` y `previous_cash_cents` = las mismas dos cifras (real y efectivo) de ese mes, ausentes si el sistema no tiene datos de ese mes (sin datos no es cero); diferencias `actual_difference_cents` = real − `previous_actual_cents` y `cash_difference_cents` = `cash_cents` − `previous_cash_cents`, con signo, ausentes sin mes anterior; conteos `categories_warning_count` y `categories_exceeded_count` = categorías activas del mes con `status` `warning` y `exceeded` en M-09 (motor S2) | mes en curso (`period`) y el mes calendario anterior | `period` | budget, category, period, expense, expense_share, credit_purchase; en C1 v1.5 también scheduled_payment, scheduled_payment_share (efectivo de M-11) | GET `/api/v1/dashboard/month-vs-plan` | oct-2026: real (parte del hogar devengada) **1,197.64** = `periodos[0].devengado.axel` (P1 = oct-2026, hallazgo 4 de S1); plan: marcador (lo captura Axel). C1 v1.5: oct-2026 efectivo del hogar **598.82** = `periodos[0].efectivo.axel` (parte del hogar del pago del 30-oct, R-13); nov-2026 (P2) real **1,197.64** = `periodos[1].devengado.axel` y efectivo **1,197.64** = `periodos[1].efectivo.axel`, con oct-2026 como mes anterior: `actual_difference_cents` **0.00** (1,197.64 − 1,197.64) y `cash_difference_cents` **598.82** (1,197.64 − 598.82) más que octubre; conteos: marcador (el plan por categoría lo captura Axel) |
 | M-02 | Flujo quincenal (N-021) | ingresos = quincena capturada (o esperada, marcada) + extras de la quincena; egresos hechos = efectivo pagado hasta hoy (contado + partes del hogar pagadas); comprometido = partes del hogar pendientes de la quincena + fijos y venideros sin pagar; saldo al cierre = ingresos − egresos − comprometido | quincena en curso | `period` (`2026-10-q2`) | income, planned_item, expense, expense_share, scheduled_payment, scheduled_payment_share, credit_payment | GET `/api/v1/dashboard/fortnight-flow` | Q2 oct-2026: comprometido incluye la parte del hogar del pago del 30-oct **598.82** (R-13); ingreso: marcador |
 | M-03 | Próximo pago (N-022 a) | pago con alguna parte pendiente y fecha mínima ≥ hoy en todas las líneas; si hay pendientes con fecha < hoy, primero el más antiguo («sin marcar como pagado»); pagos del mismo día se suman | hoy en adelante | — | scheduled_payment, scheduled_payment_share, credit_payment, credit | GET `/api/v1/dashboard/next-payment` | **30-oct-2026, 973.75** (hogar 598.82, Karen 374.93) (R-13) |
 | M-04 | Disponible A/B (N-022 b, N-201, N-285) | disponible de hoy de cada línea revolvente con la lectura activa (B por defecto) y aviso «pendiente confirmar»; vista previa con ambas lecturas y el mínimo del horizonte (motor S3) | hoy y horizonte | `credit_id` | credit, credit_purchase, scheduled_payment, credit_payment | GET `/api/v1/dashboard/next-payment`, GET `/api/v1/credits/{credit_id}/availability-preview` | 10-oct-2026: **A 10,000.00 · B 6,905.50** (R-64); mínimos **8,094.50 · 5,000.00** (R-61, R-62) |
@@ -400,6 +418,11 @@ Las 6 tarjetas de Inicio › Resumen (U1 N-020 a N-025, U3) y las métricas de s
 | M-15 | Costo semanal y kcal (N-129, N-233, N-028) | por semana (12): costo de casillas con receta y kcal promedio por día por persona contra su meta | 12 semanas | `person_id` | meal_plan_entry, recipe, recipe_ingredient, nutrition_fact, price, health_profile | GET `/api/v1/meal-plan/trends` | marcador |
 | M-16 | Metas (N-111, N-027) | por meta: ahorrado, % de avance entero, aportación mensual necesaria = (monto meta − ahorrado) ÷ meses que faltan (motor S2) y estado | hoy | `status` | savings_goal, savings_movement | GET `/api/v1/savings-goals` | marcador |
 | M-17 | Deuda viva proyectada (N-194, N-209) | por mes (12): deuda viva al cierre por línea; intereses pagados y por pagar | 12 meses | `credit_id` | credit, credit_purchase, scheduled_payment, credit_payment | GET `/api/v1/credits/debt-trend` | punto de control: deuda viva al 10-abr-2027 **6,293.44** (R-53); los meses sin cifra canon llevan la marca de `criterios-proyeccion-12m` |
+| M-18 | Ingreso del mes (K-2 del tablero, N-100) | quincenas del mes (capturadas o esperadas, marcadas) + extras; quincenas y extras del mes anterior; diferencia de quincenas = mes − mes anterior, con signo (motor S2) | mes (`period`) | `period` | income, planned_item, period | GET `/api/v1/incomes/month` (campos `previous_*` y `fortnights_difference_cents`, C1 v1.5) | marcador (el oráculo no trae ingresos) |
+| M-19 | Créditos del mes (K-3 del tablero, N-191) | pagos con fecha en el mes en curso: total, parte del hogar, parte de Karen, cuántos (`month_payment_count`) y parte del hogar que falta pagar (`month_pending_household_cents`) (motor S3) | mes en curso | — | credit, credit_purchase, scheduled_payment, scheduled_payment_share, credit_payment | GET `/api/v1/credits/totals` | oct-2026: pago del 30-oct **973.75**, parte del hogar **598.82** (R-13) |
+| M-20 | Capacidad de endeudamiento (B-1 del tablero, RN-30; K54) | pagos del mes (parte del hogar) ÷ ingreso mensual neto × 100, entero ROUND_HALF_UP; estado normal ≤ `debt.capacity_warning_pct` (30), aviso ≤ `debt.capacity_limit_pct` (40), excedido arriba; margen = tope × ingreso ÷ 100 − pagos; ingreso sin extras y pagos del hogar PROVISIONALES (bloqueos `U3-tablero-barometro` y `C1-tablero`) | mes (`period`, por omisión el en curso) | `period` | income, planned_item, period, scheduled_payment, scheduled_payment_share, credit, credit_purchase, app_setting | GET `/api/v1/dashboard/debt-capacity` | pagos del hogar oct, nov y dic-2026 **598.82**, **1,197.64** y **1,482.57** (`periodos[0..2].efectivo.axel`); ingreso: marcador |
+| M-21 | Resumen mensual del tablero (G-1 y G-6) | por mes de `from` a `to` (máximo 24): ingreso (quincenas + extras), devengado del hogar (M-01), efectivo del hogar (M-11), plan, pagos de crédito (hogar y total) y la capacidad de M-20 con su estado; los meses posteriores al en curso son proyección, sin devengado ni efectivo (motores S2 y S3) | `from`..`to` | — | income, planned_item, period, budget, category, expense, expense_share, credit_purchase, scheduled_payment, scheduled_payment_share, credit, app_setting | GET `/api/v1/dashboard/monthly-overview` | devengado del hogar oct, nov y dic-2026 **1,197.64**, **1,197.64** y **1,767.51** (`periodos[0..2].devengado.axel`) |
+| M-22 | Sugerencia de presupuesto (G-3 del tablero, RN-31) | por categoría activa: % usado de los `budget.signal_months` (3) meses cerrados anteriores al mes; `raise` si todos pasan de 100 + `budget.signal_margin_pct` (10), `cut` si todos quedan abajo de 100 − margen, si no `none`; PROVISIONAL (bloqueos `U3-tablero-senal-presupuesto` y `C1-tablero`) | 3 meses cerrados antes de `period` | `period` | budget, category, period, expense, expense_share, credit_purchase, app_setting | GET `/api/v1/budget/signals` | marcador (el plan por categoría lo captura Axel) |
 
 ## 10. Matriz pantalla P-xx → necesidad N-xxx → endpoint(s)
 
@@ -418,13 +441,13 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 | P-00 | N-010 | E | Iniciar sesión | POST `/api/v1/auth/login` | OK |
 | P-01 | N-020 | L | Tarjeta «Mes vs plan» | GET `/api/v1/dashboard/month-vs-plan` | OK |
 | P-01 | N-021 | L | Tarjeta «Flujo quincenal» | GET `/api/v1/dashboard/fortnight-flow` | OK |
-| P-01 | N-022 | L | Tarjeta «Próximo pago y disponible» | GET `/api/v1/dashboard/next-payment` | OK |
+| P-01 | N-022 | L | Tarjeta «Próximo pago y disponible» | GET `/api/v1/dashboard/next-payment` · GET `/api/v1/dashboard/debt-capacity` | OK |
 | P-01 | N-023 | L | Tarjeta «Comidas de la semana» | GET `/api/v1/dashboard/week-meals` | FIRME (K43) |
 | P-01 | N-024 | L | Tarjeta «Mejor canasta» | GET `/api/v1/dashboard/best-basket` | OK |
 | P-01 | N-025 | L | Tarjeta «Ahorro» | GET `/api/v1/dashboard/savings` | OK |
 | P-01 | N-026 | L | Participación de Karen | GET `/api/v1/persons/{person_id}/participation` | OK |
-| P-01 | N-027 | L | Segundo nivel de las tarjetas | GET `/api/v1/budget/categories` · GET `/api/v1/cash-flow/fortnights` · GET `/api/v1/savings-goals` · GET `/api/v1/meal-plan/week` · GET `/api/v1/basket-comparison` | OK |
-| P-01 | N-028 | L | Gráficas de Inicio | GET `/api/v1/budget/monthly-trend` · GET `/api/v1/cash-flow/accrual-vs-cash` · GET `/api/v1/meal-plan/trends` · GET `/api/v1/credits/debt-trend` | OK |
+| P-01 | N-027 | L | Segundo nivel de las tarjetas | GET `/api/v1/budget/signals` · GET `/api/v1/budget/categories` · GET `/api/v1/cash-flow/fortnights` · GET `/api/v1/savings-goals` · GET `/api/v1/meal-plan/week` · GET `/api/v1/basket-comparison` | OK |
+| P-01 | N-028 | L | Gráficas de Inicio | GET `/api/v1/dashboard/monthly-overview` · GET `/api/v1/budget/monthly-trend` · GET `/api/v1/cash-flow/accrual-vs-cash` · GET `/api/v1/meal-plan/trends` · GET `/api/v1/credits/debt-trend` | OK |
 | P-01 | N-029 | L | Calendario del hogar | GET `/api/v1/calendar/events` | OK |
 | P-01 | N-081 | L | Presupuesto por categoría | GET `/api/v1/budget/categories` | OK |
 | P-01 | N-085 | L | Plan contra real por mes | GET `/api/v1/budget/monthly-trend` | OK |
@@ -591,11 +614,11 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 | P-26.01 | N-272 | E | Cerrar sesiones | DELETE `/api/v1/sessions/{session_id}` · POST `/api/v1/sessions/revoke` | OK |
 | P-26.01 | N-273 | E | Cambiar contraseña | POST `/api/v1/auth/password` | OK |
 | P-26.01 | N-320 | E | Parámetros de acceso | GET `/api/v1/settings/security` · PATCH `/api/v1/settings/security` | OK |
-| P-26.02 | N-275 | L | Presupuesto mensual | GET `/api/v1/budgets` | OK |
+| P-26.02 | N-275 | L | Presupuesto mensual | GET `/api/v1/budgets` · GET `/api/v1/settings/dashboard` | OK |
 | P-26.02 | N-276 | L | Gastos fijos recurrentes | GET `/api/v1/planned-items` | OK |
 | P-26.02 | N-277 | L | Despensa programada | GET `/api/v1/planned-items` | OK |
 | P-26.02 | N-318 | L | Proyección de los meses 7 a 12 | GET `/api/v1/settings/projection` | OK |
-| P-26.02 | N-278 | E | Editar presupuesto, fijos y despensa | POST `/api/v1/budgets` · PATCH `/api/v1/budgets/{budget_id}` · DELETE `/api/v1/budgets/{budget_id}` · POST `/api/v1/planned-items` · PATCH `/api/v1/planned-items/{planned_item_id}` | OK |
+| P-26.02 | N-278 | E | Editar presupuesto, fijos y despensa | POST `/api/v1/budgets` · PATCH `/api/v1/budgets/{budget_id}` · DELETE `/api/v1/budgets/{budget_id}` · POST `/api/v1/planned-items` · PATCH `/api/v1/planned-items/{planned_item_id}` · PATCH `/api/v1/settings/dashboard` | OK |
 | P-26.02 | N-319 | E | Cambiar el interruptor de proyección | PATCH `/api/v1/settings/projection` | OK |
 | P-26.03 | N-279 | L | Ingreso esperado | GET `/api/v1/planned-items` | OK |
 | P-26.03 | N-280 | E | Editar ingreso esperado | POST `/api/v1/planned-items` · PATCH `/api/v1/planned-items/{planned_item_id}` | OK |
@@ -648,7 +671,7 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 
 ### 11.1 Resumen
 - Necesidades de U1: **211** (N-001 a N-327). Con operación: **208**. Locales sin API (U1): **3** (N-003, N-301, N-317). Sin endpoint por bloqueo: **0**. Con cobertura parcial por un bloqueo abierto de §13: **0**. FIRMES desde la puerta 1b (antes con marca): **10**; en 0 de ellas solo queda pendiente dónde viven `send_time` y `advance_days` (bloqueo abierto `S1-parametros-avisos`, §13).
-- Operaciones del contrato: **216** en **172** rutas. Con al menos una N-xxx: **211**. Excepciones técnicas sin N-xxx: **5** (§11.2). N-xxx citadas por el contrato que no existen en U1: **0**.
+- Operaciones del contrato: **221** en **176** rutas. Con al menos una N-xxx: **216**. Excepciones técnicas sin N-xxx: **5** (§11.2). N-xxx citadas por el contrato que no existen en U1: **0**.
 - Pantallas de la matriz de U1 §3.29: **41** (Global, P-00 a P-25 y P-26.01 a P-26.14); filas de la matriz: **236**.
 - Tablas de S1: **55**; con al menos una operación: **55** (§11.4). `idempotency_key` es infraestructura de S6: la declaran en `x-tablas` las **44** operaciones con `Idempotency-Key` (§1 punto 8).
 
@@ -677,33 +700,33 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | `user_account` | 7 | `login`, `getCurrentSession`, `changeOwnPassword`, `listUsers`, `listSessions` … |
 | `device_session` | 9 | `login`, `logout`, `getCurrentSession`, `changeOwnPassword`, `listUsers` … |
 | `login_attempt` | 1 | `login` |
-| `app_setting` | 28 | `login`, `getDashboardBestBasket`, `getProjectionSettings`, `updateProjectionSettings`, `suggestRecipeWithAi` … |
-| `audit_log` | 99 | `changeOwnPassword`, `revokeSession`, `revokeSessions`, `createExpense`, `getExpense` … |
+| `app_setting` | 33 | `login`, `getDashboardBestBasket`, `getDashboardDebtCapacity`, `getDashboardMonthlyOverview`, `getBudgetSignals` … |
+| `audit_log` | 100 | `changeOwnPassword`, `revokeSession`, `revokeSessions`, `createExpense`, `getExpense` … |
 | `idempotency_key` | 44 | `createExpense`, `duplicateExpense`, `markExpensePaid`, `uploadExpenseAttachment`, `createTicketScan` … |
-| `period` | 10 | `getDashboardMonthVsPlan`, `listPeriods`, `getBudgetMonth`, `getBudgetByCategory`, `getBudgetFortnights` … |
+| `period` | 13 | `getDashboardMonthVsPlan`, `getDashboardDebtCapacity`, `getDashboardMonthlyOverview`, `getBudgetSignals`, `listPeriods` … |
 | `cost_share_rule` | 21 | `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary`, `getExpenseMonthlyTrend` … |
 | `cost_share_rule_part` | 14 | `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary`, `getExpenseMonthlyTrend` … |
-| `category` | 33 | `search`, `queryView`, `getDashboardMonthVsPlan`, `listExpenses`, `createExpense` … |
-| `budget` | 12 | `getDashboardMonthVsPlan`, `listBudgets`, `createBudget`, `updateBudget`, `deleteBudget` … |
+| `category` | 35 | `search`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardMonthlyOverview`, `getBudgetSignals` … |
+| `budget` | 14 | `getDashboardMonthVsPlan`, `getDashboardMonthlyOverview`, `getBudgetSignals`, `listBudgets`, `createBudget` … |
 | `store` | 38 | `search`, `listCalendarEvents`, `queryView`, `getDashboardBestBasket`, `listExpenses` … |
 | `product_group` | 9 | `getShoppingList`, `generateShoppingList`, `listStores`, `setStoreProductGroups`, `listProductGroups` … |
 | `store_product_group` | 4 | `getShoppingList`, `generateShoppingList`, `listStores`, `setStoreProductGroups` |
 | `product` | 26 | `search`, `queryView`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
 | `presentation` | 30 | `search`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
-| `credit` | 31 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment` … |
+| `credit` | 33 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment` … |
 | `credit_term_rate` | 16 | `queryView`, `confirmTicketScan`, `listCredits`, `getCreditTotals`, `getDebtTrend` … |
 | `promotion` | 12 | `listCalendarEvents`, `queryView`, `confirmTicketScan`, `listCreditPurchases`, `createCreditPurchase` … |
-| `planned_item` | 18 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getBudgetMonth`, `getBudgetFortnights`, `getCashFlowFortnights` … |
-| `income` | 13 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getBudgetMonth` … |
-| `expense` | 41 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
+| `planned_item` | 20 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getDashboardDebtCapacity`, `getDashboardMonthlyOverview`, `getBudgetMonth` … |
+| `income` | 15 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardDebtCapacity` … |
+| `expense` | 43 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
 | `expense_item` | 19 | `getDashboardBestBasket`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
-| `expense_share` | 28 | `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow`, `getPersonParticipation`, `listExpenses` … |
+| `expense_share` | 30 | `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow`, `getDashboardMonthlyOverview`, `getBudgetSignals` … |
 | `attachment` | 19 | `queryView`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
 | `price` | 26 | `queryView`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `deleteAttachment`, `getTicketScan` … |
-| `credit_purchase` | 46 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
+| `credit_purchase` | 49 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
 | `credit_purchase_share` | 16 | `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `confirmTicketScan`, `getAccruedGroceries` … |
-| `scheduled_payment` | 28 | `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation` … |
-| `scheduled_payment_share` | 23 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `confirmTicketScan` … |
+| `scheduled_payment` | 30 | `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getDashboardDebtCapacity` … |
+| `scheduled_payment_share` | 25 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getDashboardDebtCapacity`, `getDashboardMonthlyOverview` … |
 | `credit_statement` | 9 | `listCalendarEvents`, `deleteAttachment`, `listCredits`, `getCreditTotals`, `getDebtTrend` … |
 | `credit_payment` | 22 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `getCashFlowFortnights` … |
 | `savings_goal` | 14 | `search`, `listCalendarEvents`, `queryView`, `getDashboardSavings`, `getBudgetMonth` … |
@@ -735,7 +758,7 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | Sección | Nombre | Necesidades | Operaciones |
 |---|---|---|---|
 | P-26.01 | Cuenta y roles | N-270, N-271, N-274, N-272, N-273, N-320 | `listUsers`, `listSessions`, `getCaCertificate`, `revokeSession`, `revokeSessions`, `changeOwnPassword`, `getSecuritySettings`, `updateSecuritySettings` |
-| P-26.02 | Presupuesto | N-275, N-276, N-277, N-318, N-278, N-319 | `listBudgets`, `listPlannedItems`, `getProjectionSettings`, `createBudget`, `updateBudget`, `deleteBudget`, `createPlannedItem`, `updatePlannedItem`, `updateProjectionSettings` |
+| P-26.02 | Presupuesto | N-275, N-276, N-277, N-318, N-278, N-319 | `listBudgets`, `getDashboardSettings`, `listPlannedItems`, `getProjectionSettings`, `createBudget`, `updateBudget`, `deleteBudget`, `createPlannedItem`, `updatePlannedItem`, `updateDashboardSettings`, `updateProjectionSettings` |
 | P-26.03 | Ingresos | N-279, N-280 | `listPlannedItems`, `createPlannedItem`, `updatePlannedItem` |
 | P-26.04 | Categorías | N-281, N-282 | `queryView`, `listCategories`, `listCostShareRules`, `createCategory`, `updateCategory`, `reorderCategories` |
 | P-26.05 | Créditos y condiciones (incluye promociones) | N-283, N-284, N-285, N-286, N-287, N-288, N-289, N-321 | `listCredits`, `getCredit`, `previewAvailability`, `listCreditTermRates`, `queryView`, `listPromotions`, `getOptimizerSettings`, `createCredit`, `updateCredit`, `createCreditTermRate`, `updateCreditTermRate`, `deleteCreditTermRate`, `createPromotion`, `updatePromotion`, `deletePromotion`, `updateOptimizerSettings` |
@@ -824,6 +847,11 @@ Todo parámetro operativo es una clave de `app_setting` del hogar que nace con e
 | `alerts.meal_plan_missing_weekday` | entero | día de la semana ISO 8601, de 1 a 7 (7 = domingo) | `7` | `minimum: 1`, `maximum: 7` | Decisión F, lugar K47 | Notificaciones | 00004 | `getAlertSettings` | `updateAlertSettings` |
 | `optimizer.date_window_days` | entero | días antes y después de la fecha (fecha ± días), 0 o más | `7` | `minimum: 0` | Q2-75 (K50) | Créditos y condiciones | 00004 | `getOptimizerSettings` | `updateOptimizerSettings` |
 | `ocr.timeout_seconds` | entero | segundos por imagen, 0 o más | `30` | `minimum: 0` | Q2-76 (K50); sección: propuesta S1 | Datos y respaldos | 00004 | `getDataSettings` | `updateDataSettings` |
+| `debt.capacity_warning_pct` | entero | % del ingreso mensual neto que se va en pagos de crédito del mes, frontera entre verde y amarillo del barómetro, de 1 a 100 | `30` | `minimum: 1`, `maximum: 100` | K54 decisión 2 (valor FIRME); rango y sección PROVISIONAL (bloqueo C1-tablero) | Presupuesto | 00005 | `getDashboardSettings` | `updateDashboardSettings` |
+| `debt.capacity_limit_pct` | entero | % del ingreso mensual neto que se va en pagos de crédito del mes, tope del barómetro (arriba es rojo), de 1 a 100 | `40` | `minimum: 1`, `maximum: 100` | K54 decisión 2 (valor FIRME); rango y sección PROVISIONAL (bloqueo C1-tablero) | Presupuesto | 00005 | `getDashboardSettings` | `updateDashboardSettings` |
+| `dashboard.payment_reminder_count` | entero | pagos que muestra «Pagos próximos» del tablero, de 1 a 20 | `5` | `minimum: 1`, `maximum: 20` | K54; valor PROVISIONAL (bloqueo U3-tablero-recordatorio); rango y sección PROVISIONAL (bloqueo C1-tablero) | Presupuesto | 00005 | `getDashboardSettings` | `updateDashboardSettings` |
+| `budget.signal_months` | entero | meses cerrados seguidos que mira la sugerencia «subir o recortar presupuesto», de 2 a 12 | `3` | `minimum: 2`, `maximum: 12` | K54; valor PROVISIONAL (bloqueo U3-tablero-senal-presupuesto); rango y sección PROVISIONAL (bloqueo C1-tablero) | Presupuesto | 00005 | `getDashboardSettings` | `updateDashboardSettings` |
+| `budget.signal_margin_pct` | entero | puntos de % usado arriba o abajo del 100 % del plan para la sugerencia «subir o recortar presupuesto», de 1 a 50 | `10` | `minimum: 1`, `maximum: 50` | K54; valor PROVISIONAL (bloqueo U3-tablero-senal-presupuesto); rango y sección PROVISIONAL (bloqueo C1-tablero) | Presupuesto | 00005 | `getDashboardSettings` | `updateDashboardSettings` |
 
 Parámetros que existen sin valor sembrado o que viven en otra tabla (no se inventa un valor):
 
@@ -836,6 +864,7 @@ Parámetros que existen sin valor sembrado o que viven en otra tabla (no se inve
 Reglas de rango que no caben en una sola clave (`@param_rango` de las migraciones; las valida la API con 422 `validation_failed`):
 
 - `price.zero_weight_after_days`: igual o mayor que price.stale_after_days (Q2-77; lo valida el motor de precios); decisión Q2-77 (K50).
+- `debt.capacity_limit_pct`: mayor que debt.capacity_warning_pct (lo valida la API con 422 validation_failed); decisión K54 decisión 2; PROVISIONAL (bloqueo C1-tablero).
 
 Parámetros que antes no tenían valor o vivían en `notification.params_json` y ya son claves de `app_setting` (`@param_sin_valor_cerrado`):
 
@@ -868,6 +897,7 @@ Parámetros que antes no tenían valor o vivían en `notification.params_json` y
 | GET `/api/v1/budget/fortnights` | `getBudgetFortnights` | Presupuesto | N-082 | budget, category, credit_purchase, expense, expense_share, period, planned_item |
 | GET `/api/v1/budget/month` | `getBudgetMonth` | Presupuesto | N-080 | budget, category, credit_purchase, expense, expense_share, income, period, planned_item, savings_goal |
 | GET `/api/v1/budget/monthly-trend` | `getBudgetMonthlyTrend` | Presupuesto | N-085, N-028 | budget, category, credit_purchase, expense, expense_share, period |
+| GET `/api/v1/budget/signals` | `getBudgetSignals` | Inicio | N-027 | app_setting, budget, category, credit_purchase, expense, expense_share, period |
 | GET `/api/v1/budgets` | `listBudgets` | Presupuesto | N-275 | budget, category |
 | POST `/api/v1/budgets` | `createBudget` | Presupuesto | N-087, N-278 | audit_log, budget, category, idempotency_key |
 | DELETE `/api/v1/budgets/{budget_id}` | `deleteBudget` | Presupuesto | N-278 | audit_log, budget |
@@ -903,8 +933,10 @@ Parámetros que antes no tenían valor o vivían en `notification.params_json` y
 | GET `/api/v1/credits/{credit_id}/term-rates` | `listCreditTermRates` | Créditos | N-204, N-286 | credit_term_rate |
 | POST `/api/v1/credits/{credit_id}/term-rates` | `createCreditTermRate` | Ajustes | N-289 | audit_log, credit_term_rate, idempotency_key |
 | GET `/api/v1/dashboard/best-basket` | `getDashboardBestBasket` | Inicio | N-024 | app_setting, expense, expense_item, inventory_item, meal_plan_entry, presentation, price, product, recipe_ingredient, shopping_list, shopping_list_item, store |
+| GET `/api/v1/dashboard/debt-capacity` | `getDashboardDebtCapacity` | Inicio | N-022 | app_setting, credit, credit_purchase, income, period, planned_item, scheduled_payment, scheduled_payment_share |
 | GET `/api/v1/dashboard/fortnight-flow` | `getDashboardFortnightFlow` | Inicio | N-021 | credit, credit_payment, credit_purchase, credit_purchase_share, expense, expense_share, income, person, planned_item, scheduled_payment, scheduled_payment_share |
 | GET `/api/v1/dashboard/month-vs-plan` | `getDashboardMonthVsPlan` | Inicio | N-020 | budget, category, credit_purchase, expense, expense_share, period |
+| GET `/api/v1/dashboard/monthly-overview` | `getDashboardMonthlyOverview` | Inicio | N-028 | app_setting, budget, category, credit, credit_purchase, expense, expense_share, income, period, planned_item, scheduled_payment, scheduled_payment_share |
 | GET `/api/v1/dashboard/next-payment` | `getDashboardNextPayment` | Inicio | N-022 | credit, credit_payment, credit_purchase, credit_purchase_share, person, scheduled_payment, scheduled_payment_share |
 | GET `/api/v1/dashboard/savings` | `getDashboardSavings` | Inicio | N-025 | savings_goal, savings_movement |
 | GET `/api/v1/dashboard/week-meals` | `getDashboardWeekMeals` | Inicio | N-023 | health_profile, meal_plan_entry, meal_slot, nutrition_fact, person, presentation, price, recipe, recipe_ingredient |
@@ -1022,6 +1054,8 @@ Parámetros que antes no tenían valor o vivían en `notification.params_json` y
 | DELETE `/api/v1/sessions/{session_id}` | `revokeSession` | Ajustes | N-272 | audit_log, device_session |
 | GET `/api/v1/settings/alerts` | `getAlertSettings` | Ajustes | N-298, N-323 | app_setting |
 | PATCH `/api/v1/settings/alerts` | `updateAlertSettings` | Ajustes | N-300, N-323 | app_setting, audit_log |
+| GET `/api/v1/settings/dashboard` | `getDashboardSettings` | Ajustes | N-275 | app_setting |
+| PATCH `/api/v1/settings/dashboard` | `updateDashboardSettings` | Ajustes | N-278 | app_setting, audit_log |
 | GET `/api/v1/settings/data` | `getDataSettings` | Ajustes | N-325 | app_setting |
 | PATCH `/api/v1/settings/data` | `updateDataSettings` | Ajustes | N-325 | app_setting, audit_log |
 | GET `/api/v1/settings/health` | `getHealthSettings` | Ajustes | N-326 | app_setting |
@@ -1075,6 +1109,8 @@ Parámetros que antes no tenían valor o vivían en `notification.params_json` y
 | «No incluye IVA» sin porcentaje | `Credit.missing_terms` lista `vat` con `vat_included` = 0 y sin `vat_on_interest_bp` (lectura en uso de S3 1.5 §5.3); PROVISIONAL | `S3-iva-lectura` (abierto, pregunta 2) |
 | Edición de un gasto anterior después de «solo los nuevos» | `updateExpense` recalcula sus partes con la regla vigente (opción en uso, RN-03 1.4); PROVISIONAL | `S1-reparto-edicion-gasto` (abierto) |
 | Agente externo (K53) | origen `site_assisted` y peso de sus precios (`importExternalPrices`), borrador y origen de sus recetas (`importExternalRecipes`), qué escribe el agente (`ExternalCatalogImport`), el tamaño máximo de sus lotes (los tres esquemas de importación) y dónde vive la credencial `serviceToken`; PROVISIONAL | `S5-agente-externo` (abierto, de P2d) |
+| Tablero de control (K54) | sección «Presupuesto» y rangos de `debt.capacity_warning_pct`, `debt.capacity_limit_pct`, `dashboard.payment_reminder_count`, `budget.signal_months` y `budget.signal_margin_pct` (`DashboardSettings`); necesidades de U1 de `getDashboardDebtCapacity`, `getDashboardMonthlyOverview`, `getBudgetSignals`, `getDashboardSettings` y `updateDashboardSettings`; nombre de `dashboard.payment_reminder_count`; `period` solo `AAAA-MM`; PROVISIONAL | `C1-tablero` (abierto, de C1) |
+| Qué mide el barómetro y la sugerencia | ingreso neto sin extras, pagos del hogar, redondeo y escala (`DashboardDebtCapacity`, `DashboardMonthlyOverview`); valores 5, 3 y 10 de las claves del tablero; regla de `getBudgetSignals`; PROVISIONAL | `U3-tablero-barometro`, `U3-tablero-recordatorio` y `U3-tablero-senal-presupuesto` (abiertos, de U3) |
 | Ahorro planificado por quincena | `planned_savings_cents` de `getCashFlowFortnights` es opcional, S2 1.3 §3.11 la entrega en null y no entra a `balance_cents`; PROVISIONAL | `S2-ahorro-quincenal` (abierto) |
 
 Cerrados en la puerta 1 y ya sin marca: filtro familia (K5), lista de compras (K1), huecos U1 ↔ S1 (K2, K3, K4), parámetros técnicos (K6), campos calculados (K7), quincena y semana (K8), inicio de sesión y sesión (K11), tasas (K12), tope por persona (K13), reposición de la parte externa (K15), restricciones del comparador (K16), puntaje (K17), promedios diario y mensual (K20), meses 7 a 12 (K21), frescura de precios (K22) y escala de actividad (K23). Cerrados en la puerta 1b (C1 v1.2) y ya sin marca: valores de K31 que tocan a C1 (K43: adjunto de 10 MB, comparador de 5 s, claves `send_time` y `advance_days`, «casillas sin armar»), ajuste por objetivo de la meta de kcal (K36), semana por omisión de `getMealPlanWeek` (K38; la lista de compras sigue con `week` obligatoria, R3-01), promedio semanal (K39) y parámetros configurables (K44, §11.7).

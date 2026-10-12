@@ -39,6 +39,7 @@ import (
 	gastos "finanzas-hogar/internal/api/gastos-inicio"
 	"finanzas-hogar/internal/api/presupuesto"
 	reportesapi "finanzas-hogar/internal/api/reportes"
+	"finanzas-hogar/internal/api/tablero"
 	"finanzas-hogar/internal/auth"
 	"finanzas-hogar/internal/reportes"
 	"finanzas-hogar/internal/telegram"
@@ -100,7 +101,7 @@ func newK(t *testing.T) *K {
 	cl := &telegram.Client{Base: tg.URL, Token: telegram.FileToken(cfg), HTTP: tg.Client()}
 	s := testutil.NewServer(t, auth.Register, ajustes.Register, avisos.RegisterWith(avisos.Options{Enviador: cl}),
 		comidas.Register, comprasa.Register, comprasb.Register, creditos.Register, gastos.Register,
-		presupuesto.Register, reportesapi.Register)
+		presupuesto.Register, reportesapi.Register, tablero.Register)
 	s.Reg.Deps().Service = fakeSvc{}
 	k := &K{t: t, st: t, s: s, c: s.SessionFor(t, testutil.AxelUser), anon: s.Anonymous(t), doc: testutil.Doc(t),
 		ids: map[string]int64{"person_id": s.Fx.AxelPersonID}, tg: tg}

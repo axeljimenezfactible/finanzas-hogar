@@ -1,0 +1,364 @@
+{
+ "pantalla": "P-01",
+ "subseccion": "tendencias",
+ "combinacion": "escritorio-oscuro",
+ "url": "/inicio?sub=tendencias",
+ "dimensiones_pagina": {
+  "ancho": 1440,
+  "alto": 1326
+ },
+ "puntero_grueso": false,
+ "tema": {
+  "esperado": "oscuro",
+  "fondo_body": "rgb(34, 35, 37)",
+  "fondo_token_c2": "rgb(34, 35, 37)",
+  "coincide": true,
+  "data_theme": null
+ },
+ "axe": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "reglas": []
+ },
+ "contraste": {
+  "alcance": "body",
+  "evaluados": 361,
+  "pares_unicos": 15,
+  "bajo_umbral": 0,
+  "indeterminados": 0,
+  "excluidos": {
+   "deshabilitados": 0,
+   "ui_sin_limite_visible": 19,
+   "graficos_marcas_no_medibles_en_dom": 130
+  },
+  "bajos": [],
+  "indeterminados_detalle": [],
+  "pares": [
+   {
+    "tipo": "ui",
+    "subtipo": "seleccion",
+    "fg": "#B7B8C0",
+    "bg": "#36363A",
+    "umbral": 3,
+    "grande": false,
+    "razon": 6.09,
+    "elementos": 6,
+    "ejemplos": [
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Despensa"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Comida fuera"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Papel"
+     }
+    ]
+   },
+   {
+    "tipo": "ui",
+    "subtipo": "seleccion",
+    "fg": "#C9CFFF",
+    "bg": "#36363A",
+    "umbral": 3,
+    "grande": false,
+    "razon": 7.936,
+    "elementos": 3,
+    "ejemplos": [
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Todas las categorías"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t3\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Todas"
+     },
+     {
+      "nodo": "div.flex.flex-col > figure[data-prueba=\"grafica-t4a\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Todas"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#C9CFFF",
+    "bg": "#36363A",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 7.936,
+    "elementos": 3,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > button.inline-flex.select-none",
+      "texto": "Ver como tabla"
+     },
+     {
+      "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t2\"] > button.inline-flex.select-none",
+      "texto": "Ver como tabla"
+     },
+     {
+      "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t3\"] > button.inline-flex.select-none",
+      "texto": "Ver como tabla"
+     }
+    ]
+   },
+   {
+    "tipo": "ui",
+    "subtipo": "boton",
+    "fg": "#B7B8C0",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": false,
+    "razon": 7.962,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+      "texto": "Foto de ticket"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#D1D2D8",
+    "bg": "#36363A",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 7.975,
+    "elementos": 70,
+    "ejemplos": [
+     {
+      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
+      "texto": "Axel"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > figcaption.flex.flex-col > span.text-small.font-medium",
+      "texto": "Plan contra real por mes"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > figcaption.flex.flex-col > span.text-caption.text-text-secondary",
+      "texto": "Últimos 12 meses · Todas las categorías"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#D1D2D8",
+    "bg": "#36363A",
+    "umbral": 3,
+    "grande": false,
+    "razon": 7.975,
+    "elementos": 11,
+    "ejemplos": [
+     {
+      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
+      "texto": "lucide lucide-search size-5 text-icon-de"
+     },
+     {
+      "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-plus",
+      "texto": "lucide lucide-plus size-5 text-icon-defa"
+     },
+     {
+      "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+      "texto": "lucide lucide-receipt size-5 shrink-0 te"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#C9CFFF",
+    "bg": "#303258",
+    "umbral": 3,
+    "grande": false,
+    "razon": 8.041,
+    "elementos": 4,
+    "ejemplos": [
+     {
+      "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
+      "texto": "lucide lucide-house lucide-home size-5 s"
+     },
+     {
+      "nodo": "figure[data-prueba=\"grafica-t1\"] > div.flex.flex-wrap > button.inline-flex.items-center > svg.lucide.lucide-check",
+      "texto": "lucide lucide-check size-5 text-icon-sel"
+     },
+     {
+      "nodo": "figure[data-prueba=\"grafica-t3\"] > div.flex.flex-wrap > button.inline-flex.items-center > svg.lucide.lucide-check",
+      "texto": "lucide lucide-check size-5 text-icon-sel"
+     }
+    ]
+   },
+   {
+    "tipo": "ui",
+    "subtipo": "seleccion",
+    "fg": "#C9CFFF",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": false,
+    "razon": 10.375,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Tendencias"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#D1D2D8",
+    "bg": "#222325",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 10.427,
+    "elementos": 4,
+    "ejemplos": [
+     {
+      "nodo": "nav.hidden.text-small > ol.flex.gap-1 > li > a.hover:underline",
+      "texto": "Inicio"
+     },
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Resumen"
+     },
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Detalle"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#36363A",
+    "umbral": 3,
+    "grande": false,
+    "razon": 10.76,
+    "elementos": 10,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > button.absolute.top-2 > svg.lucide.lucide-chevrons-left",
+      "texto": "lucide lucide-chevrons-left size-6"
+     },
+     {
+      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > svg.lucide.lucide-user-round",
+      "texto": "lucide lucide-user-round lucide-user-2 s"
+     },
+     {
+      "nodo": "li > div.flex.items-center > button.inline-flex.size-8 > svg.lucide.lucide-chevron-right",
+      "texto": "lucide lucide-chevron-right size-5 trans"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#36363A",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 10.76,
+    "elementos": 241,
+    "ejemplos": [
+     {
+      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",
+      "texto": "Finanzas Hogar"
+     },
+     {
+      "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+      "texto": "Buscar"
+     },
+     {
+      "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+      "texto": "Registrar gasto"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#303258",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 10.902,
+    "elementos": 4,
+    "ejemplos": [
+     {
+      "nodo": "li > div.flex.items-center > a.flex.h-8 > span.truncate",
+      "texto": "Inicio"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t1\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Todas las categorías"
+     },
+     {
+      "nodo": "div.grid.grid-cols-1 > figure[data-prueba=\"grafica-t3\"] > div.flex.flex-wrap > button.inline-flex.items-center",
+      "texto": "Todas"
+     }
+    ]
+   },
+   {
+    "tipo": "icono",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": false,
+    "razon": 14.068,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "header.flex.flex-col > div.flex.items-center > button.ml-auto.hidden > svg.lucide.lucide-search",
+      "texto": "lucide lucide-search size-6"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#222325",
+    "umbral": 3,
+    "grande": true,
+    "razon": 14.068,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+      "texto": "Inicio"
+     }
+    ]
+   },
+   {
+    "tipo": "texto",
+    "subtipo": null,
+    "fg": "#F2F2F4",
+    "bg": "#222325",
+    "umbral": 4.5,
+    "grande": false,
+    "razon": 14.068,
+    "elementos": 1,
+    "ejemplos": [
+     {
+      "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+      "texto": "Tendencias"
+     }
+    ]
+   }
+  ]
+ },
+ "hosts": [
+  "finanzas.local:8443"
+ ],
+ "texto_visible": "Saltar al contenido\nFinanzas Hogar\nAxel\nBuscar\nRegistrar gasto\nInicio\nGastos\nPresupuesto\nComidas\nCompras y tiendas\nCréditos\nSalud\nReportes\nAjustes\nTema: Según el sistema\nInicio\nInicio\nResumen\nDetalle\nTendencias\nCalendario\nFoto de ticket\nPlan contra real por mes\nÚltimos 12 meses · Todas las categorías\nEn oct-2026: real $1,197.64 de un plan de $2,000.00\nTodas las categorías\nDespensa\nComida fuera\nPapel\n$0\n$500\n$1 mil\n$1.5 mil\n$2 mil\nnov-2025\nmar-2026\njul-2026\nReal\nPlan\nPlan contra real por mes\nMes\tReal\tPlan\nnov-2025\t$0.00\t$0.00\ndic-2025\t$0.00\t$0.00\nene-2026\t$0.00\t$0.00\nfeb-2026\t$0.00\t$0.00\nmar-2026\t$0.00\t$0.00\nabr-2026\t$0.00\t$0.00\nmay-2026\t$0.00\t$0.00\njun-2026\t$0.00\t$0.00\njul-2026\t$0.00\t$0.00\nago-2026\t$0.00\t$0.00\nsep-2026\t$0.00\t$0.00\noct-2026\t$1,197.64\t$2,000.00\nVer como tabla\nDevengado contra efectivo\nDe oct-2026 a sep-2027\nHasta sep-2027, con proyección desde abr-2027: devengado acumulado $19,397.22 y efectivo acumulado $19,397.22\n$0\n$3 mil\n$6 mil\n$9 mil\n$12 mil\n$15 mil\n$18 mil\n$21 mil\noct-2026\nene-2027\nabr-2027\njul-2027\nProyección\nEfectivo acumulado $19,397.22\nDiferencia acumulada $0.00\nHoy\nDevengado contra efectivo\nMes\tDevengado\tEfectivo\tDiferencia acumulada\tDevengado acumulado\tEfectivo acumulado\tDevengado del hogar\tDevengado de Karen\tEfectivo del hogar\tEfectivo de Karen\noct-2026\t$1,947.50\t$973.75\t$973.75\t$1,947.50\t$973.75\t$1,197.64\t$749.86\t$598.82\t$374.93\nnov-2026\t$1,947.50\t$1,947.50\t$973.75\t$3,895.00\t$2,921.25\t$1,197.64\t$749.86\t$1,197.64\t$749.86\ndic-2026\t$2,517.37\t$2,232.43\t$1,258.69\t$6,412.37\t$5,153.68\t$1,767.51\t$749.86\t$1,482.57\t$749.86\nene-2027\t$2,716.37\t$2,716.36\t$1,258.70\t$9,128.74\t$7,870.04\t$1,767.51\t$948.86\t$1,767.50\t$948.86\nfeb-2027\t$2,517.37\t$2,517.38\t$1,258.69\t$11,646.11\t$10,387.42\t$1,767.51\t$749.86\t$1,767.52\t$749.86\nmar-2027\t$2,716.37\t$2,716.36\t$1,258.70\t$14,362.48\t$13,103.78\t$1,767.51\t$948.86\t$1,767.50\t$948.86\nabr-2027\t$2,517.37\t$2,517.38\t$1,258.69\t$16,879.85\t$15,621.16\t$1,767.51\t$749.86\t$1,767.52\t$749.86\nmay-2027\t$2,517.37\t$2,517.36\t$1,258.70\t$19,397.22\t$18,138.52\t$1,767.51\t$749.86\t$1,767.50\t$749.86\njun-2027\t$0.00\t$1,258.70\t$0.00\t$19,397.22\t$19,397.22\t$0.00\t$0.00\t$883.77\t$374.93\njul-2027\t$0.00\t$0.00\t$0.00\t$19,397.22\t$19,397.22\t$0.00\t$0.00\t$0.00\t$0.00\nago-2027\t$0.00\t$0.00\t$0.00\t$19,397.22\t$19,397.22\t$0.00\t$0.00\t$0.00\t$0.00\nsep-2027\t$0.00\t$0.00\t$0.00\t$19,397.22\t$19,397.22\t$0.00\t$0.00\t$0.00\t$0.00\nTotal\t$19,397.22\t$19,397.22\t—\t—\t—\t$13,000.34\t$6,396.88\t$13,000.34\t$6,396.88\n\nProyección sin despensas repetidas\n\nVer como tabla\nDeuda viva proyectada\nÚltimos 12 meses · Deuda viva total\nDeuda viva al cierre de oct-2026: $18,025.47; al cierre de sep-2027: $0.00\nTodas\nKueski\n$0\n$3 mil\n$6 mil\n$9 mil\n$12 mil\n$15 mil\n$18 mil\n$21 mil\noct-2026\nene-2027\nabr-2027\njul-2027\n$18,025.47\n$0.00\n$0.00\nDeuda viva total\nDeuda viva proyectada\nMes\tDeuda viva total\tIntereses pagados\tIntereses por pagar\noct-2026\t$18,025.47\t$0.00\t$200.12\nnov-2026\t$16,077.97\t$0.00\t$400.24\ndic-2026\t$13,845.54\t$0.00\t$458.82\nene-2027\t$11,328.18\t$0.00\t$517.36\nfeb-2027\t$8,810.80\t$0.00\t$517.38\nmar-2027\t$6,293.44\t$0.00\t$517.36\nabr-2027\t$3,776.06\t$0.00\t$517.38\nmay-2027\t$1,258.70\t$0.00\t$517.36\njun-2027\t$0.00\t$0.00\t$258.70\njul-2027\t$0.00\t$0.00\t$0.00\nago-2027\t$0.00\t$0.00\t$0.00\nsep-2027\t$0.00\t$0.00\t$0.00\nVer como tabla\nCosto por semana\nÚltimas 12 semanas\nSemana Lun 12 al Dom 18 oct: costo $0.00\nTodas\nAxel\nXimena\n\nAún no hay datos para este periodo\n\nkcal al día por persona\nÚltimas 12 semanas\nSemana Lun 12 al Dom 18 oct: Axel 0 kcal al día con meta de —; Ximena 0 kcal al día con meta de —\n\nAún no hay datos para este periodo"
+}
