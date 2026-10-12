@@ -1,0 +1,186 @@
+{
+ "pantalla": "P-26.03",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 28,
+ "pares_unicos": 8,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 7,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 6,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-col > div.pt-2.text-small",
+     "texto": "Persona"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-col > div.pt-2.text-small",
+     "texto": "Frecuencia"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-col > div.pt-2.text-small",
+     "texto": "Monto de la quincena del 15"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > header.flex.flex-col > p.text-body.text-text-secondary",
+     "texto": "Capturar el ingreso quincenal esperado d"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Inicio"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Comidas"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > article.flex.min-w-0 > a.flex.min-h-11",
+     "texto": "‹ Ajustes"
+    },
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > div.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Registrar ingreso extra"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 7,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > h3.text-title-3.text-text-default",
+     "texto": "Sueldo (desarrollo)"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.min-w-0.desktop:col-span-2 > span.px-2",
+     "texto": "Axel"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.min-w-0.desktop:col-span-2 > span.px-2",
+     "texto": "Quincenal: días 15 y 30 (o último día)"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "h2#ajustes-seccion",
+     "texto": "Ingresos"
+    }
+   ]
+  }
+ ]
+}

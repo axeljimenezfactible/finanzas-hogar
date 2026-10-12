@@ -25,7 +25,7 @@ export function BarraSuperior({ p, sub }: { p: Pantalla; sub: Subseccion | null 
         </nav>
         <button type="button" onClick={() => abrirMenu()} aria-label={textos.barra.buscar} className="ml-auto hidden size-9 items-center justify-center rounded-sm hover:bg-surface-hover tablet:inline-flex coarse:size-11"><Search aria-hidden className="size-6" size={ICONO_MD} /></button>
       </div>
-      <h1 className="text-title-2 font-semibold text-text-default">{p.nombre}</h1>
+      <h1 className="text-title-1 font-bold text-text-default">{p.nombre}</h1>
       {p.subs && (
         <div role="tablist" aria-label={p.nombre} className="-mb-px flex gap-1 overflow-x-auto">
           {p.subs.map((s) => (
@@ -40,7 +40,7 @@ export function BarraSuperior({ p, sub }: { p: Pantalla; sub: Subseccion | null 
 // DESIGN §7.10: fondo ui.surface.raised; destinos de 56 px de alto y ≥ 64 px de ancho; icono size.icon.md (24 px) en
 // ui.text.secondary; el destino actual lleva la píldora de 56 × 32 (size.bottombar.indicator-*) en ui.surface.selected
 // detrás del icono ui.icon.selected, y el nombre en ui.text.default con peso medio.
-const destino = 'group flex min-w-16 flex-1 flex-col items-center justify-center gap-0.5 text-caption text-text-secondary focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-border-focus aria-[current=page]:font-medium aria-[current=page]:text-text-default'
+const destino = 'group flex min-w-16 flex-1 flex-col items-center justify-center gap-1 text-caption text-text-secondary focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-border-focus aria-[current=page]:font-medium aria-[current=page]:text-text-default'
 const pildora = 'inline-flex h-8 w-14 items-center justify-center rounded-full group-aria-[current=page]:bg-surface-selected group-aria-[current=page]:text-icon-selected'
 export function BarraInferior() {
   const { ruta } = useUbicacion()

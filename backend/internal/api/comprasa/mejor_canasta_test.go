@@ -72,9 +72,11 @@ func TestBestBasket_MismaReglaQueLaComparativa(t *testing.T) {
 	}
 }
 
-// Con la semilla real (datos/semilla) no hay lista de la semana y no hay precios cargados (los mete el agente externo,
-// K53): la canasta es la compra del 10-oct-2026 y la tarjeta queda vacía sin error (PROVISIONAL, S6-gastos-inicio §15).
-func TestBestBasket_SemillaSinPrecios(t *testing.T) {
+// Con la semilla real (datos/semilla) no hay lista de la semana: la canasta es la compra del 10-oct-2026. Desde WF-3b la
+// semilla real trae los 36 precios de Walmart de data.json (decisión provisional del orquestador, bloqueo
+// WF3a-bis-semilla-dev punto 7), así que la tarjeta compara Bodega (la compra, 3,094.50) contra Walmart (+264.50 con el
+// motor S5; data.json trae +138.50, ver cotejo_test.go de la semilla). Antes de WF-3b no había precios y la tarjeta quedaba vacía.
+func TestBestBasket_SemillaConPreciosDeWalmart(t *testing.T) {
 	db, err := dominio.Open(filepath.Join(testutil.TempDir(t), "semilla.db"))
 	if err != nil {
 		t.Fatal(err)
@@ -96,7 +98,10 @@ func TestBestBasket_SemillaSinPrecios(t *testing.T) {
 	}
 	monday, _ := dominio.ParseDate("2026-10-12")
 	got, err := comprasa.BestBasket(ctx, db, monday, monday)
-	if err != nil || got.Basket != "expense" || got.ExpenseID == nil || *got.ExpenseID != last || got.ItemCount == 0 || got.StoreID != nil {
+	if err != nil || got.Basket != "expense" || got.ExpenseID == nil || *got.ExpenseID != last || got.ItemCount == 0 || got.StoreID == nil {
 		t.Fatalf("%+v %v", got, err)
+	}
+	if got.TotalCents == nil || *got.TotalCents != 309450 || got.SecondStoreID == nil || got.DifferenceVsSecondCents == nil || *got.DifferenceVsSecondCents != 26450 {
+		t.Fatalf("la tarjeta debía comparar Bodega 3,094.50 contra Walmart +264.50: %+v", got)
 	}
 }

@@ -93,7 +93,7 @@ export default function Calendario() {
                   <button type="button" aria-pressed={sel === dia} aria-current={dia === hoy ? 'date' : undefined} aria-label={`${fechaConDia(dia)} · ${evs.length}`} onClick={() => setSel(dia)} className={cn('flex h-full min-h-11 w-full flex-col gap-1 p-1 text-left hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-border-focus', sel === dia && 'outline-2 outline-border-selected')}>
                     <span className={cn('tabular-nums', dia === hoy && 'font-bold text-text-link')}>{diaDe(dia)}</span>
                     {(diaDe(dia) === 1 || diaDe(dia) === 16) && <span className="truncate text-caption text-text-secondary">{diaDe(dia) === 1 ? t.detalle.q1 : t.detalle.q2}</span>}
-                    <ul className="flex min-w-0 flex-col gap-0.5">{evs.slice(0, 3).map((e, k) => <Fila key={k} e={e} corto />)}</ul>
+                    <ul className="flex min-w-0 flex-col gap-1">{evs.slice(0, 3).map((e, k) => <Fila key={k} e={e} corto />)}</ul>
                     {evs.length > 3 && <span className="text-caption text-text-secondary">{K.masN(evs.length - 3)}</span>}
                   </button></td>
               })}</tr>)}</tbody>

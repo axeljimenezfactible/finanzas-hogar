@@ -1,0 +1,154 @@
+{
+ "pantalla": "P-00",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 10,
+ "pares_unicos": 8,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 0,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "input#_r_0_",
+     "texto": "username"
+    },
+    {
+     "nodo": "input#_r_1_",
+     "texto": "password"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#006FA4",
+   "bg": "#E7F5FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 4.962,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > span.flex.min-w-0 > svg.lucide.lucide-info",
+     "texto": "lucide lucide-info size-5 shrink-0 text-"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > form.flex.flex-col > div.flex.flex-col > label.text-small.font-medium",
+     "texto": "Usuario"
+    },
+    {
+     "nodo": "main#contenido > form.flex.flex-col > div.flex.flex-col > label.text-small.font-medium",
+     "texto": "Contraseña"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > form.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Entrar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > form.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Entrar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#E7F5FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.829,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > span.flex.min-w-0 > span.min-w-0.flex-1",
+     "texto": "Tu sesión terminó. Vuelve a entrar para "
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > h1.text-title-1.font-bold",
+     "texto": "Finanzas Hogar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > form.flex.flex-col > h2.text-title-3.font-semibold",
+     "texto": "Iniciar sesión"
+    }
+   ]
+  }
+ ]
+}

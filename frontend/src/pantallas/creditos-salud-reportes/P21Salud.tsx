@@ -41,8 +41,8 @@ export default function P21Salud({ sub }: PropsPantalla) {
   return (
     <div className="flex flex-col gap-6 tabular-nums">
       <Barra>
-        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-26', { seccion: '13' }))}><UserPen aria-hidden className="size-4" />{s.editarPerfil}</Boton>
-        <Boton variante="primario" onClick={() => abrirRegistro('peso')}><Scale aria-hidden className="size-4" />{s.registrarPeso}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-26', { seccion: '13' }))}><UserPen aria-hidden className="size-5" />{s.editarPerfil}</Boton>
+        <Boton variante="primario" onClick={() => abrirRegistro('peso')}><Scale aria-hidden className="size-5" />{s.registrarPeso}</Boton>
       </Barra>
       <ConDatos consulta={perfiles}>{(d) => {
         const ps = itemsDe<Perfil>(d).sort((a, b) => orden(a.person_id) - orden(b.person_id))
@@ -136,7 +136,7 @@ function Historial({ pesos, per, alCambiar }: { pesos: Peso[]; per: Personas; al
             vistaPrevia: async (x: Peso, nuevo: string) => { const g = aGramos(nuevo); if (!g || g <= 0) throw new RangeError(s.pesoInvalido); return [{ etiqueta: s.peso, antes: kilos(x.weight_g), despues: kilos(g) }] },
             guardar: async (x: Peso, nuevo: string) => { const g = aGramos(nuevo); if (!g || g <= 0) throw new RangeError(s.pesoInvalido); await pedir('patch', '/api/v1/weight-entries/{weight_entry_id}', { ruta: { weight_entry_id: x.id }, cuerpo: { weight_g: g } }); alCambiar(); avisar({ texto: s.corregido, rol: 'exito' }) } } } : {}) },
         { id: 'bmi', nombre: s.imc, valor: (x) => x.bmi_tenths ?? null, pintar: (x) => imc(x.bmi_tenths), alinear: 'derecha' },
-        { id: 'acciones', nombre: s.acciones, valor: () => '', pintar: (x) => <Boton variante="fantasma" tam="icono" aria-label={s.eliminarPeso(fecha(x.measured_date))} deshabilitadoPor={enLinea ? undefined : textos.conexion.requiere} onClick={(e) => { e.stopPropagation(); setBorrar(x) }}><Trash2 aria-hidden className="size-4" /></Boton> },
+        { id: 'acciones', nombre: s.acciones, valor: () => '', pintar: (x) => <Boton variante="fantasma" tam="icono" aria-label={s.eliminarPeso(fecha(x.measured_date))} deshabilitadoPor={enLinea ? undefined : textos.conexion.requiere} onClick={(e) => { e.stopPropagation(); setBorrar(x) }}><Trash2 aria-hidden className="size-5" /></Boton> },
       ] }} />
     <Hoja abierta={!!borrar} alCambiar={(a) => !a && setBorrar(null)} titulo={s.eliminarPeso(borrar ? fecha(borrar.measured_date) : '')} pie={<div className="flex gap-2"><Boton className="flex-1" onClick={() => setBorrar(null)}>{textos.app.cancelar}</Boton><Boton className="flex-1" variante="destructivo" onClick={eliminar}>{t.comun.eliminar}</Boton></div>}>
       <p className="text-body">{s.confirmarEliminar}</p>

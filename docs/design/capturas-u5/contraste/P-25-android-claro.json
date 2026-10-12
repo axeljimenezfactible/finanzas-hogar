@@ -1,0 +1,346 @@
+{
+ "pantalla": "P-25",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 69,
+ "pares_unicos": 18,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 3,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "O un rango"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "input#_r_c_",
+     "texto": ""
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#006FA4",
+   "bg": "#E7F5FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 4.962,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > span.flex.min-w-0 > svg.lucide.lucide-info",
+     "texto": "lucide lucide-info size-5 shrink-0 text-"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 19,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > dl.grid.grid-cols-2 > dt.text-text-secondary",
+     "texto": "Pagado en el periodo"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > dl.grid.grid-cols-2 > dt.text-text-secondary",
+     "texto": "Saldo pendiente total"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dt.text-text-secondary",
+     "texto": "10-oct-2026"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.147,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center > svg.lucide.lucide-check",
+     "texto": "lucide lucide-check size-5 text-icon-sel"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#7E509D",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.334,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.grid.grid-cols-1 > dl.grid.grid-cols-2 > dd.text-right.tabular-nums > span.font-semibold.text-role-debt",
+     "texto": "$5,998.88"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 7,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-col > label.text-small.font-medium",
+     "texto": "Mes"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > section.flex.flex-col > p.text-small.text-text-secondary",
+     "texto": "Sin compras vivas"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > section.flex.flex-col > p.text-small.text-text-secondary",
+     "texto": "Aún no hay estados de cuenta generados."
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Mes"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Generar PDF"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Generar PDF"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Mes"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 18,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > dl.grid.grid-cols-2 > dd.text-right.tabular-nums",
+     "texto": "$0.00"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dd.text-right.tabular-nums",
+     "texto": "$1,191.50 + $308.22 = $1,499.72"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dd.text-right.tabular-nums",
+     "texto": "$374.93 · pagado $0.00"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#E7F5FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.829,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > span.flex.min-w-0 > span.min-w-0.flex-1",
+     "texto": "Karen paga su parte directo a Kueski; es"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Estado de cuenta de Karen"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 8,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > h2.text-title-3.font-semibold",
+     "texto": "Periodo"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "O un rango"
+    },
+    {
+     "nodo": "input#_r_c_",
+     "texto": "2026-10"
+    }
+   ]
+  }
+ ]
+}

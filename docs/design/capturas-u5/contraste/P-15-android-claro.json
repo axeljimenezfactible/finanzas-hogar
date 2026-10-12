@@ -1,0 +1,302 @@
+{
+ "pantalla": "P-15",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 1045,
+ "pares_unicos": 15,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 494,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "button#radix-_r_c_",
+     "texto": "Más opciones"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 7,
+   "ejemplos": [
+    {
+     "nodo": "input#_r_e_",
+     "texto": ""
+    },
+    {
+     "nodo": "select#p15-tienda",
+     "texto": "TodasAcueducto de GuadalupeBodega Aurrer"
+    },
+    {
+     "nodo": "select#p15-grupo",
+     "texto": "TodasFrutas y verdurasCarne y pollo (no "
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.147,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 12,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Resumen"
+    },
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Tendencias"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.grid.gap-2 > div.flex.flex-col > label.text-small.font-medium",
+     "texto": "Buscar"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > button.group.flex > span.inline-flex.h-8 > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Detalle"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Capturar precio"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Capturar precio"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "button#radix-_r_c_ > svg.lucide.lucide-ellipsis",
+     "texto": "lucide lucide-ellipsis lucide-more-horiz"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    },
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-kanban",
+     "texto": "lucide lucide-kanban size-5"
+    },
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-images",
+     "texto": "lucide lucide-images size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Productos y precios"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1009,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Detalle"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.grid.gap-2 > label.flex.flex-col",
+     "texto": "Tienda"
+    },
+    {
+     "nodo": "select#p15-tienda",
+     "texto": "Todas"
+    }
+   ]
+  }
+ ]
+}

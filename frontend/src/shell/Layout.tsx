@@ -52,7 +52,7 @@ export function Layout() {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-      <div className="flex min-w-0 flex-1 flex-col pb-16 tablet:pb-0">
+      <div className="flex min-w-0 flex-1 flex-col pb-[calc(var(--spacing)*14_+_env(safe-area-inset-bottom))] tablet:pb-0">
         <BarraSuperior p={p} sub={sub} />
         <FranjaSinConexion />
         <main id="contenido" className="mx-auto w-full max-w-6xl flex-1 px-4 py-4">

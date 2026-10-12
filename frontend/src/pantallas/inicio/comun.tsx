@@ -136,7 +136,7 @@ export function estadoPago(p: { status?: string; due_date: string; shares?: Part
   if (falta) return { texto: falta, icono: <CircleDot aria-hidden />, rol: 'neutro' }
   return { texto: t.pago.pendiente, icono: <CircleDashed aria-hidden />, rol: 'neutro' }
 }
-export const InsigniaPago = ({ e }: { e: EstadoPago }) => <span className="flex flex-col gap-0.5"><Insignia rol={e.rol} icono={e.icono}>{e.texto}</Insignia>{e.linea && <span className="text-caption text-text-secondary">{e.linea}</span>}</span>
+export const InsigniaPago = ({ e }: { e: EstadoPago }) => <span className="flex flex-col gap-1"><Insignia rol={e.rol} icono={e.icono}>{e.texto}</Insignia>{e.linea && <span className="text-caption text-text-secondary">{e.linea}</span>}</span>
 
 /** Título de panel de Detalle o bloque (font.size.title-3). */
 export const TituloPanel = ({ children, id }: { children: ReactNode; id?: string }) => <h2 id={id} className="flex items-center gap-2 text-title-3 font-semibold text-text-default">{children}</h2>

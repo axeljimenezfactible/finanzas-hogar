@@ -52,7 +52,7 @@ async function abrirHoja(page: Page, pestana: 'Gasto' | 'Ingreso') {
 
 test('P-02 N-043 · tablero por categoría con el total de queryView en la cabecera', async ({ page }) => {
   await page.goto('/gastos?periodo=2026-10')
-  await tocar(page.getByRole('tab', { name: 'Tablero' }))
+  await tocar(page.getByRole('button', { name: 'Tablero', exact: true }))
   await expect(page.getByRole('heading', { level: 3, name: /^Despensa · \$1,500\.00 \(56 %\)/ })).toBeVisible()
   const q = vistas.find((v) => v.get('mode') === 'board')!
   expect([q.get('group_by'), q.get('period')]).toEqual(['category_id', '2026-10'])
@@ -69,7 +69,7 @@ test('P-02 N-046 · galería de tickets con la foto vía downloadAttachment; la 
   await page.goto('/gastos?periodo=2026-10')
   await expect(page.getByRole('cell', { name: 'Sí', exact: true })).toBeVisible()
   await expect(page.locator('table img')).toHaveCount(0)
-  await tocar(page.getByRole('tab', { name: 'Galería' }))
+  await tocar(page.getByRole('button', { name: 'Galería', exact: true }))
   const foto = page.getByRole('img', { name: 'Foto del ticket: Súper semanal' })
   await expect(foto).toHaveAttribute('src', '/api/v1/attachments/701/file')
   await cargada(foto)
@@ -88,12 +88,19 @@ test('P-02 Ctrl+/ · editar el tipo de varias filas con vista previa sumada; Esc
   await page.keyboard.press('Escape')
   await expect(bloque).toHaveCount(0)
   expect(parches).toHaveLength(0)
-  await page.getByRole('checkbox', { name: 'Seleccionar todas' }).focus()
+  // R5-05: al cerrar, VistaBD devuelve el foco a «Seleccionar todas» en un requestAnimationFrame. Si ese cuadro llega tarde
+  // (corrida completa con carga), el foco salta fuera del bloque recién abierto y el Enter de abajo no lo oye nadie.
+  // Se espera ese regreso de foco (U4 §0.7) antes de reabrir, y luego el foco inicial dentro del bloque.
+  const todas = page.getByRole('checkbox', { name: 'Seleccionar todas' })
+  await expect(todas).toBeFocused()
   await page.keyboard.press('Control+/')
+  await expect(bloque.getByRole('combobox', { name: 'Propiedad' })).toBeFocused()
   await bloque.locator('select').nth(0).selectOption('kind')
   await bloque.locator('select').nth(1).selectOption('fixed')
   await expect(page.getByTestId('vista-previa')).toContainText('$2,700.00')
-  await page.keyboard.press('Enter')
+  // Enter sobre un control del bloque: el atajo lo escucha el bloque (EdicionVarias.tsx, onKeyDown de la sección).
+  await bloque.getByRole('combobox', { name: 'Valor nuevo' }).press('Enter')
+  await expect(bloque).toHaveCount(0)
   await expect.poll(() => parches.length).toBe(2)
   expect(parches.map((p) => p.cuerpo)).toEqual([{ kind: 'fixed' }, { kind: 'fixed' }])
 })

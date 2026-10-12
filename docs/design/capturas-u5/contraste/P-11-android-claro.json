@@ -1,0 +1,390 @@
+{
+ "pantalla": "P-11",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 342,
+ "pares_unicos": 18,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 5,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "input#_r_c_",
+     "texto": ""
+    },
+    {
+     "nodo": "select#p11-origen",
+     "texto": "TodosRecetario inicialAxel y Ximena"
+    },
+    {
+     "nodo": "input#_r_f_",
+     "texto": ""
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "button#radix-_r_d_",
+     "texto": "Más opciones"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Desayuno"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Comida"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 60,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > ul.grid.grid-cols-1 > li > button.flex.w-full",
+     "texto": "Albóndigas de res en caldillo de chipotl"
+    },
+    {
+     "nodo": "div.flex.flex-col > ul.grid.grid-cols-1 > li > button.flex.w-full",
+     "texto": "Albóndigas de res en caldillo de jitomat"
+    },
+    {
+     "nodo": "div.flex.flex-col > ul.grid.grid-cols-1 > li > button.flex.w-full",
+     "texto": "Arroz con pollo y zanahoriaTiempos aptos"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 180,
+   "ejemplos": [
+    {
+     "nodo": "ul.grid.grid-cols-1 > li > button.flex.w-full > span.text-small.text-text-secondary",
+     "texto": "Comida, Cena"
+    },
+    {
+     "nodo": "ul.grid.grid-cols-1 > li > button.flex.w-full > span.text-small.text-text-secondary",
+     "texto": "2"
+    },
+    {
+     "nodo": "ul.grid.grid-cols-1 > li > button.flex.w-full > span.text-small.text-text-secondary",
+     "texto": "55 min"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.147,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center > svg.lucide.lucide-check",
+     "texto": "lucide lucide-check size-5 text-icon-sel"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-col > label.text-small.font-medium",
+     "texto": "Costo máximo por porción"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-col > label.text-small.font-medium",
+     "texto": "kcal máximas por porción"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Inicio"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > button.group.flex > span.inline-flex.h-8 > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Nueva receta"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Todos"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Galería"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Nueva receta"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Todos"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Galería"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-images",
+     "texto": "lucide lucide-images size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "button#radix-_r_d_ > svg.lucide.lucide-ellipsis",
+     "texto": "lucide lucide-ellipsis lucide-more-horiz"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 60,
+   "ejemplos": [
+    {
+     "nodo": "ul.grid.grid-cols-1 > li > button.flex.w-full > span.text-body.font-medium",
+     "texto": "Albóndigas de res en caldillo de chipotl"
+    },
+    {
+     "nodo": "ul.grid.grid-cols-1 > li > button.flex.w-full > span.text-body.font-medium",
+     "texto": "Albóndigas de res en caldillo de jitomat"
+    },
+    {
+     "nodo": "ul.grid.grid-cols-1 > li > button.flex.w-full > span.text-body.font-medium",
+     "texto": "Arroz con pollo y zanahoria"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    },
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    },
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-kanban",
+     "texto": "lucide lucide-kanban size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Recetario"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 9,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Desayuno"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Comida"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Cena"
+    }
+   ]
+  }
+ ]
+}

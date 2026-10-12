@@ -25,7 +25,7 @@ export function IniciarSesion() {
   }
   return (
     <main id="contenido" className="mx-auto flex min-h-dvh w-full max-w-sm flex-col justify-center gap-6 px-4">
-      <h1 className="text-title-1 font-semibold text-text-default">{textos.app.nombre}</h1>
+      <h1 className="text-title-1 font-bold text-text-default">{textos.app.nombre}</h1>
       {vencida && <Franja rol="info">{textos.sesion.vencida}</Franja>}
       {!conectado && <Franja rol="sinConexion">{textos.sesion.requiereConexion}</Franja>}
       <form onSubmit={alEnviar} className="flex flex-col gap-4" aria-label={textos.sesion.titulo}>

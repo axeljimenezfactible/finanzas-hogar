@@ -56,7 +56,7 @@ function T2() {
   return <Estados consulta={q} falla={G.falla} esqueleto={esqueleto}>{(d) => {
     const m = d.months
     if (!m.length || m.every((x) => x.accrued_cents === 0 && x.cash_cents === 0)) return <VacioGrafica titulo={G.t2.titulo} texto={G.t2.vacio} accion={<Boton variante="enlace" className="w-max" onClick={() => abrirRegistro('gasto')}>{G.t2.accionVacio}</Boton>} />
-    const u = m[m.length - 1], cs = m.map((x) => mes(x.month)), sup = token('--ui-surface-card'), ult = new Set([m.length - 1])
+    const u = m[m.length - 1], cs = m.map((x) => mes(x.month)), sup = token('--ui-surface-card')
     const hoyI = m.findIndex((x) => x.month === mesDe(c.hoy))
     const adelantado = m.filter((x) => x.cumulative_difference_cents < 0).map((x) => mes(x.month))
     const suma = (k: 'accrued_cents' | 'cash_cents' | 'accrued_household_cents' | 'accrued_external_cents' | 'cash_household_cents' | 'cash_external_cents') => dinero(m.reduce((a, x) => a + x[k], 0))
@@ -67,14 +67,19 @@ function T2() {
       tabla={{ columnas: [G.mes, C.devengadoMes, C.efectivoMes, G.t2.diferencia, G.t2.devengado, G.t2.efectivo, C.devHogar, C.devKaren, C.efeHogar, C.efeKaren],
         filas: m.map((x) => [mes(x.month), dinero(x.accrued_cents), dinero(x.cash_cents), dinero(x.cumulative_difference_cents), dinero(x.cumulative_accrued_cents), dinero(x.cumulative_cash_cents), dinero(x.accrued_household_cents), dinero(x.accrued_external_cents), dinero(x.cash_household_cents), dinero(x.cash_external_cents)]),
         total: [G.total, suma('accrued_cents'), suma('cash_cents'), t.comun.sinDato, t.comun.sinDato, t.comun.sinDato, suma('accrued_household_cents'), suma('accrued_external_cents'), suma('cash_household_cents'), suma('cash_external_cents')] }}
-      opcion={() => ({ ...ejes(cs, compacto, ancho), series: [
+      opcion={() => {
+        // Áreas apiladas (DESIGN §8.3 y §8.5): los valores finales van en la leyenda, abajo y fuera del trazo (una etiqueta sobre
+        // el relleno se encima con el área y, a la derecha, la leyenda tapaba su marca). La tabla sigue con todos los valores.
+        const e = ejes(cs, compacto, ancho)
+        const finales: Record<string, string> = { [G.t2.efectivo]: dinero(u.cumulative_cash_cents), [G.t2.diferencia]: dinero(Math.max(0, u.cumulative_difference_cents)) }
+        return { ...e, grid: { ...e.grid, right: 16, bottom: ancho ? 40 : 64 }, legend: { bottom: 0, textStyle: e.legend.textStyle, formatter: (n: string) => `${n} ${finales[n] ?? ''}`.trim() }, series: [
         { name: G.t2.efectivo, type: 'line', stack: 'pila', symbol: 'circle', symbolSize: 8, lineStyle: { color: token('--ui-chart-1'), width: 2 }, itemStyle: { color: token('--ui-chart-1') }, areaStyle: { color: token('--ui-chart-1'), opacity: 1 },
-          data: conEtiquetas(m.map((x) => x.cumulative_cash_cents), (v) => `${G.t2.efectivo} ${dinero(v)}`, ult), label: { position: 'bottom' },
+          data: m.map((x) => x.cumulative_cash_cents),
           markLine: hoyI >= 0 ? { symbol: 'none', silent: true, lineStyle: { color: token('--ui-viz-baseline'), width: 1, type: 'solid' }, label: { formatter: G.hoy, color: token('--ui-text-secondary') }, data: [{ xAxis: cs[hoyI] }] } : undefined,
           markArea: m.length > 6 ? { silent: true, itemStyle: { color: token('--ui-viz-track'), opacity: 0.35 }, label: { formatter: G.proyeccion, color: token('--ui-text-secondary') }, data: [[{ xAxis: cs[6] }, { xAxis: cs[m.length - 1] }]] } : undefined },
         { name: G.t2.diferencia, type: 'line', stack: 'pila', symbol: 'rect', symbolSize: 8, lineStyle: { color: token('--ui-chart-2'), width: 2, type: [8, 4] }, itemStyle: { color: token('--ui-chart-2') }, areaStyle: { color: token('--ui-chart-2'), opacity: 1, decal: patron(2, sup) },
-          data: m.map((x, i) => (i === m.length - 1 ? { value: Math.max(0, x.cumulative_difference_cents), label: { ...etiqueta(() => `${G.t2.devengado} ${dinero(u.cumulative_accrued_cents)}`), position: 'top' } } : Math.max(0, x.cumulative_difference_cents))) },
-      ] })} />
+          data: m.map((x) => Math.max(0, x.cumulative_difference_cents)) },
+      ] } }} />
   }}</Estados>
 }
 function T3() {

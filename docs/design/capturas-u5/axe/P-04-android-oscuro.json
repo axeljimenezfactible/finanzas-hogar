@@ -1,0 +1,290 @@
+{
+ "pantalla": "P-04",
+ "nombre": "Gasto",
+ "combinacion": "android-oscuro",
+ "url": "/gastos/1",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 27,
+  "no_aplican": 36
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      "th:nth-child(6) > .h-9.coarse\\:min-w-11.inline-flex"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Parte del hogar</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(3) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(4) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(5) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(6) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(7) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(8) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(9) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(10) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(11) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(12) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(13) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(14) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(15) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(16) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(17) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(18) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(19) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(20) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(21) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(22) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(23) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(24) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(25) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(26) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(27) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(28) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(29) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(30) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(31) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(32) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(33) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(34) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(35) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(36) > .text-right.tabular-nums:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">$0.00</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

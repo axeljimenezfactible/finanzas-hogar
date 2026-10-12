@@ -31,6 +31,11 @@ func emptyDB(t *testing.T) *sql.DB {
 	return db
 }
 
+// oracleSeed es oraculo/fixtures/s2/_datos/semilla-oraculo.json (para las cargas desde una carpeta copiada a datos/tmp).
+func oracleSeed(t *testing.T) string {
+	return filepath.Join(testutil.Root(t), "oraculo", "fixtures", "s2", "_datos", "semilla-oraculo.json")
+}
+
 func seedDir(t *testing.T) string { return filepath.Join(testutil.Root(t), "datos", "semilla") }
 
 func opts(t *testing.T) semilla.Options {
@@ -72,9 +77,9 @@ func TestSembrarCargaTodoYCruzaConElOraculo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for table, want := range map[string]int{"person": 3, "user_account": 2, "cost_share_rule": 6, "category": 2, "store": 4, "product_group": 9, "product": 160,
-		"presentation": 186, "recipe": 60, "expense": 1, "expense_item": 36, "expense_share": 2, "credit": 1, "credit_term_rate": 2, "credit_purchase": 4,
-		"credit_purchase_share": 8, "scheduled_payment": 16, "scheduled_payment_share": 32, "promotion": 0, "nutrition_fact": 0, "price": 0} {
+	for table, want := range map[string]int{"person": 3, "user_account": 2, "cost_share_rule": 6, "category": 3, "store": 4, "product_group": 9, "product": 160,
+		"presentation": 186, "recipe": 60, "expense": 6, "expense_item": 36, "expense_share": 10, "credit": 1, "credit_term_rate": 2, "credit_purchase": 4,
+		"credit_purchase_share": 8, "scheduled_payment": 16, "scheduled_payment_share": 32, "promotion": 0, "nutrition_fact": 0, "price": 36} {
 		if got := one[int](t, db, "SELECT count(*) FROM "+table); got != want {
 			t.Errorf("%s: %d, se esperaban %d", table, got, want)
 		}
@@ -315,6 +320,7 @@ func TestNutricionSoloConfirmada(t *testing.T) {
 	o := opts(t)
 	o.Dir = dir
 	o.ModelPath = filepath.Join(seedDir(t), "..", "..", "oraculo", "model.json")
+	o.OracleSeedPath = oracleSeed(t)
 	rep, err := semilla.RunWith(context.Background(), db, o)
 	if err != nil {
 		t.Fatal(err)
@@ -344,7 +350,7 @@ func TestPartidasCSVAvisaOImporta(t *testing.T) {
 	dir := miniSeed(t)
 	model := filepath.Join(seedDir(t), "..", "..", "oraculo", "model.json")
 	o := opts(t)
-	o.Dir, o.ModelPath = dir, model
+	o.Dir, o.ModelPath, o.OracleSeedPath = dir, model, oracleSeed(t)
 	rep, err := semilla.RunWith(context.Background(), emptyDB(t), o)
 	if err != nil {
 		t.Fatal(err)

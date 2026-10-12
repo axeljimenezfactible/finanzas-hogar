@@ -1,5 +1,7 @@
 // P-26.06 Tiendas y precios (U4 parte a): tiendas y mercados, membresía, lectura asistida con veredicto (acción crítica),
 // fuentes de precio, corte PROFECO y parámetros de precios (K44) con la vista previa de frescura (K22, K40).
+import { ICONO_MD } from '../../componentes/Icono'
+import { SelectorArchivo } from '../../componentes/SelectorArchivo'
 import { useEffect, useState, type KeyboardEvent as EventoTecla, type ReactNode } from 'react'
 import { ChevronLeft, ChevronRight, Plus, Upload } from 'lucide-react'
 import { nuevaClave, pedir } from '../../api/cliente'
@@ -46,7 +48,7 @@ export default function S06Tiendas() {
   const gs = grupos.datos?.items ?? []
   return (
     <div className="flex flex-col gap-4">
-      <Bloque titulo={s.tiendas} id="b-tiendas" accion={<Boton variante="primario" onClick={() => setNueva(true)}><Plus aria-hidden className="size-4" />{s.nueva}</Boton>}>
+      <Bloque titulo={s.tiendas} id="b-tiendas" accion={<Boton variante="primario" onClick={() => setNueva(true)}><Plus aria-hidden className="size-5" />{s.nueva}</Boton>}>
         <ConDatos consulta={tiendas}>{(d) => {
           if (!d.items.length) return <Vacio texto={s.sin} accion={<Boton variante="primario" onClick={() => setNueva(true)}>{s.nueva}</Boton>} />
           const guardar = (x: St) => async (c: Esquemas['StoreUpdate']) => { await pedir('patch', '/api/v1/stores/{store_id}', { ruta: { store_id: x.id }, cuerpo: c }); tiendas.recargar() }
@@ -54,7 +56,7 @@ export default function S06Tiendas() {
             <VistaBD def={{ clave: 'P-26.06-tiendas', filas: d.items, idFila: (x) => x.id, vistas: ['tabla', 'galeria', 'tablero'], titulo: (x) => x.name, alAbrir: (x) => setAbierta(x.id),
               columnasTablero: { propiedad: 'kind', columnas: Object.values(s.tipos) },
               propiedades: [
-                { id: 'name', nombre: s.nombre, valor: (x) => x.name, pintar: (x) => <button type="button" className="min-h-11 text-left text-text-link desktop:min-h-0" onClick={() => setAbierta(x.id)}>{x.name}</button> },
+                { id: 'name', nombre: s.nombre, valor: (x) => x.name, pintar: (x) => x.name },
                 { id: 'kind', nombre: s.tipo, valor: (x) => x.kind, grupo: (x) => s.tipos[x.kind], pintar: (x) => s.tipos[x.kind] },
                 { id: 'visit_weekday', nombre: s.diaVisita, valor: (x) => x.visit_weekday, pintar: (x) => (x.kind === 'market' ? <Editable etiqueta={`${s.diaVisita} · ${x.name}`} tipo="opcion" valor={String(x.visit_weekday ?? '')} mostrar={x.visit_weekday ? s.dias[x.visit_weekday - 1] : t.comun.sinValor} opciones={[{ valor: '', texto: t.v.v11 }, ...dias]} validar={(v) => (v ? null : t.v.v11)} guardar={(v) => guardar(x)({ visit_weekday: Number(v) })} /> : '—') },
                 { id: 'groups', nombre: s.queCompra, valor: (x) => (x.product_group_ids ?? []).length, pintar: (x) => (x.product_group_ids ?? []).map((id) => gs.find((g) => g.id === id)?.name).filter(Boolean).join(', ') || s.gruposVacios },
@@ -169,9 +171,8 @@ function Fuentes({ f, ia, maxGb, alCambiar }: { f: Esquemas['PriceSources']; ia:
       </Fila>
       <Fila etiqueta={s.importar}>
         <div className="flex flex-col gap-2">
-          <label className="flex flex-col gap-1 text-small text-text-secondary">{s.archivo}<input type="file" accept=".rar,.csv" className="min-h-11 text-small" onChange={(e) => { setArchivo(e.target.files?.[0] ?? null); setMsg(null) }} /></label>
-          {archivo && <p className="text-small tabular-nums">{s.archivoInfo(archivo.name, tam(archivo.size), maxGb == null ? t.comun.sinValor : `${maxGb} GB`)}</p>}
-          <Boton className="w-fit" deshabilitadoPor={!conexion ? textos.conexion.requiere : !archivo ? s.archivo : importando ? s.importando : undefined} onClick={() => void importar()}><Upload aria-hidden className="size-4" />{s.importar}</Boton>
+          <SelectorArchivo etiqueta={s.archivo} accept=".rar,.csv" archivo={archivo} detalle={archivo && s.archivoInfo(archivo.name, tam(archivo.size), maxGb == null ? t.comun.sinValor : `${maxGb} GB`)} alElegir={(f) => { setArchivo(f); setMsg(null) }} />
+          <Boton className="w-fit" deshabilitadoPor={!conexion ? textos.conexion.requiere : !archivo ? s.archivo : importando ? s.importando : undefined} onClick={() => void importar()}><Upload aria-hidden className="size-5" />{s.importar}</Boton>
           {/* Avance de la importación (U4 P-26.06, «Estados»). La tarea en listJobs queda PROVISIONAL: no hay job de importación PROFECO (bloqueo S6-compras-b-fuentes, punto 2). */}
           <p role="status" aria-live="polite" className="text-small text-text-secondary" data-prueba="avance-profeco">{importando ? `${s.importando} · ${s.avanceTarea}` : ''}</p>
           {msg && <Aviso rol={msg.rol}>{msg.texto}</Aviso>}
@@ -196,9 +197,9 @@ function CalendarioVisitas({ tiendas, alAbrir }: { tiendas: St[]; alAbrir: (id: 
       <div className="flex flex-wrap items-center gap-2">
         <h4 id="t-calendario-visitas" className="text-body font-semibold">{s.calendario}</h4>
         <span className="flex items-center gap-1">
-          <Boton tam="icono" variante="fantasma" className="shrink-0" aria-label={s.semanaAnterior} onClick={() => mover(-1)}><ChevronLeft aria-hidden className="size-6" /></Boton>
+          <Boton tam="icono" variante="fantasma" className="shrink-0" aria-label={s.semanaAnterior} onClick={() => mover(-1)}><ChevronLeft aria-hidden size={ICONO_MD} className="size-6" /></Boton>
           <span className="text-small tabular-nums" aria-live="polite">{s.semana(fecha(lunes), fecha(sumarDias(lunes, 6)))}</span>
-          <Boton tam="icono" variante="fantasma" className="shrink-0" aria-label={s.semanaSiguiente} onClick={() => mover(1)}><ChevronRight aria-hidden className="size-6" /></Boton>
+          <Boton tam="icono" variante="fantasma" className="shrink-0" aria-label={s.semanaSiguiente} onClick={() => mover(1)}><ChevronRight aria-hidden size={ICONO_MD} className="size-6" /></Boton>
         </span>
       </div>
       {!mercados.length ? <p className="text-small text-text-secondary">{s.sinMercados}</p> : (

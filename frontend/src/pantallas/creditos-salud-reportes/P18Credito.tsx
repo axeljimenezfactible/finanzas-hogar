@@ -140,10 +140,10 @@ export default function P18Credito({ params, sub, consulta }: PropsPantalla) {
   return (
     <div className="flex flex-col gap-6 tabular-nums">
       <Barra>
-        <Boton variante="secundario" onClick={() => navegar(rutaCondiciones(id))}><Settings2 aria-hidden className="size-4" />{c.editarCondiciones}</Boton>
-        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-20') + `?credito=${id}`)}><Calculator aria-hidden className="size-4" />{c.simular}</Boton>
-        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-19', { id, compra: 'nueva' }))}><Plus aria-hidden className="size-4" />{c.registrarCompraCorto}</Boton>
-        <Boton variante="primario" deshabilitadoPor={siguiente ? undefined : c.sinPagosPendientes} onClick={() => siguiente && navegar(conConsulta({ hoja: 'pago', pago: String(siguiente.id) }))}><CircleCheck aria-hidden className="size-4" />{c.marcarPago}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(rutaCondiciones(id))}><Settings2 aria-hidden className="size-5" />{c.editarCondiciones}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-20') + `?credito=${id}`)}><Calculator aria-hidden className="size-5" />{c.simular}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-19', { id, compra: 'nueva' }))}><Plus aria-hidden className="size-5" />{c.registrarCompraCorto}</Boton>
+        <Boton variante="primario" deshabilitadoPor={siguiente ? undefined : c.sinPagosPendientes} onClick={() => siguiente && navegar(conConsulta({ hoja: 'pago', pago: String(siguiente.id) }))}><CircleCheck aria-hidden className="size-5" />{c.marcarPago}</Boton>
       </Barra>
       <ConDatos consulta={linea}>{(l) => {
         // Mientras cargan los pagos (dan el inicio del rango), la consulta de eventos espera: se muestra «Cargando», no un error.

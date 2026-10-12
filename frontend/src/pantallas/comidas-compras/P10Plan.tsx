@@ -145,7 +145,7 @@ function Casilla({ celdas, tiempo, personas, receta, alAbrir }: { celdas: Celda[
     : llenas.map((c) => ({ quien: nombre(c.person_id), c, c2: false, costo: c.cost_cents ?? 0 }))
   return (
     <button type="button" onClick={alAbrir} aria-label={`${tiempo}: ${llenas.length ? lineas.map((l) => `${l.quien} ${l.c.is_eating_out ? t.fuera : receta(l.c.recipe_id ?? 0)}`).join(', ') : t.vacia}`}
-      className="flex min-h-11 w-full flex-col items-start gap-0.5 rounded-sm border border-border-divider px-2 py-1 text-left hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus">
+      className="flex min-h-11 w-full flex-col items-start gap-1 rounded-sm border border-border-control px-2 py-1 text-left hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus">
       <span className="text-caption font-medium text-text-secondary">{tiempo}</span>
       {llenas.length === 0 ? <span className="text-small text-text-secondary">{t.vacia}</span> : lineas.map((l, k) => (
         <span key={`${l.c.person_id}-${k}`} className="flex flex-col text-small">
@@ -242,7 +242,8 @@ function Tendencias({ personas }: { personas: Esquemas['Person'][] }) {
   return (
     <ConDatos consulta={c}>{(d) => {
       if (!d.weeks.length) return <Vacio texto={textos.vacio.grafica} />
-      const cats = d.weeks.map((w) => diaCorto(w.week_start) + ' ' + textoMes(w.week_start.slice(0, 7)))
+      // U5-07 y CONVENCIONES-frontend §5: «Lun 5 oct 2026» en los ejes y en «Ver como tabla».
+      const cats = d.weeks.map((w) => fechaConDia(w.week_start))
       const serie = (id: number, campo: 'avg_kcal_per_day' | 'daily_kcal_target') => d.weeks.map((w) => w.persons.find((x) => x.person_id === id)?.[campo] ?? 0)
       return (
         <div className="grid gap-4 desktop:grid-cols-2">
@@ -274,7 +275,7 @@ function Calendario({ semana }: { semana: string }) {
           {d.days.map((x) => (
             <li key={x.plan_date}>
               <button type="button" onClick={() => navegar(conConsulta({ sub: null, semana: semanaDe(x.plan_date) }))}
-                className={cn('flex min-h-11 w-full flex-col items-center rounded-sm border border-border-divider p-1 text-small focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus', ROL[x.status])}
+                className={cn('flex min-h-11 w-full flex-col items-center rounded-sm border border-border-control p-1 text-small focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus', ROL[x.status])}
                 aria-label={`${fechaConDia(x.plan_date)}: ${t.estadosDia[x.status]}`}>
                 <span className="tabular-nums">{Number(x.plan_date.slice(8))}</span>
                 <span className="hidden text-caption text-text-secondary tablet:inline">{t.estadosDia[x.status]}</span>

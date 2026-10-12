@@ -28,17 +28,20 @@ const ROL = {
 export function Franja({ rol, children, accion, alerta }: { rol: keyof typeof ROL; children: ReactNode; accion?: ReactNode; alerta?: boolean }) {
   const { icono: Icono, clase, color } = ROL[rol]
   return (
-    <div role={alerta ? 'alert' : 'status'} className={cn('flex items-center gap-2 rounded-md p-3 text-small text-text-default', clase)}>
-      <Icono aria-hidden className={cn('size-5 shrink-0', color)} />
-      <span className="flex-1">{children}</span>
+    <div role={alerta ? 'alert' : 'status'} className={cn('flex flex-col gap-2 rounded-md p-3 text-small text-text-default tablet:flex-row tablet:items-center', clase)}>
+      {/* Por debajo de 768 px el texto y la acción se apilan a todo el ancho (densidad cómoda, DESIGN §7.14–§7.15). */}
+      <span className="flex min-w-0 flex-1 items-start gap-2 tablet:items-center">
+        <Icono aria-hidden className={cn('size-5 shrink-0', color)} />
+        <span className="min-w-0 flex-1">{children}</span>
+      </span>
       {accion}
     </div>
   )
 }
 export function Vacio({ icono, texto, accion }: { icono?: ReactNode; texto: string; accion?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-3 py-10 text-center text-text-secondary">
-      {icono && <span aria-hidden className="text-icon-default [&_svg]:size-6">{icono}</span>}
+    <div className="flex flex-col items-center gap-3 py-12 text-center text-text-secondary">
+      {icono && <span aria-hidden className="text-icon-default [&_svg]:size-6 [&_svg]:stroke-[1.5]">{icono}</span>}
       <p className="text-body">{texto}</p>
       {accion}
     </div>

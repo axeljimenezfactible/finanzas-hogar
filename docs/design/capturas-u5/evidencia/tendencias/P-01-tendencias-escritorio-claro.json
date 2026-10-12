@@ -1,0 +1,87 @@
+{
+ "combinacion": "escritorio-claro",
+ "ruta": "/inicio?sub=tendencias",
+ "puntero_grueso": false,
+ "figuras": [
+  {
+   "figura": "grafica-t1",
+   "titulo": "Plan contra real por mes",
+   "textos": [
+    "$0",
+    "$500",
+    "$1 mil",
+    "$1.5 mil",
+    "$2 mil",
+    "nov-2025",
+    "mar-2026",
+    "jul-2026",
+    "Real",
+    "Plan"
+   ],
+   "encimadas": [],
+   "fuera_del_lienzo": []
+  },
+  {
+   "figura": "grafica-t2",
+   "titulo": "Devengado contra efectivo",
+   "textos": [
+    "$0",
+    "$3 mil",
+    "$6 mil",
+    "$9 mil",
+    "$12 mil",
+    "$15 mil",
+    "$18 mil",
+    "$21 mil",
+    "oct-2026",
+    "ene-2027",
+    "abr-2027",
+    "jul-2027",
+    "Proyección",
+    "Efectivo acumulado $19,397.22",
+    "Diferencia acumulada $0.00",
+    "Hoy"
+   ],
+   "encimadas": [],
+   "fuera_del_lienzo": []
+  },
+  {
+   "figura": "grafica-t3",
+   "titulo": "Deuda viva proyectada",
+   "textos": [
+    "$0",
+    "$3 mil",
+    "$6 mil",
+    "$9 mil",
+    "$12 mil",
+    "$15 mil",
+    "$18 mil",
+    "$21 mil",
+    "oct-2026",
+    "ene-2027",
+    "abr-2027",
+    "jul-2027",
+    "$18,025.47",
+    "$0.00",
+    "$0.00",
+    "Deuda viva total"
+   ],
+   "encimadas": [],
+   "fuera_del_lienzo": []
+  },
+  {
+   "figura": "grafica-t4a",
+   "titulo": "Costo por semana",
+   "textos": [],
+   "encimadas": [],
+   "fuera_del_lienzo": []
+  },
+  {
+   "figura": "grafica-t4b",
+   "titulo": "kcal al día por persona",
+   "textos": [],
+   "encimadas": [],
+   "fuera_del_lienzo": []
+  }
+ ]
+}

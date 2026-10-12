@@ -40,13 +40,13 @@ export const Variantes: Historia = {
           <Fila>
             <Etiquetada etiqueta="Reposo"><Boton variante={v}>{texto}</Boton></Etiquetada>
             <Etiquetada etiqueta="Con icono">
-              <Boton variante={v}>{v === 'destructivo' ? <Trash2 aria-hidden className="size-4" /> : <Save aria-hidden className="size-4" />}{texto}</Boton>
+              <Boton variante={v}>{v === 'destructivo' ? <Trash2 aria-hidden className="size-5" /> : <Save aria-hidden className="size-5" />}{texto}</Boton>
             </Etiquetada>
             <Etiquetada etiqueta="Deshabilitado">
               <Boton variante={v} deshabilitadoPor={textos.conexion.requiere}>{texto}</Boton>
             </Etiquetada>
             <Etiquetada etiqueta="Ocupado">
-              <Boton variante={v} aria-busy="true"><LoaderCircle aria-hidden className="size-4" />{texto}</Boton>
+              <Boton variante={v} aria-busy="true"><LoaderCircle aria-hidden className="size-5" />{texto}</Boton>
             </Etiquetada>
           </Fila>
         </Grupo>

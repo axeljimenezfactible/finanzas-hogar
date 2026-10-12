@@ -1,0 +1,218 @@
+{
+ "pantalla": "P-26.03",
+ "combinacion": "escritorio-oscuro",
+ "alcance": "body",
+ "evaluados": 73,
+ "pares_unicos": 10,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 17,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 20,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
+     "texto": "Axel"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "01"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "02"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-5 text-icon-de"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-5 text-icon-defa"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
+     "texto": "lucide lucide-monitor size-5 text-icon-d"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 8.08,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "03"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > div.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Registrar ingreso extra"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "nav.hidden.text-small > ol.flex.gap-1 > li > a.hover:underline",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > header.flex.flex-col > p.text-body.text-text-secondary",
+     "texto": "Capturar el ingreso quincenal esperado d"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 9,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > button.absolute.top-2 > svg.lucide.lucide-chevrons-left",
+     "texto": "lucide lucide-chevrons-left size-6"
+    },
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > svg.lucide.lucide-user-round",
+     "texto": "lucide lucide-user-round lucide-user-2 s"
+    },
+    {
+     "nodo": "li > div.flex.items-center > button.inline-flex.size-8 > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-5 trans"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 33,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",
+     "texto": "Finanzas Hogar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Buscar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Registrar gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.flex-1",
+     "texto": "Ingresos"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.ml-auto.hidden > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": true,
+   "razon": 14.068,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "h2#ajustes-seccion",
+     "texto": "Ingresos"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,262 @@
+{
+ "pantalla": "P-14",
+ "combinacion": "android-oscuro",
+ "alcance": "body",
+ "evaluados": 23,
+ "pares_unicos": 13,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 6,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#B7B8C0",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.962,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "select#p14-canasta",
+     "texto": "Lista de compras · Semana 42 · 12-oct-20"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Inicio"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Comidas"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > button.group.flex",
+     "texto": "Buscar"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > button.group.flex > span.inline-flex.h-8 > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#303258",
+   "umbral": 3,
+   "grande": false,
+   "razon": 8.041,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 8.08,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.min-w-0 > div.flex.flex-wrap > span.rounded-full.bg-surface-selected",
+     "texto": "Semana vigente"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Resumen"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Detalle"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-col > p.text-body",
+     "texto": "La canasta no tiene artículos"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > span.text-icon-default.[&_svg]:size-6 > svg.lucide.lucide-scale",
+     "texto": "lucide lucide-scale size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#1E203A",
+   "bg": "#C9CFFF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.471,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Compras"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    },
+    {
+     "nodo": "div.min-w-0 > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-chevron-left",
+     "texto": "lucide lucide-chevron-left size-6"
+    },
+    {
+     "nodo": "div.min-w-0 > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": true,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Comparar canasta"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Resumen"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.min-w-0 > div.flex.flex-wrap > span[data-prueba=\"semana\"]",
+     "texto": "Semana 42 · 12-oct-2026 al 18-oct-2026"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > label.flex.flex-col",
+     "texto": "Canasta"
+    }
+   ]
+  }
+ ]
+}

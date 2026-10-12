@@ -1,0 +1,890 @@
+[
+ {
+  "n": 1,
+  "pantalla": "Inicio · tarjeta Próximo pago",
+  "cifra": "Próximo pago (30-oct-2026)",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 2,
+  "pantalla": "Inicio · tarjeta Próximo pago",
+  "cifra": "Disponible hoy, lectura B",
+  "mostrado": "6905.50",
+  "esperado": "6905.50",
+  "dif": 0
+ },
+ {
+  "n": 3,
+  "pantalla": "Inicio · tarjeta Próximo pago",
+  "cifra": "Parte del hogar del pago 1",
+  "mostrado": "598.82",
+  "esperado": "598.82",
+  "dif": 0
+ },
+ {
+  "n": 4,
+  "pantalla": "Inicio · tarjeta Próximo pago",
+  "cifra": "Parte de Karen del pago 1",
+  "mostrado": "374.93",
+  "esperado": "374.93",
+  "dif": 0
+ },
+ {
+  "n": 5,
+  "pantalla": "Inicio · Detalle · Disponible por línea",
+  "cifra": "Disponible inicial, lectura A",
+  "mostrado": "10000.00",
+  "esperado": "10000.00",
+  "dif": 0
+ },
+ {
+  "n": 6,
+  "pantalla": "Inicio · Detalle · Disponible por línea",
+  "cifra": "Disponible inicial, lectura B",
+  "mostrado": "6905.50",
+  "esperado": "6905.50",
+  "dif": 0
+ },
+ {
+  "n": 7,
+  "pantalla": "Inicio · Detalle · Disponible por línea",
+  "cifra": "Mínimo del horizonte, lectura A",
+  "mostrado": "8094.50",
+  "esperado": "8094.50",
+  "dif": 0
+ },
+ {
+  "n": 8,
+  "pantalla": "Inicio · Detalle · Disponible por línea",
+  "cifra": "Mínimo del horizonte, lectura B",
+  "mostrado": "5000.00",
+  "esperado": "5000.00",
+  "dif": 0
+ },
+ {
+  "n": 9,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (oct-2026)",
+  "cifra": "P1 devengado total",
+  "mostrado": "1947.50",
+  "esperado": "1947.50",
+  "dif": 0
+ },
+ {
+  "n": 10,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (oct-2026)",
+  "cifra": "P1 efectivo total",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 11,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (oct-2026)",
+  "cifra": "P1 diferencia acumulada",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 12,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (oct-2026)",
+  "cifra": "P1 devengado hogar",
+  "mostrado": "1197.64",
+  "esperado": "1197.64",
+  "dif": 0
+ },
+ {
+  "n": 13,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (oct-2026)",
+  "cifra": "P1 devengado Karen",
+  "mostrado": "749.86",
+  "esperado": "749.86",
+  "dif": 0
+ },
+ {
+  "n": 14,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (oct-2026)",
+  "cifra": "P1 efectivo hogar",
+  "mostrado": "598.82",
+  "esperado": "598.82",
+  "dif": 0
+ },
+ {
+  "n": 15,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (oct-2026)",
+  "cifra": "P1 efectivo Karen",
+  "mostrado": "374.93",
+  "esperado": "374.93",
+  "dif": 0
+ },
+ {
+  "n": 16,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (nov-2026)",
+  "cifra": "P2 devengado total",
+  "mostrado": "1947.50",
+  "esperado": "1947.50",
+  "dif": 0
+ },
+ {
+  "n": 17,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (nov-2026)",
+  "cifra": "P2 efectivo total",
+  "mostrado": "1947.50",
+  "esperado": "1947.50",
+  "dif": 0
+ },
+ {
+  "n": 18,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (nov-2026)",
+  "cifra": "P2 diferencia acumulada",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 19,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (nov-2026)",
+  "cifra": "P2 devengado hogar",
+  "mostrado": "1197.64",
+  "esperado": "1197.64",
+  "dif": 0
+ },
+ {
+  "n": 20,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (nov-2026)",
+  "cifra": "P2 devengado Karen",
+  "mostrado": "749.86",
+  "esperado": "749.86",
+  "dif": 0
+ },
+ {
+  "n": 21,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (nov-2026)",
+  "cifra": "P2 efectivo hogar",
+  "mostrado": "1197.64",
+  "esperado": "1197.64",
+  "dif": 0
+ },
+ {
+  "n": 22,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (nov-2026)",
+  "cifra": "P2 efectivo Karen",
+  "mostrado": "749.86",
+  "esperado": "749.86",
+  "dif": 0
+ },
+ {
+  "n": 23,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (dic-2026)",
+  "cifra": "P3 devengado total",
+  "mostrado": "2517.37",
+  "esperado": "2517.37",
+  "dif": 0
+ },
+ {
+  "n": 24,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (dic-2026)",
+  "cifra": "P3 efectivo total",
+  "mostrado": "2232.43",
+  "esperado": "2232.43",
+  "dif": 0
+ },
+ {
+  "n": 25,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (dic-2026)",
+  "cifra": "P3 diferencia acumulada",
+  "mostrado": "1258.69",
+  "esperado": "1258.69",
+  "dif": 0
+ },
+ {
+  "n": 26,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (dic-2026)",
+  "cifra": "P3 devengado hogar",
+  "mostrado": "1767.51",
+  "esperado": "1767.51",
+  "dif": 0
+ },
+ {
+  "n": 27,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (dic-2026)",
+  "cifra": "P3 devengado Karen",
+  "mostrado": "749.86",
+  "esperado": "749.86",
+  "dif": 0
+ },
+ {
+  "n": 28,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (dic-2026)",
+  "cifra": "P3 efectivo hogar",
+  "mostrado": "1482.57",
+  "esperado": "1482.57",
+  "dif": 0
+ },
+ {
+  "n": 29,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (dic-2026)",
+  "cifra": "P3 efectivo Karen",
+  "mostrado": "749.86",
+  "esperado": "749.86",
+  "dif": 0
+ },
+ {
+  "n": 30,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (ene-2027)",
+  "cifra": "P4 devengado total",
+  "mostrado": "2716.37",
+  "esperado": "2716.37",
+  "dif": 0
+ },
+ {
+  "n": 31,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (ene-2027)",
+  "cifra": "P4 efectivo total",
+  "mostrado": "2716.36",
+  "esperado": "2716.36",
+  "dif": 0
+ },
+ {
+  "n": 32,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (ene-2027)",
+  "cifra": "P4 diferencia acumulada",
+  "mostrado": "1258.70",
+  "esperado": "1258.70",
+  "dif": 0
+ },
+ {
+  "n": 33,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (ene-2027)",
+  "cifra": "P4 devengado hogar",
+  "mostrado": "1767.51",
+  "esperado": "1767.51",
+  "dif": 0
+ },
+ {
+  "n": 34,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (ene-2027)",
+  "cifra": "P4 devengado Karen",
+  "mostrado": "948.86",
+  "esperado": "948.86",
+  "dif": 0
+ },
+ {
+  "n": 35,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (ene-2027)",
+  "cifra": "P4 efectivo hogar",
+  "mostrado": "1767.50",
+  "esperado": "1767.50",
+  "dif": 0
+ },
+ {
+  "n": 36,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (ene-2027)",
+  "cifra": "P4 efectivo Karen",
+  "mostrado": "948.86",
+  "esperado": "948.86",
+  "dif": 0
+ },
+ {
+  "n": 37,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (feb-2027)",
+  "cifra": "P5 devengado total",
+  "mostrado": "2517.37",
+  "esperado": "2517.37",
+  "dif": 0
+ },
+ {
+  "n": 38,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (feb-2027)",
+  "cifra": "P5 efectivo total",
+  "mostrado": "2517.38",
+  "esperado": "2517.38",
+  "dif": 0
+ },
+ {
+  "n": 39,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (feb-2027)",
+  "cifra": "P5 diferencia acumulada",
+  "mostrado": "1258.69",
+  "esperado": "1258.69",
+  "dif": 0
+ },
+ {
+  "n": 40,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (feb-2027)",
+  "cifra": "P5 devengado hogar",
+  "mostrado": "1767.51",
+  "esperado": "1767.51",
+  "dif": 0
+ },
+ {
+  "n": 41,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (feb-2027)",
+  "cifra": "P5 devengado Karen",
+  "mostrado": "749.86",
+  "esperado": "749.86",
+  "dif": 0
+ },
+ {
+  "n": 42,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (feb-2027)",
+  "cifra": "P5 efectivo hogar",
+  "mostrado": "1767.52",
+  "esperado": "1767.52",
+  "dif": 0
+ },
+ {
+  "n": 43,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (feb-2027)",
+  "cifra": "P5 efectivo Karen",
+  "mostrado": "749.86",
+  "esperado": "749.86",
+  "dif": 0
+ },
+ {
+  "n": 44,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "P6 devengado total",
+  "mostrado": "2716.37",
+  "esperado": "2716.37",
+  "dif": 0
+ },
+ {
+  "n": 45,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "P6 efectivo total",
+  "mostrado": "2716.36",
+  "esperado": "2716.36",
+  "dif": 0
+ },
+ {
+  "n": 46,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "P6 diferencia acumulada",
+  "mostrado": "1258.70",
+  "esperado": "1258.70",
+  "dif": 0
+ },
+ {
+  "n": 47,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "P6 devengado hogar",
+  "mostrado": "1767.51",
+  "esperado": "1767.51",
+  "dif": 0
+ },
+ {
+  "n": 48,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "P6 devengado Karen",
+  "mostrado": "948.86",
+  "esperado": "948.86",
+  "dif": 0
+ },
+ {
+  "n": 49,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "P6 efectivo hogar",
+  "mostrado": "1767.50",
+  "esperado": "1767.50",
+  "dif": 0
+ },
+ {
+  "n": 50,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "P6 efectivo Karen",
+  "mostrado": "948.86",
+  "esperado": "948.86",
+  "dif": 0
+ },
+ {
+  "n": 51,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "Devengado acumulado a P6",
+  "mostrado": "14362.48",
+  "esperado": "14362.48",
+  "dif": 0
+ },
+ {
+  "n": 52,
+  "pantalla": "Inicio · Tendencias · Devengado contra efectivo (mar-2027)",
+  "cifra": "Efectivo acumulado a P6",
+  "mostrado": "13103.78",
+  "esperado": "13103.78",
+  "dif": 0
+ },
+ {
+  "n": 53,
+  "pantalla": "Créditos · línea · Resumen",
+  "cifra": "Tasa a 4 quincenas (%, 4 decimales)",
+  "mostrado": "2586.85",
+  "esperado": "2586.85",
+  "dif": 0
+ },
+ {
+  "n": 54,
+  "pantalla": "Créditos · línea · Resumen",
+  "cifra": "Próximo pago",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 55,
+  "pantalla": "Créditos · línea · Resumen",
+  "cifra": "Disponible lectura A",
+  "mostrado": "10000.00",
+  "esperado": "10000.00",
+  "dif": 0
+ },
+ {
+  "n": 56,
+  "pantalla": "Créditos · línea · Resumen",
+  "cifra": "Disponible lectura B",
+  "mostrado": "6905.50",
+  "esperado": "6905.50",
+  "dif": 0
+ },
+ {
+  "n": 57,
+  "pantalla": "Créditos · línea · Detalle · Despensa 1",
+  "cifra": "Despensa 1 capital",
+  "mostrado": "3094.50",
+  "esperado": "3094.50",
+  "dif": 0
+ },
+ {
+  "n": 58,
+  "pantalla": "Créditos · línea · Detalle · Despensa 1",
+  "cifra": "Despensa 1 intereses",
+  "mostrado": "800.50",
+  "esperado": "800.50",
+  "dif": 0
+ },
+ {
+  "n": 59,
+  "pantalla": "Créditos · línea · Detalle · Despensa 1",
+  "cifra": "Despensa 1 total",
+  "mostrado": "3895.00",
+  "esperado": "3895.00",
+  "dif": 0
+ },
+ {
+  "n": 60,
+  "pantalla": "Créditos · línea · Detalle · Despensa 2",
+  "cifra": "Despensa 2 capital",
+  "mostrado": "4000.00",
+  "esperado": "4000.00",
+  "dif": 0
+ },
+ {
+  "n": 61,
+  "pantalla": "Créditos · línea · Detalle · Despensa 2",
+  "cifra": "Despensa 2 intereses",
+  "mostrado": "1034.74",
+  "esperado": "1034.74",
+  "dif": 0
+ },
+ {
+  "n": 62,
+  "pantalla": "Créditos · línea · Detalle · Despensa 2",
+  "cifra": "Despensa 2 total",
+  "mostrado": "5034.74",
+  "esperado": "5034.74",
+  "dif": 0
+ },
+ {
+  "n": 63,
+  "pantalla": "Créditos · línea · Detalle · Despensa 3",
+  "cifra": "Despensa 3 capital",
+  "mostrado": "4000.00",
+  "esperado": "4000.00",
+  "dif": 0
+ },
+ {
+  "n": 64,
+  "pantalla": "Créditos · línea · Detalle · Despensa 3",
+  "cifra": "Despensa 3 intereses",
+  "mostrado": "1034.74",
+  "esperado": "1034.74",
+  "dif": 0
+ },
+ {
+  "n": 65,
+  "pantalla": "Créditos · línea · Detalle · Despensa 3",
+  "cifra": "Despensa 3 total",
+  "mostrado": "5034.74",
+  "esperado": "5034.74",
+  "dif": 0
+ },
+ {
+  "n": 66,
+  "pantalla": "Créditos · línea · Detalle · Despensa 4",
+  "cifra": "Despensa 4 capital",
+  "mostrado": "4000.00",
+  "esperado": "4000.00",
+  "dif": 0
+ },
+ {
+  "n": 67,
+  "pantalla": "Créditos · línea · Detalle · Despensa 4",
+  "cifra": "Despensa 4 intereses",
+  "mostrado": "1034.74",
+  "esperado": "1034.74",
+  "dif": 0
+ },
+ {
+  "n": 68,
+  "pantalla": "Créditos · línea · Detalle · Despensa 4",
+  "cifra": "Despensa 4 total",
+  "mostrado": "5034.74",
+  "esperado": "5034.74",
+  "dif": 0
+ },
+ {
+  "n": 69,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-oct-2026)",
+  "cifra": "pago 30-oct-2026: monto",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 70,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-oct-2026)",
+  "cifra": "pago 30-oct-2026: disponible A",
+  "mostrado": "10773.63",
+  "esperado": "10773.63",
+  "dif": 0
+ },
+ {
+  "n": 71,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-oct-2026)",
+  "cifra": "pago 30-oct-2026: disponible B",
+  "mostrado": "7679.13",
+  "esperado": "7679.13",
+  "dif": 0
+ },
+ {
+  "n": 72,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-nov-2026)",
+  "cifra": "pago 15-nov-2026: monto",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 73,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-nov-2026)",
+  "cifra": "pago 15-nov-2026: disponible A",
+  "mostrado": "11547.26",
+  "esperado": "11547.26",
+  "dif": 0
+ },
+ {
+  "n": 74,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-nov-2026)",
+  "cifra": "pago 15-nov-2026: disponible B",
+  "mostrado": "8452.76",
+  "esperado": "8452.76",
+  "dif": 0
+ },
+ {
+  "n": 75,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-nov-2026)",
+  "cifra": "pago 30-nov-2026: monto",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 76,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-nov-2026)",
+  "cifra": "pago 30-nov-2026: disponible A",
+  "mostrado": "12320.89",
+  "esperado": "12320.89",
+  "dif": 0
+ },
+ {
+  "n": 77,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-nov-2026)",
+  "cifra": "pago 30-nov-2026: disponible B",
+  "mostrado": "9226.39",
+  "esperado": "9226.39",
+  "dif": 0
+ },
+ {
+  "n": 78,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-dic-2026)",
+  "cifra": "compra 10-dic-2026: monto",
+  "mostrado": "4000.00",
+  "esperado": "4000.00",
+  "dif": 0
+ },
+ {
+  "n": 79,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-dic-2026)",
+  "cifra": "compra 10-dic-2026: disponible A",
+  "mostrado": "8320.89",
+  "esperado": "8320.89",
+  "dif": 0
+ },
+ {
+  "n": 80,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-dic-2026)",
+  "cifra": "compra 10-dic-2026: disponible B",
+  "mostrado": "5226.39",
+  "esperado": "5226.39",
+  "dif": 0
+ },
+ {
+  "n": 81,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-dic-2026)",
+  "cifra": "pago 15-dic-2026: monto",
+  "mostrado": "973.75",
+  "esperado": "973.75",
+  "dif": 0
+ },
+ {
+  "n": 82,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-dic-2026)",
+  "cifra": "pago 15-dic-2026: disponible A",
+  "mostrado": "9094.50",
+  "esperado": "9094.50",
+  "dif": 0
+ },
+ {
+  "n": 83,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-dic-2026)",
+  "cifra": "pago 15-dic-2026: disponible B",
+  "mostrado": "6000.00",
+  "esperado": "6000.00",
+  "dif": 0
+ },
+ {
+  "n": 84,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-dic-2026)",
+  "cifra": "pago 30-dic-2026: monto",
+  "mostrado": "1258.68",
+  "esperado": "1258.68",
+  "dif": 0
+ },
+ {
+  "n": 85,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-dic-2026)",
+  "cifra": "pago 30-dic-2026: disponible A",
+  "mostrado": "10094.50",
+  "esperado": "10094.50",
+  "dif": 0
+ },
+ {
+  "n": 86,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-dic-2026)",
+  "cifra": "pago 30-dic-2026: disponible B",
+  "mostrado": "7000.00",
+  "esperado": "7000.00",
+  "dif": 0
+ },
+ {
+  "n": 87,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-ene-2027)",
+  "cifra": "pago 15-ene-2027: monto",
+  "mostrado": "1258.68",
+  "esperado": "1258.68",
+  "dif": 0
+ },
+ {
+  "n": 88,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-ene-2027)",
+  "cifra": "pago 15-ene-2027: disponible A",
+  "mostrado": "11094.50",
+  "esperado": "11094.50",
+  "dif": 0
+ },
+ {
+  "n": 89,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-ene-2027)",
+  "cifra": "pago 15-ene-2027: disponible B",
+  "mostrado": "8000.00",
+  "esperado": "8000.00",
+  "dif": 0
+ },
+ {
+  "n": 90,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-ene-2027)",
+  "cifra": "pago 30-ene-2027: monto",
+  "mostrado": "1258.68",
+  "esperado": "1258.68",
+  "dif": 0
+ },
+ {
+  "n": 91,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-ene-2027)",
+  "cifra": "pago 30-ene-2027: disponible A",
+  "mostrado": "12094.50",
+  "esperado": "12094.50",
+  "dif": 0
+ },
+ {
+  "n": 92,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-ene-2027)",
+  "cifra": "pago 30-ene-2027: disponible B",
+  "mostrado": "9000.00",
+  "esperado": "9000.00",
+  "dif": 0
+ },
+ {
+  "n": 93,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-feb-2027)",
+  "cifra": "compra 10-feb-2027: monto",
+  "mostrado": "4000.00",
+  "esperado": "4000.00",
+  "dif": 0
+ },
+ {
+  "n": 94,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-feb-2027)",
+  "cifra": "compra 10-feb-2027: disponible A",
+  "mostrado": "8094.50",
+  "esperado": "8094.50",
+  "dif": 0
+ },
+ {
+  "n": 95,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-feb-2027)",
+  "cifra": "compra 10-feb-2027: disponible B",
+  "mostrado": "5000.00",
+  "esperado": "5000.00",
+  "dif": 0
+ },
+ {
+  "n": 96,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-feb-2027)",
+  "cifra": "pago 15-feb-2027: monto",
+  "mostrado": "1258.70",
+  "esperado": "1258.70",
+  "dif": 0
+ },
+ {
+  "n": 97,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-feb-2027)",
+  "cifra": "pago 15-feb-2027: disponible A",
+  "mostrado": "9094.50",
+  "esperado": "9094.50",
+  "dif": 0
+ },
+ {
+  "n": 98,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-feb-2027)",
+  "cifra": "pago 15-feb-2027: disponible B",
+  "mostrado": "6000.00",
+  "esperado": "6000.00",
+  "dif": 0
+ },
+ {
+  "n": 99,
+  "pantalla": "Créditos · línea · Tendencias · serie (28-feb-2027)",
+  "cifra": "pago 28-feb-2027: monto",
+  "mostrado": "1258.68",
+  "esperado": "1258.68",
+  "dif": 0
+ },
+ {
+  "n": 100,
+  "pantalla": "Créditos · línea · Tendencias · serie (28-feb-2027)",
+  "cifra": "pago 28-feb-2027: disponible A",
+  "mostrado": "10094.50",
+  "esperado": "10094.50",
+  "dif": 0
+ },
+ {
+  "n": 101,
+  "pantalla": "Créditos · línea · Tendencias · serie (28-feb-2027)",
+  "cifra": "pago 28-feb-2027: disponible B",
+  "mostrado": "7000.00",
+  "esperado": "7000.00",
+  "dif": 0
+ },
+ {
+  "n": 102,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-mar-2027)",
+  "cifra": "pago 15-mar-2027: monto",
+  "mostrado": "1258.68",
+  "esperado": "1258.68",
+  "dif": 0
+ },
+ {
+  "n": 103,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-mar-2027)",
+  "cifra": "pago 15-mar-2027: disponible A",
+  "mostrado": "11094.50",
+  "esperado": "11094.50",
+  "dif": 0
+ },
+ {
+  "n": 104,
+  "pantalla": "Créditos · línea · Tendencias · serie (15-mar-2027)",
+  "cifra": "pago 15-mar-2027: disponible B",
+  "mostrado": "8000.00",
+  "esperado": "8000.00",
+  "dif": 0
+ },
+ {
+  "n": 105,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-mar-2027)",
+  "cifra": "pago 30-mar-2027: monto",
+  "mostrado": "1258.68",
+  "esperado": "1258.68",
+  "dif": 0
+ },
+ {
+  "n": 106,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-mar-2027)",
+  "cifra": "pago 30-mar-2027: disponible A",
+  "mostrado": "12094.50",
+  "esperado": "12094.50",
+  "dif": 0
+ },
+ {
+  "n": 107,
+  "pantalla": "Créditos · línea · Tendencias · serie (30-mar-2027)",
+  "cifra": "pago 30-mar-2027: disponible B",
+  "mostrado": "9000.00",
+  "esperado": "9000.00",
+  "dif": 0
+ },
+ {
+  "n": 108,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-abr-2027)",
+  "cifra": "compra 10-abr-2027: monto",
+  "mostrado": "4000.00",
+  "esperado": "4000.00",
+  "dif": 0
+ },
+ {
+  "n": 109,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-abr-2027)",
+  "cifra": "compra 10-abr-2027: disponible A",
+  "mostrado": "8094.50",
+  "esperado": "8094.50",
+  "dif": 0
+ },
+ {
+  "n": 110,
+  "pantalla": "Créditos · línea · Tendencias · serie (10-abr-2027)",
+  "cifra": "compra 10-abr-2027: disponible B",
+  "mostrado": "5000.00",
+  "esperado": "5000.00",
+  "dif": 0
+ },
+ {
+  "n": 111,
+  "pantalla": "Flujo y proyección · Resumen",
+  "cifra": "Deuda viva al 10-abr-2027",
+  "mostrado": "6293.44",
+  "esperado": "6293.44",
+  "dif": 0
+ }
+]

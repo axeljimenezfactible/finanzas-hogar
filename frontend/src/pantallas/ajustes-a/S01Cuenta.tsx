@@ -156,8 +156,8 @@ function EsteDispositivo() {
   return (
     <Bloque titulo={c.esteDispositivo} id="b-dispositivo">
       <Fila etiqueta={c.instalada}><span className="px-2">{instalada ? t.comun.si : t.comun.no}</span></Fila>
-      <Fila etiqueta={c.certificado}><div className="flex flex-col gap-2"><Boton className={cn('w-fit')} deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void descargar()}><Download aria-hidden className="size-4" />{c.descargar}</Boton><p className="text-small text-text-secondary">{c.instrucciones}</p></div></Fila>
-      <Fila etiqueta={c.salir}><Boton variante="secundario" className="w-fit" onClick={() => setPregunta(true)}><LogOut aria-hidden className="size-4" />{c.salir}</Boton></Fila>
+      <Fila etiqueta={c.certificado}><div className="flex flex-col gap-2"><Boton className={cn('w-fit')} deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void descargar()}><Download aria-hidden className="size-5" />{c.descargar}</Boton><p className="text-small text-text-secondary">{c.instrucciones}</p></div></Fila>
+      <Fila etiqueta={c.salir}><Boton variante="secundario" className="w-fit" onClick={() => setPregunta(true)}><LogOut aria-hidden className="size-5" />{c.salir}</Boton></Fila>
       <Hoja abierta={pregunta} alCambiar={setPregunta} titulo={c.salir} pie={<div className="flex justify-end gap-2"><Boton onClick={() => setPregunta(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" onClick={() => void salir()}>{c.salir}</Boton></div>}>
         <BloquePrevia previa={{ notas: [c.salirPregunta] }} />
       </Hoja>

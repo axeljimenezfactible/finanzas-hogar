@@ -58,7 +58,7 @@ export default function S07Recetas() {
           <Fila etiqueta={r.porOrigen}><span className="px-2 tabular-nums">{a.recipe_counts.map((c) => `${r.origenes[c.origin]}: ${c.count}`).join(' · ')}</span></Fila>
         </>}</ConDatos>
       </Bloque>
-      <Bloque titulo={r.recetario} id="b-recetario" accion={<Boton variante="primario" onClick={() => setNueva(true)}><Plus aria-hidden className="size-4" />{r.nueva}</Boton>}>
+      <Bloque titulo={r.recetario} id="b-recetario" accion={<Boton variante="primario" onClick={() => setNueva(true)}><Plus aria-hidden className="size-5" />{r.nueva}</Boton>}>
         <ConDatos consulta={recetas}>{(d) => {
           if (!d.items.length) return <Vacio texto={r.sin} accion={<Boton variante="primario" onClick={() => setNueva(true)}>{r.nueva}</Boton>} />
           const guardar = (x: Rec) => async (c: Esquemas['RecipeUpdate']) => { await pedir('patch', '/api/v1/recipes/{recipe_id}', { ruta: { recipe_id: x.id }, cuerpo: c }); recetas.recargar() }

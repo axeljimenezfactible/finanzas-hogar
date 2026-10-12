@@ -1,0 +1,290 @@
+{
+ "pantalla": "P-24",
+ "combinacion": "android-oscuro",
+ "alcance": "body",
+ "evaluados": 105,
+ "pares_unicos": 14,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 9,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#B7B8C0",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.962,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > label.flex.flex-col > select.h-9.w-full",
+     "texto": "oct-2026 (parcial)"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > input.h-9.rounded-md",
+     "texto": "Filtrar"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Agrupar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 28,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dt.text-text-secondary",
+     "texto": "Ingreso"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dt.text-text-secondary",
+     "texto": "Plan"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dt.text-text-secondary",
+     "texto": "Real"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Generar PDF"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 8,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > p.text-small.text-text-secondary",
+     "texto": "Aún no hay PDF de este mes."
+    },
+    {
+     "nodo": "thead > tr.border-b.border-border-divider > th.px-2.py-1 > button.inline-flex.h-9",
+     "texto": "Categoría"
+    },
+    {
+     "nodo": "thead > tr.border-b.border-border-divider > th.px-2.py-1 > button.inline-flex.h-9",
+     "texto": "Plan"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#1E203A",
+   "bg": "#C9CFFF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.471,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Generar PDF"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#1E203A",
+   "bg": "#C9CFFF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.471,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 24,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dd.text-right.tabular-nums",
+     "texto": "$0.00"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dd.text-right.tabular-nums",
+     "texto": "$2,000.00"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > dl.grid.grid-cols-2 > dd.text-right.tabular-nums",
+     "texto": "$1,197.64"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": true,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Reporte mensual"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 30,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > label.flex.flex-col",
+     "texto": "Mes del reporte"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > label.flex.flex-col > select.h-9.w-full",
+     "texto": "oct-2026 (parcial)"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > h2.text-title-3.font-semibold",
+     "texto": "PDF del mes"
+    }
+   ]
+  }
+ ]
+}

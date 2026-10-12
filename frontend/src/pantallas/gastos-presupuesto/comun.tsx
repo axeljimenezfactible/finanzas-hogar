@@ -79,11 +79,11 @@ export const useSinRed = () => (useConexion() ? undefined : textos.conexion.requ
 export const mensajeDe = (e: unknown) => (e instanceof ErrorApi ? e.message : textos.errores.generico)
 
 // ── Barra de avance (DESIGN §7.6): pista 8 px, llenado neutro; aviso y rebasado según el estado que da el API ──
-export function BarraAvance({ pct, estado, excedente }: { pct: number; estado?: 'normal' | 'warning' | 'exceeded' | null; excedente?: string }) {
+export function BarraAvance({ pct, estado, excedente, nombre }: { pct: number; estado?: 'normal' | 'warning' | 'exceeded' | null; excedente?: string; /** Nombre accesible del medidor: categoría, quincena o meta (U5-03, aria-meter-name). */ nombre: string }) {
   const alerta = estado === 'warning' || estado === 'exceeded'
   return (
     <div className="flex flex-col gap-1">
-      <div role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.min(pct, 100)} aria-valuetext={t.comun.delPlan(porcentaje(pct))} className="h-2 w-full overflow-hidden rounded-full bg-viz-track">
+      <div role="meter" aria-label={nombre} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.min(pct, 100)} aria-valuetext={t.comun.delPlan(porcentaje(pct))} className="h-2 w-full overflow-hidden rounded-full bg-viz-track">
         <div className={cn('h-full rounded-full', alerta ? 'bg-role-warning' : 'bg-viz-meter')} style={{ width: `${Math.max(0, Math.min(pct, 100))}%` }} />
       </div>
       {alerta && (

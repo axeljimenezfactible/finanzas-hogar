@@ -1,0 +1,366 @@
+{
+ "pantalla": "P-26.11",
+ "combinacion": "escritorio-claro",
+ "alcance": "body",
+ "evaluados": 126,
+ "pares_unicos": 17,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 13,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.466,
+   "elementos": 8,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > input.h-9.rounded-md",
+     "texto": "Filtrar"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Agrupar"
+    },
+    {
+     "nodo": "input#hora-respaldo",
+     "texto": ""
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#808189",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.466,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Elegir archivo CSV"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F0F1FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.021,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "11"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 33,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
+     "texto": "Axel"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "01"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "02"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-5 text-icon-de"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-5 text-icon-defa"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
+     "texto": "lucide lucide-monitor size-5 text-icon-d"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#8B5D00",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.127,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "ul.flex.flex-col > li.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-circle-alert",
+     "texto": "lucide lucide-circle-alert lucide-alert-"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-circle-alert",
+     "texto": "lucide lucide-circle-alert lucide-alert-"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-circle-alert",
+     "texto": "lucide lucide-circle-alert lucide-alert-"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.161,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-wrap > span.flex.w-full > button.inline-flex.select-none",
+     "texto": "Respaldar ahora"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Respaldar ahora"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.161,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "nav.hidden.text-small > ol.flex.gap-1 > li > a.hover:underline",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > div[data-prueba=\"seccion-11\"] > p.text-body.text-text-secondary",
+     "texto": "Respaldos locales con integridad y resta"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-wrap > span.flex.w-full > button.inline-flex.select-none",
+     "texto": "Respaldar ahora"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Respaldar ahora"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.flex-1",
+     "texto": "Datos y respaldos"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 10,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > button.absolute.top-2 > svg.lucide.lucide-chevrons-left",
+     "texto": "lucide lucide-chevrons-left size-6"
+    },
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > svg.lucide.lucide-user-round",
+     "texto": "lucide lucide-user-round lucide-user-2 s"
+    },
+    {
+     "nodo": "li > div.flex.items-center > button.inline-flex.size-8 > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-5 trans"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 49,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",
+     "texto": "Finanzas Hogar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Buscar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Registrar gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.ml-auto.hidden > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "h2#ajustes-seccion",
+     "texto": "Datos y respaldos"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Sin agrupar"
+    },
+    {
+     "nodo": "input#hora-respaldo",
+     "texto": "03:15"
+    },
+    {
+     "nodo": "input#param-attachment.max_size_mb",
+     "texto": "10"
+    }
+   ]
+  }
+ ]
+}

@@ -135,10 +135,10 @@ function DetalleCompra({ credito, id, consulta }: { credito: number; id: number;
     <div className="flex flex-col gap-6 tabular-nums">
       <ConDatos consulta={compra}>{(x) => <>
         <Barra>
-          {x.expense_id && <Boton variante="fantasma" onClick={() => navegar(rutaDe('P-04', { id: x.expense_id! }))}><Receipt aria-hidden className="size-4" />{k.verGasto}</Boton>}
-          <Boton variante="secundario" onClick={() => { setEd({ comercio: x.description ?? '', nota: x.notes ?? '' }); setHoja('editar') }}><Pencil aria-hidden className="size-4" />{t.comun.editar}</Boton>
-          <Boton variante="secundario" onClick={() => setHoja('eliminar')}><Trash2 aria-hidden className="size-4" />{t.comun.eliminar}</Boton>
-          <Boton variante="primario" deshabilitadoPor={pendiente ? undefined : t.creditos.sinPagosPendientes} onClick={() => pendiente && navegar(conConsulta({ hoja: 'pago', pago: String(pendiente.id) }))}><CircleCheck aria-hidden className="size-4" />{t.creditos.marcarPago}</Boton>
+          {x.expense_id && <Boton variante="fantasma" onClick={() => navegar(rutaDe('P-04', { id: x.expense_id! }))}><Receipt aria-hidden className="size-5" />{k.verGasto}</Boton>}
+          <Boton variante="secundario" onClick={() => { setEd({ comercio: x.description ?? '', nota: x.notes ?? '' }); setHoja('editar') }}><Pencil aria-hidden className="size-5" />{t.comun.editar}</Boton>
+          <Boton variante="secundario" onClick={() => setHoja('eliminar')}><Trash2 aria-hidden className="size-5" />{t.comun.eliminar}</Boton>
+          <Boton variante="primario" deshabilitadoPor={pendiente ? undefined : t.creditos.sinPagosPendientes} onClick={() => pendiente && navegar(conConsulta({ hoja: 'pago', pago: String(pendiente.id) }))}><CircleCheck aria-hidden className="size-5" />{t.creditos.marcarPago}</Boton>
         </Barra>
         <div className="grid grid-cols-1 gap-6 desktop:grid-cols-2">
           <Seccion titulo={k.datos}><Datos filas={[[t.creditos.linea, linea.datos?.name ?? ''], [t.creditos.comercio, x.description ?? t.comun.sinDato], [t.comun.fecha, fecha(x.purchase_date)], [t.creditos.capital, dinero(x.principal_cents)], [t.creditos.intereses, dinero(x.interest_cents)], [t.comun.total, dinero(x.total_cents)], [t.creditos.plazo, plazo(x.term_count, x.payment_frequency)], [t.creditos.promocion, x.promotion_id ? (x.rate_pct ? t.creditos.tasaCapturada(x.rate_pct) : TIPO_COMPRA[x.kind]) : k.sinPromocion], [t.comun.estado, ESTADO_COMPRA[x.status]], ...(x.notes ? [[t.comun.nota, x.notes] as [string, string]] : [])]} /></Seccion>

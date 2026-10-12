@@ -51,7 +51,7 @@ export const textoDinero = (c?: number | null) => (c == null ? '' : `${Math.floo
 // ——— Estructura
 export function Bloque({ titulo, children, accion, id }: { titulo: string; children: ReactNode; accion?: ReactNode; id?: string }) {
   return (
-    <section aria-labelledby={id} className="flex flex-col gap-3 rounded-lg border border-border-divider bg-surface-card p-4 shadow-1">
+    <section aria-labelledby={id} className="flex flex-col gap-3 rounded-lg border border-border-divider bg-surface-card p-4">
       <div className="flex flex-wrap items-center justify-between gap-2"><h3 id={id} className="text-title-3 text-text-default">{titulo}</h3>{accion}</div>
       {children}
     </section>
@@ -68,15 +68,34 @@ export function Fila({ etiqueta, children, nota }: { etiqueta: ReactNode; childr
 export function Aviso({ rol, children }: { rol: 'advertencia' | 'error' | 'exito' | 'info'; children: ReactNode }) {
   const Icono = rol === 'error' ? CircleAlert : rol === 'exito' ? CircleCheck : TriangleAlert
   const color = { advertencia: 'bg-role-warning-surface text-role-warning', error: 'bg-role-error-surface text-role-error', exito: 'bg-role-success-surface text-role-success', info: 'bg-role-info-surface text-role-info' }[rol]
-  return <p role={rol === 'error' ? 'alert' : 'status'} className={cn('flex items-start gap-2 rounded-md px-3 py-2 text-small', color)}><Icono aria-hidden className="mt-0.5 size-4 shrink-0" /><span className="text-text-default">{children}</span></p>
+  return <p role={rol === 'error' ? 'alert' : 'status'} className={cn('flex items-start gap-2 rounded-md px-3 py-2 text-small', color)}><Icono aria-hidden className="size-5 shrink-0" /><span className="text-text-default">{children}</span></p>
+}
+/** U4 §0.3 y §0.6: texto de un guardado fallido. Gana el V-xx del código que se pase (409 `in_use`, `already_exists`…);
+ *  un 4xx de validación trae su mensaje (igual que `Editable`); lo demás es «No se pudo guardar…», que se puede reintentar. */
+export function textoFallo(x: unknown, porCodigo: Record<string, string> = {}): string {
+  if (x instanceof ErrorApi) {
+    if (porCodigo[x.codigo]) return porCodigo[x.codigo]
+    if (x.estado >= 400 && x.estado < 500 && x.estado !== 401) return x.campos[0]?.message ?? x.message
+  }
+  return t.comun.noGuardo
+}
+/** U4 §0.3 «Error al guardar» dentro de una hoja o un diálogo: `circle-alert` y el texto en el rol de error, con «Reintentar»
+ *  cuando el fallo es de conexión o del servidor. Lo capturado no se pierde: quien lo usa deja la hoja abierta. */
+export function ErrorGuardado({ texto, alReintentar }: { texto: string; alReintentar?: () => void }) {
+  return (
+    <p role="alert" data-prueba="error-guardado" className="flex flex-wrap items-center gap-1 text-small text-role-error">
+      <CircleAlert aria-hidden className="size-5 shrink-0" />{texto}
+      {alReintentar && texto === t.comun.noGuardo && <> · <button type="button" className="min-h-11 text-text-link underline-offset-2 hover:underline desktop:min-h-0" onClick={alReintentar}>{textos.app.reintentar}</button></>}
+    </p>
+  )
 }
 export function BloquePrevia({ previa }: { previa: Previa }) {
   return (
     <div aria-live="polite" className="flex flex-col gap-1 rounded-md border border-border-divider bg-surface-raised p-2 text-small tabular-nums" data-prueba="vista-previa">
       {previa.cambios && previa.cambios.length > 0 && (
         <dl className="flex flex-col gap-1">
-          <div className="flex gap-2 text-caption text-text-secondary"><span className="flex-1" /><span>{t.comun.antes}</span><ArrowRight aria-hidden className="size-3" /><span>{t.comun.despues}</span></div>
-          {previa.cambios.map((c) => <div key={c.etiqueta} className="flex flex-wrap items-center gap-2"><dt className="flex-1 text-text-secondary">{c.etiqueta}</dt><dd>{c.antes}</dd><ArrowRight aria-label={t.comun.cambiaA} className="size-3" /><dd className="font-medium">{c.despues}</dd></div>)}
+          <div className="flex gap-2 text-caption text-text-secondary"><span className="flex-1" /><span>{t.comun.antes}</span><ArrowRight aria-hidden className="size-5" /><span>{t.comun.despues}</span></div>
+          {previa.cambios.map((c) => <div key={c.etiqueta} className="flex flex-wrap items-center gap-2"><dt className="flex-1 text-text-secondary">{c.etiqueta}</dt><dd>{c.antes}</dd><ArrowRight aria-label={t.comun.cambiaA} className="size-5" /><dd className="font-medium">{c.despues}</dd></div>)}
         </dl>
       )}
       {previa.notas?.map((n, i) => <p key={i} className="text-text-secondary">{n}</p>)}
@@ -88,8 +107,8 @@ function Estado({ estado, alReintentar }: { estado: 'guardando' | 'guardado' | '
   return (
     <span aria-live="polite" className="text-small">
       {estado === 'guardando' && <span className="text-text-secondary">{t.comun.guardando}</span>}
-      {estado === 'guardado' && <span className="inline-flex items-center gap-1 text-role-success"><CircleCheck aria-hidden className="size-4" />{t.comun.guardado}</span>}
-      {estado === 'error' && <span className="inline-flex flex-wrap items-center gap-1 text-role-error"><CircleAlert aria-hidden className="size-4" />{t.comun.noGuardo} · <button type="button" className="min-h-11 text-text-link underline-offset-2 hover:underline desktop:min-h-0" onClick={alReintentar}>{textos.app.reintentar}</button></span>}
+      {estado === 'guardado' && <span className="inline-flex items-center gap-1 text-role-success"><CircleCheck aria-hidden className="size-5" />{t.comun.guardado}</span>}
+      {estado === 'error' && <span className="inline-flex flex-wrap items-center gap-1 text-role-error"><CircleAlert aria-hidden className="size-5" />{t.comun.noGuardo} · <button type="button" className="min-h-11 text-text-link underline-offset-2 hover:underline desktop:min-h-0" onClick={alReintentar}>{textos.app.reintentar}</button></span>}
     </span>
   )
 }
@@ -174,7 +193,7 @@ export function Editable({ etiqueta, valor, mostrar, tipo = 'texto', opciones, v
         : tipo === 'interruptor' ? <button {...comunes} type="button" role="switch" aria-checked={texto === 'si'} className="flex min-h-11 items-center rounded-sm px-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus desktop:min-h-9" onClick={() => { const v = texto === 'si' ? 'no' : 'si'; setTexto(v); calcular(v) }}><MarcaInterruptor encendido={texto === 'si'} /></button>
         : tipo === 'area' ? <textarea {...comunes} rows={3} className={cn(estilosControl, 'h-auto py-2')} value={texto} onChange={(e) => { setTexto(e.target.value); calcular(e.target.value) }} />
         : <input {...comunes} className={estilosControl} type={tipo === 'fecha' ? 'date' : 'text'} inputMode={tipo === 'dinero' || tipo === 'numero' ? 'decimal' : undefined} value={texto} onChange={(e) => { setTexto(e.target.value); calcular(e.target.value) }} />}
-      {error && <p id={idErr} className="flex items-center gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-4" />{error}</p>}
+      {error && <p id={idErr} className="flex items-center gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-5" />{error}</p>}
       {previa === 'error' && <p role="status" className="text-small text-role-error">{t.comun.noCalculo} · <button type="button" className="min-h-11 text-text-link desktop:min-h-0" onMouseDown={(e) => e.preventDefault()} onClick={() => calcular(texto)}>{textos.app.reintentar}</button></p>}
       {extra && <div onKeyDown={teclas}>{extra}</div>}
       {previa && previa !== 'error' && <BloquePrevia previa={previa} />}
@@ -214,8 +233,22 @@ export function Interruptor({ etiqueta, encendido, guardar, critico, bloqueadoPo
 }
 
 /** Diálogo de acción crítica (U4 §0.4, DESIGN §7.12): «Cancelar» con el foco inicial; hoja inferior en móvil. */
-export function DialogoCritico({ abierto, alCambiar, titulo, verbo, children, alConfirmar }: { abierto: boolean; alCambiar: (a: boolean) => void; titulo: string; verbo: string; children: ReactNode; alConfirmar: () => Promise<void> | void }) {
+export type AccionFallo = { texto: string; accion?: { texto: string; alHacer: () => Promise<void> | void } }
+/** Si la confirmación falla, el diálogo queda abierto con el error de §0.3 y «Reintentar»; con `porCodigo`, un código de C1
+ *  (p. ej. 409 `in_use`) muestra su V-xx y, si se da, una acción alterna (p. ej. «Desactivar») en lugar del verbo crítico. */
+export function DialogoCritico({ abierto, alCambiar, titulo, verbo, children, alConfirmar, porCodigo }: { abierto: boolean; alCambiar: (a: boolean) => void; titulo: string; verbo: string; children: ReactNode; alConfirmar: () => Promise<void> | void; porCodigo?: Record<string, AccionFallo> }) {
   const [enviando, setEnviando] = useState(false)
+  const [fallo, setFallo] = useState<(AccionFallo & { reintentar?: () => void }) | null>(null)
+  useEffect(() => { if (!abierto) setFallo(null) }, [abierto])
+  const correr = async (paso: () => Promise<void> | void) => {
+    setEnviando(true); setFallo(null)
+    try { await paso(); alCambiar(false) }
+    catch (x) {
+      const propio = x instanceof ErrorApi ? porCodigo?.[x.codigo] : undefined
+      setFallo(propio ?? { texto: textoFallo(x), reintentar: () => void correr(paso) })
+    } finally { setEnviando(false) }
+  }
+  const alterna = fallo?.accion
   return (
     <AlertDialog.Root open={abierto} onOpenChange={alCambiar}>
       <AlertDialog.Portal>
@@ -223,10 +256,13 @@ export function DialogoCritico({ abierto, alCambiar, titulo, verbo, children, al
         <AlertDialog.Content className="fixed inset-x-0 bottom-0 z-50 flex flex-col gap-4 rounded-t-lg bg-surface-card p-4 shadow-2 desktop:inset-x-auto desktop:bottom-auto desktop:left-1/2 desktop:top-1/3 desktop:w-full desktop:max-w-lg desktop:-translate-x-1/2 desktop:rounded-lg">
           <AlertDialog.Title className="flex items-center gap-2 text-title-3 text-text-default"><ShieldAlert aria-hidden className="size-5 text-critical" />{titulo}</AlertDialog.Title>
           <AlertDialog.Description className="text-body text-text-default">{children}</AlertDialog.Description>
+          {fallo && <ErrorGuardado texto={fallo.texto} alReintentar={fallo.reintentar} />}
           <div className="flex flex-col-reverse gap-2 desktop:flex-row desktop:justify-end">
             <AlertDialog.Cancel asChild><Boton variante="secundario" className="coarse:h-11">{textos.app.cancelar}</Boton></AlertDialog.Cancel>
-            <button type="button" disabled={enviando} onClick={async () => { setEnviando(true); try { await alConfirmar(); alCambiar(false) } finally { setEnviando(false) } }}
-              className="inline-flex h-11 items-center justify-center rounded-md bg-action-critical-bg px-4 text-small font-medium text-text-on-critical hover:bg-action-critical-bg-hover active:bg-action-critical-bg-pressed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus desktop:h-9">{verbo}</button>
+            {alterna
+              ? <Boton variante="primario" className="coarse:h-11" disabled={enviando} onClick={() => void correr(alterna.alHacer)}>{alterna.texto}</Boton>
+              : <button type="button" disabled={enviando} onClick={() => void correr(alConfirmar)}
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-action-critical-bg px-4 text-small font-medium text-text-on-critical hover:bg-action-critical-bg-hover active:bg-action-critical-bg-pressed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus desktop:h-9">{verbo}</button>}
           </div>
         </AlertDialog.Content>
       </AlertDialog.Portal>
@@ -250,7 +286,11 @@ export function Parametro({ etiqueta, param, validar = vEntero(0), vistaPrevia, 
         </div>
         {!param.is_initial && (
           <Boton variante="fantasma" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined}
-            onClick={async () => { const previo = v; await restablecer(); avisar({ texto: t.comun.restablecido, rol: 'exito', accion: previo == null ? undefined : { texto: textos.app.deshacer, alHacer: () => guardar(previo) } }) }}>{t.comun.restablecer}</Boton>
+            onClick={async function volver() {
+              const previo = v
+              try { await restablecer() } catch (x) { avisar({ texto: textoFallo(x), rol: 'error', accion: { texto: textos.app.reintentar, alHacer: volver } }); return }
+              avisar({ texto: t.comun.restablecido, rol: 'exito', accion: previo == null ? undefined : { texto: textos.app.deshacer, alHacer: () => guardar(previo) } })
+            }}>{t.comun.restablecer}</Boton>
         )}
       </div>
     </Fila>

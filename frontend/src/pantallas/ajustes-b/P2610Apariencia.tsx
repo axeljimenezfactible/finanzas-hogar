@@ -48,7 +48,7 @@ export default function P2610Apariencia() {
       <Bloque titulo={t.atajos} ayuda={t.atajosAyuda}>
         <Interruptor etiqueta={t.atajos} activo={atajos} alCambiar={(v) => { ponerAtajos(v); marcar() }} />
       </Bloque>
-      <span aria-live="polite" className="inline-flex min-h-5 items-center gap-1 text-caption text-role-success">{guardado && <><CircleCheck aria-hidden className="size-4" />{T.comun.guardado}</>}</span>
+      <span aria-live="polite" className="inline-flex min-h-5 items-center gap-1 text-caption text-role-success">{guardado && <><CircleCheck aria-hidden className="size-5" />{T.comun.guardado}</>}</span>
     </Marco>
   )
 }

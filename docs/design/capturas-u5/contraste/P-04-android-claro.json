@@ -1,0 +1,350 @@
+{
+ "pantalla": "P-04",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 288,
+ "pares_unicos": 18,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 18,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Duplicar"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Abrir compra a crédito"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > input.h-9.rounded-md",
+     "texto": "Filtrar"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Agrupar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 26,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.flex.items-center > a.inline-flex.min-h-11",
+     "texto": "Todos los gastos"
+    },
+    {
+     "nodo": "section.flex.flex-col > div > div.flex.flex-col > span.text-small.text-text-secondary",
+     "texto": "Fecha"
+    },
+    {
+     "nodo": "section.flex.flex-col > div > div.flex.flex-col > span.text-small.text-text-secondary",
+     "texto": "Monto"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > a.inline-flex.min-h-11 > svg.lucide.lucide-chevron-left",
+     "texto": "lucide lucide-chevron-left size-5"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Adjuntar ticket"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Adjuntar ticket"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-paperclip",
+     "texto": "lucide lucide-paperclip size-5"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#A34449",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.784,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Eliminar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#A34449",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 6.034,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Eliminar"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#A34449",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.034,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-trash",
+     "texto": "lucide lucide-trash lucide-trash-2 size-"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Duplicar"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Abrir compra a crédito"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-copy",
+     "texto": "lucide lucide-copy size-5"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-credit-card",
+     "texto": "lucide lucide-credit-card size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 237,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > h2.text-title-3.font-semibold",
+     "texto": "Propiedades"
+    },
+    {
+     "nodo": "div > div.flex.flex-col > div.min-h-11.flex-1 > button.w-full.min-h-9",
+     "texto": "10-oct-2026"
+    },
+    {
+     "nodo": "div > div.flex.flex-col > div.min-h-11.flex-1 > button.w-full.min-h-9",
+     "texto": "$3,094.50"
+    }
+   ]
+  }
+ ]
+}

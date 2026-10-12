@@ -1,5 +1,6 @@
 // Piezas comunes de Ajustes 8 a 14 (U4 parte a §0): marco de sección, interruptor, guardado en el lugar,
 // fila de parámetro operativo K44, diálogo de acción crítica y bloque «Antes → Después». Solo tokens C2.
+import { ICONO_MD } from '../../componentes/Icono'
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { AlertDialog, Switch } from 'radix-ui'
 import { CircleAlert, CircleCheck, RotateCcw, ShieldAlert } from 'lucide-react'
@@ -30,7 +31,7 @@ export function Marco({ id, children }: { id: string; children: ReactNode }) {
 }
 export function Bloque({ titulo, children, accion, ayuda }: { titulo: string; children: ReactNode; accion?: ReactNode; ayuda?: ReactNode }) {
   return (
-    <section className="flex flex-col gap-3 rounded-lg border border-border-divider bg-surface-card p-4 shadow-1">
+    <section className="flex flex-col gap-3 rounded-lg border border-border-divider bg-surface-card p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-title-3 font-semibold text-text-default">{titulo}</h3>
         {accion}
@@ -97,9 +98,9 @@ export function IndicadorGuardado({ g }: { g: ReturnType<typeof useGuardado> }) 
   return (
     <span aria-live="polite" className="inline-flex min-h-5 items-center gap-1 text-caption">
       {g.estado === 'guardando' && <span className="text-text-secondary">{t.comun.guardando}</span>}
-      {g.estado === 'guardado' && <span className="inline-flex items-center gap-1 text-role-success"><CircleCheck aria-hidden className="size-4" />{t.comun.guardado}</span>}
+      {g.estado === 'guardado' && <span className="inline-flex items-center gap-1 text-role-success"><CircleCheck aria-hidden className="size-5" />{t.comun.guardado}</span>}
       {g.estado === 'error' && (
-        <span className="inline-flex flex-wrap items-center gap-1 text-role-error"><CircleAlert aria-hidden className="size-4" />{g.mensaje}
+        <span className="inline-flex flex-wrap items-center gap-1 text-role-error"><CircleAlert aria-hidden className="size-5" />{g.mensaje}
           {g.mensaje === t.comun.noSeGuardo && <Boton variante="enlace" onClick={g.reintentar}>{textos.app.reintentar}</Boton>}
         </span>
       )}
@@ -192,12 +193,12 @@ export function FilaParametro<V extends number | string | number[]>({ etiqueta, 
           )}
           {unidad && <span className="text-small text-text-secondary">{unidad}</span>}
           <span className="text-caption text-text-secondary">{t.comun.valorInicial(mostrar(tipo, param.initial_value, unidad))}</span>
-          {!param.is_initial && <Boton variante="enlace" deshabilitadoPor={sinRed} onClick={() => void alRestablecer()}><RotateCcw aria-hidden className="size-4" />{t.comun.restablecer}</Boton>}
+          {!param.is_initial && <Boton variante="enlace" deshabilitadoPor={sinRed} onClick={() => void alRestablecer()}><RotateCcw aria-hidden className="size-5" />{t.comun.restablecer}</Boton>}
           <IndicadorGuardado g={g} />
         </div>
       </div>
       <p id={`${id}-ayuda`} className={cn('text-caption', error ? 'text-role-error' : 'text-text-secondary')}>
-        {error ? <span className="inline-flex items-center gap-1"><CircleAlert aria-hidden className="size-4" />{error}</span> : ayuda}
+        {error ? <span className="inline-flex items-center gap-1"><CircleAlert aria-hidden className="size-5" />{error}</span> : ayuda}
       </p>
       {previa && <AntesDespues cambios={previa.cambios} nota={previa.nota} />}
     </div>
@@ -213,7 +214,7 @@ export function DialogoCritico({ abierto, alCambiar, titulo, texto, verbo, alCon
       <AlertDialog.Portal>
         <AlertDialog.Overlay className="fixed inset-0 z-40 bg-overlay-scrim" />
         <AlertDialog.Content className="fixed inset-x-0 bottom-0 z-50 flex flex-col gap-4 rounded-t-lg bg-surface-raised p-4 shadow-2 tablet:inset-x-auto tablet:bottom-auto tablet:left-1/2 tablet:top-1/2 tablet:w-full tablet:max-w-lg tablet:-translate-x-1/2 tablet:-translate-y-1/2 tablet:rounded-lg">
-          <AlertDialog.Title className="flex items-center gap-2 text-title-3 font-semibold text-text-default"><ShieldAlert aria-hidden className="size-6 text-critical" />{titulo}</AlertDialog.Title>
+          <AlertDialog.Title className="flex items-center gap-2 text-title-3 font-semibold text-text-default"><ShieldAlert aria-hidden size={ICONO_MD} className="size-6 text-critical" />{titulo}</AlertDialog.Title>
           <AlertDialog.Description className="text-body text-text-default">{texto}</AlertDialog.Description>
           {children}
           <div className="flex flex-col-reverse gap-2 tablet:flex-row tablet:justify-end">

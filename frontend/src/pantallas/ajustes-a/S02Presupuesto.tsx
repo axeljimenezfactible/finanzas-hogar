@@ -16,7 +16,7 @@ import { textos } from '../../textos/es-MX'
 import type { Cambio } from '../../vistas-bd/tipos'
 import { VistaBD } from '../../vistas-bd/VistaBD'
 import { fechasEnMes, mesDe, mesSiguiente, montoEn, proximas, repartir, totalEnMes, ultimoDia } from './calculos'
-import { Aviso, Bloque, DialogoCritico, Editable, Fila, Interruptor, textoDinero, vDinero, vEntero, vFecha, vNombre, vOpcion, vPlazo, type Previa } from './comunes'
+import { Aviso, Bloque, DialogoCritico, Editable, ErrorGuardado, Fila, Interruptor, textoDinero, textoFallo, vDinero, vEntero, vFecha, vNombre, vOpcion, vPlazo, type Previa } from './comunes'
 import { comoLista } from './comunes'
 import { guardarVarias, nota, siNo } from './grupo'
 import { t } from './textos'
@@ -47,7 +47,7 @@ export default function S02Presupuesto() {
           <Fila etiqueta={p.periodo}><span className="px-2 text-body">{p.periodoTexto}</span></Fila>
           <ConDatos consulta={presupuestos}>{(b) => <Montos presupuestos={b.items} cats={ctx.cats} mesActual={mesActual} alCambiar={presupuestos.recargar} />}</ConDatos>
         </Bloque>
-        <Bloque titulo={p.fijos} id="b-fijos" accion={<Boton variante="primario" onClick={() => setNuevo(true)}><Plus aria-hidden className="size-4" />{p.nuevoFijo}</Boton>}>
+        <Bloque titulo={p.fijos} id="b-fijos" accion={<Boton variante="primario" onClick={() => setNuevo(true)}><Plus aria-hidden className="size-5" />{p.nuevoFijo}</Boton>}>
           <ConDatos consulta={partidas}>{(d) => <Fijos todas={d.items} ctx={ctx} mesActual={mesActual} hoy={hoy} alCambiar={partidas.recargar} alNuevo={() => setNuevo(true)} />}</ConDatos>
         </Bloque>
       </div>
@@ -110,8 +110,8 @@ function Montos({ presupuestos, cats, mesActual, alCambiar }: { presupuestos: Es
             ))}
             <Aviso rol="info"><span className="tabular-nums">{alcance === 'onward' ? p.previaAdelante(mes(mesActual), dinero(pendiente.monto)) : p.previaSolo(mes(mesActual), dinero(pendiente.monto), mes(sig), dinero(pendiente.b?.amount_cents ?? 0))}</span></Aviso>
             {pendiente.cat && <p className="text-small tabular-nums">{p.totalMes(mes(mesActual))}: {dinero(total)} → {dinero(total - (pendiente.b?.amount_cents ?? 0) + pendiente.monto)}</p>}
-            {fallo === 'traslape' && <p role="alert" className="flex items-start gap-1 text-small text-role-error"><CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0" />{t.v.v17}</p>}
-            {fallo === 'guardar' && <p role="alert" className="flex flex-wrap items-center gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-4" />{t.comun.noGuardo} · <button type="button" className="min-h-11 text-text-link underline-offset-2 hover:underline desktop:min-h-0" onClick={() => void confirmar()}>{textos.app.reintentar}</button></p>}
+            {fallo === 'traslape' && <p role="alert" className="flex items-start gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-5 shrink-0" />{t.v.v17}</p>}
+            {fallo === 'guardar' && <p role="alert" className="flex flex-wrap items-center gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-5" />{t.comun.noGuardo} · <button type="button" className="min-h-11 text-text-link underline-offset-2 hover:underline desktop:min-h-0" onClick={() => void confirmar()}>{textos.app.reintentar}</button></p>}
           </fieldset>
         )}
       </Hoja>
@@ -222,13 +222,15 @@ function NuevoFijo({ abierta, alCambiar, cats, alCrear }: { abierta: boolean; al
   const vacio = { description: '', category_id: '', amount: '', frequency: '', interval_count: '1', start_date: '' }
   const [v, setV] = useState(vacio)
   const [err, setErr] = useState<Record<string, string | null>>({})
-  const [clave] = useState(nuevaClave)
+  const [fallo, setFallo] = useState<string | null>(null)
+  const [clave, setClave] = useState(nuevaClave)
   const guardar = async () => {
     const e = { description: vNombre(v.description), category_id: vOpcion()(v.category_id), amount: vDinero(true)(v.amount), frequency: vOpcion()(v.frequency), interval_count: vEntero(1, 24)(v.interval_count), start_date: vFecha()(v.start_date) }
-    setErr(e)
+    setErr(e); setFallo(null)
     if (Object.values(e).some(Boolean)) return
-    await pedir('post', '/api/v1/planned-items', { idempotencia: clave, cuerpo: { kind: 'fixed_expense', description: v.description.trim(), category_id: Number(v.category_id), amount_cents: aCentavos(v.amount) ?? 0, frequency: v.frequency as PI['frequency'], interval_count: Number(v.interval_count), start_date: v.start_date, is_active: true } })
-    setV(vacio); alCambiar(false); alCrear()
+    try { await pedir('post', '/api/v1/planned-items', { idempotencia: clave, cuerpo: { kind: 'fixed_expense', description: v.description.trim(), category_id: Number(v.category_id), amount_cents: aCentavos(v.amount) ?? 0, frequency: v.frequency as PI['frequency'], interval_count: Number(v.interval_count), start_date: v.start_date, is_active: true } }) }
+    catch (x) { setFallo(textoFallo(x)); return }
+    setV(vacio); setClave(nuevaClave()); alCambiar(false); alCrear()
   }
   const sel = (id: keyof typeof v, etiqueta: string, opciones: { valor: string; texto: string }[]) => (
     <label className="flex flex-col gap-1 text-small font-medium text-text-secondary">{etiqueta}
@@ -237,7 +239,7 @@ function NuevoFijo({ abierta, alCambiar, cats, alCrear }: { abierta: boolean; al
     </label>
   )
   return (
-    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={p.nuevoFijo} pie={<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div>}>
+    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={p.nuevoFijo} pie={<div className="flex flex-col gap-2">{fallo && <ErrorGuardado texto={fallo} alReintentar={() => void guardar()} />}<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div></div>}>
       <form className="flex flex-col gap-3" onKeyDown={(e) => { if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); void guardar() } }} onSubmit={(e) => { e.preventDefault(); void guardar() }}>
         <Campo etiqueta={p.concepto} value={v.description} error={err.description ?? undefined} onChange={(e) => setV({ ...v, description: e.target.value })} />
         {sel('category_id', p.categoria, cats.filter((c) => c.is_active).map((c) => ({ valor: String(c.id), texto: c.name })))}

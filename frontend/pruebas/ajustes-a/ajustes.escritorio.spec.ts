@@ -352,7 +352,7 @@ test('P-26.07 nueva receta con Alt+N: pide nombre y tiempo apto, crea y abre P-1
 test('P-26.04 tablero: soltar en otro reparto muestra la vista previa; Esc la regresa sin guardar y Enter aplica', async ({ page, context }) => {
   const escrituras = await preparar(context)
   await page.goto('/ajustes/04')
-  await page.getByRole('tab', { name: 'Tablero' }).click()
+  await page.getByRole('button', { name: 'Tablero', exact: true }).click()
   await moverTarjetaA(page, 'Despensa', 'Conjunto 50/50')
   const previa = page.getByTestId('previa-tablero')
   await expect(previa).toContainText('«Despensa» pasa a Conjunto 50/50')
@@ -473,7 +473,7 @@ test('P-26.05 Ctrl+/ en promociones: desactivar 2 con «vigentes hoy» sumado y 
   await conGet(context, '/api/v1/promotions', pagina([walmart, { id: 2, merchant_name: 'Liverpool', term_count: 6, rate_num: 0, rate_den: 1, min_purchase_cents: 300000, valid_from: '2026-10-01', valid_to: '2026-12-31', is_active: true, is_current: true, ...sello }]) as NonNullable<DatosC1['/api/v1/promotions']>)
   await page.goto('/ajustes/05')
   const promos = page.getByTestId('promociones')
-  await promos.getByRole('tab', { name: 'Tabla' }).click()
+  await promos.getByRole('button', { name: 'Tabla', exact: true }).click()
   const bloque = await editarEnGrupo(page, ['Walmart · Sin intereses', 'Liverpool · Sin intereses'], 'is_active', 'no', promos)
   const previa = bloque.getByTestId('vista-previa')
   await expect(previa).toContainText(/Activa\s*Sí\s*No/)
@@ -554,4 +554,116 @@ test('P-26.06 R2-07: el punto de equilibrio de la membresía dice PROVISIONAL y 
   await page.goto('/ajustes/06')
   await page.getByRole('button', { name: "Sam's Club" }).first().click()
   await expect(page.getByTestId('equilibrio')).toHaveText('Vista previa pendiente · PROVISIONAL (bloqueo WF3-ajustes-a §2)')
+})
+
+// ——— áreas R5-01 (WF-3b, frontend-min-fix): U4 §0.3 «Error al guardar» en los manejadores sin `catch` y V-18 al eliminar una promoción en uso.
+// Cada prueba simula el fallo con page.route (gana sobre las rutas del contexto de preparar()) y comprueba el texto y 0 pageerror.
+const NO_GUARDO = 'No se pudo guardar. Revisa la conexión con el servidor de casa'
+const ERROR_500 = { code: 'internal_error', message: 'Error interno del servidor.', request_id: 'prueba' } satisfies Esquemas['Error']
+const fallosDe = (page: Page) => { const f: string[] = []; page.on('pageerror', (e) => f.push(e.message)); return f }
+
+test('áreas R5-01 · P-26.05 «Pesos iguales» con 500: avisa «No se pudo guardar…» y Reintentar guarda', async ({ page, context }) => {
+  await preparar(context)
+  const fallosPagina = fallosDe(page)
+  const parches: unknown[] = []
+  let falla = true
+  // El fake del área no responde PATCH /settings/optimizer: el éxito del reintento se responde aquí, validado contra C1.
+  await page.route('**/api/v1/settings/optimizer', (route) => {
+    const pet = route.request(), u = new URL(pet.url())
+    if (pet.method() !== 'PATCH') return route.fallback()
+    const cuerpo = pet.postDataJSON() as Cuerpo<'/api/v1/settings/optimizer', 'patch'>
+    parches.push(cuerpo)
+    if (falla) return route.fulfill({ status: 500, json: ERROR_500, headers: { 'X-Request-Id': 'prueba' } })
+    const json = { ...(DATOS['/api/v1/settings/optimizer'] as Esquemas['OptimizerSettings']), weights: cuerpo.weights! }
+    erroresTrafico.push(...erroresC1('PATCH', u.pathname, 200, cuerpo, json))
+    return route.fulfill({ status: 200, json, headers: { 'X-Request-Id': 'prueba' } })
+  })
+  await page.goto('/ajustes/05')
+  await page.getByRole('button', { name: 'Pesos iguales' }).click()
+  const aviso = page.getByRole('alert').filter({ hasText: NO_GUARDO })
+  await expect(aviso).toBeVisible()
+  falla = false
+  await aviso.getByRole('button', { name: 'Reintentar' }).click()
+  await expect(aviso).toBeHidden()
+  const iguales = { weights: { lowest_interest: 1, even_low_payment: 1, max_available: 1, most_value_per_peso: 1 } }
+  await expect.poll(() => parches).toEqual([iguales, iguales])
+  expect(fallosPagina).toEqual([])
+})
+
+test('áreas R5-01 · P-26.05 alta de promoción con 500: la hoja queda abierta con lo capturado y Reintentar usa la misma clave', async ({ page, context }) => {
+  const escrituras = await preparar(context)
+  const fallosPagina = fallosDe(page)
+  const claves: (string | undefined)[] = []
+  let falla = true
+  await page.route('**/api/v1/promotions', (route) => {
+    if (route.request().method() !== 'POST') return route.fallback()
+    claves.push(route.request().headers()['idempotency-key'])
+    return falla ? route.fulfill({ status: 500, json: ERROR_500, headers: { 'X-Request-Id': 'prueba' } }) : route.fallback()
+  })
+  await page.goto('/ajustes/05')
+  await page.getByRole('button', { name: 'Nueva promoción' }).first().click()
+  const hoja = page.getByRole('dialog', { name: 'Nueva promoción' })
+  await hoja.getByLabel('Comercio').fill('Chedraui')
+  await hoja.getByLabel('Plazo (pagos)').fill('4')
+  await hoja.getByLabel('Vigencia: inicio').fill('2026-10-30')
+  await hoja.getByLabel('Vigencia: fin').fill('2026-10-30')
+  await hoja.getByLabel('Vigencia: fin').press('Control+Enter')
+  const aviso = hoja.getByRole('alert').filter({ hasText: NO_GUARDO })
+  await expect(aviso).toBeVisible()
+  await expect(hoja.getByLabel('Comercio')).toHaveValue('Chedraui')
+  await expect(hoja.getByLabel('Plazo (pagos)')).toHaveValue('4')
+  falla = false
+  await aviso.getByRole('button', { name: 'Reintentar' }).click()
+  await expect(hoja).toBeHidden()
+  await expect.poll(() => escrituras.at(-1)?.url).toBe('/api/v1/promotions')
+  expect(escrituras.at(-1)?.cuerpo).toMatchObject({ merchant_name: 'Chedraui', term_count: 4, valid_from: '2026-10-30', valid_to: '2026-10-30', is_active: true })
+  expect(claves).toHaveLength(2)
+  expect(claves[0]).toBeTruthy()
+  expect(claves[1]).toBe(claves[0])
+  expect(fallosPagina).toEqual([])
+})
+
+test('áreas R5-01 · P-26.05 eliminar una promoción con 500: el diálogo crítico queda abierto con «No se pudo guardar…» y Reintentar borra', async ({ page, context }) => {
+  const escrituras = await preparar(context)
+  const fallosPagina = fallosDe(page)
+  let falla = true
+  await page.route(/\/api\/v1\/promotions\/\d+$/, (route) => (route.request().method() === 'DELETE' && falla ? route.fulfill({ status: 500, json: ERROR_500, headers: { 'X-Request-Id': 'prueba' } }) : route.fallback()))
+  await page.goto('/ajustes/05')
+  const promos = page.getByTestId('promociones')
+  await promos.getByRole('button', { name: 'Tabla', exact: true }).click()
+  await promos.getByRole('row').filter({ hasText: 'Walmart' }).getByRole('button', { name: 'Eliminar' }).click()
+  const dialogo = page.getByRole('alertdialog')
+  await dialogo.getByRole('button', { name: 'Eliminar la promoción de Walmart' }).click()
+  const aviso = dialogo.getByRole('alert').filter({ hasText: NO_GUARDO })
+  await expect(aviso).toBeVisible()
+  await expect(dialogo).toBeVisible()
+  falla = false
+  await aviso.getByRole('button', { name: 'Reintentar' }).click()
+  await expect(dialogo).toBeHidden()
+  await expect.poll(() => escrituras.filter((e) => e.metodo === 'DELETE').map((e) => e.url)).toEqual(['/api/v1/promotions/1'])
+  expect(fallosPagina).toEqual([])
+})
+
+test('áreas R5-01 · P-26.05 eliminar una promoción en uso (409 in_use): V-18 y «Desactivar» la apaga con is_active = false', async ({ page, context }) => {
+  const escrituras = await preparar(context)
+  const fallosPagina = fallosDe(page)
+  await page.route(/\/api\/v1\/promotions\/\d+$/, (route) => {
+    const pet = route.request(), u = new URL(pet.url())
+    if (pet.method() !== 'DELETE') return route.fallback()
+    const json = { code: 'in_use', message: 'La promoción tiene compras que la usan.', request_id: 'prueba' } satisfies Esquemas['Error']
+    erroresTrafico.push(...erroresC1('DELETE', u.pathname, 409, null, json))
+    return route.fulfill({ status: 409, json, headers: { 'X-Request-Id': 'prueba' } })
+  })
+  await page.goto('/ajustes/05')
+  const promos = page.getByTestId('promociones')
+  await promos.getByRole('button', { name: 'Tabla', exact: true }).click()
+  await promos.getByRole('row').filter({ hasText: 'Walmart' }).getByRole('button', { name: 'Eliminar' }).click()
+  const dialogo = page.getByRole('alertdialog')
+  await dialogo.getByRole('button', { name: 'Eliminar la promoción de Walmart' }).click()
+  await expect(dialogo.getByRole('alert')).toHaveText('No se puede borrar porque hay registros que la usan. Puedes desactivarla.')
+  await expect(dialogo.getByRole('button', { name: 'Eliminar la promoción de Walmart' })).toHaveCount(0)
+  await dialogo.getByRole('button', { name: 'Desactivar' }).click()
+  await expect(dialogo).toBeHidden()
+  await expect.poll(() => escrituras.filter((e) => e.metodo === 'PATCH').map((e) => [e.url, e.cuerpo])).toEqual([['/api/v1/promotions/1', { is_active: false }]])
+  expect(fallosPagina).toEqual([])
 })

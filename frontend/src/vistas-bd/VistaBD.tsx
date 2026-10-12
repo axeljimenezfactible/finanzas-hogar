@@ -48,9 +48,9 @@ export function VistaBD<T>({ def }: { def: DefVista<T> }) {
   return (
     <div ref={raiz} className="flex flex-col gap-3" onKeyDown={teclas}>
       <div className="flex flex-wrap items-center gap-2">
-        <div role="tablist" aria-label="Vistas" className="flex gap-1">
+        <div role="group" aria-label={textos.vistas.grupo} className="flex min-w-0 max-w-full flex-wrap gap-1">
           {def.vistas.map((v) => { const I = ICONO[v]; return (
-            <button key={v} role="tab" type="button" aria-selected={vista === v} onClick={() => elegir(v)} className={cn('inline-flex h-9 items-center gap-1 rounded-md px-2 text-small coarse:h-11', vista === v ? 'bg-surface-selected font-medium' : 'hover:bg-surface-hover')}>
+            <button key={v} type="button" aria-pressed={vista === v} onClick={() => elegir(v)} className={cn('inline-flex h-9 items-center gap-1 rounded-t-md border-b-2 px-2 text-small coarse:h-11', vista === v ? 'border-border-selected bg-surface-selected font-medium' : 'border-transparent hover:bg-surface-hover')}>
               <I aria-hidden className="size-5" />{textos.vistas[v]}
             </button>) })}
         </div>

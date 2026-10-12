@@ -39,9 +39,9 @@ export default function P23Centro({ consulta }: PropsPantalla) {
   return (
     <div className="flex flex-col gap-6 tabular-nums">
       <Barra>
-        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-25'))}><UserRound aria-hidden className="size-4" />{r.karen}</Boton>
-        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-24'))}><Globe aria-hidden className="size-4" />{r.verWeb}</Boton>
-        <Boton variante="primario" deshabilitadoPor={sin} onClick={() => navegar(conConsulta({ hoja: 'generar' }))}><FileText aria-hidden className="size-4" />{r.generarMensual}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-25'))}><UserRound aria-hidden className="size-5" />{r.karen}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-24'))}><Globe aria-hidden className="size-5" />{r.verWeb}</Boton>
+        <Boton variante="primario" deshabilitadoPor={sin} onClick={() => navegar(conConsulta({ hoja: 'generar' }))}><FileText aria-hidden className="size-5" />{r.generarMensual}</Boton>
       </Barra>
       <Seccion titulo={r.proximos} accion={<Enlace a={rutaDe('P-26', { seccion: '08' })} className="inline-flex min-h-11 items-center text-small text-text-link underline">{r.cambiarFrecuencias}</Enlace>}>
         <ConDatos consulta={trabajos}>{(d) => { const js = itemsDe<Esquemas['Job']>(d).filter((j) => j.is_enabled && ['daily_summary', 'weekly_summary', 'monthly_report'].includes(j.code))

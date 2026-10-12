@@ -1,0 +1,358 @@
+{
+ "pantalla": "P-26.01",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 223,
+ "pares_unicos": 17,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 2,
+  "ui_sin_limite_visible": 13,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.466,
+   "elementos": 6,
+   "ejemplos": [
+    {
+     "nodo": "input#_r_c_",
+     "texto": ""
+    },
+    {
+     "nodo": "input#_r_d_",
+     "texto": ""
+    },
+    {
+     "nodo": "input#_r_e_",
+     "texto": ""
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#808189",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.466,
+   "elementos": 22,
+   "ejemplos": [
+    {
+     "nodo": "tbody > tr.border-b.border-border-divider > td.px-2.py-1 > button.inline-flex.select-none",
+     "texto": "Cerrar"
+    },
+    {
+     "nodo": "tbody > tr.border-b.border-border-divider > td.px-2.py-1 > button.inline-flex.select-none",
+     "texto": "Cerrar"
+    },
+    {
+     "nodo": "tbody > tr.border-b.border-border-divider > td.px-2.py-1 > button.inline-flex.select-none",
+     "texto": "Cerrar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 28,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > ul.flex.flex-col > li.flex.flex-wrap > span.text-small.text-text-secondary",
+     "texto": "Usuario: axel"
+    },
+    {
+     "nodo": "section.flex.flex-col > ul.flex.flex-col > li.flex.flex-wrap > span.text-small.text-text-secondary",
+     "texto": "Último acceso: 12-oct-2026 11:34"
+    },
+    {
+     "nodo": "section.flex.flex-col > ul.flex.flex-col > li.flex.flex-wrap > span.text-small.text-text-secondary",
+     "texto": "Usuario: ximena"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.161,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > form.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Cambiar contraseña"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.161,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > header.flex.flex-col > p.text-body.text-text-secondary",
+     "texto": "Ver las dos cuentas co-titulares, cambia"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Inicio"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Comidas"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > article.flex.min-w-0 > a.flex.min-h-11",
+     "texto": "‹ Ajustes"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > form.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Cambiar contraseña"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > ul.flex.flex-col > li.flex.flex-wrap > span.rounded-full.bg-surface-selected",
+     "texto": "Co-titular"
+    },
+    {
+     "nodo": "section.flex.flex-col > ul.flex.flex-col > li.flex.flex-wrap > span.rounded-full.bg-surface-selected",
+     "texto": "Co-titular"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F0F1FF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.73,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 141,
+   "ejemplos": [
+    {
+     "nodo": "h3#b-usuarios",
+     "texto": "Usuarios"
+    },
+    {
+     "nodo": "section.flex.flex-col > ul.flex.flex-col > li.flex.flex-wrap > span.min-w-32.font-medium",
+     "texto": "Axel"
+    },
+    {
+     "nodo": "section.flex.flex-col > ul.flex.flex-col > li.flex.flex-wrap > span.min-w-32.font-medium",
+     "texto": "Ximena"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.min-w-0.desktop:col-span-2 > div.flex.flex-col > button.inline-flex.select-none > svg.lucide.lucide-download",
+     "texto": "lucide lucide-download size-5"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.min-w-0.desktop:col-span-2 > button.inline-flex.select-none > svg.lucide.lucide-log-out",
+     "texto": "lucide lucide-log-out size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "h2#ajustes-seccion",
+     "texto": "Cuenta y roles"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Sin agrupar"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > label.flex.min-w-60 > select.h-9.w-full",
+     "texto": "Elige una opción de la lista."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,7204 @@
+{
+ "capturas": {
+  "P-00-android-claro": {
+   "pantalla": "P-00",
+   "nombre": "Iniciar sesión",
+   "combinacion": "android-claro",
+   "archivo": "P-00-android-claro.png",
+   "ruta": "/entrar",
+   "h1": "Finanzas Hogar",
+   "h1_coincide": false,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "sin sesión (formulario)",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 10,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-01-android-claro": {
+   "pantalla": "P-01",
+   "nombre": "Inicio",
+   "combinacion": "android-claro",
+   "archivo": "P-01-android-claro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1841
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 86,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-03-android-claro": {
+   "pantalla": "P-03",
+   "nombre": "Registrar gasto",
+   "combinacion": "android-claro",
+   "archivo": "P-03-android-claro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1841
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 19,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-00-android-oscuro": {
+   "pantalla": "P-00",
+   "nombre": "Iniciar sesión",
+   "combinacion": "android-oscuro",
+   "archivo": "P-00-android-oscuro.png",
+   "ruta": "/entrar",
+   "h1": "Finanzas Hogar",
+   "h1_coincide": false,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "sin sesión (formulario)",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 10,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-00-escritorio-claro": {
+   "pantalla": "P-00",
+   "nombre": "Iniciar sesión",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-00-escritorio-claro.png",
+   "ruta": "/entrar",
+   "h1": "Finanzas Hogar",
+   "h1_coincide": false,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "sin sesión (formulario)",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 10,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-00-escritorio-oscuro": {
+   "pantalla": "P-00",
+   "nombre": "Iniciar sesión",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-00-escritorio-oscuro.png",
+   "ruta": "/entrar",
+   "h1": "Finanzas Hogar",
+   "h1_coincide": false,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "sin sesión (formulario)",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 10,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-01-android-oscuro": {
+   "pantalla": "P-01",
+   "nombre": "Inicio",
+   "combinacion": "android-oscuro",
+   "archivo": "P-01-android-oscuro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1841
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 86,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-01-escritorio-claro": {
+   "pantalla": "P-01",
+   "nombre": "Inicio",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-01-escritorio-claro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 104,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-01-escritorio-oscuro": {
+   "pantalla": "P-01",
+   "nombre": "Inicio",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-01-escritorio-oscuro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 104,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-02-android-claro": {
+   "pantalla": "P-02",
+   "nombre": "Todos los gastos",
+   "combinacion": "android-claro",
+   "archivo": "P-02-android-claro.png",
+   "ruta": "/gastos",
+   "h1": "Todos los gastos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 67,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-02-android-oscuro": {
+   "pantalla": "P-02",
+   "nombre": "Todos los gastos",
+   "combinacion": "android-oscuro",
+   "archivo": "P-02-android-oscuro.png",
+   "ruta": "/gastos",
+   "h1": "Todos los gastos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 67,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-02-escritorio-claro": {
+   "pantalla": "P-02",
+   "nombre": "Todos los gastos",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-02-escritorio-claro.png",
+   "ruta": "/gastos",
+   "h1": "Todos los gastos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 88,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-02-escritorio-oscuro": {
+   "pantalla": "P-02",
+   "nombre": "Todos los gastos",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-02-escritorio-oscuro.png",
+   "ruta": "/gastos",
+   "h1": "Todos los gastos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 88,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-03-android-oscuro": {
+   "pantalla": "P-03",
+   "nombre": "Registrar gasto",
+   "combinacion": "android-oscuro",
+   "archivo": "P-03-android-oscuro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1841
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 19,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-03-escritorio-claro": {
+   "pantalla": "P-03",
+   "nombre": "Registrar gasto",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-03-escritorio-claro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 19,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-03-escritorio-oscuro": {
+   "pantalla": "P-03",
+   "nombre": "Registrar gasto",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-03-escritorio-oscuro.png",
+   "ruta": "/inicio",
+   "h1": "Inicio",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75",
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 19,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 18,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-04-android-claro": {
+   "pantalla": "P-04",
+   "nombre": "Gasto",
+   "combinacion": "android-claro",
+   "archivo": "P-04-android-claro.png",
+   "ruta": "/gastos/1",
+   "h1": "Gasto",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 4901
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 288,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 113,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-04-android-oscuro": {
+   "pantalla": "P-04",
+   "nombre": "Gasto",
+   "combinacion": "android-oscuro",
+   "archivo": "P-04-android-oscuro.png",
+   "ruta": "/gastos/1",
+   "h1": "Gasto",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 4901
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 288,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 113,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-04-escritorio-claro": {
+   "pantalla": "P-04",
+   "nombre": "Gasto",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-04-escritorio-claro.png",
+   "ruta": "/gastos/1",
+   "h1": "Gasto",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 2349
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 309,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 113,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-04-escritorio-oscuro": {
+   "pantalla": "P-04",
+   "nombre": "Gasto",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-04-escritorio-oscuro.png",
+   "ruta": "/gastos/1",
+   "h1": "Gasto",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 2349
+   },
+   "cifras_visibles": [
+    "$3,094.50",
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 309,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 113,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-05-android-claro": {
+   "pantalla": "P-05",
+   "nombre": "Capturar ticket",
+   "combinacion": "android-claro",
+   "archivo": "P-05-android-claro.png",
+   "ruta": "/gastos/ticket",
+   "h1": "Capturar ticket",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 23,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-05-android-oscuro": {
+   "pantalla": "P-05",
+   "nombre": "Capturar ticket",
+   "combinacion": "android-oscuro",
+   "archivo": "P-05-android-oscuro.png",
+   "ruta": "/gastos/ticket",
+   "h1": "Capturar ticket",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 23,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-05-escritorio-claro": {
+   "pantalla": "P-05",
+   "nombre": "Capturar ticket",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-05-escritorio-claro.png",
+   "ruta": "/gastos/ticket",
+   "h1": "Capturar ticket",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 44,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-05-escritorio-oscuro": {
+   "pantalla": "P-05",
+   "nombre": "Capturar ticket",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-05-escritorio-oscuro.png",
+   "ruta": "/gastos/ticket",
+   "h1": "Capturar ticket",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 44,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-06-android-claro": {
+   "pantalla": "P-06",
+   "nombre": "Presupuesto del mes",
+   "combinacion": "android-claro",
+   "archivo": "P-06-android-claro.png",
+   "ruta": "/presupuesto",
+   "h1": "Presupuesto del mes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1154
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 10,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-06-android-oscuro": {
+   "pantalla": "P-06",
+   "nombre": "Presupuesto del mes",
+   "combinacion": "android-oscuro",
+   "archivo": "P-06-android-oscuro.png",
+   "ruta": "/presupuesto",
+   "h1": "Presupuesto del mes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1154
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 10,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-06-escritorio-claro": {
+   "pantalla": "P-06",
+   "nombre": "Presupuesto del mes",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-06-escritorio-claro.png",
+   "ruta": "/presupuesto",
+   "h1": "Presupuesto del mes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 69,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 10,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-06-escritorio-oscuro": {
+   "pantalla": "P-06",
+   "nombre": "Presupuesto del mes",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-06-escritorio-oscuro.png",
+   "ruta": "/presupuesto",
+   "h1": "Presupuesto del mes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 69,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 10,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-07-android-claro": {
+   "pantalla": "P-07",
+   "nombre": "Flujo y proyección",
+   "combinacion": "android-claro",
+   "archivo": "P-07-android-claro.png",
+   "ruta": "/presupuesto/flujo",
+   "h1": "Flujo y proyección",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1012
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 40,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-07-android-oscuro": {
+   "pantalla": "P-07",
+   "nombre": "Flujo y proyección",
+   "combinacion": "android-oscuro",
+   "archivo": "P-07-android-oscuro.png",
+   "ruta": "/presupuesto/flujo",
+   "h1": "Flujo y proyección",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1012
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 40,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-07-escritorio-claro": {
+   "pantalla": "P-07",
+   "nombre": "Flujo y proyección",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-07-escritorio-claro.png",
+   "ruta": "/presupuesto/flujo",
+   "h1": "Flujo y proyección",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 63,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-07-escritorio-oscuro": {
+   "pantalla": "P-07",
+   "nombre": "Flujo y proyección",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-07-escritorio-oscuro.png",
+   "ruta": "/presupuesto/flujo",
+   "h1": "Flujo y proyección",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 63,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-08-android-claro": {
+   "pantalla": "P-08",
+   "nombre": "Ingresos",
+   "combinacion": "android-claro",
+   "archivo": "P-08-android-claro.png",
+   "ruta": "/presupuesto/ingresos",
+   "h1": "Ingresos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 963
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 56,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-08-android-oscuro": {
+   "pantalla": "P-08",
+   "nombre": "Ingresos",
+   "combinacion": "android-oscuro",
+   "archivo": "P-08-android-oscuro.png",
+   "ruta": "/presupuesto/ingresos",
+   "h1": "Ingresos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 963
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 56,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-08-escritorio-claro": {
+   "pantalla": "P-08",
+   "nombre": "Ingresos",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-08-escritorio-claro.png",
+   "ruta": "/presupuesto/ingresos",
+   "h1": "Ingresos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 79,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-08-escritorio-oscuro": {
+   "pantalla": "P-08",
+   "nombre": "Ingresos",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-08-escritorio-oscuro.png",
+   "ruta": "/presupuesto/ingresos",
+   "h1": "Ingresos",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 79,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-09-android-claro": {
+   "pantalla": "P-09",
+   "nombre": "Ahorro y metas",
+   "combinacion": "android-claro",
+   "archivo": "P-09-android-claro.png",
+   "ruta": "/presupuesto/ahorro",
+   "h1": "Ahorro y metas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 40,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-09-android-oscuro": {
+   "pantalla": "P-09",
+   "nombre": "Ahorro y metas",
+   "combinacion": "android-oscuro",
+   "archivo": "P-09-android-oscuro.png",
+   "ruta": "/presupuesto/ahorro",
+   "h1": "Ahorro y metas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 40,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-09-escritorio-claro": {
+   "pantalla": "P-09",
+   "nombre": "Ahorro y metas",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-09-escritorio-claro.png",
+   "ruta": "/presupuesto/ahorro",
+   "h1": "Ahorro y metas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 63,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-09-escritorio-oscuro": {
+   "pantalla": "P-09",
+   "nombre": "Ahorro y metas",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-09-escritorio-oscuro.png",
+   "ruta": "/presupuesto/ahorro",
+   "h1": "Ahorro y metas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 63,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 6,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-10-android-claro": {
+   "pantalla": "P-10",
+   "nombre": "Plan de la semana",
+   "combinacion": "android-claro",
+   "archivo": "P-10-android-claro.png",
+   "ruta": "/comidas",
+   "h1": "Plan de la semana",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 4207
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 244,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-10-android-oscuro": {
+   "pantalla": "P-10",
+   "nombre": "Plan de la semana",
+   "combinacion": "android-oscuro",
+   "archivo": "P-10-android-oscuro.png",
+   "ruta": "/comidas",
+   "h1": "Plan de la semana",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 4207
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 244,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-10-escritorio-claro": {
+   "pantalla": "P-10",
+   "nombre": "Plan de la semana",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-10-escritorio-claro.png",
+   "ruta": "/comidas",
+   "h1": "Plan de la semana",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1147
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 265,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-10-escritorio-oscuro": {
+   "pantalla": "P-10",
+   "nombre": "Plan de la semana",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-10-escritorio-oscuro.png",
+   "ruta": "/comidas",
+   "h1": "Plan de la semana",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1147
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 265,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-11-android-claro": {
+   "pantalla": "P-11",
+   "nombre": "Recetario",
+   "combinacion": "android-claro",
+   "archivo": "P-11-android-claro.png",
+   "ruta": "/comidas/recetas",
+   "h1": "Recetario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 5853
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 342,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-11-android-oscuro": {
+   "pantalla": "P-11",
+   "nombre": "Recetario",
+   "combinacion": "android-oscuro",
+   "archivo": "P-11-android-oscuro.png",
+   "ruta": "/comidas/recetas",
+   "h1": "Recetario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 5853
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 342,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-11-escritorio-claro": {
+   "pantalla": "P-11",
+   "nombre": "Recetario",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-11-escritorio-claro.png",
+   "ruta": "/comidas/recetas",
+   "h1": "Recetario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 3185
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 363,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-11-escritorio-oscuro": {
+   "pantalla": "P-11",
+   "nombre": "Recetario",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-11-escritorio-oscuro.png",
+   "ruta": "/comidas/recetas",
+   "h1": "Recetario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 3185
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 363,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-12-android-claro": {
+   "pantalla": "P-12",
+   "nombre": "Receta",
+   "combinacion": "android-claro",
+   "archivo": "P-12-android-claro.png",
+   "ruta": "/comidas/recetas/34",
+   "h1": "Receta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1847
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 125,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-12-android-oscuro": {
+   "pantalla": "P-12",
+   "nombre": "Receta",
+   "combinacion": "android-oscuro",
+   "archivo": "P-12-android-oscuro.png",
+   "ruta": "/comidas/recetas/34",
+   "h1": "Receta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1847
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 125,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-12-escritorio-claro": {
+   "pantalla": "P-12",
+   "nombre": "Receta",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-12-escritorio-claro.png",
+   "ruta": "/comidas/recetas/34",
+   "h1": "Receta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1073
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 146,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-12-escritorio-oscuro": {
+   "pantalla": "P-12",
+   "nombre": "Receta",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-12-escritorio-oscuro.png",
+   "ruta": "/comidas/recetas/34",
+   "h1": "Receta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1073
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 146,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-13-android-claro": {
+   "pantalla": "P-13",
+   "nombre": "Lista de compras",
+   "combinacion": "android-claro",
+   "archivo": "P-13-android-claro.png",
+   "ruta": "/compras",
+   "h1": "Lista de compras",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 23,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-13-android-oscuro": {
+   "pantalla": "P-13",
+   "nombre": "Lista de compras",
+   "combinacion": "android-oscuro",
+   "archivo": "P-13-android-oscuro.png",
+   "ruta": "/compras",
+   "h1": "Lista de compras",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 23,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-13-escritorio-claro": {
+   "pantalla": "P-13",
+   "nombre": "Lista de compras",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-13-escritorio-claro.png",
+   "ruta": "/compras",
+   "h1": "Lista de compras",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-13-escritorio-oscuro": {
+   "pantalla": "P-13",
+   "nombre": "Lista de compras",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-13-escritorio-oscuro.png",
+   "ruta": "/compras",
+   "h1": "Lista de compras",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-14-android-claro": {
+   "pantalla": "P-14",
+   "nombre": "Comparar canasta",
+   "combinacion": "android-claro",
+   "archivo": "P-14-android-claro.png",
+   "ruta": "/compras/comparar",
+   "h1": "Comparar canasta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 23,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-14-android-oscuro": {
+   "pantalla": "P-14",
+   "nombre": "Comparar canasta",
+   "combinacion": "android-oscuro",
+   "archivo": "P-14-android-oscuro.png",
+   "ruta": "/compras/comparar",
+   "h1": "Comparar canasta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 23,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-14-escritorio-claro": {
+   "pantalla": "P-14",
+   "nombre": "Comparar canasta",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-14-escritorio-claro.png",
+   "ruta": "/compras/comparar",
+   "h1": "Comparar canasta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-14-escritorio-oscuro": {
+   "pantalla": "P-14",
+   "nombre": "Comparar canasta",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-14-escritorio-oscuro.png",
+   "ruta": "/compras/comparar",
+   "h1": "Comparar canasta",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$3,094.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-15-android-claro": {
+   "pantalla": "P-15",
+   "nombre": "Productos y precios",
+   "combinacion": "android-claro",
+   "archivo": "P-15-android-claro.png",
+   "ruta": "/compras/productos",
+   "h1": "Productos y precios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 9721
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 1045,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 36,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-15-android-oscuro": {
+   "pantalla": "P-15",
+   "nombre": "Productos y precios",
+   "combinacion": "android-oscuro",
+   "archivo": "P-15-android-oscuro.png",
+   "ruta": "/compras/productos",
+   "h1": "Productos y precios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 9721
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 1045,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 36,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-15-escritorio-claro": {
+   "pantalla": "P-15",
+   "nombre": "Productos y precios",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-15-escritorio-claro.png",
+   "ruta": "/compras/productos",
+   "h1": "Productos y precios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 7877
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 1068,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 36,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-15-escritorio-oscuro": {
+   "pantalla": "P-15",
+   "nombre": "Productos y precios",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-15-escritorio-oscuro.png",
+   "ruta": "/compras/productos",
+   "h1": "Productos y precios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 7877
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 1068,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 36,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-16-android-claro": {
+   "pantalla": "P-16",
+   "nombre": "Inventario",
+   "combinacion": "android-claro",
+   "archivo": "P-16-android-claro.png",
+   "ruta": "/compras/inventario",
+   "h1": "Inventario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 28,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-16-android-oscuro": {
+   "pantalla": "P-16",
+   "nombre": "Inventario",
+   "combinacion": "android-oscuro",
+   "archivo": "P-16-android-oscuro.png",
+   "ruta": "/compras/inventario",
+   "h1": "Inventario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 28,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-16-escritorio-claro": {
+   "pantalla": "P-16",
+   "nombre": "Inventario",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-16-escritorio-claro.png",
+   "ruta": "/compras/inventario",
+   "h1": "Inventario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 51,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-16-escritorio-oscuro": {
+   "pantalla": "P-16",
+   "nombre": "Inventario",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-16-escritorio-oscuro.png",
+   "ruta": "/compras/inventario",
+   "h1": "Inventario",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 51,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-17-android-claro": {
+   "pantalla": "P-17",
+   "nombre": "Todas las líneas",
+   "combinacion": "android-claro",
+   "archivo": "P-17-android-claro.png",
+   "ruta": "/creditos",
+   "h1": "Todas las líneas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1332
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 55,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-17-android-oscuro": {
+   "pantalla": "P-17",
+   "nombre": "Todas las líneas",
+   "combinacion": "android-oscuro",
+   "archivo": "P-17-android-oscuro.png",
+   "ruta": "/creditos",
+   "h1": "Todas las líneas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1332
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 55,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-17-escritorio-claro": {
+   "pantalla": "P-17",
+   "nombre": "Todas las líneas",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-17-escritorio-claro.png",
+   "ruta": "/creditos",
+   "h1": "Todas las líneas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 77,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-17-escritorio-oscuro": {
+   "pantalla": "P-17",
+   "nombre": "Todas las líneas",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-17-escritorio-oscuro.png",
+   "ruta": "/creditos",
+   "h1": "Todas las líneas",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 77,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 13,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-18-android-claro": {
+   "pantalla": "P-18",
+   "nombre": "Crédito",
+   "combinacion": "android-claro",
+   "archivo": "P-18-android-claro.png",
+   "ruta": "/creditos/1",
+   "h1": "Crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1646
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 65,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 9,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-18-android-oscuro": {
+   "pantalla": "P-18",
+   "nombre": "Crédito",
+   "combinacion": "android-oscuro",
+   "archivo": "P-18-android-oscuro.png",
+   "ruta": "/creditos/1",
+   "h1": "Crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1646
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 65,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 9,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-18-escritorio-claro": {
+   "pantalla": "P-18",
+   "nombre": "Crédito",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-18-escritorio-claro.png",
+   "ruta": "/creditos/1",
+   "h1": "Crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1104
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 87,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 9,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-18-escritorio-oscuro": {
+   "pantalla": "P-18",
+   "nombre": "Crédito",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-18-escritorio-oscuro.png",
+   "ruta": "/creditos/1",
+   "h1": "Crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1104
+   },
+   "cifras_visibles": [
+    "$10,000.00",
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 87,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 9,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-19-android-claro": {
+   "pantalla": "P-19",
+   "nombre": "Compra a crédito",
+   "combinacion": "android-claro",
+   "archivo": "P-19-android-claro.png",
+   "ruta": "/creditos/1/compras/4",
+   "h1": "Compra a crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1664
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 82,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 27,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-19-android-oscuro": {
+   "pantalla": "P-19",
+   "nombre": "Compra a crédito",
+   "combinacion": "android-oscuro",
+   "archivo": "P-19-android-oscuro.png",
+   "ruta": "/creditos/1/compras/4",
+   "h1": "Compra a crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1664
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 82,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 27,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-19-escritorio-claro": {
+   "pantalla": "P-19",
+   "nombre": "Compra a crédito",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-19-escritorio-claro.png",
+   "ruta": "/creditos/1/compras/4",
+   "h1": "Compra a crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 104,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 27,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-19-escritorio-oscuro": {
+   "pantalla": "P-19",
+   "nombre": "Compra a crédito",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-19-escritorio-oscuro.png",
+   "ruta": "/creditos/1/compras/4",
+   "h1": "Compra a crédito",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 104,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 27,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-20-android-claro": {
+   "pantalla": "P-20",
+   "nombre": "Comparador de escenarios",
+   "combinacion": "android-claro",
+   "archivo": "P-20-android-claro.png",
+   "ruta": "/creditos/comparador",
+   "h1": "Comparador de escenarios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1087
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 67,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-20-android-oscuro": {
+   "pantalla": "P-20",
+   "nombre": "Comparador de escenarios",
+   "combinacion": "android-oscuro",
+   "archivo": "P-20-android-oscuro.png",
+   "ruta": "/creditos/comparador",
+   "h1": "Comparador de escenarios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1087
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 67,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-20-escritorio-claro": {
+   "pantalla": "P-20",
+   "nombre": "Comparador de escenarios",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-20-escritorio-claro.png",
+   "ruta": "/creditos/comparador",
+   "h1": "Comparador de escenarios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 939
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 89,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-20-escritorio-oscuro": {
+   "pantalla": "P-20",
+   "nombre": "Comparador de escenarios",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-20-escritorio-oscuro.png",
+   "ruta": "/creditos/comparador",
+   "h1": "Comparador de escenarios",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 939
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 89,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-21-android-claro": {
+   "pantalla": "P-21",
+   "nombre": "Salud",
+   "combinacion": "android-claro",
+   "archivo": "P-21-android-claro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 24,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-21-android-oscuro": {
+   "pantalla": "P-21",
+   "nombre": "Salud",
+   "combinacion": "android-oscuro",
+   "archivo": "P-21-android-oscuro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 24,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-21-escritorio-claro": {
+   "pantalla": "P-21",
+   "nombre": "Salud",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-21-escritorio-claro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 42,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-21-escritorio-oscuro": {
+   "pantalla": "P-21",
+   "nombre": "Salud",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-21-escritorio-oscuro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 42,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-22-android-claro": {
+   "pantalla": "P-22",
+   "nombre": "Registrar peso",
+   "combinacion": "android-claro",
+   "archivo": "P-22-android-claro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 17,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-22-android-oscuro": {
+   "pantalla": "P-22",
+   "nombre": "Registrar peso",
+   "combinacion": "android-oscuro",
+   "archivo": "P-22-android-oscuro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 17,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-22-escritorio-claro": {
+   "pantalla": "P-22",
+   "nombre": "Registrar peso",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-22-escritorio-claro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 17,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-22-escritorio-oscuro": {
+   "pantalla": "P-22",
+   "nombre": "Registrar peso",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-22-escritorio-oscuro.png",
+   "ruta": "/salud",
+   "h1": "Salud",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 17,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-23-android-claro": {
+   "pantalla": "P-23",
+   "nombre": "Centro de reportes",
+   "combinacion": "android-claro",
+   "archivo": "P-23-android-claro.png",
+   "ruta": "/reportes",
+   "h1": "Centro de reportes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1171
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 48,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-23-android-oscuro": {
+   "pantalla": "P-23",
+   "nombre": "Centro de reportes",
+   "combinacion": "android-oscuro",
+   "archivo": "P-23-android-oscuro.png",
+   "ruta": "/reportes",
+   "h1": "Centro de reportes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1171
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 48,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-23-escritorio-claro": {
+   "pantalla": "P-23",
+   "nombre": "Centro de reportes",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-23-escritorio-claro.png",
+   "ruta": "/reportes",
+   "h1": "Centro de reportes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 70,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-23-escritorio-oscuro": {
+   "pantalla": "P-23",
+   "nombre": "Centro de reportes",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-23-escritorio-oscuro.png",
+   "ruta": "/reportes",
+   "h1": "Centro de reportes",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 70,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-24-android-claro": {
+   "pantalla": "P-24",
+   "nombre": "Reporte mensual",
+   "combinacion": "android-claro",
+   "archivo": "P-24-android-claro.png",
+   "ruta": "/reportes/mensual",
+   "h1": "Reporte mensual",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2113
+   },
+   "cifras_visibles": [
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 105,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 25,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-24-android-oscuro": {
+   "pantalla": "P-24",
+   "nombre": "Reporte mensual",
+   "combinacion": "android-oscuro",
+   "archivo": "P-24-android-oscuro.png",
+   "ruta": "/reportes/mensual",
+   "h1": "Reporte mensual",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2113
+   },
+   "cifras_visibles": [
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 105,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 25,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-24-escritorio-claro": {
+   "pantalla": "P-24",
+   "nombre": "Reporte mensual",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-24-escritorio-claro.png",
+   "ruta": "/reportes/mensual",
+   "h1": "Reporte mensual",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1715
+   },
+   "cifras_visibles": [
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 127,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 25,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-24-escritorio-oscuro": {
+   "pantalla": "P-24",
+   "nombre": "Reporte mensual",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-24-escritorio-oscuro.png",
+   "ruta": "/reportes/mensual",
+   "h1": "Reporte mensual",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1715
+   },
+   "cifras_visibles": [
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 127,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 25,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-25-android-claro": {
+   "pantalla": "P-25",
+   "nombre": "Estado de cuenta de Karen",
+   "combinacion": "android-claro",
+   "archivo": "P-25-android-claro.png",
+   "ruta": "/reportes/karen",
+   "h1": "Estado de cuenta de Karen",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1509
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 69,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 37,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-25-android-oscuro": {
+   "pantalla": "P-25",
+   "nombre": "Estado de cuenta de Karen",
+   "combinacion": "android-oscuro",
+   "archivo": "P-25-android-oscuro.png",
+   "ruta": "/reportes/karen",
+   "h1": "Estado de cuenta de Karen",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1509
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 69,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 37,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-25-escritorio-claro": {
+   "pantalla": "P-25",
+   "nombre": "Estado de cuenta de Karen",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-25-escritorio-claro.png",
+   "ruta": "/reportes/karen",
+   "h1": "Estado de cuenta de Karen",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1299
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 91,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 37,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-25-escritorio-oscuro": {
+   "pantalla": "P-25",
+   "nombre": "Estado de cuenta de Karen",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-25-escritorio-oscuro.png",
+   "ruta": "/reportes/karen",
+   "h1": "Estado de cuenta de Karen",
+   "h1_coincide": true,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1299
+   },
+   "cifras_visibles": [
+    "$1,191.50"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 91,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 37,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26-android-claro": {
+   "pantalla": "P-26",
+   "nombre": "Ajustes",
+   "combinacion": "android-claro",
+   "archivo": "P-26-android-claro.png",
+   "ruta": "/ajustes",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 53,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26-android-oscuro": {
+   "pantalla": "P-26",
+   "nombre": "Ajustes",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26-android-oscuro.png",
+   "ruta": "/ajustes",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 53,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26-escritorio-claro": {
+   "pantalla": "P-26",
+   "nombre": "Ajustes",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26-escritorio-claro.png",
+   "ruta": "/ajustes",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 58,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26-escritorio-oscuro": {
+   "pantalla": "P-26",
+   "nombre": "Ajustes",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26-escritorio-oscuro.png",
+   "ruta": "/ajustes",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 58,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.01-android-claro": {
+   "pantalla": "P-26.01",
+   "nombre": "Cuenta y roles",
+   "combinacion": "android-claro",
+   "archivo": "P-26.01-android-claro.png",
+   "ruta": "/ajustes/01",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 4238
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 223,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.01-android-oscuro": {
+   "pantalla": "P-26.01",
+   "nombre": "Cuenta y roles",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.01-android-oscuro.png",
+   "ruta": "/ajustes/01",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 4683
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 258,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.01-escritorio-claro": {
+   "pantalla": "P-26.01",
+   "nombre": "Cuenta y roles",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.01-escritorio-claro.png",
+   "ruta": "/ajustes/01",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 2830
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 324,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.01-escritorio-oscuro": {
+   "pantalla": "P-26.01",
+   "nombre": "Cuenta y roles",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.01-escritorio-oscuro.png",
+   "ruta": "/ajustes/01",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 3100
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 366,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.02-android-claro": {
+   "pantalla": "P-26.02",
+   "nombre": "Presupuesto",
+   "combinacion": "android-claro",
+   "archivo": "P-26.02-android-claro.png",
+   "ruta": "/ajustes/02",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1725
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 39,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.02-android-oscuro": {
+   "pantalla": "P-26.02",
+   "nombre": "Presupuesto",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.02-android-oscuro.png",
+   "ruta": "/ajustes/02",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1725
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 39,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.02-escritorio-claro": {
+   "pantalla": "P-26.02",
+   "nombre": "Presupuesto",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.02-escritorio-claro.png",
+   "ruta": "/ajustes/02",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 999
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 84,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.02-escritorio-oscuro": {
+   "pantalla": "P-26.02",
+   "nombre": "Presupuesto",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.02-escritorio-oscuro.png",
+   "ruta": "/ajustes/02",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 999
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 84,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.03-android-claro": {
+   "pantalla": "P-26.03",
+   "nombre": "Ingresos",
+   "combinacion": "android-claro",
+   "archivo": "P-26.03-android-claro.png",
+   "ruta": "/ajustes/03",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1068
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 28,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.03-android-oscuro": {
+   "pantalla": "P-26.03",
+   "nombre": "Ingresos",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.03-android-oscuro.png",
+   "ruta": "/ajustes/03",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1068
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 28,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.03-escritorio-claro": {
+   "pantalla": "P-26.03",
+   "nombre": "Ingresos",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.03-escritorio-claro.png",
+   "ruta": "/ajustes/03",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 73,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.03-escritorio-oscuro": {
+   "pantalla": "P-26.03",
+   "nombre": "Ingresos",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.03-escritorio-oscuro.png",
+   "ruta": "/ajustes/03",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 73,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 2,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.04-android-claro": {
+   "pantalla": "P-26.04",
+   "nombre": "Categorías",
+   "combinacion": "android-claro",
+   "archivo": "P-26.04-android-claro.png",
+   "ruta": "/ajustes/04",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 56,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.04-android-oscuro": {
+   "pantalla": "P-26.04",
+   "nombre": "Categorías",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.04-android-oscuro.png",
+   "ruta": "/ajustes/04",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 56,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.04-escritorio-claro": {
+   "pantalla": "P-26.04",
+   "nombre": "Categorías",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.04-escritorio-claro.png",
+   "ruta": "/ajustes/04",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 101,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.04-escritorio-oscuro": {
+   "pantalla": "P-26.04",
+   "nombre": "Categorías",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.04-escritorio-oscuro.png",
+   "ruta": "/ajustes/04",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 101,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.05-android-claro": {
+   "pantalla": "P-26.05",
+   "nombre": "Créditos y condiciones (incluye promociones)",
+   "combinacion": "android-claro",
+   "archivo": "P-26.05-android-claro.png",
+   "ruta": "/ajustes/05",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2464
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 79,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 3,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.05-android-oscuro": {
+   "pantalla": "P-26.05",
+   "nombre": "Créditos y condiciones (incluye promociones)",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.05-android-oscuro.png",
+   "ruta": "/ajustes/05",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2464
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 79,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 3,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.05-escritorio-claro": {
+   "pantalla": "P-26.05",
+   "nombre": "Créditos y condiciones (incluye promociones)",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.05-escritorio-claro.png",
+   "ruta": "/ajustes/05",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1626
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 124,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 3,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.05-escritorio-oscuro": {
+   "pantalla": "P-26.05",
+   "nombre": "Créditos y condiciones (incluye promociones)",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.05-escritorio-oscuro.png",
+   "ruta": "/ajustes/05",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1626
+   },
+   "cifras_visibles": [
+    "$6,905.50",
+    "$973.75"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 124,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 3,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.06-android-claro": {
+   "pantalla": "P-26.06",
+   "nombre": "Tiendas y precios (incluye mercados y membresía Sam's)",
+   "combinacion": "android-claro",
+   "archivo": "P-26.06-android-claro.png",
+   "ruta": "/ajustes/06",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2373
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 99,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.06-android-oscuro": {
+   "pantalla": "P-26.06",
+   "nombre": "Tiendas y precios (incluye mercados y membresía Sam's)",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.06-android-oscuro.png",
+   "ruta": "/ajustes/06",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2373
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 99,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.06-escritorio-claro": {
+   "pantalla": "P-26.06",
+   "nombre": "Tiendas y precios (incluye mercados y membresía Sam's)",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.06-escritorio-claro.png",
+   "ruta": "/ajustes/06",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1377
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 144,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.06-escritorio-oscuro": {
+   "pantalla": "P-26.06",
+   "nombre": "Tiendas y precios (incluye mercados y membresía Sam's)",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.06-escritorio-oscuro.png",
+   "ruta": "/ajustes/06",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1377
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 144,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.07-android-claro": {
+   "pantalla": "P-26.07",
+   "nombre": "Recetas",
+   "combinacion": "android-claro",
+   "archivo": "P-26.07-android-claro.png",
+   "ruta": "/ajustes/07",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 12382
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 584,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.07-android-oscuro": {
+   "pantalla": "P-26.07",
+   "nombre": "Recetas",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.07-android-oscuro.png",
+   "ruta": "/ajustes/07",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 12382
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 584,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.07-escritorio-claro": {
+   "pantalla": "P-26.07",
+   "nombre": "Recetas",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.07-escritorio-claro.png",
+   "ruta": "/ajustes/07",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 7826
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 629,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.07-escritorio-oscuro": {
+   "pantalla": "P-26.07",
+   "nombre": "Recetas",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.07-escritorio-oscuro.png",
+   "ruta": "/ajustes/07",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 7826
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 629,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.08-android-claro": {
+   "pantalla": "P-26.08",
+   "nombre": "Reportes y frecuencias",
+   "combinacion": "android-claro",
+   "archivo": "P-26.08-android-claro.png",
+   "ruta": "/ajustes/08",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1455
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.08-android-oscuro": {
+   "pantalla": "P-26.08",
+   "nombre": "Reportes y frecuencias",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.08-android-oscuro.png",
+   "ruta": "/ajustes/08",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1455
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 46,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.08-escritorio-claro": {
+   "pantalla": "P-26.08",
+   "nombre": "Reportes y frecuencias",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.08-escritorio-claro.png",
+   "ruta": "/ajustes/08",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1229
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 117,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.08-escritorio-oscuro": {
+   "pantalla": "P-26.08",
+   "nombre": "Reportes y frecuencias",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.08-escritorio-oscuro.png",
+   "ruta": "/ajustes/08",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1229
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 117,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.09-android-claro": {
+   "pantalla": "P-26.09",
+   "nombre": "Notificaciones",
+   "combinacion": "android-claro",
+   "archivo": "P-26.09-android-claro.png",
+   "ruta": "/ajustes/09",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2000
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 55,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.09-android-oscuro": {
+   "pantalla": "P-26.09",
+   "nombre": "Notificaciones",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.09-android-oscuro.png",
+   "ruta": "/ajustes/09",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2000
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 55,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.09-escritorio-claro": {
+   "pantalla": "P-26.09",
+   "nombre": "Notificaciones",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.09-escritorio-claro.png",
+   "ruta": "/ajustes/09",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 2154
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 128,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.09-escritorio-oscuro": {
+   "pantalla": "P-26.09",
+   "nombre": "Notificaciones",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.09-escritorio-oscuro.png",
+   "ruta": "/ajustes/09",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 2154
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 128,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.10-android-claro": {
+   "pantalla": "P-26.10",
+   "nombre": "Apariencia",
+   "combinacion": "android-claro",
+   "archivo": "P-26.10-android-claro.png",
+   "ruta": "/ajustes/10",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 33,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.10-android-oscuro": {
+   "pantalla": "P-26.10",
+   "nombre": "Apariencia",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.10-android-oscuro.png",
+   "ruta": "/ajustes/10",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 33,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.10-escritorio-claro": {
+   "pantalla": "P-26.10",
+   "nombre": "Apariencia",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.10-escritorio-claro.png",
+   "ruta": "/ajustes/10",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 78,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.10-escritorio-oscuro": {
+   "pantalla": "P-26.10",
+   "nombre": "Apariencia",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.10-escritorio-oscuro.png",
+   "ruta": "/ajustes/10",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 78,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 1,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.11-android-claro": {
+   "pantalla": "P-26.11",
+   "nombre": "Datos y respaldos",
+   "combinacion": "android-claro",
+   "archivo": "P-26.11-android-claro.png",
+   "ruta": "/ajustes/11",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2402
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 81,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.11-android-oscuro": {
+   "pantalla": "P-26.11",
+   "nombre": "Datos y respaldos",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.11-android-oscuro.png",
+   "ruta": "/ajustes/11",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2402
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 81,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.11-escritorio-claro": {
+   "pantalla": "P-26.11",
+   "nombre": "Datos y respaldos",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.11-escritorio-claro.png",
+   "ruta": "/ajustes/11",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1572
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 126,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.11-escritorio-oscuro": {
+   "pantalla": "P-26.11",
+   "nombre": "Datos y respaldos",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.11-escritorio-oscuro.png",
+   "ruta": "/ajustes/11",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1572
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 126,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.12-android-claro": {
+   "pantalla": "P-26.12",
+   "nombre": "Personas y reparto",
+   "combinacion": "android-claro",
+   "archivo": "P-26.12-android-claro.png",
+   "ruta": "/ajustes/12",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2155
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 73,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.12-android-oscuro": {
+   "pantalla": "P-26.12",
+   "nombre": "Personas y reparto",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.12-android-oscuro.png",
+   "ruta": "/ajustes/12",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 2155
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 73,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.12-escritorio-claro": {
+   "pantalla": "P-26.12",
+   "nombre": "Personas y reparto",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.12-escritorio-claro.png",
+   "ruta": "/ajustes/12",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1031
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 118,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.12-escritorio-oscuro": {
+   "pantalla": "P-26.12",
+   "nombre": "Personas y reparto",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.12-escritorio-oscuro.png",
+   "ruta": "/ajustes/12",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1031
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 118,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.13-android-claro": {
+   "pantalla": "P-26.13",
+   "nombre": "Salud y metas de ahorro",
+   "combinacion": "android-claro",
+   "archivo": "P-26.13-android-claro.png",
+   "ruta": "/ajustes/13",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1724
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 73,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.13-android-oscuro": {
+   "pantalla": "P-26.13",
+   "nombre": "Salud y metas de ahorro",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.13-android-oscuro.png",
+   "ruta": "/ajustes/13",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 1724
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 73,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.13-escritorio-claro": {
+   "pantalla": "P-26.13",
+   "nombre": "Salud y metas de ahorro",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.13-escritorio-claro.png",
+   "ruta": "/ajustes/13",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1086
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 118,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.13-escritorio-oscuro": {
+   "pantalla": "P-26.13",
+   "nombre": "Salud y metas de ahorro",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.13-escritorio-oscuro.png",
+   "ruta": "/ajustes/13",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 1086
+   },
+   "cifras_visibles": [
+    "$6,293.44"
+   ],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 118,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 4,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.14-android-claro": {
+   "pantalla": "P-26.14",
+   "nombre": "Inventario",
+   "combinacion": "android-claro",
+   "archivo": "P-26.14-android-claro.png",
+   "ruta": "/ajustes/14",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 29,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.14-android-oscuro": {
+   "pantalla": "P-26.14",
+   "nombre": "Inventario",
+   "combinacion": "android-oscuro",
+   "archivo": "P-26.14-android-oscuro.png",
+   "ruta": "/ajustes/14",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": true,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 412,
+    "alto": 915
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 29,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.14-escritorio-claro": {
+   "pantalla": "P-26.14",
+   "nombre": "Inventario",
+   "combinacion": "escritorio-claro",
+   "archivo": "P-26.14-escritorio-claro.png",
+   "ruta": "/ajustes/14",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "claro",
+    "fondo_body": "rgb(250, 250, 251)",
+    "fondo_token_c2": "rgb(250, 250, 251)",
+    "token": "ui.surface.page.light = {color.neutral.50}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": false
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 74,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  },
+  "P-26.14-escritorio-oscuro": {
+   "pantalla": "P-26.14",
+   "nombre": "Inventario",
+   "combinacion": "escritorio-oscuro",
+   "archivo": "P-26.14-escritorio-oscuro.png",
+   "ruta": "/ajustes/14",
+   "h1": "Ajustes",
+   "h1_coincide": null,
+   "cargando_al_capturar": false,
+   "puntero_grueso": false,
+   "error_de_pantalla": false,
+   "sesion": "iniciada una vez por contexto",
+   "tema": {
+    "esperado": "oscuro",
+    "fondo_body": "rgb(34, 35, 37)",
+    "fondo_token_c2": "rgb(34, 35, 37)",
+    "token": "ui.surface.page.dark = {color.neutral.950}",
+    "coincide": true,
+    "data_theme": null,
+    "prefers_dark": true
+   },
+   "dimensiones_pagina": {
+    "ancho": 1440,
+    "alto": 900
+   },
+   "cifras_visibles": [],
+   "axe": {
+    "serias_o_criticas": 0,
+    "violaciones": 0
+   },
+   "contraste": {
+    "evaluados": 74,
+    "bajo_umbral": 0,
+    "indeterminados": 0
+   },
+   "u5_07": {
+    "importes": 0,
+    "importes_fuera_de_formato": [],
+    "fechas_iso": [],
+    "ingles": [],
+    "claves_internas": []
+   }
+  }
+ }
+}

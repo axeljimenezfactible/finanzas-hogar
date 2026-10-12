@@ -1,0 +1,108 @@
+{
+ "pantalla": "P-02",
+ "nombre": "Todos los gastos",
+ "combinacion": "android-claro",
+ "url": "/gastos",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 31,
+  "no_aplican": 32
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      ".text-right[aria-sort=\"none\"]:nth-child(6) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Monto</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(7) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Persona</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right[aria-sort=\"none\"]:nth-child(8) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Reparto</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(9) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Tipo</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(10) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Forma de pago</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(11) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Tienda o comercio</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right.tabular-nums:nth-child(6) > .min-h-9.text-inherit.coarse\\:min-h-11"
+     ],
+     "html": "<button type=\"button\" class=\"w-full min-h-9 text-inherit rounded-sm px-1 text-left coarse:min-h-11 coarse:min-w-11 hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-border-focus\">$3,094.50</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right.tabular-nums:nth-child(8)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">Hogar $1,903.00 · Karen $1,191.50</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(9) > .min-h-9.text-inherit.coarse\\:min-h-11"
+     ],
+     "html": "<button type=\"button\" class=\"w-full min-h-9 text-inherit rounded-sm px-1 text-left coarse:min-h-11 coarse:min-w-11 hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-border-focus\">Variable</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(10)"
+     ],
+     "html": "<td class=\"px-2 py-1\">A crédito</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(11)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Vallejo</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

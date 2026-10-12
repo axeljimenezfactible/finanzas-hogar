@@ -1,0 +1,466 @@
+{
+ "pantalla": "P-01",
+ "combinacion": "escritorio-oscuro",
+ "alcance": "body",
+ "evaluados": 104,
+ "pares_unicos": 22,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 16,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F8A078",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.895,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "span.flex.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-arrow-up-right",
+     "texto": "lucide lucide-arrow-up-right size-5 text"
+    },
+    {
+     "nodo": "span.hidden.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-arrow-up-right",
+     "texto": "lucide lucide-arrow-up-right size-5 text"
+    },
+    {
+     "nodo": "span.hidden.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-arrow-up-right",
+     "texto": "lucide lucide-arrow-up-right size-5 text"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F8A078",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.895,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "span.flex.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > span.text-role-expense",
+     "texto": "$0.00"
+    },
+    {
+     "nodo": "span.hidden.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > span.text-role-expense",
+     "texto": "$0.00"
+    },
+    {
+     "nodo": "span.hidden.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > span.text-role-expense",
+     "texto": "$0.00"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#6BC3FD",
+   "bg": "#003B5A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 6.119,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.inline-flex.h-6",
+     "texto": "Ingreso esperado"
+    },
+    {
+     "nodo": "a[data-prueba=\"tarjeta-3\"] > span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6",
+     "texto": "Pendiente confirmar"
+    },
+    {
+     "nodo": "a[data-prueba=\"tarjeta-6\"] > span.flex.flex-wrap > span.hidden.phone:inline-flex > span.inline-flex.h-6",
+     "texto": "En curso"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#6BC3FD",
+   "bg": "#003B5A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.119,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "texto": "lucide lucide-info"
+    },
+    {
+     "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "texto": "lucide lucide-info"
+    },
+    {
+     "nodo": "span.flex.flex-wrap > span.hidden.phone:inline-flex > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "texto": "lucide lucide-info"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#98CA7B",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.341,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "span.flex.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > svg.lucide.lucide-arrow-down-left",
+     "texto": "lucide lucide-arrow-down-left size-5 tex"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#98CA7B",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 6.341,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "span.flex.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > span.text-role-income",
+     "texto": "+$12,000.00"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#3FD0D7",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": true,
+   "razon": 6.425,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-6\"] > span.flex.flex-wrap > span.flex.items-center",
+     "texto": "$3,146.72"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#3FD0D7",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.425,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-6\"] > span.flex.flex-wrap > span.flex.items-center > svg.lucide.lucide-piggy-bank",
+     "texto": "lucide lucide-piggy-bank"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 6,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.mt-auto.inline-flex",
+     "texto": "Ver presupuesto"
+    },
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.mt-auto.inline-flex",
+     "texto": "Ver flujo"
+    },
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-3\"] > span.mt-auto.inline-flex",
+     "texto": "Ver crédito"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 6,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-5"
+    },
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-5"
+    },
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-3\"] > span.mt-auto.inline-flex > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#B7B8C0",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.962,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Foto de ticket"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 28,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
+     "texto": "Axel"
+    },
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.flex.items-center",
+     "texto": "Mes contra plan"
+    },
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.flex.flex-wrap > span.text-small.text-text-secondary",
+     "texto": "te quedan"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 9,
+   "ejemplos": [
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-5 text-icon-de"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-5 text-icon-defa"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
+     "texto": "lucide lucide-monitor size-5 text-icon-d"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Resumen"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.hidden.text-small > ol.flex.gap-1 > li > a.hover:underline",
+     "texto": "Inicio"
+    },
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Detalle"
+    },
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Tendencias"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 10,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > button.absolute.top-2 > svg.lucide.lucide-chevrons-left",
+     "texto": "lucide lucide-chevrons-left size-6"
+    },
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > svg.lucide.lucide-user-round",
+     "texto": "lucide lucide-user-round lucide-user-2 s"
+    },
+    {
+     "nodo": "li > div.flex.items-center > button.inline-flex.size-8 > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-5 trans"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 14,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",
+     "texto": "Finanzas Hogar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Buscar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Registrar gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": true,
+   "razon": 10.76,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-1\"] > span.flex.flex-wrap > span.flex.items-center",
+     "texto": "$802.36"
+    },
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.flex.items-center",
+     "texto": "$12,000.00"
+    },
+    {
+     "nodo": "div[data-prueba=\"resumen\"] > a[data-prueba=\"tarjeta-3\"] > span.flex.flex-wrap > span.flex.items-center",
+     "texto": "$973.75"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "ul.mt-2.flex > li > div.flex.items-center > a.flex.h-8",
+     "texto": "Inicio"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.ml-auto.hidden > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": true,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Inicio"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Resumen"
+    }
+   ]
+  }
+ ]
+}

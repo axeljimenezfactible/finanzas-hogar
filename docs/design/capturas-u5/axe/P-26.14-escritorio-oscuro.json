@@ -1,0 +1,23 @@
+{
+ "pantalla": "P-26.14",
+ "nombre": "Inventario",
+ "combinacion": "escritorio-oscuro",
+ "url": "/ajustes/14",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 0,
+  "pasadas": 27,
+  "no_aplican": 36
+ },
+ "violations": [],
+ "incomplete": []
+}

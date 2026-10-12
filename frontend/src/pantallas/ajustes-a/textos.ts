@@ -5,7 +5,7 @@ export const t = {
     guardando: 'Guardando…', guardado: 'Guardado', valorInicial: (v: string) => `Valor inicial: ${v}`, restablecer: 'Restablecer al valor inicial',
     restablecido: 'Valor restablecido', noGuardo: 'No se pudo guardar. Revisa la conexión con el servidor de casa', noCalculo: 'No se pudo calcular el efecto',
     previaPendiente: 'Vista previa pendiente', antes: 'Antes', despues: 'Después', cambiaA: 'cambia a', editar: (c: string) => `Editar ${c}`,
-    nuevo: 'Nuevo', si: 'Sí', no: 'No', ninguno: 'Ninguno', sinValor: 'Sin valor', activa: 'Activa', activo: 'Activo', eliminar: 'Eliminar',
+    nuevo: 'Nuevo', desactivar: 'Desactivar', si: 'Sí', no: 'No', ninguno: 'Ninguno', sinValor: 'Sin valor', activa: 'Activa', activo: 'Activo', eliminar: 'Eliminar',
     noCargo: (q: string) => `No se pudo cargar ${q}`, crear: 'Guardar', cancelar: 'Cancelar', provisional: 'PROVISIONAL', cerrar: 'Cerrar',
   },
   v: {
@@ -71,7 +71,7 @@ export const t = {
     aviso: 'Flujo y proyección y Presupuesto se recalculan con el ingreso nuevo.', esperado: 'Ingreso esperado del mes',
   },
   categorias: { mover: (n: string, columna: string) => `«${n}» pasa a ${columna}`, aplicar: 'Aplicar', titulo: 'Categorías de gasto',
-    nombre: 'Nombre', clave: 'Clave que usan los cálculos', padre: 'Categoría padre', raiz: 'Ninguna (raíz)', tipo: 'Tipo', fijo: 'Fijo', variable: 'Variable', sinClasificar: 'Sin clasificar',
+    nombre: 'Nombre', clave: 'Clave que usan los cálculos', claves: { groceries: 'Despensa', eating_out: 'Comida fuera' } as Record<string, string>, padre: 'Categoría padre', raiz: 'Ninguna (raíz)', tipo: 'Tipo', fijo: 'Fijo', variable: 'Variable', sinClasificar: 'Sin clasificar',
     reparto: 'Reparto por defecto', porDefecto: 'El de por defecto', orden: 'Orden', activa: 'Activa', gastos: 'Número de gastos', sin: 'Sin categorías', nueva: 'Nueva categoría', reordenar: 'Reordenar',
     ejemplo: 'Ejemplo con un gasto de $199.00', aplicaDesde: 'Aplica a los gastos que registres desde ahora; los guardados conservan sus partes.',
     fijosCambian: (n: number) => `${n} ${n === 1 ? 'gasto fijo sin reparto propio cambia' : 'gastos fijos sin reparto propio cambian'} sus partes`,

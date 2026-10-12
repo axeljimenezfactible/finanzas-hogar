@@ -1,0 +1,96 @@
+{
+ "criterio": "U5-10",
+ "combinacion": "escritorio-claro",
+ "token_claro": {
+  "rgb": "rgb(250, 250, 251)",
+  "hex": "#FAFAFB",
+  "ref": "ui.surface.page.light = {color.neutral.50}"
+ },
+ "token_oscuro": {
+  "rgb": "rgb(34, 35, 37)",
+  "hex": "#222325",
+  "ref": "ui.surface.page.dark = {color.neutral.950}"
+ },
+ "pasos": [
+  {
+   "paso": "sistema=claro, sin tocar el interruptor",
+   "bg": "rgb(250, 250, 251)",
+   "dt": null,
+   "guardado": null,
+   "esperado_bg": "rgb(250, 250, 251)",
+   "esperado_data_theme": null
+  },
+  {
+   "paso": "sistema=oscuro, sin tocar el interruptor",
+   "bg": "rgb(34, 35, 37)",
+   "dt": null,
+   "guardado": null,
+   "esperado_bg": "rgb(34, 35, 37)",
+   "esperado_data_theme": null
+  },
+  {
+   "paso": "interruptor Claro con sistema oscuro",
+   "bg": "rgb(250, 250, 251)",
+   "dt": "light",
+   "guardado": "claro",
+   "esperado_bg": "rgb(250, 250, 251)",
+   "esperado_data_theme": "light"
+  },
+  {
+   "paso": "Claro persiste al recargar",
+   "bg": "rgb(250, 250, 251)",
+   "dt": "light",
+   "guardado": "claro",
+   "esperado_bg": "rgb(250, 250, 251)",
+   "esperado_data_theme": "light"
+  },
+  {
+   "paso": "interruptor Oscuro con sistema claro",
+   "bg": "rgb(34, 35, 37)",
+   "dt": "dark",
+   "guardado": "oscuro",
+   "esperado_bg": "rgb(34, 35, 37)",
+   "esperado_data_theme": "dark"
+  },
+  {
+   "paso": "interruptor Sistema (sistema claro)",
+   "bg": "rgb(250, 250, 251)",
+   "dt": null,
+   "guardado": null,
+   "esperado_bg": "rgb(250, 250, 251)",
+   "esperado_data_theme": null
+  },
+  {
+   "paso": "Sistema sigue al sistema oscuro",
+   "bg": "rgb(34, 35, 37)",
+   "dt": null,
+   "guardado": null,
+   "esperado_bg": "rgb(34, 35, 37)",
+   "esperado_data_theme": null
+  },
+  {
+   "paso": "barra lateral: sistema → claro",
+   "bg": "rgb(250, 250, 251)",
+   "dt": "light",
+   "guardado": "claro",
+   "esperado_bg": "rgb(250, 250, 251)",
+   "esperado_data_theme": "light"
+  },
+  {
+   "paso": "barra lateral: claro → oscuro",
+   "bg": "rgb(34, 35, 37)",
+   "dt": "dark",
+   "guardado": "oscuro",
+   "esperado_bg": "rgb(34, 35, 37)",
+   "esperado_data_theme": "dark"
+  },
+  {
+   "paso": "barra lateral: oscuro → sistema (sistema oscuro)",
+   "bg": "rgb(34, 35, 37)",
+   "dt": null,
+   "guardado": null,
+   "esperado_bg": "rgb(34, 35, 37)",
+   "esperado_data_theme": null
+  }
+ ]
+}

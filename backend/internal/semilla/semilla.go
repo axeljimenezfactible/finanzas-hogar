@@ -1,7 +1,8 @@
 // Package semilla carga de forma idempotente los datos de arranque de datos/semilla/ a una base migrada
 // (WF-3a, agente semilla): personas y cuentas, reglas de reparto, categorías, tiendas, catálogo de productos,
 // tabla nutricional confirmada, recetario, la compra del 10-oct-2026 de data.json, el crédito Kueski con sus
-// despensas (todas las cifras salen del motor motor_cred y se cotejan con oraculo/model.json) y la muestra de PROFECO.
+// despensas (todas las cifras salen del motor motor_cred y se cotejan con oraculo/model.json), los gastos proyectados 2 a 6
+// del oráculo (proyectados.go, WF-3b), los 36 precios de Walmart del carrito del 10-oct (precios.go, WF-3b) y la muestra de PROFECO.
 //
 // Reglas:
 //   - Idempotente: cada entidad se busca por su llave natural (código, nombre, fecha e importe) y solo se crea si
@@ -16,6 +17,7 @@ package semilla
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -43,6 +45,9 @@ type Options struct {
 	Clock dominio.Clock
 	// FixturesDir es oraculo/fixtures/s2 (solo la semilla de desarrollo, desarrollo.go); vacío = Dir/../../oraculo/fixtures/s2.
 	FixturesDir string
+	// OracleSeedPath es oraculo/fixtures/s2/_datos/semilla-oraculo.json (gastos proyectados 2 a 6); vacío = Dir/semilla-oraculo.json
+	// y, si no existe, Dir/../../oraculo/fixtures/s2/_datos/semilla-oraculo.json.
+	OracleSeedPath string
 	// DevFixedExpense agrega la renta (gasto fijo) a la semilla de desarrollo; rompe P1–P6 canon (ver RunDev).
 	DevFixedExpense bool
 	// ImportPlannedCSV importa gastos_fijos_ingresos.csv cuando el archivo existe. Lo instala quien tenga el
@@ -153,14 +158,19 @@ func (l *loader) insert(table, q string, args ...any) (int64, error) {
 	if err != nil {
 		return 0, err
 	}
+	if err := l.audit("insert", table, id, nil, after); err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
+// audit escribe audit_log de la semilla (actor nulo = proceso del sistema).
+func (l *loader) audit(action, table string, id int64, before, after json.RawMessage) error {
 	req := l.req
 	if req == "" {
 		req = RequestID
 	}
-	if err := dominio.Audit(l.ctx, l.tx, nil, "insert", table, id, nil, after, req); err != nil {
-		return 0, err
-	}
-	return id, nil
+	return dominio.Audit(l.ctx, l.tx, nil, action, table, id, before, after, req)
 }
 
 // ensure busca por la llave natural y, si falta, inserta. Cuenta lo creado y lo existente bajo la entidad `name`.
@@ -216,7 +226,7 @@ func RunWith(ctx context.Context, db *sql.DB, opt Options) (*Report, error) {
 			l.argo = *opt.Argon2
 		}
 		steps := []func() error{l.personasYCuentas, l.reglasYCategorias, l.tiendas, l.catalogo, l.nutricion, l.recetario,
-			l.kueski, l.despensas, l.profeco, l.partidasCSV, l.cruce}
+			l.kueski, l.despensas, l.proyectados, l.precios, l.profeco, l.partidasCSV, l.cruce}
 		for _, s := range steps {
 			if err := s(); err != nil {
 				return err

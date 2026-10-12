@@ -40,7 +40,7 @@ const RequestIDDev = "semilla-desarrollo"
 const (
 	devSuffix   = "(desarrollo)"
 	devGoalName = "Meta de ahorro " + devSuffix
-	devNote     = "Dato de desarrollo (finanzas semilla --desarrollo): no existe en producción."
+	devNote     = "Dato de desarrollo: no existe en producción." // se ve en pantalla: en español y sin nombres internos (U5-07); el origen de cada fila está en la tabla de arriba
 )
 
 // Fixtures y ids que usa el overlay (ver la tabla de arriba).
@@ -238,9 +238,9 @@ func RunDevWith(ctx context.Context, db *sql.DB, opt Options) (*Report, error) {
 		return nil, err
 	}
 	if opt.DevFixedExpense {
-		rep.Notices = append(rep.Notices, "Con el gasto fijo (renta 8,000.00 al mes) el devengado y el efectivo de cada mes suben 8,000.00: P1 y P2 de getAccrualVsCash dejan de ser las cifras de model.json (C3-09 no cuadraría con esta carga).")
+		rep.Notices = append(rep.Notices, "Con el gasto fijo (renta 8,000.00 al mes) el devengado y el efectivo de cada mes suben 8,000.00: P1 a P6 de getAccrualVsCash dejan de ser las cifras de model.json (C3-09 no cuadraría con esta carga).")
 	} else {
-		rep.Notices = append(rep.Notices, "Sin gasto fijo (por omisión): getAccrualVsCash queda igual que con la semilla real sola (P1 y P2 = model.json; P3 a P6 ya difieren sin este overlay, bloqueo WF3a-bis-semilla-dev punto 4). Para agregar la renta: finanzas semilla --desarrollo --con-gasto-fijo.")
+		rep.Notices = append(rep.Notices, "Sin gasto fijo (por omisión): getAccrualVsCash queda igual que con la semilla real sola (P1 a P6 = model.json desde que la semilla real trae los gastos proyectados 2 a 6, bloqueo WF3a-bis-semilla-dev punto 4). Para agregar la renta: finanzas semilla --desarrollo --con-gasto-fijo.")
 	}
 	rep.Notices = append(rep.Notices,
 		"Semilla de DESARROLLO: no se carga en producción. Montos tomados de las fixtures del oráculo S2 (oraculo/fixtures/s2); plan de comidas armado con el recetario y los precios sembrados.",
@@ -337,7 +337,7 @@ func (l *loader) devPresupuesto(fdir string) error {
 		}
 		_, _, err = l.ensure("[desarrollo] presupuesto por categoría", "budget", `SELECT id FROM budget WHERE category_id = ? AND valid_from_date = ?`, a(cat, b.ValidFrom),
 			`INSERT INTO budget (category_id, amount_cents, valid_from_date, valid_to_date, notes) VALUES (?, ?, ?, ?, ?)`,
-			cat, b.AmountCents, b.ValidFrom, to, devNote+" Fixture "+fixBudget+", budgets[1].")
+			cat, b.AmountCents, b.ValidFrom, to, devNote)
 		return err
 	}
 	return fmt.Errorf("semilla (desarrollo): %s ya no trae el presupuesto %d", fixBudget, fixBudgetID)
@@ -401,7 +401,7 @@ func (l *loader) devPartidas(fdir string) error {
 				category_id, person_id, cost_share_rule_id, payment_method, credit_id, term_count, accrual_months, is_active, notes)
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, NULL, ?, ?, ?)`,
 			p.Kind, desc, p.AmountCents, second, p.Frequency, p.IntervalCount, p.StartDate, end, cat, person, pay, acc, p.IsActive,
-			devNote+fmt.Sprintf(" Fixture %s, planned_items[%d].", fixPlanned, p.ID))
+			devNote)
 		if err != nil {
 			return err
 		}
@@ -437,7 +437,7 @@ func (l *loader) devAhorro(fdir string) error {
 		}
 		gid, _, err = l.ensure("[desarrollo] metas de ahorro", "savings_goal", `SELECT id FROM savings_goal WHERE name = ? COLLATE NOCASE`, a(devGoalName),
 			`INSERT INTO savings_goal (name, kind, target_cents, target_date, planned_monthly_cents, start_date, is_active, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-			devGoalName, g.Kind, target, tdate, monthly, g.StartDate, g.IsActive, devNote+fmt.Sprintf(" Fixture %s, savings_goals[%d].", fixGoals, g.ID))
+			devGoalName, g.Kind, target, tdate, monthly, g.StartDate, g.IsActive, devNote)
 		if err != nil {
 			return err
 		}
@@ -454,7 +454,7 @@ func (l *loader) devAhorro(fdir string) error {
 		if _, _, err := l.ensure("[desarrollo] aportaciones de ahorro", "savings_movement",
 			`SELECT id FROM savings_movement WHERE savings_goal_id = ? AND movement_date = ? AND kind = ? AND amount_cents = ?`, a(gid, m.MovementDate, m.Kind, m.AmountCents),
 			`INSERT INTO savings_movement (savings_goal_id, movement_date, kind, amount_cents, notes) VALUES (?, ?, ?, ?, ?)`,
-			gid, m.MovementDate, m.Kind, m.AmountCents, devNote+" Fixture "+fixGoals+", savings_movements."); err != nil {
+			gid, m.MovementDate, m.Kind, m.AmountCents, devNote); err != nil {
 			return err
 		}
 	}
@@ -464,52 +464,9 @@ func (l *loader) devAhorro(fdir string) error {
 	return nil
 }
 
-// presAliases junta nombre de presentación y nombres de ticket → id, igual que lo hace el catálogo de la semilla real.
-func (l *loader) presAliases() (map[string]int64, error) {
-	b, err := os.ReadFile(filepath.Join(l.opt.Dir, "productos.json"))
-	if err != nil {
-		return nil, err
-	}
-	var f catalogFile
-	if err := json.Unmarshal(b, &f); err != nil {
-		return nil, fmt.Errorf("semilla (desarrollo): productos.json: %w", err)
-	}
-	out := map[string]int64{}
-	for _, p := range f.Productos {
-		for _, x := range p.Presentaciones {
-			id, ok, err := l.find(`SELECT pr.id FROM presentation pr JOIN product pd ON pd.id = pr.product_id WHERE pd.name = ? COLLATE NOCASE AND pr.name = ?`, p.Nombre, x.Nombre)
-			if err != nil {
-				return nil, err
-			}
-			if !ok {
-				continue
-			}
-			out[x.Nombre] = id
-			for _, t := range x.Tickets {
-				out[t] = id
-			}
-		}
-	}
-	return out, nil
-}
-
-// walmartFile son los precios de Walmart del carrito comparado del 10-oct (datos/semilla/data.json).
-type walmartFile struct {
-	Fecha          string `json:"fecha"`
-	ItemsIdenticos []struct {
-		Producto     string `json:"producto"`
-		Cantidad     int64  `json:"cantidad"`
-		WalmartTotal money  `json:"walmart_total"`
-	} `json:"items_identicos"`
-	Sustitutos []struct {
-		Walmart      string `json:"walmart"`
-		CantW        int64  `json:"cant_w"`
-		WalmartTotal money  `json:"walmart_total"`
-	} `json:"sustitutos"`
-}
-
-// devPrecios: precios de la compra del 10-oct ya sembrada. Bodega Aurrera sale de los renglones del ticket
-// (unidad exacta, ticket_manual, ligados a su renglón); Walmart, del carrito comparado de data.json (manual).
+// devPrecios: precios de Bodega Aurrera de la compra del 10-oct ya sembrada, de los renglones del ticket (unidad
+// exacta, ticket_manual, ligados a su renglón). Los de Walmart ya no son del overlay: desde WF-3b entran a la semilla
+// real (precios.go, decisión provisional del orquestador, bloqueo WF3a-bis-semilla-dev punto 7).
 // Un renglón cuyo importe no se divide exacto entre las piezas no tiene precio unitario y se omite (se avisa).
 func (l *loader) devPrecios() error {
 	rows, err := l.tx.QueryContext(l.ctx, `SELECT ei.id, ei.presentation_id, ei.unit_price_cents, e.store_id, e.expense_date
@@ -548,48 +505,6 @@ func (l *loader) devPrecios() error {
 	}
 	if skipped > 0 {
 		l.rep.Notices = append(l.rep.Notices, fmt.Sprintf("Bodega: %d renglón(es) del ticket del 10-oct no tienen precio unitario exacto (importe no divisible entre las piezas) y no generaron precio.", skipped))
-	}
-	b, err := os.ReadFile(filepath.Join(l.opt.Dir, "data.json"))
-	if err != nil {
-		return err
-	}
-	var w walmartFile
-	if err := json.Unmarshal(b, &w); err != nil {
-		return fmt.Errorf("semilla (desarrollo): data.json: %w", err)
-	}
-	wstore, ok, err := l.find(`SELECT s.id FROM store s JOIN store c ON c.id = s.parent_id WHERE s.kind = 'branch' AND c.name = 'Walmart' ORDER BY s.id LIMIT 1`)
-	if err != nil {
-		return err
-	}
-	if !ok {
-		l.rep.Notices = append(l.rep.Notices, "No hay sucursal de Walmart sembrada: no se cargaron precios de Walmart.")
-		return nil
-	}
-	al, err := l.presAliases()
-	if err != nil {
-		return err
-	}
-	omitted := 0
-	put := func(name string, qty int64, total money) error {
-		id, ok := al[name]
-		if !ok || qty <= 0 || int64(total)%qty != 0 {
-			omitted++
-			return nil
-		}
-		return l.price("[desarrollo] precios Walmart (carrito 10-oct)", id, wstore, int64(total)/qty, w.Fecha, "manual", "data.json carrito comparado 10-oct-2026", 0)
-	}
-	for _, it := range w.ItemsIdenticos {
-		if err := put(it.Producto, it.Cantidad, it.WalmartTotal); err != nil {
-			return err
-		}
-	}
-	for _, s := range w.Sustitutos {
-		if err := put(s.Walmart, s.CantW, s.WalmartTotal); err != nil {
-			return err
-		}
-	}
-	if omitted > 0 {
-		l.rep.Notices = append(l.rep.Notices, fmt.Sprintf("Walmart: %d renglón(es) del carrito no se cargaron (sin presentación en el catálogo o sin precio unitario exacto).", omitted))
 	}
 	return nil
 }

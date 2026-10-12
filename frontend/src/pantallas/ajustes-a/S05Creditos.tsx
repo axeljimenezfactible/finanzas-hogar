@@ -17,7 +17,7 @@ import { textos } from '../../textos/es-MX'
 import type { Cambio } from '../../vistas-bd/tipos'
 import { VistaBD } from '../../vistas-bd/VistaBD'
 import { aFraccion, aPuntosBase, corteYPago, multDiv, normalizar, pctDeFraccion, pctDePuntosBase } from './calculos'
-import { Aviso, Bloque, DialogoCritico, Editable, Fila, Parametro, textoDinero, vDia, vDinero, vEntero, vFecha, vNombre, vOpcion, vPct, vPlazo, type Previa } from './comunes'
+import { Aviso, Bloque, DialogoCritico, Editable, ErrorGuardado, Fila, Parametro, textoDinero, textoFallo, vDia, vDinero, vEntero, vFecha, vNombre, vOpcion, vPct, vPlazo, type Previa } from './comunes'
 import { comoLista } from './comunes'
 import { guardarVarias, nota as notaGrupo, resumen, siNo } from './grupo'
 import { t } from './textos'
@@ -78,12 +78,12 @@ export default function S05Creditos() {
   useEffect(() => { const f = (e: KeyboardEvent) => { if (e.altKey && e.key.toLowerCase() === 'n') { e.preventDefault(); if ((document.activeElement as HTMLElement | null)?.closest('section[aria-labelledby="b-promos"]')) setNuevaPromo(true); else setNuevo(true) } }; window.addEventListener('keydown', f); return () => window.removeEventListener('keydown', f) }, [])
   return (
     <div className="flex flex-col gap-4">
-      <Bloque titulo={k.lineas} id="b-lineas" accion={<Boton variante="primario" onClick={() => setNuevo(true)}><Plus aria-hidden className="size-4" />{k.nuevo}</Boton>}>
+      <Bloque titulo={k.lineas} id="b-lineas" accion={<Boton variante="primario" onClick={() => setNuevo(true)}><Plus aria-hidden className="size-5" />{k.nuevo}</Boton>}>
         <ConDatos consulta={creditos}>{(d) => d.items.length === 0 ? <Vacio texto={k.sin} accion={<Boton variante="primario" onClick={() => setNuevo(true)}>{k.nuevo}</Boton>} /> : (
           <VistaBD def={{ clave: 'P-26.05-lineas', filas: d.items, idFila: (c) => c.id, vistas: ['tabla', 'galeria', 'tablero'], titulo: (c) => c.name, alAbrir: (c) => setAbierto(c.id),
             columnasTablero: { propiedad: 'kind', columnas: Object.values(k.tipos) },
             propiedades: [
-              { id: 'name', nombre: k.nombre, valor: (c) => c.name, pintar: (c) => <button type="button" className="min-h-11 text-left text-text-link desktop:min-h-0" onClick={() => setAbierto(c.id)}>{c.name}</button> },
+              { id: 'name', nombre: k.nombre, valor: (c) => c.name, pintar: (c) => c.name },
               { id: 'kind', nombre: k.tipo, valor: (c) => c.kind, grupo: (c) => k.tipos[c.kind], pintar: (c) => k.tipos[c.kind] },
               { id: 'live_debt_cents', nombre: k.deuda, alinear: 'derecha', valor: (c) => c.live_debt_cents ?? 0, pintar: (c) => <span className="tabular-nums">{dinero(c.live_debt_cents ?? 0)}</span> },
               { id: 'available_cents', nombre: k.disponible, alinear: 'derecha', valor: (c) => c.available_cents ?? 0, pintar: (c) => <span className="tabular-nums">{c.available_cents != null ? dinero(c.available_cents) : '—'}</span> },
@@ -93,7 +93,7 @@ export default function S05Creditos() {
         )}</ConDatos>
         {abierto != null && creditos.datos && <Linea c={creditos.datos.items.find((x) => x.id === abierto)!} alCambiar={creditos.recargar} alCerrar={() => setAbierto(null)} />}
       </Bloque>
-      <Bloque titulo={k.promociones} id="b-promos" accion={<Boton variante="primario" onClick={() => setNuevaPromo(true)}><Plus aria-hidden className="size-4" />{k.nuevaPromo}</Boton>}>
+      <Bloque titulo={k.promociones} id="b-promos" accion={<Boton variante="primario" onClick={() => setNuevaPromo(true)}><Plus aria-hidden className="size-5" />{k.nuevaPromo}</Boton>}>
         <ConDatos consulta={promos}>{(d) => <Promociones filas={d.items} creditos={creditos.datos?.items ?? []} alCambiar={promos.recargar} alNueva={() => setNuevaPromo(true)} />}</ConDatos>
       </Bloque>
       <Bloque titulo={k.comparador} id="b-comparador">
@@ -262,13 +262,15 @@ function TasasPlazo({ credito }: { credito: Cr }) {
   const [borrar, setBorrar] = useState<Tasa | null>(null)
   const [nueva, setNueva] = useState({ plazo: '', tasa: '' })
   const [err, setErr] = useState<string | null>(null)
+  const [fallo, setFallo] = useState<string | null>(null)
   const conexion = useConexion()
   const guardar = (x: Tasa) => async (c: Esquemas['CreditTermRateUpdate']) => { await pedir('patch', '/api/v1/credit-term-rates/{credit_term_rate_id}', { ruta: { credit_term_rate_id: x.id }, cuerpo: c }); tasas.recargar() }
   const interes = (num: number, den: number) => dinero(multDiv(CAPITAL_EJEMPLO, num, den))
   const crear = async () => {
-    const f = aFraccion(nueva.tasa); const e = vPlazo(nueva.plazo) ?? vPct(4)(nueva.tasa); setErr(e)
+    const f = aFraccion(nueva.tasa); const e = vPlazo(nueva.plazo) ?? vPct(4)(nueva.tasa); setErr(e); setFallo(null)
     if (e || !f) return
-    await pedir('post', '/api/v1/credits/{credit_id}/term-rates', { ruta: { credit_id: credito.id }, idempotencia: nuevaClave(), cuerpo: { term_count: Number(nueva.plazo), rate_num: f.num, rate_den: f.den, rate_decimals: f.decimales, source: 'manual' } } as never)
+    try { await pedir('post', '/api/v1/credits/{credit_id}/term-rates', { ruta: { credit_id: credito.id }, idempotencia: nuevaClave(), cuerpo: { term_count: Number(nueva.plazo), rate_num: f.num, rate_den: f.den, rate_decimals: f.decimales, source: 'manual' } } as never) }
+    catch (x) { setFallo(textoFallo(x, { already_exists: t.v.v12 })); return }
     setNueva({ plazo: '', tasa: '' }); tasas.recargar()
   }
   return (
@@ -290,9 +292,10 @@ function TasasPlazo({ credito }: { credito: Cr }) {
       <div className="flex flex-wrap items-end gap-2">
         <Campo etiqueta={k.plazo} inputMode="numeric" className="w-32" value={nueva.plazo} onChange={(e) => setNueva({ ...nueva, plazo: e.target.value })} />
         <Campo etiqueta={k.tasaPlazo} inputMode="decimal" className="w-40" value={nueva.tasa} onChange={(e) => setNueva({ ...nueva, tasa: e.target.value })} />
-        <Boton deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void crear()}><Plus aria-hidden className="size-4" />{k.nuevaTasa}</Boton>
+        <Boton deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void crear()}><Plus aria-hidden className="size-5" />{k.nuevaTasa}</Boton>
       </div>
       {err && <p className="text-small text-role-error">{err}</p>}
+      {fallo && <ErrorGuardado texto={fallo} alReintentar={() => void crear()} />}
       <DialogoCritico abierto={!!borrar} alCambiar={(a) => !a && setBorrar(null)} titulo={borrar ? k.eliminarTasa(borrar.term_count) : ''} verbo={borrar ? k.eliminarTasa(borrar.term_count) : ''}
         alConfirmar={async () => { if (borrar) await pedir('delete', '/api/v1/credit-term-rates/{credit_term_rate_id}', { ruta: { credit_term_rate_id: borrar.id } }); tasas.recargar() }}>{k.eliminarTasaTexto}</DialogoCritico>
     </div>
@@ -362,7 +365,8 @@ function Promociones({ filas, creditos, alCambiar, alNueva }: { filas: Promo[]; 
           { id: 'borrar', nombre: t.comun.eliminar, valor: () => '', pintar: (x) => <Boton variante="fantasma" onClick={() => setBorrar(x)}>{t.comun.eliminar}</Boton> },
         ] }} />
       <DialogoCritico abierto={!!borrar} alCambiar={(a) => !a && setBorrar(null)} titulo={borrar ? k.eliminarPromo(borrar.merchant_name) : ''} verbo={borrar ? k.eliminarPromo(borrar.merchant_name) : ''}
-        alConfirmar={async () => { if (borrar) await pedir('delete', '/api/v1/promotions/{promotion_id}', { ruta: { promotion_id: borrar.id } }); alCambiar() }}>{k.eliminarPromoTexto}</DialogoCritico>
+        alConfirmar={async () => { if (borrar) await pedir('delete', '/api/v1/promotions/{promotion_id}', { ruta: { promotion_id: borrar.id } }); alCambiar() }}
+        porCodigo={{ in_use: { texto: t.v.v18, accion: { texto: t.comun.desactivar, alHacer: async () => { if (borrar) await pedir('patch', '/api/v1/promotions/{promotion_id}', { ruta: { promotion_id: borrar.id }, cuerpo: { is_active: false } }); alCambiar() } } } }}>{k.eliminarPromoTexto}</DialogoCritico>
     </div>
   )
 }
@@ -371,6 +375,11 @@ function Comparador({ o, alCambiar }: { o: Esquemas['OptimizerSettings']; alCamb
   const patch = async (c: Esquemas['OptimizerSettingsUpdate']) => { await pedir('patch', '/api/v1/settings/optimizer', { cuerpo: c }); alCambiar() }
   const claves = ['lowest_interest', 'even_low_payment', 'max_available', 'most_value_per_peso'] as const
   const norm = normalizar(claves.map((x) => o.weights[x]))
+  const [falloPesos, setFalloPesos] = useState<string | null>(null)
+  const pesosIguales = async () => {
+    setFalloPesos(null)
+    try { await patch({ weights: { lowest_interest: 1, even_low_payment: 1, max_available: 1, most_value_per_peso: 1 } }) } catch (x) { setFalloPesos(textoFallo(x)) }
+  }
   const previaPeso = (cl: (typeof claves)[number], n: number): Previa => { const nuevo = normalizar(claves.map((x) => (x === cl ? n : o.weights[x]))); return { cambios: claves.map((x, i) => ({ etiqueta: k.objetivos[x], antes: porcentaje(norm[i]), despues: porcentaje(nuevo[i]) })) } }
   type P = keyof Esquemas['OptimizerSettings']['parameters']
   const param = (cl: P, etiqueta: string, validar?: (s: string) => string | null) => <Parametro etiqueta={etiqueta} param={o.parameters[cl]} validar={validar} guardar={(n) => patch({ parameters: { [cl]: n } })} restablecer={() => patch({ reset_parameters: [cl] })} />
@@ -389,7 +398,8 @@ function Comparador({ o, alCambiar }: { o: Esquemas['OptimizerSettings']; alCamb
             validar={(s) => vEntero(0)(s) ?? (claves.every((x) => (x === cl ? Number(s) : o.weights[x]) === 0) ? t.v.pesos : null)} vistaPrevia={(s) => previaPeso(cl, Number(s))} guardar={(s) => patch({ weights: { ...o.weights, [cl]: Number(s) } })} />
         </Fila>
       ))}
-      <Boton className="w-fit" onClick={() => void patch({ weights: { lowest_interest: 1, even_low_payment: 1, max_available: 1, most_value_per_peso: 1 } })}>{k.pesosIguales}</Boton>
+      <Boton className="w-fit" onClick={() => void pesosIguales()}>{k.pesosIguales}</Boton>
+      {falloPesos && <ErrorGuardado texto={falloPesos} alReintentar={() => void pesosIguales()} />}
       <Fila etiqueta={k.tope}><Enlace a="/ajustes/12" className="flex min-h-11 items-center px-2 text-text-link">{k.topeEnlace}</Enlace></Fila>
       
     </div>
@@ -401,13 +411,15 @@ function NuevoCredito({ abierta, alCambiar, alCrear }: { abierta: boolean; alCam
   const personas = comoLista<Esquemas['Person']>(usarConsulta('get', '/api/v1/persons', undefined, abierta))
   const [v, setV] = useState({ name: '', kind: '', frecuencia: '' })
   const [err, setErr] = useState<Record<string, string | null>>({})
-  const [clave] = useState(nuevaClave)
+  const [fallo, setFallo] = useState<string | null>(null)
+  const [clave, setClave] = useState(nuevaClave)
   const guardar = async () => {
-    const e = { name: vNombre(v.name), kind: vOpcion()(v.kind), frecuencia: vOpcion()(v.frecuencia) }; setErr(e)
+    const e = { name: vNombre(v.name), kind: vOpcion()(v.kind), frecuencia: vOpcion()(v.frecuencia) }; setErr(e); setFallo(null)
     const titular = personas.datos?.items.find((x) => x.participation === 'holder')
     if (Object.values(e).some(Boolean) || !titular) return
-    await pedir('post', '/api/v1/credits', { idempotencia: clave, cuerpo: { name: v.name.trim(), kind: v.kind as Cr['kind'], holder_person_id: titular.id, payment_frequency: v.frecuencia as Cr['payment_frequency'], ...(v.kind === 'revolving_line' ? { availability_reading: 'B' as const } : {}) } })
-    setV({ name: '', kind: '', frecuencia: '' }); alCambiar(false); alCrear()
+    try { await pedir('post', '/api/v1/credits', { idempotencia: clave, cuerpo: { name: v.name.trim(), kind: v.kind as Cr['kind'], holder_person_id: titular.id, payment_frequency: v.frecuencia as Cr['payment_frequency'], ...(v.kind === 'revolving_line' ? { availability_reading: 'B' as const } : {}) } }) }
+    catch (x) { setFallo(textoFallo(x, { already_exists: t.v.v12 })); return }
+    setV({ name: '', kind: '', frecuencia: '' }); setClave(nuevaClave()); alCambiar(false); alCrear()
   }
   const sel = (id: 'kind' | 'frecuencia', etiqueta: string, m: Record<string, string>) => (
     <label className="flex flex-col gap-1 text-small font-medium text-text-secondary">{etiqueta}
@@ -416,7 +428,7 @@ function NuevoCredito({ abierta, alCambiar, alCrear }: { abierta: boolean; alCam
     </label>
   )
   return (
-    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={k.nuevo} pie={<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div>}>
+    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={k.nuevo} pie={<div className="flex flex-col gap-2">{fallo && <ErrorGuardado texto={fallo} alReintentar={() => void guardar()} />}<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div></div>}>
       <form className="flex flex-col gap-3" onSubmit={(e) => { e.preventDefault(); void guardar() }} onKeyDown={(e) => { if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); void guardar() } }}>
         <Campo etiqueta={k.nombre} value={v.name} error={err.name ?? undefined} onChange={(e) => setV({ ...v, name: e.target.value })} />
         {sel('kind', k.tipo, k.tipos)}{sel('frecuencia', k.frecuencia, k.frecuencias)}
@@ -432,15 +444,17 @@ function NuevaPromocion({ abierta, alCambiar, creditos, alCrear }: { abierta: bo
   const vacio = { comercio: '', tienda: '', linea: '', plazo: '', tasa: '', minimo: '', desde: '', hasta: '', fuente: '' }
   const [v, setV] = useState(vacio)
   const [err, setErr] = useState<Partial<Record<keyof typeof vacio, string | null>>>({})
+  const [fallo, setFallo] = useState<string | null>(null)
   const [clave, setClave] = useState(nuevaClave)
   const guardar = async () => {
     const e = { comercio: vNombre(v.comercio), plazo: vPlazo(v.plazo), tasa: vPct(4, true)(v.tasa), minimo: vDinero(false, true)(v.minimo), desde: vFecha()(v.desde), hasta: vFecha()(v.hasta) ?? (v.desde && v.hasta < v.desde ? t.v.v08 : null), fuente: v.fuente.length > 500 ? t.v.v09 : null }
-    setErr(e)
+    setErr(e); setFallo(null)
     if (Object.values(e).some(Boolean)) return
     const f = v.tasa.trim() ? aFraccion(v.tasa) : null
-    await pedir('post', '/api/v1/promotions', { idempotencia: clave, cuerpo: { merchant_name: v.comercio.trim(), term_count: Number(v.plazo), valid_from: v.desde, valid_to: v.hasta, is_active: true,
+    try { await pedir('post', '/api/v1/promotions', { idempotencia: clave, cuerpo: { merchant_name: v.comercio.trim(), term_count: Number(v.plazo), valid_from: v.desde, valid_to: v.hasta, is_active: true,
       ...(v.linea ? { credit_id: Number(v.linea) } : {}), ...(v.tienda ? { store_id: Number(v.tienda) } : {}), ...(f ? { rate_num: f.num, rate_den: f.den, rate_decimals: f.decimales } : {}),
-      ...(v.minimo.trim() ? { min_purchase_cents: aCentavos(v.minimo) ?? 0 } : {}), ...(v.fuente.trim() ? { source_note: v.fuente.trim() } : {}) } })
+      ...(v.minimo.trim() ? { min_purchase_cents: aCentavos(v.minimo) ?? 0 } : {}), ...(v.fuente.trim() ? { source_note: v.fuente.trim() } : {}) } }) }
+    catch (x) { setFallo(textoFallo(x, { already_exists: t.v.v12 })); return }
     setV(vacio); setClave(nuevaClave()); alCambiar(false); alCrear()
   }
   const lista = (id: 'linea' | 'tienda', etiqueta: string, primera: string, ops: { valor: string; texto: string }[]) => (
@@ -452,7 +466,7 @@ function NuevaPromocion({ abierta, alCambiar, creditos, alCrear }: { abierta: bo
     <Campo etiqueta={etiqueta} value={v[id]} error={err[id] ?? undefined} onChange={(e) => setV({ ...v, [id]: e.target.value })} {...extra} />
   )
   return (
-    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={k.nuevaPromo} pie={<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div>}>
+    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={k.nuevaPromo} pie={<div className="flex flex-col gap-2">{fallo && <ErrorGuardado texto={fallo} alReintentar={() => void guardar()} />}<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div></div>}>
       <form className="flex flex-col gap-3" data-prueba="nueva-promocion" onSubmit={(e) => { e.preventDefault(); void guardar() }} onKeyDown={(e) => { if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); void guardar() } }}>
         {campo('comercio', k.comercio)}
         {lista('tienda', k.tienda, k.tiendaNinguna, (tiendas.datos?.items ?? []).map((x) => ({ valor: String(x.id), texto: x.name })))}

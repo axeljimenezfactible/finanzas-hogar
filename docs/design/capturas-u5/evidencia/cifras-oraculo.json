@@ -1,0 +1,32 @@
+[
+ {
+  "etiqueta": "disponible inicial A",
+  "texto": "$10,000.00",
+  "enModelo": "true"
+ },
+ {
+  "etiqueta": "disponible inicial B",
+  "texto": "$6,905.50",
+  "enModelo": "true"
+ },
+ {
+  "etiqueta": "pago del 30-oct-2026",
+  "texto": "$973.75",
+  "enModelo": "true"
+ },
+ {
+  "etiqueta": "deuda viva al 10-abr-2027",
+  "texto": "$6,293.44",
+  "enModelo": "true"
+ },
+ {
+  "etiqueta": "compra del 10-oct-2026",
+  "texto": "$3,094.50",
+  "enModelo": "true"
+ },
+ {
+  "etiqueta": "parte de Karen (capital)",
+  "texto": "$1,191.50",
+  "enModelo": "true"
+ }
+]

@@ -1,0 +1,23 @@
+{
+ "pantalla": "P-13",
+ "nombre": "Lista de compras",
+ "combinacion": "android-claro",
+ "url": "/compras",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 0,
+  "pasadas": 20,
+  "no_aplican": 43
+ },
+ "violations": [],
+ "incomplete": []
+}

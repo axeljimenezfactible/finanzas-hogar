@@ -70,7 +70,7 @@ function TarjetaMeta({ m }: { m: Meta }) {
     <div className="flex flex-col gap-2">
       <span className="flex justify-between text-small text-text-secondary"><span>{m.kind === 'fund' ? t.p09.fondo : t.p09.estados[m.status ?? 'in_progress']}</span>{m.target_date && <span>{fecha(m.target_date)}</span>}</span>
       <span className="tabular-nums text-body text-text-default">{dinero(m.saved_cents ?? 0)}{m.target_cents != null && <span className="text-text-secondary"> / {dinero(m.target_cents)}</span>}</span>
-      {m.target_cents != null && <BarraAvance pct={m.progress_pct ?? 0} />}
+      {m.target_cents != null && <BarraAvance nombre={m.name} pct={m.progress_pct ?? 0} />}
       {m.required_monthly_cents != null && <span className="text-caption text-text-secondary">{t.p09.mensualNecesaria}: <span className="tabular-nums">{dinero(m.required_monthly_cents)}</span></span>}
     </div>
   )
@@ -85,7 +85,7 @@ function Resumen({ metas }: { metas: Meta[] }) {
         <div className={rejillaTarjetas}>
           <TarjetaMetrica titulo={t.p09.ahorrado} rol="savings" valor={dinero(s.saved_total_cents)} alAbrir={detalle} />
           <TarjetaMetrica titulo={t.p09.aportadoMes} rol="savings" valor={dinero(s.contributed_month_cents)} nota={t.p09.contraPlan(dinero(s.planned_month_cents))} alAbrir={detalle}>
-            <BarraAvance pct={s.planned_month_cents > 0 ? Math.floor((s.contributed_month_cents * 100) / s.planned_month_cents) : 0} />
+            <BarraAvance nombre={t.p09.aportadoMes} pct={s.planned_month_cents > 0 ? Math.floor((s.contributed_month_cents * 100) / s.planned_month_cents) : 0} />
           </TarjetaMetrica>
         </div>)}
       </ConDatos>

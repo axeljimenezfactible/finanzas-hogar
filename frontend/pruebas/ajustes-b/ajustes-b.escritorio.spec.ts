@@ -144,7 +144,7 @@ test('P-26.14 Inventario: modos, estado con texto y días restantes', async ({ p
 
 test('P-26.14 tablero: soltar en el otro modo muestra el estado antes → después; Esc la regresa sin guardar y Enter aplica', async ({ page }) => {
   await page.goto('/ajustes/14')
-  await page.getByRole('tab', { name: 'Tablero' }).click()
+  await page.getByRole('button', { name: 'Tablero', exact: true }).click()
   const mover = () => moverTarjetaA(page, 'Arroz', 'Ritmo de consumo')
   await mover()
   const previa = page.getByTestId('previa-tablero')

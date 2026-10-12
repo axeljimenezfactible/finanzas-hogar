@@ -1,0 +1,390 @@
+{
+ "pantalla": "P-04",
+ "combinacion": "android-oscuro",
+ "alcance": "body",
+ "evaluados": 288,
+ "pares_unicos": 20,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 18,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#B7B8C0",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.962,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Duplicar"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Abrir compra a crédito"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#B7B8C0",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.962,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > input.h-9.rounded-md",
+     "texto": "Filtrar"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Agrupar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Inicio"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Comidas"
+    },
+    {
+     "nodo": "div#raiz > div.flex.min-h-dvh > nav.fixed.inset-x-0 > a.group.flex",
+     "texto": "Compras"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#FFC0BF",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.144,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Eliminar"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Adjuntar ticket"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#3C1416",
+   "bg": "#FFC0BF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.388,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Eliminar"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#3C1416",
+   "bg": "#FFC0BF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.388,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-trash",
+     "texto": "lucide lucide-trash lucide-trash-2 size-"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 22,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.flex.items-center > a.inline-flex.min-h-11",
+     "texto": "Todos los gastos"
+    },
+    {
+     "nodo": "section.flex.flex-col > div > div.flex.flex-col > span.text-small.text-text-secondary",
+     "texto": "Fecha"
+    },
+    {
+     "nodo": "section.flex.flex-col > div > div.flex.flex-col > span.text-small.text-text-secondary",
+     "texto": "Monto"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > a.inline-flex.min-h-11 > svg.lucide.lucide-chevron-left",
+     "texto": "lucide lucide-chevron-left size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#1E203A",
+   "bg": "#C9CFFF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.471,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Adjuntar ticket"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#1E203A",
+   "bg": "#C9CFFF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.471,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-paperclip",
+     "texto": "lucide lucide-paperclip size-5"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Duplicar"
+    },
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Abrir compra a crédito"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-copy",
+     "texto": "lucide lucide-copy size-5"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-credit-card",
+     "texto": "lucide lucide-credit-card size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": true,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 237,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > h2.text-title-3.font-semibold",
+     "texto": "Propiedades"
+    },
+    {
+     "nodo": "div > div.flex.flex-col > div.min-h-11.flex-1 > button.w-full.min-h-9",
+     "texto": "10-oct-2026"
+    },
+    {
+     "nodo": "div > div.flex.flex-col > div.min-h-11.flex-1 > button.w-full.min-h-9",
+     "texto": "$3,094.50"
+    }
+   ]
+  }
+ ]
+}

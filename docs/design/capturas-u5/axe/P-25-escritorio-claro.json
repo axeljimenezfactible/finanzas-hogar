@@ -1,0 +1,38 @@
+{
+ "pantalla": "P-25",
+ "nombre": "Estado de cuenta de Karen",
+ "combinacion": "escritorio-claro",
+ "url": "/reportes/karen",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 28,
+  "no_aplican": 35
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      "a[href$=\"karen\"]"
+     ],
+     "html": "<a href=\"/reportes/karen\" class=\"flex h-8 w-full items-center gap-2 rounded-sm px-2 text-small text-text-default hover:bg-surface-hover coarse:h-11 bg-surface-selected font-medium\" aria-current=\"page\">Estado de cuenta de Karen</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

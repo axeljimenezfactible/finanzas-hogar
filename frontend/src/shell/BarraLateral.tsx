@@ -23,7 +23,7 @@ export function InterruptorTema() {
     </button>
   )
 }
-export function ContenidoBarra() {
+export function ContenidoBarra({ conPlegar = false }: { conPlegar?: boolean }) {
   const { ruta } = useUbicacion()
   const { sesion, salir } = useSesion()
   const actual = resolver(ruta)?.pantalla
@@ -39,7 +39,7 @@ export function ContenidoBarra() {
   }
   return (
     <nav aria-label={textos.barra.navegacion} className="flex h-full flex-col gap-1 p-2">
-      <div className="relative">
+      <div className={cn('relative', conPlegar && 'mr-12')}>
         <button type="button" className={cn(fila, 'h-10 font-semibold')} aria-expanded={menuUsuario} onClick={() => setMenuUsuario(!menuUsuario)}>
           <UserRound aria-hidden className="size-5" /><span className="flex-1 truncate text-left">{textos.app.nombre}</span><span className="text-caption font-normal text-text-secondary">{sesion?.display_name}</span>
         </button>
@@ -53,7 +53,7 @@ export function ContenidoBarra() {
       </div>
       <button type="button" className={fila} onClick={() => abrirMenu()}><Search aria-hidden className="size-5 text-icon-default" />{textos.barra.buscar}</button>
       <button type="button" className={fila} onClick={() => abrirRegistro('gasto')}><Plus aria-hidden className="size-5 text-icon-default" />{textos.barra.registrarGasto}</button>
-      <ul className="mt-2 flex flex-1 flex-col gap-0.5 overflow-y-auto">
+      <ul className="mt-2 flex flex-1 flex-col gap-1 overflow-y-auto">
         {SECCIONES.map((s) => {
           const nombre = textos.secciones[s.id]
           const hijos = hijosDe(s.id)
@@ -69,7 +69,7 @@ export function ContenidoBarra() {
                 <Enlace a={rutaDe(PRIMERA[s.id], { seccion: '01' })} className={cn(fila, 'font-medium')} aria-current={actual?.seccion === s.id && !hijos.length ? 'page' : undefined}>{nombre}</Enlace>
               </div>
               {abierta && hijos.length > 0 && (
-                <ul className="ml-8 flex flex-col gap-0.5">
+                <ul className="ml-8 flex flex-col gap-1">
                   {hijos.map((h) => <li key={h.clave}><Enlace a={h.a} className={cn(fila, ruta === h.a && 'bg-surface-selected font-medium')} aria-current={ruta === h.a ? 'page' : undefined}>{h.nombre}</Enlace></li>)}
                 </ul>
               )}
@@ -87,13 +87,13 @@ export function BarraLateral() {
   if (barraPlegada) return (
     <>
       <div className="fixed inset-y-0 left-0 z-30 hidden w-2 tablet:block" onMouseEnter={() => setFlotante(true)} />
-      {flotante && <aside onMouseLeave={() => setFlotante(false)} className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-border-divider bg-surface-raised shadow-2 tablet:block"><ContenidoBarra /></aside>}
+      {flotante && <aside onMouseLeave={() => setFlotante(false)} className="fixed inset-y-0 left-0 z-40 hidden w-60 border-r border-border-divider bg-surface-raised shadow-2 tablet:block"><ContenidoBarra /></aside>}
     </>
   )
   return (
-    <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-border-divider bg-surface-card tablet:flex">
+    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r border-border-divider bg-surface-card tablet:flex">
       <button type="button" aria-label={textos.barra.plegar} title="Ctrl+\" onClick={() => cambiar({ barraPlegada: true })} className="absolute top-2 right-2 inline-flex size-8 items-center justify-center rounded-sm hover:bg-surface-hover"><ChevronsLeft aria-hidden className="size-6" size={ICONO_MD} /></button>
-      <ContenidoBarra />
+      <ContenidoBarra conPlegar />
     </aside>
   )
 }

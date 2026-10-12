@@ -55,7 +55,7 @@ export default function S04Categorias() {
   const rs = reglas.datos?.items ?? [], ps = personas.datos?.items ?? []
   const reglaDe = (id?: number | null) => rs.find((r) => (id != null ? r.id === id : r.is_default))
   return (
-    <Bloque titulo={k.titulo} accion={<div className="flex gap-2"><Boton onClick={() => setOrden(!orden)}>{k.reordenar}</Boton><Boton variante="primario" onClick={() => setNueva(true)}><Plus aria-hidden className="size-4" />{k.nueva}</Boton></div>}>
+    <Bloque titulo={k.titulo} accion={<div className="flex gap-2"><Boton onClick={() => setOrden(!orden)}>{k.reordenar}</Boton><Boton variante="primario" onClick={() => setNueva(true)}><Plus aria-hidden className="size-5" />{k.nueva}</Boton></div>}>
       <ConDatos consulta={cats}>{(d) => {
         const filas = [...d.items].sort((a, b) => a.sort_order - b.sort_order)
         if (!filas.length) return <Vacio texto={k.sin} accion={<Boton variante="primario" onClick={() => setNueva(true)}>{k.nueva}</Boton>} />
@@ -120,7 +120,7 @@ export default function S04Categorias() {
           columnasTablero: { propiedad: 'reparto', columnas: [k.porDefecto, ...rs.map((r) => r.name)], moverA: async (c, columna) => setMov({ c, columna, regla: columna === k.porDefecto ? null : rs.find((r) => r.name === columna)?.id ?? null }) },
           propiedades: [
             { id: 'name', nombre: k.nombre, valor: (c) => c.name, pintar: (c) => <Editable etiqueta={`${k.nombre} · ${c.name}`} valor={c.name} mostrar={c.name} validar={vNombre} guardar={(s) => guardar(c)({ name: s.trim() })} /> },
-            { id: 'code', nombre: k.clave, valor: (c) => c.code ?? '', pintar: (c) => <span className="px-2 text-small text-text-secondary">{c.code ?? '—'}</span> },
+            { id: 'code', nombre: k.clave, valor: (c) => (c.code ? k.claves[c.code] ?? c.code : ''), pintar: (c) => <span className="px-2 text-small text-text-secondary">{c.code ? k.claves[c.code] ?? c.code : '—'}</span> },
             { id: 'parent_id', nombre: k.padre, valor: (c) => c.parent_id, pintar: (c) => <Editable etiqueta={`${k.padre} · ${c.name}`} tipo="opcion" valor={String(c.parent_id ?? '')} mostrar={filas.find((x) => x.id === c.parent_id)?.name ?? k.raiz} opciones={[{ valor: '', texto: k.raiz }, ...filas.filter((x) => x.id !== c.id).map((x) => ({ valor: String(x.id), texto: x.name }))]} guardar={(s) => guardar(c)({ parent_id: s ? Number(s) : null })} /> },
             { id: 'kind', nombre: k.tipo, valor: (c) => c.kind, grupo: (c) => (c.kind === 'fixed' ? k.fijo : c.kind === 'variable' ? k.variable : k.sinClasificar), pintar: (c) => <Editable etiqueta={`${k.tipo} · ${c.name}`} tipo="opcion" valor={c.kind ?? ''} mostrar={c.kind === 'fixed' ? k.fijo : c.kind === 'variable' ? k.variable : k.sinClasificar} opciones={[{ valor: '', texto: k.sinClasificar }, { valor: 'fixed', texto: k.fijo }, { valor: 'variable', texto: k.variable }]} guardar={(s) => guardar(c)({ kind: (s || null) as Cat['kind'] | null })} /> },
             { id: 'reparto', nombre: k.reparto, valor: (c) => c.default_cost_share_rule_id, grupo: (c) => (mov?.c.id === c.id ? mov.columna : reglaDe(c.default_cost_share_rule_id)?.name ?? k.porDefecto), pintar: (c) => <Editable etiqueta={`${k.reparto} · ${c.name}`} tipo="opcion" valor={String(c.default_cost_share_rule_id ?? '')} mostrar={rs.find((r) => r.id === c.default_cost_share_rule_id)?.name ?? k.porDefecto} opciones={opRegla} vistaPrevia={(s) => previaReparto(c, s)} guardar={(s) => guardar(c)({ default_cost_share_rule_id: s ? Number(s) : null })} /> },

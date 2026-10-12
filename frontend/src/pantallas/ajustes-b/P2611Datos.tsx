@@ -1,5 +1,7 @@
 // P-26.11 Datos y respaldos (U4 parte b; decisión H, K31, K43, K44, K50, N-302..N-308, N-325).
 // Hora del respaldo diario: updateJob (cron de 5 campos) PROVISIONAL hasta la puerta 4 (K31 punto 3).
+import { textos } from '../../textos/es-MX'
+import { SelectorArchivo } from '../../componentes/SelectorArchivo'
 import { useEffect, useRef, useState } from 'react'
 import { CircleAlert, CircleCheck, LoaderCircle } from 'lucide-react'
 import type { PropsPantalla } from '../../app/registro'
@@ -51,7 +53,7 @@ export default function P2611Datos({ consulta }: PropsPantalla) {
           <Bloque titulo={t.semilla}>
             <ul className="flex flex-col gap-2">{seed.items.map((s) => (
               <li key={s.code} className="flex flex-wrap items-center justify-between gap-2 text-small"><span>{t.semillas[s.code]}</span>
-                <span className="inline-flex items-center gap-1">{s.is_loaded ? <CircleCheck aria-hidden className="size-4 text-role-success" /> : <CircleAlert aria-hidden className="size-4 text-role-warning" />}{s.is_loaded ? t.cargada : t.pendiente} · {t.registros(s.row_count)}</span></li>
+                <span className="inline-flex items-center gap-1">{s.is_loaded ? <CircleCheck aria-hidden className="size-5 text-role-success" /> : <CircleAlert aria-hidden className="size-5 text-role-warning" />}{s.is_loaded ? t.cargada : t.pendiente} · {t.registros(s.row_count)}</span></li>
             ))}</ul>
           </Bloque>
           <Bloque titulo={t.ia} ayuda={t.iaAyuda}>{ia.providers.map((p) => <Proveedor key={p.provider} p={p} recargar={resto.recargar} />)}</Bloque>
@@ -115,7 +117,7 @@ function Respaldos({ c, job, hoja }: { c: EstadoConsulta<{ items: B[] }>; job?: 
 }
 function Resultado({ b }: { b: B }) {
   const Icono = b.status === 'ok' ? CircleCheck : b.status === 'failed' ? CircleAlert : LoaderCircle
-  return <span className="inline-flex items-center gap-1"><Icono aria-hidden className={cn('size-4', b.status === 'ok' ? 'text-role-success' : b.status === 'failed' ? 'text-role-error' : 'text-role-info')} />{t.estados[b.status]}{b.status === 'failed' && b.error ? `: ${b.error.slice(0, 80)}` : ''}</span>
+  return <span className="inline-flex items-center gap-1"><Icono aria-hidden className={cn('size-5', b.status === 'ok' ? 'text-role-success' : b.status === 'failed' ? 'text-role-error' : 'text-role-info')} />{t.estados[b.status]}{b.status === 'failed' && b.error ? `: ${b.error.slice(0, 80)}` : ''}</span>
 }
 function Detalle({ b, cerrar }: { b: B; cerrar: () => void }) {
   const sinRed = useSinRed()
@@ -196,9 +198,7 @@ function Importar() {
   })
   return (
     <Bloque titulo={t.importar}>
-      <label className="flex flex-col gap-1 text-small font-medium">{t.archivo}
-        <input type="file" accept=".csv,text/csv" disabled={!!sinRed} onChange={(e) => elegir(e.target.files?.[0] ?? null)} className="min-h-11 text-small file:mr-2 file:min-h-11 file:rounded-md file:border file:border-border-control file:bg-surface-card file:px-3 file:text-text-default" />
-      </label>
+      <SelectorArchivo etiqueta={t.archivo} boton={textos.archivo.elegirCsv} accept=".csv,text/csv" archivo={archivo} alElegir={elegir} deshabilitadoPor={sinRed || undefined} />
       <IndicadorGuardado g={g} />
       {previa && (
         <>
@@ -208,7 +208,7 @@ function Importar() {
               <li key={r.line_no} className={cn('flex flex-wrap gap-2 rounded-sm p-1', r.errors.length > 0 && 'bg-role-error-surface')}>
                 <span className="text-text-secondary">{`${t.renglon} ${r.line_no}`}</span>
                 {r.planned_item && <span>{r.planned_item.description}</span>}
-                {r.errors.map((e) => <span key={e.field} className="inline-flex items-center gap-1 text-role-error"><CircleAlert aria-hidden className="size-4" />{e.message}</span>)}
+                {r.errors.map((e) => <span key={e.field} className="inline-flex items-center gap-1 text-role-error"><CircleAlert aria-hidden className="size-5" />{e.message}</span>)}
               </li>
             ))}
           </ul>

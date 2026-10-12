@@ -1,0 +1,87 @@
+{
+ "pantalla": "P-24",
+ "nombre": "Reporte mensual",
+ "combinacion": "android-claro",
+ "url": "/reportes/mensual",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 29,
+  "no_aplican": 34
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      "th:nth-child(5) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Usado</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th:nth-child(6) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Gastos</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > td:nth-child(5)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">Sin dato</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > td:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">0</td>",
+     "message": "Element content is too short to determine if it is actual text content"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > td:nth-child(5)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">60 %</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > td:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">1</td>",
+     "message": "Element content is too short to determine if it is actual text content"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(3) > td:nth-child(5)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">Sin dato</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(3) > td:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1 text-right tabular-nums\">0</td>",
+     "message": "Element content is too short to determine if it is actual text content"
+    }
+   ]
+  }
+ ]
+}

@@ -67,7 +67,7 @@ function Resumen({ periodo, c, vacio }: { periodo: string; c: ReturnType<typeof 
           <TarjetaMetrica titulo={t.p06.ahorro} rol="savings" valor={dinero(m.planned_savings_cents)} alAbrir={() => navegar(rutaDe('P-09'))} />
           <TarjetaMetrica titulo={t.p06.sinAsignar} valor={dinero(m.unassigned_cents)} alAbrir={detalle} />
           <TarjetaMetrica titulo={t.p06.real} rol="expense" valor={dinero(m.actual_cents)} alAbrir={detalle}>
-            <BarraAvance pct={m.used_pct ?? 0} estado={m.status} excedente={m.remaining_cents < 0 ? dinero(-m.remaining_cents, 'gasto') : undefined} />
+            <BarraAvance nombre={t.p06.real} pct={m.used_pct ?? 0} estado={m.status} excedente={m.remaining_cents < 0 ? dinero(-m.remaining_cents, 'gasto') : undefined} />
           </TarjetaMetrica>
           <TarjetaMetrica titulo={t.p06.restante} valor={dinero(m.remaining_cents)} nota={t.p06.diasRestantes(m.days_left)} alAbrir={detalle} />
         </div>
@@ -75,7 +75,7 @@ function Resumen({ periodo, c, vacio }: { periodo: string; c: ReturnType<typeof 
           <ConDatos consulta={quincenas}>{(q) => <div>{q.fortnights.map((f) => (
             <Fila key={f.half} etiqueta={`${t.p06.quincena(f.half)} · ${fecha(f.start_date)} – ${fecha(f.end_date)}`}>
               <span className="flex w-full flex-col gap-1"><span>{t.p06.realCol} {dinero(f.actual_cents)} · {t.p06.planCol} {dinero(f.planned_cents)}</span>
-                <BarraAvance pct={f.planned_cents > 0 ? Math.floor((f.actual_cents * 100) / f.planned_cents) : 0} /></span>
+                <BarraAvance nombre={t.p06.quincena(f.half)} pct={f.planned_cents > 0 ? Math.floor((f.actual_cents * 100) / f.planned_cents) : 0} /></span>
             </Fila>))}</div>}
           </ConDatos>
         </Bloque>
@@ -100,7 +100,7 @@ function Detalle({ periodo, c, vacio, alAjustar }: { periodo: string; c: ReturnT
             { id: 'planned_cents', nombre: t.p06.planCol, valor: (f) => f.planned_cents, pintar: (f) => dinero(f.planned_cents), alinear: 'derecha' },
             { id: 'actual_cents', nombre: t.p06.realCol, valor: (f) => f.actual_cents, pintar: (f) => dinero(f.actual_cents), alinear: 'derecha' },
             { id: 'difference_cents', nombre: t.p06.diferencia, valor: (f) => f.difference_cents, pintar: (f) => dinero(f.difference_cents), alinear: 'derecha' },
-            { id: 'used_pct', nombre: t.p06.pctUsado, valor: (f) => f.used_pct, pintar: (f) => <span className="flex min-w-24 flex-col gap-1"><span className="tabular-nums">{porcentaje(f.used_pct)}</span><BarraAvance pct={f.used_pct} estado={f.status} /></span> },
+            { id: 'used_pct', nombre: t.p06.pctUsado, valor: (f) => f.used_pct, pintar: (f) => <span className="flex min-w-24 flex-col gap-1"><span className="tabular-nums">{porcentaje(f.used_pct)}</span><BarraAvance nombre={cats.categoria(f.category_id)} pct={f.used_pct} estado={f.status} /></span> },
             { id: 'status', nombre: t.comun.estado, valor: (f) => t.estadosPresupuesto[f.status], grupo: (f) => t.estadosPresupuesto[f.status] },
             { id: 'expense_count', nombre: t.p06.numGastos, valor: (f) => f.expense_count, pintar: (f) => <Boton variante="enlace" onClick={(e) => { e.stopPropagation(); verGastos(f) }}>{t.p06.verGastos} ({f.expense_count})</Boton>, alinear: 'derecha' },
           ],

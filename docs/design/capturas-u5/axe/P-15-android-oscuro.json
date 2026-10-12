@@ -1,0 +1,1676 @@
+{
+ "pantalla": "P-15",
+ "nombre": "Productos y precios",
+ "combinacion": "android-oscuro",
+ "url": "/compras/productos",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 30,
+  "no_aplican": 33
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(5) > .h-9.coarse\\:h-11.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Mejor precio por unidad base</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(6) > .h-9.coarse\\:h-11.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Último precio</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(7) > .h-9.coarse\\:h-11.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Frescura</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$300.00 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$47.57 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(3) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(4) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$529.41 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(4) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(4) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(5) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(6) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(7) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(8) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(9) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$28.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(9) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(9) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(10) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$150.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(10) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(10) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(11) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$90.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(11) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(11) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(12) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(13) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(14) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(15) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(16) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(17) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$15.47 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(17) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(17) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(18) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(19) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(20) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(21) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$622.22 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(21) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(21) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(22) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(23) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(24) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$2.33 por pieza</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(24) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(24) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(25) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(26) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(27) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(28) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(29) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(30) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$73.05 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(30) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(30) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(31) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(32) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(33) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(34) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(35) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(36) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(37) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(38) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(39) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(40) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(41) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(42) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(43) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(44) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(45) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(46) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(47) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(48) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(49) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(50) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(51) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(52) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(53) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(54) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(55) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(56) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(57) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(58) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$392.66 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(58) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(58) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(59) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$35.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(59) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(59) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(60) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(61) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$91.76 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(61) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(61) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(62) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(63) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(64) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(65) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$48.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(65) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(65) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(66) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(67) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(68) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(69) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(70) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(71) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(72) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(73) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$54.55 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(73) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(73) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(74) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(75) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$61.36 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(75) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(75) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(76) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(77) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(78) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(79) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(80) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(81) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$137.78 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(81) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(81) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(82) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$50.83 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(82) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(82) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(83) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$155.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(83) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(83) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(84) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(85) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(86) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(87) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(88) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(89) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$28.33 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(89) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(89) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(90) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(91) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(92) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(93) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(94) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(95) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(96) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(97) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(98) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$116.67 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(98) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(98) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(99) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$141.94 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(99) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(99) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(100) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(101) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(102) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(103) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(104) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(105) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(106) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$135.29 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(106) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(106) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(107) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(108) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(109) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(110) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(111) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$6.63 por pieza</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(111) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(111) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(112) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$218.75 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(112) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(112) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(113) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(114) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(115) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(116) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(117) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(118) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(119) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(120) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(121) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(122) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(123) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(124) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(125) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(126) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(127) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(128) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(129) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(130) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(131) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$305.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(131) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(131) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(132) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(133) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(134) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$146.83 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(134) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(134) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(135) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(136) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(137) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$80.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(137) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(137) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(138) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$134.48 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(138) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(138) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(139) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$241.38 por l</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(139) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(139) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(140) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(141) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(142) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$0.11 por pieza</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(142) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(142) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(143) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(144) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(145) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(146) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(147) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$126.92 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(147) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(147) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(148) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$0.13 por pieza</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(148) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(148) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(149) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(150) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(151) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(152) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(153) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(154) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(155) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$87.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(155) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(155) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(156) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(157) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(158) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$49.09 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(158) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(158) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(159) > .text-right.tabular-nums.py-1 > .items-end.flex-col.flex > span:nth-child(1)"
+     ],
+     "html": "<span class=\"tabular-nums\">$100.00 por kg</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(159) > .py-1.px-2:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">10-oct-2026</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(159) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Fresco</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(160) > .py-1.px-2:nth-child(7)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin precio</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

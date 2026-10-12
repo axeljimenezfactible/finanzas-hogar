@@ -1,0 +1,424 @@
+{
+ "resumen": {
+  "lista_estado": 200,
+  "n_items": 26,
+  "con_producto": 26,
+  "con_cantidad": 26,
+  "con_precio": 0,
+  "total_estimado": 41200,
+  "claves_lista": [
+   "shopping_list_id",
+   "start_date",
+   "end_date",
+   "generated_at",
+   "groups",
+   "total_cents"
+  ],
+  "mejor_canasta": {
+   "basket": "shopping_list",
+   "covered_count": 0,
+   "item_count": 26,
+   "stale_price_count": 0,
+   "assumes_membership": false
+  },
+  "comparacion_estado": 200,
+  "comparacion": {
+   "stores": [
+    {
+     "s": 1,
+     "tot": 0,
+     "id": 0,
+     "su": 0,
+     "mi": 26
+    },
+    {
+     "s": 3,
+     "tot": 0,
+     "id": 0,
+     "su": 0,
+     "mi": 26
+    },
+    {
+     "s": 2,
+     "tot": 40900,
+     "id": 7,
+     "su": 1,
+     "mi": 18
+    },
+    {
+     "s": 4,
+     "tot": 41500,
+     "id": 8,
+     "su": 0,
+     "mi": 18
+    }
+   ]
+  }
+ },
+ "detalle": {
+  "tiendas": [
+   {
+    "id": 4,
+    "n": "Acueducto de Guadalupe"
+   },
+   {
+    "id": 1,
+    "n": "Bodega Aurrera"
+   },
+   {
+    "id": 2,
+    "n": "Vallejo"
+   },
+   {
+    "id": 3,
+    "n": "Walmart"
+   }
+  ],
+  "claves_item": [
+   "id",
+   "shopping_list_id",
+   "origin",
+   "product_id",
+   "needed_milli",
+   "is_bought",
+   "created_at",
+   "updated_at",
+   "packages_to_buy",
+   "recommended_presentation_id",
+   "reasons",
+   "recipe_ids"
+  ],
+  "claves_cmp": [
+   "basket",
+   "stores",
+   "items",
+   "winners",
+   "ties"
+  ],
+  "cheapest": null,
+  "store2": {
+   "store_id": 2,
+   "total_cents": 40900,
+   "identical_count": 7,
+   "identical_total_cents": 38700,
+   "substitute_count": 1,
+   "missing_count": 18,
+   "stale_count": 0,
+   "assumes_membership": false
+  },
+  "items": [
+   {
+    "p": 43,
+    "need": 27000,
+    "pk": 1,
+    "pres": 46
+   },
+   {
+    "p": 49,
+    "need": 300000,
+    "pk": 1,
+    "pres": 52
+   },
+   {
+    "p": 40,
+    "need": 360000,
+    "pk": 1,
+    "pres": 43
+   },
+   {
+    "p": 54,
+    "need": 350000,
+    "pk": 1,
+    "pres": 57
+   },
+   {
+    "p": 73,
+    "need": 5000,
+    "pk": 1,
+    "pres": 76
+   },
+   {
+    "p": 37,
+    "need": 950000,
+    "pk": 1,
+    "pres": 40
+   },
+   {
+    "p": 84,
+    "need": 250000,
+    "pk": 1,
+    "pres": 91
+   },
+   {
+    "p": 48,
+    "need": 200000,
+    "pk": 1,
+    "pres": 51
+   },
+   {
+    "p": 95,
+    "need": 350000,
+    "pk": 1,
+    "pres": 102
+   },
+   {
+    "p": 1,
+    "need": 35000,
+    "pk": 1,
+    "pres": 1
+   },
+   {
+    "p": 17,
+    "need": 140000,
+    "pk": 1,
+    "pres": 17
+   },
+   {
+    "p": 10,
+    "need": 3000,
+    "pk": 1,
+    "pres": 10
+   },
+   {
+    "p": 22,
+    "need": 500000,
+    "pk": 2,
+    "pres": 22
+   },
+   {
+    "p": 16,
+    "need": 330000,
+    "pk": 2,
+    "pres": 16
+   },
+   {
+    "p": 23,
+    "need": 80000,
+    "pk": 1,
+    "pres": 23
+   },
+   {
+    "p": 2,
+    "need": 135000,
+    "pk": 1,
+    "pres": 2
+   },
+   {
+    "p": 34,
+    "need": 380000,
+    "pk": 1,
+    "pres": 35
+   },
+   {
+    "p": 148,
+    "need": 1000,
+    "pk": 1,
+    "pres": 174
+   },
+   {
+    "p": 146,
+    "need": 2000,
+    "pk": 1,
+    "pres": 172
+   },
+   {
+    "p": 125,
+    "need": 17000,
+    "pk": 1,
+    "pres": 144
+   },
+   {
+    "p": 135,
+    "need": 200000,
+    "pk": 1,
+    "pres": 157
+   },
+   {
+    "p": 117,
+    "need": 150000,
+    "pk": 1,
+    "pres": 132
+   },
+   {
+    "p": 109,
+    "need": 2000,
+    "pk": 1,
+    "pres": 116
+   },
+   {
+    "p": 114,
+    "need": 100000,
+    "pk": 1,
+    "pres": 127
+   },
+   {
+    "p": 110,
+    "need": 50000,
+    "pk": 1,
+    "pres": 119
+   },
+   {
+    "p": 122,
+    "need": 200000,
+    "pk": 1,
+    "pres": 140
+   }
+  ],
+  "lineas_cmp": [
+   {
+    "product_id": 43,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 49,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 40,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 54,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 73,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 37,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 84,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 48,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 95,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 1,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": false
+   },
+   {
+    "product_id": 17,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": false
+   },
+   {
+    "product_id": 10,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": false
+   },
+   {
+    "product_id": 22,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": false
+   },
+   {
+    "product_id": 16,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": false
+   },
+   {
+    "product_id": 23,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": false
+   },
+   {
+    "product_id": 2,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": false
+   },
+   {
+    "product_id": 34,
+    "tiendas_con_precio": [
+     2,
+     4
+    ],
+    "sustituto": true
+   },
+   {
+    "product_id": 148,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 146,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 125,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 135,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 117,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 109,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 114,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 110,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   },
+   {
+    "product_id": 122,
+    "tiendas_con_precio": [],
+    "sustituto": false
+   }
+  ]
+ }
+}

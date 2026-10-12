@@ -25,7 +25,7 @@ export default function P26Ajustes(props: PropsPantalla) {
             <li key={s.id}>
               <Enlace a={`/ajustes/${s.id}`} aria-current={s.id === id ? 'page' : undefined}
                 className={cn('flex min-h-11 items-center gap-2 rounded-md px-3 text-body text-text-default hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus desktop:min-h-9 desktop:text-small', s.id === id && 'bg-surface-selected font-medium')}>
-                <span className="w-6 text-caption tabular-nums text-text-secondary">{s.id}</span><span className="flex-1">{s.nombre}</span><ChevronRight aria-hidden className="size-4 text-text-secondary desktop:hidden" />
+                <span className="w-6 text-caption tabular-nums text-text-secondary">{s.id}</span><span className="flex-1">{s.nombre}</span><ChevronRight aria-hidden className="size-5 text-text-secondary desktop:hidden" />
               </Enlace>
             </li>
           ))}

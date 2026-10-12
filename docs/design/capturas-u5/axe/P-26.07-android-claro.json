@@ -1,0 +1,1298 @@
+{
+ "pantalla": "P-26.07",
+ "nombre": "Recetas",
+ "combinacion": "android-claro",
+ "url": "/ajustes/07",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 29,
+  "no_aplican": 34
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(5) > .coarse\\:min-w-11.h-9.coarse\\:h-11"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Duplicar receta</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/34\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/34\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Albóndigas de res en caldillo de chipotle</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/23\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/23\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Albóndigas de res en caldillo de jitomate</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(2) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/31\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/31\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Arroz con pollo y zanahoria</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(3) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(3) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/12\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/12\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Arroz rojo con huevo estrellado y plátano macho</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(4) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(4) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/6\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/6\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Avena con manzana y canela</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(5) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(5) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/21\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/21\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Bistec a la mexicana</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(6) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(6) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/28\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/28\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Calabacitas con elote y queso fresco</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(7) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(7) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/60\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/60\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Calabaza en tacha con piloncillo y canela</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(8) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(8) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/17\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/17\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Caldo de pollo con verduras</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(9) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(9) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/37\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/37\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Caldo de res con verduras y elote</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(10) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(10) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/35\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/35\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Cerdo en chile colorado con papa</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(11) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(11) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/3\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/3\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Chilaquiles verdes con huevo</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(12) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(12) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/33\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/33\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Chilaquiles verdes con pollo</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(13) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(13) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/54\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/54\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Chiles poblanos rellenos de queso</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(14) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(14) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/36\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/36\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Chuletas de cerdo con nopales a la mexicana</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(15) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(15) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/24\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/24\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Chuletas de cerdo en salsa de guajillo con papitas</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(16) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(16) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/55\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/55\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Costillas de cerdo con verdolagas</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(17) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(17) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/45\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/45\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Enfrijoladas con queso y crema</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(18) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(18) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/27\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/27\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Ensalada de atún con elote</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(19) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(19) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/51\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/51\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Ensalada de garbanzo, pepino y jitomate</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(20) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(20) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/50\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/50\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Ensalada de nopales con queso panela</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(21) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(21) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/57\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/57\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Entomatadas de pollo</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(22) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(22) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/46\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/46\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Espagueti con atún y elote</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(23) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(23) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/48\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/48\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Espagueti con calabacita y queso manchego</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(24) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(24) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/47\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/47\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Fideo seco a la mexicana</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(25) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(25) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/14\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/14\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Frijoles charros</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(26) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(26) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/13\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/13\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Frijoles de la olla con queso fresco</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(27) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(27) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/16\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/16\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Garbanzos guisados con espinaca</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(28) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(28) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/4\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/4\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Huevo revuelto con jamón y frijoles refritos</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(29) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(29) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/1\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/1\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Huevos a la mexicana con tortillas</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(30) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(30) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/42\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/42\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Huevos con nopales</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(31) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(31) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/2\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/2\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Huevos rancheros con frijoles refritos</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(32) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(32) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/30\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/30\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Jícama y pepino con limón y chile</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(33) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(33) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/15\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/15\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Lentejas guisadas con papa y zanahoria</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(34) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(34) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/7\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/7\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Licuado de plátano y avena</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(35) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(35) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/20\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/20\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Milanesa de res empanizada con ensalada</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(36) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(36) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/56\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/56\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Mole de olla de res</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(37) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(37) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/5\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/5\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Molletes con pico de gallo</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(38) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(38) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/29\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/29\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Nopales a la mexicana con queso panela</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(39) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(39) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/25\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/25\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Papas con chorizo en tacos</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(40) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(40) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/49\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/49\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Pasta pluma cremosa con champiñones</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(41) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(41) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/59\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/59\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Pechuga a la plancha con brócoli y arroz blanco</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(42) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(42) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/22\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/22\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Picadillo de res con papa y zanahoria</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(43) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(43) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/32\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/32\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Pollo al horno con papas cambray</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(44) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(44) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/18\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/18\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Pollo en salsa verde</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(45) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(45) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/52\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/52\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Pozole rojo de cerdo</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(46) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(46) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/9\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/9\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Quesadillas de champiñones con queso Oaxaca</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(47) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(47) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/58\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/58\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Rajas poblanas con crema y elote</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(48) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(48) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/11\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/11\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Sopa de fideo con jitomate</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(49) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(49) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/44\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/44\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Sopa de frijol negro con crema y tostadas</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(50) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(50) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/38\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/38\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tacos de falda de res deshebrada</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(51) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(51) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/53\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/53\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tacos dorados de papa con caldillo</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(52) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(52) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/40\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/40\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tilapia a la veracruzana con arroz</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(53) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(53) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/39\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/39\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tilapia al mojo de ajo con papitas</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(54) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(54) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/19\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/19\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tinga de pollo en tostadas</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(55) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(55) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/10\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/10\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Torta de jamón y queso con aguacate</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(56) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(56) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/43\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/43\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tortitas de calabacita con huevo en salsa de jitomate</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(57) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(57) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/41\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/41\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tostadas de atún con aguacate</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(58) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(58) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href=\"/comidas/recetas/26\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/26\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Tostadas de sardina con aguacate</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(59) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(59) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "a[href$=\"recetas/8\"]"
+     ],
+     "html": "<a href=\"/comidas/recetas/8\" class=\"inline-flex min-h-11 items-center text-text-link desktop:min-h-0\">Yogur griego con fresas y avena</a>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(60) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(2)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(60) > .py-1:nth-child(5) > .flex-wrap > .active\\:bg-surface-pressed.select-none.transition-\\[color\\,background-color\\,border-color\\]:nth-child(3)"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex select-n...\">",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

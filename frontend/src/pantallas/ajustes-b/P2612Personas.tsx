@@ -140,7 +140,7 @@ function EditorPartes({ r, personas, cerrar, guardar }: { r: Regla; personas: Pe
             </fieldset>
           ))}
           <p className="text-small tabular-nums">{t.elResto(pb(Math.max(0, 10000 - suma)), `${quien}, ${t.hogar}`)}</p>
-          {error && <p role="alert" className="inline-flex items-center gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-4" />{error}</p>}
+          {error && <p role="alert" className="inline-flex items-center gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-5" />{error}</p>}
           <label className="flex items-center gap-2 text-small">{t.conGasto}<input inputMode="decimal" className={cn(estilosControl, 'w-32 tabular-nums')} value={monto} onChange={(e) => setMonto(e.target.value)} /></label>
           {!error && <AntesDespues cambios={[{ etiqueta: t.efectoParte(dinero(M), '').replace(/: $/, ''), antes: reparte(r.parts ?? []), despues: reparte(partes) }]} />}
         </div>

@@ -114,6 +114,7 @@ type modelFile struct {
 			DisponibleB money  `json:"disponible_B"`
 		} `json:"eventos"`
 	} `json:"credito"`
+	Papel     json.RawMessage `json:"papel"`
 	Horizonte struct {
 		Fin       string `json:"fin"`
 		DeudaViva money  `json:"deuda_viva_10_abr"`

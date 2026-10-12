@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
 import { pedir } from '../api/cliente'
 import { esSinConexion } from '../api/errores'
-import { borrarLecturas, leerLectura } from '../api/lecturas'
+import { borrarLecturas, guardarLectura, leerLectura } from '../api/lecturas'
 import type { Esquemas } from '../api/tipos'
 import { navegar } from './enrutador'
 export type Sesion = Esquemas['CurrentSession']
@@ -33,6 +33,9 @@ export function ProveedorSesion({ children }: { children: ReactNode }) {
   }, [])
   const entrar = useCallback(async (username: string, password: string) => {
     const s = await pedir('post', '/api/v1/auth/login', { cuerpo: { username, password } })
+    // U5-13 paso 2 (H-5): la sesión recién abierta queda como la «última carga» de /auth/me; así, si se recarga sin red
+    // antes de cualquier otra navegación completa, la app arranca con los datos guardados y la franja «Sin conexión».
+    await guardarLectura('/api/v1/auth/me', s)
     setSesion(s); setEstado('activa'); setVencida(false)
     let volver = '/inicio'
     try { volver = sessionStorage.getItem(CLAVE_VOLVER) ?? volver; sessionStorage.removeItem(CLAVE_VOLVER) } catch { /* nada */ }

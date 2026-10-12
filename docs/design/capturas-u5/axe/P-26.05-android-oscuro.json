@@ -1,0 +1,52 @@
+{
+ "pantalla": "P-26.05",
+ "nombre": "Créditos y condiciones (incluye promociones)",
+ "combinacion": "android-oscuro",
+ "url": "/ajustes/05",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 28,
+  "no_aplican": 35
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      "th:nth-child(5) > .coarse\\:min-w-11.h-9.inline-flex"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Próximo pago</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th:nth-child(6) > .coarse\\:min-w-11.h-9.inline-flex"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Falta capturar</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(5) > .tabular-nums"
+     ],
+     "html": "<span class=\"tabular-nums\">30-oct-2026 · $973.75</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

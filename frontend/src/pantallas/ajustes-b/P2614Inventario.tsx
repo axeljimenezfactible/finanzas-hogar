@@ -30,7 +30,7 @@ const COLOR = { sufficient: 'text-role-success', reorder: 'text-role-warning', o
 function Estado({ e }: { e: 'sufficient' | 'reorder' | 'out' | null | undefined }) {
   if (!e) return <span className="text-text-secondary">{t.faltaRitmo}</span>
   const Icono = ICONO[e]
-  return <span className="inline-flex items-center gap-1"><Icono aria-hidden className={cn('size-4', COLOR[e])} />{t.estados[e]}</span>
+  return <span className="inline-flex items-center gap-1"><Icono aria-hidden className={cn('size-5', COLOR[e])} />{t.estados[e]}</span>
 }
 
 export default function P2614Inventario() {

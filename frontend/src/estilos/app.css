@@ -10,4 +10,6 @@
   html { font-family: var(--font-sans); font-optical-sizing: auto; -webkit-tap-highlight-color: transparent; }
   body { background-color: var(--ui-surface-page); color: var(--ui-text-default); min-height: 100dvh; }
   :focus-visible { outline: 2px solid var(--ui-border-focus); outline-offset: 2px; }
+  /* Iconos Lucide (DESIGN §5.2): nunca se encogen en una fila flexible (U5-06: iconos deformados de 7×16 y 19×20). */
+  svg.lucide { flex-shrink: 0; }
 }

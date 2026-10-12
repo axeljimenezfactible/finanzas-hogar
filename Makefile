@@ -11,6 +11,8 @@
 #   make verify-wf1   go test con cobertura K25, oráculos S2 a S5 con compara.py, recetario, tokens C2, contraste, U4 y paquete
 #   make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios + verify-wf1
 #   make verify-wf3   WF-3: Go, cobertura K25, contrato C1 e interfaz (todavía fuera de verify-all)
+#   make verify-u5    U5 sin servidor sobre la evidencia versionada (U5-01, 03, 04, 08 y 11); entra en verify-wf3
+#   make verify-u5-servidor  U5 contra el servidor de bash ops/dev-run.sh: regenera las 164 capturas (≈ 9 min) y luego verify-u5
 #   make verify-wf3-final  verify-wf3 + S6-13 (secretos) + S6-09 (respaldo) + S6-11/12/14 contra el servidor de bash ops/dev-run.sh
 #   make clean        borra los temporales de este Makefile
 #
@@ -55,7 +57,7 @@ RM_TMP     := rm -rf "$(TMP)"; rmdir "$(TMP_ROOT)" 2>/dev/null || true
 .PHONY: help verify-wf0 verify-sql verify-go verify-color verify-openapi verify-c1 verify-s1 verify-u1 verify-criterios verify-all clean \
         verify-wf1 verify-wf1-cobertura verify-wf1-oraculos verify-wf1-recetario verify-wf1-tokens verify-wf1-u4 verify-wf1-paquete \
         verify-wf3 verify-wf3-go verify-wf3-cobertura verify-wf3-contrato verify-wf3-frontend \
-        verify-wf3-final verify-wf3-secretos verify-wf3-respaldo verify-wf3-servidor
+        verify-wf3-final verify-wf3-secretos verify-wf3-respaldo verify-wf3-servidor verify-u5 verify-u5-servidor
 
 help:
 	@echo "Finanzas Hogar · objetivos de make"
@@ -67,6 +69,8 @@ help:
 	@echo "  make verify-wf1   go test -cover (K25), oráculos S2 a S5, recetario, tokens C2, contraste, U4 unido y paquete"
 	@echo "  make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios + verify-wf1"
 	@echo "  make verify-wf3   WF-3: go build/vet/gofmt/tidy/test, cobertura K25, contrato C1 (rutas y respuestas) e interfaz (no entra en verify-all)"
+	@echo "  make verify-u5    U5 sin servidor sobre docs/design/capturas-u5/ (U5-01, U5-03, U5-04, U5-08) y la matriz de C3 (U5-11); entra en verify-wf3"
+	@echo "  make verify-u5-servidor  U5 con el servidor de bash ops/dev-run.sh corriendo: regenera capturas, axe y contraste (≈ 9 min) y luego verify-u5"
 	@echo "  make verify-wf3-final  verify-wf3 + verify-wf3-secretos (S6-13) + verify-wf3-respaldo (S6-09) + verify-wf3-servidor (S6-11, S6-12, S6-14; servidor de bash ops/dev-run.sh corriendo)"
 	@echo "  make clean        borra datos/tmp/verify-wf0, backend/bin y las carpetas __pycache__"
 
@@ -317,9 +321,9 @@ verify-wf1-paquete:
 WF3_TMP        := $(TMP_ROOT)/verify-wf3
 WF3_SIN_UMBRAL := api auth jobs reportes telegram
 
-verify-wf3: verify-wf3-go verify-wf3-cobertura verify-wf3-contrato verify-wf3-frontend
+verify-wf3: verify-wf3-go verify-wf3-cobertura verify-wf3-contrato verify-wf3-frontend verify-u5
 	@rm -rf "$(WF3_TMP)"; rmdir "$(TMP_ROOT)" 2>/dev/null || true
-	@echo "== WF-3: verificación completa OK (Go, cobertura K25, contrato C1 e interfaz)"
+	@echo "== WF-3: verificación completa OK (Go, cobertura K25, contrato C1, interfaz y evidencia U5)"
 
 verify-wf3-go:
 	@echo "== WF-3 Go (S6-01): go build, go vet, gofmt, go mod tidy -diff y go test ./..."
@@ -429,3 +433,51 @@ clean:
 	@find "$(ROOT)/backend" "$(ROOT)/docs" "$(ROOT)/oraculo" -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true
 	@rmdir "$(TMP_ROOT)" 2>/dev/null || true
 	@if [ -d "$(TMP_ROOT)" ]; then echo "Aviso: datos/tmp conserva archivos que no son de este Makefile (no se borraron):"; ls -A "$(TMP_ROOT)"; else echo "Limpio: sin datos/tmp, sin backend/bin y sin __pycache__."; fi
+
+# ---- WF-3b cierre (agente integrador-wf3b, 12-oct-2026) ----
+#   make verify-u5          U5 SIN servidor, sobre la evidencia versionada en docs/design/capturas-u5/ (la produce verify-u5-servidor):
+#                           U5-01 (frontend/pruebas-u5/verificar_capturas.py: 4T = 164 PNG), U5-03 (comando literal del criterio: 0 serias o
+#                           críticas en los 164 JSON de axe/), U5-04 (164 JSON de contraste/: 0 pares bajo umbral), U5-08 (hosts.json: solo
+#                           finanzas.local o localhost) y U5-11 (las 41 filas P- de docs/contratos/C3-integracion.md con «sí» y sus 4 rutas).
+#                           Entra en verify-wf3. NO sustituye la revisión visual (U5-05, U5-06), ni U5-02, U5-09 y U5-13, que piden el servidor.
+#   make verify-u5-servidor U5 CON el servidor de desarrollo YA corriendo (bash ops/dev-run.sh, https://$(WF3_HOST):$(WF3_PORT)): corre
+#                           frontend/playwright.u5.config.ts (164 capturas + axe + contraste + tema + Tendencias, ≈ 9 min; 174 pruebas) y
+#                           luego verify-u5. Reescribe los PNG y JSON versionados: revisar «git status» después. No entra en verify-wf3 ni en
+#                           verify-all. Los flujos de C3-08 y U5-09/U5-13 van aparte, en una copia aislada de la base (127.0.0.1:8444):
+#                           cd frontend/pruebas-u5/flujos && bash servidor-prueba.sh arrancar && npx playwright test -c playwright.config.ts; bash servidor-prueba.sh detener
+U5_DIR := $(ROOT)/docs/design/capturas-u5
+C3_MD  := $(ROOT)/docs/contratos/C3-integracion.md
+define U5_EVIDENCIA_PY
+import glob, json, os, re, sys
+D = os.environ['U5_DIR']; f = 0
+axe = sorted(glob.glob(D + '/axe/*.json'))
+serias = [x for p in axe for x in json.load(open(p))['violations'] if x['impact'] in ('serious', 'critical')]
+print(f'   U5-03 axe-core: {len(axe)} JSON, violaciones serias o críticas = {len(serias)}'); f |= len(axe) != 164 or len(serias) != 0
+con = sorted(glob.glob(D + '/contraste/*.json')); ev = bajo = 0
+for p in con:
+    j = json.load(open(p)); ev += j['evaluados']; bajo += j['bajo_umbral']
+print(f'   U5-04 contraste: {len(con)} JSON, {ev} pares evaluados, bajo umbral = {bajo}'); f |= len(con) != 164 or bajo != 0
+h = json.load(open(D + '/hosts.json')); ext = [x for x in h['unicos'] if x.split(':')[0] not in ('finanzas.local', 'localhost')]
+print(f'   U5-08 hosts: {h["unicos"]} en {h["capturas_con_registro"]} capturas, fuera de finanzas.local/localhost = {len(ext)}'); f |= len(ext) != 0 or h['capturas_con_registro'] != 164
+ok = 0; mal = []
+for l in open(os.environ['C3_MD'], encoding='utf-8'):
+    if not l.startswith('| P-'): continue
+    pid = re.match(r'\| (P-[0-9.]+)', l).group(1)
+    rutas = [f'{pid}-{d}-{t}.png' for d in ('android', 'escritorio') for t in ('claro', 'oscuro')]
+    if '| sí |' in l and all(r in l and os.path.isfile(D + '/' + r) for r in rutas): ok += 1
+    else: mal.append(pid)
+print(f'   U5-11 C3: {ok} filas P- con «capturado» = sí y sus 4 rutas en disco; sin marca o sin ruta = {mal or 0}'); f |= ok != 41 or bool(mal)
+sys.exit(f)
+endef
+export U5_EVIDENCIA_PY
+
+verify-u5:
+	@echo "== U5 sin servidor: evidencia versionada en docs/design/capturas-u5/ y matriz de C3 (U5-01, U5-03, U5-04, U5-08 y U5-11)"
+	@cd "$(ROOT)" && out="$$($(PYTHON) -I frontend/pruebas-u5/verificar_capturas.py 2>&1)" || { echo "$$out"; exit 1; }; echo "$$out" | sed 's/^/   U5-01 /'
+	@cd "$(ROOT)" && U5_DIR="$(U5_DIR)" C3_MD="$(C3_MD)" $(PYTHON) -I -c "$$U5_EVIDENCIA_PY"
+
+verify-u5-servidor:
+	@echo "== U5 con el servidor de desarrollo (https://$(WF3_HOST):$(WF3_PORT)): capturas, axe, contraste, tema y Tendencias (≈ 9 min)"
+	@$(CURL) -fsS -o /dev/null --cacert "$$($(MKCERT) -CAROOT)/rootCA.pem" "https://$(WF3_HOST):$(WF3_PORT)/health" || { echo "   el servidor no responde: arráncalo con bash ops/dev-run.sh"; exit 1; }
+	@cd "$(ROOT)/frontend" && FH_U5_URL="https://$(WF3_HOST):$(WF3_PORT)" npx playwright test -c playwright.u5.config.ts
+	@$(MAKE) --no-print-directory verify-u5

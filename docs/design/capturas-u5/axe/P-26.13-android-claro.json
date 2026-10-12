@@ -1,0 +1,143 @@
+{
+ "pantalla": "P-26.13",
+ "nombre": "Salud y metas de ahorro",
+ "combinacion": "android-claro",
+ "url": "/ajustes/13",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 28,
+  "no_aplican": 35
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      ".text-right[aria-sort=\"none\"]:nth-child(6) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Aportación mensual planificada</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(7) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Inicio</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(8) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Activa</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right[aria-sort=\"none\"]:nth-child(9) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Ahorrado</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right[aria-sort=\"none\"]:nth-child(10) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Avance</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right[aria-sort=\"none\"]:nth-child(11) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Aportación necesaria</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(12) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Estado</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "th[aria-sort=\"none\"]:nth-child(13) > .coarse\\:min-w-11.h-9.gap-1"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Notas</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right:nth-child(6) > .min-h-9.text-inherit.coarse\\:min-h-11 > .tabular-nums"
+     ],
+     "html": "<span class=\"tabular-nums\">$449.53</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(7) > .min-h-9.text-inherit.coarse\\:min-h-11"
+     ],
+     "html": "<button type=\"button\" class=\"w-full min-h-9 text-inherit rounded-sm px-1 text-left coarse:min-h-11 coarse:min-w-11 hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-border-focus\">1-oct-2026</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(8) > .min-h-9.text-inherit.coarse\\:min-h-11"
+     ],
+     "html": "<button type=\"button\" class=\"w-full min-h-9 text-inherit rounded-sm px-1 text-left coarse:min-h-11 coarse:min-w-11 hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-border-focus\">Sí</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right:nth-child(9) > .tabular-nums"
+     ],
+     "html": "<span class=\"tabular-nums\">$3,146.72</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".tabular-nums.inline-flex.gap-2"
+     ],
+     "html": "<span class=\"inline-flex items-center gap-2 tabular-nums\"><span aria-hidden=\"true\" class=\"h-2 w-16 overflow-hidden rounded-full bg-viz-track\"><span class=\"block h-full bg-role-savings\" style=\"width: 50%;\"></span></span>50.0 %</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".text-right:nth-child(11) > .tabular-nums"
+     ],
+     "html": "<span class=\"tabular-nums\">$449.53</span>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(12)"
+     ],
+     "html": "<td class=\"px-2 py-1\">En curso</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      "td:nth-child(13) > .min-h-9.text-inherit.coarse\\:min-h-11"
+     ],
+     "html": "<button type=\"button\" class=\"w-full min-h-9 text-inherit rounded-sm px-1 text-left coarse:min-h-11 coarse:min-w-11 hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-border-focus\">Dato de desarrollo: no existe en producción.</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

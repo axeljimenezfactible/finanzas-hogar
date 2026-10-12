@@ -67,9 +67,9 @@ export default function P17Lineas({ sub, consulta }: PropsPantalla) {
   return (
     <div className="flex flex-col gap-6 tabular-nums">
       <Barra>
-        <Boton variante="secundario" onClick={() => navegar(conConsulta({ sub: 'calendario' }))}><CalendarDays aria-hidden className="size-4" />{c.verCalendario}</Boton>
-        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-20'))}><Calculator aria-hidden className="size-4" />{c.simular}</Boton>
-        <Boton variante="primario" deshabilitadoPor={primera ? undefined : c.vacio} onClick={() => primera && navegar(rutaDe('P-19', { id: primera, compra: 'nueva' }))}><Plus aria-hidden className="size-4" />{c.registrarCompra}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(conConsulta({ sub: 'calendario' }))}><CalendarDays aria-hidden className="size-5" />{c.verCalendario}</Boton>
+        <Boton variante="secundario" onClick={() => navegar(rutaDe('P-20'))}><Calculator aria-hidden className="size-5" />{c.simular}</Boton>
+        <Boton variante="primario" deshabilitadoPor={primera ? undefined : c.vacio} onClick={() => primera && navegar(rutaDe('P-19', { id: primera, compra: 'nueva' }))}><Plus aria-hidden className="size-5" />{c.registrarCompra}</Boton>
       </Barra>
       <ConDatos consulta={lineas}>{(d) => {
         const ls = [...d.items].sort(porProximo)

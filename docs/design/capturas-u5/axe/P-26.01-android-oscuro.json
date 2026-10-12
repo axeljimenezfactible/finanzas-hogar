@@ -1,0 +1,45 @@
+{
+ "pantalla": "P-26.01",
+ "nombre": "Cuenta y roles",
+ "combinacion": "android-oscuro",
+ "url": "/ajustes/01",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 31,
+  "no_aplican": 32
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "color-contrast",
+   "impact": "serious",
+   "help": "Elements must meet minimum color contrast ratio thresholds",
+   "nodes": [
+    {
+     "target": [
+      "th:nth-child(6) > .coarse\\:min-w-11.gap-1.h-9"
+     ],
+     "html": "<button type=\"button\" class=\"inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11\">Cerrar</button>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    },
+    {
+     "target": [
+      ".hover\\:bg-surface-hover-subtle.data-seleccionada\\:bg-surface-selected:nth-child(1) > td:nth-child(6)"
+     ],
+     "html": "<td class=\"px-2 py-1\">Sin valor</td>",
+     "message": "Element's background color could not be determined because it's partially obscured by another element"
+    }
+   ]
+  }
+ ]
+}

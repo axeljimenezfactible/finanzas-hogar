@@ -1,0 +1,212 @@
+[
+ {
+  "id": "F-2b",
+  "nombre": "Planear la semana · copiar semana anterior",
+  "toquesTotal": 3,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: Comidas",
+    "pantalla": "P-01 → P-10",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Toques 2-3: «⋯» → «Copiar semana anterior»",
+    "pantalla": "P-10",
+    "toques": 3,
+    "ok": true,
+    "resultado": "POST copy-previous-week → 201 {\"created_count\":0}\n · aviso en pantalla: (ninguno visible)"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F2b-copiar-semana.jpg"
+  ]
+ },
+ {
+  "id": "F-3A2",
+  "nombre": "Comparar canasta · ruta A con la lista del plan",
+  "toquesTotal": 1,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Preparación (no cuenta): generar la lista de la semana 42 desde el plan de la semilla",
+    "pantalla": "API",
+    "toques": 0,
+    "ok": true,
+    "resultado": "lista con 26 artículos; tarjeta: «Mejor canasta — Aún no hay precios para comparar Registrar precios»"
+   },
+   {
+    "n": 2,
+    "accion": "Observación A1: la tarjeta y P-14 con la lista completa (¿hay tienda con todos los precios?)",
+    "pantalla": "P-01 → P-14",
+    "toques": 1,
+    "ok": true,
+    "resultado": "la tarjeta lleva a «Productos y precios» (/compras/productos), NO a Comparar canasta (P-14): con la lista completa ninguna tienda tiene todos los precios"
+   },
+   {
+    "n": 3,
+    "accion": "Preparación (no cuenta; datos de prueba por API en la COPIA): registrar un precio de $50.00 en Vallejo para cada artículo de la lista sin precio (equivale a «Registrar precios»)",
+    "pantalla": "API",
+    "toques": 1,
+    "ok": true,
+    "resultado": "18 precios registrados en Vallejo; comparación: [{\"tienda\":2,\"total\":130900,\"faltan\":0},{\"tienda\":1,\"total\":0,\"faltan\":26},{\"tienda\":3,\"total\":0,\"faltan\":26},{\"tienda\":4,\"total\":41500,\"faltan\":18}]; cheapest_store: ausente"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F3A2-destino-de-la-tarjeta.jpg"
+  ]
+ },
+ {
+  "id": "F-3A3",
+  "nombre": "Comparar canasta · ruta A (lista con precios)",
+  "toquesTotal": 3,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Partida: Inicio con la lista que sí tiene precios",
+    "pantalla": "P-01",
+    "toques": 0,
+    "ok": true,
+    "resultado": "tarjeta: «Mejor canasta Vallejo $1,309.00 26 de 26 artículos con precio Comparar canasta»"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 1: tarjeta «Mejor canasta»",
+    "pantalla": "P-01 → P-14",
+    "toques": 1,
+    "ok": true,
+    "resultado": "Semana 42 · 12-oct-2026 al 18-oct-2026 Semana vigente Canasta Lista de compras · Semana 42 · 12-oct-2026 al 18-oct-2026 Compra del 10-oct-2026 · Bodega Aurrera · Vallejo · $3,094.50 Bodega Aurrera · Vallejo es la más barata: $1,309.00. Bodega Aurrera $0.00 −$1,309.00 contra la más barata · −$1,287.00 en idénticos 0 de 26 con precio · cobertura 0 % 0 idénticos · 0 sustitutos · 26 sin precio · 0 vie"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 2: pestaña «Detalle»",
+    "pantalla": "P-14",
+    "toques": 2,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 4,
+    "accion": "Toque 3: «Usar <tienda ganadora>»",
+    "pantalla": "P-14 → P-13",
+    "toques": 3,
+    "ok": true,
+    "resultado": "asignada: Usar Bodega Aurrera · Vallejo · P-13: Semana 42 · 12-oct-2026 al 18-oct-2026 Semana vigente Terminar compra Total estimado $1,309.00 26 artículos · 0 comprados · neteada con el inventario Totales por tienda Bodega Aurrera · Vallejo $450.00 Bodega Aurrera · Vallejo $859.00 Tabla Tablero Sin agrupar Agrupar: Tienda Comprado Artículo Canti"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F3A3-p14-resumen.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F3A3-lista-con-tienda.jpg"
+  ]
+ },
+ {
+  "id": "F-4b",
+  "nombre": "Marcar pago de la parte del hogar",
+  "toquesTotal": 4,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toques 1-3: tarjeta Próximo pago → Calendario → pago del 30-oct",
+    "pantalla": "P-01 → P-18 → G-06",
+    "toques": 3,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 4: «Marcar pagada la parte de Hogar»",
+    "pantalla": "G-06",
+    "toques": 4,
+    "ok": true,
+    "resultado": "la fila queda «Vie 30 oct 2026 · Pago de Kueski $973.75 Hogar $598.82 · Karen $374.93 · pagada / pendiente» y aparece «Deshacer» (el marcado es inmediato: no hay «Guardar»; U1 dice 6 toques, aquí son 4)"
+   },
+   {
+    "n": 3,
+    "accion": "Recálculo: Resumen del crédito después de marcar",
+    "pantalla": "P-18",
+    "toques": 4,
+    "ok": true,
+    "resultado": "antes → Disponible · lectura B (activa) $6,905.50 | Disponible · lectura A $10,000.00 · Próximo pago Próximo pago $973.75 Vie 30 oct 2026 · Hogar $598.82 · Karen $374.93 || después → Disponible · lectura B (activa) $6,905.50 | Disponible · lectura A $10,000.00 · Próximo pago Próximo pago $973.75 Vie 30 oct 2026 · Hogar $598.82 · Karen $374.93 || tras recargar → Disponible · lectura B (activa) $6,905.50 | Disponible · lectura A $10,000.00 · Próximo pago Próximo pago $973.75 Vie 30 oct 2026 · Hogar $598.82 · Karen $374.93 · deuda viva antes/después/recargado: Deuda viva $18,999.22 / Deuda viva $18,999.22 / Deuda viva $18,999.22"
+   },
+   {
+    "n": 4,
+    "accion": "Deshacer (la copia vuelve a la semilla)",
+    "pantalla": "P-18",
+    "toques": 4,
+    "ok": true,
+    "resultado": "fila antes de deshacer: Vie 30 oct 2026 · Pago de Kueski $973.75 Hogar $598.82 · Karen $374.93 · pagada / pendiente; después: Vie 30 oct 2026 · Pago de Kueski $973.75 Hogar $598.82 · Karen $374.93 · pagada / pendiente"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F4b-parte-pagada.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F4b-resumen-despues.jpg"
+  ]
+ },
+ {
+  "id": "F-5b",
+  "nombre": "Ver o generar un reporte (completo)",
+  "toquesTotal": 6,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: ☰",
+    "pantalla": "P-01 → G-01",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 2: «Reportes»",
+    "pantalla": "G-01 → P-23",
+    "toques": 2,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 3,
+    "accion": "Toques 3-4: «Generar reporte mensual» → «Generar» (mes oct-2026 parcial, sin Telegram)",
+    "pantalla": "P-23",
+    "toques": 4,
+    "ok": true,
+    "resultado": "aparece la fila «Mensual PDF · oct-2026» con «Sin envío», «Descargar PDF» y «Compartir»"
+   },
+   {
+    "n": 4,
+    "accion": "Toque 5: tocar la fila «Mensual · oct-2026»",
+    "pantalla": "P-23 → P-24",
+    "toques": 5,
+    "ok": true,
+    "resultado": "vista web: Mes del reporte oct-2026 (parcial) PDF del mes Generado el 12-oct-2026 09:44 Descargar PDF Compartir Resumen Ingreso $0.00 Plan $2,000.00 Real $1,197.64 Ahorro planeado $449.53 Restante $802.36 Sin asignar −$2,449.53 Usado 60 % Presupuesto por categoría Tabla "
+   },
+   {
+    "n": 5,
+    "accion": "Toque 6: «Descargar PDF» en la vista del mes",
+    "pantalla": "P-24",
+    "toques": 6,
+    "ok": true,
+    "resultado": "reporte-mensual-2026-10.pdf · 101331 bytes · cabecera %PDF-1.7"
+   },
+   {
+    "n": 6,
+    "accion": "Contrato: GET del PDF con la sesión (tipo y tamaño)",
+    "pantalla": "API",
+    "toques": 6,
+    "ok": true,
+    "resultado": "{\"it\":{\"id\":1,\"claves\":[\"id\",\"kind\",\"period_start_date\",\"period_end_date\",\"sha256\",\"size_bytes\",\"generated_at\",\"created_at\",\"updated_at\",\"delivery_status\"]}}"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F5b-fila-generada.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F5b-vista-web-del-mes.jpg"
+  ]
+ }
+]

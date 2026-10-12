@@ -7,6 +7,8 @@ import { AriaComponent, GridComponent, LegendComponent, MarkAreaComponent, MarkL
 import { SVGRenderer } from 'echarts/renderers'
 import { Boton } from '../../componentes/Boton'
 import { cn } from '../../componentes/utils'
+import { Vacio } from '../../componentes/Estados'
+import { textos } from '../../textos/es-MX'
 import { textosInicio as t } from './textos'
 echarts.use([BarChart, LineChart, AriaComponent, GridComponent, LegendComponent, MarkAreaComponent, MarkLineComponent, TooltipComponent, SVGRenderer])
 
@@ -27,6 +29,36 @@ function usarTema() {
   }, [])
   return n
 }
+type SerieOpcion = { type?: string; data?: unknown[]; label?: Record<string, unknown>; endLabel?: unknown; labelLayout?: unknown }
+const seriesDe = (op: echarts.EChartsCoreOption) => ([] as SerieOpcion[]).concat((op.series ?? []) as SerieOpcion[])
+const valorDe = (d: unknown): number | null => (typeof d === 'number' ? d : d && typeof d === 'object' && 'value' in d ? valorDe((d as { value: unknown }).value) : null)
+/** Todas las series en 0 o sin valor: estado vacío en lugar de ejes falsos con «$0» (DESIGN §7.7). */
+export const sinDatos = (op: echarts.EChartsCoreOption) => seriesDe(op).every((s) => (s.data ?? []).every((d) => !valorDe(d)))
+/** Ancho mínimo de cada columna para su etiqueta directa («$1,197.64» a 12 px); si no cabe, el valor queda en la
+ *  descripción emergente y en «Ver como tabla» (DESIGN §8.5). */
+const ANCHO_ETIQUETA_COLUMNA = 72
+/** Etiquetas sin encimarse (DESIGN §7.7): se recorren en vertical o se ocultan si chocan; con leyenda, los nombres al final
+ *  de la línea pasan a la leyenda; las de columnas angostas se quitan. En las líneas, la etiqueta del primer punto se alinea
+ *  a la izquierda y la del último a la derecha: así no invaden las etiquetas del eje Y ni salen por el borde (§8.5). */
+function sinEncimar(op: echarts.EChartsCoreOption, ancho: number): echarts.EChartsCoreOption {
+  const series = seriesDe(op)
+  const eje = (Array.isArray(op.xAxis) ? op.xAxis[0] : op.xAxis) as { data?: unknown[] } | undefined
+  const columnas = Math.max(1, series.filter((s) => s.type === 'bar').length)
+  const caben = ancho / Math.max(1, eje?.data?.length ?? 1) / columnas >= ANCHO_ETIQUETA_COLUMNA
+  const sinEtiqueta = (d: unknown) => (d && typeof d === 'object' && 'label' in d ? { ...(d as object), label: { ...(d as { label: object }).label, show: false } } : d)
+  const conLabel = (d: unknown): d is { label: object } => !!d && typeof d === 'object' && 'label' in d
+  const alineada = (d: unknown, i: number, n: number) => (n > 1 && (i === 0 || i === n - 1) && conLabel(d) ? { ...d, label: { ...d.label, align: i === 0 ? 'left' : 'right' } } : d)
+  return {
+    ...op,
+    series: series.map((s) => ({
+      ...s,
+      labelLayout: s.labelLayout ?? { hideOverlap: true, moveOverlap: 'shiftY' },
+      ...(s.endLabel && op.legend ? { endLabel: { show: false } } : {}),
+      ...(s.type === 'bar' && !caben ? { label: { ...s.label, show: false }, data: (s.data ?? []).map(sinEtiqueta) } : {}),
+      ...(s.type === 'line' ? { data: (s.data ?? []).map((d, i, todos) => alineada(d, i, todos.length)) } : {}),
+    })),
+  }
+}
 export interface Tabla { columnas: string[]; filas: string[][]; total?: string[] }
 interface Props { id: string; titulo: string; subtitulo: string; resumen: string; notas?: string[]; filtros?: ReactNode; opcion: () => echarts.EChartsCoreOption; tabla: Tabla; dependencias: unknown[] }
 export function FiguraGrafica({ id, titulo, subtitulo, resumen, notas, filtros, opcion, tabla, dependencias }: Props) {
@@ -37,12 +69,13 @@ export function FiguraGrafica({ id, titulo, subtitulo, resumen, notas, filtros, 
     if (comoTabla || !ref.current) return
     const g = echarts.init(ref.current, null, { renderer: 'svg' })
     const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches
-    g.setOption({ animation: !reducido, aria: { enabled: true, decal: { show: false } }, textStyle: { fontFamily: 'Inter, ui-sans-serif, system-ui', color: token('--ui-text-secondary') }, ...opcion() })
+    g.setOption({ animation: !reducido, aria: { enabled: true, decal: { show: false } }, textStyle: { fontFamily: 'Inter, ui-sans-serif, system-ui', color: token('--ui-text-secondary') }, ...sinEncimar(opcion(), ref.current.clientWidth) })
     const ro = new ResizeObserver(() => g.resize())
     ro.observe(ref.current)
     return () => { ro.disconnect(); g.dispose() }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comoTabla, tema, ...dependencias])
+  const vacia = sinDatos(opcion())
   const tablaHtml = (
     <div className={cn('overflow-x-auto', !comoTabla && 'sr-only')}>
       <table className="w-full text-small tabular-nums">
@@ -61,10 +94,11 @@ export function FiguraGrafica({ id, titulo, subtitulo, resumen, notas, filtros, 
         <span className="text-small text-text-default tabular-nums">{resumen}</span>
       </figcaption>
       {filtros}
-      {!comoTabla && <div ref={ref} aria-hidden className="h-60 w-full tabular-nums tablet:h-72" />}
-      {tablaHtml}
+      {vacia && <Vacio texto={textos.vacio.grafica} />}
+      {!vacia && !comoTabla && <div ref={ref} aria-hidden className="h-60 w-full tabular-nums tablet:h-72" />}
+      {!vacia && tablaHtml}
       {notas?.map((n) => <p key={n} className="text-caption text-text-secondary">{n}</p>)}
-      <Boton variante="enlace" className="w-max" aria-pressed={comoTabla} onClick={() => setComoTabla((x) => !x)}>{comoTabla ? t.acciones.verComoGrafica : t.acciones.verComoTabla}</Boton>
+      {!vacia && <Boton variante="enlace" className="w-max" aria-pressed={comoTabla} onClick={() => setComoTabla((x) => !x)}>{comoTabla ? t.acciones.verComoGrafica : t.acciones.verComoTabla}</Boton>}
     </figure>
   )
 }

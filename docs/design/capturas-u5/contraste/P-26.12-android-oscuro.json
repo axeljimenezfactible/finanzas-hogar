@@ -1,0 +1,310 @@
+{
+ "pantalla": "P-26.12",
+ "combinacion": "android-oscuro",
+ "alcance": "body",
+ "evaluados": 73,
+ "pares_unicos": 15,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 19,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#B7B8C0",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.09,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > input.h-9.rounded-md",
+     "texto": "Filtrar"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Agrupar"
+    },
+    {
+     "nodo": "div.grid.grid-cols-1 > article[data-prueba=\"regla-1\"] > label.flex.flex-col > input.h-9.w-full",
+     "texto": ""
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#B7B8C0",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.09,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.grid.grid-cols-1 > article[data-prueba=\"regla-1\"] > button.inline-flex.select-none",
+     "texto": "Editar partes"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.grid.grid-cols-1 > article[data-prueba=\"regla-2\"] > button.inline-flex.select-none",
+     "texto": "Editar partes"
+    },
+    {
+     "nodo": "section.flex.flex-col > div.grid.grid-cols-1 > article[data-prueba=\"regla-3\"] > button.inline-flex.select-none",
+     "texto": "Editar partes"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 18,
+   "ejemplos": [
+    {
+     "nodo": "article.flex.min-w-0 > div[data-prueba=\"seccion-12\"] > section.flex.flex-col > p.text-small.text-text-secondary",
+     "texto": "El comparador usará … como tope de esta "
+    },
+    {
+     "nodo": "thead > tr.border-b.border-border-divider > th.px-2.py-1 > button.inline-flex.h-9",
+     "texto": "Nombre visible"
+    },
+    {
+     "nodo": "thead > tr.border-b.border-border-divider > th.px-2.py-1 > button.inline-flex.h-9",
+     "texto": "Papel"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.375,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > article.flex.min-w-0 > a.flex.min-h-11",
+     "texto": "‹ Ajustes"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > div[data-prueba=\"seccion-12\"] > p.text-body.text-text-secondary",
+     "texto": "Quién participa en el dinero del hogar y"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#1E203A",
+   "bg": "#C9CFFF",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.471,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#003B5A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.592,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.grid.grid-cols-1 > article[data-prueba=\"regla-1\"] > span.self-start.rounded-sm",
+     "texto": "Reparto por defecto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 29,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"seccion-12\"] > section.flex.flex-col > div.flex.flex-wrap > h3.text-title-3.font-semibold",
+     "texto": "Personas"
+    },
+    {
+     "nodo": "tr.border-b.border-border-divider > td.px-2.py-1 > button.w-full.min-h-9 > span.inline-flex.h-6",
+     "texto": "Axel"
+    },
+    {
+     "nodo": "table.w-full.border-collapse > tbody > tr.border-b.border-border-divider > td.px-2.py-1",
+     "texto": "Titular"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9",
+     "texto": "Tabla"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.min-w-0 > button.inline-flex.h-9 > svg.lucide.lucide-table-2",
+     "texto": "lucide lucide-table-2 size-5"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": true,
+   "razon": 14.068,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "h2#ajustes-seccion",
+     "texto": "Personas y reparto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "section.flex.flex-col > div.flex.flex-col > div.flex.flex-wrap > select.h-9.rounded-md",
+     "texto": "Sin agrupar"
+    },
+    {
+     "nodo": "div.grid.grid-cols-1 > article[data-prueba=\"regla-1\"] > label.flex.flex-col > input.h-9.w-full",
+     "texto": "Hogar"
+    },
+    {
+     "nodo": "div.grid.grid-cols-1 > article[data-prueba=\"regla-2\"] > label.flex.flex-col > input.h-9.w-full",
+     "texto": "Karen"
+    }
+   ]
+  }
+ ]
+}

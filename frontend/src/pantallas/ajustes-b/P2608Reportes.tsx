@@ -122,7 +122,7 @@ export function Destinatarios({ n, recips, personas, recargar }: Pick<PropsFila,
           )
         })}
       </div>
-      {!elegidos.length && <span className="inline-flex items-center gap-1 self-start rounded-md bg-role-warning-surface px-2 py-1 text-caption text-text-default"><TriangleAlert aria-hidden className="size-4 text-role-warning" />{t.sinDestinatarios}</span>}
+      {!elegidos.length && <span className="inline-flex items-center gap-1 self-start rounded-md bg-role-warning-surface px-2 py-1 text-caption text-text-default"><TriangleAlert aria-hidden className="size-5 text-role-warning" />{t.sinDestinatarios}</span>}
       <IndicadorGuardado g={g} />
     </div>
   )
@@ -175,7 +175,7 @@ function TarjetaReporte(p: PropsFila) {
       </div>
       <p className="text-small tabular-nums text-text-secondary">{t.proximoEnvio(envioDeJob(p.job))}</p>
       {!p.n.is_enabled && <p className="text-caption text-text-secondary">{t.apagado}</p>}
-      {!(p.n.recipient_ids ?? []).length && <span className="inline-flex items-center gap-1 self-start rounded-md bg-role-warning-surface px-2 py-1 text-caption"><TriangleAlert aria-hidden className="size-4 text-role-warning" />{t.sinDestinatarios}</span>}
+      {!(p.n.recipient_ids ?? []).length && <span className="inline-flex items-center gap-1 self-start rounded-md bg-role-warning-surface px-2 py-1 text-caption"><TriangleAlert aria-hidden className="size-5 text-role-warning" />{t.sinDestinatarios}</span>}
       <IndicadorGuardado g={f.g} />
       <Boton tam="hoja" onClick={() => setAbierta(true)}>{t.editarFila}</Boton>
       <Hoja abierta={abierta} alCambiar={setAbierta} titulo={p.n.name} descripcion={t.frecuencias[p.n.code]}>

@@ -1,0 +1,386 @@
+{
+ "pantalla": "P-26.08",
+ "combinacion": "escritorio-oscuro",
+ "alcance": "body",
+ "evaluados": 117,
+ "pares_unicos": 18,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 12,
+  "ui_sin_limite_visible": 13,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#B7B8C0",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.09,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "input#param-reports.daily_send_time",
+     "texto": ""
+    },
+    {
+     "nodo": "select#param-reports.weekly_weekday",
+     "texto": "lunesmartesmiércolesjuevesviernessábadod"
+    },
+    {
+     "nodo": "input#param-reports.weekly_send_time",
+     "texto": ""
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#B7B8C0",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.09,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"seccion-08\"] > section.flex.flex-col > div.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Generar estado de cuenta de Karen"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#E5AE5B",
+   "bg": "#4C3000",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.091,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "td.border-b.border-border-divider > div.flex.flex-col > span.inline-flex.items-center > svg.lucide.lucide-triangle-alert",
+     "texto": "lucide lucide-triangle-alert lucide-aler"
+    },
+    {
+     "nodo": "td.border-b.border-border-divider > div.flex.flex-col > span.inline-flex.items-center > svg.lucide.lucide-triangle-alert",
+     "texto": "lucide lucide-triangle-alert lucide-aler"
+    },
+    {
+     "nodo": "td.border-b.border-border-divider > div.flex.flex-col > span.inline-flex.items-center > svg.lucide.lucide-triangle-alert",
+     "texto": "lucide lucide-triangle-alert lucide-aler"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "tr[data-prueba=\"reporte-daily_summary\"] > td.border-b.border-border-divider > label.inline-flex.min-h-11 > button.relative.inline-flex",
+     "texto": "Activo · Resumen diario"
+    },
+    {
+     "nodo": "tr[data-prueba=\"reporte-weekly_summary\"] > td.border-b.border-border-divider > label.inline-flex.min-h-11 > button.relative.inline-flex",
+     "texto": "Activo · Resumen semanal"
+    },
+    {
+     "nodo": "tr[data-prueba=\"reporte-monthly_report\"] > td.border-b.border-border-divider > label.inline-flex.min-h-11 > button.relative.inline-flex",
+     "texto": "Activo · Reporte mensual en PDF"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"seccion-08\"] > section.flex.flex-col > div.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Generar reporte mensual ahora"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#C9CFFF",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.936,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"seccion-08\"] > section.flex.flex-col > div.flex.flex-col > a.inline-flex.h-12",
+     "texto": "Abrir la vista web mensual · oct-2026"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 39,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
+     "texto": "Axel"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "01"
+    },
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "02"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 7.975,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-5 text-icon-de"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-5 text-icon-defa"
+    },
+    {
+     "nodo": "aside.sticky.top-0 > nav.flex.h-full > button[data-prueba=\"interruptor-tema\"] > svg.lucide.lucide-monitor",
+     "texto": "lucide lucide-monitor size-5 text-icon-d"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 8.08,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.w-6.text-caption",
+     "texto": "08"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#D1D2D8",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.427,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "nav.hidden.text-small > ol.flex.gap-1 > li > a.hover:underline",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "div.flex.flex-col > article.flex.min-w-0 > div[data-prueba=\"seccion-08\"] > p.text-body.text-text-secondary",
+     "texto": "Programa los tres reportes automáticos, "
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#1E203A",
+   "bg": "#C9CFFF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.471,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div[data-prueba=\"seccion-08\"] > section.flex.flex-col > div.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Generar reporte mensual ahora"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 9,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > button.absolute.top-2 > svg.lucide.lucide-chevrons-left",
+     "texto": "lucide lucide-chevrons-left size-6"
+    },
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > svg.lucide.lucide-user-round",
+     "texto": "lucide lucide-user-round lucide-user-2 s"
+    },
+    {
+     "nodo": "li > div.flex.items-center > button.inline-flex.size-8 > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-5 trans"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 36,
+   "ejemplos": [
+    {
+     "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",
+     "texto": "Finanzas Hogar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Buscar"
+    },
+    {
+     "nodo": "div.flex.min-h-dvh > aside.sticky.top-0 > nav.flex.h-full > button.flex.h-8",
+     "texto": "Registrar gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#4C3000",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.857,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "tr[data-prueba=\"reporte-daily_summary\"] > td.border-b.border-border-divider > div.flex.flex-col > span.inline-flex.items-center",
+     "texto": "Sin destinatarios: no llegará a nadie"
+    },
+    {
+     "nodo": "tr[data-prueba=\"reporte-weekly_summary\"] > td.border-b.border-border-divider > div.flex.flex-col > span.inline-flex.items-center",
+     "texto": "Sin destinatarios: no llegará a nadie"
+    },
+    {
+     "nodo": "tr[data-prueba=\"reporte-monthly_report\"] > td.border-b.border-border-divider > div.flex.flex-col > span.inline-flex.items-center",
+     "texto": "Sin destinatarios: no llegará a nadie"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#303258",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.902,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "ul.flex.flex-col > li > a.flex.min-h-11 > span.flex-1",
+     "texto": "Reportes y frecuencias"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.ml-auto.hidden > svg.lucide.lucide-search",
+     "texto": "lucide lucide-search size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 3,
+   "grande": true,
+   "razon": 14.068,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Ajustes"
+    },
+    {
+     "nodo": "h2#ajustes-seccion",
+     "texto": "Reportes y frecuencias"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#F2F2F4",
+   "bg": "#222325",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 14.068,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "input#param-reports.daily_send_time",
+     "texto": "21:30"
+    },
+    {
+     "nodo": "select#param-reports.weekly_weekday",
+     "texto": "domingo"
+    },
+    {
+     "nodo": "input#param-reports.weekly_send_time",
+     "texto": "19:00"
+    }
+   ]
+  }
+ ]
+}

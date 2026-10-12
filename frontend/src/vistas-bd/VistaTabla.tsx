@@ -57,9 +57,9 @@ export function VistaTabla<T>({ def, texto, agruparPor, seleccion }: { def: DefV
               const s = h.column.getIsSorted()
               return (
                 <th key={h.id} scope="col" aria-sort={s === 'asc' ? 'ascending' : s === 'desc' ? 'descending' : 'none'} className={cn('px-2 py-1 font-medium', p.alinear === 'derecha' ? 'text-right' : 'text-left')}>
-                  <button type="button" className="inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11" onClick={h.column.getToggleSortingHandler()}>
+                  {p.nombre ? <button type="button" className="inline-flex h-9 items-center gap-1 coarse:h-11 coarse:min-w-11" onClick={h.column.getToggleSortingHandler()}>
                     {p.nombre}{s === 'asc' && <ArrowUp aria-label={textos.vistas.ascendente} className="size-5" />}{s === 'desc' && <ArrowDown aria-label={textos.vistas.descendente} className="size-5" />}
-                  </button>
+                  </button> : <span className="sr-only">{textos.vistas.columnaAcciones}</span>}
                 </th>
               )
             })}

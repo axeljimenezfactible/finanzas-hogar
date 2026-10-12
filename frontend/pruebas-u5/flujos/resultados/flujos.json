@@ -1,0 +1,356 @@
+[
+ {
+  "id": "F-1",
+  "nombre": "Registrar gasto desde Inicio",
+  "toquesTotal": 3,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Partida: app abierta en Inicio (Resumen) con sesión (no cuenta toques)",
+    "pantalla": "P-01",
+    "toques": 0,
+    "ok": true,
+    "resultado": "tarjeta «Mes contra plan» antes: Mes contra plan $802.36 te quedan $1,197.64 de $2,000.00 · 60 % Faltan 20 días del mes Ver presupuesto"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 1: «+» de la barra inferior",
+    "pantalla": "P-01 → P-03",
+    "toques": 1,
+    "ok": true,
+    "resultado": "hoja abierta, monto enfocado, 3 categorías sugeridas visibles; tipo Gasto por defecto"
+   },
+   {
+    "n": 3,
+    "accion": "Teclear 185.50 (no cuenta)",
+    "pantalla": "P-03",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 4,
+    "accion": "Toque 2: chip de categoría «Despensa»",
+    "pantalla": "P-03",
+    "toques": 2,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 5,
+    "accion": "Toque 3: «Guardar»",
+    "pantalla": "P-03 → P-01",
+    "toques": 3,
+    "ok": true,
+    "resultado": "aviso «Gasto guardado · Deshacer»"
+   },
+   {
+    "n": 6,
+    "accion": "El gasto aparece en Inicio (tarjeta Mes contra plan y Detalle → Presupuesto por categoría)",
+    "pantalla": "P-01",
+    "toques": 3,
+    "ok": true,
+    "resultado": "tarjeta 1 después: Mes contra plan $709.61 te quedan $1,290.39 de $2,000.00 · 65 % Faltan 20 días del mes Ver presupuesto · Detalle: Despensa $1,290.39 de $2,000.00 (antes $1,197.64; +$92.75 = parte del hogar del reparto 50/50 de $185.50)"
+   },
+   {
+    "n": 7,
+    "accion": "El gasto aparece en la vista de tabla de Todos los gastos",
+    "pantalla": "P-02",
+    "toques": 3,
+    "ok": true,
+    "resultado": "fila: Sin valor No 12-oct-2026 Despensa $185.50 Axel Hogar $92.75 · Karen $92.75 Variable De contado —"
+   },
+   {
+    "n": 8,
+    "accion": "El servidor tiene el gasto (API)",
+    "pantalla": "API getExpenses",
+    "toques": 3,
+    "ok": true,
+    "resultado": "1 gasto de 18550 centavos"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F1-hoja-antes-de-guardar.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F1-inicio-con-el-gasto.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F1-tabla-todos-los-gastos.jpg"
+  ]
+ },
+ {
+  "id": "F-2",
+  "nombre": "Planear la semana de comidas",
+  "toquesTotal": 4,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: «Comidas» de la barra inferior",
+    "pantalla": "P-01 → P-10",
+    "toques": 1,
+    "ok": true,
+    "resultado": "plan en Detalle, semana 42 (12 al 18-oct-2026), semana vigente"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 2: casilla vacía Lun · Desayuno",
+    "pantalla": "P-10",
+    "toques": 2,
+    "ok": true,
+    "resultado": "selector de recetas abierto (tiempo Desayuno, día Lun 12 marcado)"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 3: receta «Avena con manzana y canela»",
+    "pantalla": "P-10",
+    "toques": 3,
+    "ok": true,
+    "resultado": "la casilla muestra «Axel y Ximena · Avena con manzana y canela»"
+   },
+   {
+    "n": 4,
+    "accion": "Toque 4: «Generar lista de compras»",
+    "pantalla": "P-10 → P-13",
+    "toques": 4,
+    "ok": true,
+    "resultado": "lista abierta: Semana 42 · 12-oct-2026 al 18-oct-2026 Semana vigente Terminar compra Total estimado $618.00 31 artículos · 0 comprados · neteada con el inventario Totales por tienda Mercados y tianguis $0.00 Bodega Aurrera · Vallejo $375.00 Walmart · Acueducto de Guadalupe $"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F2-plan-con-receta.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F2-lista-generada.jpg"
+  ]
+ },
+ {
+  "id": "F-3A",
+  "nombre": "Comparar canasta · ruta A (tarjeta «Mejor canasta»)",
+  "toquesTotal": 1,
+  "ok": false,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Observación (sin tocar): la tarjeta con la lista que generó F-2 (31 artículos de recetas, ninguno con precio en la semilla)",
+    "pantalla": "P-01",
+    "toques": 0,
+    "ok": true,
+    "resultado": "tarjeta: «Mejor canasta — Aún no hay precios para comparar Registrar precios» → /compras/productos (SIN precios que comparar: ruta A no puede terminar tal cual; ver hallazgo)"
+   },
+   {
+    "n": 2,
+    "accion": "Preparación de datos (API, base de prueba): agregar a la lista 3 artículos con precio (la semilla solo trae precios de los 36 artículos del 10-oct)",
+    "pantalla": "API",
+    "toques": 0,
+    "ok": true,
+    "resultado": "3 artículos agregados (productos 1, 2, 13); tarjeta ahora: «Mejor canasta — Aún no hay precios para comparar Registrar precios»"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 1: tarjeta «Mejor canasta»",
+    "pantalla": "P-01 → P-14",
+    "toques": 1,
+    "ok": false,
+    "resultado": "FALLA: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed · pantalla: Saltar al contenido Productos y precios Resumen Detalle Tendencias Capturar precio Buscar Tienda Todas Acueducto de Guadalupe Bodega Aurrera Vallejo Walmart Categoría Todas Frutas y verduras Carne y pollo (no especializada) Abarrotes Lácteos y huevo Salchichonería Panadería Limpieza del hogar Higiene personal Papel y desechables Frescura Todas Fresco Viejo Sin precio Fuente Todas Ticket Ticket (foto) Sitio PROFECO Manual Tabla Tablero Galería Sin agrupar Agrupar: Frescura Nombre Categoría Unidad"
+   },
+   {
+    "n": 4,
+    "accion": "Toque 2: pestaña «Detalle»",
+    "pantalla": "P-14",
+    "toques": null,
+    "ok": false,
+    "resultado": "no se ejecutó (paso previo falló)"
+   },
+   {
+    "n": 5,
+    "accion": "Toque 3: «Usar <tienda ganadora>»",
+    "pantalla": "P-14 → P-13",
+    "toques": null,
+    "ok": false,
+    "resultado": "no se ejecutó (paso previo falló)"
+   }
+  ],
+  "capturas": []
+ },
+ {
+  "id": "F-3A0",
+  "nombre": "Comparar canasta · ruta A con la lista vacía (semilla tal cual)",
+  "toquesTotal": 1,
+  "ok": false,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: tarjeta «Mejor canasta» (dice que compara la compra del 10-oct-2026)",
+    "pantalla": "P-01 → P-14",
+    "toques": 1,
+    "ok": false,
+    "resultado": "FALLA: la tarjeta decía «Mejor canasta Vallejo $3,094.50 $264.50 menos que Acueducto de Guadalupe Tu lista está vacía; se compara la compra del 10-oct-2026 36 de 36 artículos con precio Comparar canasta»; P-14 debía mostrar la comparación de esa canasta · pantalla: Saltar al contenido Comparar canasta Resumen Detalle Semana 42 · 12-oct-2026 al 18-oct-2026 Semana vigente Canasta Lista de compras · Semana 42 · 12-oct-2026 al 18-oct-2026 Compra del 10-oct-2026 · Bodega Aurrera · Vallejo · $3,094.50 La canasta no tiene artículos Inicio Comidas Compras Buscar"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F3A0-comparar-con-lista-vacia.jpg"
+  ]
+ },
+ {
+  "id": "F-3B",
+  "nombre": "Comparar canasta · ruta B (compra del 10-oct-2026)",
+  "toquesTotal": 5,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: «Compras» de la barra inferior",
+    "pantalla": "P-01 → P-13",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Toques 2-3: «⋯» → «Comparar tiendas»",
+    "pantalla": "P-13 → P-14",
+    "toques": 3,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 3,
+    "accion": "Toques 4-5: selector de canasta → «Compra del 10-oct-2026»",
+    "pantalla": "P-14",
+    "toques": 5,
+    "ok": true,
+    "resultado": "Resumen: Semana 42 · 12-oct-2026 al 18-oct-2026 Semana vigente Canasta Lista de compras · Semana 42 · 12-oct-2026 al 18-oct-2026 Compra del 10-oct-2026 · Bodega Aurrera · Vallejo · $3,094.50 Bodega Aurrera · Vallejo es la más barata: $3,094.50. Bodega Aurrera · Vallejo La más barata $3,094.50 36 de 36 con precio · cobertura 100 % 33 idénticos · 3 sustitutos · 0 sin precio · 0 viejos Walmart · Acueducto de Guadalupe $3,359.00 +$264.50 contra la más barata · +$100.50 en idénticos 36 de 36 con precio · cobertura 100 % 33 idénticos · 3 sustitutos · 0 sin precio · 0 viejos Artículos que gana cada tienda Bodega Aurrera · Vallejo 22 Walmart · Acueducto de Guadalupe 3 Empates: 8 · 36 artículos en total Simul"
+   },
+   {
+    "n": 4,
+    "accion": "Cifra FIRME (K46, Q2-47 = A): la pantalla da los totales de getBasketComparison con la compra del 10-oct-2026 como canasta base",
+    "pantalla": "P-14 = API",
+    "toques": 5,
+    "ok": true,
+    "resultado": "pantalla = API: más barata $3,094.50 (tienda 2); tienda 4: $3,359.00, +$264.50, +$100.50 en idénticos. U1 1.2 dice Walmart $3,233.00 (+$138.50): canon de CompareCarts, que la API no reproduce por Q2-47 = A"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F3B-comparar-compra-10-oct.jpg"
+  ]
+ },
+ {
+  "id": "F-4",
+  "nombre": "Ver un crédito y su calendario de pagos",
+  "toquesTotal": 3,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: tarjeta «Próximo pago»",
+    "pantalla": "P-01 → P-18",
+    "toques": 1,
+    "ok": true,
+    "resultado": "Resumen: deuda viva, disponible A $10,000.00 y B $6,905.50 con aviso «pendiente de confirmar», próximo pago $973.75"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 2: pestaña «Calendario»",
+    "pantalla": "P-18",
+    "toques": 2,
+    "ok": true,
+    "resultado": "primera fila: Vie 30 oct 2026 · Pago de Kueski $973.75 Hogar $598.82 · Karen $374.93 · pendiente"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 3: tocar el pago (vista previa)",
+    "pantalla": "P-18 → G-06",
+    "toques": 3,
+    "ok": true,
+    "resultado": "vista previa:  Pago programado Fecha Vie 30 oct 2026 Monto $973.75 Capital que se repone $773.63 Intereses $200.12 Fecha del pago Parte de Hogar $598.82 · Pendiente Monto de Hogar Marcar pagada la parte de Hogar Parte de Karen $374.93 · Pendiente Monto de Karen Marcar pagada la parte de Karen"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F4-calendario.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F4-vista-previa-pago.jpg"
+  ]
+ },
+ {
+  "id": "F-5",
+  "nombre": "Ver o generar un reporte",
+  "toquesTotal": 3,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: ☰ (Abrir menú)",
+    "pantalla": "P-01 → G-01",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 2: «Reportes»",
+    "pantalla": "G-01 → P-23",
+    "toques": 2,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 3: «Generar reporte mensual» (no hay fila «Mensual · sep-2026» que abrir)",
+    "pantalla": "P-23",
+    "toques": 3,
+    "ok": true,
+    "resultado": "Saltar al contenido Centro de reportes Estado de cuenta de Karen Ver reporte web Generar reporte mensual Próximos envíos Cambiar en Ajustes › Reportes y frecuencias Resumen diario 12-oct-2026 13:04 · último resultado: correcto Reporte mensual 1-nov-2026 08:00 Resumen semanal 12-oct-2026 13:04 · último resultado: correcto Reportes generados Tabla Calendario Sin agrupar Agrupar: Tipo Aún no hay reportes (el primero se genera el día 1) Avisos enviados Tabla Calendario Sin agrupar Agrupar: Tipo Agru"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F5-generar.jpg"
+  ]
+ },
+ {
+  "id": "F-6",
+  "nombre": "Capturar peso",
+  "toquesTotal": 3,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: «+» de la barra inferior",
+    "pantalla": "P-01 → P-03",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 2: «Peso» en el selector de tipo",
+    "pantalla": "P-03 → P-22",
+    "toques": 2,
+    "ok": true,
+    "resultado": "campo de peso; sin texto «Antes»"
+   },
+   {
+    "n": 3,
+    "accion": "Teclear 78.4 (no cuenta)",
+    "pantalla": "P-22",
+    "toques": 2,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 4,
+    "accion": "Toque 3: «Guardar»",
+    "pantalla": "P-22 → P-01",
+    "toques": 3,
+    "ok": true,
+    "resultado": "aviso «Peso guardado · Deshacer»"
+   },
+   {
+    "n": 5,
+    "accion": "Salud muestra el peso (IMC e historial)",
+    "pantalla": "P-21",
+    "toques": 3,
+    "ok": true,
+    "resultado": "Editar perfil Registrar peso Historial de peso Tabla Sin agrupar Agrupar: Persona Persona Fecha Peso IMC Acciones Axel 12-oct-2026 78.4 kg Sin dato"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F6-salud.jpg"
+  ]
+ }
+]

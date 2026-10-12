@@ -1,0 +1,222 @@
+{
+ "pantalla": "P-03",
+ "combinacion": "escritorio-claro",
+ "alcance": "[role=dialog]",
+ "evaluados": 19,
+ "pares_unicos": 11,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 5,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "campo",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "input#_r_c_",
+     "texto": ""
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "form.flex.flex-col > fieldset.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Despensa"
+    },
+    {
+     "nodo": "form.flex.flex-col > fieldset.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Comida fuera"
+    },
+    {
+     "nodo": "form.flex.flex-col > fieldset.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Papel"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > div.mb-3.grid > button.h-9.rounded-t-sm",
+     "texto": "Ingreso"
+    },
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > div.mb-3.grid > button.h-9.rounded-t-sm",
+     "texto": "Peso"
+    },
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > div.mb-3.grid > button.h-9.rounded-t-sm",
+     "texto": "Ticket"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.161,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > div.mb-3.grid > button.h-9.rounded-t-sm",
+     "texto": "Gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex-1.overflow-y-auto > form.flex.flex-col > div.flex.flex-col > label.text-small.font-medium",
+     "texto": "Monto"
+    },
+    {
+     "nodo": "div.flex-1.overflow-y-auto > form.flex.flex-col > fieldset.flex.flex-col > legend.mb-1.text-small",
+     "texto": "Categoría"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > form.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Más opciones"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > form.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Guardar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > form.flex.flex-col > button.inline-flex.select-none",
+     "texto": "Guardar"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div#radix-_r_3_ > div.flex-1.overflow-y-auto > div.mb-3.grid > button.h-9.rounded-t-sm",
+     "texto": "Gasto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "h2#radix-_r_4_",
+     "texto": "Registrar"
+    },
+    {
+     "nodo": "form.flex.flex-col > fieldset.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Despensa"
+    },
+    {
+     "nodo": "form.flex.flex-col > fieldset.flex.flex-col > div.flex.flex-wrap > button.inline-flex.items-center",
+     "texto": "Comida fuera"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div#radix-_r_3_ > div.flex.items-center > button.inline-flex.size-9 > svg.lucide.lucide-x",
+     "texto": "lucide lucide-x size-6"
+    }
+   ]
+  }
+ ]
+}

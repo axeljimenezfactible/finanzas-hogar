@@ -2,6 +2,8 @@
 
 Sistema web de control financiero del hogar de Axel y Ximena. Corre en la máquina de casa, solo en la red local, y se usa desde el navegador del escritorio y como aplicación instalada (PWA) en sus teléfonos Android.
 
+**Estado al 12-oct-2026, WF-3b (verificación visual y C3):** las 41 pantallas de U1 ya tienen sus **164 capturas reales**: la aplicación en marcha con la semilla, en Android 412×915 táctil y en escritorio 1440×900, en claro y en oscuro. Cada captura trae su axe-core (0 violaciones serias o críticas), su contraste medido en el DOM (20,919 pares y 0 bajo umbral) y sus hosts (solo `finanzas.local`). Todo está versionado en `docs/design/capturas-u5/`. Los flujos de U1 se probaron de extremo a extremo contra el servidor real, en copias aisladas de la base. También se probó la cola sin conexión (U5-13: sin duplicados y con reenvío idempotente). Las 111 cifras de pantalla cuadran con el oráculo (C3-09). **U5 no quedó aprobado tras 3 rondas:** quedan 2 hallazgos medios. Uno es la barra lateral sin iconos de sección. El otro, la marca «capturado» en C3, ya está resuelto en C3 v1.2. **C3 v1.2 sigue sin firma tras 3 rondas:** pasan 7 de 8 flujos y F-3 «Comparar canasta» por la ruta A falla con la semilla, porque la lista del plan no tiene precios de ingredientes. Los dos casos se escalaron a Axel con opciones; la recomendada es una corrección y una verificación acotadas. Dentro del flujo se cerraron los 2 medios que el frontend arrastraba de WF-3a bis. La semilla aplicó las decisiones PROVISIONALES del orquestador: gastos proyectados y precios de Walmart. `make verify-wf3` (ahora con `verify-u5`, la evidencia U5 sin servidor) y `make verify-all` pasan. Hay 8 bloqueos nuevos (137 archivos en total). Para la puerta 4 quedan pendientes S6-11 en los Android (Axel), S7-07 con envío real (orquestador) y los valores K31. Detalle: [`docs/estado/wf3/INTEGRACION-wf3b.md`](docs/estado/wf3/INTEGRACION-wf3b.md).
+
 **Estado al 12-oct-2026, WF-3a bis (ronda acotada de corrección del frontend):** el servidor Go atiende las 216 operaciones de C1 v1.4, y las 216 pasan su prueba de contrato. Corre por HTTPS (mkcert) solo en la red de casa, en `https://finanzas.local:8443`, con la semilla real más una **semilla de desarrollo** (`finanzas semilla --desarrollo`, con montos de las fixtures del oráculo S2): 5 de las 6 tarjetas de Inicio ya muestran cifras. El backend quedó **aprobado**. El frontend corrigió el hallazgo alto y los medios de la ronda 3: objetivos táctiles, gráficas accesibles, barra inferior, edición en grupo con `Ctrl+/` y las necesidades de U1 que no tenían llamada. Aun así, **no quedó aprobado tras 5 rondas**: le quedan 2 hallazgos medios (fechas de P-10 y errores sin aviso en Ajustes 01–07) y varios bajos, ninguno toca cifras. Playwright con la API simulada da 230 pruebas que pasan, 4 omitidas y 1 que falla en cada corrida completa (`correccion-bis.escritorio.spec.ts:79`). Por esa prueba, `make verify-wf3` queda en rojo; `make verify-all` pasa. C3 v0.95 sigue sin firma: 42 de 42 pantallas implementadas y probadas, 0 capturadas (eso es WF-3b). Hay 4 bloqueos nuevos (129 archivos en total). Detalle: [`docs/estado/wf3/INTEGRACION-wf3a.md`](docs/estado/wf3/INTEGRACION-wf3a.md), §15 «WF-3a bis».
 
 **Estado al 12-oct-2026, P2d (K53):** la aplicación no leerá sitios de tiendas: se retiró la lectura asistida, y un agente externo (la sesión de Claude Code de Axel con Claude in Chrome) meterá precios, productos y recetas por la API (C1 v1.4), con el peso de esos datos PROVISIONAL hasta la puerta 4 (`docs/estado/bloqueos/S5-agente-externo.md`).
@@ -74,7 +76,7 @@ finanzas-hogar/
                                      compara.py, fixtures/s2..s5 y salidas/
 ```
 
-`docs/design/capturas-u5/` sigue vacía (la llena WF-3b). `datos/certs/` (certificado de mkcert), `datos/dev/` y `datos/*.db` (servidor y base de desarrollo) nunca entran al repositorio. `datos/tmp/` es solo para temporales de verificación y nunca entra al repositorio; las descargas crudas (`datos/semilla/*/raw/`, ≈ 13 GB) y la base de PROFECO (`profeco/db/`, ≈ 17 GB) tampoco.
+`docs/design/capturas-u5/` guarda las 164 capturas de U5 con su evidencia (`axe/`, `contraste/`, `evidencia/`, `hosts.json`; WF-3b) y sí se versiona; las salidas de Playwright (`test-results/`) no. `datos/certs/` (certificado de mkcert), `datos/dev/` y `datos/*.db` (servidor y base de desarrollo) nunca entran al repositorio. `datos/tmp/` es solo para temporales de verificación y nunca entra al repositorio; las descargas crudas (`datos/semilla/*/raw/`, ≈ 13 GB) y la base de PROFECO (`profeco/db/`, ≈ 17 GB) tampoco.
 
 ## Versiones vigentes de los artefactos (11-oct-2026, puerta 2)
 
@@ -127,6 +129,15 @@ Detalle por agente, criterios S6 y S7, cobertura, operación → prueba, pantall
 - **C3 v0.9** (`docs/contratos/C3-integracion.md`): borrador sin firma generado por `frontend/scripts/c3-integracion.py`. La firma va en WF-3b.
 - **Operación** (`ops/`): servidor de desarrollo con `bash ops/dev-run.sh` y `bash ops/dev-stop.sh`, mkcert y el borrador del runbook para WF-4.
 
+## Qué entregó WF-3b
+
+Criterios U5 y C3 uno por uno, rondas, hallazgos abiertos, bloqueos, pendientes de la puerta 4, valores K31 y consumo: [`docs/estado/wf3/INTEGRACION-wf3b.md`](docs/estado/wf3/INTEGRACION-wf3b.md). En corto:
+
+- **Capturas U5** (`docs/design/capturas-u5/`): 164 PNG, más `axe/`, `contraste/`, `evidencia/` y `hosts.json`, generados por `frontend/playwright.u5.config.ts` (`frontend/pruebas-u5/`) contra el servidor real. Registro de la revisión: `docs/estado/U5-revision.md`, 3 rondas.
+- **Flujos de extremo a extremo** (`frontend/pruebas-u5/flujos/`): F-1 a F-8, la cola sin conexión (U5-13) y C3-09. Corren contra una copia aislada de la base de desarrollo (`servidor-prueba.sh`, `127.0.0.1:8444`) y guardan sus capturas y resultados en JSON.
+- **C3 v1.2** (`docs/contratos/C3-integracion.md`): 41 pantallas implementadas, probadas y capturadas; 7 de 8 flujos; sin firma.
+- **Semilla**: gastos proyectados de la fixture S2 (devengado contra efectivo P1 a P6 = `model.json`) y 36 precios de Walmart, PROVISIONAL (`WF3a-bis-semilla-dev`).
+
 ## Cómo correr la verificación
 
 Desde la raíz del repositorio:
@@ -138,7 +149,9 @@ make verify-s1       # backend/db/tools/s1_verifica.py: esquema 1.3, oráculo, n
 make verify-u1       # docs/design/tools/verificar_u1.py: U1 1.2
 make verify-criterios  # docs/criterios/tools/verif_final.sh: los 18 archivos de criterios
 make verify-all      # todo lo anterior
-make verify-wf3      # WF-3: Go, cobertura K25, contrato C1 e interfaz (build, rutas, hosts y Playwright; ~5 min; todavía fuera de verify-all)
+make verify-wf3      # WF-3: Go, cobertura K25, contrato C1, interfaz (build, rutas, hosts y Playwright; ~5 min) y verify-u5; fuera de verify-all
+make verify-u5       # U5 sin servidor sobre la evidencia versionada: U5-01, U5-03, U5-04, U5-08 y U5-11 (segundos)
+make verify-u5-servidor  # U5 con bash ops/dev-run.sh corriendo: regenera las 164 capturas, axe y contraste (~9 min) y luego verify-u5
 make verify-wf3-final  # verify-wf3 + secretos (S6-13), respaldo (S6-09) y servidor (S6-11, S6-12, S6-14); necesita bash ops/dev-run.sh
 make clean           # borra los temporales si una verificación falló a medias
 ```
@@ -175,6 +188,7 @@ Para la colorimetría sin make, copia el script a un árbol espejo (`<espejo>/do
 4. **Puerta 2 (aplicada el 11-oct-2026, flujo P2c).** Axel contestó las 98 preguntas en modo «lo recomendado + excepciones», sin excepciones (`docs/estado/puerta2/RESPUESTAS.md`; `docs/plan/decisiones.md` §K46 a §K52). P2c aplicó: esquema 1.4, C1 v1.3, contratos S2 1.3, S3 1.5, S4 1.5 y S5 1.5, motores S2 y S5, U3 1.5, U4 1.6 y criterios 1.3. Lo que no se aprobó, los bloqueos y los pendientes para WF-3 y la Pista 3 están en [`docs/estado/p2c/INTEGRACION.md`](docs/estado/p2c/INTEGRACION.md). Sigue P2d (registrar K53, la aplicación no lee sitios de tiendas) y después WF-3; el orquestador se detiene en la puerta 4.
 5. **Pista 3 (Claude Design por Artifacts), la ejecuta el orquestador (K45, sustituye a K35).** Sin navegador y sin subir archivos: los agentes escriben en disco el sistema de diseño y los artboards de todas las pantallas de U1 con cifras sintéticas, y solo el orquestador los publica con la herramienta Artifact; hay hasta 3 vueltas revisadas por agentes, cada una copiada en `docs/design/salida/iter-N/`, y la exportación final va en `docs/design/salida/final/`. `docs/design/entrada/` queda como brief de referencia. La puerta 3 es al final: Axel abre la URL privada del lienzo y aprueba la referencia visual. Plan técnico: [`docs/design/pista3-plan.md`](docs/design/pista3-plan.md). Después vienen WF-3 (backend, frontend y verificación visual; puerta 4) y WF-4 (operación, semilla, seguridad e informe final).
 6. **WF-3a «Construcción» (integrado el 12-oct-2026).** Servidor Go, frontend y PWA, pruebas de contrato y C3 v0.9 en borrador: [`docs/estado/wf3/INTEGRACION-wf3a.md`](docs/estado/wf3/INTEGRACION-wf3a.md). **Siguiente: WF-3b**, con las capturas de U5, los flujos F-1 a F-6 contra el servidor y la firma de C3. WF-3a bis (12-oct-2026) ya corrigió el frontend y aplicó las decisiones del orquestador sobre `docs/estado/bloqueos/C3-matriz.md` (§15 de la integración). Antes de WF-3b falta decidir si se cierran los 2 medios que quedan y la prueba que falla en la corrida completa (§15.8). Después vienen la puerta 4 (valores K31, §9) y WF-4 (instalación con systemd).
+7. **WF-3b «Verificación visual y C3» (integrado el 12-oct-2026).** Capturas U5, flujos contra el servidor real y C3 v1.2: [`docs/estado/wf3/INTEGRACION-wf3b.md`](docs/estado/wf3/INTEGRACION-wf3b.md). **Siguiente: puerta 4.** Axel decide los dos escalamientos de ronda 3, `docs/estado/bloqueos/U5-ronda3-escalamiento.md` y `C3-ronda3-escalamiento.md` (se recomienda la A en los dos), prueba S6-11 en sus Android y confirma los valores K31. El orquestador hace S7-07 con el envío real por Telegram. Después viene WF-4, la instalación con systemd.
 
 Lo que WF-1 debe tomar de los flujos anteriores (insumos, pendientes y solicitudes abiertas) está en [`docs/estado/wf0/INTEGRACION.md`](docs/estado/wf0/INTEGRACION.md) §5 y §7, [`docs/estado/p1/INTEGRACION.md`](docs/estado/p1/INTEGRACION.md) §7 y [`docs/estado/p1c/INTEGRACION.md`](docs/estado/p1c/INTEGRACION.md) §7.
 

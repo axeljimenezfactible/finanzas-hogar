@@ -34,7 +34,7 @@ export function HojaRegistro() {
       <div role="tablist" aria-label={textos.registro.titulo} className="mb-3 grid grid-cols-4 gap-1 rounded-md bg-surface-hover-subtle p-1">
         {TIPOS.map((t) => (
           <button key={t} role="tab" type="button" aria-selected={registro === t} onClick={() => cambiar({ registro: t })}
-            className={cn('h-9 rounded-sm text-small coarse:h-11', registro === t ? 'bg-surface-card font-medium shadow-1' : 'text-text-secondary hover:bg-surface-hover')}>{textos.registro.tipos[t]}</button>
+            className={cn('h-9 rounded-t-sm border-b-2 text-small coarse:h-11', registro === t ? 'border-border-selected bg-surface-card font-medium shadow-1' : 'border-transparent text-text-secondary hover:bg-surface-hover')}>{textos.registro.tipos[t]}</button>
         ))}
       </div>
       {registro === 'gasto' && <FormGasto refMonto={ref} alTerminar={cerrar} />}

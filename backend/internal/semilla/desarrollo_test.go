@@ -49,7 +49,7 @@ func devCounts(t *testing.T, db *sql.DB) map[string]int {
 
 func TestDesarrolloIdempotente(t *testing.T) {
 	db := sembrada(t, true)
-	want := map[string]int{"category": 3, "budget": 1, "planned_item": 2, "income": 0, "savings_goal": 1, "savings_movement": 1, "price": 72, "meal_plan_entry": 12}
+	want := map[string]int{"category": 4, "budget": 1, "planned_item": 2, "income": 0, "savings_goal": 1, "savings_movement": 1, "price": 72, "meal_plan_entry": 12}
 	before := devCounts(t, db)
 	for k, w := range want {
 		if before[k] != w {
@@ -76,9 +76,9 @@ func TestDesarrolloIdempotente(t *testing.T) {
 	if n := one[int](t, db, `SELECT count(*) FROM planned_item WHERE description NOT LIKE '%(desarrollo)'`); n != 0 {
 		t.Errorf("%d partidas sin la marca (desarrollo)", n)
 	}
-	// La semilla real no se tocó: dos gastos, no.
-	if n := one[int](t, db, `SELECT count(*) FROM expense`); n != 1 {
-		t.Errorf("expense: %d (la semilla real trae 1)", n)
+	// La semilla real no se tocó: el overlay no agrega gastos (la real trae 6: la despensa del 10-oct y los 5 proyectados).
+	if n := one[int](t, db, `SELECT count(*) FROM expense`); n != 6 {
+		t.Errorf("expense: %d (la semilla real trae 6)", n)
 	}
 }
 
@@ -295,21 +295,12 @@ func TestDesarrolloCotejoConElOraculo(t *testing.T) {
 	if got != base {
 		t.Errorf("el overlay movió getAccrualVsCash:\n con overlay %v\n solo real   %v", got, base)
 	}
-	// 2. P1 y P2 son las cifras de model.json. P3 a P6 NO lo son ni con la semilla real sola (hallazgo, no del overlay):
-	//    las despensas 2 a 4 no traen su gasto (devengo a 2 meses) ni el papel de contado. Bloqueo WF3a-bis-semilla-dev, punto 4.
-	for i := 0; i < 2; i++ {
+	// 2. P1 a P6 son las cifras de model.json (R-45…R-50): desde WF-3b la semilla real trae los gastos proyectados 2 a 6
+	//    (bloqueo WF3a-bis-semilla-dev, punto 4, opción a), así que ya no hay hallazgo en P3 a P6.
+	for i := 0; i < 6; i++ {
 		if got[i] != want[i] {
 			t.Errorf("P%d = %v; model.json = %v", i+1, got[i], want[i])
 		}
-	}
-	diff := 0
-	for i := 2; i < 6; i++ {
-		if got[i] != want[i] {
-			diff++
-		}
-	}
-	if diff != 4 {
-		t.Errorf("se esperaba el hallazgo conocido (P3 a P6 distintas de model.json con la semilla real); hay %d distintas. Si ya cuadran, quita este caso", diff)
 	}
 	h := readModelJSON(t)["horizonte"].(map[string]any)
 	ld, err := mf.LiveDebt(in, mf.NewDate(2027, 4, 10))

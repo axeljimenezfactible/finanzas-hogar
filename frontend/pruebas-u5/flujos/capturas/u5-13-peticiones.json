@@ -1,0 +1,27 @@
+[
+ {
+  "ruta": "/api/v1/expenses",
+  "Idempotency-Key": "1029fb4f-3fb9-4fd8-8cc1-94de96030665",
+  "captured_at": "2026-10-12T13:02:10-06:00"
+ },
+ {
+  "ruta": "/api/v1/weight-entries",
+  "Idempotency-Key": "8dafc373-fcc2-49b2-b7d4-25883980a062",
+  "captured_at": "2026-10-12T13:02:10-06:00"
+ },
+ {
+  "ruta": "/api/v1/expenses",
+  "Idempotency-Key": "1029fb4f-3fb9-4fd8-8cc1-94de96030665",
+  "captured_at": "2026-10-12T13:02:10-06:00"
+ },
+ {
+  "ruta": "/api/v1/expenses",
+  "Idempotency-Key": "d4d69b86-8ab3-4a07-8c0c-87da4f79d8c1",
+  "captured_at": "2026-10-12T13:02:20-06:00"
+ },
+ {
+  "ruta": "/api/v1/expenses",
+  "Idempotency-Key": "d4d69b86-8ab3-4a07-8c0c-87da4f79d8c1",
+  "captured_at": "2026-10-12T13:02:20-06:00"
+ }
+]

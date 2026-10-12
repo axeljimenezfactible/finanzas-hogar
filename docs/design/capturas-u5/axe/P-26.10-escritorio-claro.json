@@ -1,0 +1,37 @@
+{
+ "pantalla": "P-26.10",
+ "nombre": "Apariencia",
+ "combinacion": "escritorio-claro",
+ "url": "/ajustes/10",
+ "etiquetas": [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa"
+ ],
+ "version_axe": "4.13.0",
+ "resumen": {
+  "violaciones": 0,
+  "serias_o_criticas": 0,
+  "incompletos": 1,
+  "pasadas": 24,
+  "no_aplican": 39
+ },
+ "violations": [],
+ "incomplete": [
+  {
+   "id": "aria-prohibited-attr",
+   "impact": "serious",
+   "help": "Elements must only use permitted ARIA attributes",
+   "nodes": [
+    {
+     "target": [
+      "div[aria-label=\"Muestra de tarjeta\"]"
+     ],
+     "html": "<div class=\"flex-1\" aria-label=\"Muestra de tarjeta\">"
+    }
+   ]
+  }
+ ]
+}

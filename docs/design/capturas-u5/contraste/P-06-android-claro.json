@@ -1,0 +1,318 @@
+{
+ "pantalla": "P-06",
+ "combinacion": "android-claro",
+ "alcance": "body",
+ "evaluados": 46,
+ "pares_unicos": 15,
+ "bajo_umbral": 0,
+ "indeterminados": 0,
+ "excluidos": {
+  "deshabilitados": 0,
+  "ui_sin_limite_visible": 8,
+  "graficos_marcas_no_medibles_en_dom": 0
+ },
+ "bajos": [],
+ "indeterminados_detalle": [],
+ "pares": [
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#808189",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.715,
+   "elementos": 6,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full",
+     "texto": "Ingreso del mes$24,500.00"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full",
+     "texto": "Plan de gasto$2,000.00"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full",
+     "texto": "Ahorro planificado$449.53"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#457723",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": true,
+   "razon": 4.796,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.whitespace-nowrap.text-title-2",
+     "texto": "$24,500.00"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#00767B",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": true,
+   "razon": 4.844,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.whitespace-nowrap.text-title-2",
+     "texto": "$449.53"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#F2F2F4",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.035,
+   "elementos": 7,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.flex.items-center",
+     "texto": "Ingreso del mes"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.flex.items-center",
+     "texto": "Plan de gasto"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.flex.items-center",
+     "texto": "Ahorro planificado"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#A04B20",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": true,
+   "razon": 5.333,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.whitespace-nowrap.text-title-2",
+     "texto": "$1,197.64"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 9,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Detalle"
+    },
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Tendencias"
+    },
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Calendario"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#66676E",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 4,
+   "ejemplos": [
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-house",
+     "texto": "lucide lucide-house lucide-home size-6"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-utensils",
+     "texto": "lucide lucide-utensils lucide-fork-knife"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > a.group.flex > span[data-prueba=\"pildora\"] > svg.lucide.lucide-shopping-cart",
+     "texto": "lucide lucide-shopping-cart size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "seleccion",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Resumen"
+    }
+   ]
+  },
+  {
+   "tipo": "ui",
+   "subtipo": "boton",
+   "fg": "#5D609F",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.532,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Ajustar presupuesto"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
+     "texto": "Ajustar presupuesto"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#FFFFFF",
+   "bg": "#5D609F",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.77,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none > svg.lucide.lucide-sliders-horizontal",
+     "texto": "lucide lucide-sliders-horizontal size-5"
+    },
+    {
+     "nodo": "nav.fixed.inset-x-0 > button[data-prueba=\"boton-mas\"] > span.inline-flex.size-10 > svg.lucide.lucide-plus",
+     "texto": "lucide lucide-plus size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": true,
+   "razon": 10.76,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.whitespace-nowrap.text-title-2",
+     "texto": "$2,000.00"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.whitespace-nowrap.text-title-2",
+     "texto": "$22,050.47"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > button.flex.w-full > span.whitespace-nowrap.text-title-2",
+     "texto": "$802.36"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 3,
+   "ejemplos": [
+    {
+     "nodo": "header.flex.flex-col > div.flex.items-center > button.inline-flex.size-11 > svg.lucide.lucide-menu",
+     "texto": "lucide lucide-menu size-6"
+    },
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.items-center > button.inline-flex.select-none > svg.lucide.lucide-chevron-left",
+     "texto": "lucide lucide-chevron-left size-6"
+    },
+    {
+     "nodo": "div.flex.flex-wrap > div.flex.items-center > button.inline-flex.select-none > svg.lucide.lucide-chevron-right",
+     "texto": "lucide lucide-chevron-right size-6"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 3,
+   "grande": true,
+   "razon": 11.533,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-h-dvh > div.flex.min-w-0 > header.flex.flex-col > h1.text-title-1.font-bold",
+     "texto": "Presupuesto del mes"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#36363A",
+   "bg": "#FAFAFB",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 11.533,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.min-w-0 > header.flex.flex-col > div.-mb-px.flex > a.inline-flex.h-9",
+     "texto": "Resumen"
+    },
+    {
+     "nodo": "div.flex.flex-col > div.flex.flex-wrap > div.flex.items-center > span.min-w-24.text-center",
+     "texto": "oct-2026"
+    },
+    {
+     "nodo": "div.flex.flex-col > section.flex.flex-col > div.flex.flex-wrap > h2.text-title-3.font-semibold",
+     "texto": "Quincenas del mes"
+    }
+   ]
+  }
+ ]
+}

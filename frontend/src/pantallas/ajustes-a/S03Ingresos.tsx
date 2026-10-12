@@ -11,7 +11,7 @@ import { ConDatos, Vacio } from '../../componentes/Estados'
 import { Hoja } from '../../componentes/Hoja'
 import { abrirRegistro } from '../../shell/estado'
 import { textos } from '../../textos/es-MX'
-import { Bloque, Editable, Fila, textoDinero, vDinero, vFecha, type Previa } from './comunes'
+import { Bloque, Editable, ErrorGuardado, Fila, textoDinero, textoFallo, vDinero, vFecha, type Previa } from './comunes'
 import { comoLista } from './comunes'
 import { t } from './textos'
 const g = t.ingresos
@@ -56,16 +56,18 @@ function NuevoIngreso({ abierta, alCambiar, titular, alCrear }: { abierta: boole
   const conexion = useConexion()
   const [v, setV] = useState({ a: '', b: '', desde: hoyISO() })
   const [err, setErr] = useState<Record<string, string | null>>({})
-  const [clave] = useState(nuevaClave)
+  const [fallo, setFallo] = useState<string | null>(null)
+  const [clave, setClave] = useState(nuevaClave)
   const guardar = async () => {
     const e = { a: vDinero(true)(v.a), b: vDinero(true, true)(v.b), desde: vFecha()(v.desde) }
-    setErr(e)
+    setErr(e); setFallo(null)
     if (Object.values(e).some(Boolean) || !titular) return
-    await pedir('post', '/api/v1/planned-items', { idempotencia: clave, cuerpo: { kind: 'income', description: g.concepto, person_id: titular, amount_cents: aCentavos(v.a) ?? 0, ...(v.b ? { second_half_amount_cents: aCentavos(v.b) ?? 0 } : {}), frequency: 'fortnightly', interval_count: 1, start_date: v.desde } })
-    alCambiar(false); alCrear()
+    try { await pedir('post', '/api/v1/planned-items', { idempotencia: clave, cuerpo: { kind: 'income', description: g.concepto, person_id: titular, amount_cents: aCentavos(v.a) ?? 0, ...(v.b ? { second_half_amount_cents: aCentavos(v.b) ?? 0 } : {}), frequency: 'fortnightly', interval_count: 1, start_date: v.desde } }) }
+    catch (x) { setFallo(textoFallo(x)); return }
+    setClave(nuevaClave()); alCambiar(false); alCrear()
   }
   return (
-    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={g.capturar} pie={<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div>}>
+    <Hoja abierta={abierta} alCambiar={alCambiar} titulo={g.capturar} pie={<div className="flex flex-col gap-2">{fallo && <ErrorGuardado texto={fallo} alReintentar={() => void guardar()} />}<div className="flex justify-end gap-2"><Boton onClick={() => alCambiar(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => void guardar()}>{textos.app.guardar}</Boton></div></div>}>
       <form className="flex flex-col gap-3" onKeyDown={(e) => { if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); void guardar() } }} onSubmit={(e) => { e.preventDefault(); void guardar() }}>
         <Campo etiqueta={g.q15} inputMode="decimal" value={v.a} error={err.a ?? undefined} onChange={(e) => setV({ ...v, a: e.target.value })} />
         <Campo etiqueta={g.q30} inputMode="decimal" value={v.b} error={err.b ?? undefined} ayuda={g.igual} onChange={(e) => setV({ ...v, b: e.target.value })} />

@@ -23,6 +23,22 @@ test('P-10 Plan de la semana: semana por defecto, cuadrícula, casillas y totale
   await expect(page.getByText('$68.76').first()).toBeVisible()
   await expect(page.getByText('20 de 21')).toBeVisible()
 })
+
+test('P-10 Tendencias (core R5-01): las semanas se rotulan con fechaConDia, «Lun 5 oct 2026», en el eje y en «Ver como tabla»', async ({ page }) => {
+  await abrir(page, '/comidas')
+  await page.getByRole('tab', { name: 'Tendencias' }).click()
+  for (const titulo of ['Costo semanal de comidas', 'kcal promedio por día contra la meta']) {
+    const figura = page.locator('figure').filter({ hasText: titulo })
+    await expect(figura.locator('svg text', { hasText: 'Lun 5 oct 2026' }).first()).toBeAttached()
+    await figura.getByText('Ver como tabla').click()
+    await expect(figura.getByRole('rowheader')).toHaveText(['Lun 5 oct 2026', 'Lun 12 oct 2026'])
+  }
+  // Ningún formato híbrido «Lun 5 oct-2026» ni ISO en la vista, tampoco dentro del SVG.
+  const texto = await page.locator('main').evaluate((m) => m.textContent ?? '')
+  expect(texto).not.toMatch(/\b(Lun|Mar|Mié|Jue|Vie|Sáb|Dom) \d{1,2} [a-z]{3}-\d{4}/)
+  expect(texto).not.toMatch(/\b\d{4}-\d{2}-\d{2}\b/)
+  await sinDesborde(page)
+})
 test('P-11 Recetario: galería con costo y kcal por porción', async ({ page }) => {
   await abrir(page, '/comidas/recetas')
   await expect(page.getByText('Yogur con manzana y avena').first()).toBeVisible()

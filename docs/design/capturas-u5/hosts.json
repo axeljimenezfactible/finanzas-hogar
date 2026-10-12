@@ -1,0 +1,502 @@
+{
+ "criterio": "U5-08",
+ "unicos": [
+  "finanzas.local:8443"
+ ],
+ "total_unicos": 1,
+ "capturas_con_registro": 164,
+ "por_captura": {
+  "P-00-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-01-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-03-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-00-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-00-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-00-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-01-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-01-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-01-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-02-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-02-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-02-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-02-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-03-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-03-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-03-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-04-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-04-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-04-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-04-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-05-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-05-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-05-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-05-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-06-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-06-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-06-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-06-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-07-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-07-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-07-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-07-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-08-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-08-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-08-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-08-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-09-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-09-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-09-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-09-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-10-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-10-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-10-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-10-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-11-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-11-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-11-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-11-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-12-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-12-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-12-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-12-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-13-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-13-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-13-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-13-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-14-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-14-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-14-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-14-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-15-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-15-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-15-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-15-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-16-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-16-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-16-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-16-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-17-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-17-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-17-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-17-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-18-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-18-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-18-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-18-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-19-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-19-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-19-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-19-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-20-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-20-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-20-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-20-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-21-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-21-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-21-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-21-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-22-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-22-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-22-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-22-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-23-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-23-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-23-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-23-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-24-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-24-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-24-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-24-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-25-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-25-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-25-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-25-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.01-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.01-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.01-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.01-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.02-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.02-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.02-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.02-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.03-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.03-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.03-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.03-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.04-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.04-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.04-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.04-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.05-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.05-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.05-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.05-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.06-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.06-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.06-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.06-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.07-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.07-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.07-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.07-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.08-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.08-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.08-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.08-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.09-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.09-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.09-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.09-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.10-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.10-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.10-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.10-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.11-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.11-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.11-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.11-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.12-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.12-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.12-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.12-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.13-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.13-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.13-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.13-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.14-android-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.14-android-oscuro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.14-escritorio-claro": [
+   "finanzas.local:8443"
+  ],
+  "P-26.14-escritorio-oscuro": [
+   "finanzas.local:8443"
+  ]
+ }
+}

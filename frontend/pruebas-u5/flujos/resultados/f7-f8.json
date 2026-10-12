@@ -1,0 +1,238 @@
+[
+ {
+  "id": "F-7A",
+  "nombre": "Compra a crédito con el comparador · con la semilla (sin restricciones, K16)",
+  "toquesTotal": 5,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Partida (sin tocar): las restricciones globales de P-26.05 en la semilla (API getOptimizerSettings)",
+    "pantalla": "API",
+    "toques": 0,
+    "ok": true,
+    "resultado": "colchón mínimo undefined · máximo de compras vivas undefined · deuda en cero undefined"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 1: ☰ (Abrir menú)",
+    "pantalla": "P-01 → G-01",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 2: «Créditos»",
+    "pantalla": "G-01 → P-17",
+    "toques": 2,
+    "ok": true,
+    "resultado": "Ver calendario Simular compra Registrar compra a crédito Deuda viva total $18,999.22 Pagos de la quincena $0.00 Hogar $0.00 · Karen $0.00 Pagos del mes $973.75 Hogar $598.82 · Karen $374.93 Intereses "
+   },
+   {
+    "n": 4,
+    "accion": "Toque 3: «Simular compra» (U1: «⋯» → «Simular compra», 2 toques; aquí el botón está a la vista en la barra de acciones)",
+    "pantalla": "P-17 → P-20",
+    "toques": 3,
+    "ok": true,
+    "resultado": "Datos de la compra Monto Fecha deseada Holgura (± días) Comercio o tienda Quién compra Hogar Karen Conjunto Restricciones duras (solo para esta comparación) Pesos de los 4 objetivos Tope de pago por quincena por persona (de Ajustes › Personas y reparto) Axel Sin tope Ximena Sin tope Karen Sin tope O"
+   },
+   {
+    "n": 5,
+    "accion": "Teclear el monto 3094.50 (no cuenta; total de la compra del 10-oct-2026 de la semilla)",
+    "pantalla": "P-20",
+    "toques": 3,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 6,
+    "accion": "Toque 4: «Comparar escenarios» → «Faltan restricciones · Capturar», sin recomendación (K16)",
+    "pantalla": "P-20",
+    "toques": 4,
+    "ok": true,
+    "resultado": "API: status missing_constraints, faltan [\"min_available_buffer_cents\",\"max_live_purchases\",\"zero_debt_by_date\"], 0 evaluados · 0 válidos · 0 descartados, recomendación null · pantalla: 0 escenarios evaluados · 0 válidos · 0 descartados Faltan restricciones · Sin capturar: Colchón mínimo de disponible, Máximo de compras vivas a la vez, Fecha de deuda en cero"
+   },
+   {
+    "n": 7,
+    "accion": "Toque 5: «Capturar» abre Ajustes › Créditos y condiciones",
+    "pantalla": "P-20 → P-26.05",
+    "toques": 5,
+    "ok": true,
+    "resultado": "‹ Ajustes Créditos y condiciones Dar de alta y mantener las líneas de crédito, sus condiciones, tasas por plazo, promociones y el comparador. Líneas de crédito Nuevo crédito Tabla Galería Tablero Sin "
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F7-faltan-restricciones.jpg"
+  ]
+ },
+ {
+  "id": "F-7B",
+  "nombre": "Compra a crédito con el comparador · hasta P-19 con restricciones de esta comparación",
+  "toquesTotal": 4,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Volver al comparador (atrás del navegador; no cuenta: el recorrido corto de U1 es ☰ → Créditos → Simular compra)",
+    "pantalla": "P-26.05 → P-20",
+    "toques": 0,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Teclear el monto 3094.50 (no cuenta)",
+    "pantalla": "P-20",
+    "toques": 0,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 1: abrir «Restricciones duras (solo para esta comparación)» y teclear valores de prueba: colchón 500.00, máximo 3 compras vivas y deuda en cero el 2027-12-31 (el servidor exige las 3, C1; la pantalla dice «opcional» para la fecha: ver C3-flujos punto 6)",
+    "pantalla": "P-20",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 4,
+    "accion": "Toque 2: «Comparar escenarios» → recomendación con su puntaje y los 4 óptimos apilados",
+    "pantalla": "P-20",
+    "toques": 2,
+    "ok": true,
+    "resultado": "API: 16 evaluados · 16 válidos · 0 descartados; recomendado: línea 1, 2 pagos, compra 2026-10-16, intereses 53450 centavos · pantalla: Escenario recomendado · puntaje 88.01 de 100"
+   },
+   {
+    "n": 5,
+    "accion": "Toque 3: «Usar escenario recomendado» → P-19 prellenada, sin guardar nada",
+    "pantalla": "P-20 → P-19",
+    "toques": 3,
+    "ok": true,
+    "resultado": "URL /creditos/1/compras/nueva?monto=3094.50&fecha=2026-10-16&plazo=2; Vista previa del cálculo Capital $3,094.50 Intereses (IVA incl.) $534.50 Total $3,629.00 Partes por persona Axel $3,629.00 · pago por quincena $1,814.50 Calendario de pagos Dom 15 nov ; compras antes 4 = después 4; intereses vacíos → «Vacío: se usa la tasa de la tabla por plazo de la línea.»"
+   },
+   {
+    "n": 6,
+    "accion": "Toque 4: «Guardar compra» (intereses vacíos: tasa de la tabla por plazo de la línea, de la semilla) → crea la compra con sus pagos",
+    "pantalla": "P-19",
+    "toques": 4,
+    "ok": true,
+    "resultado": "compra 5: capital 309450, intereses 53450, 2 pagos, fecha 2026-10-16; pagos programados (API) 200 · 2 renglones"
+   },
+   {
+    "n": 7,
+    "accion": "Las restricciones globales de P-26.05 siguen sin capturar (las de esta comparación no se guardan)",
+    "pantalla": "API",
+    "toques": 4,
+    "ok": true,
+    "resultado": "colchón y máximo de compras vivas globales: null"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F7-recomendacion.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F7-compra-prellenada.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F7-compra-guardada.jpg"
+  ]
+ },
+ {
+  "id": "F-8",
+  "nombre": "Ticket con OCR",
+  "toquesTotal": 15,
+  "ok": true,
+  "pasos": [
+   {
+    "n": 1,
+    "accion": "Toque 1: «+» de la barra inferior",
+    "pantalla": "P-01 → P-03",
+    "toques": 1,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 2,
+    "accion": "Toque 2: «Ticket» en el selector de tipo",
+    "pantalla": "P-03",
+    "toques": 2,
+    "ok": true,
+    "resultado": "Registrar Registrar Gasto Ingreso Peso Ticket El ticket se captura con la cámara en Gastos › Capturar ticket. Capturar ticket"
+   },
+   {
+    "n": 3,
+    "accion": "Toque 3: «Capturar ticket» (U1: «Ticket» abre directo la cámara; aquí la hoja lleva a P-05)",
+    "pantalla": "P-03 → P-05",
+    "toques": 3,
+    "ok": true,
+    "resultado": "ok"
+   },
+   {
+    "n": 4,
+    "accion": "Toques 4-5: «Tomar foto» y aceptar la foto en la cámara (imagen sintética de prueba)",
+    "pantalla": "P-05",
+    "toques": 5,
+    "ok": true,
+    "resultado": "«Leyendo el ticket…» visible; ?lectura=1"
+   },
+   {
+    "n": 5,
+    "accion": "El OCR local lee el ticket y propone los renglones (espera al job, ≤ 120 s)",
+    "pantalla": "P-05",
+    "toques": 5,
+    "ok": true,
+    "resultado": "OCR done: 8 renglones: q TIENDA SINTETICA DE PRUEBA undefined (low) | *** TICKET DE PRUEBA NO REAL *** undefined (low) | LECHE ENTERA 1 L 2850 (low) | ARROZ BLANCO 1 KG 5800 (low) | JITOMATE 2213 (low) | HUEVO BLANCO 12 PZA 4590 (low) | LATA ATUN AGUA 6600 (low) | FRIJOL NEGRO 9080 G 3100 (low); total propuesto undefined, tienda undefined, fecha undefined"
+   },
+   {
+    "n": 6,
+    "accion": "Corrección de 1 renglón (U1 paso 5, opcional): el de «HUEVO BLANCO 12 PZA» → Huevo blanco, cartón 12 piezas (busca en el catálogo)",
+    "pantalla": "P-05",
+    "toques": 8,
+    "ok": true,
+    "resultado": "renglón 6 («HUEVO BLANCO 12 PZA») emparejado con la presentación 116"
+   },
+   {
+    "n": 7,
+    "accion": "Corrección: quitar los renglones sin importe que el OCR leyó del encabezado del ticket (1 toque cada uno)",
+    "pantalla": "P-05",
+    "toques": 10,
+    "ok": true,
+    "resultado": "2 quitados: «q TIENDA SINTETICA DE PRUEBA», «*** TICKET DE PRUEBA NO REAL ***»; quedan 6"
+   },
+   {
+    "n": 8,
+    "accion": "Encabezado: tienda y categoría (selectores nativos: abrir + elegir = 2 toques cada uno; Bodega Aurrera y Despensa); fecha y total se teclean si el OCR no los propuso (no cuentan)",
+    "pantalla": "P-05",
+    "toques": 14,
+    "ok": true,
+    "resultado": "tienda 1 · categoría 1 · fecha propuesta (vacía → tecleada 2026-10-12) · total propuesto (vacío → tecleado 251.53) · la suma cuadra"
+   },
+   {
+    "n": 9,
+    "accion": "Toque final: «Confirmar ticket» → crea gasto, renglones, precios con fuente ticket e inventario; abre el gasto",
+    "pantalla": "P-05 → P-04",
+    "toques": 15,
+    "ok": true,
+    "resultado": "gasto 7; precios [73]; inventario [] · P-04: Duplicar Eliminar Ticket adjunto Quitar adjunto Propiedades Fecha 12-oct-2026 Monto $251.53 Categoría Despensa Persona — Descripción — Tienda o comercio Bodega Aurrera Forma de pago De contado Tipo Variable Reparto — Meses de devengo 1 Nota — Reparto Karen $125.77 Axel $125.76 Parte del hogar $125.7"
+   },
+   {
+    "n": 10,
+    "accion": "El precio quedó guardado (API listProductPrices del producto Huevo blanco, fuente ticket_ocr, $45.90 en la tienda elegida)",
+    "pantalla": "API",
+    "toques": 15,
+    "ok": true,
+    "resultado": "precio 73: presentación 116, 4590 centavos, fuente ticket_ocr, tienda 1, fecha 2026-10-12"
+   },
+   {
+    "n": 11,
+    "accion": "El gasto está en la tabla de Todos los gastos",
+    "pantalla": "P-02",
+    "toques": 15,
+    "ok": true,
+    "resultado": "gasto 7: 25153 centavos, categoría 1, tienda 1"
+   }
+  ],
+  "capturas": [
+   "frontend/pruebas-u5/flujos/capturas/F8-renglones-propuestos.jpg",
+   "frontend/pruebas-u5/flujos/capturas/F8-gasto-creado.jpg"
+  ]
+ }
+]

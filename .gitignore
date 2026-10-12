@@ -37,3 +37,11 @@ frontend/node_modules/
 frontend/dist/
 playwright-report/
 test-results/
+
+# WF-3b (integrador-wf3b, 12-oct-2026): las capturas de U5 (docs/design/capturas-u5/: 164 PNG, axe/, contraste/, evidencia/,
+# hosts.json) y la evidencia de los flujos (frontend/pruebas-u5/flujos/capturas/ y resultados/) SÍ se versionan; por eso no hay
+# regla para ellas. Las salidas de Playwright van a datos/tmp/ (outputDir de cada configuración) y quedan fuera, igual que
+# cualquier test-results/ o playwright-report/ (reglas de arriba). El archivo incremental de tsc es generado (INTEGRACION-wf3a §15.8).
+**/test-results/
+**/playwright-report/
+frontend/tsconfig.tsbuildinfo

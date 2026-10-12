@@ -61,8 +61,10 @@ export function Grafica({ titulo, resumen, tipo, categorias, series, formato: fo
   const visibles = series.slice(0, 8) // 8 series máximo; la novena va en «Otros» (la arma quien llama)
   const formato = formatoDado ?? DINERO
   const formatoEje = ejeDado ?? formatoDado ?? dineroCompacto
+  // Sin ningún valor distinto de 0 no se dibujan ejes falsos (DESIGN §7.7): estado vacío «Aún no hay datos para este periodo».
+  const sinDatos = !visibles.some((s) => s.valores.some((v) => v))
   useEffect(() => {
-    if (!ref.current || !visibles.length) return
+    if (!ref.current || sinDatos) return
     const graf = echarts.init(ref.current, null, { renderer: 'svg' })
     const sup = css('--ui-surface-card'), sec = css('--ui-text-secondary')
     const columnasConEtiqueta = tipo === 'barras' && visibles.length <= MAX_SERIES_CON_ETIQUETA
@@ -71,8 +73,9 @@ export function Grafica({ titulo, resumen, tipo, categorias, series, formato: fo
     graf.setOption({
       aria: { enabled: true, label: { enabled: true, description: `${titulo}. ${resumen}` }, decal: { show: true } },
       textStyle: { fontFamily: 'Inter, ui-sans-serif, system-ui', color: sec },
-      grid: { left: 8, right: 8, top: 24, bottom: 8, containLabel: true },
-      legend: visibles.length > 1 ? { bottom: 0, textStyle: { color: css('--ui-text-default') }, inactiveColor: css('--ui-text-disabled') } : undefined,
+      // Con leyenda abajo, la rejilla le deja su renglón para que no se encime con las etiquetas del eje X.
+      grid: { left: 8, right: 8, top: 24, bottom: visibles.length > 1 ? 32 : 8, containLabel: true },
+      legend: visibles.length > 1 ? { type: 'scroll', bottom: 0, textStyle: { color: css('--ui-text-default') }, inactiveColor: css('--ui-text-disabled') } : undefined,
       tooltip: {
         trigger: 'axis',
         className: 'fh-descripcion-grafica',
@@ -94,7 +97,7 @@ export function Grafica({ titulo, resumen, tipo, categorias, series, formato: fo
           type: tipo === 'barras' ? 'bar' : 'line',
           data: s.valores.map((v, j) => (marcados.has(j) ? { value: v, label: { show: true } } : v)),
           label: { show: columnasConEtiqueta, position: 'top', color: css('--ui-text-default'), fontSize: 12, formatter: (p: { value: unknown }) => formato(Number(p.value)) },
-          labelLayout: { hideOverlap: true },
+          labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
           animation: false,
           color: css(`--ui-chart-${i + 1}`),
           symbol: MARCADORES[i],
@@ -110,8 +113,13 @@ export function Grafica({ titulo, resumen, tipo, categorias, series, formato: fo
     const ro = new ResizeObserver(() => graf.resize())
     ro.observe(ref.current)
     return () => { ro.disconnect(); graf.dispose() }
-  }, [tema, tipo, categorias, visibles, formato, formatoEje, titulo, resumen])
-  if (!visibles.length) return <Vacio texto={textos.vacio.grafica} />
+  }, [tema, tipo, categorias, visibles, formato, formatoEje, titulo, resumen, sinDatos])
+  if (sinDatos) return (
+    <figure className="flex flex-col gap-2 rounded-lg border border-border-divider bg-surface-card p-4">
+      <figcaption className="text-small font-medium text-text-secondary">{titulo}</figcaption>
+      <Vacio texto={textos.vacio.grafica} />
+    </figure>
+  )
   return (
     <figure className="flex flex-col gap-2 rounded-lg border border-border-divider bg-surface-card p-4">
       <figcaption>
