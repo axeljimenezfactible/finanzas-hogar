@@ -1,0 +1,264 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-membresia-anual",
+  "descripcion": "Anualización del punto de equilibrio (S5-09, ILUSTRATIVO): compras al año = compras de despensa en cadenas en los últimos 365 días (6 en cadena; la de 400 días y la del tianguis no cuentan). 1000.00 / 120.00 = 8.33 -> 9 (hacia arriba: con 8 no se cubre). RN-13: 138.50 x 6 = 831.00 (no cubre 1,000.00 pero sí 800.00 de `sams-b`, que equilibra en 6).",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-09"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-13"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
+    "que": "preguntas 4a y 4b: compras al año = despensas en cadenas de los últimos 365 días; equilibrio hacia arriba"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "a",
+            "name": "A",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "b",
+            "name": "B",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "c",
+            "name": "C",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "a-1kg",
+            "product": "a",
+            "name": "a-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "b-1kg",
+            "product": "b",
+            "name": "b-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "c-1kg",
+            "product": "c",
+            "name": "c-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "sams",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": true,
+          "has_membership": false,
+          "membership_fee_cents": 100000,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "sams-b",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams-b",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": true,
+          "has_membership": false,
+          "membership_fee_cents": 80000,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "sams-sin-costo",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams-sin-costo",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": true,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "chedraui",
+          "kind": "chain",
+          "parent": null,
+          "name": "chedraui",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tianguis",
+          "kind": "market",
+          "parent": null,
+          "name": "tianguis",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": 2,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": [
+            "verduras"
+          ]
+        }
+      ],
+      "grocery_purchases": [
+        {
+          "date": "2026-10-09",
+          "store": "chedraui"
+        },
+        {
+          "date": "2026-09-02",
+          "store": "chedraui"
+        },
+        {
+          "date": "2026-07-24",
+          "store": "chedraui"
+        },
+        {
+          "date": "2026-06-14",
+          "store": "chedraui"
+        },
+        {
+          "date": "2026-03-26",
+          "store": "chedraui"
+        },
+        {
+          "date": "2025-12-16",
+          "store": "chedraui"
+        },
+        {
+          "date": "2025-09-07",
+          "store": "chedraui"
+        },
+        {
+          "date": "2026-10-02",
+          "store": "tianguis"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "exacto",
+        "funcion": "membership",
+        "argumentos": {
+          "store": "sams",
+          "savings_per_purchase_cents": 12500
+        }
+      },
+      {
+        "id": "hacia-arriba",
+        "funcion": "membership",
+        "argumentos": {
+          "store": "sams",
+          "savings_per_purchase_cents": 12000
+        }
+      },
+      {
+        "id": "rn13",
+        "funcion": "membership",
+        "argumentos": {
+          "store": "sams",
+          "savings_per_purchase_cents": 13850
+        }
+      },
+      {
+        "id": "rn13-barata",
+        "funcion": "membership",
+        "argumentos": {
+          "store": "sams-b",
+          "savings_per_purchase_cents": 13850
+        }
+      },
+      {
+        "id": "sin-costo",
+        "funcion": "membership",
+        "argumentos": {
+          "store": "sams-sin-costo",
+          "savings_per_purchase_cents": 12500
+        }
+      },
+      {
+        "id": "sin-ahorro",
+        "funcion": "membership",
+        "argumentos": {
+          "store": "sams",
+          "savings_per_purchase_cents": 0
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "hacia-arriba": {
+      "break_even_purchases": 9,
+      "purchases_per_year": 6,
+      "annual_savings_cents": 72000,
+      "verdict": "not_worth_it"
+    },
+    "rn13": {
+      "break_even_purchases": 8,
+      "purchases_per_year": 6,
+      "annual_savings_cents": 83100,
+      "verdict": "not_worth_it"
+    },
+    "rn13-barata": {
+      "annual_fee_cents": 80000,
+      "break_even_purchases": 6,
+      "annual_savings_cents": 83100,
+      "verdict": "worth_it"
+    },
+    "exacto": {
+      "annual_savings_cents": 75000,
+      "verdict": "not_worth_it"
+    }
+  }
+}

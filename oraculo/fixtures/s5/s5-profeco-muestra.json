@@ -1,0 +1,180 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-profeco-muestra",
+  "descripcion": "Cargador PROFECO sobre 2 CSV de muestra (ILUSTRATIVO; S5-05, §11): a = UTF-8 con BOM, 6 renglones; b = Windows-1252, 4 renglones. Renglón por renglón: a1 se carga; a2 es el mismo registro del mismo día en otro formato de fecha (15/08/2026) -> duplicado; a3 fecha ilegible -> rechazado; a4 cadena que no es de Axel -> filtrado; a5 sin liga -> omitido; a6 liga \"propuesto\" -> omitido en producción y cargado en revisión; b1 se carga (tienda = la cadena, porque ninguna sucursal se llama WALMART ACUEDUCTO); b2 con 14 columnas -> rechazado; b3 precio ilegible -> rechazado; b4 municipio fuera del filtro -> filtrado. El municipio de Walmart va en su sucursal walmart-tepeyac y no en la cadena: así las dos lecturas de §11 («municipios de las sucursales») dan lo mismo hasta que el integrador fije el texto (REVISION-S5-r1 H-01). Lectura 10 = 3 + 2 + 2 + 2 + 1 (producción) = 3 + 2 + 1 + 3 + 1 (revisión). Los motivos (`reason`) son texto libre y no se comparan.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-05"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§11 de S5-interfaz.md"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-profeco-almacen.md",
+    "que": "almacenamiento, conteos y cobertura (opción A); ligas confirmadas: bloqueo S4-confirmacion-empates"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega",
+          "profeco_name": "BODEGA AURRERA",
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "bodega-vallejo",
+          "kind": "branch",
+          "parent": "bodega",
+          "name": "bodega-vallejo",
+          "profeco_name": "BODEGA AURRERA VALLEJO",
+          "municipality": "AZCAPOTZALCO",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": "WALMART",
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart-tepeyac",
+          "kind": "branch",
+          "parent": "walmart",
+          "name": "walmart-tepeyac",
+          "profeco_name": "WALMART TEPEYAC",
+          "municipality": "GUSTAVO A. MADERO",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "produccion",
+        "funcion": "profeco_import",
+        "argumentos": {
+          "files": [
+            "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
+            "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv"
+          ],
+          "links_file": "oraculo/fixtures/s5/_datos/profeco-vinculos.csv",
+          "mode": "production"
+        }
+      },
+      {
+        "id": "revision",
+        "funcion": "profeco_import",
+        "argumentos": {
+          "files": [
+            "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
+            "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv"
+          ],
+          "links_file": "oraculo/fixtures/s5/_datos/profeco-vinculos.csv",
+          "mode": "review"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "produccion": {
+      "read": 10,
+      "rejected": 3,
+      "filtered_out": 2,
+      "skipped": 2,
+      "loaded": 2,
+      "duplicates": 1,
+      "coverage": [
+        {
+          "chain": "BODEGA AURRERA",
+          "municipality": "AZCAPOTZALCO",
+          "price_count": 1
+        },
+        {
+          "chain": "WALMART",
+          "municipality": "GUSTAVO A. MADERO",
+          "price_count": 1
+        }
+      ],
+      "rejections": [
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
+          "row": 3
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+          "row": 2
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+          "row": 3
+        }
+      ]
+    },
+    "revision": {
+      "read": 10,
+      "rejected": 3,
+      "filtered_out": 2,
+      "skipped": 1,
+      "loaded": 3,
+      "duplicates": 1,
+      "coverage": [
+        {
+          "chain": "BODEGA AURRERA",
+          "municipality": "AZCAPOTZALCO",
+          "price_count": 2
+        },
+        {
+          "chain": "WALMART",
+          "municipality": "GUSTAVO A. MADERO",
+          "price_count": 1
+        }
+      ],
+      "rejections": [
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
+          "row": 3
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+          "row": 2
+        },
+        {
+          "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+          "row": 3
+        }
+      ]
+    }
+  }
+}

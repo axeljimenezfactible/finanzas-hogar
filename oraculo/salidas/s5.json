@@ -1,0 +1,2011 @@
+{
+  "formato": "salida/1",
+  "motor": "s5",
+  "casos": {
+    "s5-canasta-regla-unica": {
+      "canasta": {
+        "stores": [
+          {
+            "store": "walmart",
+            "total_cents": 9430,
+            "difference_vs_cheapest_cents": 0,
+            "identical_count": 1,
+            "substitute_count": 1
+          },
+          {
+            "store": "bodega",
+            "total_cents": 9460,
+            "difference_vs_cheapest_cents": 30,
+            "identical_count": 1,
+            "substitute_count": 1
+          }
+        ],
+        "items": [
+          {
+            "product": "arroz",
+            "quantity_milli": 500000,
+            "recommended_store": "walmart",
+            "recommended_presentation": "arroz-1kg",
+            "estimated_price_cents": 2800,
+            "prices": [
+              {
+                "store": "walmart",
+                "presentation": "arroz-500",
+                "price_cents": 1450,
+                "base_unit_price_cents": 2900,
+                "is_substitute": true
+              },
+              {
+                "store": "bodega",
+                "presentation": "arroz-500",
+                "price_cents": 1460,
+                "base_unit_price_cents": 2920,
+                "is_substitute": true
+              }
+            ]
+          },
+          {
+            "product": "aceite-soya",
+            "quantity_milli": 1892000,
+            "recommended_store": "walmart",
+            "recommended_presentation": "aceite-946",
+            "estimated_price_cents": 7980,
+            "prices": [
+              {
+                "store": "walmart",
+                "presentation": "aceite-946",
+                "price_cents": 3990,
+                "base_unit_price_cents": 4218,
+                "is_substitute": false
+              },
+              {
+                "store": "bodega",
+                "presentation": "aceite-946",
+                "price_cents": 4000,
+                "base_unit_price_cents": 4228,
+                "is_substitute": false
+              }
+            ]
+          }
+        ],
+        "cheapest_store": "walmart"
+      }
+    },
+    "s5-carritos-presentaciones": {
+      "carritos": {
+        "stores": [
+          {
+            "store": "tercera",
+            "total_cents": 16500,
+            "identical_count": 1,
+            "identical_total_cents": 10000,
+            "substitute_count": 1,
+            "piece_count": 7,
+            "missing_count": 2,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 0,
+            "assumes_membership": false
+          },
+          {
+            "store": "walmart",
+            "total_cents": 29650,
+            "identical_count": 1,
+            "identical_total_cents": 10750,
+            "substitute_count": 2,
+            "piece_count": 9,
+            "missing_count": 1,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 13150,
+            "assumes_membership": false
+          },
+          {
+            "store": "bodega",
+            "total_cents": 42600,
+            "identical_count": 1,
+            "identical_total_cents": 10500,
+            "substitute_count": 2,
+            "piece_count": 11,
+            "missing_count": 0,
+            "stale_count": 4,
+            "difference_vs_cheapest_cents": 26100,
+            "assumes_membership": false
+          }
+        ],
+        "identical_pieces": 5,
+        "winners": [
+          {
+            "store": "tercera",
+            "count": 1
+          },
+          {
+            "store": "walmart",
+            "count": 0
+          },
+          {
+            "store": "bodega",
+            "count": 0
+          }
+        ],
+        "ties": 0,
+        "rows": [
+          {
+            "kind": "identical",
+            "product": "atun-agua",
+            "winner_store": "tercera"
+          },
+          {
+            "kind": "substitute",
+            "product": "arroz-grano-largo",
+            "winner_store": "walmart"
+          },
+          {
+            "kind": "substitute",
+            "product": "sustituto-crema-cafe",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "only_one",
+            "product": "leche",
+            "winner_store": null
+          },
+          {
+            "kind": "only_one",
+            "product": "atun-agua",
+            "winner_store": null
+          }
+        ]
+      }
+    },
+    "s5-comparativa-canon": {
+      "canon-totales": {
+        "stores": [
+          {
+            "store": "bodega",
+            "total_cents": 309450,
+            "identical_count": 33,
+            "identical_total_cents": 277350,
+            "substitute_count": 3,
+            "piece_count": 61,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 0
+          },
+          {
+            "store": "walmart",
+            "total_cents": 323300,
+            "identical_count": 33,
+            "identical_total_cents": 287400,
+            "substitute_count": 3,
+            "piece_count": 60,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 13850
+          }
+        ],
+        "identical_pieces": 55,
+        "winners": [
+          {
+            "store": "bodega",
+            "count": 22
+          },
+          {
+            "store": "walmart",
+            "count": 3
+          }
+        ],
+        "ties": 8
+      },
+      "canon-filas": {
+        "rows": [
+          {
+            "kind": "identical",
+            "product": "aceite-oliva",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "aceite-soya",
+            "winner_store": "walmart"
+          },
+          {
+            "kind": "identical",
+            "product": "frijoles-refritos",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "duraznos-almibar",
+            "winner_store": "walmart"
+          },
+          {
+            "kind": "identical",
+            "product": "cafe-soluble",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "jamon-pavo",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "salchicha-pavo",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "avena",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "blanqueador",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "caldo-pollo-cubos",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "pasta-dental",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "jabon-manos",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "acondicionador",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "desinfectante-aerosol",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "detergente-polvo",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "elote-grano",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "atun-agua",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "uva-verde",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "jabon-trastes",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "pan-caja",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "papel-higienico",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "espagueti",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "queso-manchego",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "mayonesa-chipotle",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "salsa-soya",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "catsup",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "mayonesa",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "salsa-inglesa",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "servilletas",
+            "winner_store": "walmart"
+          },
+          {
+            "kind": "identical",
+            "product": "toallas-papel",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "identical",
+            "product": "yogur-griego",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "yogur-bebible",
+            "winner_store": null
+          },
+          {
+            "kind": "identical",
+            "product": "petit-suisse",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "substitute",
+            "product": "arroz-grano-largo",
+            "winner_store": "walmart"
+          },
+          {
+            "kind": "substitute",
+            "product": "sustituto-crema-cafe",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "substitute",
+            "product": "leche",
+            "winner_store": "walmart"
+          },
+          {
+            "kind": "only_one",
+            "product": "atun-agua",
+            "winner_store": null
+          }
+        ]
+      }
+    },
+    "s5-cotizacion-recomendada": {
+      "arroz-libre": {
+        "quote": {
+          "product": "arroz",
+          "store": "walmart",
+          "presentation": "arroz-1kg",
+          "price_cents": 2800,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "arroz-bodega": {
+        "quote": {
+          "product": "arroz",
+          "store": "bodega",
+          "presentation": "arroz-750",
+          "price_cents": 2200,
+          "size_milli": 750000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": false
+        }
+      },
+      "arroz-750": {
+        "quote": {
+          "product": "arroz",
+          "store": "walmart",
+          "presentation": "arroz-750",
+          "price_cents": 2200,
+          "size_milli": 750000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": false
+        }
+      },
+      "frijol-libre": {
+        "quote": {
+          "product": "frijol",
+          "store": "bodega",
+          "presentation": "frijol-500",
+          "price_cents": 1500,
+          "size_milli": 500000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "canasta": {
+        "stores": [
+          {
+            "store": "bodega",
+            "total_cents": 1500,
+            "difference_vs_cheapest_cents": 0,
+            "substitute_count": 1,
+            "identical_count": 0
+          },
+          {
+            "store": "walmart",
+            "total_cents": 2200,
+            "difference_vs_cheapest_cents": 700,
+            "substitute_count": 1,
+            "identical_count": 0
+          }
+        ],
+        "items": [
+          {
+            "product": "arroz",
+            "quantity_milli": 500000,
+            "recommended_store": "walmart",
+            "recommended_presentation": "arroz-1kg",
+            "estimated_price_cents": 2800,
+            "is_stale_price": false,
+            "prices": [
+              {
+                "store": "walmart",
+                "presentation": "arroz-750",
+                "price_cents": 2200,
+                "base_unit_price_cents": 2933,
+                "observed_date": "2026-10-10",
+                "is_substitute": true
+              },
+              {
+                "store": "bodega",
+                "presentation": "arroz-500",
+                "price_cents": 1500,
+                "base_unit_price_cents": 3000,
+                "observed_date": "2026-10-10",
+                "is_substitute": true
+              }
+            ]
+          }
+        ],
+        "cheapest_store": "bodega"
+      }
+    },
+    "s5-frescura-fronteras": {
+      "edad-000": {
+        "age_days": 0,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": true
+      },
+      "edad-029": {
+        "age_days": 29,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": true
+      },
+      "edad-030": {
+        "age_days": 30,
+        "is_stale": true,
+        "weight": {
+          "num": 60,
+          "den": 61
+        },
+        "weight_display": "0.9836",
+        "competes": true
+      },
+      "edad-031": {
+        "age_days": 31,
+        "is_stale": true,
+        "weight": {
+          "num": 59,
+          "den": 61
+        },
+        "weight_display": "0.9672",
+        "competes": true
+      },
+      "edad-032": {
+        "age_days": 32,
+        "is_stale": true,
+        "weight": {
+          "num": 58,
+          "den": 61
+        },
+        "weight_display": "0.9508",
+        "competes": true
+      },
+      "edad-033": {
+        "age_days": 33,
+        "is_stale": true,
+        "weight": {
+          "num": 57,
+          "den": 61
+        },
+        "weight_display": "0.9344",
+        "competes": true
+      },
+      "edad-034": {
+        "age_days": 34,
+        "is_stale": true,
+        "weight": {
+          "num": 56,
+          "den": 61
+        },
+        "weight_display": "0.9180",
+        "competes": true
+      },
+      "edad-035": {
+        "age_days": 35,
+        "is_stale": true,
+        "weight": {
+          "num": 55,
+          "den": 61
+        },
+        "weight_display": "0.9016",
+        "competes": true
+      },
+      "edad-036": {
+        "age_days": 36,
+        "is_stale": true,
+        "weight": {
+          "num": 54,
+          "den": 61
+        },
+        "weight_display": "0.8852",
+        "competes": true
+      },
+      "edad-037": {
+        "age_days": 37,
+        "is_stale": true,
+        "weight": {
+          "num": 53,
+          "den": 61
+        },
+        "weight_display": "0.8689",
+        "competes": true
+      },
+      "edad-038": {
+        "age_days": 38,
+        "is_stale": true,
+        "weight": {
+          "num": 52,
+          "den": 61
+        },
+        "weight_display": "0.8525",
+        "competes": true
+      },
+      "edad-039": {
+        "age_days": 39,
+        "is_stale": true,
+        "weight": {
+          "num": 51,
+          "den": 61
+        },
+        "weight_display": "0.8361",
+        "competes": true
+      },
+      "edad-040": {
+        "age_days": 40,
+        "is_stale": true,
+        "weight": {
+          "num": 50,
+          "den": 61
+        },
+        "weight_display": "0.8197",
+        "competes": true
+      },
+      "edad-041": {
+        "age_days": 41,
+        "is_stale": true,
+        "weight": {
+          "num": 49,
+          "den": 61
+        },
+        "weight_display": "0.8033",
+        "competes": true
+      },
+      "edad-042": {
+        "age_days": 42,
+        "is_stale": true,
+        "weight": {
+          "num": 48,
+          "den": 61
+        },
+        "weight_display": "0.7869",
+        "competes": true
+      },
+      "edad-043": {
+        "age_days": 43,
+        "is_stale": true,
+        "weight": {
+          "num": 47,
+          "den": 61
+        },
+        "weight_display": "0.7705",
+        "competes": true
+      },
+      "edad-044": {
+        "age_days": 44,
+        "is_stale": true,
+        "weight": {
+          "num": 46,
+          "den": 61
+        },
+        "weight_display": "0.7541",
+        "competes": true
+      },
+      "edad-045": {
+        "age_days": 45,
+        "is_stale": true,
+        "weight": {
+          "num": 45,
+          "den": 61
+        },
+        "weight_display": "0.7377",
+        "competes": true
+      },
+      "edad-046": {
+        "age_days": 46,
+        "is_stale": true,
+        "weight": {
+          "num": 44,
+          "den": 61
+        },
+        "weight_display": "0.7213",
+        "competes": true
+      },
+      "edad-047": {
+        "age_days": 47,
+        "is_stale": true,
+        "weight": {
+          "num": 43,
+          "den": 61
+        },
+        "weight_display": "0.7049",
+        "competes": true
+      },
+      "edad-048": {
+        "age_days": 48,
+        "is_stale": true,
+        "weight": {
+          "num": 42,
+          "den": 61
+        },
+        "weight_display": "0.6885",
+        "competes": true
+      },
+      "edad-049": {
+        "age_days": 49,
+        "is_stale": true,
+        "weight": {
+          "num": 41,
+          "den": 61
+        },
+        "weight_display": "0.6721",
+        "competes": true
+      },
+      "edad-050": {
+        "age_days": 50,
+        "is_stale": true,
+        "weight": {
+          "num": 40,
+          "den": 61
+        },
+        "weight_display": "0.6557",
+        "competes": true
+      },
+      "edad-051": {
+        "age_days": 51,
+        "is_stale": true,
+        "weight": {
+          "num": 39,
+          "den": 61
+        },
+        "weight_display": "0.6393",
+        "competes": true
+      },
+      "edad-052": {
+        "age_days": 52,
+        "is_stale": true,
+        "weight": {
+          "num": 38,
+          "den": 61
+        },
+        "weight_display": "0.6230",
+        "competes": true
+      },
+      "edad-053": {
+        "age_days": 53,
+        "is_stale": true,
+        "weight": {
+          "num": 37,
+          "den": 61
+        },
+        "weight_display": "0.6066",
+        "competes": true
+      },
+      "edad-054": {
+        "age_days": 54,
+        "is_stale": true,
+        "weight": {
+          "num": 36,
+          "den": 61
+        },
+        "weight_display": "0.5902",
+        "competes": true
+      },
+      "edad-055": {
+        "age_days": 55,
+        "is_stale": true,
+        "weight": {
+          "num": 35,
+          "den": 61
+        },
+        "weight_display": "0.5738",
+        "competes": true
+      },
+      "edad-056": {
+        "age_days": 56,
+        "is_stale": true,
+        "weight": {
+          "num": 34,
+          "den": 61
+        },
+        "weight_display": "0.5574",
+        "competes": true
+      },
+      "edad-057": {
+        "age_days": 57,
+        "is_stale": true,
+        "weight": {
+          "num": 33,
+          "den": 61
+        },
+        "weight_display": "0.5410",
+        "competes": true
+      },
+      "edad-058": {
+        "age_days": 58,
+        "is_stale": true,
+        "weight": {
+          "num": 32,
+          "den": 61
+        },
+        "weight_display": "0.5246",
+        "competes": true
+      },
+      "edad-059": {
+        "age_days": 59,
+        "is_stale": true,
+        "weight": {
+          "num": 31,
+          "den": 61
+        },
+        "weight_display": "0.5082",
+        "competes": true
+      },
+      "edad-060": {
+        "age_days": 60,
+        "is_stale": true,
+        "weight": {
+          "num": 30,
+          "den": 61
+        },
+        "weight_display": "0.4918",
+        "competes": true
+      },
+      "edad-061": {
+        "age_days": 61,
+        "is_stale": true,
+        "weight": {
+          "num": 29,
+          "den": 61
+        },
+        "weight_display": "0.4754",
+        "competes": true
+      },
+      "edad-062": {
+        "age_days": 62,
+        "is_stale": true,
+        "weight": {
+          "num": 28,
+          "den": 61
+        },
+        "weight_display": "0.4590",
+        "competes": true
+      },
+      "edad-063": {
+        "age_days": 63,
+        "is_stale": true,
+        "weight": {
+          "num": 27,
+          "den": 61
+        },
+        "weight_display": "0.4426",
+        "competes": true
+      },
+      "edad-064": {
+        "age_days": 64,
+        "is_stale": true,
+        "weight": {
+          "num": 26,
+          "den": 61
+        },
+        "weight_display": "0.4262",
+        "competes": true
+      },
+      "edad-065": {
+        "age_days": 65,
+        "is_stale": true,
+        "weight": {
+          "num": 25,
+          "den": 61
+        },
+        "weight_display": "0.4098",
+        "competes": true
+      },
+      "edad-066": {
+        "age_days": 66,
+        "is_stale": true,
+        "weight": {
+          "num": 24,
+          "den": 61
+        },
+        "weight_display": "0.3934",
+        "competes": true
+      },
+      "edad-067": {
+        "age_days": 67,
+        "is_stale": true,
+        "weight": {
+          "num": 23,
+          "den": 61
+        },
+        "weight_display": "0.3770",
+        "competes": true
+      },
+      "edad-068": {
+        "age_days": 68,
+        "is_stale": true,
+        "weight": {
+          "num": 22,
+          "den": 61
+        },
+        "weight_display": "0.3607",
+        "competes": true
+      },
+      "edad-069": {
+        "age_days": 69,
+        "is_stale": true,
+        "weight": {
+          "num": 21,
+          "den": 61
+        },
+        "weight_display": "0.3443",
+        "competes": true
+      },
+      "edad-070": {
+        "age_days": 70,
+        "is_stale": true,
+        "weight": {
+          "num": 20,
+          "den": 61
+        },
+        "weight_display": "0.3279",
+        "competes": true
+      },
+      "edad-071": {
+        "age_days": 71,
+        "is_stale": true,
+        "weight": {
+          "num": 19,
+          "den": 61
+        },
+        "weight_display": "0.3115",
+        "competes": true
+      },
+      "edad-072": {
+        "age_days": 72,
+        "is_stale": true,
+        "weight": {
+          "num": 18,
+          "den": 61
+        },
+        "weight_display": "0.2951",
+        "competes": true
+      },
+      "edad-073": {
+        "age_days": 73,
+        "is_stale": true,
+        "weight": {
+          "num": 17,
+          "den": 61
+        },
+        "weight_display": "0.2787",
+        "competes": true
+      },
+      "edad-074": {
+        "age_days": 74,
+        "is_stale": true,
+        "weight": {
+          "num": 16,
+          "den": 61
+        },
+        "weight_display": "0.2623",
+        "competes": true
+      },
+      "edad-075": {
+        "age_days": 75,
+        "is_stale": true,
+        "weight": {
+          "num": 15,
+          "den": 61
+        },
+        "weight_display": "0.2459",
+        "competes": true
+      },
+      "edad-076": {
+        "age_days": 76,
+        "is_stale": true,
+        "weight": {
+          "num": 14,
+          "den": 61
+        },
+        "weight_display": "0.2295",
+        "competes": true
+      },
+      "edad-077": {
+        "age_days": 77,
+        "is_stale": true,
+        "weight": {
+          "num": 13,
+          "den": 61
+        },
+        "weight_display": "0.2131",
+        "competes": true
+      },
+      "edad-078": {
+        "age_days": 78,
+        "is_stale": true,
+        "weight": {
+          "num": 12,
+          "den": 61
+        },
+        "weight_display": "0.1967",
+        "competes": true
+      },
+      "edad-079": {
+        "age_days": 79,
+        "is_stale": true,
+        "weight": {
+          "num": 11,
+          "den": 61
+        },
+        "weight_display": "0.1803",
+        "competes": true
+      },
+      "edad-080": {
+        "age_days": 80,
+        "is_stale": true,
+        "weight": {
+          "num": 10,
+          "den": 61
+        },
+        "weight_display": "0.1639",
+        "competes": true
+      },
+      "edad-081": {
+        "age_days": 81,
+        "is_stale": true,
+        "weight": {
+          "num": 9,
+          "den": 61
+        },
+        "weight_display": "0.1475",
+        "competes": true
+      },
+      "edad-082": {
+        "age_days": 82,
+        "is_stale": true,
+        "weight": {
+          "num": 8,
+          "den": 61
+        },
+        "weight_display": "0.1311",
+        "competes": true
+      },
+      "edad-083": {
+        "age_days": 83,
+        "is_stale": true,
+        "weight": {
+          "num": 7,
+          "den": 61
+        },
+        "weight_display": "0.1148",
+        "competes": true
+      },
+      "edad-084": {
+        "age_days": 84,
+        "is_stale": true,
+        "weight": {
+          "num": 6,
+          "den": 61
+        },
+        "weight_display": "0.0984",
+        "competes": true
+      },
+      "edad-085": {
+        "age_days": 85,
+        "is_stale": true,
+        "weight": {
+          "num": 5,
+          "den": 61
+        },
+        "weight_display": "0.0820",
+        "competes": true
+      },
+      "edad-086": {
+        "age_days": 86,
+        "is_stale": true,
+        "weight": {
+          "num": 4,
+          "den": 61
+        },
+        "weight_display": "0.0656",
+        "competes": true
+      },
+      "edad-087": {
+        "age_days": 87,
+        "is_stale": true,
+        "weight": {
+          "num": 3,
+          "den": 61
+        },
+        "weight_display": "0.0492",
+        "competes": true
+      },
+      "edad-088": {
+        "age_days": 88,
+        "is_stale": true,
+        "weight": {
+          "num": 2,
+          "den": 61
+        },
+        "weight_display": "0.0328",
+        "competes": true
+      },
+      "edad-089": {
+        "age_days": 89,
+        "is_stale": true,
+        "weight": {
+          "num": 1,
+          "den": 61
+        },
+        "weight_display": "0.0164",
+        "competes": true
+      },
+      "edad-090": {
+        "age_days": 90,
+        "is_stale": true,
+        "weight": {
+          "num": 0,
+          "den": 1
+        },
+        "weight_display": "0.0000",
+        "competes": false
+      },
+      "edad-091": {
+        "age_days": 91,
+        "is_stale": true,
+        "weight": {
+          "num": 0,
+          "den": 1
+        },
+        "weight_display": "0.0000",
+        "competes": false
+      },
+      "fuente-manual": {
+        "age_days": 5,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": true
+      },
+      "fuente-ticket-manual": {
+        "age_days": 5,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": true
+      },
+      "fuente-ticket-ocr": {
+        "age_days": 5,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": true
+      },
+      "fuente-site-assisted": {
+        "age_days": 5,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": false
+      },
+      "fuente-profeco": {
+        "age_days": 5,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": false
+      },
+      "futura": {
+        "error": "future_date"
+      }
+    },
+    "s5-frescura-parametros": {
+      "edad-009": {
+        "age_days": 9,
+        "is_stale": false,
+        "weight": {
+          "num": 1,
+          "den": 1
+        },
+        "weight_display": "1.0000",
+        "competes": true
+      },
+      "edad-010": {
+        "age_days": 10,
+        "is_stale": true,
+        "weight": {
+          "num": 10,
+          "den": 11
+        },
+        "weight_display": "0.9091",
+        "competes": true
+      },
+      "edad-015": {
+        "age_days": 15,
+        "is_stale": true,
+        "weight": {
+          "num": 5,
+          "den": 11
+        },
+        "weight_display": "0.4545",
+        "competes": true
+      },
+      "edad-020": {
+        "age_days": 20,
+        "is_stale": true,
+        "weight": {
+          "num": 0,
+          "den": 1
+        },
+        "weight_display": "0.0000",
+        "competes": false
+      },
+      "edad-021": {
+        "age_days": 21,
+        "is_stale": true,
+        "weight": {
+          "num": 0,
+          "den": 1
+        },
+        "weight_display": "0.0000",
+        "competes": false
+      }
+    },
+    "s5-fuentes-compiten": {
+      "precio-tienda-manual": {
+        "price": {
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "manual"
+        },
+        "references": [],
+        "promotion": null
+      },
+      "precio-tienda-ticket": {
+        "price": {
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual"
+        },
+        "references": [],
+        "promotion": null
+      },
+      "precio-tienda-ocr": {
+        "price": {
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "ticket_ocr"
+        },
+        "references": [],
+        "promotion": null
+      },
+      "precio-tienda-sitio": {
+        "price": null,
+        "references": [
+          {
+            "source": "site_assisted",
+            "price_cents": 1000,
+            "observed_date": "2026-10-10"
+          }
+        ],
+        "promotion": null
+      },
+      "precio-tienda-profeco": {
+        "price": null,
+        "references": [
+          {
+            "source": "profeco",
+            "price_cents": 900,
+            "observed_date": "2026-10-10"
+          }
+        ],
+        "promotion": null
+      },
+      "cotiza-arroz": {
+        "quote": {
+          "product": "arroz-grano-largo",
+          "store": "tienda-manual",
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "price_cents": 2900,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "cotiza-arroz-sitio": {
+        "quote": null
+      },
+      "cotiza-arroz-profeco": {
+        "quote": null
+      }
+    },
+    "s5-ingesta-fecha-futura": {
+      "precio": {
+        "error": "future_date"
+      }
+    },
+    "s5-ingesta-precio-duplicado": {
+      "precio": {
+        "error": "duplicate_price"
+      }
+    },
+    "s5-ingesta-presentacion-desconocida": {
+      "precio": {
+        "error": "unknown_presentation"
+      }
+    },
+    "s5-ingesta-tienda-desconocida": {
+      "precio": {
+        "error": "unknown_store"
+      }
+    },
+    "s5-lectura-asistida-apagada": {
+      "walmart": {
+        "error": "no_terms_verdict"
+      },
+      "bodega_aurrera": {
+        "error": "no_terms_verdict"
+      },
+      "sams_club": {
+        "error": "no_terms_verdict"
+      }
+    },
+    "s5-lectura-asistida-sin-veredicto": {
+      "walmart": {
+        "error": "no_terms_verdict"
+      }
+    },
+    "s5-lectura-asistida": {
+      "walmart": {
+        "can_enable": true
+      },
+      "bodega_aurrera": {
+        "error": "no_terms_verdict"
+      },
+      "sams_club": {
+        "error": "no_terms_verdict"
+      }
+    },
+    "s5-mejor-tienda-canasta": {
+      "canasta": {
+        "stores": [
+          {
+            "store": "bodega",
+            "total_cents": 309450,
+            "identical_count": 34,
+            "substitute_count": 2,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 0
+          },
+          {
+            "store": "walmart",
+            "total_cents": 325400,
+            "identical_count": 35,
+            "substitute_count": 1,
+            "missing_count": 0,
+            "stale_count": 0,
+            "difference_vs_cheapest_cents": 15950
+          }
+        ],
+        "cheapest_store": "bodega"
+      },
+      "mejor-arroz": {
+        "quote": {
+          "product": "arroz-grano-largo",
+          "store": "walmart",
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "price_cents": 2800,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "mejor-crema": {
+        "quote": {
+          "product": "sustituto-crema-cafe",
+          "store": "bodega",
+          "presentation": "sustituto-crema-cafe.coffee-mate-pack-780g",
+          "price_cents": 9900,
+          "size_milli": 780000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "mejor-leche": {
+        "quote": {
+          "product": "leche",
+          "store": "walmart",
+          "presentation": "leche.santa-clara-entera-6x1l",
+          "price_cents": 17000,
+          "size_milli": 6000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "mejor-aceite-soya": {
+        "quote": {
+          "product": "aceite-soya",
+          "store": "walmart",
+          "presentation": "aceite-soya.nutrioli-946ml",
+          "price_cents": 4500,
+          "size_milli": 946000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "mejor-frijoles": {
+        "quote": {
+          "product": "frijoles-refritos",
+          "store": "bodega",
+          "presentation": "frijoles-refritos.la-costena-220g",
+          "price_cents": 1200,
+          "size_milli": 220000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      }
+    },
+    "s5-mejor-tienda-empate-orden": {
+      "canasta": {
+        "stores": [
+          {
+            "store": "zeta",
+            "total_cents": 3100
+          },
+          {
+            "store": "alfa",
+            "total_cents": 3100
+          }
+        ],
+        "items": [
+          {
+            "recommended_store": "zeta"
+          },
+          {
+            "recommended_store": "alfa"
+          }
+        ],
+        "cheapest_store": "zeta"
+      }
+    },
+    "s5-mejor-tienda-empate-recomendados": {
+      "canasta": {
+        "stores": [
+          {
+            "store": "t2",
+            "total_cents": 4100,
+            "difference_vs_cheapest_cents": 0
+          },
+          {
+            "store": "t1",
+            "total_cents": 4100,
+            "difference_vs_cheapest_cents": 0
+          }
+        ],
+        "items": [
+          {
+            "recommended_store": "t2"
+          },
+          {
+            "recommended_store": "t1"
+          },
+          {
+            "recommended_store": "t2"
+          }
+        ],
+        "cheapest_store": "t2"
+      }
+    },
+    "s5-mejor-tienda-empate-viejos": {
+      "canasta": {
+        "stores": [
+          {
+            "store": "t1",
+            "total_cents": 3100,
+            "stale_count": 0
+          },
+          {
+            "store": "t2",
+            "total_cents": 3100,
+            "stale_count": 1
+          }
+        ],
+        "items": [
+          {
+            "recommended_store": "t1"
+          },
+          {
+            "recommended_store": "t2"
+          }
+        ],
+        "cheapest_store": "t1"
+      }
+    },
+    "s5-mejor-tienda-incompleta": {
+      "canasta": {
+        "stores": [
+          {
+            "store": "t3",
+            "total_cents": 500,
+            "missing_count": 1
+          },
+          {
+            "store": "t2",
+            "total_cents": 3100,
+            "missing_count": 0
+          },
+          {
+            "store": "t1",
+            "total_cents": 3100,
+            "missing_count": 0
+          }
+        ],
+        "cheapest_store": "t2"
+      }
+    },
+    "s5-membresia-anual": {
+      "exacto": {
+        "annual_savings_cents": 75000,
+        "verdict": "not_worth_it"
+      },
+      "hacia-arriba": {
+        "break_even_purchases": 9,
+        "purchases_per_year": 6,
+        "annual_savings_cents": 72000,
+        "verdict": "not_worth_it"
+      },
+      "rn13": {
+        "break_even_purchases": 8,
+        "purchases_per_year": 6,
+        "annual_savings_cents": 83100,
+        "verdict": "not_worth_it"
+      },
+      "rn13-barata": {
+        "annual_fee_cents": 80000,
+        "break_even_purchases": 6,
+        "annual_savings_cents": 83100,
+        "verdict": "worth_it"
+      },
+      "sin-costo": {
+        "store": "sams-sin-costo",
+        "assumes_membership": true,
+        "basket_savings_cents": 12500,
+        "annual_fee_cents": null,
+        "break_even_purchases": null,
+        "purchases_per_year": 6,
+        "annual_savings_cents": 75000,
+        "verdict": "missing_fee"
+      },
+      "sin-ahorro": {
+        "store": "sams",
+        "assumes_membership": true,
+        "basket_savings_cents": 0,
+        "annual_fee_cents": 100000,
+        "break_even_purchases": null,
+        "purchases_per_year": 6,
+        "annual_savings_cents": 0,
+        "verdict": "not_worth_it"
+      }
+    },
+    "s5-membresia-canasta": {
+      "sams": {
+        "basket_savings_cents": 600,
+        "annual_fee_cents": 100000,
+        "assumes_membership": true
+      }
+    },
+    "s5-membresia-equilibrio": {
+      "exacto": {
+        "basket_savings_cents": 12500,
+        "annual_fee_cents": 100000,
+        "break_even_purchases": 8,
+        "assumes_membership": true
+      },
+      "hacia-arriba": {
+        "store": "sams",
+        "assumes_membership": true,
+        "basket_savings_cents": 12000,
+        "annual_fee_cents": 100000,
+        "break_even_purchases": 9,
+        "purchases_per_year": 6,
+        "annual_savings_cents": 72000,
+        "verdict": "not_worth_it"
+      },
+      "rn13": {
+        "store": "sams",
+        "assumes_membership": true,
+        "basket_savings_cents": 13850,
+        "annual_fee_cents": 100000,
+        "break_even_purchases": 8,
+        "purchases_per_year": 6,
+        "annual_savings_cents": 83100,
+        "verdict": "not_worth_it"
+      },
+      "rn13-barata": {
+        "store": "sams-b",
+        "assumes_membership": true,
+        "basket_savings_cents": 13850,
+        "annual_fee_cents": 80000,
+        "break_even_purchases": 6,
+        "purchases_per_year": 6,
+        "annual_savings_cents": 83100,
+        "verdict": "worth_it"
+      },
+      "sin-costo": {
+        "annual_fee_cents": null,
+        "break_even_purchases": null,
+        "verdict": "missing_fee"
+      },
+      "sin-ahorro": {
+        "basket_savings_cents": 0,
+        "break_even_purchases": null,
+        "verdict": "not_worth_it"
+      }
+    },
+    "s5-mercado-visita": {
+      "visita-sabado": {
+        "date": "2026-10-13"
+      },
+      "visita-lunes": {
+        "date": "2026-10-13"
+      },
+      "visita-martes": {
+        "date": "2026-10-13"
+      },
+      "visita-miercoles": {
+        "date": "2026-10-20"
+      },
+      "uva": {
+        "quote": {
+          "product": "uva-verde",
+          "store": "tianguis",
+          "presentation": "uva-verde.pieza-1kg",
+          "price_cents": 6000,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "avena": {
+        "quote": {
+          "product": "avena",
+          "store": "bodega",
+          "presentation": "avena.3-minutos-400g",
+          "price_cents": 3600,
+          "size_milli": 400000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      },
+      "avena-en-tianguis": {
+        "quote": null
+      }
+    },
+    "s5-ocr-parseo": {
+      "ticket": {
+        "lines": [
+          {
+            "description": "LECHE ENTERA 1L",
+            "quantity_milli": 2000,
+            "amount_cents": 4800,
+            "confidence": 94
+          },
+          {
+            "description": "MANZANA",
+            "quantity_milli": 750,
+            "amount_cents": 3150,
+            "confidence": 90
+          },
+          {
+            "description": "PAN BLANCO",
+            "quantity_milli": null,
+            "amount_cents": 4500,
+            "confidence": 81
+          },
+          {
+            "description": "BOLSA",
+            "quantity_milli": null,
+            "amount_cents": null,
+            "confidence": 60
+          },
+          {
+            "description": "TOTAL",
+            "quantity_milli": null,
+            "amount_cents": 123450,
+            "confidence": 99
+          },
+          {
+            "description": "GALLETAS MARIAS",
+            "quantity_milli": 3000,
+            "amount_cents": 1200,
+            "confidence": 91
+          }
+        ]
+      }
+    },
+    "s5-precios-viejos": {
+      "despensa": {
+        "stale": [
+          {
+            "product": "p1",
+            "store": "t1",
+            "presentation": "p1-1kg",
+            "observed_date": "2026-10-10",
+            "age_days": 30,
+            "weight": {
+              "num": 60,
+              "den": 61
+            }
+          },
+          {
+            "product": "p3",
+            "store": "t2",
+            "presentation": "p3-1kg",
+            "observed_date": "2026-08-12",
+            "age_days": 89,
+            "weight": {
+              "num": 1,
+              "den": 61
+            }
+          },
+          {
+            "product": "p6",
+            "store": "t2",
+            "presentation": "p6-1kg",
+            "observed_date": "2026-08-31",
+            "age_days": 70,
+            "weight": {
+              "num": 20,
+              "den": 61
+            }
+          }
+        ],
+        "without_price": [
+          "p4",
+          "p5"
+        ]
+      },
+      "despensa-sin-asignar": {
+        "stale": [],
+        "without_price": []
+      }
+    },
+    "s5-profeco-filtro": {
+      "filtro": {
+        "read": 8,
+        "rejected": 0,
+        "filtered_out": 3,
+        "skipped": 0,
+        "loaded": 4,
+        "duplicates": 1,
+        "coverage": [
+          {
+            "chain": "Bodega Aurrerá",
+            "municipality": "Azcapotzalco",
+            "price_count": 1
+          },
+          {
+            "chain": "WAL-MART",
+            "municipality": "GUSTAVO A. MADERO",
+            "price_count": 1
+          },
+          {
+            "chain": "WALMART",
+            "municipality": "AZCAPOTZALCO",
+            "price_count": 1
+          },
+          {
+            "chain": "WALMART",
+            "municipality": "GUSTAVO A. MADERO",
+            "price_count": 1
+          }
+        ],
+        "rejections": []
+      }
+    },
+    "s5-profeco-muestra": {
+      "produccion": {
+        "read": 10,
+        "rejected": 3,
+        "filtered_out": 2,
+        "skipped": 2,
+        "loaded": 2,
+        "duplicates": 1,
+        "coverage": [
+          {
+            "chain": "BODEGA AURRERA",
+            "municipality": "AZCAPOTZALCO",
+            "price_count": 1
+          },
+          {
+            "chain": "WALMART",
+            "municipality": "GUSTAVO A. MADERO",
+            "price_count": 1
+          }
+        ],
+        "rejections": [
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
+            "row": 3
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+            "row": 2
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+            "row": 3
+          }
+        ]
+      },
+      "revision": {
+        "read": 10,
+        "rejected": 3,
+        "filtered_out": 2,
+        "skipped": 1,
+        "loaded": 3,
+        "duplicates": 1,
+        "coverage": [
+          {
+            "chain": "BODEGA AURRERA",
+            "municipality": "AZCAPOTZALCO",
+            "price_count": 2
+          },
+          {
+            "chain": "WALMART",
+            "municipality": "GUSTAVO A. MADERO",
+            "price_count": 1
+          }
+        ],
+        "rejections": [
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-muestra-a.csv",
+            "row": 3
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+            "row": 2
+          },
+          {
+            "file": "oraculo/fixtures/s5/_datos/profeco-muestra-b.csv",
+            "row": 3
+          }
+        ]
+      }
+    },
+    "s5-promocion-vigencia": {
+      "promo-vencida": {
+        "price": {
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "manual"
+        },
+        "references": [],
+        "promotion": null
+      },
+      "promo-vigente": {
+        "price": {
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual"
+        },
+        "references": [],
+        "promotion": {
+          "price_cents": 2500,
+          "observed_date": "2026-10-12"
+        }
+      },
+      "cotiza-arroz": {
+        "quote": {
+          "product": "arroz-grano-largo",
+          "store": "tienda-manual",
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "price_cents": 2900,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      }
+    },
+    "s5-unidad-sustitutos": {
+      "arroz-grano-largo-bodega": {
+        "base_unit_price_cents": 2933,
+        "per": "kg",
+        "exact": {
+          "num": 8800,
+          "den": 3
+        }
+      },
+      "arroz-grano-largo-walmart": {
+        "base_unit_price_cents": 2800,
+        "per": "kg",
+        "exact": {
+          "num": 2800,
+          "den": 1
+        }
+      },
+      "sustituto-crema-cafe-bodega": {
+        "base_unit_price_cents": 12692,
+        "per": "kg",
+        "exact": {
+          "num": 165000,
+          "den": 13
+        }
+      },
+      "sustituto-crema-cafe-walmart": {
+        "base_unit_price_cents": 16406,
+        "per": "kg",
+        "exact": {
+          "num": 65625,
+          "den": 4
+        }
+      },
+      "leche-bodega": {
+        "base_unit_price_cents": 3375,
+        "per": "l",
+        "exact": {
+          "num": 3375,
+          "den": 1
+        }
+      },
+      "leche-walmart": {
+        "base_unit_price_cents": 2833,
+        "per": "l",
+        "exact": {
+          "num": 8500,
+          "den": 3
+        }
+      },
+      "redondeo-g": {
+        "base_unit_price_cents": 15498,
+        "per": "kg",
+        "exact": {
+          "num": 30995,
+          "den": 2
+        }
+      },
+      "redondeo-pieza": {
+        "base_unit_price_cents": 538,
+        "per": "piece",
+        "exact": {
+          "num": 1075,
+          "den": 2
+        }
+      },
+      "exacto-g": {
+        "base_unit_price_cents": 30500,
+        "per": "kg",
+        "exact": {
+          "num": 30500,
+          "den": 1
+        }
+      },
+      "sustitutos-carritos": {
+        "stores": [
+          {
+            "store": "bodega",
+            "total_cents": 30000,
+            "identical_count": 0,
+            "substitute_count": 3,
+            "piece_count": 5,
+            "difference_vs_cheapest_cents": 0
+          },
+          {
+            "store": "walmart",
+            "total_cents": 35900,
+            "identical_count": 0,
+            "substitute_count": 3,
+            "piece_count": 5,
+            "difference_vs_cheapest_cents": 5900
+          }
+        ],
+        "ties": 0,
+        "rows": [
+          {
+            "kind": "substitute",
+            "product": "arroz-grano-largo",
+            "winner_store": "walmart"
+          },
+          {
+            "kind": "substitute",
+            "product": "sustituto-crema-cafe",
+            "winner_store": "bodega"
+          },
+          {
+            "kind": "substitute",
+            "product": "leche",
+            "winner_store": "walmart"
+          }
+        ]
+      }
+    }
+  }
+}

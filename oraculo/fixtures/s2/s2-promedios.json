@@ -1,0 +1,130 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-promedios",
+  "descripcion": "Promedios diario, semanal (K39) y mensual (R-56, R-57) con los meses calendario",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-08"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K20"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K39"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-27"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "horizonte.promedio_mensual_efectivo"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "horizonte.promedio_mensual_devengado"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "oct-2026-efectivo",
+        "funcion": "promedios",
+        "argumentos": {
+          "month": "2026-10",
+          "basis": "cash"
+        }
+      },
+      {
+        "id": "nov-2026-efectivo",
+        "funcion": "promedios",
+        "argumentos": {
+          "month": "2026-11",
+          "basis": "cash"
+        }
+      },
+      {
+        "id": "feb-2027-efectivo",
+        "funcion": "promedios",
+        "argumentos": {
+          "month": "2027-02",
+          "basis": "cash"
+        }
+      },
+      {
+        "id": "oct-2026-devengado-despensa",
+        "funcion": "promedios",
+        "argumentos": {
+          "month": "2026-10",
+          "basis": "accrued_groceries"
+        }
+      },
+      {
+        "id": "oct-2026-total-explicito",
+        "funcion": "promedios",
+        "argumentos": {
+          "total_cents": 97375,
+          "start": "2026-10-01",
+          "end": "2026-10-31"
+        }
+      },
+      {
+        "id": "mensual-efectivo",
+        "funcion": "promedio_mensual",
+        "argumentos": {
+          "total_cents": 1310378,
+          "month_count": 6
+        }
+      },
+      {
+        "id": "mensual-devengado",
+        "funcion": "promedio_mensual",
+        "argumentos": {
+          "total_cents": 1436248,
+          "month_count": 6
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "oct-2026-efectivo": {
+      "days": 31,
+      "daily_cents": 3141,
+      "weekly_cents": 21988
+    },
+    "nov-2026-efectivo": {
+      "days": 30,
+      "daily_cents": 6492,
+      "weekly_cents": 45442
+    },
+    "feb-2027-efectivo": {
+      "days": 28,
+      "daily_cents": 8991,
+      "weekly_cents": 62935
+    },
+    "oct-2026-devengado-despensa": {
+      "days": 31,
+      "daily_cents": 6282,
+      "weekly_cents": 43976
+    },
+    "oct-2026-total-explicito": {
+      "days": 31,
+      "daily_cents": 3141,
+      "weekly_cents": 21988
+    },
+    "mensual-efectivo": {
+      "monthly_cents": 218396
+    },
+    "mensual-devengado": {
+      "monthly_cents": 239375
+    }
+  }
+}

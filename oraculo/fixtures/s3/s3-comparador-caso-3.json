@@ -1,0 +1,1026 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-comparador-caso-3",
+  "descripcion": "Comparador, caso-3: tabla a mano de docs/estado/S3-escenarios.md (S3-12, S3-13, S3-14).",
+  "fuente": [
+    {
+      "tipo": "manual",
+      "ruta": "docs/estado/S3-escenarios.md"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-12"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-13"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-14"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S3-objetivos-medida.md",
+    "que": "serie y desempate del objetivo 2, ventana del colchón y del objetivo 3, tienda y canasta del objetivo 4 y créditos sin límite (preguntas 1 a 4); otros bloqueos: docs/estado/bloqueos/S3-serie-sin-intereses.md (serie de capital de la promoción 0 % y de MSI)"
+  },
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/comparador-caso-3.json"
+    },
+    "consultas": [
+      {
+        "id": "caso-3",
+        "funcion": "comparar",
+        "argumentos": {
+          "timeout_seconds": 5,
+          "request": {
+            "amount_cents": 180000,
+            "desired_date": "2026-11-30",
+            "store_id": null,
+            "merchant_name": "",
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 180000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ],
+            "global": {
+              "min_available_buffer_cents": 350000,
+              "max_live_purchases": 2,
+              "zero_debt_by_date": "2026-12-31",
+              "date_window_days": 1
+            },
+            "override": {
+              "min_available_buffer_cents": 300000,
+              "max_live_purchases": null,
+              "zero_debt_by_date": "2027-02-15",
+              "date_window_days": null
+            },
+            "weights": {
+              "lowest_interest": 1,
+              "even_low_payment": 1,
+              "max_available": 1,
+              "most_value_per_peso": 1
+            },
+            "caps": [
+              {
+                "person": "axel",
+                "cap_cents": 100000
+              }
+            ],
+            "baskets": [
+              {
+                "store_id": 1,
+                "merchant_name": "Tienda Barata",
+                "base_units_milli": 60000,
+                "cost_cents": 200000
+              },
+              {
+                "store_id": 2,
+                "merchant_name": "Tienda Cara",
+                "base_units_milli": 40000,
+                "cost_cents": 200000
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "caso-3": {
+      "status": "ok",
+      "evaluated_count": 31,
+      "valid": [
+        {
+          "credit_id": 1,
+          "term_count": 2,
+          "purchase_date": "2026-11-29",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 31091,
+          "max_fortnight_payment_cents": 134296,
+          "fortnight_payment_spread_cents": 42612,
+          "std_dev_milli_cents": 20087254,
+          "min_available_cents": 1320000,
+          "max_live_purchases": 1,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 26,
+          "score_bp": 7692,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 134296,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 2,
+          "purchase_date": "2026-11-29",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 31091,
+          "max_fortnight_payment_cents": 134296,
+          "fortnight_payment_spread_cents": 42612,
+          "std_dev_milli_cents": 20087254,
+          "min_available_cents": 1320000,
+          "max_live_purchases": 1,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 17,
+          "score_bp": 5817,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 134296,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 2,
+          "purchase_date": "2026-11-30",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 31091,
+          "max_fortnight_payment_cents": 134296,
+          "fortnight_payment_spread_cents": 42612,
+          "std_dev_milli_cents": 20087254,
+          "min_available_cents": 1320000,
+          "max_live_purchases": 1,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 26,
+          "score_bp": 7692,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 134296,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 2,
+          "purchase_date": "2026-11-30",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 31091,
+          "max_fortnight_payment_cents": 134296,
+          "fortnight_payment_spread_cents": 42612,
+          "std_dev_milli_cents": 20087254,
+          "min_available_cents": 1320000,
+          "max_live_purchases": 1,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 17,
+          "score_bp": 5817,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 134296,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 2,
+          "purchase_date": "2026-12-01",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 31091,
+          "max_fortnight_payment_cents": 134296,
+          "fortnight_payment_spread_cents": 105546,
+          "std_dev_milli_cents": 49754626,
+          "min_available_cents": 1320000,
+          "max_live_purchases": 1,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 26,
+          "score_bp": 6839,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 134296,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 2,
+          "purchase_date": "2026-12-01",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 31091,
+          "max_fortnight_payment_cents": 134296,
+          "fortnight_payment_spread_cents": 105546,
+          "std_dev_milli_cents": 49754626,
+          "min_available_cents": 1320000,
+          "max_live_purchases": 1,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 17,
+          "score_bp": 4964,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 134296,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-11-29",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 46563,
+          "max_fortnight_payment_cents": 91684,
+          "fortnight_payment_spread_cents": 35041,
+          "std_dev_milli_cents": 12370748,
+          "min_available_cents": 1205000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 24,
+          "score_bp": 6372,
+          "over_cap": [],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-11-29",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 46563,
+          "max_fortnight_payment_cents": 91684,
+          "fortnight_payment_spread_cents": 35041,
+          "std_dev_milli_cents": 12370748,
+          "min_available_cents": 1205000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 16,
+          "score_bp": 4705,
+          "over_cap": [],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-11-29",
+          "store_id": 2,
+          "promotion_id": 1,
+          "interest_cents": 0,
+          "max_fortnight_payment_cents": 91684,
+          "fortnight_payment_spread_cents": 46684,
+          "std_dev_milli_cents": 14998625,
+          "min_available_cents": 1205000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 20,
+          "score_bp": 7963,
+          "over_cap": [],
+          "provisional": [
+            "S3-objetivos-medida",
+            "S3-serie-sin-intereses"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-11-30",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 46563,
+          "max_fortnight_payment_cents": 91684,
+          "fortnight_payment_spread_cents": 35041,
+          "std_dev_milli_cents": 12370748,
+          "min_available_cents": 1205000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 24,
+          "score_bp": 6372,
+          "over_cap": [],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-11-30",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 46563,
+          "max_fortnight_payment_cents": 91684,
+          "fortnight_payment_spread_cents": 35041,
+          "std_dev_milli_cents": 12370748,
+          "min_available_cents": 1205000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 16,
+          "score_bp": 4705,
+          "over_cap": [],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-12-01",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 46563,
+          "max_fortnight_payment_cents": 306643,
+          "fortnight_payment_spread_cents": 277893,
+          "std_dev_milli_cents": 99293294,
+          "min_available_cents": 1160000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 24,
+          "score_bp": 3756,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 306643,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-12-01",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 46563,
+          "max_fortnight_payment_cents": 306643,
+          "fortnight_payment_spread_cents": 277893,
+          "std_dev_milli_cents": 99293294,
+          "min_available_cents": 1160000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 16,
+          "score_bp": 2090,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 306643,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 2,
+          "term_count": 2,
+          "purchase_date": "2026-12-01",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 14400,
+          "max_fortnight_payment_cents": 125950,
+          "fortnight_payment_spread_cents": 97200,
+          "std_dev_milli_cents": 45820519,
+          "min_available_cents": 345000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-01-15",
+          "value_per_peso_milli": 28,
+          "score_bp": 5765,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 125950,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 2,
+          "term_count": 2,
+          "purchase_date": "2026-12-01",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 14400,
+          "max_fortnight_payment_cents": 125950,
+          "fortnight_payment_spread_cents": 97200,
+          "std_dev_milli_cents": 45820519,
+          "min_available_cents": 345000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-01-15",
+          "value_per_peso_milli": 19,
+          "score_bp": 3890,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 125950,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 2,
+          "term_count": 4,
+          "purchase_date": "2026-12-01",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 27000,
+          "max_fortnight_payment_cents": 301750,
+          "fortnight_payment_spread_cents": 273000,
+          "std_dev_milli_cents": 98482562,
+          "min_available_cents": 345000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 26,
+          "score_bp": 3157,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 301750,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        {
+          "credit_id": 2,
+          "term_count": 4,
+          "purchase_date": "2026-12-01",
+          "store_id": 2,
+          "promotion_id": null,
+          "interest_cents": 27000,
+          "max_fortnight_payment_cents": 301750,
+          "fortnight_payment_spread_cents": 273000,
+          "std_dev_milli_cents": 98482562,
+          "min_available_cents": 345000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 17,
+          "score_bp": 1282,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 301750,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        }
+      ],
+      "rejected": [
+        {
+          "scenario": {
+            "credit_id": 1,
+            "term_count": 6,
+            "purchase_date": "2026-11-29",
+            "store_id": 1,
+            "promotion_id": null,
+            "interest_cents": 63000,
+            "max_fortnight_payment_cents": 290500,
+            "fortnight_payment_spread_cents": 250000,
+            "std_dev_milli_cents": 81201604,
+            "min_available_cents": 1160000,
+            "max_live_purchases": 2,
+            "zero_debt_date": "2027-02-28",
+            "value_per_peso_milli": 22,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 290500,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "zero_debt_by_date"
+        },
+        {
+          "scenario": {
+            "credit_id": 1,
+            "term_count": 6,
+            "purchase_date": "2026-11-29",
+            "store_id": 2,
+            "promotion_id": null,
+            "interest_cents": 63000,
+            "max_fortnight_payment_cents": 290500,
+            "fortnight_payment_spread_cents": 250000,
+            "std_dev_milli_cents": 81201604,
+            "min_available_cents": 1160000,
+            "max_live_purchases": 2,
+            "zero_debt_date": "2027-02-28",
+            "value_per_peso_milli": 15,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 290500,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "zero_debt_by_date"
+        },
+        {
+          "scenario": {
+            "credit_id": 1,
+            "term_count": 6,
+            "purchase_date": "2026-11-30",
+            "store_id": 1,
+            "promotion_id": null,
+            "interest_cents": 63000,
+            "max_fortnight_payment_cents": 290500,
+            "fortnight_payment_spread_cents": 250000,
+            "std_dev_milli_cents": 81201604,
+            "min_available_cents": 1160000,
+            "max_live_purchases": 2,
+            "zero_debt_date": "2027-02-28",
+            "value_per_peso_milli": 22,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 290500,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "zero_debt_by_date"
+        },
+        {
+          "scenario": {
+            "credit_id": 1,
+            "term_count": 6,
+            "purchase_date": "2026-11-30",
+            "store_id": 2,
+            "promotion_id": null,
+            "interest_cents": 63000,
+            "max_fortnight_payment_cents": 290500,
+            "fortnight_payment_spread_cents": 250000,
+            "std_dev_milli_cents": 81201604,
+            "min_available_cents": 1160000,
+            "max_live_purchases": 2,
+            "zero_debt_date": "2027-02-28",
+            "value_per_peso_milli": 15,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 290500,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "zero_debt_by_date"
+        },
+        {
+          "scenario": {
+            "credit_id": 1,
+            "term_count": 6,
+            "purchase_date": "2026-12-01",
+            "store_id": 1,
+            "promotion_id": null,
+            "interest_cents": 63000,
+            "max_fortnight_payment_cents": 290500,
+            "fortnight_payment_spread_cents": 261750,
+            "std_dev_milli_cents": 86019724,
+            "min_available_cents": 1130000,
+            "max_live_purchases": 2,
+            "zero_debt_date": "2027-03-15",
+            "value_per_peso_milli": 22,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 290500,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "zero_debt_by_date"
+        },
+        {
+          "scenario": {
+            "credit_id": 1,
+            "term_count": 6,
+            "purchase_date": "2026-12-01",
+            "store_id": 2,
+            "promotion_id": null,
+            "interest_cents": 63000,
+            "max_fortnight_payment_cents": 290500,
+            "fortnight_payment_spread_cents": 261750,
+            "std_dev_milli_cents": 86019724,
+            "min_available_cents": 1130000,
+            "max_live_purchases": 2,
+            "zero_debt_date": "2027-03-15",
+            "value_per_peso_milli": 15,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 290500,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "zero_debt_by_date"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 2,
+            "purchase_date": "2026-11-29",
+            "store_id": 1,
+            "promotion_id": null,
+            "interest_cents": 14400,
+            "max_fortnight_payment_cents": 125950,
+            "fortnight_payment_spread_cents": 34266,
+            "std_dev_milli_cents": 16153147,
+            "min_available_cents": 261725,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-15",
+            "value_per_peso_milli": 28,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 125950,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "min_available_buffer"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 2,
+            "purchase_date": "2026-11-29",
+            "store_id": 2,
+            "promotion_id": null,
+            "interest_cents": 14400,
+            "max_fortnight_payment_cents": 125950,
+            "fortnight_payment_spread_cents": 34266,
+            "std_dev_milli_cents": 16153147,
+            "min_available_cents": 261725,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-15",
+            "value_per_peso_milli": 19,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 125950,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "min_available_buffer"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 2,
+            "purchase_date": "2026-11-30",
+            "store_id": 1,
+            "promotion_id": null,
+            "interest_cents": 14400,
+            "max_fortnight_payment_cents": 125950,
+            "fortnight_payment_spread_cents": 34266,
+            "std_dev_milli_cents": 16153147,
+            "min_available_cents": 345000,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-15",
+            "value_per_peso_milli": 28,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 125950,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "max_live_purchases"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 2,
+            "purchase_date": "2026-11-30",
+            "store_id": 2,
+            "promotion_id": null,
+            "interest_cents": 14400,
+            "max_fortnight_payment_cents": 125950,
+            "fortnight_payment_spread_cents": 34266,
+            "std_dev_milli_cents": 16153147,
+            "min_available_cents": 345000,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-15",
+            "value_per_peso_milli": 19,
+            "score_bp": null,
+            "over_cap": [
+              {
+                "person": "axel",
+                "peak_cents": 125950,
+                "cap_cents": 100000
+              }
+            ],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "max_live_purchases"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 4,
+            "purchase_date": "2026-11-29",
+            "store_id": 1,
+            "promotion_id": null,
+            "interest_cents": 27000,
+            "max_fortnight_payment_cents": 91684,
+            "fortnight_payment_spread_cents": 39934,
+            "std_dev_milli_cents": 13341151,
+            "min_available_cents": 261725,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-30",
+            "value_per_peso_milli": 26,
+            "score_bp": null,
+            "over_cap": [],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "min_available_buffer"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 4,
+            "purchase_date": "2026-11-29",
+            "store_id": 2,
+            "promotion_id": null,
+            "interest_cents": 27000,
+            "max_fortnight_payment_cents": 91684,
+            "fortnight_payment_spread_cents": 39934,
+            "std_dev_milli_cents": 13341151,
+            "min_available_cents": 261725,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-30",
+            "value_per_peso_milli": 17,
+            "score_bp": null,
+            "over_cap": [],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "min_available_buffer"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 4,
+            "purchase_date": "2026-11-30",
+            "store_id": 1,
+            "promotion_id": null,
+            "interest_cents": 27000,
+            "max_fortnight_payment_cents": 91684,
+            "fortnight_payment_spread_cents": 39934,
+            "std_dev_milli_cents": 13341151,
+            "min_available_cents": 345000,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-30",
+            "value_per_peso_milli": 26,
+            "score_bp": null,
+            "over_cap": [],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "max_live_purchases"
+        },
+        {
+          "scenario": {
+            "credit_id": 2,
+            "term_count": 4,
+            "purchase_date": "2026-11-30",
+            "store_id": 2,
+            "promotion_id": null,
+            "interest_cents": 27000,
+            "max_fortnight_payment_cents": 91684,
+            "fortnight_payment_spread_cents": 39934,
+            "std_dev_milli_cents": 13341151,
+            "min_available_cents": 345000,
+            "max_live_purchases": 3,
+            "zero_debt_date": "2027-01-30",
+            "value_per_peso_milli": 17,
+            "score_bp": null,
+            "over_cap": [],
+            "provisional": [
+              "S3-objetivos-medida"
+            ]
+          },
+          "violated_constraint": "max_live_purchases"
+        }
+      ],
+      "optima": {
+        "lowest_interest": {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-11-29",
+          "store_id": 2,
+          "promotion_id": 1,
+          "interest_cents": 0,
+          "max_fortnight_payment_cents": 91684,
+          "fortnight_payment_spread_cents": 46684,
+          "std_dev_milli_cents": 14998625,
+          "min_available_cents": 1205000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 20,
+          "score_bp": 7963,
+          "over_cap": [],
+          "provisional": [
+            "S3-objetivos-medida",
+            "S3-serie-sin-intereses"
+          ]
+        },
+        "even_low_payment": {
+          "credit_id": 1,
+          "term_count": 4,
+          "purchase_date": "2026-11-29",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 46563,
+          "max_fortnight_payment_cents": 91684,
+          "fortnight_payment_spread_cents": 35041,
+          "std_dev_milli_cents": 12370748,
+          "min_available_cents": 1205000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 24,
+          "score_bp": 6372,
+          "over_cap": [],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        "max_available": {
+          "credit_id": 1,
+          "term_count": 2,
+          "purchase_date": "2026-11-29",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 31091,
+          "max_fortnight_payment_cents": 134296,
+          "fortnight_payment_spread_cents": 42612,
+          "std_dev_milli_cents": 20087254,
+          "min_available_cents": 1320000,
+          "max_live_purchases": 1,
+          "zero_debt_date": "2027-02-15",
+          "value_per_peso_milli": 26,
+          "score_bp": 7692,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 134296,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        },
+        "most_value_per_peso": {
+          "credit_id": 2,
+          "term_count": 2,
+          "purchase_date": "2026-12-01",
+          "store_id": 1,
+          "promotion_id": null,
+          "interest_cents": 14400,
+          "max_fortnight_payment_cents": 125950,
+          "fortnight_payment_spread_cents": 97200,
+          "std_dev_milli_cents": 45820519,
+          "min_available_cents": 345000,
+          "max_live_purchases": 2,
+          "zero_debt_date": "2027-01-15",
+          "value_per_peso_milli": 28,
+          "score_bp": 5765,
+          "over_cap": [
+            {
+              "person": "axel",
+              "peak_cents": 125950,
+              "cap_cents": 100000
+            }
+          ],
+          "provisional": [
+            "S3-objetivos-medida"
+          ]
+        }
+      },
+      "recommendation": {
+        "credit_id": 1,
+        "term_count": 4,
+        "purchase_date": "2026-11-29",
+        "store_id": 2,
+        "promotion_id": 1,
+        "interest_cents": 0,
+        "max_fortnight_payment_cents": 91684,
+        "fortnight_payment_spread_cents": 46684,
+        "std_dev_milli_cents": 14998625,
+        "min_available_cents": 1205000,
+        "max_live_purchases": 2,
+        "zero_debt_date": "2027-02-15",
+        "value_per_peso_milli": 20,
+        "score_bp": 7963,
+        "over_cap": [],
+        "provisional": [
+          "S3-objetivos-medida",
+          "S3-serie-sin-intereses"
+        ]
+      },
+      "excluded": [
+        {
+          "credit_id": 4,
+          "reason": "no_limit"
+        }
+      ],
+      "provisional": [
+        "S3-objetivos-medida",
+        "S3-serie-sin-intereses"
+      ]
+    }
+  }
+}

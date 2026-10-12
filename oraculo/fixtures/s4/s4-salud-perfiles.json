@@ -1,0 +1,650 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-salud-perfiles",
+  "descripcion": "S4-07, RN-17, K7, K23, K36 (personas ficticias; hoy 2026-10-11; casa: bajar 300, subir 250 como fixture, no canon). Cálculo a mano en `fuente`/descripción: hombre 30 años, 80 kg, 175 cm, sedentary: MSJ 1748.75, x1.2 = 2098.50 -> 2099 (mantener, con ajustes 300/300 también 2099); bajar con la casa 300: 1798.50 -> 1799; bajar con 100 propios: 1998.50 -> 1999; mujer 28 años, 60 kg, 165 cm: MSJ 1330.25, x1.2 = 1596.30 -> 1596; subir con la casa 250: 1846.30 -> 1846; RN-17: hombre 35 años, 72.5 kg, 175 cm, moderate: 1648.75 x1.55 = 2555.5625 -> 2556, bajar 500 propios 2056; víspera de cumpleaños (29 años): 2104.50 -> 2105 (HALF_UP); meta escrita 1900 reemplaza a la sugerida (2099); sin insumos: sin sugerencia (none). IMC (estatura 2000 mm): 70 kg 17.5 underweight; 74 kg 18.5 normal; 100 kg 25.0 overweight; 120 kg 30.0 obesity; 72.5 kg y 1750 mm 23.7 normal; 80 kg y 1750 mm 26.1; el peso vigente es el más reciente (80 kg, no 85).",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-07"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-17"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K36"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "cuentas en la descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [],
+        "products": [],
+        "presentations": []
+      },
+      "recipes": [],
+      "persons": [
+        {
+          "code": "h30-mantener",
+          "has_meal_plan": true
+        },
+        {
+          "code": "h30-bajar-casa",
+          "has_meal_plan": true
+        },
+        {
+          "code": "h30-bajar-propio",
+          "has_meal_plan": true
+        },
+        {
+          "code": "h30-mantener-ajustes",
+          "has_meal_plan": true
+        },
+        {
+          "code": "m28-mantener",
+          "has_meal_plan": true
+        },
+        {
+          "code": "m28-subir-casa",
+          "has_meal_plan": true
+        },
+        {
+          "code": "h35-rn17",
+          "has_meal_plan": true
+        },
+        {
+          "code": "h35-rn17-bajar",
+          "has_meal_plan": true
+        },
+        {
+          "code": "h29-vispera",
+          "has_meal_plan": true
+        },
+        {
+          "code": "meta-escrita",
+          "has_meal_plan": true
+        },
+        {
+          "code": "imc-bajo",
+          "has_meal_plan": true
+        },
+        {
+          "code": "imc-18-5",
+          "has_meal_plan": true
+        },
+        {
+          "code": "imc-25-0",
+          "has_meal_plan": true
+        },
+        {
+          "code": "imc-30-0",
+          "has_meal_plan": true
+        },
+        {
+          "code": "sin-datos",
+          "has_meal_plan": true
+        }
+      ],
+      "health_profiles": [
+        {
+          "person": "h30-mantener",
+          "height_mm": 1750,
+          "birth_date": "1996-10-11",
+          "sex": "male",
+          "activity": "sedentary",
+          "goal": "maintain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "h30-bajar-casa",
+          "height_mm": 1750,
+          "birth_date": "1996-10-11",
+          "sex": "male",
+          "activity": "sedentary",
+          "goal": "lose",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "h30-bajar-propio",
+          "height_mm": 1750,
+          "birth_date": "1996-10-11",
+          "sex": "male",
+          "activity": "sedentary",
+          "goal": "lose",
+          "adjust_lose_kcal": 100,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "h30-mantener-ajustes",
+          "height_mm": 1750,
+          "birth_date": "1996-10-11",
+          "sex": "male",
+          "activity": "sedentary",
+          "goal": "maintain",
+          "adjust_lose_kcal": 300,
+          "adjust_gain_kcal": 300,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "m28-mantener",
+          "height_mm": 1650,
+          "birth_date": "1998-03-15",
+          "sex": "female",
+          "activity": "sedentary",
+          "goal": "maintain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "m28-subir-casa",
+          "height_mm": 1650,
+          "birth_date": "1998-03-15",
+          "sex": "female",
+          "activity": "sedentary",
+          "goal": "gain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "h35-rn17",
+          "height_mm": 1750,
+          "birth_date": "1991-06-01",
+          "sex": "male",
+          "activity": "moderate",
+          "goal": "maintain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "h35-rn17-bajar",
+          "height_mm": 1750,
+          "birth_date": "1991-06-01",
+          "sex": "male",
+          "activity": "moderate",
+          "goal": "lose",
+          "adjust_lose_kcal": 500,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "h29-vispera",
+          "height_mm": 1750,
+          "birth_date": "1996-10-12",
+          "sex": "male",
+          "activity": "sedentary",
+          "goal": "maintain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "meta-escrita",
+          "height_mm": 1750,
+          "birth_date": "1996-10-11",
+          "sex": "male",
+          "activity": "sedentary",
+          "goal": "maintain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": 1900,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "imc-bajo",
+          "height_mm": 2000,
+          "birth_date": null,
+          "sex": null,
+          "activity": null,
+          "goal": null,
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "imc-18-5",
+          "height_mm": 2000,
+          "birth_date": null,
+          "sex": null,
+          "activity": null,
+          "goal": null,
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "imc-25-0",
+          "height_mm": 2000,
+          "birth_date": null,
+          "sex": null,
+          "activity": null,
+          "goal": null,
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "imc-30-0",
+          "height_mm": 2000,
+          "birth_date": null,
+          "sex": null,
+          "activity": null,
+          "goal": null,
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "sin-datos",
+          "height_mm": null,
+          "birth_date": null,
+          "sex": null,
+          "activity": null,
+          "goal": null,
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        }
+      ],
+      "weights": [
+        {
+          "person": "h30-mantener",
+          "date": "2026-01-05",
+          "weight_g": 85000
+        },
+        {
+          "person": "h30-mantener",
+          "date": "2026-10-01",
+          "weight_g": 80000
+        },
+        {
+          "person": "h30-bajar-casa",
+          "date": "2026-10-01",
+          "weight_g": 80000
+        },
+        {
+          "person": "h30-bajar-propio",
+          "date": "2026-10-01",
+          "weight_g": 80000
+        },
+        {
+          "person": "h30-mantener-ajustes",
+          "date": "2026-10-01",
+          "weight_g": 80000
+        },
+        {
+          "person": "m28-mantener",
+          "date": "2026-10-01",
+          "weight_g": 60000
+        },
+        {
+          "person": "m28-subir-casa",
+          "date": "2026-10-01",
+          "weight_g": 60000
+        },
+        {
+          "person": "h35-rn17",
+          "date": "2026-10-01",
+          "weight_g": 72500
+        },
+        {
+          "person": "h35-rn17-bajar",
+          "date": "2026-10-01",
+          "weight_g": 72500
+        },
+        {
+          "person": "h29-vispera",
+          "date": "2026-10-01",
+          "weight_g": 80000
+        },
+        {
+          "person": "meta-escrita",
+          "date": "2026-10-01",
+          "weight_g": 80000
+        },
+        {
+          "person": "imc-bajo",
+          "date": "2026-10-01",
+          "weight_g": 70000
+        },
+        {
+          "person": "imc-18-5",
+          "date": "2026-10-01",
+          "weight_g": 74000
+        },
+        {
+          "person": "imc-25-0",
+          "date": "2026-10-01",
+          "weight_g": 100000
+        },
+        {
+          "person": "imc-30-0",
+          "date": "2026-10-01",
+          "weight_g": 120000
+        }
+      ],
+      "settings": {
+        "house_adjust_lose_kcal": 300,
+        "house_adjust_gain_kcal": 250
+      }
+    },
+    "consultas": [
+      {
+        "id": "h30-mantener",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h30-mantener"
+        }
+      },
+      {
+        "id": "h30-bajar-casa",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h30-bajar-casa"
+        }
+      },
+      {
+        "id": "h30-bajar-propio",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h30-bajar-propio"
+        }
+      },
+      {
+        "id": "h30-mantener-ajustes",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h30-mantener-ajustes"
+        }
+      },
+      {
+        "id": "m28-mantener",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "m28-mantener"
+        }
+      },
+      {
+        "id": "m28-subir-casa",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "m28-subir-casa"
+        }
+      },
+      {
+        "id": "h35-rn17",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h35-rn17"
+        }
+      },
+      {
+        "id": "h35-rn17-bajar",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h35-rn17-bajar"
+        }
+      },
+      {
+        "id": "h29-vispera",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h29-vispera"
+        }
+      },
+      {
+        "id": "meta-escrita",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "meta-escrita"
+        }
+      },
+      {
+        "id": "imc-bajo",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "imc-bajo"
+        }
+      },
+      {
+        "id": "imc-18-5",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "imc-18-5"
+        }
+      },
+      {
+        "id": "imc-25-0",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "imc-25-0"
+        }
+      },
+      {
+        "id": "imc-30-0",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "imc-30-0"
+        }
+      },
+      {
+        "id": "sin-datos",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "sin-datos"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "h30-mantener": {
+      "person": "h30-mantener",
+      "age": 30,
+      "bmi_tenths": 261,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": {
+        "num": 4197,
+        "den": 2
+      },
+      "suggested_kcal_target": 2099,
+      "daily_kcal_target": 2099,
+      "target_status": "suggested"
+    },
+    "h30-bajar-casa": {
+      "person": "h30-bajar-casa",
+      "age": 30,
+      "bmi_tenths": 261,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": {
+        "num": 3597,
+        "den": 2
+      },
+      "suggested_kcal_target": 1799,
+      "daily_kcal_target": 1799,
+      "target_status": "suggested"
+    },
+    "h30-bajar-propio": {
+      "person": "h30-bajar-propio",
+      "age": 30,
+      "bmi_tenths": 261,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": {
+        "num": 3997,
+        "den": 2
+      },
+      "suggested_kcal_target": 1999,
+      "daily_kcal_target": 1999,
+      "target_status": "suggested"
+    },
+    "h30-mantener-ajustes": {
+      "person": "h30-mantener-ajustes",
+      "age": 30,
+      "bmi_tenths": 261,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": {
+        "num": 4197,
+        "den": 2
+      },
+      "suggested_kcal_target": 2099,
+      "daily_kcal_target": 2099,
+      "target_status": "suggested"
+    },
+    "m28-mantener": {
+      "person": "m28-mantener",
+      "age": 28,
+      "bmi_tenths": 220,
+      "bmi_class": "normal",
+      "suggested_kcal_exact": {
+        "num": 15963,
+        "den": 10
+      },
+      "suggested_kcal_target": 1596,
+      "daily_kcal_target": 1596,
+      "target_status": "suggested"
+    },
+    "m28-subir-casa": {
+      "person": "m28-subir-casa",
+      "age": 28,
+      "bmi_tenths": 220,
+      "bmi_class": "normal",
+      "suggested_kcal_exact": {
+        "num": 18463,
+        "den": 10
+      },
+      "suggested_kcal_target": 1846,
+      "daily_kcal_target": 1846,
+      "target_status": "suggested"
+    },
+    "h35-rn17": {
+      "person": "h35-rn17",
+      "age": 35,
+      "bmi_tenths": 237,
+      "bmi_class": "normal",
+      "suggested_kcal_exact": {
+        "num": 40889,
+        "den": 16
+      },
+      "suggested_kcal_target": 2556,
+      "daily_kcal_target": 2556,
+      "target_status": "suggested"
+    },
+    "h35-rn17-bajar": {
+      "person": "h35-rn17-bajar",
+      "age": 35,
+      "bmi_tenths": 237,
+      "bmi_class": "normal",
+      "suggested_kcal_exact": {
+        "num": 32889,
+        "den": 16
+      },
+      "suggested_kcal_target": 2056,
+      "daily_kcal_target": 2056,
+      "target_status": "suggested"
+    },
+    "h29-vispera": {
+      "person": "h29-vispera",
+      "age": 29,
+      "bmi_tenths": 261,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": {
+        "num": 4209,
+        "den": 2
+      },
+      "suggested_kcal_target": 2105,
+      "daily_kcal_target": 2105,
+      "target_status": "suggested"
+    },
+    "meta-escrita": {
+      "person": "meta-escrita",
+      "age": 30,
+      "bmi_tenths": 261,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": {
+        "num": 4197,
+        "den": 2
+      },
+      "suggested_kcal_target": 2099,
+      "daily_kcal_target": 1900,
+      "target_status": "confirmed"
+    },
+    "imc-bajo": {
+      "person": "imc-bajo",
+      "age": null,
+      "bmi_tenths": 175,
+      "bmi_class": "underweight",
+      "suggested_kcal_exact": null,
+      "suggested_kcal_target": null,
+      "daily_kcal_target": null,
+      "target_status": "none"
+    },
+    "imc-18-5": {
+      "person": "imc-18-5",
+      "age": null,
+      "bmi_tenths": 185,
+      "bmi_class": "normal",
+      "suggested_kcal_exact": null,
+      "suggested_kcal_target": null,
+      "daily_kcal_target": null,
+      "target_status": "none"
+    },
+    "imc-25-0": {
+      "person": "imc-25-0",
+      "age": null,
+      "bmi_tenths": 250,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": null,
+      "suggested_kcal_target": null,
+      "daily_kcal_target": null,
+      "target_status": "none"
+    },
+    "imc-30-0": {
+      "person": "imc-30-0",
+      "age": null,
+      "bmi_tenths": 300,
+      "bmi_class": "obesity",
+      "suggested_kcal_exact": null,
+      "suggested_kcal_target": null,
+      "daily_kcal_target": null,
+      "target_status": "none"
+    },
+    "sin-datos": {
+      "person": "sin-datos",
+      "age": null,
+      "bmi_tenths": null,
+      "bmi_class": null,
+      "suggested_kcal_exact": null,
+      "suggested_kcal_target": null,
+      "daily_kcal_target": null,
+      "target_status": "none"
+    }
+  }
+}

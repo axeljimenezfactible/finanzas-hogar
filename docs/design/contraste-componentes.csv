@@ -1,0 +1,317 @@
+id,componente,estado,tema,par,token_frente,token_fondo,hex_frente,hex_fondo,razon,tipo,umbral,cumple,cruce_contraste_csv
+C-001,Botón primario,reposo · texto,claro,ui.text.on-primary sobre ui.action.primary.bg,color.base.white,color.brand.700,#FFFFFF,#5D609F,5.77,texto 4.5,4.5,true,igual
+C-001,Botón primario,reposo · texto,oscuro,ui.text.on-primary sobre ui.action.primary.bg,color.brand.950,color.brand.300,#1E203A,#C9CFFF,10.47,texto 4.5,4.5,true,igual
+C-002,Botón primario,reposo · relleno sobre página,claro,ui.action.primary.bg sobre ui.surface.page,color.brand.700,color.neutral.50,#5D609F,#FAFAFB,5.53,interfaz 3,3.0,true,igual
+C-002,Botón primario,reposo · relleno sobre página,oscuro,ui.action.primary.bg sobre ui.surface.page,color.brand.300,color.neutral.950,#C9CFFF,#222325,10.37,interfaz 3,3.0,true,igual
+C-003,Botón primario,reposo · relleno sobre tarjeta,claro,ui.action.primary.bg sobre ui.surface.card,color.brand.700,color.neutral.100,#5D609F,#F2F2F4,5.16,interfaz 3,3.0,true,igual
+C-003,Botón primario,reposo · relleno sobre tarjeta,oscuro,ui.action.primary.bg sobre ui.surface.card,color.brand.300,color.neutral.900,#C9CFFF,#36363A,7.93,interfaz 3,3.0,true,igual
+C-004,Botón primario,hover · texto,claro,ui.text.on-primary sobre ui.action.primary.bg-hover,color.base.white,color.brand.800,#FFFFFF,#46487B,8.49,texto 4.5,4.5,true,igual
+C-004,Botón primario,hover · texto,oscuro,ui.text.on-primary sobre ui.action.primary.bg-hover,color.brand.950,color.brand.200,#1E203A,#E1E4FF,12.65,texto 4.5,4.5,true,igual
+C-005,Botón primario,presionado · texto,claro,ui.text.on-primary sobre ui.action.primary.bg-pressed,color.base.white,color.brand.900,#FFFFFF,#303258,12.18,texto 4.5,4.5,true,nuevo
+C-005,Botón primario,presionado · texto,oscuro,ui.text.on-primary sobre ui.action.primary.bg-pressed,color.brand.950,color.brand.100,#1E203A,#F0F1FF,14.15,texto 4.5,4.5,true,nuevo
+C-006,Todos los controles,foco · anillo sobre página,claro,ui.border.focus sobre ui.surface.page,color.brand.600,color.neutral.50,#7579C2,#FAFAFB,3.81,interfaz 3,3.0,true,igual
+C-006,Todos los controles,foco · anillo sobre página,oscuro,ui.border.focus sobre ui.surface.page,color.brand.400,color.neutral.950,#ADB3F4,#222325,7.88,interfaz 3,3.0,true,igual
+C-007,Todos los controles,foco · anillo sobre tarjeta,claro,ui.border.focus sobre ui.surface.card,color.brand.600,color.neutral.100,#7579C2,#F2F2F4,3.56,interfaz 3,3.0,true,igual
+C-007,Todos los controles,foco · anillo sobre tarjeta,oscuro,ui.border.focus sobre ui.surface.card,color.brand.400,color.neutral.900,#ADB3F4,#36363A,6.03,interfaz 3,3.0,true,igual
+C-008,Todos los controles,foco · anillo sobre fila seleccionada,claro,ui.border.focus sobre ui.surface.selected,color.brand.600,color.brand.100,#7579C2,#F0F1FF,3.55,interfaz 3,3.0,true,nuevo
+C-008,Todos los controles,foco · anillo sobre fila seleccionada,oscuro,ui.border.focus sobre ui.surface.selected,color.brand.400,color.brand.900,#ADB3F4,#303258,6.11,interfaz 3,3.0,true,nuevo
+C-009,Botón secundario,reposo · texto,claro,ui.text.default sobre ui.surface.page,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-009,Botón secundario,reposo · texto,oscuro,ui.text.default sobre ui.surface.page,color.neutral.100,color.neutral.950,#F2F2F4,#222325,14.06,texto 4.5,4.5,true,igual
+C-010,Botón secundario,reposo · borde sobre página,claro,ui.border.control sobre ui.surface.page,color.neutral.600,color.neutral.50,#808189,#FAFAFB,3.71,interfaz 3,3.0,true,igual
+C-010,Botón secundario,reposo · borde sobre página,oscuro,ui.border.control sobre ui.surface.page,color.neutral.400,color.neutral.950,#B7B8C0,#222325,7.96,interfaz 3,3.0,true,igual
+C-011,Botón secundario,reposo · borde sobre tarjeta,claro,ui.border.control sobre ui.surface.card,color.neutral.600,color.neutral.100,#808189,#F2F2F4,3.46,interfaz 3,3.0,true,igual
+C-011,Botón secundario,reposo · borde sobre tarjeta,oscuro,ui.border.control sobre ui.surface.card,color.neutral.400,color.neutral.900,#B7B8C0,#36363A,6.08,interfaz 3,3.0,true,igual
+C-012,Botón secundario,hover · texto,claro,ui.text.default sobre ui.surface.hover,color.neutral.900,color.neutral.200,#36363A,#E5E6E9,9.63,texto 4.5,4.5,true,igual
+C-012,Botón secundario,hover · texto,oscuro,ui.text.default sobre ui.surface.hover,color.neutral.100,color.neutral.800,#F2F2F4,#4D4E53,7.42,texto 4.5,4.5,true,igual
+C-013,Botón secundario,hover · borde sobre página,claro,ui.border.control-hover sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,interfaz 3,3.0,true,igual
+C-013,Botón secundario,hover · borde sobre página,oscuro,ui.border.control-hover sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,interfaz 3,3.0,true,igual
+C-014,Botón secundario,presionado · texto,claro,ui.text.default sobre ui.surface.pressed,color.neutral.900,color.neutral.300,#36363A,#D1D2D8,7.97,texto 4.5,4.5,true,nuevo
+C-014,Botón secundario,presionado · texto,oscuro,ui.text.default sobre ui.surface.pressed,color.neutral.100,color.neutral.700,#F2F2F4,#66676E,5.03,texto 4.5,4.5,true,nuevo
+C-015,Botón de texto,reposo · texto sobre página,claro,ui.text.secondary sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-015,Botón de texto,reposo · texto sobre página,oscuro,ui.text.secondary sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,texto 4.5,4.5,true,igual
+C-016,Botón de texto,reposo · texto sobre tarjeta,claro,ui.text.secondary sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-016,Botón de texto,reposo · texto sobre tarjeta,oscuro,ui.text.secondary sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-017,Botón de icono,reposo · icono sobre página,claro,ui.icon.default sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,interfaz 3,3.0,true,igual
+C-017,Botón de icono,reposo · icono sobre página,oscuro,ui.icon.default sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,interfaz 3,3.0,true,igual
+C-018,Botón de icono,reposo · icono sobre tarjeta,claro,ui.icon.default sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,interfaz 3,3.0,true,igual
+C-018,Botón de icono,reposo · icono sobre tarjeta,oscuro,ui.icon.default sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,interfaz 3,3.0,true,igual
+C-019,Botón de icono,presionado · icono,claro,ui.text.default sobre ui.surface.pressed,color.neutral.900,color.neutral.300,#36363A,#D1D2D8,7.97,interfaz 3,3.0,true,nuevo
+C-019,Botón de icono,presionado · icono,oscuro,ui.text.default sobre ui.surface.pressed,color.neutral.100,color.neutral.700,#F2F2F4,#66676E,5.03,interfaz 3,3.0,true,nuevo
+C-020,Botón destructivo,reposo · texto,claro,ui.text.on-destructive sobre ui.action.destructive.bg,color.base.white,color.role.error.700,#FFFFFF,#A34449,6.03,texto 4.5,4.5,true,igual
+C-020,Botón destructivo,reposo · texto,oscuro,ui.text.on-destructive sobre ui.action.destructive.bg,color.role.error.950,color.role.error.300,#3C1416,#FFC0BF,10.38,texto 4.5,4.5,true,igual
+C-021,Botón destructivo,hover · texto,claro,ui.text.on-destructive sobre ui.action.destructive.bg-hover,color.base.white,color.role.error.800,#FFFFFF,#7E3236,8.76,texto 4.5,4.5,true,igual
+C-021,Botón destructivo,hover · texto,oscuro,ui.text.on-destructive sobre ui.action.destructive.bg-hover,color.role.error.950,color.role.error.200,#3C1416,#FFDDDC,12.75,texto 4.5,4.5,true,igual
+C-022,Botón destructivo,presionado · texto,claro,ui.text.on-destructive sobre ui.action.destructive.bg-pressed,color.base.white,color.role.error.900,#FFFFFF,#5A2124,12.51,texto 4.5,4.5,true,nuevo
+C-022,Botón destructivo,presionado · texto,oscuro,ui.text.on-destructive sobre ui.action.destructive.bg-pressed,color.role.error.950,color.role.error.100,#3C1416,#FFEEED,14.34,texto 4.5,4.5,true,nuevo
+C-023,Botón destructivo,reposo · relleno sobre diálogo,claro,ui.action.destructive.bg sobre ui.surface.raised,color.role.error.700,color.neutral.50,#A34449,#FAFAFB,5.78,interfaz 3,3.0,true,igual
+C-023,Botón destructivo,reposo · relleno sobre diálogo,oscuro,ui.action.destructive.bg sobre ui.surface.raised,color.role.error.300,color.neutral.900,#FFC0BF,#36363A,7.75,interfaz 3,3.0,true,igual
+C-024,Botón de acción crítica,reposo · texto,claro,ui.text.on-critical sobre ui.action.critical.bg,color.base.white,color.critical.700,#FFFFFF,#766800,5.59,texto 4.5,4.5,true,igual
+C-024,Botón de acción crítica,reposo · texto,oscuro,ui.text.on-critical sobre ui.action.critical.bg,color.critical.950,color.critical.300,#292300,#E0D58E,10.54,texto 4.5,4.5,true,igual
+C-025,Botón de acción crítica,hover · texto,claro,ui.text.on-critical sobre ui.action.critical.bg-hover,color.base.white,color.critical.800,#FFFFFF,#5A4F00,8.22,texto 4.5,4.5,true,igual
+C-025,Botón de acción crítica,hover · texto,oscuro,ui.text.on-critical sobre ui.action.critical.bg-hover,color.critical.950,color.critical.200,#292300,#EEE8BD,12.67,texto 4.5,4.5,true,igual
+C-026,Botón de acción crítica,presionado · texto,claro,ui.text.on-critical sobre ui.action.critical.bg-pressed,color.base.white,color.critical.900,#FFFFFF,#3F3700,11.94,texto 4.5,4.5,true,nuevo
+C-026,Botón de acción crítica,presionado · texto,oscuro,ui.text.on-critical sobre ui.action.critical.bg-pressed,color.critical.950,color.critical.100,#292300,#F8F4D9,14.18,texto 4.5,4.5,true,nuevo
+C-027,Botón de acción crítica,reposo · relleno sobre diálogo,claro,ui.action.critical.bg sobre ui.surface.raised,color.critical.700,color.neutral.50,#766800,#FAFAFB,5.36,interfaz 3,3.0,true,igual
+C-027,Botón de acción crítica,reposo · relleno sobre diálogo,oscuro,ui.action.critical.bg sobre ui.surface.raised,color.critical.300,color.neutral.900,#E0D58E,#36363A,8.06,interfaz 3,3.0,true,igual
+C-028,Botones (todos),deshabilitado · texto,claro,ui.text.disabled sobre ui.surface.disabled,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-028,Botones (todos),deshabilitado · texto,oscuro,ui.text.disabled sobre ui.surface.disabled,color.neutral.400,color.neutral.900,#B7B8C0,#36363A,6.08,texto 4.5,4.5,true,igual
+C-029,Enlace,reposo · sobre página,claro,ui.text.link sobre ui.surface.page,color.brand.700,color.neutral.50,#5D609F,#FAFAFB,5.53,texto 4.5,4.5,true,igual
+C-029,Enlace,reposo · sobre página,oscuro,ui.text.link sobre ui.surface.page,color.brand.300,color.neutral.950,#C9CFFF,#222325,10.37,texto 4.5,4.5,true,igual
+C-030,Enlace,reposo · sobre tarjeta,claro,ui.text.link sobre ui.surface.card,color.brand.700,color.neutral.100,#5D609F,#F2F2F4,5.16,texto 4.5,4.5,true,igual
+C-030,Enlace,reposo · sobre tarjeta,oscuro,ui.text.link sobre ui.surface.card,color.brand.300,color.neutral.900,#C9CFFF,#36363A,7.93,texto 4.5,4.5,true,igual
+C-031,Enlace,hover · sobre página,claro,ui.text.link-hover sobre ui.surface.page,color.brand.800,color.neutral.50,#46487B,#FAFAFB,8.13,texto 4.5,4.5,true,igual
+C-031,Enlace,hover · sobre página,oscuro,ui.text.link-hover sobre ui.surface.page,color.brand.200,color.neutral.950,#E1E4FF,#222325,12.54,texto 4.5,4.5,true,igual
+C-032,Enlace,hover · sobre tarjeta,claro,ui.text.link-hover sobre ui.surface.card,color.brand.800,color.neutral.100,#46487B,#F2F2F4,7.59,texto 4.5,4.5,true,igual
+C-032,Enlace,hover · sobre tarjeta,oscuro,ui.text.link-hover sobre ui.surface.card,color.brand.200,color.neutral.900,#E1E4FF,#36363A,9.59,texto 4.5,4.5,true,igual
+C-033,Enlace,sobre aviso breve o diálogo,claro,ui.text.link sobre ui.surface.raised,color.brand.700,color.neutral.50,#5D609F,#FAFAFB,5.53,texto 4.5,4.5,true,igual
+C-033,Enlace,sobre aviso breve o diálogo,oscuro,ui.text.link sobre ui.surface.raised,color.brand.300,color.neutral.900,#C9CFFF,#36363A,7.93,texto 4.5,4.5,true,igual
+C-034,Campo,reposo · valor,claro,ui.text.default sobre ui.surface.field,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-034,Campo,reposo · valor,oscuro,ui.text.default sobre ui.surface.field,color.neutral.100,color.neutral.950,#F2F2F4,#222325,14.06,texto 4.5,4.5,true,igual
+C-035,Campo,reposo · marcador de posición,claro,ui.text.secondary sobre ui.surface.field,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-035,Campo,reposo · marcador de posición,oscuro,ui.text.secondary sobre ui.surface.field,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,texto 4.5,4.5,true,igual
+C-036,Campo,reposo · borde contra el interior,claro,ui.border.control sobre ui.surface.field,color.neutral.600,color.neutral.50,#808189,#FAFAFB,3.71,interfaz 3,3.0,true,igual
+C-036,Campo,reposo · borde contra el interior,oscuro,ui.border.control sobre ui.surface.field,color.neutral.400,color.neutral.950,#B7B8C0,#222325,7.96,interfaz 3,3.0,true,igual
+C-037,Campo,hover · borde sobre tarjeta,claro,ui.border.control-hover sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,interfaz 3,3.0,true,igual
+C-037,Campo,hover · borde sobre tarjeta,oscuro,ui.border.control-hover sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,interfaz 3,3.0,true,igual
+C-038,Campo,error · borde sobre tarjeta,claro,ui.border.error sobre ui.surface.card,color.role.error.light,color.neutral.100,#A34449,#F2F2F4,5.39,interfaz 3,3.0,true,igual
+C-038,Campo,error · borde sobre tarjeta,oscuro,ui.border.error sobre ui.surface.card,color.role.error.dark,color.neutral.900,#FC9999,#36363A,5.81,interfaz 3,3.0,true,igual
+C-039,Campo,error · borde sobre página,claro,ui.border.error sobre ui.surface.page,color.role.error.light,color.neutral.50,#A34449,#FAFAFB,5.78,interfaz 3,3.0,true,igual
+C-039,Campo,error · borde sobre página,oscuro,ui.border.error sobre ui.surface.page,color.role.error.dark,color.neutral.950,#FC9999,#222325,7.60,interfaz 3,3.0,true,igual
+C-040,Campo,error · mensaje e icono sobre tarjeta,claro,rol error sobre ui.surface.card,color.role.error.light,color.neutral.100,#A34449,#F2F2F4,5.39,texto 4.5,4.5,true,igual
+C-040,Campo,error · mensaje e icono sobre tarjeta,oscuro,rol error sobre ui.surface.card,color.role.error.dark,color.neutral.900,#FC9999,#36363A,5.81,texto 4.5,4.5,true,igual
+C-041,Campo,error · mensaje e icono sobre página,claro,rol error sobre ui.surface.page,color.role.error.light,color.neutral.50,#A34449,#FAFAFB,5.78,texto 4.5,4.5,true,igual
+C-041,Campo,error · mensaje e icono sobre página,oscuro,rol error sobre ui.surface.page,color.role.error.dark,color.neutral.950,#FC9999,#222325,7.60,texto 4.5,4.5,true,igual
+C-042,Campo,deshabilitado · valor,claro,ui.text.disabled sobre ui.surface.disabled,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-042,Campo,deshabilitado · valor,oscuro,ui.text.disabled sobre ui.surface.disabled,color.neutral.400,color.neutral.900,#B7B8C0,#36363A,6.08,texto 4.5,4.5,true,igual
+C-043,Casilla e interruptor,marcado · palomita o perilla,claro,ui.text.on-primary sobre ui.action.primary.bg,color.base.white,color.brand.700,#FFFFFF,#5D609F,5.77,interfaz 3,3.0,true,igual
+C-043,Casilla e interruptor,marcado · palomita o perilla,oscuro,ui.text.on-primary sobre ui.action.primary.bg,color.brand.950,color.brand.300,#1E203A,#C9CFFF,10.47,interfaz 3,3.0,true,igual
+C-044,Casilla e interruptor,marcado · relleno sobre tarjeta,claro,ui.action.primary.bg sobre ui.surface.card,color.brand.700,color.neutral.100,#5D609F,#F2F2F4,5.16,interfaz 3,3.0,true,igual
+C-044,Casilla e interruptor,marcado · relleno sobre tarjeta,oscuro,ui.action.primary.bg sobre ui.surface.card,color.brand.300,color.neutral.900,#C9CFFF,#36363A,7.93,interfaz 3,3.0,true,igual
+C-045,Interruptor,apagado · perilla sobre pista,claro,ui.surface.page sobre ui.border.control,color.neutral.50,color.neutral.600,#FAFAFB,#808189,3.71,interfaz 3,3.0,true,nuevo
+C-045,Interruptor,apagado · perilla sobre pista,oscuro,ui.surface.page sobre ui.border.control,color.neutral.950,color.neutral.400,#222325,#B7B8C0,7.96,interfaz 3,3.0,true,nuevo
+C-046,Edición en el lugar,hover · valor,claro,ui.text.default sobre ui.surface.hover-subtle,color.neutral.900,color.neutral.100,#36363A,#F2F2F4,10.75,texto 4.5,4.5,true,igual
+C-046,Edición en el lugar,hover · valor,oscuro,ui.text.default sobre ui.surface.hover-subtle,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-047,Edición en el lugar,hover · cifra de rol (gasto),claro,rol expense sobre ui.surface.hover-subtle,color.role.expense.light,color.neutral.100,#A04B20,#F2F2F4,5.33,texto 4.5,4.5,true,igual
+C-047,Edición en el lugar,hover · cifra de rol (gasto),oscuro,rol expense sobre ui.surface.hover-subtle,color.role.expense.dark,color.neutral.900,#F8A078,#36363A,5.89,texto 4.5,4.5,true,igual
+C-048,Edición en el lugar,hover · cifra de rol (ingreso),claro,rol income sobre ui.surface.hover-subtle,color.role.income.light,color.neutral.100,#457723,#F2F2F4,4.79,texto 4.5,4.5,true,igual
+C-048,Edición en el lugar,hover · cifra de rol (ingreso),oscuro,rol income sobre ui.surface.hover-subtle,color.role.income.dark,color.neutral.900,#98CA7B,#36363A,6.34,texto 4.5,4.5,true,igual
+C-049,Edición en el lugar,hover sobre tarjeta · borde,claro,ui.border.control-hover sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,interfaz 3,3.0,true,igual
+C-049,Edición en el lugar,hover sobre tarjeta · borde,oscuro,ui.border.control-hover sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,interfaz 3,3.0,true,igual
+C-050,Chip de persona o tienda,reposo · marca de forma,claro,persona axel sobre ui.surface.raised,color.person.axel.light,color.neutral.50,#002E64,#FAFAFB,12.78,interfaz 3,3.0,true,igual
+C-050,Chip de persona o tienda,reposo · marca de forma,oscuro,persona axel sobre ui.surface.raised,color.person.axel.dark,color.neutral.900,#4F83C8,#36363A,3.10,interfaz 3,3.0,true,igual
+C-051,Chip de persona o tienda,reposo · marca de forma,claro,persona ximena sobre ui.surface.raised,color.person.ximena.light,color.neutral.50,#A14E78,#FAFAFB,5.19,interfaz 3,3.0,true,igual
+C-051,Chip de persona o tienda,reposo · marca de forma,oscuro,persona ximena sobre ui.surface.raised,color.person.ximena.dark,color.neutral.900,#FFACD3,#36363A,6.92,interfaz 3,3.0,true,igual
+C-052,Chip de persona o tienda,reposo · marca de forma,claro,persona karen sobre ui.surface.raised,color.person.karen.light,color.neutral.50,#B870AC,#FAFAFB,3.38,interfaz 3,3.0,true,igual
+C-052,Chip de persona o tienda,reposo · marca de forma,oscuro,persona karen sobre ui.surface.raised,color.person.karen.dark,color.neutral.900,#D389C6,#36363A,4.67,interfaz 3,3.0,true,igual
+C-053,Chip de persona o tienda,reposo · marca de forma,claro,persona shared sobre ui.surface.raised,color.person.shared.light,color.neutral.50,#484B66,#FAFAFB,8.13,interfaz 3,3.0,true,igual
+C-053,Chip de persona o tienda,reposo · marca de forma,oscuro,persona shared sobre ui.surface.raised,color.person.shared.dark,color.neutral.900,#E7EAFF,#36363A,10.08,interfaz 3,3.0,true,igual
+C-054,Chip de persona o tienda,reposo · marca de forma,claro,tienda walmart sobre ui.surface.raised,color.store.walmart.light,color.neutral.50,#4065AC,#FAFAFB,5.47,interfaz 3,3.0,true,igual
+C-054,Chip de persona o tienda,reposo · marca de forma,oscuro,tienda walmart sobre ui.surface.raised,color.store.walmart.dark,color.neutral.900,#7AA3EE,#36363A,4.75,interfaz 3,3.0,true,igual
+C-055,Chip de persona o tienda,reposo · marca de forma,claro,tienda bodega-aurrera sobre ui.surface.raised,color.store.bodega-aurrera.light,color.neutral.50,#762C4C,#FAFAFB,9.00,interfaz 3,3.0,true,igual
+C-055,Chip de persona o tienda,reposo · marca de forma,oscuro,tienda bodega-aurrera sobre ui.surface.raised,color.store.bodega-aurrera.dark,color.neutral.900,#FFAAC9,#36363A,6.78,interfaz 3,3.0,true,igual
+C-056,Chip de persona o tienda,reposo · marca de forma,claro,tienda sams-club sobre ui.surface.raised,color.store.sams-club.light,color.neutral.50,#009D82,#FAFAFB,3.27,interfaz 3,3.0,true,igual
+C-056,Chip de persona o tienda,reposo · marca de forma,oscuro,tienda sams-club sobre ui.surface.raised,color.store.sams-club.dark,color.neutral.900,#99FFE4,#36363A,10.18,interfaz 3,3.0,true,igual
+C-057,Chip de persona o tienda,reposo · marca de forma,claro,tienda market sobre ui.surface.raised,color.store.market.light,color.neutral.50,#5C0204,#FAFAFB,13.73,interfaz 3,3.0,true,igual
+C-057,Chip de persona o tienda,reposo · marca de forma,oscuro,tienda market sobre ui.surface.raised,color.store.market.dark,color.neutral.900,#C2665B,#36363A,3.06,interfaz 3,3.0,true,igual
+C-058,Chip de persona o tienda,reposo · nombre,claro,ui.text.default sobre ui.surface.raised,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-058,Chip de persona o tienda,reposo · nombre,oscuro,ui.text.default sobre ui.surface.raised,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-059,Avatar,reposo · anillo sobre página,claro,persona axel sobre ui.surface.page,color.person.axel.light,color.neutral.50,#002E64,#FAFAFB,12.78,interfaz 3,3.0,true,igual
+C-059,Avatar,reposo · anillo sobre página,oscuro,persona axel sobre ui.surface.page,color.person.axel.dark,color.neutral.950,#4F83C8,#222325,4.05,interfaz 3,3.0,true,igual
+C-060,Avatar,reposo · anillo sobre página,claro,persona ximena sobre ui.surface.page,color.person.ximena.light,color.neutral.50,#A14E78,#FAFAFB,5.19,interfaz 3,3.0,true,igual
+C-060,Avatar,reposo · anillo sobre página,oscuro,persona ximena sobre ui.surface.page,color.person.ximena.dark,color.neutral.950,#FFACD3,#222325,9.05,interfaz 3,3.0,true,igual
+C-061,Avatar,reposo · anillo sobre página,claro,persona karen sobre ui.surface.page,color.person.karen.light,color.neutral.50,#B870AC,#FAFAFB,3.38,interfaz 3,3.0,true,igual
+C-061,Avatar,reposo · anillo sobre página,oscuro,persona karen sobre ui.surface.page,color.person.karen.dark,color.neutral.950,#D389C6,#222325,6.11,interfaz 3,3.0,true,igual
+C-062,Avatar,reposo · anillo sobre página,claro,persona shared sobre ui.surface.page,color.person.shared.light,color.neutral.50,#484B66,#FAFAFB,8.13,interfaz 3,3.0,true,igual
+C-062,Avatar,reposo · anillo sobre página,oscuro,persona shared sobre ui.surface.page,color.person.shared.dark,color.neutral.950,#E7EAFF,#222325,13.19,interfaz 3,3.0,true,igual
+C-063,Avatar,reposo · inicial,claro,ui.text.default sobre ui.surface.hover,color.neutral.900,color.neutral.200,#36363A,#E5E6E9,9.63,texto 4.5,4.5,true,igual
+C-063,Avatar,reposo · inicial,oscuro,ui.text.default sobre ui.surface.hover,color.neutral.100,color.neutral.800,#F2F2F4,#4D4E53,7.42,texto 4.5,4.5,true,igual
+C-064,Chip de filtro,activo · texto,claro,ui.text.default sobre ui.surface.selected,color.neutral.900,color.brand.100,#36363A,#F0F1FF,10.73,texto 4.5,4.5,true,igual
+C-064,Chip de filtro,activo · texto,oscuro,ui.text.default sobre ui.surface.selected,color.neutral.100,color.brand.900,#F2F2F4,#303258,10.90,texto 4.5,4.5,true,igual
+C-065,Chip de filtro,activo · icono quitar,claro,ui.icon.default sobre ui.surface.selected,color.neutral.700,color.brand.100,#66676E,#F0F1FF,5.02,interfaz 3,3.0,true,nuevo
+C-065,Chip de filtro,activo · icono quitar,oscuro,ui.icon.default sobre ui.surface.selected,color.neutral.300,color.brand.900,#D1D2D8,#303258,8.08,interfaz 3,3.0,true,nuevo
+C-066,Insignia de rol,reposo · income,claro,rol income sobre superficie de rol income,color.role.income.light,color.role.income.surface-light,#457723,#E9F8E1,4.84,texto 4.5,4.5,true,igual
+C-066,Insignia de rol,reposo · income,oscuro,rol income sobre superficie de rol income,color.role.income.dark,color.role.income.surface-dark,#98CA7B,#22400D,6.12,texto 4.5,4.5,true,igual
+C-067,Insignia de rol,reposo · expense,claro,rol expense sobre superficie de rol expense,color.role.expense.light,color.role.expense.surface-light,#A04B20,#FFEFE8,5.32,texto 4.5,4.5,true,igual
+C-067,Insignia de rol,reposo · expense,oscuro,rol expense sobre superficie de rol expense,color.role.expense.dark,color.role.expense.surface-dark,#F8A078,#59260B,6.02,texto 4.5,4.5,true,igual
+C-068,Insignia de rol,reposo · savings,claro,rol savings sobre superficie de rol savings,color.role.savings.light,color.role.savings.surface-light,#00767B,#D8FAFC,4.90,texto 4.5,4.5,true,igual
+C-068,Insignia de rol,reposo · savings,oscuro,rol savings sobre superficie de rol savings,color.role.savings.dark,color.role.savings.surface-dark,#3FD0D7,#003F42,6.26,texto 4.5,4.5,true,igual
+C-069,Insignia de rol,reposo · debt,claro,rol debt sobre superficie de rol debt,color.role.debt.light,color.role.debt.surface-light,#7E509D,#F7EEFF,5.29,texto 4.5,4.5,true,igual
+C-069,Insignia de rol,reposo · debt,oscuro,rol debt sobre superficie de rol debt,color.role.debt.dark,color.role.debt.surface-dark,#D0A3F2,#442857,6.04,texto 4.5,4.5,true,igual
+C-070,Insignia de rol,reposo · warning,claro,rol warning sobre superficie de rol warning,color.role.warning.light,color.role.warning.surface-light,#8B5D00,#FFF0DC,5.11,texto 4.5,4.5,true,igual
+C-070,Insignia de rol,reposo · warning,oscuro,rol warning sobre superficie de rol warning,color.role.warning.dark,color.role.warning.surface-dark,#E5AE5B,#4C3000,6.09,texto 4.5,4.5,true,igual
+C-071,Insignia de rol,reposo · error,claro,rol error sobre superficie de rol error,color.role.error.light,color.role.error.surface-light,#A34449,#FFEEED,5.37,texto 4.5,4.5,true,igual
+C-071,Insignia de rol,reposo · error,oscuro,rol error sobre superficie de rol error,color.role.error.dark,color.role.error.surface-dark,#FC9999,#5A2124,6.05,texto 4.5,4.5,true,igual
+C-072,Insignia de rol,reposo · success,claro,rol success sobre superficie de rol success,color.role.success.light,color.role.success.surface-light,#207B3E,#E3FAE6,4.81,texto 4.5,4.5,true,igual
+C-072,Insignia de rol,reposo · success,oscuro,rol success sobre superficie de rol success,color.role.success.dark,color.role.success.surface-dark,#7ECF90,#0A421E,6.19,texto 4.5,4.5,true,igual
+C-073,Insignia de rol,reposo · info,claro,rol info sobre superficie de rol info,color.role.info.light,color.role.info.surface-light,#006FA4,#E7F5FF,4.96,texto 4.5,4.5,true,igual
+C-073,Insignia de rol,reposo · info,oscuro,rol info sobre superficie de rol info,color.role.info.dark,color.role.info.surface-dark,#6BC3FD,#003B5A,6.11,texto 4.5,4.5,true,igual
+C-074,Insignia de acción crítica,reposo · texto,claro,acción crítica sobre ui.surface.raised,color.critical.light,color.neutral.50,#766800,#FAFAFB,5.36,texto 4.5,4.5,true,igual
+C-074,Insignia de acción crítica,reposo · texto,oscuro,acción crítica sobre ui.surface.raised,color.critical.dark,color.neutral.900,#CBBB5A,#36363A,6.18,texto 4.5,4.5,true,igual
+C-075,Tabla,encabezado · texto e icono,claro,ui.text.secondary sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-075,Tabla,encabezado · texto e icono,oscuro,ui.text.secondary sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,texto 4.5,4.5,true,igual
+C-076,Tabla,reposo · celda,claro,ui.text.default sobre ui.surface.page,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-076,Tabla,reposo · celda,oscuro,ui.text.default sobre ui.surface.page,color.neutral.100,color.neutral.950,#F2F2F4,#222325,14.06,texto 4.5,4.5,true,igual
+C-077,Tabla,reposo · cifra de ingreso,claro,rol income sobre ui.surface.page,color.role.income.light,color.neutral.50,#457723,#FAFAFB,5.14,texto 4.5,4.5,true,igual
+C-077,Tabla,reposo · cifra de ingreso,oscuro,rol income sobre ui.surface.page,color.role.income.dark,color.neutral.950,#98CA7B,#222325,8.29,texto 4.5,4.5,true,igual
+C-078,Tabla,reposo · cifra de gasto,claro,rol expense sobre ui.surface.page,color.role.expense.light,color.neutral.50,#A04B20,#FAFAFB,5.71,texto 4.5,4.5,true,igual
+C-078,Tabla,reposo · cifra de gasto,oscuro,rol expense sobre ui.surface.page,color.role.expense.dark,color.neutral.950,#F8A078,#222325,7.70,texto 4.5,4.5,true,igual
+C-079,Tabla,reposo · cifra rebasada,claro,rol warning sobre ui.surface.page,color.role.warning.light,color.neutral.50,#8B5D00,#FAFAFB,5.49,texto 4.5,4.5,true,igual
+C-079,Tabla,reposo · cifra rebasada,oscuro,rol warning sobre ui.surface.page,color.role.warning.dark,color.neutral.950,#E5AE5B,#222325,7.89,texto 4.5,4.5,true,igual
+C-080,Tabla,hover · celda,claro,ui.text.default sobre ui.surface.hover-subtle,color.neutral.900,color.neutral.100,#36363A,#F2F2F4,10.75,texto 4.5,4.5,true,igual
+C-080,Tabla,hover · celda,oscuro,ui.text.default sobre ui.surface.hover-subtle,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-081,Tabla,hover · cifra rebasada,claro,rol warning sobre ui.surface.hover-subtle,color.role.warning.light,color.neutral.100,#8B5D00,#F2F2F4,5.12,texto 4.5,4.5,true,igual
+C-081,Tabla,hover · cifra rebasada,oscuro,rol warning sobre ui.surface.hover-subtle,color.role.warning.dark,color.neutral.900,#E5AE5B,#36363A,6.03,texto 4.5,4.5,true,igual
+C-082,Tabla,seleccionada · celda,claro,ui.text.default sobre ui.surface.selected,color.neutral.900,color.brand.100,#36363A,#F0F1FF,10.73,texto 4.5,4.5,true,igual
+C-082,Tabla,seleccionada · celda,oscuro,ui.text.default sobre ui.surface.selected,color.neutral.100,color.brand.900,#F2F2F4,#303258,10.90,texto 4.5,4.5,true,igual
+C-083,Tabla,seleccionada · cifra de ingreso,claro,rol income sobre ui.surface.selected,color.role.income.light,color.brand.100,#457723,#F0F1FF,4.78,texto 4.5,4.5,true,nuevo
+C-083,Tabla,seleccionada · cifra de ingreso,oscuro,rol income sobre ui.surface.selected,color.role.income.dark,color.brand.900,#98CA7B,#303258,6.42,texto 4.5,4.5,true,nuevo
+C-084,Tabla,seleccionada · cifra de gasto,claro,rol expense sobre ui.surface.selected,color.role.expense.light,color.brand.100,#A04B20,#F0F1FF,5.31,texto 4.5,4.5,true,nuevo
+C-084,Tabla,seleccionada · cifra de gasto,oscuro,rol expense sobre ui.surface.selected,color.role.expense.dark,color.brand.900,#F8A078,#303258,5.97,texto 4.5,4.5,true,nuevo
+C-085,Tabla,seleccionada · texto secundario,claro,ui.text.secondary sobre ui.surface.selected,color.neutral.700,color.brand.100,#66676E,#F0F1FF,5.02,texto 4.5,4.5,true,nuevo
+C-085,Tabla,seleccionada · texto secundario,oscuro,ui.text.secondary sobre ui.surface.selected,color.neutral.300,color.brand.900,#D1D2D8,#303258,8.08,texto 4.5,4.5,true,nuevo
+C-086,Tabla,error · borde de celda,claro,ui.border.error sobre ui.surface.page,color.role.error.light,color.neutral.50,#A34449,#FAFAFB,5.78,interfaz 3,3.0,true,igual
+C-086,Tabla,error · borde de celda,oscuro,ui.border.error sobre ui.surface.page,color.role.error.dark,color.neutral.950,#FC9999,#222325,7.60,interfaz 3,3.0,true,igual
+C-087,Tabla,divisor de filas,claro,ui.border.divider sobre ui.surface.page,color.neutral.200,color.neutral.50,#E5E6E9,#FAFAFB,1.19,decorativo,exento,exento,nuevo
+C-087,Tabla,divisor de filas,oscuro,ui.border.divider sobre ui.surface.page,color.neutral.800,color.neutral.950,#4D4E53,#222325,1.89,decorativo,exento,exento,nuevo
+C-088,Tablero,tarjeta · título,claro,ui.text.default sobre ui.surface.card,color.neutral.900,color.neutral.100,#36363A,#F2F2F4,10.75,texto 4.5,4.5,true,igual
+C-088,Tablero,tarjeta · título,oscuro,ui.text.default sobre ui.surface.card,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-089,Tablero,tarjeta · propiedad,claro,ui.text.secondary sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-089,Tablero,tarjeta · propiedad,oscuro,ui.text.secondary sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-090,Tablero,arrastre · destino,claro,ui.border.selected sobre ui.surface.page,color.brand.700,color.neutral.50,#5D609F,#FAFAFB,5.53,interfaz 3,3.0,true,igual
+C-090,Tablero,arrastre · destino,oscuro,ui.border.selected sobre ui.surface.page,color.brand.300,color.neutral.950,#C9CFFF,#222325,10.37,interfaz 3,3.0,true,igual
+C-091,Calendario (vista),día de hoy · número,claro,ui.text.on-primary sobre ui.action.primary.bg,color.base.white,color.brand.700,#FFFFFF,#5D609F,5.77,texto 4.5,4.5,true,igual
+C-091,Calendario (vista),día de hoy · número,oscuro,ui.text.on-primary sobre ui.action.primary.bg,color.brand.950,color.brand.300,#1E203A,#C9CFFF,10.47,texto 4.5,4.5,true,igual
+C-092,Calendario (vista),día · número,claro,ui.text.secondary sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-092,Calendario (vista),día · número,oscuro,ui.text.secondary sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,texto 4.5,4.5,true,igual
+C-093,Calendario (vista),día de otro mes · número,claro,ui.text.disabled sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-093,Calendario (vista),día de otro mes · número,oscuro,ui.text.disabled sobre ui.surface.page,color.neutral.400,color.neutral.950,#B7B8C0,#222325,7.96,texto 4.5,4.5,true,igual
+C-094,Galería,portada sin imagen · icono,claro,ui.icon.default sobre ui.surface.hover,color.neutral.700,color.neutral.200,#66676E,#E5E6E9,4.51,interfaz 3,3.0,true,nuevo
+C-094,Galería,portada sin imagen · icono,oscuro,ui.icon.default sobre ui.surface.hover,color.neutral.300,color.neutral.800,#D1D2D8,#4D4E53,5.50,interfaz 3,3.0,true,nuevo
+C-095,Tarjeta de métrica,etiqueta,claro,ui.text.secondary sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-095,Tarjeta de métrica,etiqueta,oscuro,ui.text.secondary sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-096,Tarjeta de métrica,cifra principal (24 px),claro,ui.text.default sobre ui.surface.card,color.neutral.900,color.neutral.100,#36363A,#F2F2F4,10.75,texto grande 3,3.0,true,igual
+C-096,Tarjeta de métrica,cifra principal (24 px),oscuro,ui.text.default sobre ui.surface.card,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto grande 3,3.0,true,igual
+C-097,Tarjeta de métrica,dato secundario de rol · income,claro,rol income sobre ui.surface.card,color.role.income.light,color.neutral.100,#457723,#F2F2F4,4.79,texto 4.5,4.5,true,igual
+C-097,Tarjeta de métrica,dato secundario de rol · income,oscuro,rol income sobre ui.surface.card,color.role.income.dark,color.neutral.900,#98CA7B,#36363A,6.34,texto 4.5,4.5,true,igual
+C-098,Tarjeta de métrica,dato secundario de rol · expense,claro,rol expense sobre ui.surface.card,color.role.expense.light,color.neutral.100,#A04B20,#F2F2F4,5.33,texto 4.5,4.5,true,igual
+C-098,Tarjeta de métrica,dato secundario de rol · expense,oscuro,rol expense sobre ui.surface.card,color.role.expense.dark,color.neutral.900,#F8A078,#36363A,5.89,texto 4.5,4.5,true,igual
+C-099,Tarjeta de métrica,dato secundario de rol · savings,claro,rol savings sobre ui.surface.card,color.role.savings.light,color.neutral.100,#00767B,#F2F2F4,4.84,texto 4.5,4.5,true,igual
+C-099,Tarjeta de métrica,dato secundario de rol · savings,oscuro,rol savings sobre ui.surface.card,color.role.savings.dark,color.neutral.900,#3FD0D7,#36363A,6.42,texto 4.5,4.5,true,igual
+C-100,Tarjeta de métrica,dato secundario de rol · debt,claro,rol debt sobre ui.surface.card,color.role.debt.light,color.neutral.100,#7E509D,#F2F2F4,5.33,texto 4.5,4.5,true,igual
+C-100,Tarjeta de métrica,dato secundario de rol · debt,oscuro,rol debt sobre ui.surface.card,color.role.debt.dark,color.neutral.900,#D0A3F2,#36363A,5.84,texto 4.5,4.5,true,igual
+C-101,Tarjeta de métrica,dato secundario de rol · warning,claro,rol warning sobre ui.surface.card,color.role.warning.light,color.neutral.100,#8B5D00,#F2F2F4,5.12,texto 4.5,4.5,true,igual
+C-101,Tarjeta de métrica,dato secundario de rol · warning,oscuro,rol warning sobre ui.surface.card,color.role.warning.dark,color.neutral.900,#E5AE5B,#36363A,6.03,texto 4.5,4.5,true,igual
+C-102,Barra de avance,bajo el umbral · llenado sobre pista,claro,ui.viz.meter sobre ui.viz.track,color.neutral.700,color.neutral.200,#66676E,#E5E6E9,4.51,interfaz 3,3.0,true,nuevo
+C-102,Barra de avance,bajo el umbral · llenado sobre pista,oscuro,ui.viz.meter sobre ui.viz.track,color.neutral.300,color.neutral.800,#D1D2D8,#4D4E53,5.50,interfaz 3,3.0,true,nuevo
+C-103,Barra de avance,bajo el umbral · llenado sobre tarjeta,claro,ui.viz.meter sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,interfaz 3,3.0,true,igual
+C-103,Barra de avance,bajo el umbral · llenado sobre tarjeta,oscuro,ui.viz.meter sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,interfaz 3,3.0,true,igual
+C-104,Barra de avance,umbral alcanzado · llenado sobre pista,claro,rol warning sobre ui.viz.track,color.role.warning.light,color.neutral.200,#8B5D00,#E5E6E9,4.59,interfaz 3,3.0,true,nuevo
+C-104,Barra de avance,umbral alcanzado · llenado sobre pista,oscuro,rol warning sobre ui.viz.track,color.role.warning.dark,color.neutral.800,#E5AE5B,#4D4E53,4.16,interfaz 3,3.0,true,nuevo
+C-105,Barra de avance,pista sobre tarjeta,claro,ui.viz.track sobre ui.surface.card,color.neutral.200,color.neutral.100,#E5E6E9,#F2F2F4,1.11,decorativo,exento,exento,nuevo
+C-105,Barra de avance,pista sobre tarjeta,oscuro,ui.viz.track sobre ui.surface.card,color.neutral.800,color.neutral.900,#4D4E53,#36363A,1.44,decorativo,exento,exento,nuevo
+C-106,Gráfica,serie 1 sobre tarjeta,claro,serie 1 sobre ui.surface.card,color.chart.1.light,color.neutral.100,#474698,#F2F2F4,7.23,interfaz 3,3.0,true,igual
+C-106,Gráfica,serie 1 sobre tarjeta,oscuro,serie 1 sobre ui.surface.card,color.chart.1.dark,color.neutral.900,#797DCD,#36363A,3.22,interfaz 3,3.0,true,igual
+C-107,Gráfica,serie 2 sobre tarjeta,claro,serie 2 sobre ui.surface.card,color.chart.2.light,color.neutral.100,#009A87,#F2F2F4,3.14,interfaz 3,3.0,true,igual
+C-107,Gráfica,serie 2 sobre tarjeta,oscuro,serie 2 sobre ui.surface.card,color.chart.2.dark,color.neutral.900,#61E4CD,#36363A,7.72,interfaz 3,3.0,true,igual
+C-108,Gráfica,serie 3 sobre tarjeta,claro,serie 3 sobre ui.surface.card,color.chart.3.light,color.neutral.100,#883500,#F2F2F4,7.34,interfaz 3,3.0,true,igual
+C-108,Gráfica,serie 3 sobre tarjeta,oscuro,serie 3 sobre ui.surface.card,color.chart.3.dark,color.neutral.900,#C16D45,#36363A,3.17,interfaz 3,3.0,true,igual
+C-109,Gráfica,serie 4 sobre tarjeta,claro,serie 4 sobre ui.surface.card,color.chart.4.light,color.neutral.100,#BF6D2C,#F2F2F4,3.45,interfaz 3,3.0,true,igual
+C-109,Gráfica,serie 4 sobre tarjeta,oscuro,serie 4 sobre ui.surface.card,color.chart.4.dark,color.neutral.900,#FFB989,#36363A,7.19,interfaz 3,3.0,true,igual
+C-110,Gráfica,serie 5 sobre tarjeta,claro,serie 5 sobre ui.surface.card,color.chart.5.light,color.neutral.100,#812E63,#F2F2F4,7.49,interfaz 3,3.0,true,igual
+C-110,Gráfica,serie 5 sobre tarjeta,oscuro,serie 5 sobre ui.surface.card,color.chart.5.dark,color.neutral.900,#B86797,#36363A,3.10,interfaz 3,3.0,true,igual
+C-111,Gráfica,serie 6 sobre tarjeta,claro,serie 6 sobre ui.surface.card,color.chart.6.light,color.neutral.100,#0092B9,#F2F2F4,3.23,interfaz 3,3.0,true,igual
+C-111,Gráfica,serie 6 sobre tarjeta,oscuro,serie 6 sobre ui.surface.card,color.chart.6.dark,color.neutral.900,#76D9FF,#36363A,7.52,interfaz 3,3.0,true,igual
+C-112,Gráfica,serie 7 sobre tarjeta,claro,serie 7 sobre ui.surface.card,color.chart.7.light,color.neutral.100,#683987,#F2F2F4,7.44,interfaz 3,3.0,true,igual
+C-112,Gráfica,serie 7 sobre tarjeta,oscuro,serie 7 sobre ui.surface.card,color.chart.7.dark,color.neutral.900,#9C70BC,#36363A,3.12,interfaz 3,3.0,true,igual
+C-113,Gráfica,serie 8 sobre tarjeta,claro,serie 8 sobre ui.surface.card,color.chart.8.light,color.neutral.100,#579749,#F2F2F4,3.16,interfaz 3,3.0,true,igual
+C-113,Gráfica,serie 8 sobre tarjeta,oscuro,serie 8 sobre ui.surface.card,color.chart.8.dark,color.neutral.900,#A0DE93,#36363A,7.65,interfaz 3,3.0,true,igual
+C-114,Gráfica,serie «Otros» sobre tarjeta,claro,ui.viz.other sobre ui.surface.card,color.neutral.600,color.neutral.100,#808189,#F2F2F4,3.46,interfaz 3,3.0,true,igual
+C-114,Gráfica,serie «Otros» sobre tarjeta,oscuro,ui.viz.other sobre ui.surface.card,color.neutral.400,color.neutral.900,#B7B8C0,#36363A,6.08,interfaz 3,3.0,true,igual
+C-115,Gráfica,línea base,claro,ui.viz.baseline sobre ui.surface.card,color.neutral.600,color.neutral.100,#808189,#F2F2F4,3.46,interfaz 3,3.0,true,igual
+C-115,Gráfica,línea base,oscuro,ui.viz.baseline sobre ui.surface.card,color.neutral.400,color.neutral.900,#B7B8C0,#36363A,6.08,interfaz 3,3.0,true,igual
+C-116,Gráfica,retícula,claro,ui.viz.grid sobre ui.surface.card,color.neutral.200,color.neutral.100,#E5E6E9,#F2F2F4,1.11,decorativo,exento,exento,nuevo
+C-116,Gráfica,retícula,oscuro,ui.viz.grid sobre ui.surface.card,color.neutral.800,color.neutral.900,#4D4E53,#36363A,1.44,decorativo,exento,exento,nuevo
+C-117,Gráfica,etiqueta de eje,claro,ui.text.secondary sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-117,Gráfica,etiqueta de eje,oscuro,ui.text.secondary sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-118,Gráfica,etiqueta directa y leyenda,claro,ui.text.default sobre ui.surface.card,color.neutral.900,color.neutral.100,#36363A,#F2F2F4,10.75,texto 4.5,4.5,true,igual
+C-118,Gráfica,etiqueta directa y leyenda,oscuro,ui.text.default sobre ui.surface.card,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-119,Gráfica,descripción emergente · texto,claro,ui.text.default sobre ui.surface.raised,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-119,Gráfica,descripción emergente · texto,oscuro,ui.text.default sobre ui.surface.raised,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-120,Gráfica,descripción emergente · texto secundario,claro,ui.text.secondary sobre ui.surface.raised,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-120,Gráfica,descripción emergente · texto secundario,oscuro,ui.text.secondary sobre ui.surface.raised,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-121,Calendario de pagos,pagado · icono y texto,claro,rol success sobre ui.surface.card,color.role.success.light,color.neutral.100,#207B3E,#F2F2F4,4.73,texto 4.5,4.5,true,igual
+C-121,Calendario de pagos,pagado · icono y texto,oscuro,rol success sobre ui.surface.card,color.role.success.dark,color.neutral.900,#7ECF90,#36363A,6.42,texto 4.5,4.5,true,igual
+C-122,Calendario de pagos,por vencer o vencido · icono y texto,claro,rol warning sobre ui.surface.card,color.role.warning.light,color.neutral.100,#8B5D00,#F2F2F4,5.12,texto 4.5,4.5,true,igual
+C-122,Calendario de pagos,por vencer o vencido · icono y texto,oscuro,rol warning sobre ui.surface.card,color.role.warning.dark,color.neutral.900,#E5AE5B,#36363A,6.03,texto 4.5,4.5,true,igual
+C-123,Calendario de pagos,pendiente · monto,claro,ui.text.default sobre ui.surface.card,color.neutral.900,color.neutral.100,#36363A,#F2F2F4,10.75,texto 4.5,4.5,true,igual
+C-123,Calendario de pagos,pendiente · monto,oscuro,ui.text.default sobre ui.surface.card,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-124,Calendario de pagos,día seleccionado · monto,claro,ui.text.default sobre ui.surface.selected,color.neutral.900,color.brand.100,#36363A,#F0F1FF,10.73,texto 4.5,4.5,true,igual
+C-124,Calendario de pagos,día seleccionado · monto,oscuro,ui.text.default sobre ui.surface.selected,color.neutral.100,color.brand.900,#F2F2F4,#303258,10.90,texto 4.5,4.5,true,igual
+C-125,Barra lateral,reposo · elemento,claro,ui.text.secondary sobre ui.surface.card,color.neutral.700,color.neutral.100,#66676E,#F2F2F4,5.03,texto 4.5,4.5,true,igual
+C-125,Barra lateral,reposo · elemento,oscuro,ui.text.secondary sobre ui.surface.card,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-126,Barra lateral,hover · elemento,claro,ui.text.default sobre ui.surface.hover,color.neutral.900,color.neutral.200,#36363A,#E5E6E9,9.63,texto 4.5,4.5,true,igual
+C-126,Barra lateral,hover · elemento,oscuro,ui.text.default sobre ui.surface.hover,color.neutral.100,color.neutral.800,#F2F2F4,#4D4E53,7.42,texto 4.5,4.5,true,igual
+C-127,Barra lateral,activo · elemento,claro,ui.text.default sobre ui.surface.selected,color.neutral.900,color.brand.100,#36363A,#F0F1FF,10.73,texto 4.5,4.5,true,igual
+C-127,Barra lateral,activo · elemento,oscuro,ui.text.default sobre ui.surface.selected,color.neutral.100,color.brand.900,#F2F2F4,#303258,10.90,texto 4.5,4.5,true,igual
+C-128,Barra lateral,activo · icono,claro,ui.icon.selected sobre ui.surface.selected,color.brand.700,color.brand.100,#5D609F,#F0F1FF,5.14,interfaz 3,3.0,true,igual
+C-128,Barra lateral,activo · icono,oscuro,ui.icon.selected sobre ui.surface.selected,color.brand.300,color.brand.900,#C9CFFF,#303258,8.04,interfaz 3,3.0,true,igual
+C-129,Barra superior,migas,claro,ui.text.secondary sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-129,Barra superior,migas,oscuro,ui.text.secondary sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,texto 4.5,4.5,true,igual
+C-130,Pestañas,activa · indicador,claro,ui.border.selected sobre ui.surface.page,color.brand.700,color.neutral.50,#5D609F,#FAFAFB,5.53,interfaz 3,3.0,true,igual
+C-130,Pestañas,activa · indicador,oscuro,ui.border.selected sobre ui.surface.page,color.brand.300,color.neutral.950,#C9CFFF,#222325,10.37,interfaz 3,3.0,true,igual
+C-131,Barra inferior,reposo · icono y nombre,claro,ui.text.secondary sobre ui.surface.raised,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-131,Barra inferior,reposo · icono y nombre,oscuro,ui.text.secondary sobre ui.surface.raised,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-132,Barra inferior,activo · icono,claro,ui.icon.selected sobre ui.surface.selected,color.brand.700,color.brand.100,#5D609F,#F0F1FF,5.14,interfaz 3,3.0,true,igual
+C-132,Barra inferior,activo · icono,oscuro,ui.icon.selected sobre ui.surface.selected,color.brand.300,color.brand.900,#C9CFFF,#303258,8.04,interfaz 3,3.0,true,igual
+C-133,Barra inferior,activo · nombre,claro,ui.text.default sobre ui.surface.raised,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-133,Barra inferior,activo · nombre,oscuro,ui.text.default sobre ui.surface.raised,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-134,Barra inferior,«+» · relleno sobre barra,claro,ui.action.primary.bg sobre ui.surface.raised,color.brand.700,color.neutral.50,#5D609F,#FAFAFB,5.53,interfaz 3,3.0,true,igual
+C-134,Barra inferior,«+» · relleno sobre barra,oscuro,ui.action.primary.bg sobre ui.surface.raised,color.brand.300,color.neutral.900,#C9CFFF,#36363A,7.93,interfaz 3,3.0,true,igual
+C-135,Menú «/» y búsqueda,reposo · comando,claro,ui.text.default sobre ui.surface.raised,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-135,Menú «/» y búsqueda,reposo · comando,oscuro,ui.text.default sobre ui.surface.raised,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-136,Menú «/» y búsqueda,reposo · alias y grupo,claro,ui.text.secondary sobre ui.surface.raised,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-136,Menú «/» y búsqueda,reposo · alias y grupo,oscuro,ui.text.secondary sobre ui.surface.raised,color.neutral.300,color.neutral.900,#D1D2D8,#36363A,7.97,texto 4.5,4.5,true,igual
+C-137,Menú «/» y búsqueda,resaltado · comando,claro,ui.text.default sobre ui.surface.hover,color.neutral.900,color.neutral.200,#36363A,#E5E6E9,9.63,texto 4.5,4.5,true,igual
+C-137,Menú «/» y búsqueda,resaltado · comando,oscuro,ui.text.default sobre ui.surface.hover,color.neutral.100,color.neutral.800,#F2F2F4,#4D4E53,7.42,texto 4.5,4.5,true,igual
+C-138,Menú «/» y búsqueda,resaltado · alias y atajo,claro,ui.text.secondary sobre ui.surface.hover,color.neutral.700,color.neutral.200,#66676E,#E5E6E9,4.51,texto 4.5,4.5,true,nuevo
+C-138,Menú «/» y búsqueda,resaltado · alias y atajo,oscuro,ui.text.secondary sobre ui.surface.hover,color.neutral.300,color.neutral.800,#D1D2D8,#4D4E53,5.50,texto 4.5,4.5,true,nuevo
+C-139,Diálogo de acción crítica,icono de encabezado,claro,acción crítica sobre ui.surface.raised,color.critical.light,color.neutral.50,#766800,#FAFAFB,5.36,interfaz 3,3.0,true,igual
+C-139,Diálogo de acción crítica,icono de encabezado,oscuro,acción crítica sobre ui.surface.raised,color.critical.dark,color.neutral.900,#CBBB5A,#36363A,6.18,interfaz 3,3.0,true,igual
+C-140,Ajustes,fila · descripción y valor inicial,claro,ui.text.secondary sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,texto 4.5,4.5,true,igual
+C-140,Ajustes,fila · descripción y valor inicial,oscuro,ui.text.secondary sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,texto 4.5,4.5,true,igual
+C-141,Ajustes,guardado · palomita,claro,rol success sobre ui.surface.page,color.role.success.light,color.neutral.50,#207B3E,#FAFAFB,5.07,interfaz 3,3.0,true,igual
+C-141,Ajustes,guardado · palomita,oscuro,rol success sobre ui.surface.page,color.role.success.dark,color.neutral.950,#7ECF90,#222325,8.39,interfaz 3,3.0,true,igual
+C-142,Estado vacío,icono,claro,ui.icon.default sobre ui.surface.page,color.neutral.700,color.neutral.50,#66676E,#FAFAFB,5.39,interfaz 3,3.0,true,igual
+C-142,Estado vacío,icono,oscuro,ui.icon.default sobre ui.surface.page,color.neutral.300,color.neutral.950,#D1D2D8,#222325,10.42,interfaz 3,3.0,true,igual
+C-143,Esqueleto de carga,sobre página,claro,ui.skeleton.on-page sobre ui.surface.page,color.neutral.100,color.neutral.50,#F2F2F4,#FAFAFB,1.07,decorativo,exento,exento,nuevo
+C-143,Esqueleto de carga,sobre página,oscuro,ui.skeleton.on-page sobre ui.surface.page,color.neutral.900,color.neutral.950,#36363A,#222325,1.30,decorativo,exento,exento,nuevo
+C-144,Esqueleto de carga,sobre tarjeta,claro,ui.skeleton.on-card sobre ui.surface.card,color.neutral.200,color.neutral.100,#E5E6E9,#F2F2F4,1.11,decorativo,exento,exento,nuevo
+C-144,Esqueleto de carga,sobre tarjeta,oscuro,ui.skeleton.on-card sobre ui.surface.card,color.neutral.800,color.neutral.900,#4D4E53,#36363A,1.44,decorativo,exento,exento,nuevo
+C-145,Aviso en página (franja),info · icono,claro,rol info sobre superficie de rol info,color.role.info.light,color.role.info.surface-light,#006FA4,#E7F5FF,4.96,interfaz 3,3.0,true,igual
+C-145,Aviso en página (franja),info · icono,oscuro,rol info sobre superficie de rol info,color.role.info.dark,color.role.info.surface-dark,#6BC3FD,#003B5A,6.11,interfaz 3,3.0,true,igual
+C-146,Aviso en página (franja),info · texto,claro,ui.text.default sobre superficie de rol info,color.neutral.900,color.role.info.surface-light,#36363A,#E7F5FF,10.82,texto 4.5,4.5,true,nuevo
+C-146,Aviso en página (franja),info · texto,oscuro,ui.text.default sobre superficie de rol info,color.neutral.100,color.role.info.surface-dark,#F2F2F4,#003B5A,10.59,texto 4.5,4.5,true,nuevo
+C-147,Aviso en página (franja),warning · icono,claro,rol warning sobre superficie de rol warning,color.role.warning.light,color.role.warning.surface-light,#8B5D00,#FFF0DC,5.11,interfaz 3,3.0,true,igual
+C-147,Aviso en página (franja),warning · icono,oscuro,rol warning sobre superficie de rol warning,color.role.warning.dark,color.role.warning.surface-dark,#E5AE5B,#4C3000,6.09,interfaz 3,3.0,true,igual
+C-148,Aviso en página (franja),warning · texto,claro,ui.text.default sobre superficie de rol warning,color.neutral.900,color.role.warning.surface-light,#36363A,#FFF0DC,10.74,texto 4.5,4.5,true,nuevo
+C-148,Aviso en página (franja),warning · texto,oscuro,ui.text.default sobre superficie de rol warning,color.neutral.100,color.role.warning.surface-dark,#F2F2F4,#4C3000,10.85,texto 4.5,4.5,true,nuevo
+C-149,Aviso en página (franja),error · icono,claro,rol error sobre superficie de rol error,color.role.error.light,color.role.error.surface-light,#A34449,#FFEEED,5.37,interfaz 3,3.0,true,igual
+C-149,Aviso en página (franja),error · icono,oscuro,rol error sobre superficie de rol error,color.role.error.dark,color.role.error.surface-dark,#FC9999,#5A2124,6.05,interfaz 3,3.0,true,igual
+C-150,Aviso en página (franja),error · texto,claro,ui.text.default sobre superficie de rol error,color.neutral.900,color.role.error.surface-light,#36363A,#FFEEED,10.71,texto 4.5,4.5,true,nuevo
+C-150,Aviso en página (franja),error · texto,oscuro,ui.text.default sobre superficie de rol error,color.neutral.100,color.role.error.surface-dark,#F2F2F4,#5A2124,11.19,texto 4.5,4.5,true,nuevo
+C-151,Aviso en página (franja),success · icono,claro,rol success sobre superficie de rol success,color.role.success.light,color.role.success.surface-light,#207B3E,#E3FAE6,4.81,interfaz 3,3.0,true,igual
+C-151,Aviso en página (franja),success · icono,oscuro,rol success sobre superficie de rol success,color.role.success.dark,color.role.success.surface-dark,#7ECF90,#0A421E,6.19,interfaz 3,3.0,true,igual
+C-152,Aviso en página (franja),success · texto,claro,ui.text.default sobre superficie de rol success,color.neutral.900,color.role.success.surface-light,#36363A,#E3FAE6,10.93,texto 4.5,4.5,true,nuevo
+C-152,Aviso en página (franja),success · texto,oscuro,ui.text.default sobre superficie de rol success,color.neutral.100,color.role.success.surface-dark,#F2F2F4,#0A421E,10.37,texto 4.5,4.5,true,nuevo
+C-153,Aviso breve,texto,claro,ui.text.default sobre ui.surface.raised,color.neutral.900,color.neutral.50,#36363A,#FAFAFB,11.53,texto 4.5,4.5,true,igual
+C-153,Aviso breve,texto,oscuro,ui.text.default sobre ui.surface.raised,color.neutral.100,color.neutral.900,#F2F2F4,#36363A,10.75,texto 4.5,4.5,true,igual
+C-154,Aviso breve,icono · success,claro,rol success sobre ui.surface.raised,color.role.success.light,color.neutral.50,#207B3E,#FAFAFB,5.07,interfaz 3,3.0,true,igual
+C-154,Aviso breve,icono · success,oscuro,rol success sobre ui.surface.raised,color.role.success.dark,color.neutral.900,#7ECF90,#36363A,6.42,interfaz 3,3.0,true,igual
+C-155,Aviso breve,icono · error,claro,rol error sobre ui.surface.raised,color.role.error.light,color.neutral.50,#A34449,#FAFAFB,5.78,interfaz 3,3.0,true,igual
+C-155,Aviso breve,icono · error,oscuro,rol error sobre ui.surface.raised,color.role.error.dark,color.neutral.900,#FC9999,#36363A,5.81,interfaz 3,3.0,true,igual
+C-156,Aviso breve,icono · warning,claro,rol warning sobre ui.surface.raised,color.role.warning.light,color.neutral.50,#8B5D00,#FAFAFB,5.49,interfaz 3,3.0,true,igual
+C-156,Aviso breve,icono · warning,oscuro,rol warning sobre ui.surface.raised,color.role.warning.dark,color.neutral.900,#E5AE5B,#36363A,6.03,interfaz 3,3.0,true,igual
+C-157,Aviso breve,icono · info,claro,rol info sobre ui.surface.raised,color.role.info.light,color.neutral.50,#006FA4,#FAFAFB,5.28,interfaz 3,3.0,true,igual
+C-157,Aviso breve,icono · info,oscuro,rol info sobre ui.surface.raised,color.role.info.dark,color.neutral.900,#6BC3FD,#36363A,6.21,interfaz 3,3.0,true,igual
+C-158,Lo que flota,borde,claro,ui.border.divider sobre ui.surface.raised,color.neutral.200,color.neutral.50,#E5E6E9,#FAFAFB,1.19,decorativo,exento,exento,nuevo
+C-158,Lo que flota,borde,oscuro,ui.border.divider sobre ui.surface.raised,color.neutral.800,color.neutral.900,#4D4E53,#36363A,1.44,decorativo,exento,exento,nuevo

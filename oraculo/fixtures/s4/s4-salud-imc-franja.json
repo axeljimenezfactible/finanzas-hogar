@@ -1,0 +1,73 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-salud-imc-franja",
+  "descripcion": "PROVISIONAL (S4-reglas-lista, pregunta 3, opción A): 73990 g y 2000 mm = 18.4975 exacto, se muestra 18.5 (bmi_tenths = 185) y se clasifica sobre el valor mostrado: normal. Con la opción B sería underweight. ILUSTRATIVO.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-07"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "cuentas en descripcion"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S4-reglas-lista.md",
+    "que": "clasificación del IMC sobre el valor mostrado (pregunta 3), opción A"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [],
+        "products": [],
+        "presentations": []
+      },
+      "recipes": [],
+      "persons": [
+        {
+          "code": "franja",
+          "has_meal_plan": true
+        }
+      ],
+      "health_profiles": [
+        {
+          "person": "franja",
+          "height_mm": 2000,
+          "birth_date": null,
+          "sex": null,
+          "activity": null,
+          "goal": null,
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        }
+      ],
+      "weights": [
+        {
+          "person": "franja",
+          "date": "2026-10-01",
+          "weight_g": 73990
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "franja",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "franja"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "franja": {
+      "bmi_tenths": 185,
+      "bmi_class": "normal"
+    }
+  }
+}

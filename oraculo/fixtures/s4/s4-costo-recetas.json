@@ -1,0 +1,596 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-costo-recetas",
+  "descripcion": "S4-06, §8.2, §8.3 (precios de Bodega Aurrera del ticket del 2026-10-10, data.json items_identicos[21], [16], [15], [0]; el resto ILUSTRATIVO): espagueti-ilustrativo 2 porciones = 1200+2100+675+450 = 4425, por porción HALF_UP(2212.5) = 2213, a 4 porciones 8850 (§8.3); yogur con avena = 3000+360 = 3360; frijoles con jamón = 1200+1240+50.74 = 2491. La receta REAL espagueti-con-atun-y-elote (recetario-b) tiene 5 ingredientes sin precio: costo y totales nulos, nunca 0. Día 12 = 4425+4425+2491+3360 = 14701, día 13 = 3360, semana 42 = 18061; la semana 43 trae la receta incompleta y queda sin valor.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-06"
+    },
+    {
+      "tipo": "data.json",
+      "ruta": "items_identicos"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "cuentas en descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog_file": "datos/semilla/productos.json",
+      "recipes": [
+        {
+          "code": "espagueti-ilustrativo",
+          "name": "Espagueti con atún (ilustrativa)",
+          "slots": [
+            "lunch",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "household",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "espagueti",
+              "presentation": "espagueti.la-moderna-250g",
+              "quantity_milli": 250000,
+              "optional": false
+            },
+            {
+              "product": "atun-agua",
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 140000,
+              "optional": false
+            },
+            {
+              "product": "elote-grano",
+              "presentation": "elote-grano.herdez-220g",
+              "quantity_milli": 110000,
+              "optional": false
+            },
+            {
+              "product": "aceite-oliva",
+              "presentation": "aceite-oliva.nutrioli-oli-500ml",
+              "quantity_milli": 15000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "yogur-con-avena-ilustrativa",
+          "name": "Yogur con avena (ilustrativa)",
+          "slots": [
+            "breakfast"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "household",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "yogur-griego",
+              "presentation": "yogur-griego.yoplait-750g",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "avena",
+              "presentation": "avena.3-minutos-400g",
+              "quantity_milli": 40000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "frijoles-con-jamon-ilustrativa",
+          "name": "Frijoles con jamón (ilustrativa)",
+          "slots": [
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "household",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "frijoles-refritos",
+              "presentation": "frijoles-refritos.la-costena-220g",
+              "quantity_milli": 220000,
+              "optional": false
+            },
+            {
+              "product": "jamon-pavo",
+              "presentation": "jamon-pavo.sabori-400g",
+              "quantity_milli": 80000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.nutrioli-946ml",
+              "quantity_milli": 10000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "espagueti-con-atun-y-elote",
+          "name": "Espagueti con atún y elote",
+          "slots": [
+            "lunch",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "espagueti",
+              "presentation": "espagueti.la-moderna-250g",
+              "quantity_milli": 250000,
+              "optional": false
+            },
+            {
+              "product": "atun-agua",
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 140000,
+              "optional": false
+            },
+            {
+              "product": "elote-grano",
+              "presentation": "elote-grano.herdez-220g",
+              "quantity_milli": 110000,
+              "optional": false
+            },
+            {
+              "product": "jitomate-saladet",
+              "presentation": "jitomate-saladet.kilo-granel",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "cebolla-blanca",
+              "presentation": "cebolla-blanca.kilo-granel",
+              "quantity_milli": 60000,
+              "optional": false
+            },
+            {
+              "product": "ajo",
+              "presentation": "ajo.kilo-granel",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "aceite-oliva",
+              "presentation": "aceite-oliva.nutrioli-oli-500ml",
+              "quantity_milli": 15000,
+              "optional": false
+            },
+            {
+              "product": "sal",
+              "presentation": "sal.bolsa-1kg",
+              "quantity_milli": 3000,
+              "optional": false
+            },
+            {
+              "product": "oregano",
+              "presentation": "oregano.bolsa-15g",
+              "quantity_milli": 1000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        }
+      ],
+      "meal_plan": [
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "espagueti-ilustrativo",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-b",
+          "recipe": "espagueti-ilustrativo",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-12",
+          "slot": "dinner",
+          "person": "persona-a",
+          "recipe": "frijoles-con-jamon-ilustrativa",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-12",
+          "slot": "dinner",
+          "person": "persona-b",
+          "recipe": "yogur-con-avena-ilustrativa",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "breakfast",
+          "person": "persona-a",
+          "recipe": "yogur-con-avena-ilustrativa",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-19",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "espagueti-con-atun-y-elote",
+          "servings_milli": 2000,
+          "eating_out": false
+        }
+      ],
+      "quotes": [
+        {
+          "product": "espagueti",
+          "store": "bodega",
+          "presentation": "espagueti.la-moderna-250g",
+          "price_cents": 1200,
+          "size_milli": 250000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "atun-agua",
+          "store": "bodega",
+          "presentation": "atun-agua.dolores-140g",
+          "price_cents": 2100,
+          "size_milli": 140000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "elote-grano",
+          "store": "bodega",
+          "presentation": "elote-grano.herdez-220g",
+          "price_cents": 1350,
+          "size_milli": 220000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "aceite-oliva",
+          "store": "bodega",
+          "presentation": "aceite-oliva.nutrioli-oli-500ml",
+          "price_cents": 15000,
+          "size_milli": 500000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "yogur-griego",
+          "store": "bodega",
+          "presentation": "yogur-griego.yoplait-750g",
+          "price_cents": 7500,
+          "size_milli": 750000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "avena",
+          "store": "bodega",
+          "presentation": "avena.3-minutos-400g",
+          "price_cents": 3600,
+          "size_milli": 400000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "frijoles-refritos",
+          "store": "bodega",
+          "presentation": "frijoles-refritos.la-costena-220g",
+          "price_cents": 1200,
+          "size_milli": 220000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "jamon-pavo",
+          "store": "bodega",
+          "presentation": "jamon-pavo.sabori-400g",
+          "price_cents": 6200,
+          "size_milli": 400000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "aceite-soya",
+          "store": "bodega",
+          "presentation": "aceite-soya.nutrioli-946ml",
+          "price_cents": 4800,
+          "size_milli": 946000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "espagueti-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "espagueti-ilustrativo",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "espagueti-4",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "espagueti-ilustrativo",
+          "servings_milli": 4000
+        }
+      },
+      {
+        "id": "yogur-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "yogur-con-avena-ilustrativa",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "frijoles-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "frijoles-con-jamon-ilustrativa",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "real-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "espagueti-con-atun-y-elote",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "semana-42",
+        "funcion": "week_plan",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      },
+      {
+        "id": "semana-43",
+        "funcion": "week_plan",
+        "argumentos": {
+          "week": "2026-W43"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "espagueti-2": {
+      "ingredients": [
+        {
+          "product": "espagueti",
+          "cost_cents": 1200
+        },
+        {
+          "product": "atun-agua",
+          "cost_cents": 2100
+        },
+        {
+          "product": "elote-grano",
+          "cost_cents": 675
+        },
+        {
+          "product": "aceite-oliva",
+          "cost_cents": 450
+        }
+      ],
+      "total_cost_cents": 4425,
+      "cost_per_serving_cents": 2213,
+      "missing_prices": []
+    },
+    "espagueti-4": {
+      "ingredients": [
+        {
+          "product": "espagueti",
+          "cost_cents": 2400
+        },
+        {
+          "product": "atun-agua",
+          "cost_cents": 4200
+        },
+        {
+          "product": "elote-grano",
+          "cost_cents": 1350
+        },
+        {
+          "product": "aceite-oliva",
+          "cost_cents": 900
+        }
+      ],
+      "total_cost_cents": 8850,
+      "cost_per_serving_cents": 2213,
+      "missing_prices": []
+    },
+    "yogur-2": {
+      "total_cost_cents": 3360,
+      "cost_per_serving_cents": 1680,
+      "missing_prices": []
+    },
+    "frijoles-2": {
+      "ingredients": [
+        {
+          "product": "frijoles-refritos",
+          "cost_cents": 1200
+        },
+        {
+          "product": "jamon-pavo",
+          "cost_cents": 1240
+        },
+        {
+          "product": "aceite-soya",
+          "cost_cents": 51
+        }
+      ],
+      "total_cost_cents": 2491,
+      "cost_per_serving_cents": 1245,
+      "missing_prices": []
+    },
+    "real-2": {
+      "ingredients": [
+        {
+          "product": "espagueti",
+          "cost_cents": 1200
+        },
+        {
+          "product": "atun-agua",
+          "cost_cents": 2100
+        },
+        {
+          "product": "elote-grano",
+          "cost_cents": 675
+        },
+        {
+          "product": "jitomate-saladet",
+          "cost_cents": null
+        },
+        {
+          "product": "cebolla-blanca",
+          "cost_cents": null
+        },
+        {
+          "product": "ajo",
+          "cost_cents": null
+        },
+        {
+          "product": "aceite-oliva",
+          "cost_cents": 450
+        },
+        {
+          "product": "sal",
+          "cost_cents": null
+        },
+        {
+          "product": "oregano",
+          "cost_cents": null
+        }
+      ],
+      "total_cost_cents": null,
+      "cost_per_serving_cents": null,
+      "missing_prices": [
+        "jitomate-saladet",
+        "cebolla-blanca",
+        "ajo",
+        "sal",
+        "oregano"
+      ]
+    },
+    "semana-42": {
+      "days": [
+        {
+          "date": "2026-10-12",
+          "cost_cents": 14701
+        },
+        {
+          "date": "2026-10-13",
+          "cost_cents": 3360
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        }
+      ],
+      "week_cost_cents": 18061
+    },
+    "semana-43": {
+      "cells": [
+        {
+          "cost_cents": null
+        }
+      ],
+      "days": [
+        {
+          "date": "2026-10-19",
+          "cost_cents": null
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        }
+      ],
+      "week_cost_cents": null
+    }
+  }
+}

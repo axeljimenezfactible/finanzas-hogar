@@ -1,0 +1,247 @@
+{
+ "version": "1.0",
+ "fecha": "2026-10-11",
+ "grupos": [
+  {
+   "id": "frutas-verduras",
+   "nombre": "Frutas y verduras",
+   "canal": "mercado",
+   "orden": 10
+  },
+  {
+   "id": "carnes",
+   "nombre": "Carne y pollo",
+   "canal": "mercado",
+   "orden": 20
+  },
+  {
+   "id": "abarrotes",
+   "nombre": "Abarrotes",
+   "canal": "cadena",
+   "orden": 30
+  },
+  {
+   "id": "lacteos",
+   "nombre": "Lácteos y huevo",
+   "canal": "cadena",
+   "orden": 40
+  }
+ ],
+ "productos": [
+  {
+   "id": "espagueti",
+   "nombre": "Espagueti",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "espagueti.la-moderna-250g",
+   "presentaciones": [
+    {
+     "id": "espagueti.la-moderna-250g",
+     "nombre": "Espagueti 250 g",
+     "contenido_milli": 250000
+    }
+   ]
+  },
+  {
+   "id": "atun",
+   "nombre": "Atún en agua",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "atun.lata-140g",
+   "presentaciones": [
+    {
+     "id": "atun.lata-140g",
+     "nombre": "Atún lata 140 g",
+     "contenido_milli": 140000
+    }
+   ]
+  },
+  {
+   "id": "elote",
+   "nombre": "Granos de elote",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "elote.lata-220g",
+   "presentaciones": [
+    {
+     "id": "elote.lata-220g",
+     "nombre": "Elote lata 220 g",
+     "contenido_milli": 220000
+    }
+   ]
+  },
+  {
+   "id": "aceite-oliva",
+   "nombre": "Aceite de oliva",
+   "categoria": "abarrotes",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "0.913",
+   "presentacion_tipica": "aceite-oliva.500ml",
+   "presentaciones": [
+    {
+     "id": "aceite-oliva.500ml",
+     "nombre": "Aceite de oliva 500 ml",
+     "contenido_milli": 500000
+    }
+   ]
+  },
+  {
+   "id": "jitomate",
+   "nombre": "Jitomate saladet",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "jitomate.kilo",
+   "presentaciones": [
+    {
+     "id": "jitomate.kilo",
+     "nombre": "Jitomate a granel",
+     "contenido_milli": 1000000
+    }
+   ]
+  },
+  {
+   "id": "huevo",
+   "nombre": "Huevo blanco",
+   "categoria": "lacteos",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": "50",
+   "presentacion_tipica": "huevo.carton-12",
+   "presentaciones": [
+    {
+     "id": "huevo.carton-12",
+     "nombre": "Huevo 12 piezas",
+     "contenido_milli": 12000
+    }
+   ]
+  },
+  {
+   "id": "tortilla",
+   "nombre": "Tortilla de maíz",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "tortilla.kilo",
+   "presentaciones": [
+    {
+     "id": "tortilla.kilo",
+     "nombre": "Tortilla 1 kg",
+     "contenido_milli": 1000000
+    }
+   ]
+  },
+  {
+   "id": "arroz",
+   "nombre": "Arroz",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "arroz.1kg",
+   "presentaciones": [
+    {
+     "id": "arroz.1kg",
+     "nombre": "Arroz 1 kg",
+     "contenido_milli": 1000000
+    },
+    {
+     "id": "arroz.750g",
+     "nombre": "Arroz 750 g",
+     "contenido_milli": 750000
+    }
+   ]
+  },
+  {
+   "id": "pollo",
+   "nombre": "Pierna de pollo",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "pollo.kilo",
+   "presentaciones": [
+    {
+     "id": "pollo.kilo",
+     "nombre": "Pollo a granel",
+     "contenido_milli": 1000000
+    }
+   ]
+  },
+  {
+   "id": "cebolla",
+   "nombre": "Cebolla blanca",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "cebolla.kilo",
+   "presentaciones": [
+    {
+     "id": "cebolla.kilo",
+     "nombre": "Cebolla a granel",
+     "contenido_milli": 1000000
+    }
+   ]
+  },
+  {
+   "id": "sal",
+   "nombre": "Sal de mesa",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "sal.1kg",
+   "presentaciones": [
+    {
+     "id": "sal.1kg",
+     "nombre": "Sal 1 kg",
+     "contenido_milli": 1000000
+    }
+   ]
+  },
+  {
+   "id": "frijol",
+   "nombre": "Frijol negro",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "frijol.1kg",
+   "presentaciones": [
+    {
+     "id": "frijol.1kg",
+     "nombre": "Frijol 1 kg",
+     "contenido_milli": 1000000
+    }
+   ]
+  },
+  {
+   "id": "aceite-soya",
+   "nombre": "Aceite de soya",
+   "categoria": "abarrotes",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "0.921",
+   "presentacion_tipica": "aceite-soya.946ml",
+   "presentaciones": [
+    {
+     "id": "aceite-soya.946ml",
+     "nombre": "Aceite de soya 946 ml",
+     "contenido_milli": 946000
+    }
+   ]
+  },
+  {
+   "id": "servilletas",
+   "nombre": "Servilletas",
+   "categoria": "abarrotes",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": null,
+   "presentacion_tipica": "servilletas.paq-100",
+   "presentaciones": [
+    {
+     "id": "servilletas.paq-100",
+     "nombre": "Servilletas 100 piezas",
+     "contenido_milli": 100000
+    }
+   ]
+  }
+ ]
+}

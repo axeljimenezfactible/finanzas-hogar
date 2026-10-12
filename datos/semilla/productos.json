@@ -1,0 +1,4601 @@
+{
+ "version": "1.0",
+ "fecha": "2026-10-11",
+ "grupos": [
+  {
+   "id": "frutas-verduras",
+   "nombre": "Frutas y verduras",
+   "canal": "mercado",
+   "orden": 10
+  },
+  {
+   "id": "carnes",
+   "nombre": "Carne y pollo (no especializada)",
+   "canal": "mercado",
+   "orden": 20
+  },
+  {
+   "id": "abarrotes",
+   "nombre": "Abarrotes",
+   "canal": "cadena",
+   "orden": 30
+  },
+  {
+   "id": "lacteos",
+   "nombre": "Lácteos y huevo",
+   "canal": "cadena",
+   "orden": 40
+  },
+  {
+   "id": "salchichoneria",
+   "nombre": "Salchichonería",
+   "canal": "cadena",
+   "orden": 50
+  },
+  {
+   "id": "panaderia",
+   "nombre": "Panadería",
+   "canal": "cadena",
+   "orden": 60
+  },
+  {
+   "id": "limpieza",
+   "nombre": "Limpieza del hogar",
+   "canal": "cadena",
+   "orden": 70
+  },
+  {
+   "id": "higiene",
+   "nombre": "Higiene personal",
+   "canal": "cadena",
+   "orden": 80
+  },
+  {
+   "id": "papel",
+   "nombre": "Papel y desechables",
+   "canal": "cadena",
+   "orden": 90
+  }
+ ],
+ "productos": [
+  {
+   "id": "aceite-oliva",
+   "nombre": "Aceite de oliva",
+   "categoria": "abarrotes",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "0.913",
+   "fuente_gramos": "USDA FDC 171413 (SR Legacy, aceite de oliva): 1 taza = 216 g; 1 taza = 236.588 ml",
+   "vertical": "cadena",
+   "sinonimos": [
+    "aceite de oliva",
+    "aceite oliva",
+    "oliva"
+   ],
+   "presentacion_tipica": "aceite-oliva.nutrioli-oli-500ml",
+   "presentaciones": [
+    {
+     "id": "aceite-oliva.nutrioli-oli-500ml",
+     "nombre": "Aceite de oliva Nutrioli Oli 500 ml",
+     "marca": "Nutrioli",
+     "contenido_milli": 500000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Aceite de oliva Nutrioli 500 ml"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aceite-soya",
+   "nombre": "Aceite de soya",
+   "categoria": "abarrotes",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "0.921",
+   "fuente_gramos": "USDA FDC 171411 (SR Legacy, aceite de soya): 1 taza = 218 g; 1 taza = 236.588 ml",
+   "vertical": "cadena",
+   "sinonimos": [
+    "aceite de soya",
+    "aceite vegetal",
+    "aceite comestible",
+    "aceite"
+   ],
+   "presentacion_tipica": "aceite-soya.nutrioli-946ml",
+   "presentaciones": [
+    {
+     "id": "aceite-soya.nutrioli-946ml",
+     "nombre": "Aceite de soya Nutrioli 946 ml",
+     "marca": "Nutrioli",
+     "contenido_milli": 946000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Aceite de soya Nutrioli 946 ml"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "frijoles-refritos",
+   "nombre": "Frijoles refritos bayos",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "frijoles refritos",
+    "frijol refrito",
+    "frijoles bayos refritos",
+    "frijoles de lata"
+   ],
+   "presentacion_tipica": "frijoles-refritos.la-costena-220g",
+   "presentaciones": [
+    {
+     "id": "frijoles-refritos.la-costena-220g",
+     "nombre": "Frijoles bayos La Costeña refritos 220 g",
+     "marca": "La Costeña",
+     "contenido_milli": 220000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Frijoles refritos La Costeña"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "duraznos-almibar",
+   "nombre": "Duraznos en almíbar",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "duraznos en almíbar",
+    "duraznos en almibar",
+    "durazno en almíbar",
+    "duraznos de lata"
+   ],
+   "presentacion_tipica": "duraznos-almibar.la-costena-425g",
+   "presentaciones": [
+    {
+     "id": "duraznos-almibar.la-costena-425g",
+     "nombre": "Duraznos La Costeña cubitos en almíbar 425 g",
+     "marca": "La Costeña",
+     "contenido_milli": 425000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Duraznos La Costeña cubitos 425 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cafe-soluble",
+   "nombre": "Café soluble",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "café soluble",
+    "cafe soluble",
+    "café instantáneo",
+    "nescafé"
+   ],
+   "presentacion_tipica": "cafe-soluble.nescafe-verarica-180g",
+   "presentaciones": [
+    {
+     "id": "cafe-soluble.nescafe-verarica-180g",
+     "nombre": "Café soluble Nescafé Reserva Mexicana Verarica 180 g",
+     "marca": "Nescafé",
+     "contenido_milli": 180000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Nescafé Verarica 180 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "jamon-pavo",
+   "nombre": "Jamón de pavo",
+   "categoria": "salchichoneria",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "jamón de pavo",
+    "jamon de pavo",
+    "jamón",
+    "jamon",
+    "jamón virginia"
+   ],
+   "presentacion_tipica": "jamon-pavo.sabori-400g",
+   "presentaciones": [
+    {
+     "id": "jamon-pavo.sabori-400g",
+     "nombre": "Jamón de pavo Sabori Parma virginia premium 400 g",
+     "marca": "Sabori",
+     "contenido_milli": 400000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Jamón de pavo Sabori 400 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "salchicha-pavo",
+   "nombre": "Salchicha de pavo",
+   "categoria": "salchichoneria",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "salchicha de pavo",
+    "salchichas",
+    "salchicha"
+   ],
+   "presentacion_tipica": "salchicha-pavo.sabori-500g",
+   "presentaciones": [
+    {
+     "id": "salchicha-pavo.sabori-500g",
+     "nombre": "Salchicha de pavo Sabori Parma 500 g",
+     "marca": "Sabori",
+     "contenido_milli": 500000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Salchicha de pavo Sabori 500 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "avena",
+   "nombre": "Avena en hojuelas",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "avena",
+    "avena en hojuelas",
+    "hojuelas de avena",
+    "avena molida"
+   ],
+   "presentacion_tipica": "avena.3-minutos-400g",
+   "presentaciones": [
+    {
+     "id": "avena.3-minutos-400g",
+     "nombre": "Avena 3 Minutos con sémola de trigo 400 g",
+     "marca": "3 Minutos",
+     "contenido_milli": 400000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Avena 3 Minutos 400 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "blanqueador",
+   "nombre": "Blanqueador con cloro",
+   "categoria": "limpieza",
+   "unidad_base": "ml",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "blanqueador",
+    "cloro",
+    "cloralex"
+   ],
+   "presentacion_tipica": "blanqueador.cloralex-3750ml",
+   "presentaciones": [
+    {
+     "id": "blanqueador.cloralex-3750ml",
+     "nombre": "Blanqueador Cloralex El Rendidor 3.75 l",
+     "marca": "Cloralex",
+     "contenido_milli": 3750000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Cloralex 3.75 l"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "caldo-pollo-cubos",
+   "nombre": "Caldo de pollo en cubos",
+   "categoria": "abarrotes",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": "4",
+   "fuente_gramos": "USDA FDC 171562 (SR Legacy, caldo de pollo deshidratado): 1 cubo = 4 g; pendiente cotejar con la etiqueta del paquete",
+   "vertical": "cadena",
+   "sinonimos": [
+    "caldo de pollo en cubos",
+    "cubo de caldo de pollo",
+    "consomé de pollo",
+    "consome de pollo",
+    "caldo en cubos"
+   ],
+   "presentacion_tipica": "caldo-pollo-cubos.knorr-24-cubos",
+   "presentaciones": [
+    {
+     "id": "caldo-pollo-cubos.knorr-24-cubos",
+     "nombre": "Caldo de pollo Knorr 24 cubos",
+     "marca": "Knorr",
+     "contenido_milli": 24000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Caldo Knorr 24 cubos"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pasta-dental",
+   "nombre": "Pasta dental",
+   "categoria": "higiene",
+   "unidad_base": "ml",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "pasta dental",
+    "pasta de dientes",
+    "crema dental"
+   ],
+   "presentacion_tipica": "pasta-dental.colgate-2x80ml",
+   "presentaciones": [
+    {
+     "id": "pasta-dental.colgate-2x80ml",
+     "nombre": "Pasta dental Colgate Triple Acción 2 x 80 ml",
+     "marca": "Colgate",
+     "contenido_milli": 160000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Pasta dental Colgate"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "jabon-manos",
+   "nombre": "Jabón líquido para manos",
+   "categoria": "higiene",
+   "unidad_base": "ml",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "jabón líquido para manos",
+    "jabon liquido para manos",
+    "jabón de manos",
+    "jabon de manos"
+   ],
+   "presentacion_tipica": "jabon-manos.grisi-450ml",
+   "presentaciones": [
+    {
+     "id": "jabon-manos.grisi-450ml",
+     "nombre": "Jabón líquido Grisi frutos rojos 450 ml",
+     "marca": "Grisi",
+     "contenido_milli": 450000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Jabón Grisi 450 ml"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "acondicionador",
+   "nombre": "Acondicionador para cabello",
+   "categoria": "higiene",
+   "unidad_base": "ml",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "acondicionador",
+    "acondicionador para cabello",
+    "enjuague para cabello"
+   ],
+   "presentacion_tipica": "acondicionador.pantene-170ml",
+   "presentaciones": [
+    {
+     "id": "acondicionador.pantene-170ml",
+     "nombre": "Acondicionador Pantene 3 Minute Miracle Repara 170 ml",
+     "marca": "Pantene",
+     "contenido_milli": 170000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Pantene 3 Minute Miracle"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "desinfectante-aerosol",
+   "nombre": "Desinfectante en aerosol",
+   "categoria": "limpieza",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "desinfectante en aerosol",
+    "desinfectante",
+    "aerosol desinfectante",
+    "lysol"
+   ],
+   "presentacion_tipica": "desinfectante-aerosol.lysol-354g",
+   "presentaciones": [
+    {
+     "id": "desinfectante-aerosol.lysol-354g",
+     "nombre": "Desinfectante Lysol Crisp Linen aerosol 354 g",
+     "marca": "Lysol",
+     "contenido_milli": 354000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Lysol Crisp Linen 354 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "detergente-polvo",
+   "nombre": "Detergente en polvo",
+   "categoria": "limpieza",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "detergente en polvo",
+    "detergente",
+    "jabón para ropa",
+    "jabon para ropa"
+   ],
+   "presentacion_tipica": "detergente-polvo.roma-1kg",
+   "presentaciones": [
+    {
+     "id": "detergente-polvo.roma-1kg",
+     "nombre": "Detergente en polvo Roma multiusos 1 kg",
+     "marca": "Roma",
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Detergente Roma 1 kg"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "elote-grano",
+   "nombre": "Granos de elote",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "granos de elote",
+    "elote en grano",
+    "elote de lata",
+    "maíz dulce en lata",
+    "esquites de lata"
+   ],
+   "presentacion_tipica": "elote-grano.herdez-220g",
+   "presentaciones": [
+    {
+     "id": "elote-grano.herdez-220g",
+     "nombre": "Granos de elote Herdez 220 g",
+     "marca": "Herdez",
+     "contenido_milli": 220000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Granos de elote Herdez"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "atun-agua",
+   "nombre": "Atún en agua",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "atún en agua",
+    "atun en agua",
+    "atún",
+    "atun",
+    "atún en lata",
+    "atun en lata"
+   ],
+   "presentacion_tipica": "atun-agua.dolores-140g",
+   "presentaciones": [
+    {
+     "id": "atun-agua.dolores-140g",
+     "nombre": "Atún Dolores aleta amarilla en agua con aceite 140 g (5 pzas)",
+     "marca": "Dolores",
+     "contenido_milli": 140000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Atún Dolores 140 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uva-verde",
+   "nombre": "Uva verde",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "uva verde",
+    "uvas",
+    "uva",
+    "uvas verdes"
+   ],
+   "presentacion_tipica": "uva-verde.pieza-1kg",
+   "presentaciones": [
+    {
+     "id": "uva-verde.pieza-1kg",
+     "nombre": "Uva verde por pieza de 1 kg aprox",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Uva verde 1 kg"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "jabon-trastes",
+   "nombre": "Jabón líquido para trastes",
+   "categoria": "limpieza",
+   "unidad_base": "ml",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "jabón líquido para trastes",
+    "jabon liquido para trastes",
+    "jabón para trastes",
+    "lavatrastes",
+    "lavaplatos"
+   ],
+   "presentacion_tipica": "jabon-trastes.salvo-1200ml",
+   "presentaciones": [
+    {
+     "id": "jabon-trastes.salvo-1200ml",
+     "nombre": "Jabón para trastes Salvo Power Clean 1.2 l",
+     "marca": "Salvo",
+     "contenido_milli": 1200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Jabón Salvo 1.2 l"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pan-caja",
+   "nombre": "Pan de caja",
+   "categoria": "panaderia",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "pan de caja",
+    "pan blanco",
+    "pan de sandwich",
+    "pan molde",
+    "pan de molde",
+    "pan oroweat"
+   ],
+   "presentacion_tipica": "pan-caja.oroweat-mantequilla-680g",
+   "presentaciones": [
+    {
+     "id": "pan-caja.oroweat-mantequilla-680g",
+     "nombre": "Pan Oroweat mantequilla 680 g",
+     "marca": "Oroweat",
+     "contenido_milli": 680000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Pan Oroweat mantequilla 680 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "papel-higienico",
+   "nombre": "Papel higiénico",
+   "categoria": "papel",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "papel higiénico",
+    "papel higienico",
+    "papel de baño",
+    "papel de bano"
+   ],
+   "presentacion_tipica": "papel-higienico.cottonelle-30-rollos",
+   "presentaciones": [
+    {
+     "id": "papel-higienico.cottonelle-30-rollos",
+     "nombre": "Papel higiénico Kleenex Cottonelle Elegance 30 rollos",
+     "marca": "Kleenex Cottonelle",
+     "contenido_milli": 30000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Papel higiénico Cottonelle 30 rollos"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "espagueti",
+   "nombre": "Espagueti",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "espagueti",
+    "spaghetti",
+    "espaguetis",
+    "pasta larga",
+    "sopa de espagueti"
+   ],
+   "presentacion_tipica": "espagueti.la-moderna-250g",
+   "presentaciones": [
+    {
+     "id": "espagueti.la-moderna-250g",
+     "nombre": "Spaghetti La Moderna 250 g",
+     "marca": "La Moderna",
+     "contenido_milli": 250000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Spaghetti La Moderna"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "queso-manchego",
+   "nombre": "Queso manchego",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "queso manchego",
+    "manchego",
+    "queso amarillo",
+    "queso en rebanadas"
+   ],
+   "presentacion_tipica": "queso-manchego.nochebuena-200g",
+   "presentaciones": [
+    {
+     "id": "queso-manchego.nochebuena-200g",
+     "nombre": "Queso manchego NocheBuena rebanadas 200 g",
+     "marca": "NocheBuena",
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Queso manchego NocheBuena 200 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mayonesa-chipotle",
+   "nombre": "Mayonesa con chipotle",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "mayonesa con chipotle",
+    "mayonesa con chilpotle",
+    "aderezo de chipotle",
+    "mayonesa de chipotle"
+   ],
+   "presentacion_tipica": "mayonesa-chipotle.mccormick-310g",
+   "presentaciones": [
+    {
+     "id": "mayonesa-chipotle.mccormick-310g",
+     "nombre": "Mayonesa McCormick con chilpotle squeeze 310 g",
+     "marca": "McCormick",
+     "contenido_milli": 310000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Mayonesa McCormick chipotle"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "salsa-soya",
+   "nombre": "Salsa de soya",
+   "categoria": "abarrotes",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "1.078",
+   "fuente_gramos": "USDA FDC 174277 (SR Legacy, salsa de soya shoyu): 1 taza = 255 g; 1 taza = 236.588 ml",
+   "vertical": "cadena",
+   "sinonimos": [
+    "salsa de soya",
+    "salsa soya",
+    "soya",
+    "salsa de soja"
+   ],
+   "presentacion_tipica": "salsa-soya.maggi-290ml",
+   "presentaciones": [
+    {
+     "id": "salsa-soya.maggi-290ml",
+     "nombre": "Soya Maggi tradicional 290 ml",
+     "marca": "Maggi",
+     "contenido_milli": 290000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Soya Maggi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "catsup",
+   "nombre": "Catsup",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "catsup",
+    "cátsup",
+    "kétchup",
+    "ketchup",
+    "salsa catsup"
+   ],
+   "presentacion_tipica": "catsup.heinz-397g",
+   "presentaciones": [
+    {
+     "id": "catsup.heinz-397g",
+     "nombre": "Catsup Heinz 397 g",
+     "marca": "Heinz",
+     "contenido_milli": 397000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Catsup Heinz"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mayonesa",
+   "nombre": "Mayonesa",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "mayonesa",
+    "aderezo de mayonesa",
+    "mayonesa natural"
+   ],
+   "presentacion_tipica": "mayonesa.mccormick-420g",
+   "presentaciones": [
+    {
+     "id": "mayonesa.mccormick-420g",
+     "nombre": "Aderezo de mayonesa McCormick 420 g",
+     "marca": "McCormick",
+     "contenido_milli": 420000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Mayonesa McCormick 420 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "salsa-inglesa",
+   "nombre": "Salsa inglesa",
+   "categoria": "abarrotes",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "1.162",
+   "fuente_gramos": "USDA FDC 171610 (SR Legacy, salsa Worcestershire): 1 taza = 275 g; 1 taza = 236.588 ml",
+   "vertical": "cadena",
+   "sinonimos": [
+    "salsa inglesa",
+    "salsa worcestershire",
+    "worcestershire"
+   ],
+   "presentacion_tipica": "salsa-inglesa.crosse-blackwell-290ml",
+   "presentaciones": [
+    {
+     "id": "salsa-inglesa.crosse-blackwell-290ml",
+     "nombre": "Salsa Inglesa Crosse & Blackwell 290 ml",
+     "marca": "Crosse & Blackwell",
+     "contenido_milli": 290000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Salsa Inglesa Crosse & Blackwell"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "servilletas",
+   "nombre": "Servilletas de papel",
+   "categoria": "papel",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "servilletas de papel",
+    "servilletas",
+    "servilleta"
+   ],
+   "presentacion_tipica": "servilletas.petalo-420",
+   "presentaciones": [
+    {
+     "id": "servilletas.petalo-420",
+     "nombre": "Servilletas Pétalo 420 pzas",
+     "marca": "Pétalo",
+     "contenido_milli": 420000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Servilletas Pétalo 420"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "toallas-papel",
+   "nombre": "Toallas de papel",
+   "categoria": "papel",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "toallas de papel",
+    "servitoalla",
+    "papel de cocina",
+    "papel absorbente",
+    "rollo de cocina"
+   ],
+   "presentacion_tipica": "toallas-papel.petalo-mega-jumbo-270",
+   "presentaciones": [
+    {
+     "id": "toallas-papel.petalo-mega-jumbo-270",
+     "nombre": "Servitoalla Pétalo Mega Jumbo 270 hojas dobles",
+     "marca": "Pétalo",
+     "contenido_milli": 270000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Servitoalla Pétalo"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "yogur-griego",
+   "nombre": "Yogur griego natural",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "yogur griego natural",
+    "yogur griego",
+    "yoghurt griego",
+    "yogurt griego",
+    "yogur natural"
+   ],
+   "presentacion_tipica": "yogur-griego.yoplait-750g",
+   "presentaciones": [
+    {
+     "id": "yogur-griego.yoplait-750g",
+     "nombre": "Yoghurt Yoplait Griego natural sin azúcar 750 g",
+     "marca": "Yoplait",
+     "contenido_milli": 750000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Yoghurt Yoplait Griego 750 g"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "yogur-bebible",
+   "nombre": "Yogur bebible",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "yogur bebible",
+    "yoghurt bebible",
+    "yogurt bebible",
+    "yogur para beber"
+   ],
+   "presentacion_tipica": "yogur-bebible.alpura-10x220g",
+   "presentaciones": [
+    {
+     "id": "yogur-bebible.alpura-10x220g",
+     "nombre": "Yoghurt bebible Alpura multi sabor 10 pzas 220 g",
+     "marca": "Alpura",
+     "contenido_milli": 2200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Yoghurt Alpura bebible 10 pzas"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "petit-suisse",
+   "nombre": "Queso petit suisse",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "queso petit suisse",
+    "petit suisse",
+    "danonino",
+    "queso fresco para niños"
+   ],
+   "presentacion_tipica": "petit-suisse.danonino-6x42g",
+   "presentaciones": [
+    {
+     "id": "petit-suisse.danonino-6x42g",
+     "nombre": "Queso petit suisse Danonino fresa 6 pzas 42 g",
+     "marca": "Danonino",
+     "contenido_milli": 252000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Danonino fresa 6 pzas"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arroz-grano-largo",
+   "nombre": "Arroz blanco grano largo",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "arroz",
+    "arroz blanco",
+    "arroz grano largo",
+    "arroz blanco grano largo"
+   ],
+   "presentacion_tipica": "arroz-grano-largo.sos-750g",
+   "presentaciones": [
+    {
+     "id": "arroz-grano-largo.sos-750g",
+     "nombre": "Arroz SOS grano largo súper extra 750 g",
+     "marca": "SOS",
+     "contenido_milli": 750000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Arroz SOS 750 g"
+     ]
+    },
+    {
+     "id": "arroz-grano-largo.sos-uruguayo-1kg",
+     "nombre": "Arroz SOS grano largo uruguayo 1 kg",
+     "marca": "SOS",
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sustituto-crema-cafe",
+   "nombre": "Sustituto de crema para café",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "sustituto de crema para café",
+    "sustituto de crema",
+    "crema para café",
+    "coffee mate",
+    "cremora"
+   ],
+   "presentacion_tipica": "sustituto-crema-cafe.coffee-mate-pack-780g",
+   "presentaciones": [
+    {
+     "id": "sustituto-crema-cafe.coffee-mate-pack-780g",
+     "nombre": "Pack Coffee Mate 640 g + 140 g (780 g)",
+     "marca": "Coffee Mate",
+     "contenido_milli": 780000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Pack Coffee Mate"
+     ]
+    },
+    {
+     "id": "sustituto-crema-cafe.coffee-mate-640g",
+     "nombre": "Coffee Mate en polvo 640 g",
+     "marca": "Coffee Mate",
+     "contenido_milli": 640000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "leche",
+   "nombre": "Leche",
+   "categoria": "lacteos",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "1.031",
+   "fuente_gramos": "USDA FDC 171265 (SR Legacy, leche entera 3.25 %): 1 taza = 244 g; 1 taza = 236.588 ml",
+   "vertical": "cadena",
+   "sinonimos": [
+    "leche",
+    "leche entera",
+    "leche de vaca",
+    "leche líquida",
+    "leche liquida"
+   ],
+   "presentacion_tipica": "leche.santa-clara-4x1l-taza",
+   "presentaciones": [
+    {
+     "id": "leche.santa-clara-4x1l-taza",
+     "nombre": "Leche Santa Clara 4 pack 1 l + taza de regalo",
+     "marca": "Santa Clara",
+     "contenido_milli": 4000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": [
+      "Leche Santa Clara 4 pack + taza"
+     ]
+    },
+    {
+     "id": "leche.santa-clara-entera-6x1l",
+     "nombre": "Leche Santa Clara entera caja 6 pzas 1 l",
+     "marca": "Santa Clara",
+     "contenido_milli": 6000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "jitomate-saladet",
+   "nombre": "Jitomate saladet",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "jitomate",
+    "tomate rojo",
+    "jitomate saladet",
+    "tomate saladet",
+    "jitomate guaje"
+   ],
+   "presentacion_tipica": "jitomate-saladet.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "jitomate-saladet.kilo-granel",
+     "nombre": "Jitomate saladet, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "tomate-bola",
+   "nombre": "Jitomate bola",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "jitomate bola",
+    "tomate bola",
+    "jitomate redondo"
+   ],
+   "presentacion_tipica": "tomate-bola.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "tomate-bola.kilo-granel",
+     "nombre": "Jitomate bola, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "tomate-verde",
+   "nombre": "Tomate verde",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "tomate verde",
+    "tomatillo",
+    "miltomate"
+   ],
+   "presentacion_tipica": "tomate-verde.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "tomate-verde.kilo-granel",
+     "nombre": "Tomate verde, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "cebolla-blanca",
+   "nombre": "Cebolla blanca",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "cebolla",
+    "cebolla blanca"
+   ],
+   "presentacion_tipica": "cebolla-blanca.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "cebolla-blanca.kilo-granel",
+     "nombre": "Cebolla blanca, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "cebolla-morada",
+   "nombre": "Cebolla morada",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "cebolla morada"
+   ],
+   "presentacion_tipica": "cebolla-morada.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "cebolla-morada.kilo-granel",
+     "nombre": "Cebolla morada, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "cebolla-cambray",
+   "nombre": "Cebolla cambray",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "cebolla cambray",
+    "cebollitas de cambray",
+    "cebollín",
+    "cebollin"
+   ],
+   "presentacion_tipica": "cebolla-cambray.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "cebolla-cambray.kilo-granel",
+     "nombre": "Cebolla cambray, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "ajo",
+   "nombre": "Ajo",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "ajo",
+    "cabeza de ajo",
+    "dientes de ajo",
+    "ajos"
+   ],
+   "presentacion_tipica": "ajo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "ajo.kilo-granel",
+     "nombre": "Ajo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "jengibre",
+   "nombre": "Jengibre",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "jengibre",
+    "raíz de jengibre",
+    "raiz de jengibre"
+   ],
+   "presentacion_tipica": "jengibre.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "jengibre.kilo-granel",
+     "nombre": "Jengibre, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "papa-blanca",
+   "nombre": "Papa blanca",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "papa",
+    "papas",
+    "papa blanca"
+   ],
+   "presentacion_tipica": "papa-blanca.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "papa-blanca.kilo-granel",
+     "nombre": "Papa blanca, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "papa-cambray",
+   "nombre": "Papa cambray",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "papa cambray",
+    "papitas cambray",
+    "papa chiquita"
+   ],
+   "presentacion_tipica": "papa-cambray.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "papa-cambray.kilo-granel",
+     "nombre": "Papa cambray, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "camote",
+   "nombre": "Camote",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "camote",
+    "camote amarillo"
+   ],
+   "presentacion_tipica": "camote.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "camote.kilo-granel",
+     "nombre": "Camote, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "zanahoria",
+   "nombre": "Zanahoria",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "zanahoria",
+    "zanahorias"
+   ],
+   "presentacion_tipica": "zanahoria.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "zanahoria.kilo-granel",
+     "nombre": "Zanahoria, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "calabacita",
+   "nombre": "Calabacita",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "calabacita",
+    "calabacitas",
+    "calabaza italiana"
+   ],
+   "presentacion_tipica": "calabacita.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "calabacita.kilo-granel",
+     "nombre": "Calabacita, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "calabaza-castilla",
+   "nombre": "Calabaza de castilla",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "calabaza de castilla",
+    "calabaza",
+    "calabaza madura"
+   ],
+   "presentacion_tipica": "calabaza-castilla.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "calabaza-castilla.kilo-granel",
+     "nombre": "Calabaza de castilla, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chayote",
+   "nombre": "Chayote",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "chayote",
+    "chayotes"
+   ],
+   "presentacion_tipica": "chayote.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "chayote.kilo-granel",
+     "nombre": "Chayote, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-serrano",
+   "nombre": "Chile serrano",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "chile serrano",
+    "chiles serranos",
+    "serrano"
+   ],
+   "presentacion_tipica": "chile-serrano.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "chile-serrano.kilo-granel",
+     "nombre": "Chile serrano, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-jalapeno",
+   "nombre": "Chile jalapeño",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "chile jalapeño",
+    "chile jalapeno",
+    "jalapeño",
+    "jalapeno",
+    "chiles jalapeños"
+   ],
+   "presentacion_tipica": "chile-jalapeno.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "chile-jalapeno.kilo-granel",
+     "nombre": "Chile jalapeño, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-poblano",
+   "nombre": "Chile poblano",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "chile poblano",
+    "chiles poblanos",
+    "poblano",
+    "chile para rajas"
+   ],
+   "presentacion_tipica": "chile-poblano.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "chile-poblano.kilo-granel",
+     "nombre": "Chile poblano, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-habanero",
+   "nombre": "Chile habanero",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "chile habanero",
+    "habanero"
+   ],
+   "presentacion_tipica": "chile-habanero.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "chile-habanero.kilo-granel",
+     "nombre": "Chile habanero, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pimiento-morron",
+   "nombre": "Pimiento morrón",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "pimiento morrón",
+    "pimiento morron",
+    "pimiento",
+    "morrón",
+    "chile morrón",
+    "morron"
+   ],
+   "presentacion_tipica": "pimiento-morron.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "pimiento-morron.kilo-granel",
+     "nombre": "Pimiento morrón, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pepino",
+   "nombre": "Pepino",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "pepino",
+    "pepinos"
+   ],
+   "presentacion_tipica": "pepino.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "pepino.kilo-granel",
+     "nombre": "Pepino, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "lechuga-romana",
+   "nombre": "Lechuga romana",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "lechuga",
+    "lechuga romana",
+    "lechuga orejona"
+   ],
+   "presentacion_tipica": "lechuga-romana.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "lechuga-romana.kilo-granel",
+     "nombre": "Lechuga romana, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "espinaca",
+   "nombre": "Espinaca",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "espinaca",
+    "espinacas"
+   ],
+   "presentacion_tipica": "espinaca.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "espinaca.kilo-granel",
+     "nombre": "Espinaca, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "acelga",
+   "nombre": "Acelga",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "acelga",
+    "acelgas"
+   ],
+   "presentacion_tipica": "acelga.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "acelga.kilo-granel",
+     "nombre": "Acelga, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "verdolagas",
+   "nombre": "Verdolagas",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "verdolagas",
+    "verdolaga"
+   ],
+   "presentacion_tipica": "verdolagas.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "verdolagas.kilo-granel",
+     "nombre": "Verdolagas, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "col-repollo",
+   "nombre": "Col blanca",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "col",
+    "repollo",
+    "col blanca",
+    "repollo blanco"
+   ],
+   "presentacion_tipica": "col-repollo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "col-repollo.kilo-granel",
+     "nombre": "Col blanca, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "col-morada",
+   "nombre": "Col morada",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "col morada",
+    "repollo morado"
+   ],
+   "presentacion_tipica": "col-morada.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "col-morada.kilo-granel",
+     "nombre": "Col morada, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "brocoli",
+   "nombre": "Brócoli",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "brócoli",
+    "brocoli"
+   ],
+   "presentacion_tipica": "brocoli.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "brocoli.kilo-granel",
+     "nombre": "Brócoli, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "coliflor",
+   "nombre": "Coliflor",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "coliflor"
+   ],
+   "presentacion_tipica": "coliflor.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "coliflor.kilo-granel",
+     "nombre": "Coliflor, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "nopales",
+   "nombre": "Nopales",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "nopales",
+    "nopal",
+    "nopales limpios",
+    "nopalitos"
+   ],
+   "presentacion_tipica": "nopales.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "nopales.kilo-granel",
+     "nombre": "Nopales, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "ejotes",
+   "nombre": "Ejotes",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "ejotes",
+    "ejote"
+   ],
+   "presentacion_tipica": "ejotes.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "ejotes.kilo-granel",
+     "nombre": "Ejotes, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "champinones",
+   "nombre": "Champiñones",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "champiñones",
+    "champinones",
+    "hongos"
+   ],
+   "presentacion_tipica": "champinones.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "champinones.kilo-granel",
+     "nombre": "Champiñones, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "apio",
+   "nombre": "Apio",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "apio",
+    "tallos de apio"
+   ],
+   "presentacion_tipica": "apio.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "apio.kilo-granel",
+     "nombre": "Apio, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "betabel",
+   "nombre": "Betabel",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "betabel"
+   ],
+   "presentacion_tipica": "betabel.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "betabel.kilo-granel",
+     "nombre": "Betabel, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "jicama",
+   "nombre": "Jícama",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "jícama",
+    "jicama"
+   ],
+   "presentacion_tipica": "jicama.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "jicama.kilo-granel",
+     "nombre": "Jícama, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "berenjena",
+   "nombre": "Berenjena",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "berenjena",
+    "berenjenas"
+   ],
+   "presentacion_tipica": "berenjena.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "berenjena.kilo-granel",
+     "nombre": "Berenjena, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "cilantro",
+   "nombre": "Cilantro",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "cilantro",
+    "cilantro fresco",
+    "manojo de cilantro"
+   ],
+   "presentacion_tipica": "cilantro.manojo-50g",
+   "presentaciones": [
+    {
+     "id": "cilantro.manojo-50g",
+     "nombre": "Cilantro, manojo (aprox. 50 g)",
+     "marca": null,
+     "contenido_milli": 50000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "cilantro.kilo-granel",
+     "nombre": "Cilantro, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "perejil",
+   "nombre": "Perejil",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "perejil",
+    "perejil liso",
+    "perejil fresco"
+   ],
+   "presentacion_tipica": "perejil.manojo-50g",
+   "presentaciones": [
+    {
+     "id": "perejil.manojo-50g",
+     "nombre": "Perejil, manojo (aprox. 50 g)",
+     "marca": null,
+     "contenido_milli": 50000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "perejil.kilo-granel",
+     "nombre": "Perejil, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "epazote",
+   "nombre": "Epazote",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "epazote",
+    "ramita de epazote"
+   ],
+   "presentacion_tipica": "epazote.manojo-50g",
+   "presentaciones": [
+    {
+     "id": "epazote.manojo-50g",
+     "nombre": "Epazote, manojo (aprox. 50 g)",
+     "marca": null,
+     "contenido_milli": 50000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "epazote.kilo-granel",
+     "nombre": "Epazote, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "hierbabuena",
+   "nombre": "Hierbabuena",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "hierbabuena",
+    "yerbabuena"
+   ],
+   "presentacion_tipica": "hierbabuena.manojo-50g",
+   "presentaciones": [
+    {
+     "id": "hierbabuena.manojo-50g",
+     "nombre": "Hierbabuena, manojo (aprox. 50 g)",
+     "marca": null,
+     "contenido_milli": 50000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "hierbabuena.kilo-granel",
+     "nombre": "Hierbabuena, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "elote-mazorca",
+   "nombre": "Elote en mazorca",
+   "categoria": "frutas-verduras",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": "102",
+   "fuente_gramos": "USDA FDC 169998 (SR Legacy, maíz dulce crudo): 1 mazorca mediana rinde 102 g de granos comestibles",
+   "vertical": "mercado",
+   "sinonimos": [
+    "elote",
+    "elote tierno",
+    "mazorca",
+    "elote fresco"
+   ],
+   "presentacion_tipica": "elote-mazorca.pieza",
+   "presentaciones": [
+    {
+     "id": "elote-mazorca.pieza",
+     "nombre": "Elote en mazorca, por pieza",
+     "marca": null,
+     "contenido_milli": 1000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "limon",
+   "nombre": "Limón",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "limón",
+    "limon",
+    "limones",
+    "limón verde"
+   ],
+   "presentacion_tipica": "limon.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "limon.kilo-granel",
+     "nombre": "Limón, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "aguacate",
+   "nombre": "Aguacate",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "aguacate",
+    "aguacates",
+    "aguacate hass"
+   ],
+   "presentacion_tipica": "aguacate.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "aguacate.kilo-granel",
+     "nombre": "Aguacate, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "naranja",
+   "nombre": "Naranja",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "naranja",
+    "naranjas",
+    "naranja de jugo"
+   ],
+   "presentacion_tipica": "naranja.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "naranja.kilo-granel",
+     "nombre": "Naranja, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "mandarina",
+   "nombre": "Mandarina",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "mandarina",
+    "mandarinas"
+   ],
+   "presentacion_tipica": "mandarina.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "mandarina.kilo-granel",
+     "nombre": "Mandarina, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "toronja",
+   "nombre": "Toronja",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "toronja",
+    "toronjas"
+   ],
+   "presentacion_tipica": "toronja.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "toronja.kilo-granel",
+     "nombre": "Toronja, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "platano",
+   "nombre": "Plátano",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "plátano",
+    "platano",
+    "plátano tabasco"
+   ],
+   "presentacion_tipica": "platano.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "platano.kilo-granel",
+     "nombre": "Plátano, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "platano-macho",
+   "nombre": "Plátano macho",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "plátano macho",
+    "platano macho",
+    "macho"
+   ],
+   "presentacion_tipica": "platano-macho.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "platano-macho.kilo-granel",
+     "nombre": "Plátano macho, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "manzana",
+   "nombre": "Manzana",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "manzana",
+    "manzanas"
+   ],
+   "presentacion_tipica": "manzana.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "manzana.kilo-granel",
+     "nombre": "Manzana, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pera",
+   "nombre": "Pera",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "pera",
+    "peras"
+   ],
+   "presentacion_tipica": "pera.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "pera.kilo-granel",
+     "nombre": "Pera, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "durazno",
+   "nombre": "Durazno",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "durazno",
+    "duraznos frescos",
+    "durazno fresco"
+   ],
+   "presentacion_tipica": "durazno.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "durazno.kilo-granel",
+     "nombre": "Durazno, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "papaya",
+   "nombre": "Papaya",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "papaya",
+    "papaya maradol"
+   ],
+   "presentacion_tipica": "papaya.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "papaya.kilo-granel",
+     "nombre": "Papaya, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sandia",
+   "nombre": "Sandía",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "sandía",
+    "sandia"
+   ],
+   "presentacion_tipica": "sandia.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "sandia.kilo-granel",
+     "nombre": "Sandía, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "melon",
+   "nombre": "Melón",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "melón",
+    "melon",
+    "melón chino",
+    "melon chino"
+   ],
+   "presentacion_tipica": "melon.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "melon.kilo-granel",
+     "nombre": "Melón, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "mango",
+   "nombre": "Mango",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "mango",
+    "mangos"
+   ],
+   "presentacion_tipica": "mango.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "mango.kilo-granel",
+     "nombre": "Mango, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pina",
+   "nombre": "Piña",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "piña",
+    "pina"
+   ],
+   "presentacion_tipica": "pina.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "pina.kilo-granel",
+     "nombre": "Piña, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "fresa",
+   "nombre": "Fresa",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "fresa",
+    "fresas"
+   ],
+   "presentacion_tipica": "fresa.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "fresa.kilo-granel",
+     "nombre": "Fresa, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "guayaba",
+   "nombre": "Guayaba",
+   "categoria": "frutas-verduras",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "guayaba",
+    "guayabas"
+   ],
+   "presentacion_tipica": "guayaba.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "guayaba.kilo-granel",
+     "nombre": "Guayaba, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pechuga-pollo",
+   "nombre": "Pechuga de pollo",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "pechuga de pollo",
+    "pechuga",
+    "pechuga sin hueso",
+    "filete de pechuga"
+   ],
+   "presentacion_tipica": "pechuga-pollo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "pechuga-pollo.kilo-granel",
+     "nombre": "Pechuga de pollo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pierna-muslo-pollo",
+   "nombre": "Pierna y muslo de pollo",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "pierna y muslo",
+    "pierna y muslo de pollo",
+    "piezas de pollo",
+    "muslo de pollo"
+   ],
+   "presentacion_tipica": "pierna-muslo-pollo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "pierna-muslo-pollo.kilo-granel",
+     "nombre": "Pierna y muslo de pollo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pollo-entero",
+   "nombre": "Pollo entero",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "pollo entero",
+    "pollo",
+    "pollo para caldo"
+   ],
+   "presentacion_tipica": "pollo-entero.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "pollo-entero.kilo-granel",
+     "nombre": "Pollo entero, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "carne-molida-res",
+   "nombre": "Carne molida de res",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "carne molida",
+    "carne molida de res",
+    "molida de res",
+    "res molida"
+   ],
+   "presentacion_tipica": "carne-molida-res.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "carne-molida-res.kilo-granel",
+     "nombre": "Carne molida de res, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "carne-molida-cerdo",
+   "nombre": "Carne molida de cerdo",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "molida de cerdo",
+    "carne molida de cerdo",
+    "cerdo molido"
+   ],
+   "presentacion_tipica": "carne-molida-cerdo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "carne-molida-cerdo.kilo-granel",
+     "nombre": "Carne molida de cerdo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "bistec-res",
+   "nombre": "Bistec de res",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "bistec",
+    "bistec de res",
+    "bistec de bola",
+    "carne para bistec"
+   ],
+   "presentacion_tipica": "bistec-res.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "bistec-res.kilo-granel",
+     "nombre": "Bistec de res, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "milanesa-res",
+   "nombre": "Milanesa de res",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "milanesa",
+    "milanesa de res",
+    "bistec empanizado"
+   ],
+   "presentacion_tipica": "milanesa-res.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "milanesa-res.kilo-granel",
+     "nombre": "Milanesa de res, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "falda-res",
+   "nombre": "Falda de res",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "falda",
+    "falda de res",
+    "carne para deshebrar",
+    "carne para tinga"
+   ],
+   "presentacion_tipica": "falda-res.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "falda-res.kilo-granel",
+     "nombre": "Falda de res, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chambarete-res",
+   "nombre": "Chambarete de res",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "chambarete",
+    "chambarete de res",
+    "carne con hueso para caldo"
+   ],
+   "presentacion_tipica": "chambarete-res.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "chambarete-res.kilo-granel",
+     "nombre": "Chambarete de res, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "costilla-res",
+   "nombre": "Costilla de res",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "costilla de res",
+    "costillas de res",
+    "costilla para caldo"
+   ],
+   "presentacion_tipica": "costilla-res.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "costilla-res.kilo-granel",
+     "nombre": "Costilla de res, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chuleta-cerdo",
+   "nombre": "Chuleta de cerdo",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "chuleta",
+    "chuleta de cerdo",
+    "chuletas de cerdo",
+    "chuleta ahumada"
+   ],
+   "presentacion_tipica": "chuleta-cerdo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "chuleta-cerdo.kilo-granel",
+     "nombre": "Chuleta de cerdo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "carne-cerdo-maciza",
+   "nombre": "Carne de cerdo maciza",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "maciza de cerdo",
+    "carne de cerdo",
+    "pulpa de cerdo",
+    "cerdo en cubos"
+   ],
+   "presentacion_tipica": "carne-cerdo-maciza.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "carne-cerdo-maciza.kilo-granel",
+     "nombre": "Carne de cerdo maciza, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "costilla-cerdo",
+   "nombre": "Costilla de cerdo",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "costilla de cerdo",
+    "costillas de cerdo",
+    "espinazo de cerdo",
+    "espinazo"
+   ],
+   "presentacion_tipica": "costilla-cerdo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "costilla-cerdo.kilo-granel",
+     "nombre": "Costilla de cerdo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "filete-tilapia",
+   "nombre": "Filete de tilapia",
+   "categoria": "carnes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "mercado",
+   "sinonimos": [
+    "tilapia",
+    "filete de tilapia",
+    "filete de pescado",
+    "pescado blanco"
+   ],
+   "presentacion_tipica": "filete-tilapia.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "filete-tilapia.kilo-granel",
+     "nombre": "Filete de tilapia, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "huevo",
+   "nombre": "Huevo blanco",
+   "categoria": "lacteos",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": "50",
+   "fuente_gramos": "USDA FDC 171287 (SR Legacy, huevo entero crudo): 1 huevo grande = 50 g de contenido comestible sin cascarón",
+   "vertical": "ambas",
+   "sinonimos": [
+    "huevo",
+    "huevos",
+    "huevo blanco",
+    "blanquillo",
+    "blanquillos",
+    "huevo de gallina"
+   ],
+   "presentacion_tipica": "huevo.carton-12",
+   "presentaciones": [
+    {
+     "id": "huevo.carton-12",
+     "nombre": "Huevo blanco, cartón 12 piezas",
+     "marca": null,
+     "contenido_milli": 12000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "huevo.carton-18",
+     "nombre": "Huevo blanco, cartón 18 piezas",
+     "marca": null,
+     "contenido_milli": 18000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "huevo.plato-30",
+     "nombre": "Huevo blanco, plato 30 piezas",
+     "marca": null,
+     "contenido_milli": 30000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "queso-fresco",
+   "nombre": "Queso fresco",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "queso fresco",
+    "queso ranchero",
+    "queso blanco",
+    "queso fresco de vaca"
+   ],
+   "presentacion_tipica": "queso-fresco.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "queso-fresco.kilo-granel",
+     "nombre": "Queso fresco, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "queso-fresco.paquete-200g",
+     "nombre": "Queso fresco, paquete 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "queso-oaxaca",
+   "nombre": "Queso Oaxaca",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "queso oaxaca",
+    "quesillo",
+    "queso de hebra",
+    "queso oaxaca deshebrado"
+   ],
+   "presentacion_tipica": "queso-oaxaca.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "queso-oaxaca.kilo-granel",
+     "nombre": "Queso Oaxaca, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "queso-oaxaca.paquete-400g",
+     "nombre": "Queso Oaxaca, paquete 400 g",
+     "marca": null,
+     "contenido_milli": 400000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "queso-panela",
+   "nombre": "Queso panela",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "queso panela",
+    "panela",
+    "queso canasta"
+   ],
+   "presentacion_tipica": "queso-panela.paquete-400g",
+   "presentaciones": [
+    {
+     "id": "queso-panela.kilo-granel",
+     "nombre": "Queso panela, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "queso-panela.paquete-400g",
+     "nombre": "Queso panela, paquete 400 g",
+     "marca": null,
+     "contenido_milli": 400000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "queso-cotija",
+   "nombre": "Queso cotija",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "queso cotija",
+    "cotija",
+    "queso para espolvorear",
+    "queso añejo",
+    "queso anejo"
+   ],
+   "presentacion_tipica": "queso-cotija.bolsa-200g",
+   "presentaciones": [
+    {
+     "id": "queso-cotija.kilo-granel",
+     "nombre": "Queso cotija, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "queso-cotija.bolsa-200g",
+     "nombre": "Queso cotija desmoronado, bolsa 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "queso-chihuahua",
+   "nombre": "Queso Chihuahua",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "queso chihuahua",
+    "queso menonita",
+    "queso para fundir",
+    "queso para gratinar"
+   ],
+   "presentacion_tipica": "queso-chihuahua.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "queso-chihuahua.kilo-granel",
+     "nombre": "Queso Chihuahua, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "queso-chihuahua.bolsa-400g",
+     "nombre": "Queso Chihuahua rallado, bolsa 400 g",
+     "marca": null,
+     "contenido_milli": 400000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "queso-crema",
+   "nombre": "Queso crema",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "queso crema",
+    "queso filadelfia",
+    "queso para untar"
+   ],
+   "presentacion_tipica": "queso-crema.barra-190g",
+   "presentaciones": [
+    {
+     "id": "queso-crema.barra-190g",
+     "nombre": "Queso crema, barra 190 g",
+     "marca": null,
+     "contenido_milli": 190000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "requeson",
+   "nombre": "Requesón",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "requesón",
+    "requeson"
+   ],
+   "presentacion_tipica": "requeson.paquete-250g",
+   "presentaciones": [
+    {
+     "id": "requeson.kilo-granel",
+     "nombre": "Requesón, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "requeson.paquete-250g",
+     "nombre": "Requesón, paquete 250 g",
+     "marca": null,
+     "contenido_milli": 250000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "crema-acida",
+   "nombre": "Crema",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "crema",
+    "crema ácida",
+    "crema acida",
+    "crema para tacos",
+    "crema fresca"
+   ],
+   "presentacion_tipica": "crema-acida.bote-200g",
+   "presentaciones": [
+    {
+     "id": "crema-acida.bote-200g",
+     "nombre": "Crema, bote 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "crema-acida.bote-450g",
+     "nombre": "Crema, bote 450 g",
+     "marca": null,
+     "contenido_milli": 450000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "mantequilla",
+   "nombre": "Mantequilla",
+   "categoria": "lacteos",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "mantequilla",
+    "mantequilla con sal",
+    "mantequilla sin sal",
+    "barra de mantequilla"
+   ],
+   "presentacion_tipica": "mantequilla.barra-90g",
+   "presentaciones": [
+    {
+     "id": "mantequilla.barra-90g",
+     "nombre": "Mantequilla, barra 90 g",
+     "marca": null,
+     "contenido_milli": 90000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "mantequilla.barra-225g",
+     "nombre": "Mantequilla, barra 225 g",
+     "marca": null,
+     "contenido_milli": 225000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "tocino",
+   "nombre": "Tocino",
+   "categoria": "salchichoneria",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "tocino",
+    "tocino rebanado",
+    "tocino ahumado"
+   ],
+   "presentacion_tipica": "tocino.paquete-250g",
+   "presentaciones": [
+    {
+     "id": "tocino.paquete-250g",
+     "nombre": "Tocino rebanado, paquete 250 g",
+     "marca": null,
+     "contenido_milli": 250000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chorizo",
+   "nombre": "Chorizo",
+   "categoria": "salchichoneria",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "chorizo",
+    "chorizo de cerdo",
+    "chorizo rojo"
+   ],
+   "presentacion_tipica": "chorizo.paquete-250g",
+   "presentaciones": [
+    {
+     "id": "chorizo.kilo-granel",
+     "nombre": "Chorizo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "chorizo.paquete-250g",
+     "nombre": "Chorizo, paquete 250 g",
+     "marca": null,
+     "contenido_milli": 250000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "bolillo",
+   "nombre": "Bolillo",
+   "categoria": "panaderia",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": "57",
+   "fuente_gramos": "USDA FDC 175031 (SR Legacy, panecillo duro tipo kaiser): 1 pieza de 3.5 pulgadas = 57 g; el bolillo mexicano suele pesar más, pendiente cotejar con la báscula del hogar",
+   "vertical": "ambas",
+   "sinonimos": [
+    "bolillo",
+    "bolillos",
+    "telera",
+    "pan blanco de sal",
+    "pan de sal"
+   ],
+   "presentacion_tipica": "bolillo.pieza",
+   "presentaciones": [
+    {
+     "id": "bolillo.pieza",
+     "nombre": "Bolillo, por pieza",
+     "marca": null,
+     "contenido_milli": 1000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "tortilla-maiz",
+   "nombre": "Tortillas de maíz",
+   "categoria": "panaderia",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "tortilla de maíz",
+    "tortillas de maíz",
+    "tortillas",
+    "tortilla",
+    "tortilla de maiz"
+   ],
+   "presentacion_tipica": "tortilla-maiz.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "tortilla-maiz.kilo-granel",
+     "nombre": "Tortillas de maíz, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "tortilla-maiz.paquete-500g",
+     "nombre": "Tortillas de maíz, paquete 500 g (aprox. 20 piezas)",
+     "marca": null,
+     "contenido_milli": 500000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "tortilla-harina",
+   "nombre": "Tortillas de harina",
+   "categoria": "panaderia",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": "32",
+   "fuente_gramos": "USDA FDC 173242 (SR Legacy, tortilla de harina): 1 tortilla mediana de 6 pulgadas = 32 g",
+   "vertical": "cadena",
+   "sinonimos": [
+    "tortilla de harina",
+    "tortillas de harina",
+    "tortillas de trigo",
+    "tortilla de trigo"
+   ],
+   "presentacion_tipica": "tortilla-harina.paquete-10",
+   "presentaciones": [
+    {
+     "id": "tortilla-harina.paquete-10",
+     "nombre": "Tortillas de harina, paquete 10 piezas",
+     "marca": null,
+     "contenido_milli": 10000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "tostadas",
+   "nombre": "Tostadas de maíz",
+   "categoria": "panaderia",
+   "unidad_base": "pieza",
+   "gramos_por_unidad": "12.3",
+   "fuente_gramos": "USDA FDC 167525 (SR Legacy, tostadas de maíz): 1 pieza = 12.3 g",
+   "vertical": "cadena",
+   "sinonimos": [
+    "tostadas",
+    "tostadas de maíz",
+    "tostadas horneadas",
+    "tostadas de maiz"
+   ],
+   "presentacion_tipica": "tostadas.paquete-30",
+   "presentaciones": [
+    {
+     "id": "tostadas.paquete-30",
+     "nombre": "Tostadas de maíz, paquete 30 piezas",
+     "marca": null,
+     "contenido_milli": 30000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sal",
+   "nombre": "Sal de mesa",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "sal",
+    "sal de mesa",
+    "sal fina",
+    "sal molida"
+   ],
+   "presentacion_tipica": "sal.bolsa-1kg",
+   "presentaciones": [
+    {
+     "id": "sal.bolsa-1kg",
+     "nombre": "Sal de mesa, bolsa 1 kg",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "azucar",
+   "nombre": "Azúcar estándar",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "azúcar",
+    "azucar",
+    "azúcar blanca",
+    "azúcar estándar"
+   ],
+   "presentacion_tipica": "azucar.bolsa-1kg",
+   "presentaciones": [
+    {
+     "id": "azucar.bolsa-1kg",
+     "nombre": "Azúcar estándar, bolsa 1 kg",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "azucar.bolsa-2kg",
+     "nombre": "Azúcar estándar, bolsa 2 kg",
+     "marca": null,
+     "contenido_milli": 2000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "piloncillo",
+   "nombre": "Piloncillo",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "piloncillo",
+    "panela de caña",
+    "cono de piloncillo"
+   ],
+   "presentacion_tipica": "piloncillo.kilo-granel",
+   "presentaciones": [
+    {
+     "id": "piloncillo.kilo-granel",
+     "nombre": "Piloncillo, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "harina-trigo",
+   "nombre": "Harina de trigo",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "harina de trigo",
+    "harina",
+    "harina para todo uso",
+    "harina de trigo para todo uso"
+   ],
+   "presentacion_tipica": "harina-trigo.bolsa-1kg",
+   "presentaciones": [
+    {
+     "id": "harina-trigo.bolsa-1kg",
+     "nombre": "Harina de trigo, bolsa 1 kg",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "harina-maiz",
+   "nombre": "Harina de maíz nixtamalizado",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "harina de maíz",
+    "harina de maiz",
+    "masa harina",
+    "harina para tortillas",
+    "harina para tamales"
+   ],
+   "presentacion_tipica": "harina-maiz.bolsa-1kg",
+   "presentaciones": [
+    {
+     "id": "harina-maiz.bolsa-1kg",
+     "nombre": "Harina de maíz nixtamalizado, bolsa 1 kg",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pan-molido",
+   "nombre": "Pan molido",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "pan molido",
+    "pan rallado",
+    "pan para empanizar"
+   ],
+   "presentacion_tipica": "pan-molido.bolsa-200g",
+   "presentaciones": [
+    {
+     "id": "pan-molido.bolsa-200g",
+     "nombre": "Pan molido, bolsa 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "frijol-bayo",
+   "nombre": "Frijol bayo seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "frijol bayo",
+    "frijoles bayos",
+    "frijol",
+    "frijoles",
+    "frijol seco",
+    "frijol canario"
+   ],
+   "presentacion_tipica": "frijol-bayo.bolsa-1kg",
+   "presentaciones": [
+    {
+     "id": "frijol-bayo.bolsa-1kg",
+     "nombre": "Frijol bayo seco, bolsa 1 kg",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "frijol-bayo.kilo-granel",
+     "nombre": "Frijol bayo seco, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "frijol-negro",
+   "nombre": "Frijol negro seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "frijol negro",
+    "frijoles negros",
+    "frijol negro seco"
+   ],
+   "presentacion_tipica": "frijol-negro.bolsa-1kg",
+   "presentaciones": [
+    {
+     "id": "frijol-negro.bolsa-1kg",
+     "nombre": "Frijol negro seco, bolsa 1 kg",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "frijol-negro.kilo-granel",
+     "nombre": "Frijol negro seco, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "lenteja",
+   "nombre": "Lenteja",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "lenteja",
+    "lentejas"
+   ],
+   "presentacion_tipica": "lenteja.bolsa-500g",
+   "presentaciones": [
+    {
+     "id": "lenteja.bolsa-500g",
+     "nombre": "Lenteja, bolsa 500 g",
+     "marca": null,
+     "contenido_milli": 500000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "garbanzo",
+   "nombre": "Garbanzo seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "garbanzo",
+    "garbanzos",
+    "garbanzo seco"
+   ],
+   "presentacion_tipica": "garbanzo.bolsa-500g",
+   "presentaciones": [
+    {
+     "id": "garbanzo.bolsa-500g",
+     "nombre": "Garbanzo seco, bolsa 500 g",
+     "marca": null,
+     "contenido_milli": 500000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sopa-fideo",
+   "nombre": "Sopa de fideo",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "fideo",
+    "sopa de fideo",
+    "fideos",
+    "fideo seco",
+    "pasta para sopa"
+   ],
+   "presentacion_tipica": "sopa-fideo.bolsa-200g",
+   "presentaciones": [
+    {
+     "id": "sopa-fideo.bolsa-200g",
+     "nombre": "Sopa de fideo, bolsa 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sopa-codo",
+   "nombre": "Sopa de codo",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "codo",
+    "sopa de codo",
+    "pasta codo",
+    "coditos",
+    "macarrón",
+    "macarron"
+   ],
+   "presentacion_tipica": "sopa-codo.bolsa-200g",
+   "presentaciones": [
+    {
+     "id": "sopa-codo.bolsa-200g",
+     "nombre": "Sopa de codo, bolsa 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sopa-pluma",
+   "nombre": "Sopa de pluma",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "pluma",
+    "sopa de pluma",
+    "pasta pluma",
+    "plumas"
+   ],
+   "presentacion_tipica": "sopa-pluma.bolsa-200g",
+   "presentaciones": [
+    {
+     "id": "sopa-pluma.bolsa-200g",
+     "nombre": "Sopa de pluma, bolsa 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sopa-estrellitas",
+   "nombre": "Sopa de estrellitas",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "estrellitas",
+    "sopa de estrellitas",
+    "pasta de estrella"
+   ],
+   "presentacion_tipica": "sopa-estrellitas.bolsa-200g",
+   "presentaciones": [
+    {
+     "id": "sopa-estrellitas.bolsa-200g",
+     "nombre": "Sopa de estrellitas, bolsa 200 g",
+     "marca": null,
+     "contenido_milli": 200000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pure-tomate",
+   "nombre": "Puré de tomate",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "puré de tomate",
+    "pure de tomate",
+    "puré de jitomate",
+    "salsa de tomate"
+   ],
+   "presentacion_tipica": "pure-tomate.bolsa-210g",
+   "presentaciones": [
+    {
+     "id": "pure-tomate.bolsa-210g",
+     "nombre": "Puré de tomate, bolsa 210 g",
+     "marca": null,
+     "contenido_milli": 210000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chipotle-adobo",
+   "nombre": "Chiles chipotles en adobo",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "chipotle",
+    "chiles chipotles",
+    "chipotles en adobo",
+    "chile chipotle en adobo",
+    "chilpotle"
+   ],
+   "presentacion_tipica": "chipotle-adobo.lata-220g",
+   "presentaciones": [
+    {
+     "id": "chipotle-adobo.lata-220g",
+     "nombre": "Chiles chipotles en adobo, lata 220 g",
+     "marca": null,
+     "contenido_milli": 220000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "jalapenos-escabeche",
+   "nombre": "Chiles jalapeños en escabeche",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "jalapeños en escabeche",
+    "chiles en escabeche",
+    "chiles en vinagre",
+    "jalapeños en vinagre"
+   ],
+   "presentacion_tipica": "jalapenos-escabeche.lata-220g",
+   "presentaciones": [
+    {
+     "id": "jalapenos-escabeche.lata-220g",
+     "nombre": "Chiles jalapeños en escabeche, lata 220 g",
+     "marca": null,
+     "contenido_milli": 220000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-guajillo",
+   "nombre": "Chile guajillo seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "chile guajillo",
+    "guajillo",
+    "chiles guajillo"
+   ],
+   "presentacion_tipica": "chile-guajillo.bolsa-100g",
+   "presentaciones": [
+    {
+     "id": "chile-guajillo.bolsa-100g",
+     "nombre": "Chile guajillo seco, bolsa 100 g",
+     "marca": null,
+     "contenido_milli": 100000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "chile-guajillo.kilo-granel",
+     "nombre": "Chile guajillo seco, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-ancho",
+   "nombre": "Chile ancho seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "chile ancho",
+    "ancho",
+    "chiles anchos"
+   ],
+   "presentacion_tipica": "chile-ancho.bolsa-100g",
+   "presentaciones": [
+    {
+     "id": "chile-ancho.bolsa-100g",
+     "nombre": "Chile ancho seco, bolsa 100 g",
+     "marca": null,
+     "contenido_milli": 100000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "chile-ancho.kilo-granel",
+     "nombre": "Chile ancho seco, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-pasilla",
+   "nombre": "Chile pasilla seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "chile pasilla",
+    "pasilla",
+    "chiles pasilla"
+   ],
+   "presentacion_tipica": "chile-pasilla.bolsa-100g",
+   "presentaciones": [
+    {
+     "id": "chile-pasilla.bolsa-100g",
+     "nombre": "Chile pasilla seco, bolsa 100 g",
+     "marca": null,
+     "contenido_milli": 100000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "chile-pasilla.kilo-granel",
+     "nombre": "Chile pasilla seco, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chile-arbol",
+   "nombre": "Chile de árbol seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "chile de árbol",
+    "chile de arbol",
+    "chiles de árbol",
+    "árbol"
+   ],
+   "presentacion_tipica": "chile-arbol.bolsa-100g",
+   "presentaciones": [
+    {
+     "id": "chile-arbol.bolsa-100g",
+     "nombre": "Chile de árbol seco, bolsa 100 g",
+     "marca": null,
+     "contenido_milli": 100000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    },
+    {
+     "id": "chile-arbol.kilo-granel",
+     "nombre": "Chile de árbol seco, por kilo (granel)",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": true,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "pimienta-negra",
+   "nombre": "Pimienta negra molida",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "pimienta",
+    "pimienta negra",
+    "pimienta molida"
+   ],
+   "presentacion_tipica": "pimienta-negra.frasco-50g",
+   "presentaciones": [
+    {
+     "id": "pimienta-negra.frasco-50g",
+     "nombre": "Pimienta negra molida, frasco 50 g",
+     "marca": null,
+     "contenido_milli": 50000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "comino",
+   "nombre": "Comino molido",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "comino",
+    "comino molido",
+    "comino en polvo"
+   ],
+   "presentacion_tipica": "comino.frasco-40g",
+   "presentaciones": [
+    {
+     "id": "comino.frasco-40g",
+     "nombre": "Comino molido, frasco 40 g",
+     "marca": null,
+     "contenido_milli": 40000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "oregano",
+   "nombre": "Orégano seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "orégano",
+    "oregano",
+    "orégano seco",
+    "oregano seco"
+   ],
+   "presentacion_tipica": "oregano.bolsa-15g",
+   "presentaciones": [
+    {
+     "id": "oregano.bolsa-15g",
+     "nombre": "Orégano seco, bolsa 15 g",
+     "marca": null,
+     "contenido_milli": 15000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "laurel",
+   "nombre": "Laurel seco",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "laurel",
+    "hoja de laurel",
+    "hojas de laurel"
+   ],
+   "presentacion_tipica": "laurel.bolsa-10g",
+   "presentaciones": [
+    {
+     "id": "laurel.bolsa-10g",
+     "nombre": "Laurel seco, bolsa 10 g",
+     "marca": null,
+     "contenido_milli": 10000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "canela",
+   "nombre": "Canela en raja",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "canela",
+    "canela en raja",
+    "rajas de canela",
+    "canela entera"
+   ],
+   "presentacion_tipica": "canela.bolsa-30g",
+   "presentaciones": [
+    {
+     "id": "canela.bolsa-30g",
+     "nombre": "Canela en raja, bolsa 30 g",
+     "marca": null,
+     "contenido_milli": 30000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "vinagre-blanco",
+   "nombre": "Vinagre blanco",
+   "categoria": "abarrotes",
+   "unidad_base": "ml",
+   "gramos_por_unidad": "1.006",
+   "fuente_gramos": "USDA FDC 172237 (SR Legacy, vinagre destilado): 1 taza = 238 g; 1 taza = 236.588 ml",
+   "vertical": "cadena",
+   "sinonimos": [
+    "vinagre",
+    "vinagre blanco",
+    "vinagre destilado"
+   ],
+   "presentacion_tipica": "vinagre-blanco.botella-1l",
+   "presentaciones": [
+    {
+     "id": "vinagre-blanco.botella-1l",
+     "nombre": "Vinagre blanco, botella 1 l",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "sardina-lata",
+   "nombre": "Sardina en tomate",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "sardina",
+    "sardinas",
+    "sardina en tomate",
+    "sardina en lata"
+   ],
+   "presentacion_tipica": "sardina-lata.lata-155g",
+   "presentaciones": [
+    {
+     "id": "sardina-lata.lata-155g",
+     "nombre": "Sardina en salsa de tomate, lata 155 g",
+     "marca": null,
+     "contenido_milli": 155000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "maiz-pozolero",
+   "nombre": "Maíz pozolero",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "maíz pozolero",
+    "maiz pozolero",
+    "maíz cacahuazintle",
+    "maiz cacahuazintle",
+    "maíz para pozole"
+   ],
+   "presentacion_tipica": "maiz-pozolero.bolsa-1kg",
+   "presentaciones": [
+    {
+     "id": "maiz-pozolero.bolsa-1kg",
+     "nombre": "Maíz pozolero seco, bolsa 1 kg",
+     "marca": null,
+     "contenido_milli": 1000000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "leche-evaporada",
+   "nombre": "Leche evaporada",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "leche evaporada",
+    "lata de leche evaporada"
+   ],
+   "presentacion_tipica": "leche-evaporada.lata-360g",
+   "presentaciones": [
+    {
+     "id": "leche-evaporada.lata-360g",
+     "nombre": "Leche evaporada, lata 360 g",
+     "marca": null,
+     "contenido_milli": 360000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "chocolate-mesa",
+   "nombre": "Chocolate de mesa",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "chocolate de mesa",
+    "chocolate para champurrado",
+    "tablilla de chocolate",
+    "chocolate"
+   ],
+   "presentacion_tipica": "chocolate-mesa.tableta-90g",
+   "presentaciones": [
+    {
+     "id": "chocolate-mesa.tableta-90g",
+     "nombre": "Chocolate de mesa, tableta 90 g",
+     "marca": null,
+     "contenido_milli": 90000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "jamaica",
+   "nombre": "Flor de jamaica",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "ambas",
+   "sinonimos": [
+    "jamaica",
+    "flor de jamaica",
+    "jamaica seca"
+   ],
+   "presentacion_tipica": "jamaica.bolsa-100g",
+   "presentaciones": [
+    {
+     "id": "jamaica.bolsa-100g",
+     "nombre": "Flor de jamaica seca, bolsa 100 g",
+     "marca": null,
+     "contenido_milli": 100000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "polvo-hornear",
+   "nombre": "Polvo para hornear",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "polvo para hornear",
+    "royal"
+   ],
+   "presentacion_tipica": "polvo-hornear.lata-100g",
+   "presentaciones": [
+    {
+     "id": "polvo-hornear.lata-100g",
+     "nombre": "Polvo para hornear, lata 100 g",
+     "marca": null,
+     "contenido_milli": 100000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "bicarbonato",
+   "nombre": "Bicarbonato de sodio",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "bicarbonato",
+    "bicarbonato de sodio"
+   ],
+   "presentacion_tipica": "bicarbonato.bolsa-100g",
+   "presentaciones": [
+    {
+     "id": "bicarbonato.bolsa-100g",
+     "nombre": "Bicarbonato de sodio, bolsa 100 g",
+     "marca": null,
+     "contenido_milli": 100000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "maizena",
+   "nombre": "Almidón de maíz",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "almidón de maíz",
+    "almidon de maiz",
+    "fécula de maíz",
+    "maicena",
+    "maizena"
+   ],
+   "presentacion_tipica": "maizena.caja-400g",
+   "presentaciones": [
+    {
+     "id": "maizena.caja-400g",
+     "nombre": "Almidón de maíz, caja 400 g",
+     "marca": null,
+     "contenido_milli": 400000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  },
+  {
+   "id": "cafe-molido",
+   "nombre": "Café molido",
+   "categoria": "abarrotes",
+   "unidad_base": "g",
+   "gramos_por_unidad": null,
+   "fuente_gramos": null,
+   "vertical": "cadena",
+   "sinonimos": [
+    "café molido",
+    "cafe molido",
+    "café de olla",
+    "café tostado y molido"
+   ],
+   "presentacion_tipica": "cafe-molido.bolsa-250g",
+   "presentaciones": [
+    {
+     "id": "cafe-molido.bolsa-250g",
+     "nombre": "Café molido, bolsa 250 g",
+     "marca": null,
+     "contenido_milli": 250000,
+     "granel": false,
+     "codigo_barras": null,
+     "nombres_ticket": []
+    }
+   ]
+  }
+ ]
+}

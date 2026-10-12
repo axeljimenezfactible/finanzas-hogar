@@ -1,0 +1,459 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-lista-cantidad-manual",
+  "descripcion": "S4-03, S4-06, C1 quantity_milli, §6.6 (ILUSTRATIVO): arroz necesita 500000 y la persona fijó 3000000 (3 paquetes, sobra 3000000-500000 = 2500000, 3 x 2800 = 8400); frijol necesita 1200000 y fijó 500000 (1 paquete, sobra max(0, 1000000-1200000) = 0, 3000); aceite de soya manual comprado de 1892000 = 2 paquetes de 946000, 7980, suma aunque is_bought; servilletas manual sin cotización: paquetes, sobrante y precio nulos y en missing_prices. Grupo (chain, walmart) = 8400 + 3000 + 7980 = 19380; (chain, null) = 0; total de la raíz 19380.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-03"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S4-06"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-15"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§6.6 del contrato"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [
+          {
+            "code": "verduras",
+            "name": "Verduras",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "frutas",
+            "name": "Frutas",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "carnes",
+            "name": "Carnes",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "lacteos",
+            "name": "Lácteos y huevo",
+            "purchase_channel": "chain"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "frijol",
+            "name": "Frijol",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "aceite-soya",
+            "name": "Aceite de soya",
+            "base_unit": "ml",
+            "group": "abarrotes",
+            "grams_per_unit_milli": 921
+          },
+          {
+            "code": "huevo",
+            "name": "Huevo",
+            "base_unit": "piece",
+            "group": "lacteos",
+            "grams_per_unit_milli": 50000
+          },
+          {
+            "code": "servilletas",
+            "name": "Servilletas",
+            "base_unit": "piece",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "harina",
+            "name": "Harina",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "jitomate",
+            "name": "Jitomate",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "cebolla",
+            "name": "Cebolla",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "fresa",
+            "name": "Fresa",
+            "base_unit": "g",
+            "group": "frutas",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "pollo",
+            "name": "Pollo",
+            "base_unit": "g",
+            "group": "carnes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz.1kg",
+            "product": "arroz",
+            "name": "Arroz 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "arroz.750g",
+            "product": "arroz",
+            "name": "Arroz 750 g",
+            "size_milli": 750000
+          },
+          {
+            "code": "frijol.1kg",
+            "product": "frijol",
+            "name": "Frijol 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "aceite-soya.946ml",
+            "product": "aceite-soya",
+            "name": "Aceite de soya 946 ml",
+            "size_milli": 946000
+          },
+          {
+            "code": "huevo.carton-12",
+            "product": "huevo",
+            "name": "Huevo cartón de 12",
+            "size_milli": 12000
+          },
+          {
+            "code": "servilletas.420",
+            "product": "servilletas",
+            "name": "Servilletas 420 piezas",
+            "size_milli": 420000
+          },
+          {
+            "code": "harina.1kg",
+            "product": "harina",
+            "name": "Harina 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "harina.500g",
+            "product": "harina",
+            "name": "Harina 500 g",
+            "size_milli": 500000
+          },
+          {
+            "code": "jitomate.kilo",
+            "product": "jitomate",
+            "name": "Jitomate por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "cebolla.kilo",
+            "product": "cebolla",
+            "name": "Cebolla por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "fresa.kilo",
+            "product": "fresa",
+            "name": "Fresa por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "pollo.kilo",
+            "product": "pollo",
+            "name": "Pollo por kilo",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "recipes": [
+        {
+          "code": "base-cantidad",
+          "name": "Receta base de cantidad",
+          "slots": [
+            "lunch"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "arroz",
+              "presentation": "arroz.1kg",
+              "quantity_milli": 500000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 1200000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        },
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        }
+      ],
+      "meal_plan": [
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "base-cantidad",
+          "servings_milli": 2000,
+          "eating_out": false
+        }
+      ],
+      "inventory": [],
+      "list_choices": [
+        {
+          "product": "arroz",
+          "kind": "calculated",
+          "store": null,
+          "presentation": null,
+          "quantity_milli": 3000000,
+          "is_bought": false
+        },
+        {
+          "product": "frijol",
+          "kind": "calculated",
+          "store": null,
+          "presentation": null,
+          "quantity_milli": 500000,
+          "is_bought": false
+        },
+        {
+          "product": "aceite-soya",
+          "kind": "manual",
+          "store": null,
+          "presentation": null,
+          "quantity_milli": 1892000,
+          "is_bought": true
+        },
+        {
+          "product": "servilletas",
+          "kind": "manual",
+          "store": null,
+          "presentation": null,
+          "quantity_milli": 1000,
+          "is_bought": false
+        }
+      ],
+      "quotes": [
+        {
+          "product": "arroz",
+          "store": "walmart",
+          "presentation": "arroz.1kg",
+          "price_cents": 2800,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "frijol",
+          "store": "walmart",
+          "presentation": "frijol.1kg",
+          "price_cents": 3000,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "aceite-soya",
+          "store": "walmart",
+          "presentation": "aceite-soya.946ml",
+          "price_cents": 3990,
+          "size_milli": 946000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "lista",
+        "funcion": "shopping_list",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "lista": {
+      "items": [
+        {
+          "product": "arroz",
+          "kind": "calculated",
+          "needed_milli": 500000,
+          "quantity_milli": 3000000,
+          "presentation": "arroz.1kg",
+          "packages_to_buy": 3,
+          "leftover_milli": 2500000,
+          "reasons": [
+            "recipe"
+          ],
+          "recipes": [
+            "base-cantidad"
+          ],
+          "store": "walmart",
+          "is_bought": false,
+          "recommended_store": "walmart",
+          "recommended_presentation": "arroz.1kg",
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10",
+          "is_stale_price": false,
+          "estimated_cents": 8400
+        },
+        {
+          "product": "frijol",
+          "kind": "calculated",
+          "needed_milli": 1200000,
+          "quantity_milli": 500000,
+          "presentation": "frijol.1kg",
+          "packages_to_buy": 1,
+          "leftover_milli": 0,
+          "reasons": [
+            "recipe"
+          ],
+          "recipes": [
+            "base-cantidad"
+          ],
+          "store": "walmart",
+          "is_bought": false,
+          "recommended_store": "walmart",
+          "recommended_presentation": "frijol.1kg",
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10",
+          "is_stale_price": false,
+          "estimated_cents": 3000
+        },
+        {
+          "product": "aceite-soya",
+          "kind": "manual",
+          "needed_milli": null,
+          "quantity_milli": 1892000,
+          "presentation": "aceite-soya.946ml",
+          "packages_to_buy": 2,
+          "leftover_milli": 1892000,
+          "reasons": [
+            "manual"
+          ],
+          "recipes": [],
+          "store": "walmart",
+          "is_bought": true,
+          "recommended_store": "walmart",
+          "recommended_presentation": "aceite-soya.946ml",
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10",
+          "is_stale_price": false,
+          "estimated_cents": 7980
+        },
+        {
+          "product": "servilletas",
+          "kind": "manual",
+          "needed_milli": null,
+          "quantity_milli": 1000,
+          "presentation": null,
+          "packages_to_buy": null,
+          "leftover_milli": null,
+          "reasons": [
+            "manual"
+          ],
+          "recipes": [],
+          "store": null,
+          "is_bought": false,
+          "recommended_store": null,
+          "recommended_presentation": null,
+          "price_store": null,
+          "price_observed_date": null,
+          "is_stale_price": null,
+          "estimated_cents": null
+        }
+      ],
+      "groups": [
+        {
+          "vertical": "chain",
+          "store": "walmart",
+          "visit_date": null,
+          "estimated_total_cents": 19380
+        },
+        {
+          "vertical": "chain",
+          "store": null,
+          "visit_date": null,
+          "estimated_total_cents": 0
+        }
+      ],
+      "estimated_total_cents": 19380,
+      "missing_prices": [
+        "servilletas"
+      ]
+    }
+  }
+}

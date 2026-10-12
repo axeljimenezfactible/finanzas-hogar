@@ -1,0 +1,321 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-cotizacion-recomendada",
+  "descripcion": "Ejemplo de §14.1 (hoy 2026-10-12; precios del 10-oct, peso 1; stores = walmart, bodega). Arroz: Walmart 1 kg 2800 y 750 g 2200; Bodega 750 g 2200 y 500 g 1500. Sin elección gana Walmart 1 kg (2800 por kg contra 2933 y 3000); con store bodega, 750 g (2933 contra 3000); con presentación 750 g, empatan en unidad base y en precio y gana Walmart por el orden de `stores`. Frijol: Walmart 1 kg 3000 y Bodega 500 g 1500 empatan por kg (3000); gana Bodega por menor precio de paquete. Canasta (necesidad 500 g): recomendada Walmart 1 kg (2800); cada tienda cubre con su menor costo, Walmart 750 g a 2200 y Bodega 500 g a 1500, los dos sustitutos; Bodega la más barata, Walmart +700.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-03"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§14.1 y §7.3 de S5-interfaz.md"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
+    "que": "pregunta 2: desempate por precio del paquete, orden de `stores` y orden del catálogo (opción A)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "frijol",
+            "name": "Frijol",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz-1kg",
+            "product": "arroz",
+            "name": "arroz-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "arroz-750",
+            "product": "arroz",
+            "name": "arroz-750",
+            "size_milli": 750000
+          },
+          {
+            "code": "arroz-500",
+            "product": "arroz",
+            "name": "arroz-500",
+            "size_milli": 500000
+          },
+          {
+            "code": "frijol-1kg",
+            "product": "frijol",
+            "name": "frijol-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "frijol-500",
+            "product": "frijol",
+            "name": "frijol-500",
+            "size_milli": 500000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "arroz-1kg",
+          "store": "walmart",
+          "price_cents": 2800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-750",
+          "store": "walmart",
+          "price_cents": 2200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-750",
+          "store": "bodega",
+          "price_cents": 2200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-500",
+          "store": "bodega",
+          "price_cents": 1500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "frijol-1kg",
+          "store": "walmart",
+          "price_cents": 3000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "frijol-500",
+          "store": "bodega",
+          "price_cents": 1500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ],
+      "shopping_list": [
+        {
+          "product": "arroz",
+          "needed_milli": 500000,
+          "quantity_milli": null,
+          "recommended_presentation": "arroz-1kg"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "arroz-libre",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz"
+        }
+      },
+      {
+        "id": "arroz-bodega",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz",
+          "store": "bodega"
+        }
+      },
+      {
+        "id": "arroz-750",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz",
+          "presentation": "arroz-750"
+        }
+      },
+      {
+        "id": "frijol-libre",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "frijol"
+        }
+      },
+      {
+        "id": "canasta",
+        "funcion": "compare_basket",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "arroz-libre": {
+      "quote": {
+        "product": "arroz",
+        "store": "walmart",
+        "presentation": "arroz-1kg",
+        "price_cents": 2800,
+        "size_milli": 1000000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "arroz-bodega": {
+      "quote": {
+        "product": "arroz",
+        "store": "bodega",
+        "presentation": "arroz-750",
+        "price_cents": 2200,
+        "size_milli": 750000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": false
+      }
+    },
+    "arroz-750": {
+      "quote": {
+        "product": "arroz",
+        "store": "walmart",
+        "presentation": "arroz-750",
+        "price_cents": 2200,
+        "size_milli": 750000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": false
+      }
+    },
+    "frijol-libre": {
+      "quote": {
+        "product": "frijol",
+        "store": "bodega",
+        "presentation": "frijol-500",
+        "price_cents": 1500,
+        "size_milli": 500000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "canasta": {
+      "stores": [
+        {
+          "store": "bodega",
+          "total_cents": 1500,
+          "difference_vs_cheapest_cents": 0,
+          "substitute_count": 1,
+          "identical_count": 0
+        },
+        {
+          "store": "walmart",
+          "total_cents": 2200,
+          "difference_vs_cheapest_cents": 700,
+          "substitute_count": 1,
+          "identical_count": 0
+        }
+      ],
+      "items": [
+        {
+          "product": "arroz",
+          "quantity_milli": 500000,
+          "recommended_store": "walmart",
+          "recommended_presentation": "arroz-1kg",
+          "estimated_price_cents": 2800,
+          "is_stale_price": false,
+          "prices": [
+            {
+              "store": "walmart",
+              "presentation": "arroz-750",
+              "price_cents": 2200,
+              "base_unit_price_cents": 2933,
+              "observed_date": "2026-10-10",
+              "is_substitute": true
+            },
+            {
+              "store": "bodega",
+              "presentation": "arroz-500",
+              "price_cents": 1500,
+              "base_unit_price_cents": 3000,
+              "observed_date": "2026-10-10",
+              "is_substitute": true
+            }
+          ]
+        }
+      ],
+      "cheapest_store": "bodega"
+    }
+  }
+}

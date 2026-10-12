@@ -1,0 +1,161 @@
+producto_id	nombre_es	fuente	id_fuente	conjunto	energia	confianza	nota
+aceite-oliva	Aceite de oliva	USDA	171413	SR Legacy 2018-04	1008	alta	Aceite de oliva; mismo registro que cita el catálogo para la densidad
+aceite-soya	Aceite de soya	USDA	171411	SR Legacy 2018-04	1008	alta	Aceite de soya; mismo registro que cita el catálogo para la densidad
+frijoles-refritos	Frijoles refritos bayos	USDA	172438	SR Legacy 2018-04	1008	media	Frijoles refritos enlatados estilo tradicional; el producto bayo de La Costeña puede llevar distinta grasa
+duraznos-almibar	Duraznos en almíbar	USDA	169112	SR Legacy 2018-04	1008	media	Durazno enlatado en almíbar espeso, sólidos y líquido; el almíbar real de la lata puede variar
+cafe-soluble	Café soluble	USDA	171893	SR Legacy 2018-04	1008	alta	Café instantáneo regular en polvo
+jamon-pavo	Jamón de pavo	USDA	172941	SR Legacy 2018-04	1008	media	Pechuga de pavo rebanada empacada; el jamón de pavo procesado puede tener otro contenido
+salchicha-pavo	Salchicha de pavo	USDA	171625	SR Legacy 2018-04	1008	media	Salchicha (frankfurter) de pavo; la marca puede variar
+avena	Avena en hojuelas	USDA	2346396	Foundation 2026-04-30	2048	alta	Avena en hojuelas a la antigua, cruda
+blanqueador	Blanqueador con cloro	SIN_FUENTE				alta	No es alimento: producto de limpieza
+caldo-pollo-cubos	Caldo de pollo en cubos	USDA	171563	SR Legacy 2018-04	1008	media	Cubos de caldo de pollo deshidratado; el catálogo cita 171562 (caldo en polvo, 267 kcal) solo para el peso del cubo
+pasta-dental	Pasta dental	SIN_FUENTE				alta	No es alimento: producto de higiene
+jabon-manos	Jabón líquido para manos	SIN_FUENTE				alta	No es alimento: producto de higiene
+acondicionador	Acondicionador para cabello	SIN_FUENTE				alta	No es alimento: producto de higiene
+desinfectante-aerosol	Desinfectante en aerosol	SIN_FUENTE				alta	No es alimento: producto de limpieza
+detergente-polvo	Detergente en polvo	SIN_FUENTE				alta	No es alimento: producto de limpieza
+elote-grano	Granos de elote	USDA	169214	SR Legacy 2018-04	1008	media	Elote amarillo enlatado en grano, sólidos escurridos; el producto trae líquido
+atun-agua	Atún en agua	USDA	334194	Foundation 2026-04-30	1008	alta	Atún claro enlatado en agua, escurrido
+uva-verde	Uva verde	USDA	2346413	Foundation 2026-04-30	2048	alta	Uva verde sin semilla, cruda
+jabon-trastes	Jabón líquido para trastes	SIN_FUENTE				alta	No es alimento: producto de limpieza
+pan-caja	Pan de caja	USDA	325871	Foundation 2026-04-30	1008	media	Pan blanco comercial; el pan de caja integral o multigrano tendría otro valor
+papel-higienico	Papel higiénico	SIN_FUENTE				alta	No es alimento: papel
+espagueti	Espagueti	USDA	169736	SR Legacy 2018-04	1008	alta	Pasta seca enriquecida, cruda
+queso-manchego	Queso manchego	OFF	7501077506585	Open Food Facts 2026-10-11	energy-kcal_100g	media	Queso manchego rebanado NocheBuena 500 g (misma marca que el catálogo); dato capturado por usuarios de OFF
+mayonesa-chipotle	Mayonesa con chipotle	OFF	7501003308535	Open Food Facts 2026-10-11	energy-kcal_100g	media	Aderezo McCormick chipotle 310 g (misma marca y tamaño que el catálogo); dato de OFF
+salsa-soya	Salsa de soya	USDA	174277	SR Legacy 2018-04	1008	alta	Salsa de soya shoyu; mismo registro que cita el catálogo
+catsup	Catsup	USDA	168556	SR Legacy 2018-04	1008	alta	Catsup
+mayonesa	Mayonesa	USDA	171009	SR Legacy 2018-04	1008	alta	Aderezo mayonesa regular
+salsa-inglesa	Salsa inglesa	USDA	171610	SR Legacy 2018-04	1008	alta	Salsa Worcestershire; mismo registro que cita el catálogo
+servilletas	Servilletas de papel	SIN_FUENTE				alta	No es alimento: papel
+toallas-papel	Toallas de papel	SIN_FUENTE				alta	No es alimento: papel
+yogur-griego	Yogur griego natural	USDA	2259794	Foundation 2026-04-30	2048	media	Yogur griego natural de leche entera; el producto Yoplait sin azúcar puede traer menos grasa
+yogur-bebible	Yogur bebible	OFF	7501055900398	Open Food Facts 2026-10-11	energy-kcal_100g	media	Yoghurt bebible Alpura fresa 250 g; el catálogo es multi sabor y los sabores casi no cambian los macros; dato de OFF
+petit-suisse	Queso petit suisse	OFF	7501032395100	Open Food Facts 2026-10-11	energy-kcal_100g	media	Danonino fresa, uva y durazno 6 pack 252 g (6 por 42 g como el catálogo); otros registros de Danonino en OFF van de 56 a 112 kcal
+arroz-grano-largo	Arroz blanco grano largo	USDA	168877	SR Legacy 2018-04	1008	alta	Arroz blanco grano largo enriquecido, crudo
+sustituto-crema-cafe	Sustituto de crema para café	USDA	171263	SR Legacy 2018-04	1008	media	Sustituto de crema en polvo; el Coffee Mate líquido tendría otro valor
+leche	Leche	USDA	171265	SR Legacy 2018-04	1008	alta	Leche entera 3.25 %; mismo registro que cita el catálogo
+jitomate-saladet	Jitomate saladet	USDA	170457	SR Legacy 2018-04	1008	alta	Jitomate rojo maduro crudo, promedio anual
+tomate-bola	Jitomate bola	USDA	170457	SR Legacy 2018-04	1008	alta	Jitomate rojo maduro crudo, promedio anual
+tomate-verde	Tomate verde	USDA	168566	SR Legacy 2018-04	1008	alta	Tomatillo crudo
+cebolla-blanca	Cebolla blanca	USDA	1104962	Foundation 2026-04-30	1008	alta	Cebolla blanca cruda
+cebolla-morada	Cebolla morada	USDA	790577	Foundation 2026-04-30	1008	alta	Cebolla morada cruda
+cebolla-cambray	Cebolla cambray	USDA	170005	SR Legacy 2018-04	1008	alta	Cebolla de cambray (cebollitas con rabo), cruda
+ajo	Ajo	USDA	1104647	Foundation 2026-04-30	1008	alta	Ajo crudo
+jengibre	Jengibre	USDA	169231	SR Legacy 2018-04	1008	alta	Raíz de jengibre cruda
+papa-blanca	Papa blanca	USDA	170028	SR Legacy 2018-04	1008	alta	Papa blanca con piel, cruda
+papa-cambray	Papa cambray	USDA	170028	SR Legacy 2018-04	1008	media	Papa blanca con piel cruda; la papa cambray es pequeña pero del mismo tipo
+camote	Camote	USDA	168482	SR Legacy 2018-04	1008	alta	Camote crudo
+zanahoria	Zanahoria	USDA	170393	SR Legacy 2018-04	1008	alta	Zanahoria cruda
+calabacita	Calabacita	USDA	169291	SR Legacy 2018-04	1008	alta	Calabacita italiana con piel, cruda
+calabaza-castilla	Calabaza de castilla	USDA	168448	SR Legacy 2018-04	1008	alta	Calabaza cruda
+chayote	Chayote	USDA	170402	SR Legacy 2018-04	1008	alta	Chayote crudo
+chile-serrano	Chile serrano	USDA	169395	SR Legacy 2018-04	1008	alta	Chile serrano crudo
+chile-jalapeno	Chile jalapeño	USDA	168576	SR Legacy 2018-04	1008	alta	Chile jalapeño crudo
+chile-poblano	Chile poblano	USDA	2747662	Foundation 2026-04-30	2047	alta	Chile poblano sin semillas, crudo
+chile-habanero	Chile habanero	USDA	170497	SR Legacy 2018-04	1008	baja	USDA no trae habanero; chile picante verde crudo como aproximación
+pimiento-morron	Pimiento morrón	USDA	170427	SR Legacy 2018-04	1008	media	Pimiento verde crudo; el morrón rojo trae 26 kcal (170108)
+pepino	Pepino	USDA	2346406	Foundation 2026-04-30	2048	alta	Pepino con cáscara crudo
+lechuga-romana	Lechuga romana	USDA	2346389	Foundation 2026-04-30	2048	alta	Lechuga romana cruda
+espinaca	Espinaca	USDA	168462	SR Legacy 2018-04	1008	alta	Espinaca cruda
+acelga	Acelga	USDA	169991	SR Legacy 2018-04	1008	alta	Acelga cruda
+verdolagas	Verdolagas	USDA	169274	SR Legacy 2018-04	1008	alta	Verdolaga cruda
+col-repollo	Col blanca	USDA	2346407	Foundation 2026-04-30	2048	alta	Col verde cruda
+col-morada	Col morada	USDA	2346408	Foundation 2026-04-30	2048	alta	Col morada cruda
+brocoli	Brócoli	USDA	321900	Foundation 2026-04-30	1008	alta	Brócoli crudo
+coliflor	Coliflor	USDA	2685573	Foundation 2026-04-30	2048	alta	Coliflor cruda
+nopales	Nopales	USDA	168571	SR Legacy 2018-04	1008	alta	Nopales crudos
+ejotes	Ejotes	USDA	2346400	Foundation 2026-04-30	2048	alta	Ejote verde crudo
+champinones	Champiñones	USDA	169251	SR Legacy 2018-04	1008	alta	Champiñón blanco crudo
+apio	Apio	USDA	2346405	Foundation 2026-04-30	2048	alta	Apio crudo
+betabel	Betabel	USDA	2685576	Foundation 2026-04-30	2048	alta	Betabel crudo
+jicama	Jícama	USDA	170073	SR Legacy 2018-04	1008	alta	Jícama cruda
+berenjena	Berenjena	USDA	2685577	Foundation 2026-04-30	2048	alta	Berenjena cruda
+cilantro	Cilantro	USDA	169997	SR Legacy 2018-04	1008	alta	Hojas de cilantro crudas
+perejil	Perejil	USDA	170416	SR Legacy 2018-04	1008	alta	Perejil fresco
+epazote	Epazote	USDA	169398	SR Legacy 2018-04	1008	alta	Epazote crudo
+hierbabuena	Hierbabuena	USDA	173475	SR Legacy 2018-04	1008	media	Hierbabuena (spearmint) fresca; la hierbabuena mexicana es otra especie de menta
+elote-mazorca	Elote en mazorca	USDA	169998	SR Legacy 2018-04	1008	alta	Elote amarillo crudo; mismo registro que cita el catálogo
+limon	Limón	USDA	168155	SR Legacy 2018-04	1008	alta	Limón verde (lime) crudo; el limón de México es el lime
+aguacate	Aguacate	USDA	171705	SR Legacy 2018-04	1008	alta	Aguacate crudo, todas las variedades comerciales
+naranja	Naranja	USDA	169097	SR Legacy 2018-04	1008	alta	Naranja cruda, todas las variedades
+mandarina	Mandarina	USDA	169105	SR Legacy 2018-04	1008	alta	Mandarina cruda
+toronja	Toronja	USDA	173033	SR Legacy 2018-04	1008	alta	Toronja cruda rosa, roja y blanca
+platano	Plátano	USDA	790991	Foundation 2026-04-30	1008	alta	Plátano maduro crudo
+platano-macho	Plátano macho	USDA	2710817	Foundation 2026-04-30	2048	alta	Plátano macho maduro crudo
+manzana	Manzana	USDA	171688	SR Legacy 2018-04	1008	alta	Manzana cruda con piel, variedad no especificada
+pera	Pera	USDA	169118	SR Legacy 2018-04	1008	alta	Pera cruda
+durazno	Durazno	USDA	325430	Foundation 2026-04-30	1008	alta	Durazno amarillo crudo
+papaya	Papaya	USDA	169926	SR Legacy 2018-04	1008	alta	Papaya cruda
+sandia	Sandía	USDA	167765	SR Legacy 2018-04	1008	alta	Sandía cruda
+melon	Melón	USDA	327198	Foundation 2026-04-30	1008	alta	Melón cantaloupe crudo
+mango	Mango	USDA	169910	SR Legacy 2018-04	1008	alta	Mango crudo
+pina	Piña	USDA	2346398	Foundation 2026-04-30	2048	alta	Piña cruda
+fresa	Fresa	USDA	327699	Foundation 2026-04-30	1008	alta	Fresa cruda
+guayaba	Guayaba	USDA	173044	SR Legacy 2018-04	1008	alta	Guayaba común cruda
+pechuga-pollo	Pechuga de pollo	USDA	2646170	Foundation 2026-04-30	2048	alta	Pechuga de pollo sin piel ni hueso, cruda
+pierna-muslo-pollo	Pierna y muslo de pollo	USDA	172378	SR Legacy 2018-04	1008	alta	Pierna y muslo de pollo con piel, crudo, sin hueso
+pollo-entero	Pollo entero	USDA	171447	SR Legacy 2018-04	1008	media	Pollo con piel crudo, parte comestible sin hueso; el peso entero con hueso rinde menos
+carne-molida-res	Carne molida de res	USDA	2514743	Foundation 2026-04-30	2048	media	Carne molida 90 % magra cruda; el porcentaje de grasa de la molida de tienda no está en el catálogo
+carne-molida-cerdo	Carne molida de cerdo	USDA	2514745	Foundation 2026-04-30	2048	alta	Carne molida de cerdo cruda
+bistec-res	Bistec de res	USDA	2646173	Foundation 2026-04-30	2048	media	Bola (top round) de res cruda; el corte de bistec varía
+milanesa-res	Milanesa de res	USDA	2646173	Foundation 2026-04-30	2048	baja	Carne cruda sin empanizar; la milanesa empanizada lleva pan molido y huevo
+falda-res	Falda de res	USDA	2646175	Foundation 2026-04-30	2048	media	Arrachera/flank cruda como equivalente de falda
+chambarete-res	Chambarete de res	USDA	169441	SR Legacy 2018-04	1008	media	Chambarete (shank) en cruz, solo carne magra, cruda
+costilla-res	Costilla de res	USDA	169439	SR Legacy 2018-04	1008	media	Costilla corta de res con grasa, cruda, sin hueso
+chuleta-cerdo	Chuleta de cerdo	USDA	168238	SR Legacy 2018-04	1008	alta	Chuleta de lomo con grasa, cruda
+carne-cerdo-maciza	Carne de cerdo maciza	USDA	167814	SR Legacy 2018-04	1008	media	Pierna de cerdo con grasa, cruda; maciza no define cuánta grasa trae
+costilla-cerdo	Costilla de cerdo	USDA	167853	SR Legacy 2018-04	1008	media	Costilla de cerdo con grasa, cruda, parte comestible
+filete-tilapia	Filete de tilapia	USDA	175176	SR Legacy 2018-04	1008	alta	Tilapia cruda
+huevo	Huevo blanco	USDA	171287	SR Legacy 2018-04	1008	alta	Huevo entero crudo; mismo registro que cita el catálogo
+queso-fresco	Queso fresco	USDA	2647442	Foundation 2026-04-30	2048	alta	Queso fresco
+queso-oaxaca	Queso Oaxaca	USDA	2647441	Foundation 2026-04-30	2048	alta	Queso Oaxaca
+queso-panela	Queso panela	OFF	7501002201646	Open Food Facts 2026-10-11	energy-kcal_100g	media	Queso panela Caperucita; el catálogo no fija marca y los panela de OFF van de 210 a 284 kcal
+queso-cotija	Queso cotija	USDA	2647443	Foundation 2026-04-30	2048	alta	Queso cotija
+queso-chihuahua	Queso Chihuahua	USDA	2647438	Foundation 2026-04-30	2048	media	Monterey Jack como equivalente del Chihuahua
+queso-crema	Queso crema	USDA	173418	SR Legacy 2018-04	1008	alta	Queso crema
+requeson	Requesón	USDA	323444	Foundation 2026-04-30	1008	media	Ricotta de leche entera como equivalente del requesón
+crema-acida	Crema	USDA	2346387	Foundation 2026-04-30	2048	media	Crema ácida entera; la crema mexicana de mesa es parecida pero no igual
+mantequilla	Mantequilla	USDA	173410	SR Legacy 2018-04	1008	alta	Mantequilla con sal
+tocino	Tocino	USDA	168277	SR Legacy 2018-04	1008	alta	Tocino crudo
+chorizo	Chorizo	USDA	173859	SR Legacy 2018-04	1008	alta	Chorizo de cerdo crudo
+bolillo	Bolillo	USDA	175031	SR Legacy 2018-04	1008	alta	Pan duro tipo kaiser; mismo registro que cita el catálogo
+tortilla-maiz	Tortillas de maíz	USDA	175036	SR Legacy 2018-04	1008	alta	Tortilla de maíz
+tortilla-harina	Tortillas de harina	USDA	173242	SR Legacy 2018-04	1008	alta	Tortilla de harina; mismo registro que cita el catálogo
+tostadas	Tostadas de maíz	USDA	167525	SR Legacy 2018-04	1008	alta	Tostadas de maíz; mismo registro que cita el catálogo
+sal	Sal de mesa	USDA	746775	Foundation 2026-04-30	2047	alta	Sal de mesa
+azucar	Azúcar estándar	USDA	334247	Foundation 2026-04-30	1008	alta	Azúcar granulada
+piloncillo	Piloncillo	USDA	168833	SR Legacy 2018-04	1008	media	Azúcar morena como equivalente; el piloncillo no está en USDA
+harina-trigo	Harina de trigo	USDA	789890	Foundation 2026-04-30	1008	alta	Harina de trigo de uso general enriquecida
+harina-maiz	Harina de maíz nixtamalizado	USDA	2710835	Foundation 2026-04-30	2048	alta	Harina de maíz nixtamalizado (masa harina)
+pan-molido	Pan molido	USDA	174928	SR Legacy 2018-04	1008	alta	Pan molido seco natural
+frijol-bayo	Frijol bayo seco	USDA	175199	SR Legacy 2018-04	1008	media	Frijol pinto crudo como equivalente del bayo
+frijol-negro	Frijol negro seco	USDA	173734	SR Legacy 2018-04	1008	alta	Frijol negro crudo
+lenteja	Lenteja	USDA	172420	SR Legacy 2018-04	1008	alta	Lenteja cruda
+garbanzo	Garbanzo seco	USDA	2644282	Foundation 2026-04-30	2048	alta	Garbanzo seco
+sopa-fideo	Sopa de fideo	USDA	169736	SR Legacy 2018-04	1008	alta	Pasta seca enriquecida
+sopa-codo	Sopa de codo	USDA	169736	SR Legacy 2018-04	1008	alta	Pasta seca enriquecida
+sopa-pluma	Sopa de pluma	USDA	169736	SR Legacy 2018-04	1008	alta	Pasta seca enriquecida
+sopa-estrellitas	Sopa de estrellitas	USDA	169736	SR Legacy 2018-04	1008	alta	Pasta seca enriquecida
+pure-tomate	Puré de tomate	USDA	2685582	Foundation 2026-04-30	2048	alta	Puré de tomate enlatado
+chipotle-adobo	Chiles chipotles en adobo	OFF	7501017006021	Open Food Facts 2026-10-11	energy-kcal_100g	baja	Chipotles adobados La Costeña 105 g; otro registro de La Costeña dice 73 kcal (7501017057887) y el catálogo no fija marca
+jalapenos-escabeche	Chiles jalapeños en escabeche	USDA	170080	SR Legacy 2018-04	1008	media	Jalapeño enlatado, sólidos y líquido; el escabeche mexicano lleva zanahoria y vinagre
+chile-guajillo	Chile guajillo seco	USDA	168570	SR Legacy 2018-04	1008	media	Chile picante seco al sol como equivalente del guajillo
+chile-ancho	Chile ancho seco	USDA	169396	SR Legacy 2018-04	1008	alta	Chile ancho seco
+chile-pasilla	Chile pasilla seco	USDA	168579	SR Legacy 2018-04	1008	alta	Chile pasilla seco
+chile-arbol	Chile de árbol seco	USDA	168570	SR Legacy 2018-04	1008	media	Chile picante seco al sol como equivalente del chile de árbol
+pimienta-negra	Pimienta negra molida	USDA	170931	SR Legacy 2018-04	1008	alta	Pimienta negra
+comino	Comino molido	USDA	170923	SR Legacy 2018-04	1008	alta	Comino (semilla; molido tiene el mismo valor)
+oregano	Orégano seco	USDA	171328	SR Legacy 2018-04	1008	alta	Orégano seco
+laurel	Laurel seco	USDA	170917	SR Legacy 2018-04	1008	alta	Hoja de laurel
+canela	Canela en raja	USDA	171320	SR Legacy 2018-04	1008	alta	Canela molida; en raja tiene el mismo valor
+vinagre-blanco	Vinagre blanco	USDA	172237	SR Legacy 2018-04	1008	alta	Vinagre destilado; mismo registro que cita el catálogo
+sardina-lata	Sardina en tomate	USDA	175140	SR Legacy 2018-04	1008	alta	Sardina del Pacífico en salsa de tomate, escurrida con espinas
+maiz-pozolero	Maíz pozolero	USDA	169701	SR Legacy 2018-04	1008	alta	Hominy (maíz pozolero) enlatado blanco
+leche-evaporada	Leche evaporada	USDA	171276	SR Legacy 2018-04	1008	alta	Leche evaporada entera enlatada
+chocolate-mesa	Chocolate de mesa	OFF	7501014300405	Open Food Facts 2026-10-11	energy-kcal_100g	media	Chocolate para mesa Ibarra tradicional 630 g; el catálogo no fija marca y los de OFF van de 437 a 475 kcal
+jamaica	Flor de jamaica	USDA	168170	SR Legacy 2018-04	1008	baja	Roselle (jamaica) cruda; la flor seca que se vende trae otro valor
+polvo-hornear	Polvo para hornear	USDA	172804	SR Legacy 2018-04	1008	media	Polvo para hornear de fosfato directo; el de doble acción con sulfato de aluminio es 53 kcal
+bicarbonato	Bicarbonato de sodio	USDA	175040	SR Legacy 2018-04	1008	alta	Bicarbonato de sodio
+maizena	Almidón de maíz	USDA	169698	SR Legacy 2018-04	1008	alta	Almidón de maíz
+cafe-molido	Café molido	OFF	7503035511143	Open Food Facts 2026-10-11	energy-kcal_100g	baja	Café molido Vips 400 g; mismo valor 396.6 en tres productos de OFF y el café seco no tiene registro en USDA; revisar qué valor usar

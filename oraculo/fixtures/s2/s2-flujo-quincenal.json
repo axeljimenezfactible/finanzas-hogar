@@ -1,0 +1,669 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-flujo-quincenal",
+  "descripcion": "16 quincenas desde 2026-10-q2 (un pago de despensa por quincena) y valor estable para el contraste (S2-10); resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-10"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[0].pagos"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[1].pagos"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[2].pagos"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[3].pagos"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "valor_estable"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "flujo",
+        "funcion": "flujo_quincenal",
+        "argumentos": {
+          "from": "2026-10-q2",
+          "count": 16
+        }
+      },
+      {
+        "id": "valor-estable",
+        "funcion": "valor_estable",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "flujo": [
+      {
+        "fortnight": "2026-10-q2",
+        "start": "2026-10-16",
+        "end": "2026-10-31",
+        "pay_date": "2026-10-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 59882,
+            "karen": 37493
+          },
+          "household_cents": 59882,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 59882
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 59882,
+        "balance_cents": -59882,
+        "cumulative_balance_cents": -59882,
+        "provisional": null
+      },
+      {
+        "fortnight": "2026-11-q1",
+        "start": "2026-11-01",
+        "end": "2026-11-15",
+        "pay_date": "2026-11-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 59882,
+            "karen": 37493
+          },
+          "household_cents": 59882,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 59882
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 59882,
+        "balance_cents": -59882,
+        "cumulative_balance_cents": -119764,
+        "provisional": null
+      },
+      {
+        "fortnight": "2026-11-q2",
+        "start": "2026-11-16",
+        "end": "2026-11-30",
+        "pay_date": "2026-11-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 59882,
+            "karen": 37493
+          },
+          "household_cents": 59882,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 59882
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 59882,
+        "balance_cents": -59882,
+        "cumulative_balance_cents": -179646,
+        "provisional": null
+      },
+      {
+        "fortnight": "2026-12-q1",
+        "start": "2026-12-01",
+        "end": "2026-12-15",
+        "pay_date": "2026-12-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 59882,
+            "karen": 37493
+          },
+          "household_cents": 59882,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 59882
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 59882,
+        "balance_cents": -59882,
+        "cumulative_balance_cents": -239528,
+        "provisional": null
+      },
+      {
+        "fortnight": "2026-12-q2",
+        "start": "2026-12-16",
+        "end": "2026-12-31",
+        "pay_date": "2026-12-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -327903,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-01-q1",
+        "start": "2027-01-01",
+        "end": "2027-01-15",
+        "pay_date": "2027-01-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -416278,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-01-q2",
+        "start": "2027-01-16",
+        "end": "2027-01-31",
+        "pay_date": "2027-01-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -504653,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-02-q1",
+        "start": "2027-02-01",
+        "end": "2027-02-15",
+        "pay_date": "2027-02-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88377,
+            "karen": 37493
+          },
+          "household_cents": 88377,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88377
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88377,
+        "balance_cents": -88377,
+        "cumulative_balance_cents": -593030,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-02-q2",
+        "start": "2027-02-16",
+        "end": "2027-02-28",
+        "pay_date": "2027-02-28",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -681405,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-03-q1",
+        "start": "2027-03-01",
+        "end": "2027-03-15",
+        "pay_date": "2027-03-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -769780,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-03-q2",
+        "start": "2027-03-16",
+        "end": "2027-03-31",
+        "pay_date": "2027-03-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -858155,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-04-q1",
+        "start": "2027-04-01",
+        "end": "2027-04-15",
+        "pay_date": "2027-04-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88377,
+            "karen": 37493
+          },
+          "household_cents": 88377,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88377
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88377,
+        "balance_cents": -88377,
+        "cumulative_balance_cents": -946532,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-04-q2",
+        "start": "2027-04-16",
+        "end": "2027-04-30",
+        "pay_date": "2027-04-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -1034907,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-05-q1",
+        "start": "2027-05-01",
+        "end": "2027-05-15",
+        "pay_date": "2027-05-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -1123282,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-05-q2",
+        "start": "2027-05-16",
+        "end": "2027-05-31",
+        "pay_date": "2027-05-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -1211657,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-06-q1",
+        "start": "2027-06-01",
+        "end": "2027-06-15",
+        "pay_date": "2027-06-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88377,
+            "karen": 37493
+          },
+          "household_cents": 88377,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88377
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88377,
+        "balance_cents": -88377,
+        "cumulative_balance_cents": -1300034,
+        "provisional": null
+      }
+    ],
+    "valor-estable": {
+      "month": {
+        "total_cents": 261687,
+        "by_person": {
+          "axel": 176751,
+          "karen": 84936
+        }
+      },
+      "fortnight": {
+        "total_cents": 130844,
+        "by_person": {
+          "axel": 88376,
+          "karen": 42468
+        },
+        "sum_persons_cents": 130844,
+        "cent_diff_cents": 0
+      },
+      "components": [
+        {
+          "label": "despensa",
+          "monthly_cents": 251737,
+          "by_person": {
+            "axel": 176751,
+            "karen": 74986
+          }
+        },
+        {
+          "label": "papel_contado",
+          "monthly_cents": 9950,
+          "by_person": {
+            "axel": 0,
+            "karen": 9950
+          }
+        }
+      ]
+    }
+  }
+}

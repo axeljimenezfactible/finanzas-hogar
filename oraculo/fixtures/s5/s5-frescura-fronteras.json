@@ -1,0 +1,1318 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-frescura-fronteras",
+  "descripcion": "Frescura (RN-12, K22, K40): hoy 2026-12-31 y precios con edad de 0 y de 29 a 91 días. Peso 1 hasta el día 29; (90 - días) / 61 de 30 a 90 (0.9836, 0.4918, 0); día 90 pesa 0 y no compite; día 91 no compite. La diferencia entre días consecutivos es 1/61. Las 5 fuentes a los 5 días: compiten manual, ticket_manual y ticket_ocr; no compiten site_assisted ni profeco. Una fecha futura es future_date.",
+  "fuente": [
+    {
+      "tipo": "decision",
+      "ruta": "K40"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K22"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-12"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S5-04"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-12-31",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz-1kg",
+            "product": "arroz",
+            "name": "arroz-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "edad-000",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-31",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-029",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-02",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-030",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-01",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-031",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-30",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-032",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-29",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-033",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-28",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-034",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-27",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-035",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-26",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-036",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-25",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-037",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-24",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-038",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-23",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-039",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-22",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-040",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-21",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-041",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-20",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-042",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-19",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-043",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-18",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-044",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-17",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-045",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-16",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-046",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-15",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-047",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-14",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-048",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-13",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-049",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-12",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-050",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-11",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-051",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-10",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-052",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-09",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-053",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-08",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-054",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-07",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-055",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-06",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-056",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-05",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-057",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-04",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-058",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-03",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-059",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-02",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-060",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-11-01",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-061",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-31",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-062",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-30",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-063",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-29",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-064",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-28",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-065",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-27",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-066",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-26",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-067",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-25",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-068",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-24",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-069",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-23",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-070",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-22",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-071",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-21",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-072",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-20",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-073",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-19",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-074",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-18",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-075",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-17",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-076",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-16",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-077",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-15",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-078",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-14",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-079",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-13",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-080",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-12",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-081",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-11",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-082",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-10",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-083",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-09",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-084",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-08",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-085",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-07",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-086",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-06",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-087",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-05",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-088",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-04",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-089",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-03",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-090",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-02",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "edad-091",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-10-01",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "fuente-manual",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-26",
+          "source": "manual"
+        }
+      },
+      {
+        "id": "fuente-ticket-manual",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-26",
+          "source": "ticket_manual"
+        }
+      },
+      {
+        "id": "fuente-ticket-ocr",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-26",
+          "source": "ticket_ocr"
+        }
+      },
+      {
+        "id": "fuente-site-assisted",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-26",
+          "source": "site_assisted"
+        }
+      },
+      {
+        "id": "fuente-profeco",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-26",
+          "source": "profeco"
+        }
+      },
+      {
+        "id": "futura",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2027-01-01",
+          "source": "manual"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "edad-000": {
+      "age_days": 0,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": true
+    },
+    "edad-029": {
+      "age_days": 29,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": true
+    },
+    "edad-030": {
+      "age_days": 30,
+      "is_stale": true,
+      "weight": {
+        "num": 60,
+        "den": 61
+      },
+      "weight_display": "0.9836",
+      "competes": true
+    },
+    "edad-031": {
+      "age_days": 31,
+      "is_stale": true,
+      "weight": {
+        "num": 59,
+        "den": 61
+      },
+      "weight_display": "0.9672",
+      "competes": true
+    },
+    "edad-032": {
+      "age_days": 32,
+      "is_stale": true,
+      "weight": {
+        "num": 58,
+        "den": 61
+      },
+      "weight_display": "0.9508",
+      "competes": true
+    },
+    "edad-033": {
+      "age_days": 33,
+      "is_stale": true,
+      "weight": {
+        "num": 57,
+        "den": 61
+      },
+      "weight_display": "0.9344",
+      "competes": true
+    },
+    "edad-034": {
+      "age_days": 34,
+      "is_stale": true,
+      "weight": {
+        "num": 56,
+        "den": 61
+      },
+      "weight_display": "0.9180",
+      "competes": true
+    },
+    "edad-035": {
+      "age_days": 35,
+      "is_stale": true,
+      "weight": {
+        "num": 55,
+        "den": 61
+      },
+      "weight_display": "0.9016",
+      "competes": true
+    },
+    "edad-036": {
+      "age_days": 36,
+      "is_stale": true,
+      "weight": {
+        "num": 54,
+        "den": 61
+      },
+      "weight_display": "0.8852",
+      "competes": true
+    },
+    "edad-037": {
+      "age_days": 37,
+      "is_stale": true,
+      "weight": {
+        "num": 53,
+        "den": 61
+      },
+      "weight_display": "0.8689",
+      "competes": true
+    },
+    "edad-038": {
+      "age_days": 38,
+      "is_stale": true,
+      "weight": {
+        "num": 52,
+        "den": 61
+      },
+      "weight_display": "0.8525",
+      "competes": true
+    },
+    "edad-039": {
+      "age_days": 39,
+      "is_stale": true,
+      "weight": {
+        "num": 51,
+        "den": 61
+      },
+      "weight_display": "0.8361",
+      "competes": true
+    },
+    "edad-040": {
+      "age_days": 40,
+      "is_stale": true,
+      "weight": {
+        "num": 50,
+        "den": 61
+      },
+      "weight_display": "0.8197",
+      "competes": true
+    },
+    "edad-041": {
+      "age_days": 41,
+      "is_stale": true,
+      "weight": {
+        "num": 49,
+        "den": 61
+      },
+      "weight_display": "0.8033",
+      "competes": true
+    },
+    "edad-042": {
+      "age_days": 42,
+      "is_stale": true,
+      "weight": {
+        "num": 48,
+        "den": 61
+      },
+      "weight_display": "0.7869",
+      "competes": true
+    },
+    "edad-043": {
+      "age_days": 43,
+      "is_stale": true,
+      "weight": {
+        "num": 47,
+        "den": 61
+      },
+      "weight_display": "0.7705",
+      "competes": true
+    },
+    "edad-044": {
+      "age_days": 44,
+      "is_stale": true,
+      "weight": {
+        "num": 46,
+        "den": 61
+      },
+      "weight_display": "0.7541",
+      "competes": true
+    },
+    "edad-045": {
+      "age_days": 45,
+      "is_stale": true,
+      "weight": {
+        "num": 45,
+        "den": 61
+      },
+      "weight_display": "0.7377",
+      "competes": true
+    },
+    "edad-046": {
+      "age_days": 46,
+      "is_stale": true,
+      "weight": {
+        "num": 44,
+        "den": 61
+      },
+      "weight_display": "0.7213",
+      "competes": true
+    },
+    "edad-047": {
+      "age_days": 47,
+      "is_stale": true,
+      "weight": {
+        "num": 43,
+        "den": 61
+      },
+      "weight_display": "0.7049",
+      "competes": true
+    },
+    "edad-048": {
+      "age_days": 48,
+      "is_stale": true,
+      "weight": {
+        "num": 42,
+        "den": 61
+      },
+      "weight_display": "0.6885",
+      "competes": true
+    },
+    "edad-049": {
+      "age_days": 49,
+      "is_stale": true,
+      "weight": {
+        "num": 41,
+        "den": 61
+      },
+      "weight_display": "0.6721",
+      "competes": true
+    },
+    "edad-050": {
+      "age_days": 50,
+      "is_stale": true,
+      "weight": {
+        "num": 40,
+        "den": 61
+      },
+      "weight_display": "0.6557",
+      "competes": true
+    },
+    "edad-051": {
+      "age_days": 51,
+      "is_stale": true,
+      "weight": {
+        "num": 39,
+        "den": 61
+      },
+      "weight_display": "0.6393",
+      "competes": true
+    },
+    "edad-052": {
+      "age_days": 52,
+      "is_stale": true,
+      "weight": {
+        "num": 38,
+        "den": 61
+      },
+      "weight_display": "0.6230",
+      "competes": true
+    },
+    "edad-053": {
+      "age_days": 53,
+      "is_stale": true,
+      "weight": {
+        "num": 37,
+        "den": 61
+      },
+      "weight_display": "0.6066",
+      "competes": true
+    },
+    "edad-054": {
+      "age_days": 54,
+      "is_stale": true,
+      "weight": {
+        "num": 36,
+        "den": 61
+      },
+      "weight_display": "0.5902",
+      "competes": true
+    },
+    "edad-055": {
+      "age_days": 55,
+      "is_stale": true,
+      "weight": {
+        "num": 35,
+        "den": 61
+      },
+      "weight_display": "0.5738",
+      "competes": true
+    },
+    "edad-056": {
+      "age_days": 56,
+      "is_stale": true,
+      "weight": {
+        "num": 34,
+        "den": 61
+      },
+      "weight_display": "0.5574",
+      "competes": true
+    },
+    "edad-057": {
+      "age_days": 57,
+      "is_stale": true,
+      "weight": {
+        "num": 33,
+        "den": 61
+      },
+      "weight_display": "0.5410",
+      "competes": true
+    },
+    "edad-058": {
+      "age_days": 58,
+      "is_stale": true,
+      "weight": {
+        "num": 32,
+        "den": 61
+      },
+      "weight_display": "0.5246",
+      "competes": true
+    },
+    "edad-059": {
+      "age_days": 59,
+      "is_stale": true,
+      "weight": {
+        "num": 31,
+        "den": 61
+      },
+      "weight_display": "0.5082",
+      "competes": true
+    },
+    "edad-060": {
+      "age_days": 60,
+      "is_stale": true,
+      "weight": {
+        "num": 30,
+        "den": 61
+      },
+      "weight_display": "0.4918",
+      "competes": true
+    },
+    "edad-061": {
+      "age_days": 61,
+      "is_stale": true,
+      "weight": {
+        "num": 29,
+        "den": 61
+      },
+      "weight_display": "0.4754",
+      "competes": true
+    },
+    "edad-062": {
+      "age_days": 62,
+      "is_stale": true,
+      "weight": {
+        "num": 28,
+        "den": 61
+      },
+      "weight_display": "0.4590",
+      "competes": true
+    },
+    "edad-063": {
+      "age_days": 63,
+      "is_stale": true,
+      "weight": {
+        "num": 27,
+        "den": 61
+      },
+      "weight_display": "0.4426",
+      "competes": true
+    },
+    "edad-064": {
+      "age_days": 64,
+      "is_stale": true,
+      "weight": {
+        "num": 26,
+        "den": 61
+      },
+      "weight_display": "0.4262",
+      "competes": true
+    },
+    "edad-065": {
+      "age_days": 65,
+      "is_stale": true,
+      "weight": {
+        "num": 25,
+        "den": 61
+      },
+      "weight_display": "0.4098",
+      "competes": true
+    },
+    "edad-066": {
+      "age_days": 66,
+      "is_stale": true,
+      "weight": {
+        "num": 24,
+        "den": 61
+      },
+      "weight_display": "0.3934",
+      "competes": true
+    },
+    "edad-067": {
+      "age_days": 67,
+      "is_stale": true,
+      "weight": {
+        "num": 23,
+        "den": 61
+      },
+      "weight_display": "0.3770",
+      "competes": true
+    },
+    "edad-068": {
+      "age_days": 68,
+      "is_stale": true,
+      "weight": {
+        "num": 22,
+        "den": 61
+      },
+      "weight_display": "0.3607",
+      "competes": true
+    },
+    "edad-069": {
+      "age_days": 69,
+      "is_stale": true,
+      "weight": {
+        "num": 21,
+        "den": 61
+      },
+      "weight_display": "0.3443",
+      "competes": true
+    },
+    "edad-070": {
+      "age_days": 70,
+      "is_stale": true,
+      "weight": {
+        "num": 20,
+        "den": 61
+      },
+      "weight_display": "0.3279",
+      "competes": true
+    },
+    "edad-071": {
+      "age_days": 71,
+      "is_stale": true,
+      "weight": {
+        "num": 19,
+        "den": 61
+      },
+      "weight_display": "0.3115",
+      "competes": true
+    },
+    "edad-072": {
+      "age_days": 72,
+      "is_stale": true,
+      "weight": {
+        "num": 18,
+        "den": 61
+      },
+      "weight_display": "0.2951",
+      "competes": true
+    },
+    "edad-073": {
+      "age_days": 73,
+      "is_stale": true,
+      "weight": {
+        "num": 17,
+        "den": 61
+      },
+      "weight_display": "0.2787",
+      "competes": true
+    },
+    "edad-074": {
+      "age_days": 74,
+      "is_stale": true,
+      "weight": {
+        "num": 16,
+        "den": 61
+      },
+      "weight_display": "0.2623",
+      "competes": true
+    },
+    "edad-075": {
+      "age_days": 75,
+      "is_stale": true,
+      "weight": {
+        "num": 15,
+        "den": 61
+      },
+      "weight_display": "0.2459",
+      "competes": true
+    },
+    "edad-076": {
+      "age_days": 76,
+      "is_stale": true,
+      "weight": {
+        "num": 14,
+        "den": 61
+      },
+      "weight_display": "0.2295",
+      "competes": true
+    },
+    "edad-077": {
+      "age_days": 77,
+      "is_stale": true,
+      "weight": {
+        "num": 13,
+        "den": 61
+      },
+      "weight_display": "0.2131",
+      "competes": true
+    },
+    "edad-078": {
+      "age_days": 78,
+      "is_stale": true,
+      "weight": {
+        "num": 12,
+        "den": 61
+      },
+      "weight_display": "0.1967",
+      "competes": true
+    },
+    "edad-079": {
+      "age_days": 79,
+      "is_stale": true,
+      "weight": {
+        "num": 11,
+        "den": 61
+      },
+      "weight_display": "0.1803",
+      "competes": true
+    },
+    "edad-080": {
+      "age_days": 80,
+      "is_stale": true,
+      "weight": {
+        "num": 10,
+        "den": 61
+      },
+      "weight_display": "0.1639",
+      "competes": true
+    },
+    "edad-081": {
+      "age_days": 81,
+      "is_stale": true,
+      "weight": {
+        "num": 9,
+        "den": 61
+      },
+      "weight_display": "0.1475",
+      "competes": true
+    },
+    "edad-082": {
+      "age_days": 82,
+      "is_stale": true,
+      "weight": {
+        "num": 8,
+        "den": 61
+      },
+      "weight_display": "0.1311",
+      "competes": true
+    },
+    "edad-083": {
+      "age_days": 83,
+      "is_stale": true,
+      "weight": {
+        "num": 7,
+        "den": 61
+      },
+      "weight_display": "0.1148",
+      "competes": true
+    },
+    "edad-084": {
+      "age_days": 84,
+      "is_stale": true,
+      "weight": {
+        "num": 6,
+        "den": 61
+      },
+      "weight_display": "0.0984",
+      "competes": true
+    },
+    "edad-085": {
+      "age_days": 85,
+      "is_stale": true,
+      "weight": {
+        "num": 5,
+        "den": 61
+      },
+      "weight_display": "0.0820",
+      "competes": true
+    },
+    "edad-086": {
+      "age_days": 86,
+      "is_stale": true,
+      "weight": {
+        "num": 4,
+        "den": 61
+      },
+      "weight_display": "0.0656",
+      "competes": true
+    },
+    "edad-087": {
+      "age_days": 87,
+      "is_stale": true,
+      "weight": {
+        "num": 3,
+        "den": 61
+      },
+      "weight_display": "0.0492",
+      "competes": true
+    },
+    "edad-088": {
+      "age_days": 88,
+      "is_stale": true,
+      "weight": {
+        "num": 2,
+        "den": 61
+      },
+      "weight_display": "0.0328",
+      "competes": true
+    },
+    "edad-089": {
+      "age_days": 89,
+      "is_stale": true,
+      "weight": {
+        "num": 1,
+        "den": 61
+      },
+      "weight_display": "0.0164",
+      "competes": true
+    },
+    "edad-090": {
+      "age_days": 90,
+      "is_stale": true,
+      "weight": {
+        "num": 0,
+        "den": 1
+      },
+      "weight_display": "0.0000",
+      "competes": false
+    },
+    "edad-091": {
+      "age_days": 91,
+      "is_stale": true,
+      "weight": {
+        "num": 0,
+        "den": 1
+      },
+      "weight_display": "0.0000",
+      "competes": false
+    },
+    "fuente-manual": {
+      "age_days": 5,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": true
+    },
+    "fuente-ticket-manual": {
+      "age_days": 5,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": true
+    },
+    "fuente-ticket-ocr": {
+      "age_days": 5,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": true
+    },
+    "fuente-site-assisted": {
+      "age_days": 5,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": false
+    },
+    "fuente-profeco": {
+      "age_days": 5,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": false
+    },
+    "futura": {
+      "error": "future_date"
+    }
+  }
+}

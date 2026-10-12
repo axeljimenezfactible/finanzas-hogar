@@ -1,0 +1,159 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-deuda-viva-10-abr-2027",
+  "descripcion": "Cruce con S2: deuda viva al 10-abr-2027 (6,293.44 = 1,258.70 de d3, 1 pago, + 5,034.74 de d4, 4 pagos), efectivo de las ventanas del 10 al 9 (P1 a P6), efectivo del horizonte con 398.00 de contado y compras vivas d3 y d4; valores de las ramas de S2 de model.json en centavos",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S3-01"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-21"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "horizonte"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "periodos"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/kueski-semilla.json"
+    },
+    "consultas": [
+      {
+        "id": "deuda-viva",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "as_of": "2027-04-10"
+        }
+      },
+      {
+        "id": "efectivo-p1",
+        "funcion": "efectivo_ventana",
+        "argumentos": {
+          "from": "2026-10-10",
+          "to": "2026-11-09"
+        }
+      },
+      {
+        "id": "efectivo-p2",
+        "funcion": "efectivo_ventana",
+        "argumentos": {
+          "from": "2026-11-10",
+          "to": "2026-12-09"
+        }
+      },
+      {
+        "id": "efectivo-p3",
+        "funcion": "efectivo_ventana",
+        "argumentos": {
+          "from": "2026-12-10",
+          "to": "2027-01-09"
+        }
+      },
+      {
+        "id": "efectivo-p4",
+        "funcion": "efectivo_ventana",
+        "argumentos": {
+          "from": "2027-01-10",
+          "to": "2027-02-09"
+        }
+      },
+      {
+        "id": "efectivo-p5",
+        "funcion": "efectivo_ventana",
+        "argumentos": {
+          "from": "2027-02-10",
+          "to": "2027-03-09"
+        }
+      },
+      {
+        "id": "efectivo-p6",
+        "funcion": "efectivo_ventana",
+        "argumentos": {
+          "from": "2027-03-10",
+          "to": "2027-04-09"
+        }
+      },
+      {
+        "id": "efectivo-horizonte",
+        "funcion": "efectivo_ventana",
+        "argumentos": {
+          "from": "2026-10-10",
+          "to": "2027-04-10"
+        }
+      },
+      {
+        "id": "vivas",
+        "funcion": "compras_vivas",
+        "argumentos": {
+          "credit_id": 1,
+          "at": "2027-04-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "deuda-viva": {
+      "as_of": "2027-04-10",
+      "total_cents": 629344,
+      "by_purchase": [
+        {
+          "credit_id": 1,
+          "purchase_ref": "d3",
+          "pending_cents": 125870,
+          "payment_count": 1
+        },
+        {
+          "credit_id": 1,
+          "purchase_ref": "d4",
+          "pending_cents": 503474,
+          "payment_count": 4
+        }
+      ],
+      "by_credit": [
+        {
+          "credit_id": 1,
+          "purchase_ref": "",
+          "pending_cents": 629344,
+          "payment_count": 5
+        }
+      ]
+    },
+    "efectivo-p1": {
+      "total_cents": 97375
+    },
+    "efectivo-p2": {
+      "total_cents": 194750
+    },
+    "efectivo-p3": {
+      "total_cents": 223243
+    },
+    "efectivo-p4": {
+      "total_cents": 271636
+    },
+    "efectivo-p5": {
+      "total_cents": 251738
+    },
+    "efectivo-p6": {
+      "total_cents": 271636
+    },
+    "efectivo-horizonte": {
+      "cash_cents": 39800,
+      "total_cents": 1310378
+    },
+    "vivas": {
+      "refs": [
+        "d3",
+        "d4"
+      ]
+    }
+  }
+}

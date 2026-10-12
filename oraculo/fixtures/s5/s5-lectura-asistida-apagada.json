@@ -1,0 +1,151 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-lectura-asistida-apagada",
+  "descripcion": "Por omisión price.assisted_reading_enabled es false: aun con veredicto completo y bandera de tienda, ninguna cadena se puede activar (S5-07, K44).",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-07"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K44"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "a",
+            "name": "A",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "a-1kg",
+            "product": "a",
+            "name": "a-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": true,
+          "groups": []
+        },
+        {
+          "code": "bodega_aurrera",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega_aurrera",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": true,
+          "groups": []
+        },
+        {
+          "code": "sams_club",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams_club",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "terms": [
+        {
+          "site": "walmart",
+          "verdict": "permitido con baja frecuencia",
+          "url": "https://ejemplo.invalid/terminos-walmart",
+          "read_date": "2026-10-11"
+        },
+        {
+          "site": "bodega_aurrera",
+          "verdict": "prohibido",
+          "url": "",
+          "read_date": "2026-10-11"
+        },
+        {
+          "site": "sams_club",
+          "verdict": "permitido",
+          "url": "https://ejemplo.invalid/terminos-sams",
+          "read_date": "2026-10-11"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "walmart",
+        "funcion": "assisted_can_enable",
+        "argumentos": {
+          "store": "walmart"
+        }
+      },
+      {
+        "id": "bodega_aurrera",
+        "funcion": "assisted_can_enable",
+        "argumentos": {
+          "store": "bodega_aurrera"
+        }
+      },
+      {
+        "id": "sams_club",
+        "funcion": "assisted_can_enable",
+        "argumentos": {
+          "store": "sams_club"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "walmart": {
+      "error": "no_terms_verdict"
+    },
+    "bodega_aurrera": {
+      "error": "no_terms_verdict"
+    },
+    "sams_club": {
+      "error": "no_terms_verdict"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-periodos-p1",
+  "descripcion": "Mes calendario 2026-10 con la semilla; reproduce P1 (S2-09, nota (e) de S2.md §6)",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "periodos[0]"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-01"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-09"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "periodos[0]",
+        "funcion": "vista_periodo",
+        "argumentos": {
+          "month": "2026-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "periodos[0]": {
+      "despensa_que_cubre": 1,
+      "devengado": {
+        "despensa_total": 194750,
+        "papel_contado": 0,
+        "total": 194750,
+        "axel": 119764,
+        "karen": 74986
+      },
+      "efectivo": {
+        "pagos": 97375,
+        "papel": 0,
+        "total": 97375,
+        "axel": 59882,
+        "karen": 37493,
+        "n_pagos": 1,
+        "detalle_pagos": [
+          {
+            "despensa": 1,
+            "fecha": "2026-10-30",
+            "monto": 97375,
+            "axel": 59882,
+            "karen": 37493
+          }
+        ]
+      },
+      "diferencia_acumulada": 97375
+    }
+  }
+}

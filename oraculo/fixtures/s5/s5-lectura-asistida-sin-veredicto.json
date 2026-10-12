@@ -1,0 +1,110 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-lectura-asistida-sin-veredicto",
+  "descripcion": "Interruptor activado y bandera de tienda encendida, pero sin ningún veredicto en `terms`: no_terms_verdict (S5-07).",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-07"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "settings": {
+        "assisted_reading_enabled": true
+      },
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "a",
+            "name": "A",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "a-1kg",
+            "product": "a",
+            "name": "a-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": true,
+          "groups": []
+        },
+        {
+          "code": "bodega_aurrera",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega_aurrera",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": true,
+          "groups": []
+        },
+        {
+          "code": "sams_club",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams_club",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "walmart",
+        "funcion": "assisted_can_enable",
+        "argumentos": {
+          "store": "walmart"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "walmart": {
+      "error": "no_terms_verdict"
+    }
+  }
+}

@@ -1,0 +1,3251 @@
+{
+  "version": "1.0",
+  "fecha": "2026-10-11",
+  "catalogo": "datos/semilla/productos.json",
+  "recetas": [
+    {
+      "id": "arroz-con-pollo",
+      "nombre": "Arroz con pollo y zanahoria",
+      "descripcion": "Arroz rojo cocido en una sola olla con trozos de pechuga y zanahoria.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 35,
+      "origen": "claude",
+      "etiquetas": [
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "pechuga-pollo",
+          "cantidad_milli": 350000,
+          "unidad": "g",
+          "presentacion_id": "pechuga-pollo.kilo-granel",
+          "texto": "1 pechuga grande (350 g)",
+          "opcional": false
+        },
+        {
+          "producto_id": "arroz-grano-largo",
+          "cantidad_milli": 180000,
+          "unidad": "g",
+          "presentacion_id": "arroz-grano-largo.sos-750g",
+          "texto": "1 taza",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "zanahoria",
+          "cantidad_milli": 120000,
+          "unidad": "g",
+          "presentacion_id": "zanahoria.kilo-granel",
+          "texto": "1 zanahoria grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 30000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "2 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "caldo-pollo-cubos",
+          "cantidad_milli": 1000,
+          "unidad": "pieza",
+          "presentacion_id": "caldo-pollo-cubos.knorr-24-cubos",
+          "texto": "1 cubo",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "pimienta-negra",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "pimienta-negra.frasco-50g",
+          "texto": "1 pizca generosa",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Corta la pechuga en cubos de 2 cm y la zanahoria en cuadritos. Licúa los jitomates con la cebolla y el ajo.",
+        "Calienta el aceite en una olla, sofríe el arroz 4 minutos hasta que se vea dorado y retira la mitad del aceite sobrante si hay mucho.",
+        "Agrega el pollo y fríelo 3 minutos moviendo; añade la salsa de jitomate y deja que reduzca 3 minutos.",
+        "Incorpora la zanahoria, el cubo de caldo desbaratado, la sal, la pimienta y 2 tazas (450 ml) de agua caliente.",
+        "Cuando hierva, tapa y cuece a fuego muy bajo 20 minutos sin destapar. Deja reposar 5 minutos y esponja con un tenedor."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "pollo-al-horno-con-papas",
+      "nombre": "Pollo al horno con papas cambray",
+      "descripcion": "Piernas y muslos con limón, ajo y orégano, horneados sobre una cama de papas y zanahoria.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 55,
+      "origen": "claude",
+      "etiquetas": [],
+      "ingredientes": [
+        {
+          "producto_id": "pierna-muslo-pollo",
+          "cantidad_milli": 800000,
+          "unidad": "g",
+          "presentacion_id": "pierna-muslo-pollo.kilo-granel",
+          "texto": "4 piernas con muslo (800 g)",
+          "opcional": false
+        },
+        {
+          "producto_id": "papa-cambray",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "papa-cambray.kilo-granel",
+          "texto": "400 g de papas cambray",
+          "opcional": false
+        },
+        {
+          "producto_id": "zanahoria",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "zanahoria.kilo-granel",
+          "texto": "2 zanahorias",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1 cebolla chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "3 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "jugo de 2 limones",
+          "opcional": false
+        },
+        {
+          "producto_id": "oregano",
+          "cantidad_milli": 2000,
+          "unidad": "g",
+          "presentacion_id": "oregano.bolsa-15g",
+          "texto": "2 cucharaditas",
+          "opcional": false
+        },
+        {
+          "producto_id": "pimienta-negra",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "pimienta-negra.frasco-50g",
+          "texto": "1 pizca generosa",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 30000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "2 cucharadas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Calienta el horno a 200 grados. Machaca el ajo y mézclalo con el jugo de limón, el orégano, la pimienta, la sal y la mitad del aceite.",
+        "Baña el pollo con la mezcla y déjalo reposar 10 minutos.",
+        "Parte las papas por la mitad, la zanahoria en rodajas gruesas y la cebolla en gajos; acomódalas en una charola con el resto del aceite.",
+        "Coloca el pollo encima de las verduras con la piel hacia arriba.",
+        "Hornea 55 minutos, bañando con los jugos de la charola a la mitad, hasta que el pollo esté dorado y las papas suaves."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "chilaquiles-verdes-con-pollo",
+      "nombre": "Chilaquiles verdes con pollo",
+      "descripcion": "Tortillas del día anterior fritas y bañadas en salsa verde, con pollo, crema y queso.",
+      "tiempos": [
+        "breakfast",
+        "lunch"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 25,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 240000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "10 tortillas del día anterior",
+          "opcional": false
+        },
+        {
+          "producto_id": "pechuga-pollo",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "pechuga-pollo.kilo-granel",
+          "texto": "media pechuga",
+          "opcional": false
+        },
+        {
+          "producto_id": "tomate-verde",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "tomate-verde.kilo-granel",
+          "texto": "6 tomates verdes",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 20000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "2 a 3 chiles serranos",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1 cebolla chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "cilantro",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "cilantro.manojo-50g",
+          "texto": "1/5 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "5 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-fresco",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "queso-fresco.kilo-granel",
+          "texto": "80 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 60000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "4 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece la pechuga en agua con sal 15 minutos, déjala enfriar y deshébrala.",
+        "Hierve los tomates y los chiles 8 minutos. Licúalos con la mitad de la cebolla, el ajo, el cilantro y la sal.",
+        "Corta las tortillas en triángulos y fríelas en el aceite caliente hasta que estén doradas y firmes; escúrrelas sobre papel.",
+        "Hierve la salsa en la misma sartén 3 minutos, agrega las tortillas y el pollo y mezcla 1 minuto para que absorban sin deshacerse.",
+        "Sirve de inmediato con el resto de la cebolla en aros finos, la crema y el queso desmoronado."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "albondigas-en-chipotle",
+      "nombre": "Albóndigas de res en caldillo de chipotle",
+      "descripcion": "Albóndigas de res y pan molido en un caldillo de jitomate con chipotle y zanahoria.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 25,
+      "minutos_coccion": 30,
+      "origen": "claude",
+      "etiquetas": [],
+      "ingredientes": [
+        {
+          "producto_id": "carne-molida-res",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "carne-molida-res.kilo-granel",
+          "texto": "400 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "huevo",
+          "cantidad_milli": 1000,
+          "unidad": "pieza",
+          "presentacion_id": "huevo.carton-12",
+          "texto": "1 huevo",
+          "opcional": false
+        },
+        {
+          "producto_id": "pan-molido",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "pan-molido.bolsa-200g",
+          "texto": "4 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "4 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "chipotle-adobo",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "chipotle-adobo.lata-220g",
+          "texto": "2 chiles chipotles con su adobo",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1 cebolla chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 6000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "2 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "zanahoria",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "zanahoria.kilo-granel",
+          "texto": "1 zanahoria",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "comino",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "comino.frasco-40g",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "cilantro",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "cilantro.manojo-50g",
+          "texto": "1/5 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "6 tortillas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Pica finamente la mitad de la cebolla y un diente de ajo. Mezcla con la carne, el huevo, el pan molido, 3 g de sal y el comino.",
+        "Forma 12 albóndigas del tamaño de una nuez y refrigéralas 10 minutos.",
+        "Licúa los jitomates con los chipotles, el resto del ajo y de la cebolla y 2 g de sal.",
+        "Calienta el aceite en una cazuela, cuela la salsa sobre él y deja hervir 5 minutos.",
+        "Agrega la zanahoria en cuadritos y las albóndigas; tapa y cuece a fuego bajo 25 minutos sin revolver, solo moviendo la cazuela.",
+        "Sirve con cilantro picado y tortillas calientes."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "cerdo-en-chile-colorado",
+      "nombre": "Cerdo en chile colorado con papa",
+      "descripcion": "Cubos de cerdo guisados en una salsa de chile guajillo y ancho con papa; mejora al recalentar.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 60,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "carne-cerdo-maciza",
+          "cantidad_milli": 450000,
+          "unidad": "g",
+          "presentacion_id": "carne-cerdo-maciza.kilo-granel",
+          "texto": "450 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-guajillo",
+          "cantidad_milli": 25000,
+          "unidad": "g",
+          "presentacion_id": "chile-guajillo.bolsa-100g",
+          "texto": "4 chiles guajillo",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-ancho",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-ancho.bolsa-100g",
+          "texto": "1 chile ancho",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 6000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "2 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "comino",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "comino.frasco-40g",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "vinagre-blanco",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "vinagre-blanco.botella-1l",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "papa-blanca",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "papa-blanca.kilo-granel",
+          "texto": "2 papas medianas",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "laurel",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "laurel.bolsa-10g",
+          "texto": "2 hojas",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "6 tortillas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Quita rabos y semillas a los chiles, ábrelos y remójalos en agua caliente 15 minutos.",
+        "Licúa los chiles escurridos con el ajo, el comino, el vinagre, la mitad de la cebolla, la sal y una taza de agua.",
+        "Corta el cerdo en cubos de 3 cm y dóralo en el aceite 8 minutos.",
+        "Cuela la salsa sobre la carne, agrega el laurel y el resto de la cebolla picada; tapa y cuece a fuego bajo 30 minutos.",
+        "Añade la papa en cubos grandes y cuece 20 minutos más, hasta que la carne y la papa estén suaves.",
+        "Sirve con tortillas. Se conserva 3 días en el refrigerador."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "chuletas-de-cerdo-con-nopales",
+      "nombre": "Chuletas de cerdo con nopales a la mexicana",
+      "descripcion": "Chuletas doradas acompañadas de nopales guisados con jitomate y chile.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 25,
+      "origen": "claude",
+      "etiquetas": [],
+      "ingredientes": [
+        {
+          "producto_id": "chuleta-cerdo",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "chuleta-cerdo.kilo-granel",
+          "texto": "2 chuletas (400 g)",
+          "opcional": false
+        },
+        {
+          "producto_id": "nopales",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "nopales.kilo-granel",
+          "texto": "3 nopales",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 70000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "1 chile serrano",
+          "opcional": false
+        },
+        {
+          "producto_id": "cilantro",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "cilantro.manojo-50g",
+          "texto": "1/5 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 30000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "1 limón",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "6 tortillas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Corta los nopales en cuadritos y cuécelos con un trozo de cebolla y sal en agua hirviendo 10 minutos; escúrrelos y enjuágalos.",
+        "Sazona las chuletas con ajo machacado, jugo de limón y 2 g de sal. Fríelas en una sartén con la mitad del aceite 5 minutos por lado.",
+        "En otra sartén, sofríe el resto de la cebolla picada y el chile en el aceite restante 2 minutos.",
+        "Agrega el jitomate picado, cuece 4 minutos, añade los nopales y cuece 4 minutos más.",
+        "Sirve las chuletas con los nopales, el cilantro picado y las tortillas."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "caldo-de-res-con-verduras",
+      "nombre": "Caldo de res con verduras y elote",
+      "descripcion": "Chambarete de res cocido lentamente con calabacita, chayote, papa, col y elote; rinde para dos comidas.",
+      "tiempos": [
+        "lunch"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 130,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "chambarete-res",
+          "cantidad_milli": 500000,
+          "unidad": "g",
+          "presentacion_id": "chambarete-res.kilo-granel",
+          "texto": "500 g con hueso",
+          "opcional": false
+        },
+        {
+          "producto_id": "zanahoria",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "zanahoria.kilo-granel",
+          "texto": "2 zanahorias",
+          "opcional": false
+        },
+        {
+          "producto_id": "papa-blanca",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "papa-blanca.kilo-granel",
+          "texto": "2 papas medianas",
+          "opcional": false
+        },
+        {
+          "producto_id": "calabacita",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "calabacita.kilo-granel",
+          "texto": "2 calabacitas",
+          "opcional": false
+        },
+        {
+          "producto_id": "chayote",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "chayote.kilo-granel",
+          "texto": "1 chayote",
+          "opcional": false
+        },
+        {
+          "producto_id": "elote-mazorca",
+          "cantidad_milli": 2000,
+          "unidad": "pieza",
+          "presentacion_id": "elote-mazorca.pieza",
+          "texto": "2 elotes",
+          "opcional": false
+        },
+        {
+          "producto_id": "col-repollo",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "col-repollo.kilo-granel",
+          "texto": "1/4 de col chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1 cebolla chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "cilantro",
+          "cantidad_milli": 20000,
+          "unidad": "g",
+          "presentacion_id": "cilantro.manojo-50g",
+          "texto": "1/2 manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 6000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita y media",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "2 limones",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "6 tortillas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Pon la carne en una olla con 2 litros de agua, la cebolla, el ajo y la sal. Cuece a fuego medio 90 minutos y retira la espuma de vez en cuando.",
+        "Agrega la zanahoria en trozos y el elote partido en 3 cada uno; cuece 15 minutos.",
+        "Añade la papa en cuartos y el chayote en trozos; cuece 10 minutos.",
+        "Agrega la calabacita en trozos, la col en gajos y el cilantro; cuece 10 minutos más.",
+        "Sirve con limón y tortillas calientes. Guarda el sobrante hasta 3 días en el refrigerador."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "tacos-de-falda-de-res-deshebrada",
+      "nombre": "Tacos de falda de res deshebrada",
+      "descripcion": "Falda cocida y deshebrada en salsa de jitomate; sobra para quesadillas del día siguiente.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 100,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "falda-res",
+          "cantidad_milli": 450000,
+          "unidad": "g",
+          "presentacion_id": "falda-res.kilo-granel",
+          "texto": "450 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "3 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1 cebolla chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 15000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "2 chiles serranos",
+          "opcional": false
+        },
+        {
+          "producto_id": "laurel",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "laurel.bolsa-10g",
+          "texto": "2 hojas",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 240000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "10 tortillas",
+          "opcional": false
+        },
+        {
+          "producto_id": "aguacate",
+          "cantidad_milli": 120000,
+          "unidad": "g",
+          "presentacion_id": "aguacate.kilo-granel",
+          "texto": "1 aguacate chico",
+          "opcional": false
+        },
+        {
+          "producto_id": "cilantro",
+          "cantidad_milli": 15000,
+          "unidad": "g",
+          "presentacion_id": "cilantro.manojo-50g",
+          "texto": "1/3 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "1 limón",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece la falda en agua con la mitad de la cebolla, la mitad del ajo, el laurel y 3 g de sal, tapada y a fuego bajo, 80 minutos o hasta que se deshebre fácil.",
+        "Deja enfriar la carne en su caldo 10 minutos y deshébrala con dos tenedores.",
+        "Licúa los jitomates con los chiles, el resto del ajo y 2 g de sal.",
+        "Acitrona el resto de la cebolla picada en el aceite, vierte la salsa y cuece 8 minutos; agrega la carne y 1/2 taza del caldo y cuece 8 minutos más.",
+        "Sirve en tortillas calientes con aguacate en rebanadas, cilantro picado y limón.",
+        "Guarda la carne sobrante con su salsa hasta 3 días en el refrigerador."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "tilapia-al-mojo-de-ajo",
+      "nombre": "Tilapia al mojo de ajo con papitas",
+      "descripcion": "Filetes de tilapia en mantequilla, ajo y limón con papas cambray y lechuga.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 25,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "filete-tilapia",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "filete-tilapia.kilo-granel",
+          "texto": "2 filetes (400 g)",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 20000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "6 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "mantequilla",
+          "cantidad_milli": 25000,
+          "unidad": "g",
+          "presentacion_id": "mantequilla.barra-90g",
+          "texto": "2 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "2 limones",
+          "opcional": false
+        },
+        {
+          "producto_id": "perejil",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "perejil.manojo-50g",
+          "texto": "1/5 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "pimienta-negra",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "pimienta-negra.frasco-50g",
+          "texto": "1 pizca generosa",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 10000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "2 cucharaditas",
+          "opcional": false
+        },
+        {
+          "producto_id": "papa-cambray",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "papa-cambray.kilo-granel",
+          "texto": "300 g de papas cambray",
+          "opcional": false
+        },
+        {
+          "producto_id": "lechuga-romana",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "lechuga-romana.kilo-granel",
+          "texto": "4 hojas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece las papas enteras en agua con sal 15 minutos; escúrrelas y pártelas por la mitad.",
+        "Seca los filetes con papel, sazónalos con la mitad de la sal, la pimienta y el jugo de medio limón.",
+        "Derrite la mantequilla con el aceite a fuego medio, dora el ajo en láminas 1 minuto sin que se queme y retíralo con una cuchara.",
+        "En la misma sartén, cuece los filetes 3 minutos por lado hasta que se separen con el tenedor; baña con el mojo de ajo.",
+        "Sirve con las papas, la lechuga picada aderezada con el resto del limón, el perejil picado y el ajo dorado encima."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "tilapia-a-la-veracruzana",
+      "nombre": "Tilapia a la veracruzana con arroz",
+      "descripcion": "Filetes de tilapia en salsa de jitomate con jalapeños en escabeche y laurel, con arroz blanco.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 30,
+      "origen": "claude",
+      "etiquetas": [],
+      "ingredientes": [
+        {
+          "producto_id": "filete-tilapia",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "filete-tilapia.kilo-granel",
+          "texto": "2 filetes (400 g)",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 350000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "4 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/2 cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "jalapenos-escabeche",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "jalapenos-escabeche.lata-220g",
+          "texto": "2 jalapeños en escabeche",
+          "opcional": false
+        },
+        {
+          "producto_id": "laurel",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "laurel.bolsa-10g",
+          "texto": "2 hojas",
+          "opcional": false
+        },
+        {
+          "producto_id": "oregano",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "oregano.bolsa-15g",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-oliva",
+          "cantidad_milli": 20000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-oliva.nutrioli-oli-500ml",
+          "texto": "1 cucharada y media",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 30000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "1 limón",
+          "opcional": false
+        },
+        {
+          "producto_id": "arroz-grano-largo",
+          "cantidad_milli": 120000,
+          "unidad": "g",
+          "presentacion_id": "arroz-grano-largo.sos-750g",
+          "texto": "2/3 de taza",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece el arroz: enjuágalo, fríelo 2 minutos en una cucharadita del aceite, agrega 240 ml de agua y 1 g de sal, tapa y cuece a fuego bajo 18 minutos.",
+        "Sazona los filetes con el jugo de limón y 1 g de sal; déjalos reposar 10 minutos.",
+        "Sofríe en el resto del aceite la cebolla en pluma y el ajo picado 3 minutos; agrega el jitomate picado, el laurel, el orégano y 2 g de sal y cuece 10 minutos.",
+        "Añade los jalapeños picados y acomoda los filetes sobre la salsa; tapa y cuece a fuego bajo 8 minutos.",
+        "Sirve la tilapia con su salsa sobre el arroz."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "tostadas-de-atun-con-aguacate",
+      "nombre": "Tostadas de atún con aguacate",
+      "descripcion": "Atún en agua mezclado con jitomate, cebolla morada y cilantro sobre tostadas; no lleva estufa.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 0,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "atun-agua",
+          "cantidad_milli": 280000,
+          "unidad": "g",
+          "presentacion_id": "atun-agua.dolores-140g",
+          "texto": "2 latas de 140 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "tostadas",
+          "cantidad_milli": 8000,
+          "unidad": "pieza",
+          "presentacion_id": "tostadas.paquete-30",
+          "texto": "8 tostadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "aguacate",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "aguacate.kilo-granel",
+          "texto": "1 aguacate mediano",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-morada",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-morada.kilo-granel",
+          "texto": "1/4 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "1 limón",
+          "opcional": false
+        },
+        {
+          "producto_id": "cilantro",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "cilantro.manojo-50g",
+          "texto": "1/5 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "1 chile serrano",
+          "opcional": false
+        },
+        {
+          "producto_id": "mayonesa",
+          "cantidad_milli": 30000,
+          "unidad": "g",
+          "presentacion_id": "mayonesa.mccormick-420g",
+          "texto": "2 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 pizca",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Escurre el atún y desmenúzalo en un tazón.",
+        "Pica finamente el jitomate, la cebolla, el chile y el cilantro. Mézclalos con el atún, la mayonesa, el jugo de limón y la sal.",
+        "Aplasta el aguacate con un tenedor.",
+        "Unta cada tostada con aguacate y reparte encima la mezcla de atún. Sirve en seguida para que no se ablanden."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "huevos-con-nopales",
+      "nombre": "Huevos con nopales",
+      "descripcion": "Huevos revueltos con nopales, jitomate y cebolla, para comer con tortillas.",
+      "tiempos": [
+        "breakfast",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 10,
+      "minutos_coccion": 20,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "huevo",
+          "cantidad_milli": 4000,
+          "unidad": "pieza",
+          "presentacion_id": "huevo.carton-12",
+          "texto": "4 huevos",
+          "opcional": false
+        },
+        {
+          "producto_id": "nopales",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "nopales.kilo-granel",
+          "texto": "2 a 3 nopales",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 50000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/4 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "1 jitomate",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "1 chile serrano",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "6 tortillas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Corta los nopales en cuadritos y cuécelos en agua con sal 8 minutos; escúrrelos y enjuágalos para quitarles la baba.",
+        "Sofríe en el aceite la cebolla, el chile y el jitomate picados 4 minutos.",
+        "Agrega los nopales y cuece 3 minutos.",
+        "Bate los huevos con la sal, viértelos y mueve con una espátula hasta que cuajen, 2 a 3 minutos.",
+        "Sirve de inmediato con tortillas calientes."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "tortitas-de-calabacita-con-huevo",
+      "nombre": "Tortitas de calabacita con huevo en salsa de jitomate",
+      "descripcion": "Tortitas de calabacita rallada, huevo y queso fresco, bañadas en salsa de jitomate.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 25,
+      "origen": "claude",
+      "etiquetas": [
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "calabacita",
+          "cantidad_milli": 350000,
+          "unidad": "g",
+          "presentacion_id": "calabacita.kilo-granel",
+          "texto": "3 calabacitas",
+          "opcional": false
+        },
+        {
+          "producto_id": "huevo",
+          "cantidad_milli": 3000,
+          "unidad": "pieza",
+          "presentacion_id": "huevo.carton-12",
+          "texto": "3 huevos",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-fresco",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "queso-fresco.kilo-granel",
+          "texto": "80 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "harina-trigo",
+          "cantidad_milli": 30000,
+          "unidad": "g",
+          "presentacion_id": "harina-trigo.bolsa-1kg",
+          "texto": "3 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/5 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 40000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "3 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Ralla la calabacita, mézclala con una pizca de sal y escúrrela exprimiéndola con las manos para quitarle el agua.",
+        "Mezcla la calabacita con los huevos, el queso desmoronado, la harina, la cebolla muy picada y la sal restante.",
+        "Licúa los jitomates con el ajo y hiérvelos en una cacerola 8 minutos hasta que espesen.",
+        "Fríe cucharadas grandes de la mezcla en el aceite caliente, 3 minutos por lado, hasta que doren. Haz unas 8 tortitas.",
+        "Pasa las tortitas a la salsa y cuece 3 minutos antes de servir."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "sopa-de-frijol-negro",
+      "nombre": "Sopa de frijol negro con crema y tostadas",
+      "descripcion": "Sopa de frijol negro molida con jitomate y tocino, con crema, aguacate y tostadas.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 100,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "frijol-negro",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "frijol-negro.bolsa-1kg",
+          "texto": "200 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 70000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "epazote",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "epazote.manojo-50g",
+          "texto": "1 ramita",
+          "opcional": false
+        },
+        {
+          "producto_id": "tocino",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "tocino.paquete-250g",
+          "texto": "2 a 3 tiras",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "4 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "tostadas",
+          "cantidad_milli": 6000,
+          "unidad": "pieza",
+          "presentacion_id": "tostadas.paquete-30",
+          "texto": "6 tostadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "aguacate",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "aguacate.kilo-granel",
+          "texto": "1/2 aguacate",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece los frijoles en 1.2 litros de agua con la mitad de la cebolla y el ajo, tapados, 80 minutos, hasta que estén muy suaves.",
+        "Licúa los frijoles con su caldo y los jitomates crudos, en tandas, hasta obtener una crema suave.",
+        "Fríe el tocino picado en una olla hasta que dore; agrega la cebolla restante picada y cuece 2 minutos.",
+        "Vierte la crema de frijol colada, agrega el epazote y la sal, y hierve 15 minutos a fuego bajo.",
+        "Sirve con crema, aguacate en cubos y las tostadas desmenuzadas encima. El sobrante dura 4 días en el refrigerador."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "enfrijoladas-con-queso",
+      "nombre": "Enfrijoladas con queso y crema",
+      "descripcion": "Tortillas bañadas en salsa de frijol refrito, rellenas de queso fresco; resuelven una cena en 15 minutos.",
+      "tiempos": [
+        "breakfast",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 10,
+      "minutos_coccion": 10,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 220000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "8 tortillas",
+          "opcional": false
+        },
+        {
+          "producto_id": "frijoles-refritos",
+          "cantidad_milli": 220000,
+          "unidad": "g",
+          "presentacion_id": "frijoles-refritos.la-costena-220g",
+          "texto": "1 lata de 220 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-fresco",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "queso-fresco.kilo-granel",
+          "texto": "100 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "4 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/5 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "1 chile serrano",
+          "opcional": false
+        },
+        {
+          "producto_id": "aguacate",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "aguacate.kilo-granel",
+          "texto": "1/2 aguacate",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 30000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "2 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 pizca",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Licúa los frijoles refritos con 250 ml de agua, el chile y la sal hasta tener una salsa tersa, y caliéntala en una sartén 5 minutos.",
+        "Pasa cada tortilla por un poco de aceite caliente unos segundos para que se suavice.",
+        "Báñalas en la salsa de frijol, rellénalas con el queso desmoronado y dóblalas en cuatro.",
+        "Sirve con crema, cebolla en aros finos y aguacate en rebanadas."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "espagueti-con-atun-y-elote",
+      "nombre": "Espagueti con atún y elote",
+      "descripcion": "Pasta con salsa fresca de jitomate, atún y granos de elote, lista en 25 minutos.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 10,
+      "minutos_coccion": 20,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "espagueti",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "espagueti.la-moderna-250g",
+          "texto": "1 paquete de 250 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "atun-agua",
+          "cantidad_milli": 140000,
+          "unidad": "g",
+          "presentacion_id": "atun-agua.dolores-140g",
+          "texto": "1 lata de 140 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "elote-grano",
+          "cantidad_milli": 110000,
+          "unidad": "g",
+          "presentacion_id": "elote-grano.herdez-220g",
+          "texto": "media lata de 220 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "3 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-oliva",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-oliva.nutrioli-oli-500ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "oregano",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "oregano.bolsa-15g",
+          "texto": "1 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece el espagueti en abundante agua con sal el tiempo que indique el paquete, unos 10 minutos. Reserva media taza del agua y escúrrelo.",
+        "Licúa los jitomates con el ajo. Sofríe la cebolla picada en el aceite 2 minutos y agrega el jitomate licuado, la sal y el orégano.",
+        "Cuece la salsa 8 minutos; añade el atún escurrido y desmenuzado y el elote escurrido y cuece 3 minutos.",
+        "Mezcla la pasta con la salsa, agregando agua de cocción si queda seca, y sirve."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "fideo-seco-a-la-mexicana",
+      "nombre": "Fideo seco a la mexicana",
+      "descripcion": "Fideo dorado y cocido en caldo de jitomate, con crema, queso cotija y aguacate.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 10,
+      "minutos_coccion": 20,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "sopa-fideo",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "sopa-fideo.bolsa-200g",
+          "texto": "1 bolsa de 200 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "3 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 30000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "2 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "caldo-pollo-cubos",
+          "cantidad_milli": 1000,
+          "unidad": "pieza",
+          "presentacion_id": "caldo-pollo-cubos.knorr-24-cubos",
+          "texto": "1 cubo",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "4 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-cotija",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "queso-cotija.bolsa-200g",
+          "texto": "40 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "aguacate",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "aguacate.kilo-granel",
+          "texto": "1/2 aguacate",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 2000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Licúa los jitomates con la cebolla, el ajo y 300 ml de agua; cuela la salsa.",
+        "Calienta el aceite en una cacerola y dora el fideo a fuego medio, moviendo, hasta que tome color café claro, unos 4 minutos.",
+        "Agrega la salsa colada, el cubo de caldo desbaratado y la sal; cuece a fuego bajo 10 minutos con la cacerola tapada, hasta que el fideo absorba el caldo.",
+        "Sirve con crema, queso cotija desmoronado y aguacate en rebanadas."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "espagueti-con-calabacita-y-queso",
+      "nombre": "Espagueti con calabacita y queso manchego",
+      "descripcion": "Pasta con calabacita en medias lunas, ajo y queso manchego gratinado.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 10,
+      "minutos_coccion": 20,
+      "origen": "claude",
+      "etiquetas": [
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "espagueti",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "espagueti.la-moderna-250g",
+          "texto": "1 paquete de 250 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "calabacita",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "calabacita.kilo-granel",
+          "texto": "3 calabacitas",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-manchego",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "queso-manchego.nochebuena-200g",
+          "texto": "80 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-oliva",
+          "cantidad_milli": 20000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-oliva.nutrioli-oli-500ml",
+          "texto": "1 cucharada y media",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "pimienta-negra",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "pimienta-negra.frasco-50g",
+          "texto": "1 pizca generosa",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece el espagueti en agua con sal 10 minutos; reserva media taza del agua y escurre.",
+        "Mientras, corta la calabacita en medias lunas delgadas y la cebolla en cuadritos; pica el ajo.",
+        "Sofríe la cebolla y el ajo en el aceite 2 minutos; agrega la calabacita, la sal y la pimienta y cuece 6 minutos sin que se deshaga.",
+        "Mezcla la pasta con la calabacita y el agua de cocción necesaria.",
+        "Sirve con el queso manchego rallado encima y deja que se derrita con el calor."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "pasta-pluma-con-champinones",
+      "nombre": "Pasta pluma cremosa con champiñones",
+      "descripcion": "Pluma con champiñones salteados en mantequilla, crema ácida y un poco de queso manchego.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 10,
+      "minutos_coccion": 20,
+      "origen": "claude",
+      "etiquetas": [],
+      "ingredientes": [
+        {
+          "producto_id": "sopa-pluma",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "sopa-pluma.bolsa-200g",
+          "texto": "1 bolsa de 200 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "champinones",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "champinones.kilo-granel",
+          "texto": "250 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "5 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-manchego",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "queso-manchego.nochebuena-200g",
+          "texto": "40 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "mantequilla",
+          "cantidad_milli": 20000,
+          "unidad": "g",
+          "presentacion_id": "mantequilla.barra-90g",
+          "texto": "2 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "perejil",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "perejil.manojo-50g",
+          "texto": "1/5 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "pimienta-negra",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "pimienta-negra.frasco-50g",
+          "texto": "1 pizca generosa",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece la pluma en agua con sal 10 minutos; reserva media taza del agua y escurre.",
+        "Rebana los champiñones. Derrite la mantequilla y sofríe la cebolla y el ajo picados 2 minutos.",
+        "Agrega los champiñones y cuece a fuego alto 6 minutos, hasta que suelten el agua y se doren. Sazona con la sal y la pimienta.",
+        "Baja el fuego, agrega la crema y el queso rallado y mezcla 2 minutos.",
+        "Incorpora la pasta con un poco del agua de cocción, mezcla y sirve con perejil picado."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "ensalada-de-nopales-con-queso-panela",
+      "nombre": "Ensalada de nopales con queso panela",
+      "descripcion": "Nopales cocidos y fríos con jitomate, cebolla morada, cilantro y cubos de queso panela, con tostadas.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 15,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "nopales",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "nopales.kilo-granel",
+          "texto": "4 nopales",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-morada",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-morada.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "cilantro",
+          "cantidad_milli": 15000,
+          "unidad": "g",
+          "presentacion_id": "cilantro.manojo-50g",
+          "texto": "1/3 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-panela",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "queso-panela.paquete-400g",
+          "texto": "150 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "1 limón",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-oliva",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-oliva.nutrioli-oli-500ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "oregano",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "oregano.bolsa-15g",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "1 chile serrano",
+          "opcional": false
+        },
+        {
+          "producto_id": "tostadas",
+          "cantidad_milli": 6000,
+          "unidad": "pieza",
+          "presentacion_id": "tostadas.paquete-30",
+          "texto": "6 tostadas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Corta los nopales en cuadritos y cuécelos en agua con sal 8 minutos. Escúrrelos, enjuágalos y déjalos enfriar.",
+        "Pica el jitomate, la cebolla, el chile y el cilantro. Corta el queso panela en cubos.",
+        "Mezcla todo en un tazón con el jugo de limón, el aceite, la sal y el orégano.",
+        "Sirve fría sobre tostadas o con ellas al lado."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "ensalada-de-garbanzo-y-pepino",
+      "nombre": "Ensalada de garbanzo, pepino y jitomate",
+      "descripcion": "Garbanzo cocido y frío con pepino, jitomate, cebolla morada, lechuga y queso fresco; sirve para llevar.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 80,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "garbanzo",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "garbanzo.bolsa-500g",
+          "texto": "150 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "pepino",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "pepino.kilo-granel",
+          "texto": "2 pepinos chicos",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-morada",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-morada.kilo-granel",
+          "texto": "1/3 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "lechuga-romana",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "lechuga-romana.kilo-granel",
+          "texto": "5 hojas",
+          "opcional": false
+        },
+        {
+          "producto_id": "perejil",
+          "cantidad_milli": 15000,
+          "unidad": "g",
+          "presentacion_id": "perejil.manojo-50g",
+          "texto": "1/3 de manojo",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-fresco",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "queso-fresco.kilo-granel",
+          "texto": "80 g",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 50000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "1 limón grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-oliva",
+          "cantidad_milli": 25000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-oliva.nutrioli-oli-500ml",
+          "texto": "2 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "pimienta-negra",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "pimienta-negra.frasco-50g",
+          "texto": "1 pizca generosa",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "La noche anterior, deja los garbanzos en remojo en agua fría, 8 a 12 horas. Tira el agua.",
+        "Cuécelos en agua nueva con 1 g de sal 70 minutos, hasta que estén suaves pero enteros. Escúrrelos y enfríalos.",
+        "Corta el pepino y el jitomate en cubos, la cebolla en pluma delgada, la lechuga en tiras y pica el perejil.",
+        "Prepara el aderezo con el jugo de limón, el aceite, 2 g de sal y la pimienta.",
+        "Mezcla todo con el garbanzo y el queso fresco en cubos. Se conserva 2 días en el refrigerador."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "pozole-rojo-de-cerdo",
+      "nombre": "Pozole rojo de cerdo",
+      "descripcion": "Pozole casero con maciza de cerdo y caldo de guajillo; rinde para recalentar.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 90,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "carne-cerdo-maciza",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "carne-cerdo-maciza.kilo-granel",
+          "texto": "400 g de maciza en trozos",
+          "opcional": false
+        },
+        {
+          "producto_id": "maiz-pozolero",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "maiz-pozolero.bolsa-1kg",
+          "texto": "200 g de maíz pozolero",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-guajillo",
+          "cantidad_milli": 25000,
+          "unidad": "g",
+          "presentacion_id": "chile-guajillo.bolsa-100g",
+          "texto": "5 chiles guajillo",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-ancho",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-ancho.bolsa-100g",
+          "texto": "1 chile ancho",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "3 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1 cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "oregano",
+          "cantidad_milli": 2000,
+          "unidad": "g",
+          "presentacion_id": "oregano.bolsa-15g",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "lechuga-romana",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "lechuga-romana.kilo-granel",
+          "texto": "1/4 de lechuga",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "3 limones",
+          "opcional": false
+        },
+        {
+          "producto_id": "tostadas",
+          "cantidad_milli": 4000,
+          "unidad": "pieza",
+          "presentacion_id": "tostadas.paquete-30",
+          "texto": "4 tostadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 8000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 1/2 cucharaditas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece la maciza con media cebolla, un diente de ajo, la mitad de la sal y 2 litros de agua durante 60 minutos.",
+        "Agrega el maíz pozolero y sigue la cocción 20 minutos.",
+        "Desvena los chiles, hiérvelos 5 minutos y lícualos con el ajo restante y una taza del caldo.",
+        "Cuela la salsa sobre la olla, sala al gusto con la sal restante medida y hierve 10 minutos más.",
+        "Pica la lechuga y la cebolla restante y parte los limones.",
+        "Sirve el pozole con lechuga, cebolla, orégano, limón y las tostadas."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "tacos-dorados-de-papa",
+      "nombre": "Tacos dorados de papa con caldillo",
+      "descripcion": "Tacos de papa fritos, con caldillo de jitomate, col, crema y queso.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 30,
+      "origen": "claude",
+      "etiquetas": [
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "papa-blanca",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "papa-blanca.kilo-granel",
+          "texto": "3 papas medianas",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 240000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "8 tortillas",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 60000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1/4 de taza",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "3 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/2 cebolla chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "col-repollo",
+          "cantidad_milli": 120000,
+          "unidad": "g",
+          "presentacion_id": "col-repollo.kilo-granel",
+          "texto": "1 taza de col rallada",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "4 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-cotija",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "queso-cotija.bolsa-200g",
+          "texto": "1/3 de taza desmoronado",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece las papas peladas en agua con la mitad de la sal 20 minutos y machácalas.",
+        "Calienta las tortillas, rellénalas de papa, enróllalas y sujétalas con un palillo.",
+        "Fríe los tacos en el aceite caliente hasta que doren y escúrrelos en papel.",
+        "Licua el jitomate con la cebolla, el ajo, media taza de agua y la sal restante, y hierve el caldillo 8 minutos.",
+        "Sirve los tacos con el caldillo encima, la col, la crema y el queso."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "chiles-rellenos-de-queso",
+      "nombre": "Chiles poblanos rellenos de queso",
+      "descripcion": "Chiles capeados rellenos de queso Oaxaca, servidos en caldillo de jitomate.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 30,
+      "minutos_coccion": 30,
+      "origen": "claude",
+      "etiquetas": [],
+      "ingredientes": [
+        {
+          "producto_id": "chile-poblano",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "chile-poblano.kilo-granel",
+          "texto": "4 chiles poblanos",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-oaxaca",
+          "cantidad_milli": 160000,
+          "unidad": "g",
+          "presentacion_id": "queso-oaxaca.kilo-granel",
+          "texto": "160 g de queso Oaxaca",
+          "opcional": false
+        },
+        {
+          "producto_id": "huevo",
+          "cantidad_milli": 3000,
+          "unidad": "pieza",
+          "presentacion_id": "huevo.carton-12",
+          "texto": "3 huevos",
+          "opcional": false
+        },
+        {
+          "producto_id": "harina-trigo",
+          "cantidad_milli": 30000,
+          "unidad": "g",
+          "presentacion_id": "harina-trigo.bolsa-1kg",
+          "texto": "3 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 100000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1/2 taza para freír",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "5 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 50000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/4 de cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "caldo-pollo-cubos",
+          "cantidad_milli": 1000,
+          "unidad": "pieza",
+          "presentacion_id": "caldo-pollo-cubos.knorr-24-cubos",
+          "texto": "1 cubo",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 3000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Asa los chiles en el comal, déjalos sudar en una bolsa 10 minutos, pélalos y quítales las semillas por una abertura.",
+        "Rellena cada chile con queso y pásalo por la harina.",
+        "Bate las claras a punto de turrón, agrega las yemas y la sal, y capea los chiles.",
+        "Fríe los chiles en el aceite caliente por ambos lados y escúrrelos.",
+        "Licua el jitomate con la cebolla, el ajo, el cubo de caldo y una taza de agua, y hierve el caldillo 10 minutos.",
+        "Sirve los chiles bañados en el caldillo."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "costillas-de-cerdo-con-verdolagas",
+      "nombre": "Costillas de cerdo con verdolagas",
+      "descripcion": "Guiso de costilla de cerdo con verdolagas en salsa de tomate verde.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 50,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "costilla-cerdo",
+          "cantidad_milli": 500000,
+          "unidad": "g",
+          "presentacion_id": "costilla-cerdo.kilo-granel",
+          "texto": "500 g de costilla en trozos",
+          "opcional": false
+        },
+        {
+          "producto_id": "verdolagas",
+          "cantidad_milli": 250000,
+          "unidad": "g",
+          "presentacion_id": "verdolagas.kilo-granel",
+          "texto": "1 manojo grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "tomate-verde",
+          "cantidad_milli": 400000,
+          "unidad": "g",
+          "presentacion_id": "tomate-verde.kilo-granel",
+          "texto": "8 tomates verdes",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-serrano",
+          "cantidad_milli": 15000,
+          "unidad": "g",
+          "presentacion_id": "chile-serrano.kilo-granel",
+          "texto": "2 chiles",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/2 cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 8000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "2 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "comino",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "comino.frasco-40g",
+          "texto": "1 pizca medida",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 6000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "7 tortillas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece la costilla con un trozo de cebolla y la mitad de la sal en un litro de agua 35 minutos y reserva el caldo.",
+        "Hierve los tomates y los chiles 8 minutos y lícualos con el ajo, el comino, la cebolla restante y una taza del caldo.",
+        "Dora la costilla escurrida en el aceite, agrega la salsa y la sal restante y deja hervir 5 minutos.",
+        "Agrega las verdolagas lavadas y cuece 7 minutos más.",
+        "Sirve con tortillas calientes."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "mole-de-olla-de-res",
+      "nombre": "Mole de olla de res",
+      "descripcion": "Caldo espeso de costilla de res con chiles secos, elote, calabacita, ejotes y chayote.",
+      "tiempos": [
+        "lunch"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 25,
+      "minutos_coccion": 100,
+      "origen": "claude",
+      "etiquetas": [
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "costilla-res",
+          "cantidad_milli": 500000,
+          "unidad": "g",
+          "presentacion_id": "costilla-res.kilo-granel",
+          "texto": "500 g de costilla de res",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-ancho",
+          "cantidad_milli": 15000,
+          "unidad": "g",
+          "presentacion_id": "chile-ancho.bolsa-100g",
+          "texto": "1 chile ancho grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "chile-pasilla",
+          "cantidad_milli": 10000,
+          "unidad": "g",
+          "presentacion_id": "chile-pasilla.bolsa-100g",
+          "texto": "2 chiles pasilla",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "2 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/2 cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 8000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "2 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "elote-mazorca",
+          "cantidad_milli": 1000,
+          "unidad": "pieza",
+          "presentacion_id": "elote-mazorca.pieza",
+          "texto": "1 elote en trozos",
+          "opcional": false
+        },
+        {
+          "producto_id": "calabacita",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "calabacita.kilo-granel",
+          "texto": "2 calabacitas",
+          "opcional": false
+        },
+        {
+          "producto_id": "ejotes",
+          "cantidad_milli": 120000,
+          "unidad": "g",
+          "presentacion_id": "ejotes.kilo-granel",
+          "texto": "1 taza de ejotes",
+          "opcional": false
+        },
+        {
+          "producto_id": "chayote",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "chayote.kilo-granel",
+          "texto": "1 chayote",
+          "opcional": false
+        },
+        {
+          "producto_id": "epazote",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "epazote.manojo-50g",
+          "texto": "2 ramas",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 8000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 1/2 cucharaditas",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "2 limones",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece la costilla con la mitad de la cebolla, un diente de ajo y la mitad de la sal en 2 litros de agua 70 minutos.",
+        "Desvena los chiles, hiérvelos con el jitomate 5 minutos y lícualos con la cebolla y el ajo restantes.",
+        "Cuela la salsa sobre el caldo y agrega el elote, el chayote y los ejotes; cuece 15 minutos.",
+        "Agrega la calabacita, el epazote y la sal restante y cuece 10 minutos más.",
+        "Sirve con limón."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "entomatadas-de-pollo",
+      "nombre": "Entomatadas de pollo",
+      "descripcion": "Tortillas bañadas en salsa de jitomate, rellenas de pollo deshebrado, con crema y queso.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 35,
+      "origen": "claude",
+      "etiquetas": [
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "pechuga-pollo",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "pechuga-pollo.kilo-granel",
+          "texto": "1 pechuga chica",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 240000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "8 tortillas",
+          "opcional": false
+        },
+        {
+          "producto_id": "jitomate-saladet",
+          "cantidad_milli": 500000,
+          "unidad": "g",
+          "presentacion_id": "jitomate-saladet.kilo-granel",
+          "texto": "6 jitomates",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/2 cebolla",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 6000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "2 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "laurel",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "laurel.bolsa-10g",
+          "texto": "2 hojas",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 20000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "4 cucharaditas",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "4 cucharadas",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-fresco",
+          "cantidad_milli": 60000,
+          "unidad": "g",
+          "presentacion_id": "queso-fresco.kilo-granel",
+          "texto": "1/2 taza desmoronado",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Cuece la pechuga con laurel, un trozo de cebolla y la mitad de la sal 25 minutos y deshébrala.",
+        "Licua el jitomate con el ajo y un trozo de cebolla; fríe la salsa en la mitad del aceite con la sal restante 8 minutos.",
+        "Pasa las tortillas por el aceite restante caliente y luego por la salsa.",
+        "Rellena cada tortilla con pollo, dóblala y báñala con más salsa.",
+        "Sirve con crema, queso y la cebolla restante en rodajas."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "rajas-con-crema-y-elote",
+      "nombre": "Rajas poblanas con crema y elote",
+      "descripcion": "Rajas de chile poblano con elote, crema y queso Chihuahua, para taquear.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 20,
+      "minutos_coccion": 20,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida",
+        "económica"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "chile-poblano",
+          "cantidad_milli": 350000,
+          "unidad": "g",
+          "presentacion_id": "chile-poblano.kilo-granel",
+          "texto": "4 chiles poblanos",
+          "opcional": false
+        },
+        {
+          "producto_id": "elote-grano",
+          "cantidad_milli": 220000,
+          "unidad": "g",
+          "presentacion_id": "elote-grano.herdez-220g",
+          "texto": "1 lata de elote",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1/2 cebolla grande",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "1 diente",
+          "opcional": false
+        },
+        {
+          "producto_id": "crema-acida",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "crema-acida.bote-200g",
+          "texto": "3/4 de taza",
+          "opcional": false
+        },
+        {
+          "producto_id": "queso-chihuahua",
+          "cantidad_milli": 100000,
+          "unidad": "g",
+          "presentacion_id": "queso-chihuahua.kilo-granel",
+          "texto": "1 taza rallado",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-soya",
+          "cantidad_milli": 15000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-soya.nutrioli-946ml",
+          "texto": "1 cucharada",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 4000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "3/4 de cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "tortilla-maiz",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "tortilla-maiz.kilo-granel",
+          "texto": "7 tortillas",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Asa los chiles, déjalos sudar, pélalos, quítales las semillas y córtalos en rajas.",
+        "Acitrona la cebolla fileteada y el ajo picado en el aceite 4 minutos.",
+        "Agrega las rajas y el elote escurrido y cocina 5 minutos.",
+        "Incorpora la crema y la sal, baja el fuego y cubre con el queso hasta que se funda.",
+        "Sirve con tortillas calientes."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "pechuga-a-la-plancha-con-brocoli",
+      "nombre": "Pechuga a la plancha con brócoli y arroz blanco",
+      "descripcion": "Pechuga asada con limón, brócoli al vapor y arroz blanco con zanahoria.",
+      "tiempos": [
+        "lunch",
+        "dinner"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 15,
+      "minutos_coccion": 25,
+      "origen": "claude",
+      "etiquetas": [
+        "rápida"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "pechuga-pollo",
+          "cantidad_milli": 350000,
+          "unidad": "g",
+          "presentacion_id": "pechuga-pollo.kilo-granel",
+          "texto": "2 filetes de pechuga",
+          "opcional": false
+        },
+        {
+          "producto_id": "brocoli",
+          "cantidad_milli": 300000,
+          "unidad": "g",
+          "presentacion_id": "brocoli.kilo-granel",
+          "texto": "1 brócoli mediano",
+          "opcional": false
+        },
+        {
+          "producto_id": "arroz-grano-largo",
+          "cantidad_milli": 120000,
+          "unidad": "g",
+          "presentacion_id": "arroz-grano-largo.sos-750g",
+          "texto": "2/3 de taza",
+          "opcional": false
+        },
+        {
+          "producto_id": "zanahoria",
+          "cantidad_milli": 80000,
+          "unidad": "g",
+          "presentacion_id": "zanahoria.kilo-granel",
+          "texto": "1 zanahoria",
+          "opcional": false
+        },
+        {
+          "producto_id": "cebolla-blanca",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "cebolla-blanca.kilo-granel",
+          "texto": "1 trozo",
+          "opcional": false
+        },
+        {
+          "producto_id": "ajo",
+          "cantidad_milli": 6000,
+          "unidad": "g",
+          "presentacion_id": "ajo.kilo-granel",
+          "texto": "2 dientes",
+          "opcional": false
+        },
+        {
+          "producto_id": "aceite-oliva",
+          "cantidad_milli": 20000,
+          "unidad": "ml",
+          "presentacion_id": "aceite-oliva.nutrioli-oli-500ml",
+          "texto": "4 cucharaditas",
+          "opcional": false
+        },
+        {
+          "producto_id": "limon",
+          "cantidad_milli": 40000,
+          "unidad": "g",
+          "presentacion_id": "limon.kilo-granel",
+          "texto": "2 limones",
+          "opcional": false
+        },
+        {
+          "producto_id": "pimienta-negra",
+          "cantidad_milli": 1000,
+          "unidad": "g",
+          "presentacion_id": "pimienta-negra.frasco-50g",
+          "texto": "1/2 cucharadita",
+          "opcional": false
+        },
+        {
+          "producto_id": "sal",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "sal.bolsa-1kg",
+          "texto": "1 cucharadita",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Marina la pechuga con el jugo de limón, un diente de ajo picado, la pimienta y la mitad de la sal 10 minutos.",
+        "Sofríe el arroz en la mitad del aceite con la cebolla y el ajo restante, agrega la zanahoria picada, 1 1/3 tazas de agua y la sal restante; cuece tapado 18 minutos.",
+        "Cuece el brócoli al vapor 6 minutos.",
+        "Asa la pechuga en una plancha con el aceite restante 5 minutos por lado.",
+        "Sirve la pechuga rebanada con el brócoli y el arroz."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    },
+    {
+      "id": "calabaza-en-tacha",
+      "nombre": "Calabaza en tacha con piloncillo y canela",
+      "descripcion": "Dulce tradicional de calabaza de Castilla en miel de piloncillo, canela y naranja.",
+      "tiempos": [
+        "snack"
+      ],
+      "porciones_base": 2,
+      "minutos_preparacion": 10,
+      "minutos_coccion": 40,
+      "origen": "claude",
+      "etiquetas": [
+        "económica",
+        "sobrantes"
+      ],
+      "ingredientes": [
+        {
+          "producto_id": "calabaza-castilla",
+          "cantidad_milli": 600000,
+          "unidad": "g",
+          "presentacion_id": "calabaza-castilla.kilo-granel",
+          "texto": "1/4 de calabaza de Castilla",
+          "opcional": false
+        },
+        {
+          "producto_id": "piloncillo",
+          "cantidad_milli": 150000,
+          "unidad": "g",
+          "presentacion_id": "piloncillo.kilo-granel",
+          "texto": "1 cono chico",
+          "opcional": false
+        },
+        {
+          "producto_id": "canela",
+          "cantidad_milli": 5000,
+          "unidad": "g",
+          "presentacion_id": "canela.bolsa-30g",
+          "texto": "1 raja",
+          "opcional": false
+        },
+        {
+          "producto_id": "naranja",
+          "cantidad_milli": 200000,
+          "unidad": "g",
+          "presentacion_id": "naranja.kilo-granel",
+          "texto": "1 naranja",
+          "opcional": false
+        }
+      ],
+      "pasos": [
+        "Corta la calabaza en trozos con cáscara y quítale las semillas.",
+        "Disuelve el piloncillo con la canela, el jugo y la cáscara de la naranja en una taza de agua a fuego medio.",
+        "Acomoda la calabaza con la cáscara hacia arriba, tapa y cuece a fuego bajo 35 minutos, bañándola con la miel a la mitad.",
+        "Sirve tibia o fría con su miel."
+      ],
+      "kcal_por_porcion": null,
+      "fuentes_kcal": []
+    }
+  ]
+}

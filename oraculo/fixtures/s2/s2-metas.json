@@ -1,0 +1,237 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-metas",
+  "descripcion": "Metas: meses exactos, residuo de centavos (RN-18: 50.0 %), meta cumplida, fondo sin monto y una archivada; resto calculado por el oráculo (state no se compara)",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-12"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-18"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "horizonte.deuda_viva_10_abr"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S2-metas.md",
+    "que": "months_left (opción 1A), needed_monthly_cents y plan; resumen solo con activas (S2-metas-resumen)"
+  },
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "savings_goals": [
+          {
+            "id": 1,
+            "name": "Meses exactos",
+            "kind": "goal",
+            "target_cents": 600000,
+            "target_date": "2027-03-31",
+            "planned_monthly_cents": 100000,
+            "start_date": "2026-10-01",
+            "is_active": true
+          },
+          {
+            "id": 2,
+            "name": "Con residuo (RN-18)",
+            "kind": "goal",
+            "target_cents": 629344,
+            "target_date": "2027-04-10",
+            "planned_monthly_cents": 44953,
+            "start_date": "2026-10-01",
+            "is_active": true
+          },
+          {
+            "id": 3,
+            "name": "Cumplida",
+            "kind": "goal",
+            "target_cents": 100000,
+            "target_date": "2026-12-31",
+            "planned_monthly_cents": null,
+            "start_date": "2026-09-01",
+            "is_active": true
+          },
+          {
+            "id": 4,
+            "name": "Fondo",
+            "kind": "fund",
+            "target_cents": null,
+            "target_date": null,
+            "planned_monthly_cents": 20000,
+            "start_date": "2026-10-01",
+            "is_active": true
+          },
+          {
+            "id": 5,
+            "name": "Archivada",
+            "kind": "goal",
+            "target_cents": 50000,
+            "target_date": "2026-12-31",
+            "planned_monthly_cents": 10000,
+            "start_date": "2026-09-01",
+            "is_active": false
+          }
+        ],
+        "savings_movements": [
+          {
+            "goal_id": 2,
+            "movement_date": "2026-10-05",
+            "kind": "deposit",
+            "amount_cents": 314672
+          },
+          {
+            "goal_id": 3,
+            "movement_date": "2026-09-15",
+            "kind": "deposit",
+            "amount_cents": 120000
+          },
+          {
+            "goal_id": 3,
+            "movement_date": "2026-10-02",
+            "kind": "withdrawal",
+            "amount_cents": 10000
+          },
+          {
+            "goal_id": 4,
+            "movement_date": "2026-10-10",
+            "kind": "deposit",
+            "amount_cents": 50000
+          },
+          {
+            "goal_id": 4,
+            "movement_date": "2026-10-20",
+            "kind": "deposit",
+            "amount_cents": 7000
+          },
+          {
+            "goal_id": 5,
+            "movement_date": "2026-10-01",
+            "kind": "deposit",
+            "amount_cents": 5000
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "metas",
+        "funcion": "metas",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "metas": {
+      "month_summary": {
+        "saved_cents": 474672,
+        "contributed_this_month_cents": 364672,
+        "planned_this_month_cents": 164953
+      },
+      "goals": [
+        {
+          "goal_id": 1,
+          "kind": "goal",
+          "saved_cents": 0,
+          "target_cents": 600000,
+          "progress_tenths_pct": 0,
+          "progress_pct": 0,
+          "months_left": 6,
+          "needed_monthly_cents": 100000,
+          "plan": [
+            {
+              "month": "2026-10",
+              "cents": 100000
+            },
+            {
+              "month": "2026-11",
+              "cents": 100000
+            },
+            {
+              "month": "2026-12",
+              "cents": 100000
+            },
+            {
+              "month": "2027-01",
+              "cents": 100000
+            },
+            {
+              "month": "2027-02",
+              "cents": 100000
+            },
+            {
+              "month": "2027-03",
+              "cents": 100000
+            }
+          ]
+        },
+        {
+          "goal_id": 2,
+          "kind": "goal",
+          "saved_cents": 314672,
+          "target_cents": 629344,
+          "progress_tenths_pct": 500,
+          "progress_pct": 50,
+          "months_left": 7,
+          "needed_monthly_cents": 44953,
+          "plan": [
+            {
+              "month": "2026-10",
+              "cents": 44953
+            },
+            {
+              "month": "2026-11",
+              "cents": 44953
+            },
+            {
+              "month": "2026-12",
+              "cents": 44953
+            },
+            {
+              "month": "2027-01",
+              "cents": 44953
+            },
+            {
+              "month": "2027-02",
+              "cents": 44953
+            },
+            {
+              "month": "2027-03",
+              "cents": 44953
+            },
+            {
+              "month": "2027-04",
+              "cents": 44954
+            }
+          ]
+        },
+        {
+          "goal_id": 3,
+          "kind": "goal",
+          "saved_cents": 110000,
+          "target_cents": 100000,
+          "progress_tenths_pct": 1100,
+          "progress_pct": 110,
+          "months_left": 3,
+          "needed_monthly_cents": 0,
+          "plan": []
+        },
+        {
+          "goal_id": 4,
+          "kind": "fund",
+          "saved_cents": 50000,
+          "target_cents": null,
+          "progress_tenths_pct": null,
+          "progress_pct": null,
+          "months_left": null,
+          "needed_monthly_cents": null,
+          "plan": []
+        }
+      ]
+    }
+  }
+}

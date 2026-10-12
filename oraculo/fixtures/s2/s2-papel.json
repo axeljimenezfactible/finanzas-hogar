@@ -1,0 +1,75 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-papel",
+  "descripcion": "Seis paquetes de papel: dentro de despensa y de contado (R-68…R-73)",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "papel"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-01"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "papel",
+        "funcion": "vista_papel",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "papel": [
+      {
+        "paquete": 1,
+        "compra": "2026-10-10",
+        "quien": "Karen",
+        "forma": "dentro de despensa 1",
+        "monto": 19900
+      },
+      {
+        "paquete": 2,
+        "compra": "2026-12-10",
+        "quien": "Axel",
+        "forma": "dentro de despensa 2",
+        "monto": 19900
+      },
+      {
+        "paquete": 3,
+        "compra": "2027-01-10",
+        "quien": "Karen",
+        "forma": "de contado",
+        "monto": 19900
+      },
+      {
+        "paquete": 4,
+        "compra": "2027-02-10",
+        "quien": "Axel",
+        "forma": "dentro de despensa 3",
+        "monto": 19900
+      },
+      {
+        "paquete": 5,
+        "compra": "2027-03-10",
+        "quien": "Karen",
+        "forma": "de contado",
+        "monto": 19900
+      },
+      {
+        "paquete": 6,
+        "compra": "2027-04-10",
+        "quien": "Axel",
+        "forma": "dentro de despensa 4",
+        "monto": 19900
+      }
+    ]
+  }
+}

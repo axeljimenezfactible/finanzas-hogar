@@ -1,0 +1,380 @@
+{
+ "version": "1.0",
+ "fecha": "2026-10-11",
+ "catalogo": "testdata/catalogo.json",
+ "recetas": [
+  {
+   "id": "espagueti-con-atun",
+   "nombre": "Espagueti con atún y elote",
+   "descripcion": "Receta de prueba.",
+   "tiempos": [
+    "lunch",
+    "dinner"
+   ],
+   "porciones_base": 2,
+   "minutos_preparacion": 10,
+   "minutos_coccion": 15,
+   "origen": "claude",
+   "ingredientes": [
+    {
+     "producto_id": "espagueti",
+     "cantidad_milli": 250000,
+     "unidad": "g",
+     "presentacion_id": "espagueti.la-moderna-250g",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "atun",
+     "cantidad_milli": 140000,
+     "unidad": "g",
+     "presentacion_id": "atun.lata-140g",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "elote",
+     "cantidad_milli": 110000,
+     "unidad": "g",
+     "presentacion_id": "elote.lata-220g",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "aceite-oliva",
+     "cantidad_milli": 15000,
+     "unidad": "ml",
+     "presentacion_id": "aceite-oliva.500ml",
+     "texto": "",
+     "opcional": false
+    }
+   ],
+   "pasos": [
+    "Paso único de prueba."
+   ],
+   "kcal_por_porcion": 650,
+   "fuentes_kcal": [
+    {
+     "producto_id": "espagueti",
+     "fuente": "USDA",
+     "id_fuente": "100001"
+    },
+    {
+     "producto_id": "atun",
+     "fuente": "OFF",
+     "id_fuente": "7501000000017"
+    },
+    {
+     "producto_id": "elote",
+     "fuente": "manual",
+     "id_fuente": "Etiqueta de prueba, lata 220 g"
+    },
+    {
+     "producto_id": "aceite-oliva",
+     "fuente": "USDA",
+     "id_fuente": "100002"
+    }
+   ]
+  },
+  {
+   "id": "huevos-a-la-mexicana",
+   "nombre": "Huevos a la mexicana",
+   "descripcion": "Receta de prueba.",
+   "tiempos": [
+    "breakfast",
+    "dinner"
+   ],
+   "porciones_base": 2,
+   "minutos_preparacion": 10,
+   "minutos_coccion": 15,
+   "origen": "claude",
+   "ingredientes": [
+    {
+     "producto_id": "huevo",
+     "cantidad_milli": 4000,
+     "unidad": "pieza",
+     "presentacion_id": "huevo.carton-12",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "jitomate",
+     "cantidad_milli": 150000,
+     "unidad": "g",
+     "presentacion_id": "jitomate.kilo",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "cebolla",
+     "cantidad_milli": 40000,
+     "unidad": "g",
+     "presentacion_id": "cebolla.kilo",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "aceite-soya",
+     "cantidad_milli": 15000,
+     "unidad": "ml",
+     "presentacion_id": "aceite-soya.946ml",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "tortilla",
+     "cantidad_milli": 200000,
+     "unidad": "g",
+     "presentacion_id": "tortilla.kilo",
+     "texto": "",
+     "opcional": false
+    }
+   ],
+   "pasos": [
+    "Paso único de prueba."
+   ],
+   "kcal_por_porcion": 444,
+   "fuentes_kcal": [
+    {
+     "producto_id": "huevo",
+     "fuente": "USDA",
+     "id_fuente": "100004"
+    },
+    {
+     "producto_id": "jitomate",
+     "fuente": "USDA",
+     "id_fuente": "100003"
+    },
+    {
+     "producto_id": "cebolla",
+     "fuente": "USDA",
+     "id_fuente": "100005"
+    },
+    {
+     "producto_id": "aceite-soya",
+     "fuente": "USDA",
+     "id_fuente": "100006"
+    },
+    {
+     "producto_id": "tortilla",
+     "fuente": "manual",
+     "id_fuente": "Tabla de prueba, página 1"
+    }
+   ]
+  },
+  {
+   "id": "arroz-rojo",
+   "nombre": "Arroz rojo",
+   "descripcion": "Receta de prueba.",
+   "tiempos": [
+    "lunch"
+   ],
+   "porciones_base": 2,
+   "minutos_preparacion": 10,
+   "minutos_coccion": 15,
+   "origen": "claude",
+   "ingredientes": [
+    {
+     "producto_id": "arroz",
+     "cantidad_milli": 200000,
+     "unidad": "g",
+     "presentacion_id": "arroz.1kg",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "jitomate",
+     "cantidad_milli": 100000,
+     "unidad": "g",
+     "presentacion_id": "jitomate.kilo",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "cebolla",
+     "cantidad_milli": 30000,
+     "unidad": "g",
+     "presentacion_id": "cebolla.kilo",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "aceite-soya",
+     "cantidad_milli": 20000,
+     "unidad": "ml",
+     "presentacion_id": "aceite-soya.946ml",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "sal",
+     "cantidad_milli": 3000,
+     "unidad": "g",
+     "presentacion_id": "sal.1kg",
+     "texto": "",
+     "opcional": false
+    }
+   ],
+   "pasos": [
+    "Paso único de prueba."
+   ],
+   "kcal_por_porcion": 461,
+   "fuentes_kcal": [
+    {
+     "producto_id": "arroz",
+     "fuente": "USDA",
+     "id_fuente": "100007"
+    },
+    {
+     "producto_id": "jitomate",
+     "fuente": "USDA",
+     "id_fuente": "100003"
+    },
+    {
+     "producto_id": "cebolla",
+     "fuente": "USDA",
+     "id_fuente": "100005"
+    },
+    {
+     "producto_id": "aceite-soya",
+     "fuente": "USDA",
+     "id_fuente": "100006"
+    },
+    {
+     "producto_id": "sal",
+     "fuente": "USDA",
+     "id_fuente": "100008"
+    }
+   ]
+  },
+  {
+   "id": "pollo-con-arroz",
+   "nombre": "Pollo con arroz",
+   "descripcion": "Receta de prueba.",
+   "tiempos": [
+    "lunch",
+    "dinner"
+   ],
+   "porciones_base": 2,
+   "minutos_preparacion": 10,
+   "minutos_coccion": 15,
+   "origen": "claude",
+   "ingredientes": [
+    {
+     "producto_id": "pollo",
+     "cantidad_milli": 500000,
+     "unidad": "g",
+     "presentacion_id": "pollo.kilo",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "arroz",
+     "cantidad_milli": 150000,
+     "unidad": "g",
+     "presentacion_id": "arroz.1kg",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "cebolla",
+     "cantidad_milli": 50000,
+     "unidad": "g",
+     "presentacion_id": "cebolla.kilo",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "sal",
+     "cantidad_milli": 4000,
+     "unidad": "g",
+     "presentacion_id": "sal.1kg",
+     "texto": "",
+     "opcional": false
+    }
+   ],
+   "pasos": [
+    "Paso único de prueba."
+   ],
+   "kcal_por_porcion": 714,
+   "fuentes_kcal": [
+    {
+     "producto_id": "pollo",
+     "fuente": "USDA",
+     "id_fuente": "100009"
+    },
+    {
+     "producto_id": "arroz",
+     "fuente": "USDA",
+     "id_fuente": "100007"
+    },
+    {
+     "producto_id": "cebolla",
+     "fuente": "USDA",
+     "id_fuente": "100005"
+    },
+    {
+     "producto_id": "sal",
+     "fuente": "USDA",
+     "id_fuente": "100008"
+    }
+   ]
+  },
+  {
+   "id": "frijoles-de-la-olla",
+   "nombre": "Frijoles de la olla",
+   "descripcion": "Receta de prueba.",
+   "tiempos": [
+    "lunch",
+    "dinner",
+    "snack"
+   ],
+   "porciones_base": 2,
+   "minutos_preparacion": 10,
+   "minutos_coccion": 15,
+   "origen": "claude",
+   "ingredientes": [
+    {
+     "producto_id": "frijol",
+     "cantidad_milli": 250000,
+     "unidad": "g",
+     "presentacion_id": "frijol.1kg",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "cebolla",
+     "cantidad_milli": 40000,
+     "unidad": "g",
+     "presentacion_id": "cebolla.kilo",
+     "texto": "",
+     "opcional": false
+    },
+    {
+     "producto_id": "sal",
+     "cantidad_milli": 5000,
+     "unidad": "g",
+     "presentacion_id": "sal.1kg",
+     "texto": "",
+     "opcional": false
+    }
+   ],
+   "pasos": [
+    "Paso único de prueba."
+   ],
+   "kcal_por_porcion": null,
+   "fuentes_kcal": [
+    {
+     "producto_id": "cebolla",
+     "fuente": "USDA",
+     "id_fuente": "100005"
+    },
+    {
+     "producto_id": "sal",
+     "fuente": "USDA",
+     "id_fuente": "100008"
+    }
+   ]
+  }
+ ]
+}

@@ -12,3 +12,14 @@ frontend/dist/
 # temporales de verificación y Python
 datos/tmp/
 __pycache__/
+
+# WF-1 (integrador-wf1, 11-oct-2026)
+# La tabla nutricional procesada sí se versiona: la leen recetario.json (rec_genera_recetario.py) y las fixtures de S4.
+# Las descargas crudas viven en datos/semilla/<fuente>/raw/ y la base de PROFECO en profeco/db/, cada una con su propio .gitignore.
+!datos/semilla/nutricion/tabla.csv
+datos/semilla/*/raw/*
+!datos/semilla/*/raw/.gitignore
+datos/semilla/profeco/db/*.sqlite*
+**/node_modules/
+# Configuración local de Obsidian (bóveda de Axel): no es parte del proyecto.
+.obsidian/

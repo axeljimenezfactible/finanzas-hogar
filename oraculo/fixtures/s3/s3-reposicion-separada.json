@@ -1,0 +1,201 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-reposicion-separada",
+  "descripcion": "Despensa 1 con la parte de Karen pagada aparte el 29-oct y la de Axel el 31-oct: el capital del pago 1 (773.63) se repone el 31-oct y no antes (K15); el pago 2, sin abonos, se proyecta completo el 15-nov (§5.2)",
+  "fuente": [
+    {
+      "tipo": "decision",
+      "ruta": "K15"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-05"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [
+        {
+          "credit": {
+            "id": 1,
+            "name": "Kueski",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 1000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-10-10",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 53450,
+                  "den": 309450,
+                  "decimales": 2
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 80050,
+                  "den": 309450,
+                  "decimales": 4
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": []
+          },
+          "purchases": [
+            {
+              "ref": "d1",
+              "status": "active",
+              "input": {
+                "date": "2026-10-10",
+                "principal_cents": 309450,
+                "term_count": 4,
+                "quoted_interest_cents": 80050,
+                "rate_decimals": 4,
+                "promotion_id": null,
+                "store_id": null,
+                "merchant": "",
+                "first_payment_date": null,
+                "shares": [
+                  {
+                    "person": "axel",
+                    "external": false,
+                    "principal_cents": 190300,
+                    "joint_cents": 85100,
+                    "paper_in_cents": 0
+                  },
+                  {
+                    "person": "karen",
+                    "external": true,
+                    "principal_cents": 119150,
+                    "joint_cents": 85100,
+                    "paper_in_cents": 19900
+                  }
+                ]
+              }
+            }
+          ],
+          "payments": [
+            {
+              "purchase_ref": "d1",
+              "seq": 1,
+              "date": "2026-10-29",
+              "payer": "karen",
+              "amount_cents": 37493
+            },
+            {
+              "purchase_ref": "d1",
+              "seq": 1,
+              "date": "2026-10-31",
+              "payer": "axel",
+              "amount_cents": 59882
+            }
+          ],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "linea",
+        "funcion": "linea_tiempo",
+        "argumentos": {
+          "credit_id": 1,
+          "today": "2026-10-10",
+          "from": "2026-10-10",
+          "to": "2026-11-15"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "linea": {
+      "events": [
+        {
+          "date": "2026-10-10",
+          "kind": "start",
+          "purchase_ref": "",
+          "seq": 0,
+          "amount_cents": 0,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 1000000,
+          "available_b_cents": 690550
+        },
+        {
+          "date": "2026-10-29",
+          "kind": "payment",
+          "purchase_ref": "d1",
+          "seq": 1,
+          "amount_cents": 37493,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 1000000,
+          "available_b_cents": 690550
+        },
+        {
+          "date": "2026-10-31",
+          "kind": "payment",
+          "purchase_ref": "d1",
+          "seq": 1,
+          "amount_cents": 59882,
+          "principal_restored_cents": 77363,
+          "interest_not_restored_cents": 20012,
+          "available_a_cents": 1077363,
+          "available_b_cents": 767913
+        },
+        {
+          "date": "2026-11-15",
+          "kind": "payment",
+          "purchase_ref": "d1",
+          "seq": 2,
+          "amount_cents": 97375,
+          "principal_restored_cents": 77363,
+          "interest_not_restored_cents": 20012,
+          "available_a_cents": 1154726,
+          "available_b_cents": 845276
+        }
+      ],
+      "series_a_cents": [
+        1000000,
+        1077363,
+        1154726
+      ],
+      "series_b_cents": [
+        690550,
+        767913,
+        845276
+      ],
+      "min_a_cents": 1000000,
+      "min_b_cents": 690550,
+      "reading": "B",
+      "pending_confirmation": true,
+      "a_anchor": "2026-10-10",
+      "a_anchor_defaulted": false
+    }
+  }
+}

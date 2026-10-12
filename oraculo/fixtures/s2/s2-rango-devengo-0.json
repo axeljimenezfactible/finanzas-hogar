@@ -1,0 +1,204 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-rango-devengo-0",
+  "descripcion": "Gasto de fixture del 5-dic-2026 con accrual_months 0 explícito: fuera del rango 1–24 (S2-interfaz §2.4); ausente o null valdría 1",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-03"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "S2-interfaz §2.4: accrual_months entero 1–24"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "categories": [
+          {
+            "code": "despensa",
+            "name": "Despensa",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "papel",
+            "name": "Papel",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "varios",
+            "name": "Varios",
+            "kind": "variable",
+            "is_active": true
+          }
+        ],
+        "expenses": [
+          {
+            "id": 1,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 309450,
+            "expense_date": "2026-10-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 190300
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 1,
+            "planned_item_id": null
+          },
+          {
+            "id": 2,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 400000,
+            "expense_date": "2026-12-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 280850
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 2,
+            "planned_item_id": null
+          },
+          {
+            "id": 3,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 400000,
+            "expense_date": "2027-02-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 280850
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 3,
+            "planned_item_id": null
+          },
+          {
+            "id": 4,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 400000,
+            "expense_date": "2027-04-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 280850
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 4,
+            "planned_item_id": null
+          },
+          {
+            "id": 5,
+            "kind": "variable",
+            "category": "papel",
+            "amount_cents": 19900,
+            "expense_date": "2027-01-10",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": "karen",
+            "shares": [
+              {
+                "person": "karen",
+                "amount_cents": 19900
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 6,
+            "kind": "variable",
+            "category": "papel",
+            "amount_cents": 19900,
+            "expense_date": "2027-03-10",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": "karen",
+            "shares": [
+              {
+                "person": "karen",
+                "amount_cents": 19900
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 7,
+            "kind": "variable",
+            "category": "varios",
+            "amount_cents": 30000,
+            "expense_date": "2026-12-05",
+            "accrual_months": 0,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 30000
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "dic-2026",
+        "funcion": "periodos",
+        "argumentos": {
+          "months": [
+            "2026-12"
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "dic-2026": {
+      "error": "invalid_argument"
+    }
+  }
+}

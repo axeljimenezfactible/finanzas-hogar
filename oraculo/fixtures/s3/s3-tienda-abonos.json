@@ -1,0 +1,175 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-tienda-abonos",
+  "descripcion": "Crédito de tienda con 3 abonos sin interés (tasa 0 en term_rates, §5.8): 1,000.00 da 333.33, 333.33 y 333.34 (truncado, el último ajusta), 0.00 de intereses, saldo final 0.00 y fechas mensuales desde la capturada; el otro crédito sin term_rates ni datos K18 da «falta capturar»; el capital por pago no se pide (PROVISIONAL S3-serie-sin-intereses)",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S3-10"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K18"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [
+        {
+          "credit": {
+            "id": 4,
+            "name": "Tienda sin interés",
+            "kind": "store_credit",
+            "holder": "axel",
+            "limit_cents": null,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 3,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": []
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 5,
+            "name": "Tienda sin datos",
+            "kind": "store_credit",
+            "holder": "axel",
+            "limit_cents": null,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [],
+            "promotions": []
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "abonos-3",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 4,
+          "purchase": {
+            "date": "2026-10-20",
+            "principal_cents": 100000,
+            "term_count": 3,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": "2026-11-20",
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 100000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "sin-datos",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 5,
+          "purchase": {
+            "date": "2026-10-20",
+            "principal_cents": 100000,
+            "term_count": 3,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": "2026-11-20",
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 100000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "abonos-3": {
+      "interest_cents": 0,
+      "total_cents": 100000,
+      "source": "term_table",
+      "payments": [
+        {
+          "due_date": "2026-11-20",
+          "amount_cents": 33333
+        },
+        {
+          "due_date": "2026-12-20",
+          "amount_cents": 33333
+        },
+        {
+          "due_date": "2027-01-20",
+          "amount_cents": 33334
+        }
+      ],
+      "provisional": [
+        "S3-serie-sin-intereses"
+      ]
+    },
+    "sin-datos": {
+      "error": "missing_capture"
+    }
+  }
+}

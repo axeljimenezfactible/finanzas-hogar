@@ -1,0 +1,314 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-kcal-sin-dato",
+  "descripcion": "S4-08, S4-11, §9.1 y §9.3: sin dato nutricional de jamon-pavo, huevo-con-jamon-y-frijoles queda incompleta (kcal nula, nunca 0, y missing_nutrition); la celda y el día de esa persona quedan sin kcal; sin cotizaciones el costo es nulo y missing_prices lista los seis productos. yogur-griego-con-fresas-y-avena sí se calcula. Los renglones nutricionales van en línea, copiados tal cual de datos/semilla/nutricion/tabla.csv (valor, fuente, id_fuente y estado): huevo 143 kcal/100 g (USDA 171287, propuesto); frijoles-refritos 90 kcal/100 g (USDA 172438, propuesto); tortilla-maiz 218 kcal/100 g (USDA 175036, propuesto); aceite-soya 884 kcal/100 g (USDA 171411, propuesto); sal 0 kcal/100 g (USDA 746775, propuesto); yogur-griego 94507/1000 kcal/100 g (USDA 2259794, propuesto); fresa 31 kcal/100 g (USDA 327699, propuesto); avena 189433/500 kcal/100 g (USDA 2346396, propuesto); azucar 385 kcal/100 g (USDA 334247, propuesto). ILUSTRATIVO solo en el renglón de jamon-pavo, que se omite a propósito para simular un producto sin dato (tabla.csv cubre los 150 productos de comida del catálogo, y nutrition_file junto con nutrition es invalid_argument por §12.1). Cobertura: únicos = 10, con fuente 9 (confirmados 0, propuestos 9) y 1 sin dato.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-08"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S4-11"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "segunda vía en rec_genera_fixtures.py"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "datos/semilla/nutricion/tabla.csv"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S4-confirmacion-empates.md",
+    "que": "los renglones de tabla.csv de estas recetas están en estado propuesto; si al confirmarlos se corrige un valor, se regeneran el recetario y esta fixture"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog_file": "datos/semilla/productos.json",
+      "recipes": [
+        {
+          "code": "huevo-con-jamon-y-frijoles",
+          "name": "Huevo revuelto con jamón y frijoles refritos",
+          "slots": [
+            "breakfast",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 5,
+          "cook_minutes": 10,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "huevo",
+              "presentation": "huevo.carton-12",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "jamon-pavo",
+              "presentation": "jamon-pavo.sabori-400g",
+              "quantity_milli": 80000,
+              "optional": false
+            },
+            {
+              "product": "frijoles-refritos",
+              "presentation": "frijoles-refritos.la-costena-220g",
+              "quantity_milli": 220000,
+              "optional": false
+            },
+            {
+              "product": "tortilla-maiz",
+              "presentation": "tortilla-maiz.kilo-granel",
+              "quantity_milli": 120000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.nutrioli-946ml",
+              "quantity_milli": 10000,
+              "optional": false
+            },
+            {
+              "product": "sal",
+              "presentation": "sal.bolsa-1kg",
+              "quantity_milli": 1000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "yogur-griego-con-fresas-y-avena",
+          "name": "Yogur griego con fresas y avena",
+          "slots": [
+            "breakfast",
+            "snack"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 5,
+          "cook_minutes": 0,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "yogur-griego",
+              "presentation": "yogur-griego.yoplait-750g",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "fresa",
+              "presentation": "fresa.kilo-granel",
+              "quantity_milli": 150000,
+              "optional": false
+            },
+            {
+              "product": "avena",
+              "presentation": "avena.3-minutos-400g",
+              "quantity_milli": 40000,
+              "optional": false
+            },
+            {
+              "product": "azucar",
+              "presentation": "azucar.bolsa-1kg",
+              "quantity_milli": 10000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "nutrition": [
+        {
+          "product": "huevo",
+          "presentation": null,
+          "kcal_milli_per_100g": 143000,
+          "source": "usda_fdc",
+          "source_ref": "171287",
+          "status": "proposed"
+        },
+        {
+          "product": "frijoles-refritos",
+          "presentation": null,
+          "kcal_milli_per_100g": 90000,
+          "source": "usda_fdc",
+          "source_ref": "172438",
+          "status": "proposed"
+        },
+        {
+          "product": "tortilla-maiz",
+          "presentation": null,
+          "kcal_milli_per_100g": 218000,
+          "source": "usda_fdc",
+          "source_ref": "175036",
+          "status": "proposed"
+        },
+        {
+          "product": "aceite-soya",
+          "presentation": null,
+          "kcal_milli_per_100g": 884000,
+          "source": "usda_fdc",
+          "source_ref": "171411",
+          "status": "proposed"
+        },
+        {
+          "product": "sal",
+          "presentation": null,
+          "kcal_milli_per_100g": 0,
+          "source": "usda_fdc",
+          "source_ref": "746775",
+          "status": "proposed"
+        },
+        {
+          "product": "yogur-griego",
+          "presentation": null,
+          "kcal_milli_per_100g": 94507,
+          "source": "usda_fdc",
+          "source_ref": "2259794",
+          "status": "proposed"
+        },
+        {
+          "product": "fresa",
+          "presentation": null,
+          "kcal_milli_per_100g": 31000,
+          "source": "usda_fdc",
+          "source_ref": "327699",
+          "status": "proposed"
+        },
+        {
+          "product": "avena",
+          "presentation": null,
+          "kcal_milli_per_100g": 378866,
+          "source": "usda_fdc",
+          "source_ref": "2346396",
+          "status": "proposed"
+        },
+        {
+          "product": "azucar",
+          "presentation": null,
+          "kcal_milli_per_100g": 385000,
+          "source": "usda_fdc",
+          "source_ref": "334247",
+          "status": "proposed"
+        }
+      ],
+      "meal_plan": [
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "huevo-con-jamon-y-frijoles",
+          "servings_milli": 2000,
+          "eating_out": false
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "incompleta",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "huevo-con-jamon-y-frijoles",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "completa",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "yogur-griego-con-fresas-y-avena",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "cobertura",
+        "funcion": "nutrition_coverage",
+        "argumentos": {}
+      },
+      {
+        "id": "plan",
+        "funcion": "week_plan",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "incompleta": {
+      "total_kcal": null,
+      "kcal_per_serving": null,
+      "missing_nutrition": [
+        "jamon-pavo"
+      ],
+      "total_cost_cents": null,
+      "missing_prices": [
+        "huevo",
+        "jamon-pavo",
+        "frijoles-refritos",
+        "tortilla-maiz",
+        "aceite-soya",
+        "sal"
+      ]
+    },
+    "completa": {
+      "total_kcal": 520,
+      "kcal_per_serving": 260,
+      "missing_nutrition": []
+    },
+    "cobertura": {
+      "unique": 10,
+      "with_source": 9,
+      "confirmed": 0,
+      "proposed": 9,
+      "missing": [
+        "jamon-pavo"
+      ]
+    },
+    "plan": {
+      "cells": [
+        {
+          "kcal": null,
+          "cost_cents": null
+        }
+      ],
+      "days": [
+        {
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": null
+            },
+            {
+              "person": "persona-b",
+              "kcal": 0
+            }
+          ]
+        },
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    }
+  }
+}

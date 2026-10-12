@@ -1,0 +1,103 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-zona-medianoche",
+  "descripcion": "Hoy en America/Mexico_City (UTC−6 todo el año) cerca de la medianoche; resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-14"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "instante de verano sin horario de verano"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "antes",
+        "funcion": "calendario",
+        "argumentos": {
+          "now": "2026-10-31T05:59:59Z"
+        }
+      },
+      {
+        "id": "despues",
+        "funcion": "calendario",
+        "argumentos": {
+          "now": "2026-10-31T06:00:00Z"
+        }
+      },
+      {
+        "id": "verano",
+        "funcion": "calendario",
+        "argumentos": {
+          "now": "2027-07-01T05:30:00Z"
+        }
+      },
+      {
+        "id": "dos-formas",
+        "funcion": "calendario",
+        "argumentos": {
+          "date": "2026-10-31",
+          "now": "2026-10-31T06:00:00Z"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "antes": {
+      "today": "2026-10-30",
+      "month": "2026-10",
+      "month_start": "2026-10-01",
+      "month_end": "2026-10-31",
+      "month_label": "1-oct-2026 a 31-oct-2026",
+      "days_in_month": 31,
+      "fortnight": "2026-10-q2",
+      "fortnight_start": "2026-10-16",
+      "fortnight_end": "2026-10-31",
+      "pay_date": "2026-10-30",
+      "week": "2026-W44",
+      "week_start": "2026-10-26",
+      "week_end": "2026-11-01"
+    },
+    "despues": {
+      "today": "2026-10-31",
+      "month": "2026-10",
+      "month_start": "2026-10-01",
+      "month_end": "2026-10-31",
+      "month_label": "1-oct-2026 a 31-oct-2026",
+      "days_in_month": 31,
+      "fortnight": "2026-10-q2",
+      "fortnight_start": "2026-10-16",
+      "fortnight_end": "2026-10-31",
+      "pay_date": "2026-10-30",
+      "week": "2026-W44",
+      "week_start": "2026-10-26",
+      "week_end": "2026-11-01"
+    },
+    "verano": {
+      "today": "2027-06-30",
+      "month": "2027-06",
+      "month_start": "2027-06-01",
+      "month_end": "2027-06-30",
+      "month_label": "1-jun-2027 a 30-jun-2027",
+      "days_in_month": 30,
+      "fortnight": "2027-06-q2",
+      "fortnight_start": "2027-06-16",
+      "fortnight_end": "2027-06-30",
+      "pay_date": "2027-06-30",
+      "week": "2027-W26",
+      "week_start": "2027-06-28",
+      "week_end": "2027-07-04"
+    },
+    "dos-formas": {
+      "error": "invalid_argument"
+    }
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-series-desde-otra-fecha",
+  "descripcion": "Línea de tiempo con From posterior al ancla (§5.2): el inicio vale el A y el B del canon tras el último evento con fecha <= From (9,094.50 / 6,000.00 el 16-dic-2026; 8,094.50 / 5,000.00 el 10-feb-2027) y los eventos siguientes son los de credito.eventos; valores copiados de model.json con id libres",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "credito.eventos"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-03"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/kueski-semilla.json"
+    },
+    "consultas": [
+      {
+        "id": "desde-2026-12-16",
+        "funcion": "linea_tiempo",
+        "argumentos": {
+          "credit_id": 1,
+          "today": "2026-10-10",
+          "from": "2026-12-16",
+          "to": "2027-04-10"
+        }
+      },
+      {
+        "id": "desde-2027-02-10",
+        "funcion": "linea_tiempo",
+        "argumentos": {
+          "credit_id": 1,
+          "today": "2026-10-10",
+          "from": "2027-02-10",
+          "to": "2027-04-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "desde-2026-12-16": {
+      "events": [
+        {
+          "date": "2026-12-16",
+          "kind": "start",
+          "amount_cents": 0,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 909450,
+          "available_b_cents": 600000
+        },
+        {
+          "date": "2026-12-30",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1009450,
+          "available_b_cents": 700000
+        },
+        {
+          "date": "2027-01-10",
+          "kind": "cash",
+          "amount_cents": 19900,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 1009450,
+          "available_b_cents": 700000
+        },
+        {
+          "date": "2027-01-15",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1109450,
+          "available_b_cents": 800000
+        },
+        {
+          "date": "2027-01-30",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1209450,
+          "available_b_cents": 900000
+        },
+        {
+          "date": "2027-02-10",
+          "kind": "purchase",
+          "amount_cents": 400000,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 809450,
+          "available_b_cents": 500000
+        },
+        {
+          "date": "2027-02-15",
+          "kind": "payment",
+          "amount_cents": 125870,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25870,
+          "available_a_cents": 909450,
+          "available_b_cents": 600000
+        },
+        {
+          "date": "2027-02-28",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1009450,
+          "available_b_cents": 700000
+        },
+        {
+          "date": "2027-03-10",
+          "kind": "cash",
+          "amount_cents": 19900,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 1009450,
+          "available_b_cents": 700000
+        },
+        {
+          "date": "2027-03-15",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1109450,
+          "available_b_cents": 800000
+        },
+        {
+          "date": "2027-03-30",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1209450,
+          "available_b_cents": 900000
+        },
+        {
+          "date": "2027-04-10",
+          "kind": "purchase",
+          "amount_cents": 400000,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 809450,
+          "available_b_cents": 500000
+        }
+      ],
+      "series_a_cents": [
+        1009450,
+        1109450,
+        1209450,
+        809450,
+        909450,
+        1009450,
+        1109450,
+        1209450,
+        809450
+      ],
+      "series_b_cents": [
+        700000,
+        800000,
+        900000,
+        500000,
+        600000,
+        700000,
+        800000,
+        900000,
+        500000
+      ],
+      "min_a_cents": 809450,
+      "min_b_cents": 500000,
+      "reading": "B"
+    },
+    "desde-2027-02-10": {
+      "events": [
+        {
+          "date": "2027-02-10",
+          "kind": "start",
+          "amount_cents": 0,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 809450,
+          "available_b_cents": 500000
+        },
+        {
+          "date": "2027-02-15",
+          "kind": "payment",
+          "amount_cents": 125870,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25870,
+          "available_a_cents": 909450,
+          "available_b_cents": 600000
+        },
+        {
+          "date": "2027-02-28",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1009450,
+          "available_b_cents": 700000
+        },
+        {
+          "date": "2027-03-10",
+          "kind": "cash",
+          "amount_cents": 19900,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 1009450,
+          "available_b_cents": 700000
+        },
+        {
+          "date": "2027-03-15",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1109450,
+          "available_b_cents": 800000
+        },
+        {
+          "date": "2027-03-30",
+          "kind": "payment",
+          "amount_cents": 125868,
+          "principal_restored_cents": 100000,
+          "interest_not_restored_cents": 25868,
+          "available_a_cents": 1209450,
+          "available_b_cents": 900000
+        },
+        {
+          "date": "2027-04-10",
+          "kind": "purchase",
+          "amount_cents": 400000,
+          "principal_restored_cents": 0,
+          "interest_not_restored_cents": 0,
+          "available_a_cents": 809450,
+          "available_b_cents": 500000
+        }
+      ],
+      "series_a_cents": [
+        909450,
+        1009450,
+        1109450,
+        1209450,
+        809450
+      ],
+      "series_b_cents": [
+        600000,
+        700000,
+        800000,
+        900000,
+        500000
+      ],
+      "min_a_cents": 809450,
+      "min_b_cents": 500000,
+      "reading": "B"
+    }
+  }
+}

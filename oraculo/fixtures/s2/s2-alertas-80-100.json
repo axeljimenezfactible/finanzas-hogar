@@ -1,0 +1,470 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-alertas-80-100",
+  "descripcion": "Banderas 80/100 con frontera exacta: 79 %, 79.999 %, 80 %, 99 %, 100 % y 101 % sobre planes de 100000 (S2-11); resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-11"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-22"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K44"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "gastos de fixture del 2026-10-05"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "categories": [
+          {
+            "code": "alerta_079",
+            "name": "alerta_079",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "alerta_079_999",
+            "name": "alerta_079_999",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "alerta_080",
+            "name": "alerta_080",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "alerta_099",
+            "name": "alerta_099",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "alerta_100",
+            "name": "alerta_100",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "alerta_101",
+            "name": "alerta_101",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "despensa",
+            "name": "Despensa",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "papel",
+            "name": "Papel",
+            "kind": "variable",
+            "is_active": true
+          }
+        ],
+        "expenses": [
+          {
+            "id": 1,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 309450,
+            "expense_date": "2026-10-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 190300
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 1,
+            "planned_item_id": null
+          },
+          {
+            "id": 2,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 400000,
+            "expense_date": "2026-12-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 280850
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 2,
+            "planned_item_id": null
+          },
+          {
+            "id": 3,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 400000,
+            "expense_date": "2027-02-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 280850
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 3,
+            "planned_item_id": null
+          },
+          {
+            "id": 4,
+            "kind": "variable",
+            "category": "despensa",
+            "amount_cents": 400000,
+            "expense_date": "2027-04-10",
+            "accrual_months": 2,
+            "payment_method": "credit",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 280850
+              },
+              {
+                "person": "karen",
+                "amount_cents": 119150
+              }
+            ],
+            "credit_purchase_id": 4,
+            "planned_item_id": null
+          },
+          {
+            "id": 5,
+            "kind": "variable",
+            "category": "papel",
+            "amount_cents": 19900,
+            "expense_date": "2027-01-10",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": "karen",
+            "shares": [
+              {
+                "person": "karen",
+                "amount_cents": 19900
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 6,
+            "kind": "variable",
+            "category": "papel",
+            "amount_cents": 19900,
+            "expense_date": "2027-03-10",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": "karen",
+            "shares": [
+              {
+                "person": "karen",
+                "amount_cents": 19900
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 7,
+            "kind": "variable",
+            "category": "alerta_079",
+            "amount_cents": 79000,
+            "expense_date": "2026-10-05",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 79000
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 8,
+            "kind": "variable",
+            "category": "alerta_079_999",
+            "amount_cents": 79999,
+            "expense_date": "2026-10-05",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 79999
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 9,
+            "kind": "variable",
+            "category": "alerta_080",
+            "amount_cents": 80000,
+            "expense_date": "2026-10-05",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 80000
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 10,
+            "kind": "variable",
+            "category": "alerta_099",
+            "amount_cents": 99000,
+            "expense_date": "2026-10-05",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 99000
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 11,
+            "kind": "variable",
+            "category": "alerta_100",
+            "amount_cents": 100000,
+            "expense_date": "2026-10-05",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 100000
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          },
+          {
+            "id": 12,
+            "kind": "variable",
+            "category": "alerta_101",
+            "amount_cents": 101000,
+            "expense_date": "2026-10-05",
+            "accrual_months": 1,
+            "payment_method": "cash",
+            "paid_by": null,
+            "shares": [
+              {
+                "person": "axel",
+                "amount_cents": 101000
+              }
+            ],
+            "credit_purchase_id": null,
+            "planned_item_id": null
+          }
+        ],
+        "budgets": [
+          {
+            "id": 1,
+            "category": "alerta_079",
+            "amount_cents": 100000,
+            "valid_from": "2026-10-01",
+            "valid_to": null
+          },
+          {
+            "id": 2,
+            "category": "alerta_079_999",
+            "amount_cents": 100000,
+            "valid_from": "2026-10-01",
+            "valid_to": null
+          },
+          {
+            "id": 3,
+            "category": "alerta_080",
+            "amount_cents": 100000,
+            "valid_from": "2026-10-01",
+            "valid_to": null
+          },
+          {
+            "id": 4,
+            "category": "alerta_099",
+            "amount_cents": 100000,
+            "valid_from": "2026-10-01",
+            "valid_to": null
+          },
+          {
+            "id": 5,
+            "category": "alerta_100",
+            "amount_cents": 100000,
+            "valid_from": "2026-10-01",
+            "valid_to": null
+          },
+          {
+            "id": 6,
+            "category": "alerta_101",
+            "amount_cents": 100000,
+            "valid_from": "2026-10-01",
+            "valid_to": null
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "oct-2026",
+        "funcion": "presupuesto_mes",
+        "argumentos": {
+          "month": "2026-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "oct-2026": {
+      "month": "2026-10",
+      "days_in_month": 31,
+      "days_left": 21,
+      "categories": [
+        {
+          "category": "alerta_079",
+          "plan_cents": 100000,
+          "actual_cents": 79000,
+          "remaining_cents": 21000,
+          "used_pct": 79,
+          "warning": false,
+          "limit": false,
+          "state": "normal"
+        },
+        {
+          "category": "alerta_079_999",
+          "plan_cents": 100000,
+          "actual_cents": 79999,
+          "remaining_cents": 20001,
+          "used_pct": 80,
+          "warning": false,
+          "limit": false,
+          "state": "normal"
+        },
+        {
+          "category": "alerta_080",
+          "plan_cents": 100000,
+          "actual_cents": 80000,
+          "remaining_cents": 20000,
+          "used_pct": 80,
+          "warning": true,
+          "limit": false,
+          "state": "warning"
+        },
+        {
+          "category": "alerta_099",
+          "plan_cents": 100000,
+          "actual_cents": 99000,
+          "remaining_cents": 1000,
+          "used_pct": 99,
+          "warning": true,
+          "limit": false,
+          "state": "warning"
+        },
+        {
+          "category": "alerta_100",
+          "plan_cents": 100000,
+          "actual_cents": 100000,
+          "remaining_cents": 0,
+          "used_pct": 100,
+          "warning": true,
+          "limit": true,
+          "state": "exceeded"
+        },
+        {
+          "category": "alerta_101",
+          "plan_cents": 100000,
+          "actual_cents": 101000,
+          "remaining_cents": -1000,
+          "used_pct": 101,
+          "warning": true,
+          "limit": true,
+          "state": "exceeded"
+        },
+        {
+          "category": "despensa",
+          "plan_cents": null,
+          "actual_cents": 119764,
+          "remaining_cents": null,
+          "used_pct": null,
+          "warning": false,
+          "limit": false,
+          "state": "no_plan"
+        },
+        {
+          "category": "papel",
+          "plan_cents": null,
+          "actual_cents": 0,
+          "remaining_cents": null,
+          "used_pct": null,
+          "warning": false,
+          "limit": false,
+          "state": "no_plan"
+        }
+      ],
+      "total": {
+        "plan_cents": 600000,
+        "actual_cents": 658763,
+        "remaining_cents": -58763,
+        "used_pct": 110,
+        "warning": true,
+        "limit": true,
+        "state": "exceeded",
+        "declared_total_row_cents": null
+      },
+      "accrued_household_cents": 658763,
+      "cash_household_cents": 598881
+    }
+  }
+}

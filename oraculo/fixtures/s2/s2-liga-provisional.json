@@ -1,0 +1,734 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-liga-provisional",
+  "descripcion": "Sueldo quincenal con una captura del 14-oct ligada a la ocurrencia del 15-oct (lectura de trabajo 3A); resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-09"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-10"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "captura del 2026-10-14 de fixture"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S2-flujo-quincenal.md",
+    "que": "liga ocurrencia ↔ captura"
+  },
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "planned_items": [
+          {
+            "id": 1,
+            "kind": "income",
+            "description": "Sueldo (dato de fixture)",
+            "amount_cents": 1200000,
+            "second_half_amount_cents": 1250000,
+            "frequency": "fortnightly",
+            "interval_count": 1,
+            "start_date": "2026-10-15",
+            "end_date": null,
+            "category": null,
+            "payment_method": null,
+            "accrual_months": null,
+            "person": "axel",
+            "share_rule": null,
+            "credit_id": null,
+            "is_active": true
+          }
+        ],
+        "incomes": [
+          {
+            "id": 1,
+            "person": "axel",
+            "kind": "fixed",
+            "amount_cents": 1195000,
+            "income_date": "2026-10-14",
+            "planned_item_id": 1
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "flujo",
+        "funcion": "flujo_quincenal",
+        "argumentos": {
+          "from": "2026-10-q1",
+          "count": 2
+        }
+      },
+      {
+        "id": "proyeccion",
+        "funcion": "proyeccion",
+        "argumentos": {
+          "from": "2026-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "flujo": [
+      {
+        "fortnight": "2026-10-q1",
+        "start": "2026-10-01",
+        "end": "2026-10-15",
+        "pay_date": "2026-10-15",
+        "income": {
+          "fixed_cents": 1195000,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 1195000
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 0,
+            "karen": 0
+          },
+          "household_cents": 0,
+          "external_informative_cents": 0,
+          "household_paid_cents": 0,
+          "household_pending_cents": 0
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 0,
+        "balance_cents": 1195000,
+        "cumulative_balance_cents": 1195000,
+        "provisional": [
+          "S2-flujo-quincenal"
+        ]
+      },
+      {
+        "fortnight": "2026-10-q2",
+        "start": "2026-10-16",
+        "end": "2026-10-31",
+        "pay_date": "2026-10-30",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 1250000,
+          "income_is_expected": true,
+          "total_cents": 1250000
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 59882,
+            "karen": 37493
+          },
+          "household_cents": 59882,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 59882
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 59882,
+        "balance_cents": 1190118,
+        "cumulative_balance_cents": 2385118,
+        "provisional": null
+      }
+    ],
+    "proyeccion": {
+      "repeat_cadence_enabled": false,
+      "months": [
+        {
+          "index": 1,
+          "month": "2026-10",
+          "accrued": {
+            "total_cents": 194750,
+            "by_person": {
+              "axel": 119764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750
+            }
+          },
+          "cash": {
+            "total_cents": 97375,
+            "payments_cents": 97375,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 59882,
+              "karen": 37493
+            },
+            "by_category": {
+              "despensa": 97375
+            },
+            "payment_count": 1,
+            "payments": [
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 1,
+                "due_date": "2026-10-30",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2445000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2385118,
+          "cumulative_diff_cents": 97375,
+          "provisional": [
+            "S2-flujo-quincenal"
+          ]
+        },
+        {
+          "index": 2,
+          "month": "2026-11",
+          "accrued": {
+            "total_cents": 194750,
+            "by_person": {
+              "axel": 119764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750
+            }
+          },
+          "cash": {
+            "total_cents": 194750,
+            "payments_cents": 194750,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 119764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 2,
+                "due_date": "2026-11-15",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 3,
+                "due_date": "2026-11-30",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2330236,
+          "cumulative_diff_cents": 97375,
+          "provisional": null
+        },
+        {
+          "index": 3,
+          "month": "2026-12",
+          "accrued": {
+            "total_cents": 251737,
+            "by_person": {
+              "axel": 176751,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251737
+            }
+          },
+          "cash": {
+            "total_cents": 223243,
+            "payments_cents": 223243,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 148257,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 223243
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 4,
+                "due_date": "2026-12-15",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 1,
+                "due_date": "2026-12-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2301743,
+          "cumulative_diff_cents": 125869,
+          "provisional": null
+        },
+        {
+          "index": 4,
+          "month": "2027-01",
+          "accrued": {
+            "total_cents": 271637,
+            "by_person": {
+              "axel": 176751,
+              "karen": 94886
+            },
+            "by_category": {
+              "despensa": 251737,
+              "papel": 19900
+            }
+          },
+          "cash": {
+            "total_cents": 271636,
+            "payments_cents": 251736,
+            "cash_expenses_cents": 19900,
+            "by_person": {
+              "axel": 176750,
+              "karen": 94886
+            },
+            "by_category": {
+              "despensa": 251736,
+              "papel": 19900
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 2,
+                "due_date": "2027-01-15",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 3,
+                "due_date": "2027-01-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2273250,
+          "cumulative_diff_cents": 125870,
+          "provisional": null
+        },
+        {
+          "index": 5,
+          "month": "2027-02",
+          "accrued": {
+            "total_cents": 251737,
+            "by_person": {
+              "axel": 176751,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251737
+            }
+          },
+          "cash": {
+            "total_cents": 251738,
+            "payments_cents": 251738,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 176752,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251738
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 4,
+                "due_date": "2027-02-15",
+                "amount_cents": 125870,
+                "shares": {
+                  "axel": 88377,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 1,
+                "due_date": "2027-02-28",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2273248,
+          "cumulative_diff_cents": 125869,
+          "provisional": null
+        },
+        {
+          "index": 6,
+          "month": "2027-03",
+          "accrued": {
+            "total_cents": 271637,
+            "by_person": {
+              "axel": 176751,
+              "karen": 94886
+            },
+            "by_category": {
+              "despensa": 251737,
+              "papel": 19900
+            }
+          },
+          "cash": {
+            "total_cents": 271636,
+            "payments_cents": 251736,
+            "cash_expenses_cents": 19900,
+            "by_person": {
+              "axel": 176750,
+              "karen": 94886
+            },
+            "by_category": {
+              "despensa": 251736,
+              "papel": 19900
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 2,
+                "due_date": "2027-03-15",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 3,
+                "due_date": "2027-03-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2273250,
+          "cumulative_diff_cents": 125870,
+          "provisional": null
+        },
+        {
+          "index": 7,
+          "month": "2027-04",
+          "accrued": {
+            "total_cents": 251737,
+            "by_person": {
+              "axel": 176751,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251737
+            }
+          },
+          "cash": {
+            "total_cents": 251738,
+            "payments_cents": 251738,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 176752,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251738
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 4,
+                "due_date": "2027-04-15",
+                "amount_cents": 125870,
+                "shares": {
+                  "axel": 88377,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 1,
+                "due_date": "2027-04-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2273248,
+          "cumulative_diff_cents": 125869,
+          "provisional": null
+        },
+        {
+          "index": 8,
+          "month": "2027-05",
+          "accrued": {
+            "total_cents": 251737,
+            "by_person": {
+              "axel": 176751,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251737
+            }
+          },
+          "cash": {
+            "total_cents": 251736,
+            "payments_cents": 251736,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 176750,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251736
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 2,
+                "due_date": "2027-05-15",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 3,
+                "due_date": "2027-05-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2273250,
+          "cumulative_diff_cents": 125870,
+          "provisional": null
+        },
+        {
+          "index": 9,
+          "month": "2027-06",
+          "accrued": {
+            "total_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {}
+          },
+          "cash": {
+            "total_cents": 125870,
+            "payments_cents": 125870,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 88377,
+              "karen": 37493
+            },
+            "by_category": {
+              "despensa": 125870
+            },
+            "payment_count": 1,
+            "payments": [
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 4,
+                "due_date": "2027-06-15",
+                "amount_cents": 125870,
+                "shares": {
+                  "axel": 88377,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2361623,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        },
+        {
+          "index": 10,
+          "month": "2027-07",
+          "accrued": {
+            "total_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {}
+          },
+          "cash": {
+            "total_cents": 0,
+            "payments_cents": 0,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {},
+            "payment_count": 0,
+            "payments": []
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2450000,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        },
+        {
+          "index": 11,
+          "month": "2027-08",
+          "accrued": {
+            "total_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {}
+          },
+          "cash": {
+            "total_cents": 0,
+            "payments_cents": 0,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {},
+            "payment_count": 0,
+            "payments": []
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2450000,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        },
+        {
+          "index": 12,
+          "month": "2027-09",
+          "accrued": {
+            "total_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {}
+          },
+          "cash": {
+            "total_cents": 0,
+            "payments_cents": 0,
+            "cash_expenses_cents": 0,
+            "by_person": {
+              "axel": 0,
+              "karen": 0
+            },
+            "by_category": {},
+            "payment_count": 0,
+            "payments": []
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 0,
+          "net_cash_cents": 2450000,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        }
+      ]
+    }
+  }
+}

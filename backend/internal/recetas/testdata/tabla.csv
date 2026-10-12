@@ -1,0 +1,13 @@
+producto_id,kcal_100g,proteina_g,grasa_g,carbohidratos_g,fuente,id_fuente,nombre_fuente,fecha,estado,confirmo,fecha_confirmacion
+espagueti,371,,,,USDA,100001,"Pasta, dry, unenriched",2026-10-11,confirmado,axel,2026-10-11
+atun,116,,,,OFF,7501000000017,Atun en agua,2026-10-11,confirmado,axel,2026-10-11
+elote,81.5,,,,manual,"Etiqueta de prueba, lata 220 g",,2026-10-11,confirmado,axel,2026-10-11
+aceite-oliva,884,,,,USDA,100002,"Oil, olive, salad or cooking",2026-10-11,confirmado,axel,2026-10-11
+jitomate,18,,,,USDA,100003,"Tomatoes, red, ripe, raw",2026-10-11,confirmado,axel,2026-10-11
+huevo,143,1.5,,,USDA,100004,"Egg, whole, raw, fresh",2026-10-11,confirmado,axel,2026-10-11
+cebolla,40,,,,USDA,100005,"Onions, raw",2026-10-11,confirmado,axel,2026-10-11
+aceite-soya,884,,,,USDA,100006,"Oil, soybean",2026-10-11,confirmado,axel,2026-10-11
+tortilla,218,,,,manual,"Tabla de prueba, página 1",,2026-10-11,propuesto,,
+arroz,365,,,,USDA,100007,"Rice, white, long-grain, raw",2026-10-11,confirmado,axel,2026-10-11
+sal,0,,,,USDA,100008,"Salt, table",2026-10-11,confirmado,axel,2026-10-11
+pollo,172.25,,,,USDA,100009,"Chicken, drumstick, raw",2026-10-11,confirmado,axel,2026-10-11

@@ -1,0 +1,162 @@
+# producto_id	fuente	id_fuente	confianza	nota
+# fuente: USDA | OFF | SIN_FUENTE. confianza: alta | media | baja. Escrito a mano; ver PROCEDENCIA.md para las reglas de empate.
+aceite-oliva	USDA	171413	alta	Aceite de oliva; mismo registro que cita el catálogo para la densidad
+aceite-soya	USDA	171411	alta	Aceite de soya; mismo registro que cita el catálogo para la densidad
+frijoles-refritos	USDA	172438	media	Frijoles refritos enlatados estilo tradicional; el producto bayo de La Costeña puede llevar distinta grasa
+duraznos-almibar	USDA	169112	media	Durazno enlatado en almíbar espeso, sólidos y líquido; el almíbar real de la lata puede variar
+cafe-soluble	USDA	171893	alta	Café instantáneo regular en polvo
+jamon-pavo	USDA	172941	media	Pechuga de pavo rebanada empacada; el jamón de pavo procesado puede tener otro contenido
+salchicha-pavo	USDA	171625	media	Salchicha (frankfurter) de pavo; la marca puede variar
+avena	USDA	2346396	alta	Avena en hojuelas a la antigua, cruda
+caldo-pollo-cubos	USDA	171563	media	Cubos de caldo de pollo deshidratado; el catálogo cita 171562 (caldo en polvo, 267 kcal) solo para el peso del cubo
+elote-grano	USDA	169214	media	Elote amarillo enlatado en grano, sólidos escurridos; el producto trae líquido
+atun-agua	USDA	334194	alta	Atún claro enlatado en agua, escurrido
+uva-verde	USDA	2346413	alta	Uva verde sin semilla, cruda
+pan-caja	USDA	325871	media	Pan blanco comercial; el pan de caja integral o multigrano tendría otro valor
+espagueti	USDA	169736	alta	Pasta seca enriquecida, cruda
+queso-manchego	OFF	7501077506585	media	Queso manchego rebanado NocheBuena 500 g (misma marca que el catálogo); dato capturado por usuarios de OFF
+mayonesa-chipotle	OFF	7501003308535	media	Aderezo McCormick chipotle 310 g (misma marca y tamaño que el catálogo); dato de OFF
+salsa-soya	USDA	174277	alta	Salsa de soya shoyu; mismo registro que cita el catálogo
+catsup	USDA	168556	alta	Catsup
+mayonesa	USDA	171009	alta	Aderezo mayonesa regular
+salsa-inglesa	USDA	171610	alta	Salsa Worcestershire; mismo registro que cita el catálogo
+yogur-griego	USDA	2259794	media	Yogur griego natural de leche entera; el producto Yoplait sin azúcar puede traer menos grasa
+yogur-bebible	OFF	7501055900398	media	Yoghurt bebible Alpura fresa 250 g; el catálogo es multi sabor y los sabores casi no cambian los macros; dato de OFF
+petit-suisse	OFF	7501032395100	media	Danonino fresa, uva y durazno 6 pack 252 g (6 por 42 g como el catálogo); otros registros de Danonino en OFF van de 56 a 112 kcal
+arroz-grano-largo	USDA	168877	alta	Arroz blanco grano largo enriquecido, crudo
+sustituto-crema-cafe	USDA	171263	media	Sustituto de crema en polvo; el Coffee Mate líquido tendría otro valor
+leche	USDA	171265	alta	Leche entera 3.25 %; mismo registro que cita el catálogo
+jitomate-saladet	USDA	170457	alta	Jitomate rojo maduro crudo, promedio anual
+tomate-bola	USDA	170457	alta	Jitomate rojo maduro crudo, promedio anual
+tomate-verde	USDA	168566	alta	Tomatillo crudo
+cebolla-blanca	USDA	1104962	alta	Cebolla blanca cruda
+cebolla-morada	USDA	790577	alta	Cebolla morada cruda
+cebolla-cambray	USDA	170005	alta	Cebolla de cambray (cebollitas con rabo), cruda
+ajo	USDA	1104647	alta	Ajo crudo
+jengibre	USDA	169231	alta	Raíz de jengibre cruda
+papa-blanca	USDA	170028	alta	Papa blanca con piel, cruda
+papa-cambray	USDA	170028	media	Papa blanca con piel cruda; la papa cambray es pequeña pero del mismo tipo
+camote	USDA	168482	alta	Camote crudo
+zanahoria	USDA	170393	alta	Zanahoria cruda
+calabacita	USDA	169291	alta	Calabacita italiana con piel, cruda
+calabaza-castilla	USDA	168448	alta	Calabaza cruda
+chayote	USDA	170402	alta	Chayote crudo
+chile-serrano	USDA	169395	alta	Chile serrano crudo
+chile-jalapeno	USDA	168576	alta	Chile jalapeño crudo
+chile-poblano	USDA	2747662	alta	Chile poblano sin semillas, crudo
+chile-habanero	USDA	170497	baja	USDA no trae habanero; chile picante verde crudo como aproximación
+pimiento-morron	USDA	170427	media	Pimiento verde crudo; el morrón rojo trae 26 kcal (170108)
+pepino	USDA	2346406	alta	Pepino con cáscara crudo
+lechuga-romana	USDA	2346389	alta	Lechuga romana cruda
+espinaca	USDA	168462	alta	Espinaca cruda
+acelga	USDA	169991	alta	Acelga cruda
+verdolagas	USDA	169274	alta	Verdolaga cruda
+col-repollo	USDA	2346407	alta	Col verde cruda
+col-morada	USDA	2346408	alta	Col morada cruda
+brocoli	USDA	321900	alta	Brócoli crudo
+coliflor	USDA	2685573	alta	Coliflor cruda
+nopales	USDA	168571	alta	Nopales crudos
+ejotes	USDA	2346400	alta	Ejote verde crudo
+champinones	USDA	169251	alta	Champiñón blanco crudo
+apio	USDA	2346405	alta	Apio crudo
+betabel	USDA	2685576	alta	Betabel crudo
+jicama	USDA	170073	alta	Jícama cruda
+berenjena	USDA	2685577	alta	Berenjena cruda
+cilantro	USDA	169997	alta	Hojas de cilantro crudas
+perejil	USDA	170416	alta	Perejil fresco
+epazote	USDA	169398	alta	Epazote crudo
+hierbabuena	USDA	173475	media	Hierbabuena (spearmint) fresca; la hierbabuena mexicana es otra especie de menta
+elote-mazorca	USDA	169998	alta	Elote amarillo crudo; mismo registro que cita el catálogo
+limon	USDA	168155	alta	Limón verde (lime) crudo; el limón de México es el lime
+aguacate	USDA	171705	alta	Aguacate crudo, todas las variedades comerciales
+naranja	USDA	169097	alta	Naranja cruda, todas las variedades
+mandarina	USDA	169105	alta	Mandarina cruda
+toronja	USDA	173033	alta	Toronja cruda rosa, roja y blanca
+platano	USDA	790991	alta	Plátano maduro crudo
+platano-macho	USDA	2710817	alta	Plátano macho maduro crudo
+manzana	USDA	171688	alta	Manzana cruda con piel, variedad no especificada
+pera	USDA	169118	alta	Pera cruda
+durazno	USDA	325430	alta	Durazno amarillo crudo
+papaya	USDA	169926	alta	Papaya cruda
+sandia	USDA	167765	alta	Sandía cruda
+melon	USDA	327198	alta	Melón cantaloupe crudo
+mango	USDA	169910	alta	Mango crudo
+pina	USDA	2346398	alta	Piña cruda
+fresa	USDA	327699	alta	Fresa cruda
+guayaba	USDA	173044	alta	Guayaba común cruda
+pechuga-pollo	USDA	2646170	alta	Pechuga de pollo sin piel ni hueso, cruda
+pierna-muslo-pollo	USDA	172378	alta	Pierna y muslo de pollo con piel, crudo, sin hueso
+pollo-entero	USDA	171447	media	Pollo con piel crudo, parte comestible sin hueso; el peso entero con hueso rinde menos
+carne-molida-res	USDA	2514743	media	Carne molida 90 % magra cruda; el porcentaje de grasa de la molida de tienda no está en el catálogo
+carne-molida-cerdo	USDA	2514745	alta	Carne molida de cerdo cruda
+bistec-res	USDA	2646173	media	Bola (top round) de res cruda; el corte de bistec varía
+milanesa-res	USDA	2646173	baja	Carne cruda sin empanizar; la milanesa empanizada lleva pan molido y huevo
+falda-res	USDA	2646175	media	Arrachera/flank cruda como equivalente de falda
+chambarete-res	USDA	169441	media	Chambarete (shank) en cruz, solo carne magra, cruda
+costilla-res	USDA	169439	media	Costilla corta de res con grasa, cruda, sin hueso
+chuleta-cerdo	USDA	168238	alta	Chuleta de lomo con grasa, cruda
+carne-cerdo-maciza	USDA	167814	media	Pierna de cerdo con grasa, cruda; maciza no define cuánta grasa trae
+costilla-cerdo	USDA	167853	media	Costilla de cerdo con grasa, cruda, parte comestible
+filete-tilapia	USDA	175176	alta	Tilapia cruda
+huevo	USDA	171287	alta	Huevo entero crudo; mismo registro que cita el catálogo
+queso-fresco	USDA	2647442	alta	Queso fresco
+queso-oaxaca	USDA	2647441	alta	Queso Oaxaca
+queso-panela	OFF	7501002201646	media	Queso panela Caperucita; el catálogo no fija marca y los panela de OFF van de 210 a 284 kcal
+queso-cotija	USDA	2647443	alta	Queso cotija
+queso-chihuahua	USDA	2647438	media	Monterey Jack como equivalente del Chihuahua
+queso-crema	USDA	173418	alta	Queso crema
+requeson	USDA	323444	media	Ricotta de leche entera como equivalente del requesón
+crema-acida	USDA	2346387	media	Crema ácida entera; la crema mexicana de mesa es parecida pero no igual
+mantequilla	USDA	173410	alta	Mantequilla con sal
+tocino	USDA	168277	alta	Tocino crudo
+chorizo	USDA	173859	alta	Chorizo de cerdo crudo
+bolillo	USDA	175031	alta	Pan duro tipo kaiser; mismo registro que cita el catálogo
+tortilla-maiz	USDA	175036	alta	Tortilla de maíz
+tortilla-harina	USDA	173242	alta	Tortilla de harina; mismo registro que cita el catálogo
+tostadas	USDA	167525	alta	Tostadas de maíz; mismo registro que cita el catálogo
+sal	USDA	746775	alta	Sal de mesa
+azucar	USDA	334247	alta	Azúcar granulada
+piloncillo	USDA	168833	media	Azúcar morena como equivalente; el piloncillo no está en USDA
+harina-trigo	USDA	789890	alta	Harina de trigo de uso general enriquecida
+harina-maiz	USDA	2710835	alta	Harina de maíz nixtamalizado (masa harina)
+pan-molido	USDA	174928	alta	Pan molido seco natural
+frijol-bayo	USDA	175199	media	Frijol pinto crudo como equivalente del bayo
+frijol-negro	USDA	173734	alta	Frijol negro crudo
+lenteja	USDA	172420	alta	Lenteja cruda
+garbanzo	USDA	2644282	alta	Garbanzo seco
+sopa-fideo	USDA	169736	alta	Pasta seca enriquecida
+sopa-codo	USDA	169736	alta	Pasta seca enriquecida
+sopa-pluma	USDA	169736	alta	Pasta seca enriquecida
+sopa-estrellitas	USDA	169736	alta	Pasta seca enriquecida
+pure-tomate	USDA	2685582	alta	Puré de tomate enlatado
+chipotle-adobo	OFF	7501017006021	baja	Chipotles adobados La Costeña 105 g; otro registro de La Costeña dice 73 kcal (7501017057887) y el catálogo no fija marca
+jalapenos-escabeche	USDA	170080	media	Jalapeño enlatado, sólidos y líquido; el escabeche mexicano lleva zanahoria y vinagre
+chile-guajillo	USDA	168570	media	Chile picante seco al sol como equivalente del guajillo
+chile-ancho	USDA	169396	alta	Chile ancho seco
+chile-pasilla	USDA	168579	alta	Chile pasilla seco
+chile-arbol	USDA	168570	media	Chile picante seco al sol como equivalente del chile de árbol
+pimienta-negra	USDA	170931	alta	Pimienta negra
+comino	USDA	170923	alta	Comino (semilla; molido tiene el mismo valor)
+oregano	USDA	171328	alta	Orégano seco
+laurel	USDA	170917	alta	Hoja de laurel
+canela	USDA	171320	alta	Canela molida; en raja tiene el mismo valor
+vinagre-blanco	USDA	172237	alta	Vinagre destilado; mismo registro que cita el catálogo
+sardina-lata	USDA	175140	alta	Sardina del Pacífico en salsa de tomate, escurrida con espinas
+maiz-pozolero	USDA	169701	alta	Hominy (maíz pozolero) enlatado blanco
+leche-evaporada	USDA	171276	alta	Leche evaporada entera enlatada
+chocolate-mesa	OFF	7501014300405	media	Chocolate para mesa Ibarra tradicional 630 g; el catálogo no fija marca y los de OFF van de 437 a 475 kcal
+jamaica	USDA	168170	baja	Roselle (jamaica) cruda; la flor seca que se vende trae otro valor
+polvo-hornear	USDA	172804	media	Polvo para hornear de fosfato directo; el de doble acción con sulfato de aluminio es 53 kcal
+bicarbonato	USDA	175040	alta	Bicarbonato de sodio
+maizena	USDA	169698	alta	Almidón de maíz
+cafe-molido	OFF	7503035511143	baja	Café molido Vips 400 g; mismo valor 396.6 en tres productos de OFF y el café seco no tiene registro en USDA; revisar qué valor usar
+blanqueador	SIN_FUENTE		alta	No es alimento: producto de limpieza
+pasta-dental	SIN_FUENTE		alta	No es alimento: producto de higiene
+jabon-manos	SIN_FUENTE		alta	No es alimento: producto de higiene
+acondicionador	SIN_FUENTE		alta	No es alimento: producto de higiene
+desinfectante-aerosol	SIN_FUENTE		alta	No es alimento: producto de limpieza
+detergente-polvo	SIN_FUENTE		alta	No es alimento: producto de limpieza
+jabon-trastes	SIN_FUENTE		alta	No es alimento: producto de limpieza
+papel-higienico	SIN_FUENTE		alta	No es alimento: papel
+servilletas	SIN_FUENTE		alta	No es alimento: papel
+toallas-papel	SIN_FUENTE		alta	No es alimento: papel

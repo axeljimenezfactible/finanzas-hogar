@@ -1,0 +1,72 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-periodos-p6",
+  "descripcion": "Mes calendario 2027-03 con la semilla; reproduce P6 (S2-09, nota (e) de S2.md §6)",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "periodos[5]"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-01"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-09"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "periodos[5]",
+        "funcion": "vista_periodo",
+        "argumentos": {
+          "month": "2027-03"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "periodos[5]": {
+      "despensa_que_cubre": 3,
+      "devengado": {
+        "despensa_total": 251737,
+        "papel_contado": 19900,
+        "total": 271637,
+        "axel": 176751,
+        "karen": 94886
+      },
+      "efectivo": {
+        "pagos": 251736,
+        "papel": 19900,
+        "total": 271636,
+        "axel": 176750,
+        "karen": 94886,
+        "n_pagos": 2,
+        "detalle_pagos": [
+          {
+            "despensa": 3,
+            "fecha": "2027-03-15",
+            "monto": 125868,
+            "axel": 88375,
+            "karen": 37493
+          },
+          {
+            "despensa": 3,
+            "fecha": "2027-03-30",
+            "monto": 125868,
+            "axel": 88375,
+            "karen": 37493
+          }
+        ]
+      },
+      "diferencia_acumulada": 125870
+    }
+  }
+}

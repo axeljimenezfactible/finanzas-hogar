@@ -1,0 +1,728 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-unificado",
+  "descripcion": "Lo mismo con un corte de banco del 5-nov-2026 (pago el 25-nov) de 1,825.00: sustituye al cargo normal (1,500.00) y a la primera mensualidad MSI (300.00), con capital 1,800.00 e interés 25.00; suma del calendario = programados no sustituidos + saldo del corte",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S3-11"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S3-formula-tarjeta.md",
+    "que": "fechas de los pagos de la tarjeta (pregunta 4) y el corte que sustituye pagos; otros bloqueos: docs/estado/bloqueos/S3-convencion-prestamo.md (tasa del periodo del préstamo), docs/estado/bloqueos/S3-serie-sin-intereses.md (serie de capital de MSI y de la tienda sin interés)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [
+        {
+          "credit": {
+            "id": 1,
+            "name": "Kueski",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 1000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-10-10",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 53450,
+                  "den": 309450,
+                  "decimales": 2
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 80050,
+                  "den": 309450,
+                  "decimales": 4
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": []
+          },
+          "purchases": [
+            {
+              "ref": "d1",
+              "status": "active",
+              "input": {
+                "date": "2026-10-10",
+                "principal_cents": 309450,
+                "term_count": 4,
+                "quoted_interest_cents": 80050,
+                "rate_decimals": 4,
+                "promotion_id": null,
+                "store_id": null,
+                "merchant": "",
+                "first_payment_date": null,
+                "shares": [
+                  {
+                    "person": "axel",
+                    "external": false,
+                    "principal_cents": 190300,
+                    "joint_cents": 85100,
+                    "paper_in_cents": 0
+                  },
+                  {
+                    "person": "karen",
+                    "external": true,
+                    "principal_cents": 119150,
+                    "joint_cents": 85100,
+                    "paper_in_cents": 19900
+                  }
+                ]
+              }
+            }
+          ],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 2,
+            "name": "Tarjeta con datos",
+            "kind": "bank_card",
+            "holder": "axel",
+            "limit_cents": 2000000,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": 5,
+            "payment_due_day": 25,
+            "annual_rate": {
+              "num": 455,
+              "den": 1000,
+              "decimales": 1
+            },
+            "rate_base": "daily",
+            "vat_on_interest_bp": 1600,
+            "min_payment_pct_bp": 500,
+            "min_payment_fixed_cents": 20000,
+            "term_rates": [],
+            "promotions": [
+              {
+                "id": 21,
+                "credit_id": 2,
+                "merchant": "Liverpool",
+                "store_id": null,
+                "term_count": 3,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 90000,
+                "valid_from": "2026-10-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [
+            {
+              "ref": "c1",
+              "status": "active",
+              "input": {
+                "date": "2026-10-12",
+                "principal_cents": 150000,
+                "term_count": 1,
+                "quoted_interest_cents": null,
+                "rate_decimals": null,
+                "promotion_id": null,
+                "store_id": null,
+                "merchant": "",
+                "first_payment_date": null,
+                "shares": [
+                  {
+                    "person": "axel",
+                    "external": false,
+                    "principal_cents": 150000,
+                    "joint_cents": null,
+                    "paper_in_cents": null
+                  }
+                ]
+              }
+            },
+            {
+              "ref": "c2",
+              "status": "active",
+              "input": {
+                "date": "2026-10-20",
+                "principal_cents": 90000,
+                "term_count": 3,
+                "quoted_interest_cents": null,
+                "rate_decimals": null,
+                "promotion_id": 21,
+                "store_id": null,
+                "merchant": "Liverpool",
+                "first_payment_date": null,
+                "shares": [
+                  {
+                    "person": "axel",
+                    "external": false,
+                    "principal_cents": 90000,
+                    "joint_cents": null,
+                    "paper_in_cents": null
+                  }
+                ]
+              }
+            }
+          ],
+          "payments": [],
+          "statements": [
+            {
+              "statement_date": "2026-11-05",
+              "due_date": "2026-11-25",
+              "balance_cents": 182500,
+              "daily_balances_cents": [],
+              "source": "bank"
+            }
+          ]
+        },
+        {
+          "credit": {
+            "id": 3,
+            "name": "Préstamo",
+            "kind": "term_loan",
+            "holder": "axel",
+            "limit_cents": null,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": {
+              "num": 24,
+              "den": 100,
+              "decimales": 0
+            },
+            "rate_base": "",
+            "vat_on_interest_bp": 1600,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [],
+            "promotions": []
+          },
+          "purchases": [
+            {
+              "ref": "l1",
+              "status": "active",
+              "input": {
+                "date": "2026-10-15",
+                "principal_cents": 100000,
+                "term_count": 3,
+                "quoted_interest_cents": null,
+                "rate_decimals": null,
+                "promotion_id": null,
+                "store_id": null,
+                "merchant": "",
+                "first_payment_date": "2026-11-15",
+                "shares": [
+                  {
+                    "person": "axel",
+                    "external": false,
+                    "principal_cents": 100000,
+                    "joint_cents": null,
+                    "paper_in_cents": null
+                  }
+                ]
+              }
+            }
+          ],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 4,
+            "name": "Tienda sin interés",
+            "kind": "store_credit",
+            "holder": "axel",
+            "limit_cents": null,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 3,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": []
+          },
+          "purchases": [
+            {
+              "ref": "s1",
+              "status": "active",
+              "input": {
+                "date": "2026-10-20",
+                "principal_cents": 60000,
+                "term_count": 3,
+                "quoted_interest_cents": null,
+                "rate_decimals": null,
+                "promotion_id": null,
+                "store_id": null,
+                "merchant": "",
+                "first_payment_date": "2026-11-20",
+                "shares": [
+                  {
+                    "person": "axel",
+                    "external": false,
+                    "principal_cents": 60000,
+                    "joint_cents": null,
+                    "paper_in_cents": null
+                  }
+                ]
+              }
+            }
+          ],
+          "payments": [],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "calendario",
+        "funcion": "calendario_unificado",
+        "argumentos": {
+          "from": "2026-10-10",
+          "to": "2027-01-31"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "calendario": {
+      "entries": [
+        {
+          "date": "2026-10-30",
+          "credit_id": 1,
+          "credit_kind": "revolving_line",
+          "source": "scheduled",
+          "purchase_ref": "d1",
+          "seq": 1,
+          "statement_date": null,
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "status": "pending",
+          "provisional": []
+        },
+        {
+          "date": "2026-11-15",
+          "credit_id": 1,
+          "credit_kind": "revolving_line",
+          "source": "scheduled",
+          "purchase_ref": "d1",
+          "seq": 2,
+          "statement_date": null,
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "status": "pending",
+          "provisional": []
+        },
+        {
+          "date": "2026-11-15",
+          "credit_id": 3,
+          "credit_kind": "term_loan",
+          "source": "scheduled",
+          "purchase_ref": "l1",
+          "seq": 1,
+          "statement_date": null,
+          "amount_cents": 34892,
+          "principal_cents": 32572,
+          "interest_cents": 2320,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 34892
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-convencion-prestamo"
+          ]
+        },
+        {
+          "date": "2026-11-20",
+          "credit_id": 4,
+          "credit_kind": "store_credit",
+          "source": "scheduled",
+          "purchase_ref": "s1",
+          "seq": 1,
+          "statement_date": null,
+          "amount_cents": 20000,
+          "principal_cents": 20000,
+          "interest_cents": 0,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 20000
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-serie-sin-intereses"
+          ]
+        },
+        {
+          "date": "2026-11-25",
+          "credit_id": 2,
+          "credit_kind": "bank_card",
+          "source": "statement",
+          "purchase_ref": "",
+          "seq": 0,
+          "statement_date": "2026-11-05",
+          "amount_cents": 182500,
+          "principal_cents": 180000,
+          "interest_cents": 2500,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 182500
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-formula-tarjeta"
+          ]
+        },
+        {
+          "date": "2026-11-30",
+          "credit_id": 1,
+          "credit_kind": "revolving_line",
+          "source": "scheduled",
+          "purchase_ref": "d1",
+          "seq": 3,
+          "statement_date": null,
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "status": "pending",
+          "provisional": []
+        },
+        {
+          "date": "2026-12-15",
+          "credit_id": 1,
+          "credit_kind": "revolving_line",
+          "source": "scheduled",
+          "purchase_ref": "d1",
+          "seq": 4,
+          "statement_date": null,
+          "amount_cents": 97375,
+          "principal_cents": 77361,
+          "interest_cents": 20014,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "status": "pending",
+          "provisional": []
+        },
+        {
+          "date": "2026-12-15",
+          "credit_id": 3,
+          "credit_kind": "term_loan",
+          "source": "scheduled",
+          "purchase_ref": "l1",
+          "seq": 2,
+          "statement_date": null,
+          "amount_cents": 34892,
+          "principal_cents": 33328,
+          "interest_cents": 1564,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 34892
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-convencion-prestamo"
+          ]
+        },
+        {
+          "date": "2026-12-20",
+          "credit_id": 4,
+          "credit_kind": "store_credit",
+          "source": "scheduled",
+          "purchase_ref": "s1",
+          "seq": 2,
+          "statement_date": null,
+          "amount_cents": 20000,
+          "principal_cents": 20000,
+          "interest_cents": 0,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 20000
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-serie-sin-intereses"
+          ]
+        },
+        {
+          "date": "2026-12-25",
+          "credit_id": 2,
+          "credit_kind": "bank_card",
+          "source": "scheduled",
+          "purchase_ref": "c2",
+          "seq": 2,
+          "statement_date": null,
+          "amount_cents": 30000,
+          "principal_cents": 30000,
+          "interest_cents": 0,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 30000
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-formula-tarjeta",
+            "S3-serie-sin-intereses"
+          ]
+        },
+        {
+          "date": "2027-01-15",
+          "credit_id": 3,
+          "credit_kind": "term_loan",
+          "source": "scheduled",
+          "purchase_ref": "l1",
+          "seq": 3,
+          "statement_date": null,
+          "amount_cents": 34891,
+          "principal_cents": 34100,
+          "interest_cents": 791,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 34891
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-convencion-prestamo"
+          ]
+        },
+        {
+          "date": "2027-01-20",
+          "credit_id": 4,
+          "credit_kind": "store_credit",
+          "source": "scheduled",
+          "purchase_ref": "s1",
+          "seq": 3,
+          "statement_date": null,
+          "amount_cents": 20000,
+          "principal_cents": 20000,
+          "interest_cents": 0,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 20000
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-serie-sin-intereses"
+          ]
+        },
+        {
+          "date": "2027-01-25",
+          "credit_id": 2,
+          "credit_kind": "bank_card",
+          "source": "scheduled",
+          "purchase_ref": "c2",
+          "seq": 3,
+          "statement_date": null,
+          "amount_cents": 30000,
+          "principal_cents": 30000,
+          "interest_cents": 0,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 30000
+            }
+          ],
+          "status": "pending",
+          "provisional": [
+            "S3-formula-tarjeta",
+            "S3-serie-sin-intereses"
+          ]
+        }
+      ],
+      "by_fortnight": [
+        {
+          "pay_day": "2026-10-30",
+          "total_cents": 97375,
+          "by_person": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ]
+        },
+        {
+          "pay_day": "2026-11-15",
+          "total_cents": 132267,
+          "by_person": [
+            {
+              "person": "axel",
+              "amount_cents": 94774
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ]
+        },
+        {
+          "pay_day": "2026-11-30",
+          "total_cents": 299875,
+          "by_person": [
+            {
+              "person": "axel",
+              "amount_cents": 262382
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ]
+        },
+        {
+          "pay_day": "2026-12-15",
+          "total_cents": 132267,
+          "by_person": [
+            {
+              "person": "axel",
+              "amount_cents": 94774
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ]
+        },
+        {
+          "pay_day": "2026-12-30",
+          "total_cents": 50000,
+          "by_person": [
+            {
+              "person": "axel",
+              "amount_cents": 50000
+            }
+          ]
+        },
+        {
+          "pay_day": "2027-01-15",
+          "total_cents": 34891,
+          "by_person": [
+            {
+              "person": "axel",
+              "amount_cents": 34891
+            }
+          ]
+        },
+        {
+          "pay_day": "2027-01-30",
+          "total_cents": 50000,
+          "by_person": [
+            {
+              "person": "axel",
+              "amount_cents": 50000
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-presupuesto-scope",
+  "descripcion": "Cambio de presupuesto con alcance (K2), plan contra real (M-14) y el ejemplo de RN-22; resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "decision",
+      "ruta": "K2"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-22"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-11"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "periodos[0].devengado.axel"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "periodos[2].devengado.axel"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "budgets": [
+          {
+            "id": 1,
+            "category": "despensa",
+            "amount_cents": 200000,
+            "valid_from": "2026-10-01",
+            "valid_to": null
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "onward-dic",
+        "funcion": "aplicar_cambio_presupuesto",
+        "argumentos": {
+          "row_id": 1,
+          "month": "2026-12",
+          "amount_cents": 250000,
+          "scope": "onward"
+        }
+      },
+      {
+        "id": "solo-dic",
+        "funcion": "aplicar_cambio_presupuesto",
+        "argumentos": {
+          "row_id": 1,
+          "month": "2026-12",
+          "amount_cents": 250000,
+          "scope": "this_month"
+        }
+      },
+      {
+        "id": "sin-alcance-dic",
+        "funcion": "aplicar_cambio_presupuesto",
+        "argumentos": {
+          "row_id": 1,
+          "month": "2026-12",
+          "amount_cents": 250000
+        }
+      },
+      {
+        "id": "solo-oct-inicio",
+        "funcion": "aplicar_cambio_presupuesto",
+        "argumentos": {
+          "row_id": 1,
+          "month": "2026-10",
+          "amount_cents": 180000,
+          "scope": "this_month"
+        }
+      },
+      {
+        "id": "fuera-de-vigencia",
+        "funcion": "aplicar_cambio_presupuesto",
+        "argumentos": {
+          "row_id": 1,
+          "month": "2026-09",
+          "amount_cents": 180000
+        }
+      },
+      {
+        "id": "dic-2026",
+        "funcion": "presupuesto_mes",
+        "argumentos": {
+          "month": "2026-12"
+        }
+      },
+      {
+        "id": "oct-2026",
+        "funcion": "presupuesto_mes",
+        "argumentos": {
+          "month": "2026-10"
+        }
+      },
+      {
+        "id": "plan-real",
+        "funcion": "plan_contra_real",
+        "argumentos": {
+          "from": "2026-10",
+          "count": 3,
+          "category": "despensa"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "onward-dic": {
+      "rows": [
+        {
+          "id": 1,
+          "category": "despensa",
+          "amount_cents": 200000,
+          "valid_from": "2026-10-01",
+          "valid_to": "2026-11-30"
+        },
+        {
+          "id": 2,
+          "category": "despensa",
+          "amount_cents": 250000,
+          "valid_from": "2026-12-01",
+          "valid_to": null
+        }
+      ],
+      "effective_row_id": 2,
+      "deleted_row_ids": []
+    },
+    "solo-dic": {
+      "rows": [
+        {
+          "id": 1,
+          "category": "despensa",
+          "amount_cents": 200000,
+          "valid_from": "2026-10-01",
+          "valid_to": "2026-11-30"
+        },
+        {
+          "id": 2,
+          "category": "despensa",
+          "amount_cents": 250000,
+          "valid_from": "2026-12-01",
+          "valid_to": "2026-12-31"
+        },
+        {
+          "id": 3,
+          "category": "despensa",
+          "amount_cents": 200000,
+          "valid_from": "2027-01-01",
+          "valid_to": null
+        }
+      ],
+      "effective_row_id": 2,
+      "deleted_row_ids": []
+    },
+    "sin-alcance-dic": {
+      "rows": [
+        {
+          "id": 1,
+          "category": "despensa",
+          "amount_cents": 200000,
+          "valid_from": "2026-10-01",
+          "valid_to": "2026-11-30"
+        },
+        {
+          "id": 2,
+          "category": "despensa",
+          "amount_cents": 250000,
+          "valid_from": "2026-12-01",
+          "valid_to": null
+        }
+      ],
+      "effective_row_id": 2,
+      "deleted_row_ids": []
+    },
+    "solo-oct-inicio": {
+      "rows": [
+        {
+          "id": 1,
+          "category": "despensa",
+          "amount_cents": 180000,
+          "valid_from": "2026-10-01",
+          "valid_to": "2026-10-31"
+        },
+        {
+          "id": 2,
+          "category": "despensa",
+          "amount_cents": 200000,
+          "valid_from": "2026-11-01",
+          "valid_to": null
+        }
+      ],
+      "effective_row_id": 1,
+      "deleted_row_ids": []
+    },
+    "fuera-de-vigencia": {
+      "error": "out_of_range"
+    },
+    "dic-2026": {
+      "month": "2026-12",
+      "days_in_month": 31,
+      "days_left": 31,
+      "categories": [
+        {
+          "category": "despensa",
+          "plan_cents": 200000,
+          "actual_cents": 176751,
+          "remaining_cents": 23249,
+          "used_pct": 88,
+          "warning": true,
+          "limit": false,
+          "state": "warning"
+        },
+        {
+          "category": "papel",
+          "plan_cents": null,
+          "actual_cents": 0,
+          "remaining_cents": null,
+          "used_pct": null,
+          "warning": false,
+          "limit": false,
+          "state": "no_plan"
+        }
+      ],
+      "total": {
+        "plan_cents": 200000,
+        "actual_cents": 176751,
+        "remaining_cents": 23249,
+        "used_pct": 88,
+        "warning": true,
+        "limit": false,
+        "state": "warning",
+        "declared_total_row_cents": null
+      },
+      "accrued_household_cents": 176751,
+      "cash_household_cents": 148257
+    },
+    "oct-2026": {
+      "month": "2026-10",
+      "days_in_month": 31,
+      "days_left": 21,
+      "categories": [
+        {
+          "category": "despensa",
+          "plan_cents": 200000,
+          "actual_cents": 119764,
+          "remaining_cents": 80236,
+          "used_pct": 60,
+          "warning": false,
+          "limit": false,
+          "state": "normal"
+        },
+        {
+          "category": "papel",
+          "plan_cents": null,
+          "actual_cents": 0,
+          "remaining_cents": null,
+          "used_pct": null,
+          "warning": false,
+          "limit": false,
+          "state": "no_plan"
+        }
+      ],
+      "total": {
+        "plan_cents": 200000,
+        "actual_cents": 119764,
+        "remaining_cents": 80236,
+        "used_pct": 60,
+        "warning": false,
+        "limit": false,
+        "state": "normal",
+        "declared_total_row_cents": null
+      },
+      "accrued_household_cents": 119764,
+      "cash_household_cents": 59882
+    },
+    "plan-real": [
+      {
+        "month": "2026-10",
+        "plan_cents": 200000,
+        "actual_cents": 119764
+      },
+      {
+        "month": "2026-11",
+        "plan_cents": 200000,
+        "actual_cents": 119764
+      },
+      {
+        "month": "2026-12",
+        "plan_cents": 200000,
+        "actual_cents": 176751
+      }
+    ]
+  }
+}

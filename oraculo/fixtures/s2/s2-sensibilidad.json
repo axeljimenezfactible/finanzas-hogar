@@ -1,0 +1,237 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-sensibilidad",
+  "descripcion": "Cruce con S3: valor estable con la despensa de N (5 filas de sensibilidad, 15 hojas)",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "sensibilidad[0]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "sensibilidad[1]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "sensibilidad[2]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "sensibilidad[3]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "sensibilidad[4]"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-03"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "sensibilidad[0]",
+        "funcion": "vista_sensibilidad",
+        "argumentos": {
+          "items": [
+            {
+              "label": "despensa",
+              "cycle_months": 2,
+              "total_cents": 377605,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 149972
+                },
+                {
+                  "person": "axel",
+                  "total_cents": 227633
+                }
+              ]
+            },
+            {
+              "label": "papel_contado",
+              "cycle_months": 2,
+              "total_cents": 19900,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 19900
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "sensibilidad[1]",
+        "funcion": "vista_sensibilidad",
+        "argumentos": {
+          "items": [
+            {
+              "label": "despensa",
+              "cycle_months": 2,
+              "total_cents": 440540,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 149972
+                },
+                {
+                  "person": "axel",
+                  "total_cents": 290568
+                }
+              ]
+            },
+            {
+              "label": "papel_contado",
+              "cycle_months": 2,
+              "total_cents": 19900,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 19900
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "sensibilidad[2]",
+        "funcion": "vista_sensibilidad",
+        "argumentos": {
+          "items": [
+            {
+              "label": "despensa",
+              "cycle_months": 2,
+              "total_cents": 503474,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 149972
+                },
+                {
+                  "person": "axel",
+                  "total_cents": 353502
+                }
+              ]
+            },
+            {
+              "label": "papel_contado",
+              "cycle_months": 2,
+              "total_cents": 19900,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 19900
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "sensibilidad[3]",
+        "funcion": "vista_sensibilidad",
+        "argumentos": {
+          "items": [
+            {
+              "label": "despensa",
+              "cycle_months": 2,
+              "total_cents": 566408,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 149972
+                },
+                {
+                  "person": "axel",
+                  "total_cents": 416436
+                }
+              ]
+            },
+            {
+              "label": "papel_contado",
+              "cycle_months": 2,
+              "total_cents": 19900,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 19900
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "sensibilidad[4]",
+        "funcion": "vista_sensibilidad",
+        "argumentos": {
+          "items": [
+            {
+              "label": "despensa",
+              "cycle_months": 2,
+              "total_cents": 629342,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 149972
+                },
+                {
+                  "person": "axel",
+                  "total_cents": 479370
+                }
+              ]
+            },
+            {
+              "label": "papel_contado",
+              "cycle_months": 2,
+              "total_cents": 19900,
+              "shares": [
+                {
+                  "person": "karen",
+                  "total_cents": 19900
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "sensibilidad[0]": {
+      "costo_mensual_total": 198753,
+      "axel_mensual": 113817,
+      "karen_mensual": 84936
+    },
+    "sensibilidad[1]": {
+      "costo_mensual_total": 230220,
+      "axel_mensual": 145284,
+      "karen_mensual": 84936
+    },
+    "sensibilidad[2]": {
+      "costo_mensual_total": 261687,
+      "axel_mensual": 176751,
+      "karen_mensual": 84936
+    },
+    "sensibilidad[3]": {
+      "costo_mensual_total": 293154,
+      "axel_mensual": 208218,
+      "karen_mensual": 84936
+    },
+    "sensibilidad[4]": {
+      "costo_mensual_total": 324621,
+      "axel_mensual": 239685,
+      "karen_mensual": 84936
+    }
+  }
+}

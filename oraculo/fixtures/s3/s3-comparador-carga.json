@@ -1,0 +1,804 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-comparador-carga",
+  "descripcion": "Comparador, carga (S3-12, tiempo de §8.7): rejilla sintética de §10.0 con capturas de fixture, no valores de Axel: 6 líneas tipo Kueski de 100,000.00 sin compras, plazos 2 a 14 quincenas con tasa t × 3 % (7 plazos), una promoción 0 % a 4 q por crédito en su tienda (vigente del 1-nov al 31-dic-2026), 6 tiendas, compra de 2,000.00 deseada el 20-nov-2026 con ventana de ± 7 días, restricciones 0.00 / 10 / 4-feb-2028 / 7 y tope de Axel 1,000.00. Cuenta a mano: 15 fechas (13 al 27-nov) × 6 tiendas × 7 plazos = 630 por crédito, más 15 con la promoción (sus 15 fechas, solo en su tienda): 6 × (630 + 15) = 3,870 evaluados; todas las restricciones se cumplen, así que status «ok». Solo se fijan status y evaluated_count (el resto no cabe en una tabla a mano; S3-escenarios.md §5).",
+  "fuente": [
+    {
+      "tipo": "manual",
+      "ruta": "docs/estado/S3-escenarios.md"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-12"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S3-objetivos-medida.md",
+    "que": "serie y desempate del objetivo 2, ventana del colchón y del objetivo 3, tienda y canasta del objetivo 4 y créditos sin límite (preguntas 1 a 4); otros bloqueos: docs/estado/bloqueos/S3-serie-sin-intereses.md (serie de capital de la promoción 0 % y de MSI)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-11-01",
+      "credits": [
+        {
+          "credit": {
+            "id": 1,
+            "name": "Línea",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 10000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-11-01",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 6,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 12,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 6,
+                "rate": {
+                  "num": 18,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 8,
+                "rate": {
+                  "num": 24,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 10,
+                "rate": {
+                  "num": 30,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 12,
+                "rate": {
+                  "num": 36,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 14,
+                "rate": {
+                  "num": 42,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": [
+              {
+                "id": 1,
+                "credit_id": 1,
+                "merchant": "Tienda",
+                "store_id": 1,
+                "term_count": 4,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 0,
+                "valid_from": "2026-11-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 2,
+            "name": "Línea",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 10000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-11-01",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 6,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 12,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 6,
+                "rate": {
+                  "num": 18,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 8,
+                "rate": {
+                  "num": 24,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 10,
+                "rate": {
+                  "num": 30,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 12,
+                "rate": {
+                  "num": 36,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 14,
+                "rate": {
+                  "num": 42,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": [
+              {
+                "id": 2,
+                "credit_id": 2,
+                "merchant": "Tienda",
+                "store_id": 2,
+                "term_count": 4,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 0,
+                "valid_from": "2026-11-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 3,
+            "name": "Línea",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 10000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-11-01",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 6,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 12,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 6,
+                "rate": {
+                  "num": 18,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 8,
+                "rate": {
+                  "num": 24,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 10,
+                "rate": {
+                  "num": 30,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 12,
+                "rate": {
+                  "num": 36,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 14,
+                "rate": {
+                  "num": 42,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": [
+              {
+                "id": 3,
+                "credit_id": 3,
+                "merchant": "Tienda",
+                "store_id": 3,
+                "term_count": 4,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 0,
+                "valid_from": "2026-11-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 4,
+            "name": "Línea",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 10000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-11-01",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 6,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 12,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 6,
+                "rate": {
+                  "num": 18,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 8,
+                "rate": {
+                  "num": 24,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 10,
+                "rate": {
+                  "num": 30,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 12,
+                "rate": {
+                  "num": 36,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 14,
+                "rate": {
+                  "num": 42,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": [
+              {
+                "id": 4,
+                "credit_id": 4,
+                "merchant": "Tienda",
+                "store_id": 4,
+                "term_count": 4,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 0,
+                "valid_from": "2026-11-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 5,
+            "name": "Línea",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 10000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-11-01",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 6,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 12,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 6,
+                "rate": {
+                  "num": 18,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 8,
+                "rate": {
+                  "num": 24,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 10,
+                "rate": {
+                  "num": 30,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 12,
+                "rate": {
+                  "num": 36,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 14,
+                "rate": {
+                  "num": 42,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": [
+              {
+                "id": 5,
+                "credit_id": 5,
+                "merchant": "Tienda",
+                "store_id": 5,
+                "term_count": 4,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 0,
+                "valid_from": "2026-11-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 6,
+            "name": "Línea",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 10000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-11-01",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 6,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 12,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 6,
+                "rate": {
+                  "num": 18,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 8,
+                "rate": {
+                  "num": 24,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 10,
+                "rate": {
+                  "num": 30,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 12,
+                "rate": {
+                  "num": 36,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 14,
+                "rate": {
+                  "num": 42,
+                  "den": 100,
+                  "decimales": 0
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": [
+              {
+                "id": 6,
+                "credit_id": 6,
+                "merchant": "Tienda",
+                "store_id": 6,
+                "term_count": 4,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 0,
+                "valid_from": "2026-11-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "carga",
+        "funcion": "comparar",
+        "argumentos": {
+          "timeout_seconds": 5,
+          "request": {
+            "amount_cents": 200000,
+            "desired_date": "2026-11-20",
+            "store_id": null,
+            "merchant_name": "",
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 200000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ],
+            "global": {
+              "min_available_buffer_cents": 0,
+              "max_live_purchases": 10,
+              "zero_debt_by_date": "2028-02-04",
+              "date_window_days": 7
+            },
+            "override": {
+              "min_available_buffer_cents": null,
+              "max_live_purchases": null,
+              "zero_debt_by_date": null,
+              "date_window_days": null
+            },
+            "weights": {
+              "lowest_interest": 1,
+              "even_low_payment": 1,
+              "max_available": 1,
+              "most_value_per_peso": 1
+            },
+            "caps": [
+              {
+                "person": "axel",
+                "cap_cents": 100000
+              }
+            ],
+            "baskets": [
+              {
+                "store_id": 1,
+                "merchant_name": "Tienda",
+                "base_units_milli": 51000,
+                "cost_cents": 200000
+              },
+              {
+                "store_id": 2,
+                "merchant_name": "Tienda",
+                "base_units_milli": 52000,
+                "cost_cents": 200000
+              },
+              {
+                "store_id": 3,
+                "merchant_name": "Tienda",
+                "base_units_milli": 53000,
+                "cost_cents": 200000
+              },
+              {
+                "store_id": 4,
+                "merchant_name": "Tienda",
+                "base_units_milli": 54000,
+                "cost_cents": 200000
+              },
+              {
+                "store_id": 5,
+                "merchant_name": "Tienda",
+                "base_units_milli": 55000,
+                "cost_cents": 200000
+              },
+              {
+                "store_id": 6,
+                "merchant_name": "Tienda",
+                "base_units_milli": 56000,
+                "cost_cents": 200000
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "carga": {
+      "status": "ok",
+      "evaluated_count": 3870
+    }
+  }
+}

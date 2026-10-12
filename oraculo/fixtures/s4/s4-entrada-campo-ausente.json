@@ -1,0 +1,40 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-entrada-campo-ausente",
+  "descripcion": "§12.1: un campo obligatorio ausente (today) es missing_field. ILUSTRATIVO.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-15"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§12.1"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "catalog": {
+        "groups": [],
+        "products": [],
+        "presentations": []
+      },
+      "recipes": [],
+      "persons": []
+    },
+    "consultas": [
+      {
+        "id": "r",
+        "funcion": "inventory_status",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "r": {
+      "error": "missing_field"
+    }
+  }
+}

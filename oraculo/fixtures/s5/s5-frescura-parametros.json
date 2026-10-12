@@ -1,0 +1,147 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-frescura-parametros",
+  "descripcion": "K44: con price.stale_after_days = 10 y price.zero_weight_after_days = 20 el peso es (20 - días) / 11 entre los días 10 y 20 (15 días = 5/11).",
+  "fuente": [
+    {
+      "tipo": "decision",
+      "ruta": "K44"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-12-31",
+      "settings": {
+        "stale_after_days": 10,
+        "zero_weight_after_days": 20
+      },
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz-1kg",
+            "product": "arroz",
+            "name": "arroz-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "edad-009",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-22",
+          "source": "ticket_ocr"
+        }
+      },
+      {
+        "id": "edad-010",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-21",
+          "source": "ticket_ocr"
+        }
+      },
+      {
+        "id": "edad-015",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-16",
+          "source": "ticket_ocr"
+        }
+      },
+      {
+        "id": "edad-020",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-11",
+          "source": "ticket_ocr"
+        }
+      },
+      {
+        "id": "edad-021",
+        "funcion": "freshness",
+        "argumentos": {
+          "observed_date": "2026-12-10",
+          "source": "ticket_ocr"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "edad-009": {
+      "age_days": 9,
+      "is_stale": false,
+      "weight": {
+        "num": 1,
+        "den": 1
+      },
+      "weight_display": "1.0000",
+      "competes": true
+    },
+    "edad-010": {
+      "age_days": 10,
+      "is_stale": true,
+      "weight": {
+        "num": 10,
+        "den": 11
+      },
+      "weight_display": "0.9091",
+      "competes": true
+    },
+    "edad-015": {
+      "age_days": 15,
+      "is_stale": true,
+      "weight": {
+        "num": 5,
+        "den": 11
+      },
+      "weight_display": "0.4545",
+      "competes": true
+    },
+    "edad-020": {
+      "age_days": 20,
+      "is_stale": true,
+      "weight": {
+        "num": 0,
+        "den": 1
+      },
+      "weight_display": "0.0000",
+      "competes": false
+    },
+    "edad-021": {
+      "age_days": 21,
+      "is_stale": true,
+      "weight": {
+        "num": 0,
+        "den": 1
+      },
+      "weight_display": "0.0000",
+      "competes": false
+    }
+  }
+}

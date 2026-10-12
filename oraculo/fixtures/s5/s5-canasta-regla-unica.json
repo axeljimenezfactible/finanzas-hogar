@@ -1,0 +1,247 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-canasta-regla-unica",
+  "descripcion": "Contraejemplo de la revisión r4 (§7.3): el total de cada tienda usa una sola regla. Arroz (necesidad 500 g): Walmart 1 kg 2800 y 500 g 1450, Bodega 500 g 1460; recomendado Walmart 1 kg (2800), pero Walmart cubre con 500 g a 1450. Aceite de soya `manual` (cantidad fijada 1892 ml, rec. 946 ml): Walmart 3990 y Bodega 4000 por botella, 2 paquetes: 7980 y 8000. Totales Walmart 9430 y Bodega 9460 (+30); la más barata es Walmart. Si la tienda recomendada se cotizara con la presentación recomendada, Walmart saldría en 10780 y la canasta señalaría a Bodega.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-03"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§7.3 de S5-interfaz.md y REVISION-contrato-S4S5-r4.md"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
+    "que": "pregunta 2: desempate (aquí no interviene; la recomendación es única por unidad base)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "aceite-soya",
+            "name": "Aceite-soya",
+            "base_unit": "ml",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz-1kg",
+            "product": "arroz",
+            "name": "arroz-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "arroz-500",
+            "product": "arroz",
+            "name": "arroz-500",
+            "size_milli": 500000
+          },
+          {
+            "code": "aceite-946",
+            "product": "aceite-soya",
+            "name": "aceite-946",
+            "size_milli": 946000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "arroz-1kg",
+          "store": "walmart",
+          "price_cents": 2800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-500",
+          "store": "walmart",
+          "price_cents": 1450,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-500",
+          "store": "bodega",
+          "price_cents": 1460,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "aceite-946",
+          "store": "walmart",
+          "price_cents": 3990,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "aceite-946",
+          "store": "bodega",
+          "price_cents": 4000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ],
+      "shopping_list": [
+        {
+          "product": "arroz",
+          "needed_milli": 500000,
+          "quantity_milli": null,
+          "recommended_presentation": "arroz-1kg"
+        },
+        {
+          "product": "aceite-soya",
+          "needed_milli": null,
+          "quantity_milli": 1892000,
+          "recommended_presentation": "aceite-946"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "canasta",
+        "funcion": "compare_basket",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "canasta": {
+      "stores": [
+        {
+          "store": "walmart",
+          "total_cents": 9430,
+          "difference_vs_cheapest_cents": 0,
+          "identical_count": 1,
+          "substitute_count": 1
+        },
+        {
+          "store": "bodega",
+          "total_cents": 9460,
+          "difference_vs_cheapest_cents": 30,
+          "identical_count": 1,
+          "substitute_count": 1
+        }
+      ],
+      "items": [
+        {
+          "product": "arroz",
+          "quantity_milli": 500000,
+          "recommended_store": "walmart",
+          "recommended_presentation": "arroz-1kg",
+          "estimated_price_cents": 2800,
+          "prices": [
+            {
+              "store": "walmart",
+              "presentation": "arroz-500",
+              "price_cents": 1450,
+              "base_unit_price_cents": 2900,
+              "is_substitute": true
+            },
+            {
+              "store": "bodega",
+              "presentation": "arroz-500",
+              "price_cents": 1460,
+              "base_unit_price_cents": 2920,
+              "is_substitute": true
+            }
+          ]
+        },
+        {
+          "product": "aceite-soya",
+          "quantity_milli": 1892000,
+          "recommended_store": "walmart",
+          "recommended_presentation": "aceite-946",
+          "estimated_price_cents": 7980,
+          "prices": [
+            {
+              "store": "walmart",
+              "presentation": "aceite-946",
+              "price_cents": 3990,
+              "base_unit_price_cents": 4218,
+              "is_substitute": false
+            },
+            {
+              "store": "bodega",
+              "presentation": "aceite-946",
+              "price_cents": 4000,
+              "base_unit_price_cents": 4228,
+              "is_substitute": false
+            }
+          ]
+        }
+      ],
+      "cheapest_store": "walmart"
+    }
+  }
+}

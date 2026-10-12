@@ -1,0 +1,443 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-promocion-0",
+  "descripcion": "Promoción 0 % de fixture (Chedraui, 4 q, mínimo 2,000.00, del 28 al 30-oct-2026): 0.00 de intereses el 28 y el 30 con montos 773.62 x3 + 773.64 (RN-07, truncado); el 27 y con 1,999.99 no aplica: pedirla da promotion_not_applicable y sin ella se cobra la tasa de 4 q (800.50; a mano HALF_UP(199,999 x 80050 / 309450) = 517.37); el capital por pago no se pide (PROVISIONAL S3-serie-sin-intereses)",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S3-07"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-10"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [
+        {
+          "credit": {
+            "id": 1,
+            "name": "Kueski",
+            "kind": "revolving_line",
+            "holder": "axel",
+            "limit_cents": 1000000,
+            "frequency": "fortnightly",
+            "first_payment_min_days": 15,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": "2026-10-10",
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [
+              {
+                "term_count": 2,
+                "rate": {
+                  "num": 53450,
+                  "den": 309450,
+                  "decimales": 2
+                },
+                "source": "manual",
+                "quote_date": null
+              },
+              {
+                "term_count": 4,
+                "rate": {
+                  "num": 80050,
+                  "den": 309450,
+                  "decimales": 4
+                },
+                "source": "manual",
+                "quote_date": null
+              }
+            ],
+            "promotions": [
+              {
+                "id": 1,
+                "credit_id": 1,
+                "merchant": "Chedraui",
+                "store_id": null,
+                "term_count": 4,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 200000,
+                "valid_from": "2026-10-28",
+                "valid_to": "2026-10-30",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "promo-28",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-28",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": 1,
+            "store_id": null,
+            "merchant": "Chedraui",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "promo-30",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-30",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": 1,
+            "store_id": null,
+            "merchant": "Chedraui",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "promo-27",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-27",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": 1,
+            "store_id": null,
+            "merchant": "Chedraui",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "normal-27",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-27",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "Chedraui",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "promo-minimo-menos-1",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-28",
+            "principal_cents": 199999,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": 1,
+            "store_id": null,
+            "merchant": "Chedraui",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 80849,
+                "joint_cents": null,
+                "paper_in_cents": null
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "normal-minimo-menos-1",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-28",
+            "principal_cents": 199999,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "Chedraui",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 80849,
+                "joint_cents": null,
+                "paper_in_cents": null
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "aplica-28",
+        "funcion": "promociones_aplicables",
+        "argumentos": {
+          "credit_id": 1,
+          "date": "2026-10-28",
+          "principal_cents": 309450,
+          "term_count": 4,
+          "store_id": null,
+          "merchant": "Chedraui"
+        }
+      },
+      {
+        "id": "aplica-30",
+        "funcion": "promociones_aplicables",
+        "argumentos": {
+          "credit_id": 1,
+          "date": "2026-10-30",
+          "principal_cents": 309450,
+          "term_count": 4,
+          "store_id": null,
+          "merchant": "Chedraui"
+        }
+      },
+      {
+        "id": "aplica-27",
+        "funcion": "promociones_aplicables",
+        "argumentos": {
+          "credit_id": 1,
+          "date": "2026-10-27",
+          "principal_cents": 309450,
+          "term_count": 4,
+          "store_id": null,
+          "merchant": "Chedraui"
+        }
+      },
+      {
+        "id": "aplica-minimo-menos-1",
+        "funcion": "promociones_aplicables",
+        "argumentos": {
+          "credit_id": 1,
+          "date": "2026-10-28",
+          "principal_cents": 199999,
+          "term_count": 4,
+          "store_id": null,
+          "merchant": "Chedraui"
+        }
+      },
+      {
+        "id": "aplica-minimo-exacto",
+        "funcion": "promociones_aplicables",
+        "argumentos": {
+          "credit_id": 1,
+          "date": "2026-10-28",
+          "principal_cents": 200000,
+          "term_count": 4,
+          "store_id": null,
+          "merchant": "Chedraui"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "promo-28": {
+      "interest_cents": 0,
+      "total_cents": 309450,
+      "source": "promotion",
+      "promotion_id": 1,
+      "payments": [
+        {
+          "amount_cents": 77362
+        },
+        {
+          "amount_cents": 77362
+        },
+        {
+          "amount_cents": 77362
+        },
+        {
+          "amount_cents": 77364
+        }
+      ],
+      "provisional": [
+        "S3-serie-sin-intereses"
+      ]
+    },
+    "promo-30": {
+      "interest_cents": 0,
+      "total_cents": 309450,
+      "source": "promotion",
+      "promotion_id": 1,
+      "payments": [
+        {
+          "amount_cents": 77362
+        },
+        {
+          "amount_cents": 77362
+        },
+        {
+          "amount_cents": 77362
+        },
+        {
+          "amount_cents": 77364
+        }
+      ],
+      "provisional": [
+        "S3-serie-sin-intereses"
+      ]
+    },
+    "promo-27": {
+      "error": "promotion_not_applicable"
+    },
+    "normal-27": {
+      "interest_cents": 80050,
+      "source": "term_table",
+      "promotion_id": null
+    },
+    "promo-minimo-menos-1": {
+      "error": "promotion_not_applicable"
+    },
+    "normal-minimo-menos-1": {
+      "interest_cents": 51737,
+      "source": "term_table"
+    },
+    "aplica-28": {
+      "promotion_ids": [
+        1
+      ]
+    },
+    "aplica-30": {
+      "promotion_ids": [
+        1
+      ]
+    },
+    "aplica-27": {
+      "promotion_ids": []
+    },
+    "aplica-minimo-menos-1": {
+      "promotion_ids": []
+    },
+    "aplica-minimo-exacto": {
+      "promotion_ids": [
+        1
+      ]
+    }
+  }
+}

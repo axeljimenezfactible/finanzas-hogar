@@ -1,0 +1,51 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-valor-estable",
+  "descripcion": "Valor estable de la semilla (R-37…R-44)",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "valor_estable"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-01"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "valor_estable",
+        "funcion": "vista_valor_estable",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "valor_estable": {
+      "mes": {
+        "total": 261687,
+        "axel": 176751,
+        "karen": 84936
+      },
+      "quincena": {
+        "total": 130844,
+        "axel": 88376,
+        "karen": 42468,
+        "suma_axel_karen": 130844,
+        "diferencia_centavo": 0
+      },
+      "componentes": {
+        "mitad_despensa": 251737,
+        "papel_contado_mes": 9950,
+        "karen_mitad_despensa": 74986,
+        "axel_mitad_despensa": 176751
+      }
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-feb-2027",
+  "descripcion": "Calendario quincenal de RN-06 con febrero: compra del 10-feb-2027 paga el 28-feb (el «30» es el último día) y la del 10-feb-2028 (bisiesto) el 29-feb; a mano: primera quincena a >= 15 días y las siguientes",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S3-04"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[2].pagos"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/kueski-semilla.json"
+    },
+    "consultas": [
+      {
+        "id": "feb-2027",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2027-02-10",
+            "principal_cents": 400000,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "feb-2028",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2028-02-10",
+            "principal_cents": 400000,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "feb-2027": {
+      "payments": [
+        {
+          "due_date": "2027-02-28"
+        },
+        {
+          "due_date": "2027-03-15"
+        },
+        {
+          "due_date": "2027-03-30"
+        },
+        {
+          "due_date": "2027-04-15"
+        }
+      ]
+    },
+    "feb-2028": {
+      "payments": [
+        {
+          "due_date": "2028-02-29"
+        },
+        {
+          "due_date": "2028-03-15"
+        },
+        {
+          "due_date": "2028-03-30"
+        },
+        {
+          "due_date": "2028-04-15"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,676 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-costo-cotizacion-elegida",
+  "descripcion": "S4-06, §8.1, §6.5 (ILUSTRATIVO): sin elección rige la recomendada (arroz Walmart 1 kg, 2800; la cotización de Bodega 750 g se ignora); tienda elegida con cotización (frijol, Bodega 3200, observada el 2026-10-08); tienda elegida SIN cotización (aceite en Bodega: sin precio, no cae a la recomendada de Walmart); presentación elegida (harina 500 g, 1700 contra 3000 de 1 kg). combo2 a 2000: 1400+800+340 = 2540 (por porción 1270); a 3000: 2100+1200+510 = 3810. Celda con varias tiendas: price_store ausente y fecha la más vieja (2026-10-08). Lista: paquetes arroz 1 (1000000/1000000), frijol 1 (sobra 500000), harina 200000/500000 = 1 (sobra 300000); grupos walmart 2800+1700 = 4500, bodega 3200; total 7700.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-06"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S4-03"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "cuentas en descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [
+          {
+            "code": "verduras",
+            "name": "Verduras",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "frutas",
+            "name": "Frutas",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "carnes",
+            "name": "Carnes",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "lacteos",
+            "name": "Lácteos y huevo",
+            "purchase_channel": "chain"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "frijol",
+            "name": "Frijol",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "aceite-soya",
+            "name": "Aceite de soya",
+            "base_unit": "ml",
+            "group": "abarrotes",
+            "grams_per_unit_milli": 921
+          },
+          {
+            "code": "huevo",
+            "name": "Huevo",
+            "base_unit": "piece",
+            "group": "lacteos",
+            "grams_per_unit_milli": 50000
+          },
+          {
+            "code": "servilletas",
+            "name": "Servilletas",
+            "base_unit": "piece",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "harina",
+            "name": "Harina",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "jitomate",
+            "name": "Jitomate",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "cebolla",
+            "name": "Cebolla",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "fresa",
+            "name": "Fresa",
+            "base_unit": "g",
+            "group": "frutas",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "pollo",
+            "name": "Pollo",
+            "base_unit": "g",
+            "group": "carnes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz.1kg",
+            "product": "arroz",
+            "name": "Arroz 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "arroz.750g",
+            "product": "arroz",
+            "name": "Arroz 750 g",
+            "size_milli": 750000
+          },
+          {
+            "code": "frijol.1kg",
+            "product": "frijol",
+            "name": "Frijol 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "aceite-soya.946ml",
+            "product": "aceite-soya",
+            "name": "Aceite de soya 946 ml",
+            "size_milli": 946000
+          },
+          {
+            "code": "huevo.carton-12",
+            "product": "huevo",
+            "name": "Huevo cartón de 12",
+            "size_milli": 12000
+          },
+          {
+            "code": "servilletas.420",
+            "product": "servilletas",
+            "name": "Servilletas 420 piezas",
+            "size_milli": 420000
+          },
+          {
+            "code": "harina.1kg",
+            "product": "harina",
+            "name": "Harina 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "harina.500g",
+            "product": "harina",
+            "name": "Harina 500 g",
+            "size_milli": 500000
+          },
+          {
+            "code": "jitomate.kilo",
+            "product": "jitomate",
+            "name": "Jitomate por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "cebolla.kilo",
+            "product": "cebolla",
+            "name": "Cebolla por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "fresa.kilo",
+            "product": "fresa",
+            "name": "Fresa por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "pollo.kilo",
+            "product": "pollo",
+            "name": "Pollo por kilo",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "recipes": [
+        {
+          "code": "combo",
+          "name": "Combo con aceite",
+          "slots": [
+            "lunch"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "arroz",
+              "presentation": "arroz.1kg",
+              "quantity_milli": 500000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 250000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.946ml",
+              "quantity_milli": 15000,
+              "optional": false
+            },
+            {
+              "product": "harina",
+              "presentation": "harina.1kg",
+              "quantity_milli": 100000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "combo2",
+          "name": "Combo sin aceite",
+          "slots": [
+            "lunch"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "arroz",
+              "presentation": "arroz.1kg",
+              "quantity_milli": 500000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 250000,
+              "optional": false
+            },
+            {
+              "product": "harina",
+              "presentation": "harina.1kg",
+              "quantity_milli": 100000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        },
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        }
+      ],
+      "meal_plan": [
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "combo2",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "dinner",
+          "person": "persona-b",
+          "recipe": "combo",
+          "servings_milli": 2000,
+          "eating_out": false
+        }
+      ],
+      "inventory": [],
+      "list_choices": [
+        {
+          "product": "frijol",
+          "kind": "calculated",
+          "store": "bodega",
+          "presentation": null,
+          "quantity_milli": null,
+          "is_bought": false
+        },
+        {
+          "product": "aceite-soya",
+          "kind": "calculated",
+          "store": "bodega",
+          "presentation": null,
+          "quantity_milli": null,
+          "is_bought": false
+        },
+        {
+          "product": "harina",
+          "kind": "calculated",
+          "store": null,
+          "presentation": "harina.500g",
+          "quantity_milli": null,
+          "is_bought": false
+        }
+      ],
+      "quotes": [
+        {
+          "product": "arroz",
+          "store": "walmart",
+          "presentation": "arroz.1kg",
+          "price_cents": 2800,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "arroz",
+          "store": "bodega",
+          "presentation": "arroz.750g",
+          "price_cents": 2200,
+          "size_milli": 750000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": false
+        },
+        {
+          "product": "frijol",
+          "store": "walmart",
+          "presentation": "frijol.1kg",
+          "price_cents": 3000,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "frijol",
+          "store": "bodega",
+          "presentation": "frijol.1kg",
+          "price_cents": 3200,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-08",
+          "is_stale": false,
+          "recommended": false
+        },
+        {
+          "product": "aceite-soya",
+          "store": "walmart",
+          "presentation": "aceite-soya.946ml",
+          "price_cents": 3990,
+          "size_milli": 946000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "harina",
+          "store": "walmart",
+          "presentation": "harina.1kg",
+          "price_cents": 3000,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "harina",
+          "store": "walmart",
+          "presentation": "harina.500g",
+          "price_cents": 1700,
+          "size_milli": 500000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": false
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "combo2-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "combo2",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "combo2-3",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "combo2",
+          "servings_milli": 3000
+        }
+      },
+      {
+        "id": "combo-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "combo",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "plan",
+        "funcion": "week_plan",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      },
+      {
+        "id": "lista",
+        "funcion": "shopping_list",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "combo2-2": {
+      "ingredients": [
+        {
+          "product": "arroz",
+          "cost_cents": 1400
+        },
+        {
+          "product": "frijol",
+          "cost_cents": 800
+        },
+        {
+          "product": "harina",
+          "cost_cents": 340
+        }
+      ],
+      "total_cost_cents": 2540,
+      "cost_per_serving_cents": 1270,
+      "missing_prices": []
+    },
+    "combo2-3": {
+      "ingredients": [
+        {
+          "product": "arroz",
+          "cost_cents": 2100
+        },
+        {
+          "product": "frijol",
+          "cost_cents": 1200
+        },
+        {
+          "product": "harina",
+          "cost_cents": 510
+        }
+      ],
+      "total_cost_cents": 3810,
+      "cost_per_serving_cents": 1270,
+      "missing_prices": []
+    },
+    "combo-2": {
+      "ingredients": [
+        {
+          "product": "arroz",
+          "cost_cents": 1400
+        },
+        {
+          "product": "frijol",
+          "cost_cents": 800
+        },
+        {
+          "product": "aceite-soya",
+          "cost_cents": null
+        },
+        {
+          "product": "harina",
+          "cost_cents": 340
+        }
+      ],
+      "total_cost_cents": null,
+      "cost_per_serving_cents": null,
+      "missing_prices": [
+        "aceite-soya"
+      ]
+    },
+    "plan": {
+      "cells": [
+        {
+          "cost_cents": 2540,
+          "price_store": null,
+          "price_observed_date": "2026-10-08"
+        },
+        {
+          "cost_cents": null
+        }
+      ],
+      "days": [
+        {
+          "cost_cents": 2540
+        },
+        {
+          "cost_cents": null
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        },
+        {
+          "cost_cents": 0
+        }
+      ],
+      "week_cost_cents": null
+    },
+    "lista": {
+      "items": [
+        {
+          "product": "aceite-soya",
+          "kind": "calculated",
+          "needed_milli": 15000,
+          "quantity_milli": null,
+          "presentation": "aceite-soya.946ml",
+          "packages_to_buy": 1,
+          "leftover_milli": 931000,
+          "reasons": [
+            "recipe"
+          ],
+          "recipes": [
+            "combo"
+          ],
+          "store": "bodega",
+          "is_bought": false,
+          "recommended_store": "walmart",
+          "recommended_presentation": "aceite-soya.946ml",
+          "price_store": null,
+          "price_observed_date": null,
+          "is_stale_price": null,
+          "estimated_cents": null
+        },
+        {
+          "product": "arroz",
+          "kind": "calculated",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "presentation": "arroz.1kg",
+          "packages_to_buy": 1,
+          "leftover_milli": 0,
+          "reasons": [
+            "recipe"
+          ],
+          "recipes": [
+            "combo",
+            "combo2"
+          ],
+          "store": "walmart",
+          "is_bought": false,
+          "recommended_store": "walmart",
+          "recommended_presentation": "arroz.1kg",
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10",
+          "is_stale_price": false,
+          "estimated_cents": 2800
+        },
+        {
+          "product": "frijol",
+          "kind": "calculated",
+          "needed_milli": 500000,
+          "quantity_milli": null,
+          "presentation": "frijol.1kg",
+          "packages_to_buy": 1,
+          "leftover_milli": 500000,
+          "reasons": [
+            "recipe"
+          ],
+          "recipes": [
+            "combo",
+            "combo2"
+          ],
+          "store": "bodega",
+          "is_bought": false,
+          "recommended_store": "walmart",
+          "recommended_presentation": "frijol.1kg",
+          "price_store": "bodega",
+          "price_observed_date": "2026-10-08",
+          "is_stale_price": false,
+          "estimated_cents": 3200
+        },
+        {
+          "product": "harina",
+          "kind": "calculated",
+          "needed_milli": 200000,
+          "quantity_milli": null,
+          "presentation": "harina.500g",
+          "packages_to_buy": 1,
+          "leftover_milli": 300000,
+          "reasons": [
+            "recipe"
+          ],
+          "recipes": [
+            "combo",
+            "combo2"
+          ],
+          "store": "walmart",
+          "is_bought": false,
+          "recommended_store": "walmart",
+          "recommended_presentation": "harina.1kg",
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10",
+          "is_stale_price": false,
+          "estimated_cents": 1700
+        }
+      ],
+      "groups": [
+        {
+          "vertical": "chain",
+          "store": "walmart",
+          "visit_date": null,
+          "estimated_total_cents": 4500
+        },
+        {
+          "vertical": "chain",
+          "store": "bodega",
+          "visit_date": null,
+          "estimated_total_cents": 3200
+        }
+      ],
+      "estimated_total_cents": 7700,
+      "missing_prices": [
+        "aceite-soya"
+      ]
+    }
+  }
+}

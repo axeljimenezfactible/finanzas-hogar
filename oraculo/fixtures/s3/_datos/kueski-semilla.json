@@ -1,0 +1,191 @@
+{
+  "today": "2026-10-10",
+  "credits": [
+    {
+      "credit": {
+        "id": 1,
+        "name": "Kueski",
+        "kind": "revolving_line",
+        "holder": "axel",
+        "limit_cents": 1000000,
+        "frequency": "fortnightly",
+        "first_payment_min_days": 15,
+        "reading": "B",
+        "reading_confirmed": false,
+        "reading_a_anchor": "2026-10-10",
+        "statement_day": null,
+        "payment_due_day": null,
+        "annual_rate": null,
+        "rate_base": "",
+        "vat_on_interest_bp": null,
+        "min_payment_pct_bp": null,
+        "min_payment_fixed_cents": null,
+        "term_rates": [
+          {
+            "term_count": 2,
+            "rate": {
+              "num": 53450,
+              "den": 309450,
+              "decimales": 2
+            },
+            "source": "manual",
+            "quote_date": null
+          },
+          {
+            "term_count": 4,
+            "rate": {
+              "num": 80050,
+              "den": 309450,
+              "decimales": 4
+            },
+            "source": "manual",
+            "quote_date": null
+          }
+        ],
+        "promotions": []
+      },
+      "purchases": [
+        {
+          "ref": "d1",
+          "status": "active",
+          "input": {
+            "date": "2026-10-10",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": 80050,
+            "rate_decimals": 4,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        },
+        {
+          "ref": "d2",
+          "status": "active",
+          "input": {
+            "date": "2026-12-10",
+            "principal_cents": 400000,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        },
+        {
+          "ref": "d3",
+          "status": "active",
+          "input": {
+            "date": "2027-02-10",
+            "principal_cents": 400000,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        },
+        {
+          "ref": "d4",
+          "status": "active",
+          "input": {
+            "date": "2027-04-10",
+            "principal_cents": 400000,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      ],
+      "payments": [],
+      "statements": []
+    }
+  ],
+  "cash": [
+    {
+      "date": "2027-01-10",
+      "amount_cents": 19900,
+      "person": "karen",
+      "description": "Papel de contado"
+    },
+    {
+      "date": "2027-03-10",
+      "amount_cents": 19900,
+      "person": "karen",
+      "description": "Papel de contado"
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-prestamo-frances",
+  "descripcion": "Tabla francesa a mano (Decimal de 80 dígitos, método distinto del oráculo): r = 24 % / 12 x 1.16 = 0.0232; pago = HALF_UP(P r / (1 - (1 + r)^-n)); interés = HALF_UP(saldo x r); el último pago = saldo + su interés. 10,000.00 a 12 meses desde el 15-nov-2026; 1,000.00 a 7 meses desde el 31-ene-2027 (fechas recortadas a fin de mes; el último ajusta: pago fijo 156.42 y último 156.41); la misma sin IVA (r = 0.02) lleva además U4-iva-credito. Propiedades de S3-09: suma de capital = capital, saldo final 0.00",
+  "fuente": [
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-09"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S3-convencion-prestamo.md",
+    "que": "tasa del periodo = anual / 12 x (1 + IVA) (opción a); otros bloqueos: docs/estado/bloqueos/U4-iva-credito.md (lectura de vat_bp nulo en la variante sin IVA)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "prestamo-12",
+        "funcion": "amortizar",
+        "argumentos": {
+          "principal_cents": 1000000,
+          "annual_rate": {
+            "num": 24,
+            "den": 100,
+            "decimales": 0
+          },
+          "vat_bp": 1600,
+          "term_count": 12,
+          "frequency": "monthly",
+          "first_date": "2026-11-15"
+        }
+      },
+      {
+        "id": "prestamo-7-ajuste",
+        "funcion": "amortizar",
+        "argumentos": {
+          "principal_cents": 100000,
+          "annual_rate": {
+            "num": 24,
+            "den": 100,
+            "decimales": 0
+          },
+          "vat_bp": 1600,
+          "term_count": 7,
+          "frequency": "monthly",
+          "first_date": "2027-01-31"
+        }
+      },
+      {
+        "id": "prestamo-7-sin-iva",
+        "funcion": "amortizar",
+        "argumentos": {
+          "principal_cents": 100000,
+          "annual_rate": {
+            "num": 24,
+            "den": 100,
+            "decimales": 0
+          },
+          "vat_bp": null,
+          "term_count": 7,
+          "frequency": "monthly",
+          "first_date": "2027-01-31"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "prestamo-12": {
+      "principal_cents": 1000000,
+      "interest_cents": 157132,
+      "total_cents": 1157132,
+      "reference_payment_cents": 96428,
+      "source": "amortization",
+      "payments": [
+        {
+          "due_date": "2026-11-15",
+          "amount_cents": 96428,
+          "principal_cents": 73228,
+          "interest_cents": 23200
+        },
+        {
+          "due_date": "2026-12-15",
+          "amount_cents": 96428,
+          "principal_cents": 74927,
+          "interest_cents": 21501
+        },
+        {
+          "due_date": "2027-01-15",
+          "amount_cents": 96428,
+          "principal_cents": 76665,
+          "interest_cents": 19763
+        },
+        {
+          "due_date": "2027-02-15",
+          "amount_cents": 96428,
+          "principal_cents": 78444,
+          "interest_cents": 17984
+        },
+        {
+          "due_date": "2027-03-15",
+          "amount_cents": 96428,
+          "principal_cents": 80264,
+          "interest_cents": 16164
+        },
+        {
+          "due_date": "2027-04-15",
+          "amount_cents": 96428,
+          "principal_cents": 82126,
+          "interest_cents": 14302
+        },
+        {
+          "due_date": "2027-05-15",
+          "amount_cents": 96428,
+          "principal_cents": 84031,
+          "interest_cents": 12397
+        },
+        {
+          "due_date": "2027-06-15",
+          "amount_cents": 96428,
+          "principal_cents": 85981,
+          "interest_cents": 10447
+        },
+        {
+          "due_date": "2027-07-15",
+          "amount_cents": 96428,
+          "principal_cents": 87975,
+          "interest_cents": 8453
+        },
+        {
+          "due_date": "2027-08-15",
+          "amount_cents": 96428,
+          "principal_cents": 90016,
+          "interest_cents": 6412
+        },
+        {
+          "due_date": "2027-09-15",
+          "amount_cents": 96428,
+          "principal_cents": 92105,
+          "interest_cents": 4323
+        },
+        {
+          "due_date": "2027-10-15",
+          "amount_cents": 96424,
+          "principal_cents": 94238,
+          "interest_cents": 2186
+        }
+      ],
+      "shares": [],
+      "provisional": [
+        "S3-convencion-prestamo"
+      ]
+    },
+    "prestamo-7-ajuste": {
+      "principal_cents": 100000,
+      "interest_cents": 9493,
+      "total_cents": 109493,
+      "reference_payment_cents": 15642,
+      "source": "amortization",
+      "payments": [
+        {
+          "due_date": "2027-01-31",
+          "amount_cents": 15642,
+          "principal_cents": 13322,
+          "interest_cents": 2320
+        },
+        {
+          "due_date": "2027-02-28",
+          "amount_cents": 15642,
+          "principal_cents": 13631,
+          "interest_cents": 2011
+        },
+        {
+          "due_date": "2027-03-31",
+          "amount_cents": 15642,
+          "principal_cents": 13947,
+          "interest_cents": 1695
+        },
+        {
+          "due_date": "2027-04-30",
+          "amount_cents": 15642,
+          "principal_cents": 14271,
+          "interest_cents": 1371
+        },
+        {
+          "due_date": "2027-05-31",
+          "amount_cents": 15642,
+          "principal_cents": 14602,
+          "interest_cents": 1040
+        },
+        {
+          "due_date": "2027-06-30",
+          "amount_cents": 15642,
+          "principal_cents": 14941,
+          "interest_cents": 701
+        },
+        {
+          "due_date": "2027-07-31",
+          "amount_cents": 15641,
+          "principal_cents": 15286,
+          "interest_cents": 355
+        }
+      ],
+      "shares": [],
+      "provisional": [
+        "S3-convencion-prestamo"
+      ]
+    },
+    "prestamo-7-sin-iva": {
+      "principal_cents": 100000,
+      "interest_cents": 8159,
+      "total_cents": 108159,
+      "reference_payment_cents": 15451,
+      "source": "amortization",
+      "payments": [
+        {
+          "due_date": "2027-01-31",
+          "amount_cents": 15451,
+          "principal_cents": 13451,
+          "interest_cents": 2000
+        },
+        {
+          "due_date": "2027-02-28",
+          "amount_cents": 15451,
+          "principal_cents": 13720,
+          "interest_cents": 1731
+        },
+        {
+          "due_date": "2027-03-31",
+          "amount_cents": 15451,
+          "principal_cents": 13994,
+          "interest_cents": 1457
+        },
+        {
+          "due_date": "2027-04-30",
+          "amount_cents": 15451,
+          "principal_cents": 14274,
+          "interest_cents": 1177
+        },
+        {
+          "due_date": "2027-05-31",
+          "amount_cents": 15451,
+          "principal_cents": 14560,
+          "interest_cents": 891
+        },
+        {
+          "due_date": "2027-06-30",
+          "amount_cents": 15451,
+          "principal_cents": 14851,
+          "interest_cents": 600
+        },
+        {
+          "due_date": "2027-07-31",
+          "amount_cents": 15453,
+          "principal_cents": 15150,
+          "interest_cents": 303
+        }
+      ],
+      "shares": [],
+      "provisional": [
+        "S3-convencion-prestamo",
+        "U4-iva-credito"
+      ]
+    }
+  }
+}

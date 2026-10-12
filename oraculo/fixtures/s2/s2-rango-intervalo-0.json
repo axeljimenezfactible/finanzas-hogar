@@ -1,0 +1,81 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-rango-intervalo-0",
+  "descripcion": "Partida mensual de fixture (renta) con interval_count 0 explícito: fuera del rango 1–24 (S2-interfaz §2.7); ausente o null valdría 1",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-03"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "S2-interfaz §2.7: interval_count entero 1–24"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "categories": [
+          {
+            "code": "despensa",
+            "name": "Despensa",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "papel",
+            "name": "Papel",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "vivienda",
+            "name": "Vivienda",
+            "kind": "fixed",
+            "is_active": true
+          }
+        ],
+        "planned_items": [
+          {
+            "id": 2,
+            "kind": "fixed_expense",
+            "description": "Renta (dato de fixture)",
+            "amount_cents": 800000,
+            "second_half_amount_cents": null,
+            "frequency": "monthly",
+            "interval_count": 0,
+            "start_date": "2026-10-20",
+            "end_date": null,
+            "category": "vivienda",
+            "payment_method": "transfer",
+            "accrual_months": 1,
+            "person": null,
+            "share_rule": {
+              "parts": [],
+              "rest_person": "axel"
+            },
+            "credit_id": null,
+            "is_active": true
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "proyeccion",
+        "funcion": "proyeccion",
+        "argumentos": {
+          "from": "2026-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "proyeccion": {
+      "error": "invalid_argument"
+    }
+  }
+}

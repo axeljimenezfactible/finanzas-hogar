@@ -1,0 +1,338 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-tarjeta-minimo",
+  "descripcion": "Tarjeta con datos de fixture (45.5 % anual, base diaria, IVA 16 %, mínimo 5 % o 200.00 fijo): saldo diario 1,500.00 por 30 días pagado un día después: base HALF_UP(45,000.00 x 0.455 / 360) = 56.88 e IVA HALF_UP(56.88 x 0.16) = 9.10, interés 65.98; mínimo máx(75.00, 200.00) = 200.00; con saldo 10,000.00 el 5 % = 500.00; con saldo 150.00 el mínimo no pasa del saldo; sin datos, «falta capturar»",
+  "fuente": [
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K18"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-08"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S3-formula-tarjeta.md",
+    "que": "fórmula del interés del periodo y del mínimo (opción b); otros bloqueos: docs/estado/bloqueos/U4-iva-credito.md (datos de «falta capturar» y lectura del IVA)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [
+        {
+          "credit": {
+            "id": 2,
+            "name": "Tarjeta con datos",
+            "kind": "bank_card",
+            "holder": "axel",
+            "limit_cents": 2000000,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": 5,
+            "payment_due_day": 25,
+            "annual_rate": {
+              "num": 455,
+              "den": 1000,
+              "decimales": 1
+            },
+            "rate_base": "daily",
+            "vat_on_interest_bp": 1600,
+            "min_payment_pct_bp": 500,
+            "min_payment_fixed_cents": 20000,
+            "term_rates": [],
+            "promotions": []
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 3,
+            "name": "Tarjeta sin datos",
+            "kind": "bank_card",
+            "holder": "axel",
+            "limit_cents": 2000000,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": 5,
+            "payment_due_day": 25,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [],
+            "promotions": []
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "interes-dia-despues",
+        "funcion": "interes_tarjeta",
+        "argumentos": {
+          "credit_id": 2,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000
+            ],
+            "source": "bank"
+          },
+          "paid_cents": 150000,
+          "paid_date": "2026-11-26"
+        }
+      },
+      {
+        "id": "minimo",
+        "funcion": "minimo_tarjeta",
+        "argumentos": {
+          "credit_id": 2,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000
+            ],
+            "source": "bank"
+          }
+        }
+      },
+      {
+        "id": "minimo-saldo-alto",
+        "funcion": "minimo_tarjeta",
+        "argumentos": {
+          "credit_id": 2,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 1000000,
+            "daily_balances_cents": [],
+            "source": "bank"
+          }
+        }
+      },
+      {
+        "id": "minimo-saldo-bajo",
+        "funcion": "minimo_tarjeta",
+        "argumentos": {
+          "credit_id": 2,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 15000,
+            "daily_balances_cents": [],
+            "source": "bank"
+          }
+        }
+      },
+      {
+        "id": "interes-sin-datos",
+        "funcion": "interes_tarjeta",
+        "argumentos": {
+          "credit_id": 3,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000
+            ],
+            "source": "bank"
+          },
+          "paid_cents": 150000,
+          "paid_date": "2026-11-26"
+        }
+      },
+      {
+        "id": "minimo-sin-datos",
+        "funcion": "minimo_tarjeta",
+        "argumentos": {
+          "credit_id": 3,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000,
+              150000
+            ],
+            "source": "bank"
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "interes-dia-despues": {
+      "interest_cents": 6598,
+      "provisional": [
+        "S3-formula-tarjeta",
+        "U4-iva-credito"
+      ]
+    },
+    "minimo": {
+      "minimum_cents": 20000,
+      "provisional": [
+        "S3-formula-tarjeta",
+        "U4-iva-credito"
+      ]
+    },
+    "minimo-saldo-alto": {
+      "minimum_cents": 50000,
+      "provisional": [
+        "S3-formula-tarjeta",
+        "U4-iva-credito"
+      ]
+    },
+    "minimo-saldo-bajo": {
+      "minimum_cents": 15000,
+      "provisional": [
+        "S3-formula-tarjeta",
+        "U4-iva-credito"
+      ]
+    },
+    "interes-sin-datos": {
+      "error": "missing_capture"
+    },
+    "minimo-sin-datos": {
+      "error": "missing_capture"
+    }
+  }
+}

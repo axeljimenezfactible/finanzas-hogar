@@ -1,0 +1,123 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-sensibilidad",
+  "descripcion": "Tabla de sensibilidad del canon (5 montos de 3,000.00 a 5,000.00) con el insumo de sensitivityFromModel: tasa de 4 q, n 4, Karen 1,191.50, Axel actual 1,903.00, 2 meses y 99.50",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "sensibilidad"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-01"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-02"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "sensibilidad",
+        "funcion": "vista_sensibilidad",
+        "argumentos": {
+          "amounts_cents": [
+            300000,
+            350000,
+            400000,
+            450000,
+            500000
+          ],
+          "rate": {
+            "num": 80050,
+            "den": 309450,
+            "decimales": 4
+          },
+          "term_count": 4,
+          "external": {
+            "person": "karen",
+            "external": true,
+            "principal_cents": 119150,
+            "joint_cents": null,
+            "paper_in_cents": null
+          },
+          "holder_current_principal_cents": 190300,
+          "accrual_months": 2,
+          "cash_monthly_cents": 9950
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "sensibilidad": [
+      {
+        "N": 300000,
+        "intereses": 77605,
+        "total": 377605,
+        "pago_quincenal": 94401,
+        "axel_total": 227633,
+        "axel_capital": 180850,
+        "axel_menor_que_actual": true,
+        "costo_mensual_total": 198753,
+        "axel_mensual": 113817,
+        "karen_mensual": 84936
+      },
+      {
+        "N": 350000,
+        "intereses": 90540,
+        "total": 440540,
+        "pago_quincenal": 110135,
+        "axel_total": 290568,
+        "axel_capital": 230850,
+        "axel_menor_que_actual": false,
+        "costo_mensual_total": 230220,
+        "axel_mensual": 145284,
+        "karen_mensual": 84936
+      },
+      {
+        "N": 400000,
+        "intereses": 103474,
+        "total": 503474,
+        "pago_quincenal": 125868,
+        "axel_total": 353502,
+        "axel_capital": 280850,
+        "axel_menor_que_actual": false,
+        "costo_mensual_total": 261687,
+        "axel_mensual": 176751,
+        "karen_mensual": 84936
+      },
+      {
+        "N": 450000,
+        "intereses": 116408,
+        "total": 566408,
+        "pago_quincenal": 141602,
+        "axel_total": 416436,
+        "axel_capital": 330850,
+        "axel_menor_que_actual": false,
+        "costo_mensual_total": 293154,
+        "axel_mensual": 208218,
+        "karen_mensual": 84936
+      },
+      {
+        "N": 500000,
+        "intereses": 129342,
+        "total": 629342,
+        "pago_quincenal": 157336,
+        "axel_total": 479370,
+        "axel_capital": 380850,
+        "axel_menor_que_actual": false,
+        "costo_mensual_total": 324621,
+        "axel_mensual": 239685,
+        "karen_mensual": 84936
+      }
+    ]
+  }
+}

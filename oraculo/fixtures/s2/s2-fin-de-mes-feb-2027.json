@@ -1,0 +1,204 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-fin-de-mes-feb-2027",
+  "descripcion": "Febrero de 2027: quincena 2 del 16 al 28, paga el 28 (R-23); resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-06"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K8"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[2].pagos[0]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "periodos[4]"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "feb-20",
+        "funcion": "calendario",
+        "argumentos": {
+          "date": "2027-02-20"
+        }
+      },
+      {
+        "id": "feb-2027",
+        "funcion": "periodos",
+        "argumentos": {
+          "months": [
+            "2027-02"
+          ]
+        }
+      },
+      {
+        "id": "flujo-feb-2027",
+        "funcion": "flujo_quincenal",
+        "argumentos": {
+          "from": "2027-02-q1",
+          "count": 2
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "feb-20": {
+      "today": "2027-02-20",
+      "month": "2027-02",
+      "month_start": "2027-02-01",
+      "month_end": "2027-02-28",
+      "month_label": "1-feb-2027 a 28-feb-2027",
+      "days_in_month": 28,
+      "fortnight": "2027-02-q2",
+      "fortnight_start": "2027-02-16",
+      "fortnight_end": "2027-02-28",
+      "pay_date": "2027-02-28",
+      "week": "2027-W07",
+      "week_start": "2027-02-15",
+      "week_end": "2027-02-21"
+    },
+    "feb-2027": [
+      {
+        "label": "1-feb-2027 a 28-feb-2027",
+        "start": "2027-02-01",
+        "end": "2027-02-28",
+        "days": 28,
+        "accrued": {
+          "total_cents": 251737,
+          "by_person": {
+            "axel": 176751,
+            "karen": 74986
+          },
+          "by_category": {
+            "despensa": 251737
+          }
+        },
+        "cash": {
+          "total_cents": 251738,
+          "payments_cents": 251738,
+          "cash_expenses_cents": 0,
+          "by_person": {
+            "axel": 176752,
+            "karen": 74986
+          },
+          "by_category": {
+            "despensa": 251738
+          },
+          "payment_count": 2,
+          "payments": [
+            {
+              "purchase_id": 2,
+              "purchase_seq": 2,
+              "seq": 4,
+              "due_date": "2027-02-15",
+              "amount_cents": 125870,
+              "shares": {
+                "axel": 88377,
+                "karen": 37493
+              }
+            },
+            {
+              "purchase_id": 3,
+              "purchase_seq": 3,
+              "seq": 1,
+              "due_date": "2027-02-28",
+              "amount_cents": 125868,
+              "shares": {
+                "axel": 88375,
+                "karen": 37493
+              }
+            }
+          ]
+        },
+        "cumulative_diff_cents": 125869,
+        "covering_groceries_seq": 3
+      }
+    ],
+    "flujo-feb-2027": [
+      {
+        "fortnight": "2027-02-q1",
+        "start": "2027-02-01",
+        "end": "2027-02-15",
+        "pay_date": "2027-02-15",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88377,
+            "karen": 37493
+          },
+          "household_cents": 88377,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88377
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88377,
+        "balance_cents": -88377,
+        "cumulative_balance_cents": -88377,
+        "provisional": null
+      },
+      {
+        "fortnight": "2027-02-q2",
+        "start": "2027-02-16",
+        "end": "2027-02-28",
+        "pay_date": "2027-02-28",
+        "income": {
+          "fixed_cents": 0,
+          "extra_cents": 0,
+          "expected_cents": 0,
+          "income_is_expected": false,
+          "total_cents": 0
+        },
+        "credit_payments": {
+          "by_person": {
+            "axel": 88375,
+            "karen": 37493
+          },
+          "household_cents": 88375,
+          "external_informative_cents": 37493,
+          "household_paid_cents": 0,
+          "household_pending_cents": 88375
+        },
+        "fixed_upcoming": {
+          "planned_cents": 0,
+          "paid_cents": 0,
+          "pending_cents": 0
+        },
+        "variable_spent_cents": 0,
+        "variable_estimated_cents": null,
+        "savings_planned_cents": null,
+        "spent_cents": 0,
+        "committed_cents": 88375,
+        "balance_cents": -88375,
+        "cumulative_balance_cents": -176752,
+        "provisional": null
+      }
+    ]
+  }
+}

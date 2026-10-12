@@ -1,0 +1,144 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-profeco-filtro",
+  "descripcion": "Filtro de profeco_import (ILUSTRATIVO; §11, REVISION-S5-r2 R2-02) con la opción A del bloqueo S5-profeco-filtro: (1) el municipio de una cadena (Bodega en TLALNEPANTLA DE BAZ) o de un mercado (IZTAPALAPA) no entra al filtro, solo el de las sucursales; (2) cadena, municipio y nombre comercial se comparan normalizados («Wal-mart» = «WALMART» = «WAL-MART», «Bodega Aurrerá» = «BODEGA AURRERA», «Gustavo A. Madero» = «GUSTAVO A. MADERO»); (3) la sucursal del precio se busca solo dentro de la cadena que casó, así que f6 (WALMART con nombre BODEGA AURRERA VALLEJO) va a la cadena walmart y f8 es su duplicado. coverage[] agrupa por el texto del CSV tal como llega. Lectura 8 = 3 filtrados + 4 cargados + 1 duplicado.",
+  "fuente": [
+    {
+      "tipo": "bloqueo",
+      "ruta": "docs/estado/bloqueos/S5-profeco-filtro.md"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§11 de S5-interfaz.md"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-profeco-filtro.md",
+    "que": "municipios solo de sucursales, comparación normalizada y sucursal dentro de su cadena (opción A)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega",
+          "profeco_name": "Bodega Aurrera",
+          "municipality": "TLALNEPANTLA DE BAZ",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "bodega-vallejo",
+          "kind": "branch",
+          "parent": "bodega",
+          "name": "bodega-vallejo",
+          "profeco_name": "BODEGA AURRERA VALLEJO",
+          "municipality": "Azcapotzalco",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "walmart",
+          "profeco_name": "Wal-mart",
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart-tepeyac",
+          "kind": "branch",
+          "parent": "walmart",
+          "name": "walmart-tepeyac",
+          "profeco_name": "Walmart Tepeyac",
+          "municipality": "Gustavo A. Madero",
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tianguis",
+          "kind": "market",
+          "parent": null,
+          "name": "Tianguis",
+          "profeco_name": null,
+          "municipality": "IZTAPALAPA",
+          "visit_weekday": 2,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "filtro",
+        "funcion": "profeco_import",
+        "argumentos": {
+          "files": [
+            "oraculo/fixtures/s5/_datos/profeco-filtro.csv"
+          ],
+          "links_file": "oraculo/fixtures/s5/_datos/profeco-vinculos.csv",
+          "mode": "production"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "filtro": {
+      "read": 8,
+      "rejected": 0,
+      "filtered_out": 3,
+      "skipped": 0,
+      "loaded": 4,
+      "duplicates": 1,
+      "coverage": [
+        {
+          "chain": "Bodega Aurrerá",
+          "municipality": "Azcapotzalco",
+          "price_count": 1
+        },
+        {
+          "chain": "WAL-MART",
+          "municipality": "GUSTAVO A. MADERO",
+          "price_count": 1
+        },
+        {
+          "chain": "WALMART",
+          "municipality": "AZCAPOTZALCO",
+          "price_count": 1
+        },
+        {
+          "chain": "WALMART",
+          "municipality": "GUSTAVO A. MADERO",
+          "price_count": 1
+        }
+      ],
+      "rejections": []
+    }
+  }
+}

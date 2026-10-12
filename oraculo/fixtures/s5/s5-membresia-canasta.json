@@ -1,0 +1,257 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-membresia-canasta",
+  "descripcion": "Ahorro de la canasta de Sam's (RN-13): solo cuentan los renglones donde Sam's es más barato que la mejor tienda sin membresía, con las cantidades de la lista. a: 1000 contra 1200 -> 200; b: 2500 contra 2300 -> 0; c (2 kg): 1600 contra 2000 -> 400; ahorro 600. `sams-b` (700 en a) también exige membresía y no cuenta como comparador. Un artículo sin precio en Sam's no suma.",
+  "fuente": [
+    {
+      "tipo": "regla",
+      "ruta": "RN-13"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "a",
+            "name": "A",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "b",
+            "name": "B",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "c",
+            "name": "C",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "a-1kg",
+            "product": "a",
+            "name": "a-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "b-1kg",
+            "product": "b",
+            "name": "b-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "c-1kg",
+            "product": "c",
+            "name": "c-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "sams",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": true,
+          "has_membership": false,
+          "membership_fee_cents": 100000,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "sams-b",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams-b",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": true,
+          "has_membership": false,
+          "membership_fee_cents": 80000,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "sams-sin-costo",
+          "kind": "chain",
+          "parent": null,
+          "name": "sams-sin-costo",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": true,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "chedraui",
+          "kind": "chain",
+          "parent": null,
+          "name": "chedraui",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tianguis",
+          "kind": "market",
+          "parent": null,
+          "name": "tianguis",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": 2,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": [
+            "verduras"
+          ]
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "a-1kg",
+          "store": "sams",
+          "price_cents": 1000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "chedraui",
+          "price_cents": 1200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "sams-b",
+          "price_cents": 700,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "b-1kg",
+          "store": "sams",
+          "price_cents": 2500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "b-1kg",
+          "store": "chedraui",
+          "price_cents": 2300,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "c-1kg",
+          "store": "sams",
+          "price_cents": 800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "c-1kg",
+          "store": "chedraui",
+          "price_cents": 1000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ],
+      "shopping_list": [
+        {
+          "product": "a",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "recommended_presentation": "a-1kg"
+        },
+        {
+          "product": "b",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "recommended_presentation": "b-1kg"
+        },
+        {
+          "product": "c",
+          "needed_milli": 2000000,
+          "quantity_milli": null,
+          "recommended_presentation": "c-1kg"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "sams",
+        "funcion": "membership",
+        "argumentos": {
+          "store": "sams"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "sams": {
+      "basket_savings_cents": 600,
+      "annual_fee_cents": 100000,
+      "assumes_membership": true
+    }
+  }
+}

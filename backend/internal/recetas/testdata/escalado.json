@@ -1,0 +1,590 @@
+[
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 4000,
+"product": "espagueti",
+"num": 500000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 4000,
+"product": "atun",
+"num": 280000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 4000,
+"product": "elote",
+"num": 220000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 4000,
+"product": "aceite-oliva",
+"num": 30000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 1000,
+"product": "espagueti",
+"num": 125000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 1000,
+"product": "atun",
+"num": 70000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 1000,
+"product": "elote",
+"num": 55000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 1000,
+"product": "aceite-oliva",
+"num": 7500,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 3000,
+"product": "espagueti",
+"num": 375000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 3000,
+"product": "atun",
+"num": 210000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 3000,
+"product": "elote",
+"num": 165000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 3000,
+"product": "aceite-oliva",
+"num": 22500,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 6000,
+"product": "espagueti",
+"num": 750000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 6000,
+"product": "atun",
+"num": 420000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 6000,
+"product": "elote",
+"num": 330000,
+"den": 1
+},
+{
+"recipe": "espagueti-con-atun",
+"servings_milli": 6000,
+"product": "aceite-oliva",
+"num": 45000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 4000,
+"product": "huevo",
+"num": 8000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 4000,
+"product": "jitomate",
+"num": 300000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 4000,
+"product": "cebolla",
+"num": 80000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 4000,
+"product": "aceite-soya",
+"num": 30000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 4000,
+"product": "tortilla",
+"num": 400000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 1000,
+"product": "huevo",
+"num": 2000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 1000,
+"product": "jitomate",
+"num": 75000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 1000,
+"product": "cebolla",
+"num": 20000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 1000,
+"product": "aceite-soya",
+"num": 7500,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 1000,
+"product": "tortilla",
+"num": 100000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 3000,
+"product": "huevo",
+"num": 6000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 3000,
+"product": "jitomate",
+"num": 225000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 3000,
+"product": "cebolla",
+"num": 60000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 3000,
+"product": "aceite-soya",
+"num": 22500,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 3000,
+"product": "tortilla",
+"num": 300000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 6000,
+"product": "huevo",
+"num": 12000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 6000,
+"product": "jitomate",
+"num": 450000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 6000,
+"product": "cebolla",
+"num": 120000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 6000,
+"product": "aceite-soya",
+"num": 45000,
+"den": 1
+},
+{
+"recipe": "huevos-a-la-mexicana",
+"servings_milli": 6000,
+"product": "tortilla",
+"num": 600000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 4000,
+"product": "arroz",
+"num": 400000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 4000,
+"product": "jitomate",
+"num": 200000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 4000,
+"product": "cebolla",
+"num": 60000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 4000,
+"product": "aceite-soya",
+"num": 40000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 4000,
+"product": "sal",
+"num": 6000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 1000,
+"product": "arroz",
+"num": 100000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 1000,
+"product": "jitomate",
+"num": 50000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 1000,
+"product": "cebolla",
+"num": 15000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 1000,
+"product": "aceite-soya",
+"num": 10000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 1000,
+"product": "sal",
+"num": 1500,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 3000,
+"product": "arroz",
+"num": 300000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 3000,
+"product": "jitomate",
+"num": 150000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 3000,
+"product": "cebolla",
+"num": 45000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 3000,
+"product": "aceite-soya",
+"num": 30000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 3000,
+"product": "sal",
+"num": 4500,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 6000,
+"product": "arroz",
+"num": 600000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 6000,
+"product": "jitomate",
+"num": 300000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 6000,
+"product": "cebolla",
+"num": 90000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 6000,
+"product": "aceite-soya",
+"num": 60000,
+"den": 1
+},
+{
+"recipe": "arroz-rojo",
+"servings_milli": 6000,
+"product": "sal",
+"num": 9000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 4000,
+"product": "pollo",
+"num": 1000000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 4000,
+"product": "arroz",
+"num": 300000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 4000,
+"product": "cebolla",
+"num": 100000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 4000,
+"product": "sal",
+"num": 8000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 1000,
+"product": "pollo",
+"num": 250000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 1000,
+"product": "arroz",
+"num": 75000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 1000,
+"product": "cebolla",
+"num": 25000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 1000,
+"product": "sal",
+"num": 2000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 3000,
+"product": "pollo",
+"num": 750000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 3000,
+"product": "arroz",
+"num": 225000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 3000,
+"product": "cebolla",
+"num": 75000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 3000,
+"product": "sal",
+"num": 6000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 6000,
+"product": "pollo",
+"num": 1500000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 6000,
+"product": "arroz",
+"num": 450000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 6000,
+"product": "cebolla",
+"num": 150000,
+"den": 1
+},
+{
+"recipe": "pollo-con-arroz",
+"servings_milli": 6000,
+"product": "sal",
+"num": 12000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 4000,
+"product": "frijol",
+"num": 500000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 4000,
+"product": "cebolla",
+"num": 80000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 4000,
+"product": "sal",
+"num": 10000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 1000,
+"product": "frijol",
+"num": 125000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 1000,
+"product": "cebolla",
+"num": 20000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 1000,
+"product": "sal",
+"num": 2500,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 3000,
+"product": "frijol",
+"num": 375000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 3000,
+"product": "cebolla",
+"num": 60000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 3000,
+"product": "sal",
+"num": 7500,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 6000,
+"product": "frijol",
+"num": 750000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 6000,
+"product": "cebolla",
+"num": 120000,
+"den": 1
+},
+{
+"recipe": "frijoles-de-la-olla",
+"servings_milli": 6000,
+"product": "sal",
+"num": 15000,
+"den": 1
+}
+]

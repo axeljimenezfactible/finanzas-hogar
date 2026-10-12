@@ -1,0 +1,610 @@
+{
+  "params": {
+    "today": "2026-10-11",
+    "holder": "axel",
+    "groceries_category": "despensa",
+    "paper_category": "papel",
+    "repeat_cadence_enabled": false
+  },
+  "persons": [
+    {
+      "code": "axel",
+      "display_name": "Axel",
+      "participation": "holder",
+      "pays_share_directly": false
+    },
+    {
+      "code": "karen",
+      "display_name": "Karen",
+      "participation": "external",
+      "pays_share_directly": true
+    }
+  ],
+  "categories": [
+    {
+      "code": "despensa",
+      "name": "Despensa",
+      "kind": "variable",
+      "is_active": true
+    },
+    {
+      "code": "papel",
+      "name": "Papel",
+      "kind": "variable",
+      "is_active": true
+    }
+  ],
+  "expenses": [],
+  "credit_purchases": [
+    {
+      "id": 1,
+      "credit_id": 1,
+      "expense_id": null,
+      "category": "despensa",
+      "purchase_date": "2026-10-10",
+      "principal_cents": 100,
+      "interest_cents": 26,
+      "total_cents": 126,
+      "accrual_months": 2,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 100,
+          "interest_cents": 26,
+          "total_cents": 126
+        }
+      ],
+      "embedded": [],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 31,
+          "principal_cents": 25,
+          "interest_cents": 6,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 31
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 31,
+          "principal_cents": 25,
+          "interest_cents": 6,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 31
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 31,
+          "principal_cents": 25,
+          "interest_cents": 6,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 31
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 33,
+          "principal_cents": 25,
+          "interest_cents": 8,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 33
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 2,
+      "credit_id": 1,
+      "expense_id": null,
+      "category": "despensa",
+      "purchase_date": "2026-10-10",
+      "principal_cents": 10000,
+      "interest_cents": 2587,
+      "total_cents": 12587,
+      "accrual_months": 2,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 10000,
+          "interest_cents": 2587,
+          "total_cents": 12587
+        }
+      ],
+      "embedded": [],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 3147,
+          "principal_cents": 2500,
+          "interest_cents": 647,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 3147
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 3147,
+          "principal_cents": 2500,
+          "interest_cents": 647,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 3147
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 3147,
+          "principal_cents": 2500,
+          "interest_cents": 647,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 3147
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 3146,
+          "principal_cents": 2500,
+          "interest_cents": 646,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 3146
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 3,
+      "credit_id": 1,
+      "expense_id": null,
+      "category": "despensa",
+      "purchase_date": "2026-10-10",
+      "principal_cents": 100000,
+      "interest_cents": 25868,
+      "total_cents": 125868,
+      "accrual_months": 2,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "total_cents": 125868
+        }
+      ],
+      "embedded": [],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 31467,
+          "principal_cents": 25000,
+          "interest_cents": 6467,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 31467
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 31467,
+          "principal_cents": 25000,
+          "interest_cents": 6467,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 31467
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 31467,
+          "principal_cents": 25000,
+          "interest_cents": 6467,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 31467
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 31467,
+          "principal_cents": 25000,
+          "interest_cents": 6467,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 31467
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 4,
+      "credit_id": 1,
+      "expense_id": null,
+      "category": "despensa",
+      "purchase_date": "2026-10-10",
+      "principal_cents": 200000,
+      "interest_cents": 51737,
+      "total_cents": 251737,
+      "accrual_months": 2,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 200000,
+          "interest_cents": 51737,
+          "total_cents": 251737
+        }
+      ],
+      "embedded": [],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 62934,
+          "principal_cents": 50000,
+          "interest_cents": 12934,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 62934
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 62934,
+          "principal_cents": 50000,
+          "interest_cents": 12934,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 62934
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 62934,
+          "principal_cents": 50000,
+          "interest_cents": 12934,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 62934
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 62935,
+          "principal_cents": 50000,
+          "interest_cents": 12935,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 62935
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 5,
+      "credit_id": 1,
+      "expense_id": null,
+      "category": "despensa",
+      "purchase_date": "2026-10-10",
+      "principal_cents": 309450,
+      "interest_cents": 80050,
+      "total_cents": 389500,
+      "accrual_months": 2,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 309450,
+          "interest_cents": 80050,
+          "total_cents": 389500
+        }
+      ],
+      "embedded": [],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 97375
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 97375
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 97375
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 97375,
+          "principal_cents": 77361,
+          "interest_cents": 20014,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 97375
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 6,
+      "credit_id": 1,
+      "expense_id": null,
+      "category": "despensa",
+      "purchase_date": "2026-10-10",
+      "principal_cents": 400000,
+      "interest_cents": 103474,
+      "total_cents": 503474,
+      "accrual_months": 2,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 400000,
+          "interest_cents": 103474,
+          "total_cents": 503474
+        }
+      ],
+      "embedded": [],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 125868
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 125868
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 125868
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 125870,
+          "principal_cents": 100000,
+          "interest_cents": 25870,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 125870
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 7,
+      "credit_id": 1,
+      "expense_id": null,
+      "category": "despensa",
+      "purchase_date": "2026-10-10",
+      "principal_cents": 500000,
+      "interest_cents": 129342,
+      "total_cents": 629342,
+      "accrual_months": 2,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 500000,
+          "interest_cents": 129342,
+          "total_cents": 629342
+        }
+      ],
+      "embedded": [],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 157336,
+          "principal_cents": 125000,
+          "interest_cents": 32336,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 157336
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 157336,
+          "principal_cents": 125000,
+          "interest_cents": 32336,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 157336
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 157336,
+          "principal_cents": 125000,
+          "interest_cents": 32336,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 157336
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 157334,
+          "principal_cents": 125000,
+          "interest_cents": 32334,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 157334
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    }
+  ],
+  "incomes": [],
+  "planned_items": [],
+  "budgets": [],
+  "savings_goals": [],
+  "savings_movements": [],
+  "cadence": {
+    "purchases": [],
+    "expenses": []
+  },
+  "stable_items": []
+}

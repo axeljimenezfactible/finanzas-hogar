@@ -1,0 +1,158 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-promocion-vigencia",
+  "descripcion": "Promociones (RN-12, S5-10): la del 2026-10-05 (2000) está vencida y no se muestra ni cuenta; la de hoy (2500) se muestra junto al precio regular, y ninguna entra en la cotización (gana el regular 2900, primera tienda).",
+  "fuente": [
+    {
+      "tipo": "regla",
+      "ruta": "RN-12"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S5-10"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
+    "que": "pregunta 3: una promoción solo es vigente en su observed_date (opción A)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "tienda-manual",
+          "kind": "chain",
+          "parent": null,
+          "name": "tienda-manual",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tienda-ticket",
+          "kind": "chain",
+          "parent": null,
+          "name": "tienda-ticket",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-manual",
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-manual",
+          "price_cents": 2000,
+          "observed_date": "2026-10-05",
+          "source": "manual",
+          "is_promotional": true,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-ticket",
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-ticket",
+          "price_cents": 2500,
+          "observed_date": "2026-10-12",
+          "source": "ticket_manual",
+          "is_promotional": true,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "promo-vencida",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-manual"
+        }
+      },
+      {
+        "id": "promo-vigente",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-ticket"
+        }
+      },
+      {
+        "id": "cotiza-arroz",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz-grano-largo"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "promo-vencida": {
+      "price": {
+        "price_cents": 2900,
+        "observed_date": "2026-10-10",
+        "source": "manual"
+      },
+      "references": [],
+      "promotion": null
+    },
+    "promo-vigente": {
+      "price": {
+        "price_cents": 2900,
+        "observed_date": "2026-10-10",
+        "source": "ticket_manual"
+      },
+      "references": [],
+      "promotion": {
+        "price_cents": 2500,
+        "observed_date": "2026-10-12"
+      }
+    },
+    "cotiza-arroz": {
+      "quote": {
+        "product": "arroz-grano-largo",
+        "store": "tienda-manual",
+        "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+        "price_cents": 2900,
+        "size_milli": 1000000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    }
+  }
+}

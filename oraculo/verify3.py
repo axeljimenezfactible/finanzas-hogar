@@ -86,8 +86,13 @@ out = dict(dev_t=dev_t, dev_a=dev_a, dev_k=dev_k, ef_t=ef_t, ef_a=ef_a, ef_k=ef_
            A=A, B=B, est_mes=est_mes, est_q=est_q, sens=sens, interes=inte, pagos_h=pagos_h, efectivo_h=efectivo_h,
            suma_periodos=q(sum(ef_t)), deuda=deuda,
            pagos=[dict(f=str(p['f']), desp=p['desp'], tot=p['tot'], k=p['k'], a=p['a']) for p in P])
-json.dump(out, open('/home/deepsec/reporte-compra-latex/model/verify3.json', 'w'), indent=1)
 if __name__ == '__main__':
+    # S2-04: la salida va a datos/tmp/verify3.json, relativa a la raíz del repositorio; oraculo/verify3.json no se toca.
+    from pathlib import Path
+    _dest = Path(__file__).resolve().parents[1] / 'datos' / 'tmp' / 'verify3.json'
+    _dest.parent.mkdir(parents=True, exist_ok=True)
+    with open(_dest, 'w') as _fh:
+        json.dump(out, _fh, indent=1)
     for k in ('dev_t','ef_t','ef_a','ef_k','dif_t','pagos_h','efectivo_h','suma_periodos','deuda','est_mes','est_q'):
         print(k, out[k])
     print('A', [x[1] for x in A]); print('B', [x[1] for x in B])

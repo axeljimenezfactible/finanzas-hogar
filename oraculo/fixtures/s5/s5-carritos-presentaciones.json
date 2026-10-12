@@ -1,0 +1,251 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-carritos-presentaciones",
+  "descripcion": "compare_carts con tres canastas (ILUSTRATIVO; §7.2, REVISION-S5-r2 R2-03) y la opción A del bloqueo S5-carritos-detalle. Bodega (base, del 1-sep, vieja) = los 3 sustitutos de data.json + 6 atunes a 21.00; Walmart = arroz y crema de data.json + 5 atunes a 21.50 (sin leche); tercera = arroz 750 g a 15.00 + arroz 1 kg a 50.00 + 5 atunes a 20.00. (1) El sustituto del arroz lo gana Walmart (28.00/kg) porque la tercera cobró 65.00 por 1.75 kg (37.14/kg), aunque su 750 g sola saldría a 20.00/kg. (2) missing_count: tercera 2 (crema y leche), Walmart 1 (leche), Bodega 0. (3) stale_count de Bodega = 4 presentaciones agrupadas (el atún cuenta una vez aunque salga como idéntico y como «solo aquí»). winners[] va en el orden de stores[].",
+  "fuente": [
+    {
+      "tipo": "bloqueo",
+      "ruta": "docs/estado/bloqueos/S5-carritos-detalle.md"
+    },
+    {
+      "tipo": "data.json",
+      "ruta": "sustitutos"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§7.2 de S5-interfaz.md"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-carritos-detalle.md",
+    "que": "ganador del sustituto con varias presentaciones, missing_count y stale_count de carritos (opción A)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "Bodega Aurrera (sucursal Vallejo)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "Walmart (sucursal Acueducto de Guadalupe)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tercera",
+          "kind": "chain",
+          "parent": null,
+          "name": "Tercera tienda",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "carts": [
+        {
+          "code": "bodega",
+          "store": "bodega",
+          "kind": "expense",
+          "observed_date": "2026-09-01",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 3000,
+              "unit_price_cents": 2200
+            },
+            {
+              "presentation": "sustituto-crema-cafe.coffee-mate-pack-780g",
+              "quantity_milli": 1000,
+              "unit_price_cents": 9900
+            },
+            {
+              "presentation": "leche.santa-clara-4x1l-taza",
+              "quantity_milli": 1000,
+              "unit_price_cents": 13500
+            },
+            {
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 6000,
+              "unit_price_cents": 2100
+            }
+          ]
+        },
+        {
+          "code": "walmart",
+          "store": "walmart",
+          "kind": "cart",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+              "quantity_milli": 3000,
+              "unit_price_cents": 2800
+            },
+            {
+              "presentation": "sustituto-crema-cafe.coffee-mate-640g",
+              "quantity_milli": 1000,
+              "unit_price_cents": 10500
+            },
+            {
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 5000,
+              "unit_price_cents": 2150
+            }
+          ]
+        },
+        {
+          "code": "tercera",
+          "store": "tercera",
+          "kind": "cart",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 1000,
+              "unit_price_cents": 1500
+            },
+            {
+              "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+              "quantity_milli": 1000,
+              "unit_price_cents": 5000
+            },
+            {
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 5000,
+              "unit_price_cents": 2000
+            }
+          ]
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "carritos",
+        "funcion": "compare_carts",
+        "argumentos": {
+          "base": "bodega",
+          "others": [
+            "walmart",
+            "tercera"
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "carritos": {
+      "stores": [
+        {
+          "store": "tercera",
+          "total_cents": 16500,
+          "identical_count": 1,
+          "identical_total_cents": 10000,
+          "substitute_count": 1,
+          "piece_count": 7,
+          "missing_count": 2,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 0,
+          "assumes_membership": false
+        },
+        {
+          "store": "walmart",
+          "total_cents": 29650,
+          "identical_count": 1,
+          "identical_total_cents": 10750,
+          "substitute_count": 2,
+          "piece_count": 9,
+          "missing_count": 1,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 13150,
+          "assumes_membership": false
+        },
+        {
+          "store": "bodega",
+          "total_cents": 42600,
+          "identical_count": 1,
+          "identical_total_cents": 10500,
+          "substitute_count": 2,
+          "piece_count": 11,
+          "missing_count": 0,
+          "stale_count": 4,
+          "difference_vs_cheapest_cents": 26100,
+          "assumes_membership": false
+        }
+      ],
+      "identical_pieces": 5,
+      "winners": [
+        {
+          "store": "tercera",
+          "count": 1
+        },
+        {
+          "store": "walmart",
+          "count": 0
+        },
+        {
+          "store": "bodega",
+          "count": 0
+        }
+      ],
+      "ties": 0,
+      "rows": [
+        {
+          "kind": "identical",
+          "product": "atun-agua",
+          "winner_store": "tercera"
+        },
+        {
+          "kind": "substitute",
+          "product": "arroz-grano-largo",
+          "winner_store": "walmart"
+        },
+        {
+          "kind": "substitute",
+          "product": "sustituto-crema-cafe",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "only_one",
+          "product": "leche",
+          "winner_store": null
+        },
+        {
+          "kind": "only_one",
+          "product": "atun-agua",
+          "winner_store": null
+        }
+      ]
+    }
+  }
+}

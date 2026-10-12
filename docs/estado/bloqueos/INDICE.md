@@ -11,14 +11,15 @@ Consolidado por el integrador de WF-0 (`integrador-wf0`) el 11-oct-2026 para la 
 
 ## Resumen
 
-**Conteo al 11-oct-2026, cierre de P1c (integrador `integrador-p1c`):** esta carpeta tiene **43 archivos de bloqueo** (sin contar este índice): **42 resueltos y 1 abierto**.
+**Conteo al 11-oct-2026, cierre de P1c (integrador `integrador-p1c`):** esta carpeta tiene **43 archivos de bloqueo** (sin contar este índice): **42 resueltos y 1 abierto**. **Conteo al cierre de WF-1 (integrador `integrador-wf1`, 11-oct-2026):** 69 archivos, **42 resueltos y 27 abiertos** (`S1-parametros-avisos` de P1c y 26 nuevos de WF-1).
 
 | Origen | Archivos | Resueltos | Abiertos | Cómo se resolvieron |
 |---|---|---|---|---|
 | WF-0 y puerta 1 (32 de WF-0 más los 2 que se crearon en la puerta 1 para A12 y A13) | 34 | 34 | 0 | 33 con «Respuesta de Axel» de la puerta 1 (K1 a K31); `criterios-nxx` con su «Resolución» de WF-0 |
 | Flujo P1 | 8 | 8 | 0 | «Respuesta de Axel (puerta 1b)», K36 a K43 |
 | Flujo P1c | 1 | 0 | 1 | `S1-parametros-avisos.md`, abierto (ver «Bloqueos nuevos de P1c» al final) |
-| **Total** | **43** | **42** | **1** | |
+| Flujo WF-1 | 26 | 0 | 26 | abiertos; se deciden en la puerta 2 (ver «Bloqueos nuevos de WF-1» al final) |
+| **Total** | **69** | **42** | **27** | |
 
 Regla de conteo: un bloqueo está resuelto si su archivo trae la sección «Respuesta de Axel» (o, en el caso de `criterios-nxx`, su «Resolución»); sin ella sigue abierto y la marca PROVISIONAL que lo cita se conserva. Las marcas PROVISIONAL activas de los artefactos citan solo el bloqueo abierto (detalle por archivo en `docs/estado/p1c/INTEGRACION.md` §4). La tabla que sigue es la de la puerta 1 (sus 31 preguntas, todas resueltas); la columna «Lo que quedó mientras tanto» describe el estado anterior a las respuestas.
 
@@ -342,3 +343,46 @@ Los dejaron los agentes del flujo «P1c · Aplicar respuestas de la puerta 1b» 
 | `S1-parametros-avisos.md` | S1 esquema 1.3 (reducido por `correccion-S1-r1` y ampliado por `correccion-S1-r2`) | Si `send_time`, `advance_days`, `weekday` (7) y `day_of_month` (1) viven en `notification.params_json` (opción A, K43 al pie de la letra), en claves de `app_setting` (opción B, K44, como ya quedaron los umbrales 80 y 100 % y los días antes del pago [1, 0]) o mixto (opción C) | Solo el **lugar** de esos cuatro parámetros (el valor de `weekday` y `day_of_month` es FIRME por la decisión F; `send_time` y `advance_days` no tienen valor: lo propone S7, K31). Marcas en `00003_puerta1b.sql`, `diccionario-datos.md`, `reglas-negocio.md` (RN-29), `openapi.yaml`, `C1-datos.md` y en los criterios C1-22, U4-12 y S7 | Puerta 2; C1, U4 y S7 |
 
 Recomendaciones de los agentes, que no coinciden: S1 recomienda la **opción B** (`docs/estado/p1c/correccion-S1-r2.md`, una sola fuente por valor, como los umbrales); la corrección de criterios recomendó la **opción A** (`docs/estado/p1c/correccion-criterios-r1.md`, sin cambio de esquema ni contrato). Ojo: los criterios 1.2 todavía describen los umbrales y los días antes del pago como si vivieran en `params_json` (hallazgo A, alto, de `docs/estado/p1c/REVISION-criterios-r3.md`); el esquema 1.3 ya los tiene en `app_setting`.
+
+## Bloqueos nuevos de WF-1 (11-oct-2026, para la puerta 2)
+
+Consolidado por `integrador-wf1`. WF-1 dejó **26 archivos nuevos, todos abiertos**; `S1-parametros-avisos` (P1c) también sigue abierto: nadie lo decidió en WF-1 y lo que depende de él (U4 «Notificaciones» y «Reportes y frecuencias») lleva la marca PROVISIONAL con sus dos variantes. La columna «Fase» es la fase que dejó el archivo y la que lo usa. Las recomendaciones de los agentes para cada bloqueo están en `docs/estado/wf1/INTEGRACION.md` §7.2, y los artefactos que se escalan a Axel con sus hallazgos abiertos, en §4.
+
+| Archivo | Fase | Pregunta (primera línea de «Qué falta») |
+|---|---|---|
+| `S2-flujo-quincenal.md` | S2 | (1) método del gasto variable estimado de una quincena futura; (2) cómo se reparte el ahorro mensual planificado (`planned_monthly_cents`) entre las dos quincenas; (3) cuándo una ocurrencia planificada (sueldo, renta) se da… |
+| `S2-metas-resumen.md` | S2 | ¿el resumen del mes cuenta solo las metas y fondos activos o también los inactivos que aún tienen saldo? M-07 dice «ahorrado = Σ aportaciones − Σ retiros (fondo y metas)» sin decir «activos», y en la misma fila dice… |
+| `S2-metas.md` | S2 | (1) cómo se cuentan los «meses que faltan» de M-16 («aportación mensual necesaria = (monto meta − ahorrado) ÷ meses que faltan»); (2) qué porcentaje de avance se muestra: RN-18 dice «con un decimal» (50.0 %) y M-07/M-16 dicen… |
+| `S2-presupuesto-total.md` | S2 | (1) si existe un renglón del total, ¿el plan total es ese monto o la suma de las categorías? (2) Con un plan de 0.00 en una categoría, ¿qué porcentaje y qué banderas se muestran? |
+| `S2-proyeccion-interruptor.md` | S2 | (1) monto de cada despensa proyectada: ¿capital de la despensa base 4,000.00 (despensas 2–4) con la tasa vigente de la tabla por plazo, o el de la última despensa comprada, o una partida planificada que Axel captura? (2)… |
+| `S2-ventanas.md` | S2 | (pregunta para Axel y para el dueño de la interfaz): 1. Con ventanas, ¿qué pasa con un costo o un pago anterior a la primera ventana pedida? §3.2 dice que `cumulative_diff_cents` va «desde el primer evento de las entradas… |
+| `S3-convencion-prestamo.md` | S3 | ¿Cómo se calcula la tasa por periodo de un préstamo a plazo fijo y cómo entra el IVA? |
+| `S3-formula-tarjeta.md` | S3 | (1) Intereses de tarjeta cuando no se paga el total: ¿sobre qué saldo (saldo promedio diario del periodo, saldo al corte, saldo insoluto después del pago) y con qué días (días reales del periodo / 360, / 365, o tasa anual / 12… |
+| `S3-objetivos-medida.md` | S3 | (1) Canasta y tienda (objetivo 4): ¿la tienda es una dimensión más del escenario (cada tienda con precios vigentes) y qué es «la canasta» de una compra planeada? (a) la lista de compras de la semana (P-13) con los precios… |
+| `S3-origen-cargo-normal.md` | S3 | ¿qué `interest_source` lleva un cargo normal de tarjeta? |
+| `S3-serie-sin-intereses.md` | S3 | con intereses 0, ¿qué capital lleva cada pago? K14 y RN-07 fijan montos con base truncada y capital con base HALF_UP, y el último pago ajusta. Para 3,094.50 a 4 quincenas eso da montos 773.62 ×3 + 773.64 y capital 773.63 ×3 +… |
+| `S4-asignacion-mercado.md` | S4 | (cuatro preguntas para Axel): 1. Si varios mercados surten el grupo del producto, ¿a cuál va el artículo de la lista? |
+| `S4-confirmacion-empates.md` | S4 | ¿quién confirma los empates de `nutricion/tabla.csv` y las ligas de `profeco/vinculos.csv`, y en qué momento? |
+| `S4-reglas-lista.md` | S4 | (tres preguntas para Axel): 1. **Sobrante previsto** (`MealPlanWeek.leftovers`, RN-15): ¿el plan cocina exactamente las porciones planeadas o la receta completa (múltiplos de sus 2 porciones base)? |
+| `S5-carrito-comparativa.md` | S5 | (preguntas para Axel): 1. Con `basket = expense`, ¿contra qué se compara la compra registrada en las otras tiendas? |
+| `S5-carritos-detalle.md` | S5 | tres preguntas para Axel (o para el dueño del contrato): 1. Ganador de un sustituto cuando una tienda tiene varias presentaciones del producto: ¿precio por unidad base de **lo que esa tienda cobró** por el producto (importe… |
+| `S5-profeco-almacen.md` | S5 | (tres preguntas para Axel): 1. ¿Dónde viven los registros crudos de PROFECO (millones de renglones, la mayoría sin producto del catálogo)? |
+| `S5-profeco-filtro.md` | S5 | tres preguntas para Axel (o para el dueño del contrato): 1. ¿El `municipality` de una tienda que **no** es sucursal (una cadena o un mercado) entra al filtro de municipios? |
+| `S5-reglas-comparativa.md` | S5 | (cuatro preguntas para Axel): 1. ¿Cómo «pesa menos» un precio viejo al elegir la tienda más barata? |
+| `S5-terminos.md` | S5 | Axel, ¿cómo se obtiene el veredicto de términos de los 3 sitios (walmart.com.mx, bodegaaurrera.com.mx y sams.com.mx)? |
+| `U3-t2-acumulados.md` | U3 | ¿C1 agrega a `AccrualVsCash.months[]` el devengado acumulado y el efectivo acumulado con el mismo origen que `cumulative_difference_cents` (opción A), o T-2 se dibuja relativo a la ventana con las sumas de lo visible (opción B)? |
+| `U4-dia-mes-reporte.md` | U4 | si Axel cambia el día del mes del reporte mensual a 29, 30 o 31, ¿qué pasa en los meses que no tienen ese día (febrero, abril, junio, septiembre, noviembre)? |
+| `U4-iva-credito.md` | U4 | C1 v1.2 y el esquema 1.3 guardan «si incluye IVA» en `credit.vat_on_interest_bp`, donde NULL significa «la tasa ya incluye IVA»; por eso `Credit.missing_terms` solo puede listar 4 datos (`annual_rate`, `rate_base`,… |
+| `U4-reparto-retroactivo.md` | U4 | cuando Axel cambia el porcentaje de una regla de reparto reutilizable (p. ej. «Conjunto 50/50»), ¿el cambio vale para los gastos ya capturados o solo para los nuevos? |
+| `U4-vista-previa-formulas.md` | U4 | (dos preguntas vigentes para Axel; la 2 se retiró): 1. **Comisiones de un crédito** (anual, por pago tardío y por apertura; `credit.annual_fee_cents`, `late_fee_cents`, `opening_fee_cents`): ¿deben entrar al costo de una… |
+| `WF1-catalogo-huevo-por-kilo.md` | WF1 | ¿Cómo debe registrarse un precio por kilo de un producto cuya unidad base es `pieza` (huevo)? Es decisión de modelo (S5/Ajustes), no del catálogo. |
+
+### Propuestas para Axel de valores operativos (K31 y K44), recogidas de todos los reportes de WF-1
+| Valor | Propuesta | Por qué (resumen) | Agente |
+|---|---|---|---|
+| Hora de los reportes (K31 punto 1) | diario 21:30; semanal domingo 19:00; mensual día 1 a las 08:00 | de noche ya se capturó el día; el domingo se planea la semana; el día 1 el mes ya cerró. Dónde se guarda depende de `S1-parametros-avisos` | `U4b-ajustes` |
+| Avisos (K31 punto 2) | `advance_days` de precios viejos = 1; hora de avisos 09:00 (detalle en el reporte) | un día antes de la despensa da tiempo de actualizar precios | `U4b-ajustes` |
+| Tiempo máximo del comparador (K31 punto 7) | mantener 5 s (K43); límites de seguridad 1 s a 30 s | peor caso medido 111–123 ms (3,870 candidatos), 2.5 % del tope; casos reales ≤ 1 ms | `motor-S3-comparador-go`, `oraculo-S3` |
+| `optimizer.date_window_days` | 7 días | cubre una semana y mueve el primer pago a la quincena vecina; peor caso ≈ 7,600 escenarios, muy por debajo de 5 s | `contrato-S3` |
+| `ocr.timeout_seconds` | 30 s | 2 imágenes sintéticas tardan ≈ 2 s; una foto de 12 MP en un equipo lento, 5–10 s; margen de 3× | `ocr`, `contrato-S4S5` |
+| Rango de frescura (K44) | `price.stale_after_days` ≥ 1 y `price.zero_weight_after_days` ≥ `price.stale_after_days`; fórmula general del peso (Z − días) ÷ (Z − S + 1), que con 30 y 90 da K40 | con otros valores la recta no baja de 1 a 0; el motor los rechaza con `invalid_argument` | `motor-S5-go`, `U4a-ajustes` |

@@ -1,0 +1,59 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-horizonte",
+  "descripcion": "Horizonte 10-oct-2026 a 10-abr-2027 con los meses oct-2026…mar-2027 (R-51…R-60)",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "horizonte"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-01"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "horizonte",
+        "funcion": "vista_horizonte",
+        "argumentos": {
+          "start": "2026-10-10",
+          "end": "2027-04-10",
+          "months": [
+            "2026-10",
+            "2026-11",
+            "2026-12",
+            "2027-01",
+            "2027-02",
+            "2027-03"
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "horizonte": {
+      "pagos_despensa_1": 389500,
+      "pagos_despensa_2": 503474,
+      "pagos_despensa_3_en_horizonte": 377604,
+      "papel_contado": 39800,
+      "total_efectivo": 1310378,
+      "suma_periodos_efectivo": 1310378,
+      "total_devengado": 1436248,
+      "deuda_viva_10_abr": 629344,
+      "deuda_viva_detalle": {
+        "despensa_3_pendiente": 125870,
+        "despensa_4": 503474
+      },
+      "promedio_mensual_efectivo": 218396,
+      "promedio_mensual_devengado": 239375,
+      "diferencia_final": 125870
+    }
+  }
+}

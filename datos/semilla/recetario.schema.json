@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "datos/semilla/recetario.schema.json",
+  "title": "Recetario semilla de Finanzas Hogar",
+  "description": "Esquema de datos/semilla/recetario.json con exactamente los campos de docs/contratos/motores/S4-interfaz.md §3.1 y §3.2 (S4-01). Las reglas que cruzan archivos o renglones (id y nombre únicos sin distinguir mayúsculas, producto una sola vez por receta, producto y presentación existentes en productos.json, unidad igual a la unidad base, nombres distintos de los de USDA y los campos derivados de kcal) las valida el cargador (LoadRecipeBook) y el generador oraculo/rec_genera_recetario.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "fecha", "catalogo", "recetas"],
+  "properties": {
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "fecha": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "catalogo": {"const": "datos/semilla/productos.json"},
+    "recetas": {"type": "array", "minItems": 60, "maxItems": 60, "items": {"$ref": "#/$defs/receta"}}
+  },
+  "$defs": {
+    "codigo": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+    "receta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "nombre", "tiempos", "porciones_base", "minutos_preparacion", "minutos_coccion", "origen", "ingredientes", "pasos", "kcal_por_porcion", "fuentes_kcal"],
+      "properties": {
+        "id": {"$ref": "#/$defs/codigo"},
+        "nombre": {"type": "string", "minLength": 3, "maxLength": 80},
+        "descripcion": {"type": "string", "maxLength": 200},
+        "tiempos": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["breakfast", "lunch", "dinner", "snack"]}},
+        "porciones_base": {"type": "integer", "minimum": 1, "maximum": 50},
+        "minutos_preparacion": {"type": "integer", "minimum": 0},
+        "minutos_coccion": {"type": "integer", "minimum": 0},
+        "origen": {"enum": ["claude", "propia"]},
+        "ingredientes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/ingrediente"}},
+        "pasos": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "kcal_por_porcion": {"type": ["integer", "null"], "minimum": 0},
+        "fuentes_kcal": {"type": "array", "items": {"$ref": "#/$defs/fuente"}}
+      },
+      "if": {"required": ["origen"], "properties": {"origen": {"const": "claude"}}},
+      "then": {
+        "properties": {
+          "porciones_base": {"const": 2},
+          "ingredientes": {"items": {"properties": {"opcional": {"const": false}}}}
+        }
+      }
+    },
+    "ingrediente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producto_id", "cantidad_milli", "unidad", "presentacion_id", "opcional"],
+      "properties": {
+        "producto_id": {"$ref": "#/$defs/codigo"},
+        "cantidad_milli": {"type": "integer", "exclusiveMinimum": 0},
+        "unidad": {"enum": ["g", "ml", "pieza"]},
+        "presentacion_id": {"type": "string", "minLength": 1},
+        "texto": {"type": "string"},
+        "opcional": {"type": "boolean"}
+      }
+    },
+    "fuente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producto_id", "fuente", "id_fuente"],
+      "properties": {
+        "producto_id": {"$ref": "#/$defs/codigo"},
+        "fuente": {"enum": ["USDA", "OFF", "manual"]},
+        "id_fuente": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

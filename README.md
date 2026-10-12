@@ -2,7 +2,7 @@
 
 Sistema web de control financiero del hogar de Axel y Ximena. Corre en la máquina de casa, solo en la red local, y se usa desde el navegador del escritorio y como aplicación instalada (PWA) en sus teléfonos Android.
 
-**Estado al 11-oct-2026:** Etapa B. WF-0 «Cimientos», la puerta 1 (flujo P1) y la **puerta 1b (flujo P1c) aplicadas**. Axel respondió los 8 bloqueos de P1 y fijó dos reglas de proceso (`docs/plan/decisiones.md` §K, K35 a K44); sus respuestas ya están en el **esquema 1.3** (migración 00003: ajuste de kcal por persona y cada parámetro operativo como clave configurable de `app_setting`, K36 y K44), **C1 v1.2**, **U1 1.2**, la **colorimetría 1.2** y los **criterios 1.2**. Los revisores aprobaron S1, U1, colorimetría y C1; **los criterios 1.2 no quedaron aprobados** en la ronda 3 de 3 (1 hallazgo alto y 2 medios, en [`docs/estado/p1c/REVISION-criterios-r3.md`](docs/estado/p1c/REVISION-criterios-r3.md)) y pasan a decisión del orquestador. Queda **1 bloqueo abierto** (`S1-parametros-avisos`: dónde viven `send_time`, `advance_days`, `weekday` y `day_of_month`; no cambia cifras) de 43. La **Pista 3 (Claude Design) la ejecuta Axel** con el paquete que se le entrega en `docs/design/entrada/` al cierre de WF-1 (K35). Sigue **WF-1 «Motores y sistema de diseño»**. Todavía no hay motores de cálculo, interfaz ni servicio en operación. Resumen del flujo: [`docs/estado/p1c/INTEGRACION.md`](docs/estado/p1c/INTEGRACION.md).
+**Estado al 11-oct-2026, cierre de WF-1:** Etapa B. WF-0, la puerta 1 (P1), la puerta 1b (P1c) y **WF-1 «Motores y sistema de diseño»** están integrados. WF-1 dejó los 4 motores en Go (S2 financiero, S3 créditos y comparador, S4 recetas y salud, S5 precios, PROFECO y OCR), cada uno con su oráculo independiente en Python y sus fixtures, que reproducen `oraculo/model.json` y `datos/semilla/data.json` con 0 diferencias; el recetario de 60 recetas con kcal y fuente; el catálogo de 160 productos; `DESIGN.md` y los tokens C2; U3 (Inicio) y U4 (Ajustes, unido en `docs/design/U4-ajustes.md`); y el paquete para Claude Design en `docs/design/entrada/`, que **sube Axel** (K35). `make verify-all` pasa completo. **Siguiente: puerta 2.** Axel decide 6 artefactos sin aprobar (motor S2, motor S5, contrato S4/S5, U4 y el paquete), 27 bloqueos abiertos y los valores operativos propuestos: todo en [`docs/estado/wf1/INTEGRACION.md`](docs/estado/wf1/INTEGRACION.md) y en `docs/estado/bloqueos/INDICE.md`.
 
 ## Qué es
 
@@ -32,47 +32,58 @@ Las decisiones cerradas de Axel están en [`docs/plan/decisiones.md`](docs/plan/
 
 ```
 finanzas-hogar/
-├── Makefile                         verificación (make verify-wf0, verify-c1, verify-s1, verify-u1, verify-criterios, verify-all) y limpieza
+├── Makefile                         verificación (verify-wf0, verify-c1, verify-s1, verify-u1, verify-criterios, verify-wf1, verify-all) y limpieza
 ├── README.md
-├── backend/                         Go, módulo finanzas-hogar (go.mod declara go 1.27; K28)
+├── backend/                         Go, módulo finanzas-hogar (go 1.27; K28); solo biblioteca estándar y modernc.org/sqlite
 │   ├── cmd/finanzas/main.go         servidor mínimo: GET /health y GET /openapi.yaml; las demás rutas responden 501
-│   ├── db/migrations/
-│   │   ├── 00001_esquema.sql        migración goose: esquema 1.1 de S1 (WF-0)
-│   │   ├── 00002_puerta1.sql        migración goose de la puerta 1: esquema 1.2
-│   │   └── 00003_puerta1b.sql       migración goose de la puerta 1b: esquema 1.3 (K36 y K44), 55 tablas STRICT en total
-│   ├── db/tools/                    s1_verifica.py (verificación de S1, make verify-s1) y gen_dict.py
-│   └── internal/api/
-│       ├── routes.go                rutas generadas desde el contrato C1 v1.2 (no se edita a mano)
-│       ├── generate.go              go generate → c1gen/build.py
-│       └── c1gen/                   generador y verificador de C1 (openapi.yaml, routes.go, C1-datos.md y extractos)
-├── datos/semilla/                   data.json (compra del 10-oct-2026) y profeco/ (diccionario y metadatos)
+│   ├── cmd/motores/                 binario común de los motores: motores <s2|s3|s4|s5> dump --fixtures … --out … (correr desde la raíz)
+│   ├── db/migrations/               00001 (esquema 1.1), 00002 (1.2) y 00003 (1.3): 55 tablas STRICT
+│   ├── db/tools/                    s1_verifica.py (make verify-s1) y gen_dict.py
+│   └── internal/
+│       ├── api/                     rutas generadas desde C1 v1.2 y c1gen/ (generador y verificador de C1)
+│       ├── motor_fin/               S2: devengo, efectivo, presupuesto, flujo, metas, proyección
+│       ├── motor_cred/              S3: créditos y series (más comparador/, evaluar/ y canontest/)
+│       ├── recetas/                 S4: recetario, escalado, lista, inventario, plan semanal, kcal y salud
+│       └── precios/                 S5: comparativa y frescura (más ocr/, profeco/ y asistida/, apagada)
+├── datos/semilla/                   data.json, productos.json (160), recetario.json (60 = recetario-a + recetario-b) y su esquema,
+│                                    nutricion/ (tabla.csv y procedencia), profeco/ (muestra; raw/ y db/ ignorados), tickets-sinteticos/, tickets/
 ├── docs/
-│   ├── plan/                        plan.md, decisiones.md, protocolo-agentes.md y fuentes/ (Kueski)
-│   ├── contratos/                   C1-datos.md, openapi.yaml, diccionario-datos.md, reglas-negocio.md, C2-colores.json
-│   │   └── extractos/               openapi.yaml por módulo (17 YAML e INDICE.md); los genera build.py, no se editan
-│   ├── criterios/                   INDICE.md y 18 archivos de criterios de aceptación, uno por fase
-│   │   └── tools/                   verif_final.sh y sus scripts (conteos, trazas, citas, cifras canon; make verify-criterios)
-│   ├── design/                      U1-arquitectura.md, colorimetria.md, contraste.csv, paleta.html y .png
-│   │   └── tools/                   colorimetria.py (regenera la colorimetría) y verificar_u1.py (make verify-u1)
+│   ├── plan/                        plan.md, decisiones.md, protocolo-agentes.md y fuentes/
+│   ├── contratos/                   C1 (openapi.yaml, C1-datos.md, extractos/), diccionario, reglas de negocio, C2-colores.json,
+│   │                                C2-tokens.json, tokens.css, tailwind.theme.css
+│   │   └── motores/                 interfaces S2, S3, S4 y S5 y formato del catálogo de productos
+│   ├── criterios/                   INDICE.md y 18 archivos de criterios (tools/: verif_final.sh)
+│   ├── design/                      U1, DESIGN.md, U3-dashboard.md, U4-ajustes{,-a,-b}.md, colorimetría y contraste
+│   │   ├── entrada/                 paquete para Claude Design (LEEME.md y MANIFIESTO.md); lo sube Axel (K35)
+│   │   ├── fuentes/                 Inter y Lucide autoalojados
+│   │   └── tools/                   colorimetria.py, verificar_u1.py, contraste_componentes.py, tokens/ (Style Dictionary) y paquete_entrada.sh
 │   └── estado/
-│       ├── wf0/                     reportes de agentes, revisiones REVISION-r1 a r3, correcciones e INTEGRACION.md
-│       ├── p1/                      flujo de la puerta 1: reportes, revisiones por artefacto, correcciones e INTEGRACION.md
-│       └── bloqueos/                preguntas para Axel (una por archivo, con su respuesta al final) e INDICE.md
-└── oraculo/                         model.py y verify3.py con sus JSON: cifras canon de regresión (no se editan)
+│       ├── wf0/, p1/, p1c/          reportes, revisiones, correcciones e INTEGRACION.md de cada flujo
+│       ├── wf1/                     reportes de WF-1, revisiones REVISION-*-rN, correcciones e INTEGRACION.md
+│       └── bloqueos/                preguntas para Axel (una por archivo) e INDICE.md
+└── oraculo/                         model.json y verify3.json (canon, no se editan), oráculos fin_/cred_/rec_/pre_*.py,
+                                     compara.py, fixtures/s2..s5 y salidas/
 ```
 
-`frontend/`, `ops/`, `datos/semilla/nutricion/` y `docs/design/{entrada,salida,capturas-u5}/` existen en disco pero están vacías, así que git no las guarda; se llenan en WF-1, WF-3 y WF-4. `datos/tmp/` es solo para bases temporales de verificación y nunca entra al repositorio.
+`frontend/`, `ops/`, `docs/design/salida/` y `docs/design/capturas-u5/` siguen vacías (git no las guarda); se llenan en la Pista 3, WF-3 y WF-4. `datos/tmp/` es solo para temporales de verificación y nunca entra al repositorio; las descargas crudas (`datos/semilla/*/raw/`, ≈ 13 GB) y la base de PROFECO (`profeco/db/`, ≈ 17 GB) tampoco.
 
 ## Versiones vigentes de los artefactos (11-oct-2026)
 
-| Artefacto | Versión | Ruta | Estado en P1c (puerta 1b) |
+| Artefacto | Versión | Ruta | Estado (P1c o WF-1) |
 |---|---|---|---|
 | Modelo de datos (S1) | esquema 1.3 | `backend/db/migrations/00001_esquema.sql` + `00002_puerta1.sql` + `00003_puerta1b.sql`, `docs/contratos/diccionario-datos.md` 1.3, `docs/contratos/reglas-negocio.md` 1.3 | aprobado (ronda 3): 55 tablas STRICT, 152 índices, 75 disparadores, 29 reglas de negocio; parámetros operativos de K44 como claves de `app_setting` con valor inicial sembrado |
 | Contrato C1 | v1.2 (`info.version` 1.2.0) | `docs/contratos/openapi.yaml`, `docs/contratos/C1-datos.md`, `docs/contratos/extractos/`, `backend/internal/api/` | aprobado (ronda 2): 210 operaciones en 167 rutas, 252 esquemas, matriz de 236 filas (211 necesidades) |
 | Arquitectura de información (U1) | 1.2 | `docs/design/U1-arquitectura.md` | aprobado (ronda 3): 27 pantallas, 14 secciones de Ajustes, 211 necesidades (138 L + 73 E) |
 | Colorimetría (U2a) | 1.2 | `docs/design/colorimetria.md`, `docs/contratos/C2-colores.json`, `docs/design/contraste.csv`, `docs/design/paleta.html` | aprobado (ronda 2): 190 tokens sin cambio de valor (K41 y K42 quitan 5 marcas), 202 pares de contraste sin ninguno bajo umbral |
-| Criterios de aceptación | 1.2 | `docs/criterios/` | **no aprobado** (ronda 3 de 3: 1 alto, 2 medios y 4 bajos); 261 criterios (201 alta y 60 media) en 18 archivos |
-| Bloqueos | puerta 1b respondida | `docs/estado/bloqueos/INDICE.md` | 43 archivos: 42 resueltos y 1 abierto (`S1-parametros-avisos`, nuevo de P1c) |
+| Criterios de aceptación | 1.2 | `docs/criterios/` | aprobado en las rondas extra 4 y 5 (P1d; `docs/estado/p1c/INTEGRACION.md` §8); 261 criterios (201 alta y 60 media) en 18 archivos |
+| Motor S2 (`motor_fin`) | contrato 1.2 | `backend/internal/motor_fin/`, `docs/contratos/motores/S2-interfaz.md`, `oraculo/fin_*.py` | **no aprobado** (ronda 3: 1 medio); 0 diferencias en 2320 hojas y 159 de `model.json` |
+| Motor S3 (`motor_cred`) | contrato 1.4 | `backend/internal/motor_cred/`, `S3-interfaz.md`, `oraculo/cred_*.py` | contrato aprobado (ronda 5) y motor aprobado (ronda 3); 437 de 437 de `model.json` |
+| Motor S4 (`recetas`) y recetario | contrato 1.4 | `backend/internal/recetas/`, `S4-interfaz.md`, `datos/semilla/recetario.json` | motor aprobado (ronda 2); contrato S4/S5 **no aprobado** (ronda 5: 3 medios) |
+| Motor S5 (`precios`) | contrato 1.4 | `backend/internal/precios/`, `S5-interfaz.md`, `oraculo/pre_*.py` | **no aprobado** (ronda 3: 1 alto que solo Axel destraba y 4 medios) |
+| U2: DESIGN.md y tokens C2 | — | `docs/design/DESIGN.md`, `docs/contratos/C2-tokens.json`, `tokens.css` | aprobado (ronda 4) |
+| U3 Inicio · U4 Ajustes | 1.2 · a 1.4 y b 1.3 | `docs/design/U3-dashboard.md`, `docs/design/U4-ajustes.md` | U3 aprobado (ronda 3); U4 **no aprobado** (ronda 5: 1 medio) |
+| Paquete para Claude Design | — | `docs/design/entrada/` | **no aprobado** (ronda 3: 1 medio, una frase del LEEME); `sha256sum -c` sin diferencias |
+| Bloqueos | cierre de WF-1 | `docs/estado/bloqueos/INDICE.md` | 69 archivos: 42 resueltos y 27 abiertos (`S1-parametros-avisos` y 26 de WF-1) |
 
 ## Qué entregó WF-0
 
@@ -88,6 +99,15 @@ Tabla histórica de WF-0 (cifras de entonces; las vigentes están en la tabla an
 | Criterios de aceptación | `docs/criterios/` | 248 criterios medibles (189 de severidad alta) para las 18 fases, con 85 cifras canon de regresión |
 | Bloqueos | `docs/estado/bloqueos/INDICE.md` | 32 archivos (31 abiertos) y 2 preguntas de la revisión, agrupados en 31 preguntas para Axel |
 | Integración | `docs/estado/wf0/INTEGRACION.md` | qué se hizo por fase, verificación, supuestos, pendientes para WF-1 y rondas de revisión |
+
+## Qué entregó WF-1
+
+Detalle, verificaciones, rondas extra, interrupción y continuación, hallazgos, bloqueos, propuestas para Axel y consumo por agente: [`docs/estado/wf1/INTEGRACION.md`](docs/estado/wf1/INTEGRACION.md). En corto:
+
+- 4 motores con oráculo independiente: S2 30 fixtures, S3 27, S4 26 y S5 29; `make verify-wf1` corre el oráculo y el motor de cada uno y `oraculo/compara.py` da 0 diferencias. Cobertura ≥ 85 % (K25) en `motor_fin`, `motor_cred`, `recetas` y `precios`.
+- Recetario de 60 recetas validado (JSON Schema, generador del oráculo y pruebas Go), catálogo de 160 productos, tabla nutricional con fuente por renglón, muestra de PROFECO y OCR listo para medirse con las 5 fotos de Axel (K24).
+- `DESIGN.md`, tokens C2 compilados con Style Dictionary (reproducibles), contraste de componentes sin pares bajo umbral, U3 y U4.
+- Paquete para Claude Design en `docs/design/entrada/` con `LEEME.md` paso a paso para Axel.
 
 ## Cómo correr la verificación
 
@@ -131,7 +151,7 @@ Para la colorimetría sin make, copia el script a un árbol espejo (`<espejo>/do
 
 1. **Puerta 1 (aplicada el 11-oct-2026).** Axel aprobó C1 v1.0, U1 y los criterios y respondió todos los bloqueos (`docs/plan/decisiones.md` §K, K1 a K34). El flujo P1 aplicó las respuestas (esquema 1.2, C1 v1.1, U1 1.1, criterios 1.1 y colorimetría 1.1): [`docs/estado/p1/INTEGRACION.md`](docs/estado/p1/INTEGRACION.md).
 2. **Puerta 1b (aplicada el 11-oct-2026).** Axel respondió los 8 bloqueos de P1 y fijó dos reglas (K35 a K44). El flujo P1c las aplicó: esquema 1.3 con la migración 00003, C1 v1.2 regenerado con `backend/internal/api/c1gen/build.py`, U1 1.2, colorimetría 1.2 y criterios 1.2. Antes de arrancar WF-1, el orquestador decide qué hacer con los hallazgos de los criterios que siguen abiertos; las propuestas para la puerta 2 (mínimos de seguridad y el bloqueo `S1-parametros-avisos`) están en [`docs/estado/p1c/INTEGRACION.md`](docs/estado/p1c/INTEGRACION.md).
-3. **WF-1 «Motores y sistema de diseño»** (plan §3.3 y §5). Pista 1: S2 motor financiero con su oráculo y fixtures; S3 motor de créditos, comparador de escenarios y regresión Kueski; S4 recetas, comidas y salud, recetario de 60 recetas y nutrición; S5 precios y tiendas, PROFECO y OCR. Pista 2: U2 `DESIGN.md` y tokens C2 a partir de `C2-colores.json`; U3 especificación del dashboard; U4 especificación de Ajustes (cada parámetro de K44 en su sección, con valor inicial y «restablecer»). Al cierre, el agente paquete-claude-design deja el paquete de la Pista 3 en `docs/design/entrada/` (K35). Cada motor se verifica contra `oraculo/` al centavo y contra los criterios de `docs/criterios/`. Revisores independientes y un integrador cierran el flujo.
+3. **WF-1 «Motores y sistema de diseño» (integrado el 11-oct-2026).** Motores S2 a S5 con oráculos, recetario, catálogo, PROFECO y OCR, `DESIGN.md`, tokens C2, U3, U4 y el paquete para Claude Design: [`docs/estado/wf1/INTEGRACION.md`](docs/estado/wf1/INTEGRACION.md). `make verify-wf1` lo comprueba.
 4. **Puerta 2:** `DESIGN.md`, tokens C2, motores verificados, mínimos de los parámetros de seguridad (K44) y el bloqueo `S1-parametros-avisos`.
 5. **Pista 3 (Claude Design), la ejecuta Axel (K35).** Axel sube el paquete de `docs/design/entrada/` (con su `LEEME.md`), itera hasta 3 veces y guarda lo descargado en `docs/design/salida/iter-N/` y lo final en `docs/design/salida/final/`; un agente revisa cada iteración y deja el siguiente prompt. La puerta 3 queda en «paquete listo y revisado». Después vienen WF-3 (backend, frontend y verificación visual; puerta 4) y WF-4 (operación, semilla, seguridad e informe final).
 

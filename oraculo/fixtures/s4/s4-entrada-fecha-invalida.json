@@ -1,0 +1,41 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-entrada-fecha-invalida",
+  "descripcion": "§12.1 y §12.2: 2026-02-30 no es fecha: invalid_date. ILUSTRATIVO.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-15"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§12.1"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-02-30",
+      "catalog": {
+        "groups": [],
+        "products": [],
+        "presentations": []
+      },
+      "recipes": [],
+      "persons": []
+    },
+    "consultas": [
+      {
+        "id": "r",
+        "funcion": "inventory_status",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "r": {
+      "error": "invalid_date"
+    }
+  }
+}

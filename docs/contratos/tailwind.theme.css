@@ -1,0 +1,173 @@
+/* tailwind.theme.css
+ * C2 v1.0 · Finanzas Hogar · GENERADO por Style Dictionary 5.6.1 desde docs/contratos/C2-tokens.json.
+ * No se edita a mano: cambia C2-tokens.json y compila (docs/design/tools/tokens/README.md).
+ */
+
+/* Uso: en la hoja de entrada del frontend, en este orden: @import "tailwindcss"; @import ".../docs/contratos/tailwind.theme.css"; (este archivo trae tokens.css).
+ * Solo se exponen como utilidades los semánticos --ui-*, nunca los primitivos (DESIGN §10.4): un componente no combina colores a mano.
+ * Los componentes no usan la variante dark:; el tema lo resuelven las variables --ui-*. */
+@import "./tokens.css";
+
+/* Medidas de 44 px para puntero grueso (Android y toda pantalla táctil) */
+@custom-variant coarse (@media (any-pointer: coarse));
+
+@theme inline {
+  /* Se quitan las escalas por defecto de Tailwind: solo existen las de C2 */
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --font-weight-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --ease-*: initial;
+  --breakpoint-*: initial;
+
+  /* Color: semánticos temáticos (cada uno resuelve claro u oscuro por var(--ui-*)) */
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* surface */
+  --color-surface-page: var(--ui-surface-page);
+  --color-surface-card: var(--ui-surface-card);
+  --color-surface-raised: var(--ui-surface-raised);
+  --color-surface-field: var(--ui-surface-field);
+  --color-surface-hover: var(--ui-surface-hover);
+  --color-surface-hover-subtle: var(--ui-surface-hover-subtle);
+  --color-surface-pressed: var(--ui-surface-pressed);
+  --color-surface-selected: var(--ui-surface-selected);
+  --color-surface-disabled: var(--ui-surface-disabled);
+
+  /* skeleton */
+  --color-skeleton-on-page: var(--ui-skeleton-on-page);
+  --color-skeleton-on-card: var(--ui-skeleton-on-card);
+
+  /* text */
+  --color-text-default: var(--ui-text-default);
+  --color-text-secondary: var(--ui-text-secondary);
+  --color-text-disabled: var(--ui-text-disabled);
+  --color-text-link: var(--ui-text-link);
+  --color-text-link-hover: var(--ui-text-link-hover);
+  --color-text-on-primary: var(--ui-text-on-primary);
+  --color-text-on-destructive: var(--ui-text-on-destructive);
+  --color-text-on-critical: var(--ui-text-on-critical);
+
+  /* icon */
+  --color-icon-default: var(--ui-icon-default);
+  --color-icon-selected: var(--ui-icon-selected);
+
+  /* border */
+  --color-border-divider: var(--ui-border-divider);
+  --color-border-control: var(--ui-border-control);
+  --color-border-control-hover: var(--ui-border-control-hover);
+  --color-border-focus: var(--ui-border-focus);
+  --color-border-selected: var(--ui-border-selected);
+  --color-border-error: var(--ui-border-error);
+
+  /* action */
+  --color-action-primary-bg: var(--ui-action-primary-bg);
+  --color-action-primary-bg-hover: var(--ui-action-primary-bg-hover);
+  --color-action-primary-bg-pressed: var(--ui-action-primary-bg-pressed);
+  --color-action-destructive-bg: var(--ui-action-destructive-bg);
+  --color-action-destructive-bg-hover: var(--ui-action-destructive-bg-hover);
+  --color-action-destructive-bg-pressed: var(--ui-action-destructive-bg-pressed);
+  --color-action-critical-bg: var(--ui-action-critical-bg);
+  --color-action-critical-bg-hover: var(--ui-action-critical-bg-hover);
+  --color-action-critical-bg-pressed: var(--ui-action-critical-bg-pressed);
+
+  /* viz */
+  --color-viz-grid: var(--ui-viz-grid);
+  --color-viz-baseline: var(--ui-viz-baseline);
+  --color-viz-other: var(--ui-viz-other);
+  --color-viz-track: var(--ui-viz-track);
+  --color-viz-meter: var(--ui-viz-meter);
+
+  /* role */
+  --color-role-income: var(--ui-role-income);
+  --color-role-income-surface: var(--ui-role-income-surface);
+  --color-role-expense: var(--ui-role-expense);
+  --color-role-expense-surface: var(--ui-role-expense-surface);
+  --color-role-savings: var(--ui-role-savings);
+  --color-role-savings-surface: var(--ui-role-savings-surface);
+  --color-role-debt: var(--ui-role-debt);
+  --color-role-debt-surface: var(--ui-role-debt-surface);
+  --color-role-warning: var(--ui-role-warning);
+  --color-role-warning-surface: var(--ui-role-warning-surface);
+  --color-role-error: var(--ui-role-error);
+  --color-role-error-surface: var(--ui-role-error-surface);
+  --color-role-success: var(--ui-role-success);
+  --color-role-success-surface: var(--ui-role-success-surface);
+  --color-role-info: var(--ui-role-info);
+  --color-role-info-surface: var(--ui-role-info-surface);
+
+  /* critical */
+  --color-critical: var(--ui-critical);
+  --color-critical-surface: var(--ui-critical-surface);
+
+  /* person */
+  --color-person-axel: var(--ui-person-axel);
+  --color-person-ximena: var(--ui-person-ximena);
+  --color-person-karen: var(--ui-person-karen);
+  --color-person-shared: var(--ui-person-shared);
+
+  /* store */
+  --color-store-walmart: var(--ui-store-walmart);
+  --color-store-bodega-aurrera: var(--ui-store-bodega-aurrera);
+  --color-store-sams-club: var(--ui-store-sams-club);
+  --color-store-market: var(--ui-store-market);
+
+  /* chart */
+  --color-chart-1: var(--ui-chart-1);
+  --color-chart-2: var(--ui-chart-2);
+  --color-chart-3: var(--ui-chart-3);
+  --color-chart-4: var(--ui-chart-4);
+  --color-chart-5: var(--ui-chart-5);
+  --color-chart-6: var(--ui-chart-6);
+  --color-chart-7: var(--ui-chart-7);
+  --color-chart-8: var(--ui-chart-8);
+
+  /* overlay */
+  --color-overlay-scrim: var(--ui-overlay-scrim);
+
+  /* Tipografía */
+  --font-sans: "Inter", ui-sans-serif, system-ui, "Noto Sans", Roboto, sans-serif, "Noto Color Emoji";
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.25rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+  --text-title-3: 1.25rem;
+  --text-title-3--line-height: 1.75rem;
+  --text-title-2: 1.5rem;
+  --text-title-2--line-height: 2rem;
+  --text-title-1: 2rem;
+  --text-title-1--line-height: 2.5rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Espaciado: p-1 … p-12 coinciden con space.1 … space.12 */
+  --spacing: 0.25rem;
+
+  /* Radios */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  /* Sombras (claro; en oscuro valen none y la superficie lleva borde) */
+  --shadow-0: none;
+  --shadow-1: var(--ui-shadow-1);
+  --shadow-2: var(--ui-shadow-2);
+
+  /* Curvas (las duraciones usan duration-150, duration-200 y duration-250) */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+
+  /* Puntos de quiebre: 360 es la base sin prefijo */
+  --breakpoint-phone: 25.75rem;
+  --breakpoint-tablet: 48rem;
+  --breakpoint-desktop: 64rem;
+  --breakpoint-wide: 90rem;
+}

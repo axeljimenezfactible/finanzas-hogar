@@ -1,0 +1,313 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-comparativa-canon",
+  "descripcion": "Compra registrada de Bodega Aurrera contra el carrito de Walmart del 10-oct-2026 (S5-interfaz §3, §7.2). Todo sale de data.json (report_file): K-01 3,094.50; K-02 3,233.00; K-03 +138.50 = +100.50 (idénticos 2,874.00 - 2,773.50) + 59.00 (sustitutos 359.00 - 300.00) - 21.00 (la lata que solo compró Bodega); K-04/K-05 2,773.50 y 2,874.00; K-06 +100.50; K-07 61/60/55 piezas; K-08 33/3 renglones; ganadores 22/8/3. Los renglones se piden aparte (canon-filas) porque su orden es una convención del oráculo.",
+  "fuente": [
+    {
+      "tipo": "data.json",
+      "ruta": "totales"
+    },
+    {
+      "tipo": "data.json",
+      "ruta": "resultados_por_producto"
+    },
+    {
+      "tipo": "data.json",
+      "ruta": "items_identicos"
+    },
+    {
+      "tipo": "data.json",
+      "ruta": "sustitutos"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "Bodega Aurrera (sucursal Vallejo)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "Walmart (sucursal Acueducto de Guadalupe)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "report_file": "datos/semilla/data.json"
+    },
+    "consultas": [
+      {
+        "id": "canon-totales",
+        "funcion": "compare_carts",
+        "argumentos": {
+          "base": "bodega",
+          "others": [
+            "walmart"
+          ]
+        }
+      },
+      {
+        "id": "canon-filas",
+        "funcion": "compare_carts",
+        "argumentos": {
+          "base": "bodega",
+          "others": [
+            "walmart"
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "canon-totales": {
+      "stores": [
+        {
+          "store": "bodega",
+          "total_cents": 309450,
+          "identical_count": 33,
+          "identical_total_cents": 277350,
+          "substitute_count": 3,
+          "piece_count": 61,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 0
+        },
+        {
+          "store": "walmart",
+          "total_cents": 323300,
+          "identical_count": 33,
+          "identical_total_cents": 287400,
+          "substitute_count": 3,
+          "piece_count": 60,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 13850
+        }
+      ],
+      "identical_pieces": 55,
+      "winners": [
+        {
+          "store": "bodega",
+          "count": 22
+        },
+        {
+          "store": "walmart",
+          "count": 3
+        }
+      ],
+      "ties": 8
+    },
+    "canon-filas": {
+      "rows": [
+        {
+          "kind": "identical",
+          "product": "aceite-oliva",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "aceite-soya",
+          "winner_store": "walmart"
+        },
+        {
+          "kind": "identical",
+          "product": "frijoles-refritos",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "duraznos-almibar",
+          "winner_store": "walmart"
+        },
+        {
+          "kind": "identical",
+          "product": "cafe-soluble",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "jamon-pavo",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "salchicha-pavo",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "avena",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "blanqueador",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "caldo-pollo-cubos",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "pasta-dental",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "jabon-manos",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "acondicionador",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "desinfectante-aerosol",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "detergente-polvo",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "elote-grano",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "atun-agua",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "uva-verde",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "jabon-trastes",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "pan-caja",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "papel-higienico",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "espagueti",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "queso-manchego",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "mayonesa-chipotle",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "salsa-soya",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "catsup",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "mayonesa",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "salsa-inglesa",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "servilletas",
+          "winner_store": "walmart"
+        },
+        {
+          "kind": "identical",
+          "product": "toallas-papel",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "identical",
+          "product": "yogur-griego",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "yogur-bebible",
+          "winner_store": null
+        },
+        {
+          "kind": "identical",
+          "product": "petit-suisse",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "substitute",
+          "product": "arroz-grano-largo",
+          "winner_store": "walmart"
+        },
+        {
+          "kind": "substitute",
+          "product": "sustituto-crema-cafe",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "substitute",
+          "product": "leche",
+          "winner_store": "walmart"
+        },
+        {
+          "kind": "only_one",
+          "product": "atun-agua",
+          "winner_store": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-interes-por-monto",
+  "descripcion": "Interés por monto del canon (7 montos de 1.00 a 5,000.00) con la tasa de 4 q y n 4; pago de referencia desde el total sin redondear",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-01"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-02"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "interes_por_monto",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "amounts_cents": [
+            100,
+            10000,
+            100000,
+            200000,
+            309450,
+            400000,
+            500000
+          ],
+          "rate": {
+            "num": 80050,
+            "den": 309450,
+            "decimales": 4
+          },
+          "term_count": 4
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "interes_por_monto": [
+      {
+        "monto": 100,
+        "intereses": 26,
+        "total": 126,
+        "pago_quincenal": 31
+      },
+      {
+        "monto": 10000,
+        "intereses": 2587,
+        "total": 12587,
+        "pago_quincenal": 3147
+      },
+      {
+        "monto": 100000,
+        "intereses": 25868,
+        "total": 125868,
+        "pago_quincenal": 31467
+      },
+      {
+        "monto": 200000,
+        "intereses": 51737,
+        "total": 251737,
+        "pago_quincenal": 62934
+      },
+      {
+        "monto": 309450,
+        "intereses": 80050,
+        "total": 389500,
+        "pago_quincenal": 97375
+      },
+      {
+        "monto": 400000,
+        "intereses": 103474,
+        "total": 503474,
+        "pago_quincenal": 125868
+      },
+      {
+        "monto": 500000,
+        "intereses": 129342,
+        "total": 629342,
+        "pago_quincenal": 157336
+      }
+    ]
+  }
+}

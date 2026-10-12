@@ -1,0 +1,124 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-salud-ajuste-inicial",
+  "descripcion": "S4-07, K36, K44: con los ajustes de la casa en su valor inicial (`settings` ausente = 0 y 0), el hombre con objetivo «bajar» sale 2098.50 -> 2099 y la mujer con objetivo «subir» 1596.30 -> 1596, iguales al caso sin ajuste. ILUSTRATIVO.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-07"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K36"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "cuentas en s4-salud-perfiles"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [],
+        "products": [],
+        "presentations": []
+      },
+      "recipes": [],
+      "persons": [
+        {
+          "code": "h30-bajar-casa",
+          "has_meal_plan": true
+        },
+        {
+          "code": "m28-subir-casa",
+          "has_meal_plan": true
+        }
+      ],
+      "health_profiles": [
+        {
+          "person": "h30-bajar-casa",
+          "height_mm": 1750,
+          "birth_date": "1996-10-11",
+          "sex": "male",
+          "activity": "sedentary",
+          "goal": "lose",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "m28-subir-casa",
+          "height_mm": 1650,
+          "birth_date": "1998-03-15",
+          "sex": "female",
+          "activity": "sedentary",
+          "goal": "gain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        }
+      ],
+      "weights": [
+        {
+          "person": "h30-bajar-casa",
+          "date": "2026-10-01",
+          "weight_g": 80000
+        },
+        {
+          "person": "m28-subir-casa",
+          "date": "2026-10-01",
+          "weight_g": 60000
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "h30-bajar-casa",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "h30-bajar-casa"
+        }
+      },
+      {
+        "id": "m28-subir-casa",
+        "funcion": "health_profile",
+        "argumentos": {
+          "person": "m28-subir-casa"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "h30-bajar-casa": {
+      "person": "h30-bajar-casa",
+      "age": 30,
+      "bmi_tenths": 261,
+      "bmi_class": "overweight",
+      "suggested_kcal_exact": {
+        "num": 4197,
+        "den": 2
+      },
+      "suggested_kcal_target": 2099,
+      "daily_kcal_target": 2099,
+      "target_status": "suggested"
+    },
+    "m28-subir-casa": {
+      "person": "m28-subir-casa",
+      "age": 28,
+      "bmi_tenths": 220,
+      "bmi_class": "normal",
+      "suggested_kcal_exact": {
+        "num": 15963,
+        "den": 10
+      },
+      "suggested_kcal_target": 1596,
+      "daily_kcal_target": 1596,
+      "target_status": "suggested"
+    }
+  }
+}

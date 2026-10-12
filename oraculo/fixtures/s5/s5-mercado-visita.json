@@ -1,0 +1,194 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-mercado-visita",
+  "descripcion": "Mercados (RN-16, S5-11): tianguis de martes (2). Desde el sábado 10-oct-2026 la próxima visita es el martes 13; si hoy es día de visita, hoy cuenta (supuesto S-10); desde el miércoles 14, el martes 20. El tianguis declara solo \"frutas-verduras\": gana en uva (6000 contra 8700) pero no compite en avena, aunque tenga un precio de 100.",
+  "fuente": [
+    {
+      "tipo": "regla",
+      "ruta": "RN-16"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S5-11"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "bodega",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tianguis",
+          "kind": "market",
+          "parent": null,
+          "name": "Tianguis de martes",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": 2,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": [
+            "frutas-verduras"
+          ]
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "uva-verde.pieza-1kg",
+          "store": "tianguis",
+          "price_cents": 6000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "uva-verde.pieza-1kg",
+          "store": "bodega",
+          "price_cents": 8700,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "avena.3-minutos-400g",
+          "store": "tianguis",
+          "price_cents": 100,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "avena.3-minutos-400g",
+          "store": "bodega",
+          "price_cents": 3600,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "visita-sabado",
+        "funcion": "next_visit",
+        "argumentos": {
+          "store": "tianguis",
+          "from": "2026-10-10"
+        }
+      },
+      {
+        "id": "visita-lunes",
+        "funcion": "next_visit",
+        "argumentos": {
+          "store": "tianguis",
+          "from": "2026-10-12"
+        }
+      },
+      {
+        "id": "visita-martes",
+        "funcion": "next_visit",
+        "argumentos": {
+          "store": "tianguis",
+          "from": "2026-10-13"
+        }
+      },
+      {
+        "id": "visita-miercoles",
+        "funcion": "next_visit",
+        "argumentos": {
+          "store": "tianguis",
+          "from": "2026-10-14"
+        }
+      },
+      {
+        "id": "uva",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "uva-verde"
+        }
+      },
+      {
+        "id": "avena",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "avena"
+        }
+      },
+      {
+        "id": "avena-en-tianguis",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "avena",
+          "store": "tianguis"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "visita-sabado": {
+      "date": "2026-10-13"
+    },
+    "visita-lunes": {
+      "date": "2026-10-13"
+    },
+    "visita-martes": {
+      "date": "2026-10-13"
+    },
+    "visita-miercoles": {
+      "date": "2026-10-20"
+    },
+    "uva": {
+      "quote": {
+        "product": "uva-verde",
+        "store": "tianguis",
+        "presentation": "uva-verde.pieza-1kg",
+        "price_cents": 6000,
+        "size_milli": 1000000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "avena": {
+      "quote": {
+        "product": "avena",
+        "store": "bodega",
+        "presentation": "avena.3-minutos-400g",
+        "price_cents": 3600,
+        "size_milli": 400000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "avena-en-tianguis": {
+      "quote": null
+    }
+  }
+}

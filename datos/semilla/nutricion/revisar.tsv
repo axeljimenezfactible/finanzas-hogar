@@ -1,0 +1,51 @@
+producto_id	nombre_es	motivo	fuente	id_fuente	nombre_fuente	kcal_100g	nota
+frijoles-refritos	Frijoles refritos bayos	media	USDA	172438	Refried beans, canned, traditional style	90	Frijoles refritos enlatados estilo tradicional; el producto bayo de La Costeña puede llevar distinta grasa
+duraznos-almibar	Duraznos en almíbar	media	USDA	169112	Peaches, canned, heavy syrup pack, solids and liquids	74	Durazno enlatado en almíbar espeso, sólidos y líquido; el almíbar real de la lata puede variar
+jamon-pavo	Jamón de pavo	media	USDA	172941	Turkey breast, sliced, prepackaged	106	Pechuga de pavo rebanada empacada; el jamón de pavo procesado puede tener otro contenido
+salchicha-pavo	Salchicha de pavo	media	USDA	171625	Frankfurter, turkey	223	Salchicha (frankfurter) de pavo; la marca puede variar
+blanqueador	Blanqueador con cloro	sin fuente					No es alimento: producto de limpieza
+caldo-pollo-cubos	Caldo de pollo en cubos	media	USDA	171563	Soup, chicken broth cubes, dry	198	Cubos de caldo de pollo deshidratado; el catálogo cita 171562 (caldo en polvo, 267 kcal) solo para el peso del cubo
+pasta-dental	Pasta dental	sin fuente					No es alimento: producto de higiene
+jabon-manos	Jabón líquido para manos	sin fuente					No es alimento: producto de higiene
+acondicionador	Acondicionador para cabello	sin fuente					No es alimento: producto de higiene
+desinfectante-aerosol	Desinfectante en aerosol	sin fuente					No es alimento: producto de limpieza
+detergente-polvo	Detergente en polvo	sin fuente					No es alimento: producto de limpieza
+elote-grano	Granos de elote	media	USDA	169214	Corn, sweet, yellow, canned, whole kernel, drained solids	67	Elote amarillo enlatado en grano, sólidos escurridos; el producto trae líquido
+jabon-trastes	Jabón líquido para trastes	sin fuente					No es alimento: producto de limpieza
+pan-caja	Pan de caja	media	USDA	325871	Bread, white, commercially prepared	270	Pan blanco comercial; el pan de caja integral o multigrano tendría otro valor
+papel-higienico	Papel higiénico	sin fuente					No es alimento: papel
+queso-manchego	Queso manchego	media	OFF	7501077506585	Queso manchego rebanado 500 g (NocheBuena)	366	Queso manchego rebanado NocheBuena 500 g (misma marca que el catálogo); dato capturado por usuarios de OFF
+mayonesa-chipotle	Mayonesa con chipotle	media	OFF	7501003308535	Aderezo McCormick chipotle 310 g (McCormick)	376.3	Aderezo McCormick chipotle 310 g (misma marca y tamaño que el catálogo); dato de OFF
+servilletas	Servilletas de papel	sin fuente					No es alimento: papel
+toallas-papel	Toallas de papel	sin fuente					No es alimento: papel
+yogur-griego	Yogur griego natural	media	USDA	2259794	Yogurt, Greek, plain, whole milk	94.507	Yogur griego natural de leche entera; el producto Yoplait sin azúcar puede traer menos grasa
+yogur-bebible	Yogur bebible	media	OFF	7501055900398	Yoghurt bebible con Fresa (Alpura)	78.72	Yoghurt bebible Alpura fresa 250 g; el catálogo es multi sabor y los sabores casi no cambian los macros; dato de OFF
+petit-suisse	Queso petit suisse	media	OFF	7501032395100	Danonino Fresa, Uva y Durazno 6 pack (Danone)	111.667	Danonino fresa, uva y durazno 6 pack 252 g (6 por 42 g como el catálogo); otros registros de Danonino en OFF van de 56 a 112 kcal
+sustituto-crema-cafe	Sustituto de crema para café	media	USDA	171263	Cream substitute, powdered	529	Sustituto de crema en polvo; el Coffee Mate líquido tendría otro valor
+papa-cambray	Papa cambray	media	USDA	170028	Potatoes, white, flesh and skin, raw	69	Papa blanca con piel cruda; la papa cambray es pequeña pero del mismo tipo
+chile-habanero	Chile habanero	baja	USDA	170497	Peppers, hot chili, green, raw	40	USDA no trae habanero; chile picante verde crudo como aproximación
+pimiento-morron	Pimiento morrón	media	USDA	170427	Peppers, sweet, green, raw	20	Pimiento verde crudo; el morrón rojo trae 26 kcal (170108)
+hierbabuena	Hierbabuena	media	USDA	173475	Spearmint, fresh	44	Hierbabuena (spearmint) fresca; la hierbabuena mexicana es otra especie de menta
+pollo-entero	Pollo entero	media	USDA	171447	Chicken, broilers or fryers, meat and skin, raw	215	Pollo con piel crudo, parte comestible sin hueso; el peso entero con hueso rinde menos
+carne-molida-res	Carne molida de res	media	USDA	2514743	Beef, ground, 90% lean meat / 10% fat, raw	190.135	Carne molida 90 % magra cruda; el porcentaje de grasa de la molida de tienda no está en el catálogo
+bistec-res	Bistec de res	media	USDA	2646173	Beef, round, top round, boneless, choice, raw	146.437	Bola (top round) de res cruda; el corte de bistec varía
+milanesa-res	Milanesa de res	baja	USDA	2646173	Beef, round, top round, boneless, choice, raw	146.437	Carne cruda sin empanizar; la milanesa empanizada lleva pan molido y huevo
+falda-res	Falda de res	media	USDA	2646175	Beef, flank, steak, boneless, choice, raw	169.563	Arrachera/flank cruda como equivalente de falda
+chambarete-res	Chambarete de res	media	USDA	169441	"Beef, shank crosscuts, separable lean only, trimmed to 1/4"" fat, choice, raw"	128	Chambarete (shank) en cruz, solo carne magra, cruda
+costilla-res	Costilla de res	media	USDA	169439	Beef, rib, shortribs, separable lean and fat, choice, raw	390	Costilla corta de res con grasa, cruda, sin hueso
+carne-cerdo-maciza	Carne de cerdo maciza	media	USDA	167814	Pork, fresh, leg (ham), rump half, separable lean and fat, raw	182	Pierna de cerdo con grasa, cruda; maciza no define cuánta grasa trae
+costilla-cerdo	Costilla de cerdo	media	USDA	167853	Pork, fresh, spareribs, separable lean and fat, raw	277	Costilla de cerdo con grasa, cruda, parte comestible
+queso-panela	Queso panela	media	OFF	7501002201646	Queso Panela (Caperucita)	276.4	Queso panela Caperucita; el catálogo no fija marca y los panela de OFF van de 210 a 284 kcal
+queso-chihuahua	Queso Chihuahua	media	USDA	2647438	Cheese, monterey jack, solid	390.738	Monterey Jack como equivalente del Chihuahua
+requeson	Requesón	media	USDA	323444	Cheese, ricotta, whole milk	157	Ricotta de leche entera como equivalente del requesón
+crema-acida	Crema	media	USDA	2346387	Cream, sour, full fat	192.744	Crema ácida entera; la crema mexicana de mesa es parecida pero no igual
+piloncillo	Piloncillo	media	USDA	168833	Sugars, brown	380	Azúcar morena como equivalente; el piloncillo no está en USDA
+frijol-bayo	Frijol bayo seco	media	USDA	175199	Beans, pinto, mature seeds, raw (Includes foods for USDA's Food Distribution Program)	347	Frijol pinto crudo como equivalente del bayo
+chipotle-adobo	Chiles chipotles en adobo	baja	OFF	7501017006021	Chipotles Adobados (La Costeña)	49	Chipotles adobados La Costeña 105 g; otro registro de La Costeña dice 73 kcal (7501017057887) y el catálogo no fija marca
+jalapenos-escabeche	Chiles jalapeños en escabeche	media	USDA	170080	Peppers, jalapeno, canned, solids and liquids	27	Jalapeño enlatado, sólidos y líquido; el escabeche mexicano lleva zanahoria y vinagre
+chile-guajillo	Chile guajillo seco	media	USDA	168570	Peppers, hot chile, sun-dried	324	Chile picante seco al sol como equivalente del guajillo
+chile-arbol	Chile de árbol seco	media	USDA	168570	Peppers, hot chile, sun-dried	324	Chile picante seco al sol como equivalente del chile de árbol
+chocolate-mesa	Chocolate de mesa	media	OFF	7501014300405	Chocolate para mesa tradicional mexicano (Ibarra)	457	Chocolate para mesa Ibarra tradicional 630 g; el catálogo no fija marca y los de OFF van de 437 a 475 kcal
+jamaica	Flor de jamaica	baja	USDA	168170	Roselle, raw	49	Roselle (jamaica) cruda; la flor seca que se vende trae otro valor
+polvo-hornear	Polvo para hornear	media	USDA	172804	Leavening agents, baking powder, double-acting, straight phosphate	51	Polvo para hornear de fosfato directo; el de doble acción con sulfato de aluminio es 53 kcal
+cafe-molido	Café molido	baja	OFF	7503035511143	café molido 100% arabico (Vips)	396.6	Café molido Vips 400 g; mismo valor 396.6 en tres productos de OFF y el café seco no tiene registro en USDA; revisar qué valor usar

@@ -1,0 +1,312 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-series-a-b",
+  "descripcion": "Línea de tiempo del canon del 10-oct-2026 al 10-abr-2027: eventos, series A y B de 14 valores, mínimos 8,094.50 y 5,000.00; con la lectura omitida rige B y sale «pendiente confirmar»",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "credito"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "parametros"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-03"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-05"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/kueski-semilla.json"
+    },
+    "consultas": [
+      {
+        "id": "credito",
+        "funcion": "vista_credito",
+        "argumentos": {
+          "credit_id": 1,
+          "today": "2026-10-10",
+          "from": "2026-10-10",
+          "to": "2027-04-10"
+        }
+      },
+      {
+        "id": "parametros",
+        "funcion": "vista_parametros",
+        "argumentos": {
+          "credit_id": 1
+        }
+      },
+      {
+        "id": "lectura-omitida",
+        "funcion": "linea_tiempo",
+        "argumentos": {
+          "credit_id": 1,
+          "today": "2026-10-10",
+          "from": "2026-10-10",
+          "to": "2027-04-10",
+          "reading": ""
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "credito": {
+      "eventos": [
+        {
+          "fecha": "2026-10-10",
+          "tipo": "inicio",
+          "monto": 0,
+          "capital_repuesto": 0,
+          "interes_no_repuesto": 0,
+          "disponible_A": 1000000,
+          "disponible_B": 690550
+        },
+        {
+          "fecha": "2026-10-30",
+          "tipo": "pago",
+          "monto": 97375,
+          "capital_repuesto": 77363,
+          "interes_no_repuesto": 20012,
+          "disponible_A": 1077363,
+          "disponible_B": 767913
+        },
+        {
+          "fecha": "2026-11-15",
+          "tipo": "pago",
+          "monto": 97375,
+          "capital_repuesto": 77363,
+          "interes_no_repuesto": 20012,
+          "disponible_A": 1154726,
+          "disponible_B": 845276
+        },
+        {
+          "fecha": "2026-11-30",
+          "tipo": "pago",
+          "monto": 97375,
+          "capital_repuesto": 77363,
+          "interes_no_repuesto": 20012,
+          "disponible_A": 1232089,
+          "disponible_B": 922639
+        },
+        {
+          "fecha": "2026-12-10",
+          "tipo": "compra",
+          "monto": 400000,
+          "capital_repuesto": 0,
+          "interes_no_repuesto": 0,
+          "disponible_A": 832089,
+          "disponible_B": 522639
+        },
+        {
+          "fecha": "2026-12-15",
+          "tipo": "pago",
+          "monto": 97375,
+          "capital_repuesto": 77361,
+          "interes_no_repuesto": 20014,
+          "disponible_A": 909450,
+          "disponible_B": 600000
+        },
+        {
+          "fecha": "2026-12-30",
+          "tipo": "pago",
+          "monto": 125868,
+          "capital_repuesto": 100000,
+          "interes_no_repuesto": 25868,
+          "disponible_A": 1009450,
+          "disponible_B": 700000
+        },
+        {
+          "fecha": "2027-01-10",
+          "tipo": "papel",
+          "monto": 19900,
+          "capital_repuesto": 0,
+          "interes_no_repuesto": 0,
+          "disponible_A": 1009450,
+          "disponible_B": 700000
+        },
+        {
+          "fecha": "2027-01-15",
+          "tipo": "pago",
+          "monto": 125868,
+          "capital_repuesto": 100000,
+          "interes_no_repuesto": 25868,
+          "disponible_A": 1109450,
+          "disponible_B": 800000
+        },
+        {
+          "fecha": "2027-01-30",
+          "tipo": "pago",
+          "monto": 125868,
+          "capital_repuesto": 100000,
+          "interes_no_repuesto": 25868,
+          "disponible_A": 1209450,
+          "disponible_B": 900000
+        },
+        {
+          "fecha": "2027-02-10",
+          "tipo": "compra",
+          "monto": 400000,
+          "capital_repuesto": 0,
+          "interes_no_repuesto": 0,
+          "disponible_A": 809450,
+          "disponible_B": 500000
+        },
+        {
+          "fecha": "2027-02-15",
+          "tipo": "pago",
+          "monto": 125870,
+          "capital_repuesto": 100000,
+          "interes_no_repuesto": 25870,
+          "disponible_A": 909450,
+          "disponible_B": 600000
+        },
+        {
+          "fecha": "2027-02-28",
+          "tipo": "pago",
+          "monto": 125868,
+          "capital_repuesto": 100000,
+          "interes_no_repuesto": 25868,
+          "disponible_A": 1009450,
+          "disponible_B": 700000
+        },
+        {
+          "fecha": "2027-03-10",
+          "tipo": "papel",
+          "monto": 19900,
+          "capital_repuesto": 0,
+          "interes_no_repuesto": 0,
+          "disponible_A": 1009450,
+          "disponible_B": 700000
+        },
+        {
+          "fecha": "2027-03-15",
+          "tipo": "pago",
+          "monto": 125868,
+          "capital_repuesto": 100000,
+          "interes_no_repuesto": 25868,
+          "disponible_A": 1109450,
+          "disponible_B": 800000
+        },
+        {
+          "fecha": "2027-03-30",
+          "tipo": "pago",
+          "monto": 125868,
+          "capital_repuesto": 100000,
+          "interes_no_repuesto": 25868,
+          "disponible_A": 1209450,
+          "disponible_B": 900000
+        },
+        {
+          "fecha": "2027-04-10",
+          "tipo": "compra",
+          "monto": 400000,
+          "capital_repuesto": 0,
+          "interes_no_repuesto": 0,
+          "disponible_A": 809450,
+          "disponible_B": 500000
+        }
+      ],
+      "comparacion_series": {
+        "esperado_A": [
+          1077363,
+          1154726,
+          1232089,
+          832089,
+          909450,
+          1009450,
+          1109450,
+          1209450,
+          809450,
+          909450,
+          1009450,
+          1109450,
+          1209450,
+          809450
+        ],
+        "esperado_B": [
+          767913,
+          845276,
+          922639,
+          522639,
+          600000,
+          700000,
+          800000,
+          900000,
+          500000,
+          600000,
+          700000,
+          800000,
+          900000,
+          500000
+        ],
+        "calculado_A": [
+          1077363,
+          1154726,
+          1232089,
+          832089,
+          909450,
+          1009450,
+          1109450,
+          1209450,
+          809450,
+          909450,
+          1009450,
+          1109450,
+          1209450,
+          809450
+        ],
+        "calculado_B": [
+          767913,
+          845276,
+          922639,
+          522639,
+          600000,
+          700000,
+          800000,
+          900000,
+          500000,
+          600000,
+          700000,
+          800000,
+          900000,
+          500000
+        ],
+        "coinciden": true
+      },
+      "minimo_A": 809450,
+      "minimo_B": 500000
+    },
+    "parametros": {
+      "papel": 19900,
+      "limite_credito": 1000000
+    },
+    "lectura-omitida": {
+      "reading": "B",
+      "pending_confirmation": true,
+      "series_b_cents": [
+        767913,
+        845276,
+        922639,
+        522639,
+        600000,
+        700000,
+        800000,
+        900000,
+        500000,
+        600000,
+        700000,
+        800000,
+        900000,
+        500000
+      ]
+    }
+  }
+}

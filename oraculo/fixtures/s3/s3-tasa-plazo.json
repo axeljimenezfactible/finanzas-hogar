@@ -1,0 +1,342 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-tasa-plazo",
+  "descripcion": "Tabla por plazo: 6, 8, 10 y 12 quincenas sin tasa capturada dan «sin tasa» (nunca un número); 4,000.00 a 4 q da 1,034.74 (R-17); d1 cotizada con 4 decimales se muestra «25.8685 %» y sin rate_decimals la tasa lleva decimales -1 y texto vacío (§5.1, K12); rate_decimals negativo es entrada inválida",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S3-06"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K12"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[1]"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/kueski-semilla.json"
+    },
+    "consultas": [
+      {
+        "id": "plazo-6",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-12-10",
+            "principal_cents": 400000,
+            "term_count": 6,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "plazo-8",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-12-10",
+            "principal_cents": 400000,
+            "term_count": 8,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "plazo-10",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-12-10",
+            "principal_cents": 400000,
+            "term_count": 10,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "plazo-12",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-12-10",
+            "principal_cents": 400000,
+            "term_count": 12,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "plazo-4",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-12-10",
+            "principal_cents": 400000,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 280850,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "d1-cotizada",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-10",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": 80050,
+            "rate_decimals": 4,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "d1-sin-decimales",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-10",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": 80050,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "d1-decimales-negativos",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 1,
+          "purchase": {
+            "date": "2026-10-10",
+            "principal_cents": 309450,
+            "term_count": 4,
+            "quoted_interest_cents": 80050,
+            "rate_decimals": -1,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 190300,
+                "joint_cents": 85100,
+                "paper_in_cents": 0
+              },
+              {
+                "person": "karen",
+                "external": true,
+                "principal_cents": 119150,
+                "joint_cents": 85100,
+                "paper_in_cents": 19900
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "plazo-6": {
+      "error": "no_rate"
+    },
+    "plazo-8": {
+      "error": "no_rate"
+    },
+    "plazo-10": {
+      "error": "no_rate"
+    },
+    "plazo-12": {
+      "error": "no_rate"
+    },
+    "plazo-4": {
+      "interest_cents": 103474,
+      "total_cents": 503474,
+      "source": "term_table",
+      "rate_display": "25.8685 %"
+    },
+    "d1-cotizada": {
+      "interest_cents": 80050,
+      "rate": {
+        "num": 80050,
+        "den": 309450,
+        "decimales": 4
+      },
+      "rate_display": "25.8685 %",
+      "source": "quoted"
+    },
+    "d1-sin-decimales": {
+      "interest_cents": 80050,
+      "rate": {
+        "num": 80050,
+        "den": 309450,
+        "decimales": -1
+      },
+      "rate_display": ""
+    },
+    "d1-decimales-negativos": {
+      "error": "invalid"
+    }
+  }
+}

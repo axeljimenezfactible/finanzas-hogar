@@ -1,0 +1,289 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-fuentes-compiten",
+  "descripcion": "Cinco fuentes, un precio cada una del 2026-10-10 (K22, K37, S5-04, S5-10): manual, ticket_manual y ticket_ocr valen 2900 y compiten con el mismo peso; site_assisted (1000) y profeco (900) son más baratos pero solo referencia: no aparecen como precio vigente ni ganan. Empate de las tres que compiten: gana la primera de `stores`.",
+  "fuente": [
+    {
+      "tipo": "decision",
+      "ruta": "K37"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K22"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S5-04"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S5-10"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "tienda-manual",
+          "kind": "chain",
+          "parent": null,
+          "name": "tienda-manual",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tienda-ticket",
+          "kind": "chain",
+          "parent": null,
+          "name": "tienda-ticket",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tienda-ocr",
+          "kind": "chain",
+          "parent": null,
+          "name": "tienda-ocr",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tienda-sitio",
+          "kind": "chain",
+          "parent": null,
+          "name": "tienda-sitio",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "tienda-profeco",
+          "kind": "chain",
+          "parent": null,
+          "name": "tienda-profeco",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-manual",
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-ticket",
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "ticket_manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-ocr",
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "ticket_ocr",
+          "is_promotional": false,
+          "source_ref": "attachment 7",
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-sitio",
+          "price_cents": 1000,
+          "observed_date": "2026-10-10",
+          "source": "site_assisted",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-profeco",
+          "price_cents": 900,
+          "observed_date": "2026-10-10",
+          "source": "profeco",
+          "is_promotional": false,
+          "source_ref": "QQP 2026 a.csv:12",
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "precio-tienda-manual",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-manual"
+        }
+      },
+      {
+        "id": "precio-tienda-ticket",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-ticket"
+        }
+      },
+      {
+        "id": "precio-tienda-ocr",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-ocr"
+        }
+      },
+      {
+        "id": "precio-tienda-sitio",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-sitio"
+        }
+      },
+      {
+        "id": "precio-tienda-profeco",
+        "funcion": "current_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "tienda-profeco"
+        }
+      },
+      {
+        "id": "cotiza-arroz",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz-grano-largo"
+        }
+      },
+      {
+        "id": "cotiza-arroz-sitio",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz-grano-largo",
+          "store": "tienda-sitio"
+        }
+      },
+      {
+        "id": "cotiza-arroz-profeco",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz-grano-largo",
+          "store": "tienda-profeco"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "precio-tienda-manual": {
+      "price": {
+        "price_cents": 2900,
+        "observed_date": "2026-10-10",
+        "source": "manual"
+      },
+      "references": [],
+      "promotion": null
+    },
+    "precio-tienda-ticket": {
+      "price": {
+        "price_cents": 2900,
+        "observed_date": "2026-10-10",
+        "source": "ticket_manual"
+      },
+      "references": [],
+      "promotion": null
+    },
+    "precio-tienda-ocr": {
+      "price": {
+        "price_cents": 2900,
+        "observed_date": "2026-10-10",
+        "source": "ticket_ocr"
+      },
+      "references": [],
+      "promotion": null
+    },
+    "precio-tienda-sitio": {
+      "price": null,
+      "references": [
+        {
+          "source": "site_assisted",
+          "price_cents": 1000,
+          "observed_date": "2026-10-10"
+        }
+      ],
+      "promotion": null
+    },
+    "precio-tienda-profeco": {
+      "price": null,
+      "references": [
+        {
+          "source": "profeco",
+          "price_cents": 900,
+          "observed_date": "2026-10-10"
+        }
+      ],
+      "promotion": null
+    },
+    "cotiza-arroz": {
+      "quote": {
+        "product": "arroz-grano-largo",
+        "store": "tienda-manual",
+        "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+        "price_cents": 2900,
+        "size_milli": 1000000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "cotiza-arroz-sitio": {
+      "quote": null
+    },
+    "cotiza-arroz-profeco": {
+      "quote": null
+    }
+  }
+}

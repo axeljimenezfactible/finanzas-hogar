@@ -1,0 +1,381 @@
+{
+  "formato": "insumo-s3/1",
+  "descripcion": "Filas S3 de la regresión tal como S3 las entrega; S2 no las calcula",
+  "filas": {
+    "R-01": {
+      "despensas[0].capital": 309450
+    },
+    "R-02": {
+      "despensas[0].intereses": 80050
+    },
+    "R-03": {
+      "despensas[0].total": 389500
+    },
+    "R-04": {
+      "parametros.tasa_pct": {
+        "num": 80050,
+        "den": 309450
+      }
+    },
+    "R-05": {
+      "data.json:financiamiento.dos_quincenas.tasa_pct": {
+        "num": 53450,
+        "den": 309450,
+        "decimales": 2
+      }
+    },
+    "R-06": {
+      "data.json:financiamiento.dos_quincenas.total": 362900,
+      "data.json:financiamiento.dos_quincenas.intereses": 53450
+    },
+    "R-07": {
+      "despensas[0].axel.total": 239528
+    },
+    "R-08": {
+      "despensas[0].axel.pago_por_quincena": 59882
+    },
+    "R-09": {
+      "despensas[0].axel.intereses": 49228
+    },
+    "R-10": {
+      "despensas[0].karen.total": 149972
+    },
+    "R-11": {
+      "despensas[0].karen.pago_por_quincena": 37493
+    },
+    "R-12": {
+      "despensas[0].karen.intereses": 30822
+    },
+    "R-13": {
+      "despensas[0].pagos[0].fecha": "2026-10-30",
+      "despensas[0].pagos[0].monto": 97375,
+      "despensas[0].pagos[0].axel": 59882,
+      "despensas[0].pagos[0].karen": 37493,
+      "despensas[0].pagos[0].capital_repuesto": 77363
+    },
+    "R-14": {
+      "despensas[0].pagos[1].fecha": "2026-11-15",
+      "despensas[0].pagos[1].monto": 97375,
+      "despensas[0].pagos[1].axel": 59882,
+      "despensas[0].pagos[1].karen": 37493,
+      "despensas[0].pagos[1].capital_repuesto": 77363
+    },
+    "R-15": {
+      "despensas[0].pagos[2].fecha": "2026-11-30",
+      "despensas[0].pagos[2].monto": 97375,
+      "despensas[0].pagos[2].axel": 59882,
+      "despensas[0].pagos[2].karen": 37493,
+      "despensas[0].pagos[2].capital_repuesto": 77363
+    },
+    "R-16": {
+      "despensas[0].pagos[3].fecha": "2026-12-15",
+      "despensas[0].pagos[3].monto": 97375,
+      "despensas[0].pagos[3].axel": 59882,
+      "despensas[0].pagos[3].karen": 37493,
+      "despensas[0].pagos[3].capital_repuesto": 77361
+    },
+    "R-17": {
+      "despensas[1].capital": 400000,
+      "despensas[1].intereses": 103474,
+      "despensas[1].total": 503474
+    },
+    "R-18": {
+      "despensas[1].pagos[0].fecha": "2026-12-30",
+      "despensas[1].pagos[0].monto": 125868,
+      "despensas[1].pagos[0].axel": 88375,
+      "despensas[1].pagos[0].karen": 37493
+    },
+    "R-19": {
+      "despensas[1].pagos[1].fecha": "2027-01-15",
+      "despensas[1].pagos[1].monto": 125868,
+      "despensas[1].pagos[1].axel": 88375,
+      "despensas[1].pagos[1].karen": 37493
+    },
+    "R-20": {
+      "despensas[1].pagos[2].fecha": "2027-01-30",
+      "despensas[1].pagos[2].monto": 125868,
+      "despensas[1].pagos[2].axel": 88375,
+      "despensas[1].pagos[2].karen": 37493
+    },
+    "R-21": {
+      "despensas[1].pagos[3].fecha": "2027-02-15",
+      "despensas[1].pagos[3].monto": 125870,
+      "despensas[1].pagos[3].axel": 88377,
+      "despensas[1].pagos[3].karen": 37493
+    },
+    "R-22": {
+      "despensas[2].capital": 400000,
+      "despensas[2].intereses": 103474,
+      "despensas[2].total": 503474
+    },
+    "R-23": {
+      "despensas[2].pagos[0].fecha": "2027-02-28",
+      "despensas[2].pagos[0].monto": 125868,
+      "despensas[2].pagos[0].axel": 88375,
+      "despensas[2].pagos[0].karen": 37493
+    },
+    "R-24": {
+      "despensas[2].pagos[1].fecha": "2027-03-15",
+      "despensas[2].pagos[1].monto": 125868,
+      "despensas[2].pagos[1].axel": 88375,
+      "despensas[2].pagos[1].karen": 37493
+    },
+    "R-25": {
+      "despensas[2].pagos[2].fecha": "2027-03-30",
+      "despensas[2].pagos[2].monto": 125868,
+      "despensas[2].pagos[2].axel": 88375,
+      "despensas[2].pagos[2].karen": 37493
+    },
+    "R-26": {
+      "despensas[2].pagos[3].fecha": "2027-04-15",
+      "despensas[2].pagos[3].monto": 125870,
+      "despensas[2].pagos[3].axel": 88377,
+      "despensas[2].pagos[3].karen": 37493
+    },
+    "R-27": {
+      "despensas[3].capital": 400000,
+      "despensas[3].intereses": 103474,
+      "despensas[3].total": 503474
+    },
+    "R-28": {
+      "despensas[3].pagos[0].fecha": "2027-04-30",
+      "despensas[3].pagos[0].monto": 125868,
+      "despensas[3].pagos[0].axel": 88375,
+      "despensas[3].pagos[0].karen": 37493
+    },
+    "R-29": {
+      "despensas[3].pagos[1].fecha": "2027-05-15",
+      "despensas[3].pagos[1].monto": 125868,
+      "despensas[3].pagos[1].axel": 88375,
+      "despensas[3].pagos[1].karen": 37493
+    },
+    "R-30": {
+      "despensas[3].pagos[2].fecha": "2027-05-30",
+      "despensas[3].pagos[2].monto": 125868,
+      "despensas[3].pagos[2].axel": 88375,
+      "despensas[3].pagos[2].karen": 37493
+    },
+    "R-31": {
+      "despensas[3].pagos[3].fecha": "2027-06-15",
+      "despensas[3].pagos[3].monto": 125870,
+      "despensas[3].pagos[3].axel": 88377,
+      "despensas[3].pagos[3].karen": 37493
+    },
+    "R-32": {
+      "parametros.karen_fija.total": 149972
+    },
+    "R-33": {
+      "parametros.karen_fija.pago": 37493
+    },
+    "R-34": {
+      "parametros.karen_fija.capital": 119150
+    },
+    "R-35": {
+      "parametros.karen_fija.intereses": 30822
+    },
+    "R-36": {
+      "parametros.karen_fija.conjunto": 85100
+    },
+    "R-61": {
+      "credito.minimo_A": 809450
+    },
+    "R-62": {
+      "credito.minimo_B": 500000
+    },
+    "R-63": {
+      "parametros.limite_credito": 1000000
+    },
+    "R-64": {
+      "credito.eventos[0].disponible_A": 1000000,
+      "credito.eventos[0].disponible_B": 690550
+    },
+    "R-65": {
+      "credito.comparacion_series.esperado_A": [
+        1077363,
+        1154726,
+        1232089,
+        832089,
+        909450,
+        1009450,
+        1109450,
+        1209450,
+        809450,
+        909450,
+        1009450,
+        1109450,
+        1209450,
+        809450
+      ]
+    },
+    "R-66": {
+      "credito.comparacion_series.esperado_B": [
+        767913,
+        845276,
+        922639,
+        522639,
+        600000,
+        700000,
+        800000,
+        900000,
+        500000,
+        600000,
+        700000,
+        800000,
+        900000,
+        500000
+      ]
+    },
+    "R-67": {
+      "credito.eventos[0].fecha": "2026-10-10",
+      "credito.eventos[0].tipo": "inicio",
+      "credito.eventos[0].monto": 0,
+      "credito.eventos[0].disponible_A": 1000000,
+      "credito.eventos[0].disponible_B": 690550,
+      "credito.eventos[1].fecha": "2026-10-30",
+      "credito.eventos[1].tipo": "pago",
+      "credito.eventos[1].monto": 97375,
+      "credito.eventos[1].disponible_A": 1077363,
+      "credito.eventos[1].disponible_B": 767913,
+      "credito.eventos[2].fecha": "2026-11-15",
+      "credito.eventos[2].tipo": "pago",
+      "credito.eventos[2].monto": 97375,
+      "credito.eventos[2].disponible_A": 1154726,
+      "credito.eventos[2].disponible_B": 845276,
+      "credito.eventos[3].fecha": "2026-11-30",
+      "credito.eventos[3].tipo": "pago",
+      "credito.eventos[3].monto": 97375,
+      "credito.eventos[3].disponible_A": 1232089,
+      "credito.eventos[3].disponible_B": 922639,
+      "credito.eventos[4].fecha": "2026-12-10",
+      "credito.eventos[4].tipo": "compra",
+      "credito.eventos[4].monto": 400000,
+      "credito.eventos[4].disponible_A": 832089,
+      "credito.eventos[4].disponible_B": 522639,
+      "credito.eventos[5].fecha": "2026-12-15",
+      "credito.eventos[5].tipo": "pago",
+      "credito.eventos[5].monto": 97375,
+      "credito.eventos[5].disponible_A": 909450,
+      "credito.eventos[5].disponible_B": 600000,
+      "credito.eventos[6].fecha": "2026-12-30",
+      "credito.eventos[6].tipo": "pago",
+      "credito.eventos[6].monto": 125868,
+      "credito.eventos[6].disponible_A": 1009450,
+      "credito.eventos[6].disponible_B": 700000,
+      "credito.eventos[7].fecha": "2027-01-10",
+      "credito.eventos[7].tipo": "papel",
+      "credito.eventos[7].monto": 19900,
+      "credito.eventos[7].disponible_A": 1009450,
+      "credito.eventos[7].disponible_B": 700000,
+      "credito.eventos[8].fecha": "2027-01-15",
+      "credito.eventos[8].tipo": "pago",
+      "credito.eventos[8].monto": 125868,
+      "credito.eventos[8].disponible_A": 1109450,
+      "credito.eventos[8].disponible_B": 800000,
+      "credito.eventos[9].fecha": "2027-01-30",
+      "credito.eventos[9].tipo": "pago",
+      "credito.eventos[9].monto": 125868,
+      "credito.eventos[9].disponible_A": 1209450,
+      "credito.eventos[9].disponible_B": 900000,
+      "credito.eventos[10].fecha": "2027-02-10",
+      "credito.eventos[10].tipo": "compra",
+      "credito.eventos[10].monto": 400000,
+      "credito.eventos[10].disponible_A": 809450,
+      "credito.eventos[10].disponible_B": 500000,
+      "credito.eventos[11].fecha": "2027-02-15",
+      "credito.eventos[11].tipo": "pago",
+      "credito.eventos[11].monto": 125870,
+      "credito.eventos[11].disponible_A": 909450,
+      "credito.eventos[11].disponible_B": 600000,
+      "credito.eventos[12].fecha": "2027-02-28",
+      "credito.eventos[12].tipo": "pago",
+      "credito.eventos[12].monto": 125868,
+      "credito.eventos[12].disponible_A": 1009450,
+      "credito.eventos[12].disponible_B": 700000,
+      "credito.eventos[13].fecha": "2027-03-10",
+      "credito.eventos[13].tipo": "papel",
+      "credito.eventos[13].monto": 19900,
+      "credito.eventos[13].disponible_A": 1009450,
+      "credito.eventos[13].disponible_B": 700000,
+      "credito.eventos[14].fecha": "2027-03-15",
+      "credito.eventos[14].tipo": "pago",
+      "credito.eventos[14].monto": 125868,
+      "credito.eventos[14].disponible_A": 1109450,
+      "credito.eventos[14].disponible_B": 800000,
+      "credito.eventos[15].fecha": "2027-03-30",
+      "credito.eventos[15].tipo": "pago",
+      "credito.eventos[15].monto": 125868,
+      "credito.eventos[15].disponible_A": 1209450,
+      "credito.eventos[15].disponible_B": 900000,
+      "credito.eventos[16].fecha": "2027-04-10",
+      "credito.eventos[16].tipo": "compra",
+      "credito.eventos[16].monto": 400000,
+      "credito.eventos[16].disponible_A": 809450,
+      "credito.eventos[16].disponible_B": 500000
+    },
+    "R-74": {
+      "sensibilidad[0].intereses": 77605,
+      "sensibilidad[0].total": 377605,
+      "sensibilidad[0].pago_quincenal": 94401,
+      "sensibilidad[0].axel_total": 227633
+    },
+    "R-75": {
+      "sensibilidad[1].intereses": 90540,
+      "sensibilidad[1].total": 440540,
+      "sensibilidad[1].pago_quincenal": 110135,
+      "sensibilidad[1].axel_total": 290568
+    },
+    "R-76": {
+      "sensibilidad[2].intereses": 103474,
+      "sensibilidad[2].total": 503474,
+      "sensibilidad[2].pago_quincenal": 125868,
+      "sensibilidad[2].axel_total": 353502
+    },
+    "R-77": {
+      "sensibilidad[3].intereses": 116408,
+      "sensibilidad[3].total": 566408,
+      "sensibilidad[3].pago_quincenal": 141602,
+      "sensibilidad[3].axel_total": 416436
+    },
+    "R-78": {
+      "sensibilidad[4].intereses": 129342,
+      "sensibilidad[4].total": 629342,
+      "sensibilidad[4].pago_quincenal": 157336,
+      "sensibilidad[4].axel_total": 479370
+    },
+    "R-79": {
+      "interes_por_monto[0].intereses": 26,
+      "interes_por_monto[0].total": 126,
+      "interes_por_monto[0].pago_quincenal": 31
+    },
+    "R-80": {
+      "interes_por_monto[1].intereses": 2587,
+      "interes_por_monto[1].total": 12587,
+      "interes_por_monto[1].pago_quincenal": 3147
+    },
+    "R-81": {
+      "interes_por_monto[2].intereses": 25868,
+      "interes_por_monto[2].total": 125868,
+      "interes_por_monto[2].pago_quincenal": 31467
+    },
+    "R-82": {
+      "interes_por_monto[3].intereses": 51737,
+      "interes_por_monto[3].total": 251737,
+      "interes_por_monto[3].pago_quincenal": 62934
+    },
+    "R-83": {
+      "interes_por_monto[4].intereses": 80050,
+      "interes_por_monto[4].total": 389500,
+      "interes_por_monto[4].pago_quincenal": 97375
+    },
+    "R-84": {
+      "interes_por_monto[5].intereses": 103474,
+      "interes_por_monto[5].total": 503474,
+      "interes_por_monto[5].pago_quincenal": 125868
+    },
+    "R-85": {
+      "interes_por_monto[6].intereses": 129342,
+      "interes_por_monto[6].total": 629342,
+      "interes_por_monto[6].pago_quincenal": 157336
+    }
+  }
+}

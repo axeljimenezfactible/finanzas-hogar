@@ -1,0 +1,498 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-inventario-modos",
+  "descripcion": "S4-04, RN-15, K7 (hoy 2026-10-11): ritmo con el ejemplo de RN-15 (2838000 contados, 946000 cada 21 días, 30 días después: 2838000 - 1351429 = 1486571; semanal 315333; días completos 32); stock en igualdad con el nivel (reorder); stock en 0 con nivel (out prevalece); sobrante de receta en porciones x 1000; ritmo que se agota sin negativos; ritmo que baja a reorder; mitad que sube (999). ILUSTRATIVO salvo el ejemplo de RN-15.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-04"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-15"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K7"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "cuentas en descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [
+          {
+            "code": "verduras",
+            "name": "Verduras",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "frutas",
+            "name": "Frutas",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "carnes",
+            "name": "Carnes",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "lacteos",
+            "name": "Lácteos y huevo",
+            "purchase_channel": "chain"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "frijol",
+            "name": "Frijol",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "aceite-soya",
+            "name": "Aceite de soya",
+            "base_unit": "ml",
+            "group": "abarrotes",
+            "grams_per_unit_milli": 921
+          },
+          {
+            "code": "huevo",
+            "name": "Huevo",
+            "base_unit": "piece",
+            "group": "lacteos",
+            "grams_per_unit_milli": 50000
+          },
+          {
+            "code": "servilletas",
+            "name": "Servilletas",
+            "base_unit": "piece",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "harina",
+            "name": "Harina",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "jitomate",
+            "name": "Jitomate",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "cebolla",
+            "name": "Cebolla",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "fresa",
+            "name": "Fresa",
+            "base_unit": "g",
+            "group": "frutas",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "pollo",
+            "name": "Pollo",
+            "base_unit": "g",
+            "group": "carnes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz.1kg",
+            "product": "arroz",
+            "name": "Arroz 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "arroz.750g",
+            "product": "arroz",
+            "name": "Arroz 750 g",
+            "size_milli": 750000
+          },
+          {
+            "code": "frijol.1kg",
+            "product": "frijol",
+            "name": "Frijol 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "aceite-soya.946ml",
+            "product": "aceite-soya",
+            "name": "Aceite de soya 946 ml",
+            "size_milli": 946000
+          },
+          {
+            "code": "huevo.carton-12",
+            "product": "huevo",
+            "name": "Huevo cartón de 12",
+            "size_milli": 12000
+          },
+          {
+            "code": "servilletas.420",
+            "product": "servilletas",
+            "name": "Servilletas 420 piezas",
+            "size_milli": 420000
+          },
+          {
+            "code": "harina.1kg",
+            "product": "harina",
+            "name": "Harina 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "harina.500g",
+            "product": "harina",
+            "name": "Harina 500 g",
+            "size_milli": 500000
+          },
+          {
+            "code": "jitomate.kilo",
+            "product": "jitomate",
+            "name": "Jitomate por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "cebolla.kilo",
+            "product": "cebolla",
+            "name": "Cebolla por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "fresa.kilo",
+            "product": "fresa",
+            "name": "Fresa por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "pollo.kilo",
+            "product": "pollo",
+            "name": "Pollo por kilo",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "recipes": [
+        {
+          "code": "arroz-con-frijol",
+          "name": "Arroz con frijol",
+          "slots": [
+            "lunch",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "arroz",
+              "presentation": "arroz.1kg",
+              "quantity_milli": 450000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.946ml",
+              "quantity_milli": 15000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "huevo-con-frijol",
+          "name": "Huevo con frijol",
+          "slots": [
+            "breakfast",
+            "snack"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "huevo",
+              "presentation": "huevo.carton-12",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 150000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.946ml",
+              "quantity_milli": 10000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        },
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        }
+      ],
+      "meal_plan": [],
+      "inventory": [
+        {
+          "code": "frijol-ritmo",
+          "product": "frijol",
+          "recipe": null,
+          "mode": "consumption_rate",
+          "quantity_milli": 2838000,
+          "counted_date": "2026-09-11",
+          "rate_quantity_milli": 946000,
+          "rate_period_days": 21,
+          "reorder_level_milli": 500000,
+          "expires_date": null
+        },
+        {
+          "code": "arroz-stock",
+          "product": "arroz",
+          "recipe": null,
+          "mode": "stock",
+          "quantity_milli": 400000,
+          "counted_date": null,
+          "rate_quantity_milli": null,
+          "rate_period_days": null,
+          "reorder_level_milli": 400000,
+          "expires_date": null
+        },
+        {
+          "code": "aceite-stock",
+          "product": "aceite-soya",
+          "recipe": null,
+          "mode": "stock",
+          "quantity_milli": 0,
+          "counted_date": null,
+          "rate_quantity_milli": null,
+          "rate_period_days": null,
+          "reorder_level_milli": 200000,
+          "expires_date": null
+        },
+        {
+          "code": "sobrante-r1",
+          "product": null,
+          "recipe": "arroz-con-frijol",
+          "mode": "stock",
+          "quantity_milli": 2000,
+          "counted_date": null,
+          "rate_quantity_milli": null,
+          "rate_period_days": null,
+          "reorder_level_milli": null,
+          "expires_date": null
+        },
+        {
+          "code": "agotado-ritmo",
+          "product": "huevo",
+          "recipe": null,
+          "mode": "consumption_rate",
+          "quantity_milli": 1000000,
+          "counted_date": "2026-10-01",
+          "rate_quantity_milli": 1000000,
+          "rate_period_days": 5,
+          "reorder_level_milli": null,
+          "expires_date": null
+        },
+        {
+          "code": "huevo-ritmo",
+          "product": "huevo",
+          "recipe": null,
+          "mode": "consumption_rate",
+          "quantity_milli": 12000,
+          "counted_date": "2026-10-08",
+          "rate_quantity_milli": 6000,
+          "rate_period_days": 7,
+          "reorder_level_milli": 9500,
+          "expires_date": null
+        },
+        {
+          "code": "mitad-ritmo",
+          "product": "servilletas",
+          "recipe": null,
+          "mode": "consumption_rate",
+          "quantity_milli": 1000,
+          "counted_date": "2026-10-10",
+          "rate_quantity_milli": 1,
+          "rate_period_days": 2,
+          "reorder_level_milli": null,
+          "expires_date": null
+        }
+      ],
+      "list_choices": [],
+      "quotes": [
+        {
+          "product": "arroz",
+          "store": "walmart",
+          "presentation": "arroz.1kg",
+          "price_cents": 2800,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "frijol",
+          "store": "walmart",
+          "presentation": "frijol.1kg",
+          "price_cents": 3000,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "aceite-soya",
+          "store": "walmart",
+          "presentation": "aceite-soya.946ml",
+          "price_cents": 3990,
+          "size_milli": 946000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "huevo",
+          "store": "walmart",
+          "presentation": "huevo.carton-12",
+          "price_cents": 6000,
+          "size_milli": 12000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "inv",
+        "funcion": "inventory_status",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "inv": {
+      "items": [
+        {
+          "code": "frijol-ritmo",
+          "estimated_quantity_milli": 1486571,
+          "status": "sufficient",
+          "weekly_consumption_milli": 315333,
+          "days_left": 32
+        },
+        {
+          "code": "arroz-stock",
+          "estimated_quantity_milli": 400000,
+          "status": "reorder",
+          "weekly_consumption_milli": null,
+          "days_left": null
+        },
+        {
+          "code": "aceite-stock",
+          "estimated_quantity_milli": 0,
+          "status": "out",
+          "weekly_consumption_milli": null,
+          "days_left": null
+        },
+        {
+          "code": "sobrante-r1",
+          "estimated_quantity_milli": 2000,
+          "status": "sufficient",
+          "weekly_consumption_milli": null,
+          "days_left": null
+        },
+        {
+          "code": "agotado-ritmo",
+          "estimated_quantity_milli": 0,
+          "status": "out",
+          "weekly_consumption_milli": 1400000,
+          "days_left": 0
+        },
+        {
+          "code": "huevo-ritmo",
+          "estimated_quantity_milli": 9429,
+          "status": "reorder",
+          "weekly_consumption_milli": 6000,
+          "days_left": 11
+        },
+        {
+          "code": "mitad-ritmo",
+          "estimated_quantity_milli": 999,
+          "status": "sufficient",
+          "weekly_consumption_milli": 4,
+          "days_left": 1998
+        }
+      ],
+      "summary": {
+        "sufficient": 3,
+        "reorder": 2,
+        "out": 2
+      }
+    }
+  }
+}

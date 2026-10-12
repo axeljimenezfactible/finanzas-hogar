@@ -1,0 +1,361 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-plan-fuera-con-receta",
+  "descripcion": "S4-05, RN-19: una celda «fuera» que además trae receta es eating_out_conflict. ILUSTRATIVO.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-05"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-19"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [
+          {
+            "code": "verduras",
+            "name": "Verduras",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "frutas",
+            "name": "Frutas",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "carnes",
+            "name": "Carnes",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "lacteos",
+            "name": "Lácteos y huevo",
+            "purchase_channel": "chain"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "frijol",
+            "name": "Frijol",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "aceite-soya",
+            "name": "Aceite de soya",
+            "base_unit": "ml",
+            "group": "abarrotes",
+            "grams_per_unit_milli": 921
+          },
+          {
+            "code": "huevo",
+            "name": "Huevo",
+            "base_unit": "piece",
+            "group": "lacteos",
+            "grams_per_unit_milli": 50000
+          },
+          {
+            "code": "servilletas",
+            "name": "Servilletas",
+            "base_unit": "piece",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "harina",
+            "name": "Harina",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "jitomate",
+            "name": "Jitomate",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "cebolla",
+            "name": "Cebolla",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "fresa",
+            "name": "Fresa",
+            "base_unit": "g",
+            "group": "frutas",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "pollo",
+            "name": "Pollo",
+            "base_unit": "g",
+            "group": "carnes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz.1kg",
+            "product": "arroz",
+            "name": "Arroz 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "arroz.750g",
+            "product": "arroz",
+            "name": "Arroz 750 g",
+            "size_milli": 750000
+          },
+          {
+            "code": "frijol.1kg",
+            "product": "frijol",
+            "name": "Frijol 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "aceite-soya.946ml",
+            "product": "aceite-soya",
+            "name": "Aceite de soya 946 ml",
+            "size_milli": 946000
+          },
+          {
+            "code": "huevo.carton-12",
+            "product": "huevo",
+            "name": "Huevo cartón de 12",
+            "size_milli": 12000
+          },
+          {
+            "code": "servilletas.420",
+            "product": "servilletas",
+            "name": "Servilletas 420 piezas",
+            "size_milli": 420000
+          },
+          {
+            "code": "harina.1kg",
+            "product": "harina",
+            "name": "Harina 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "harina.500g",
+            "product": "harina",
+            "name": "Harina 500 g",
+            "size_milli": 500000
+          },
+          {
+            "code": "jitomate.kilo",
+            "product": "jitomate",
+            "name": "Jitomate por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "cebolla.kilo",
+            "product": "cebolla",
+            "name": "Cebolla por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "fresa.kilo",
+            "product": "fresa",
+            "name": "Fresa por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "pollo.kilo",
+            "product": "pollo",
+            "name": "Pollo por kilo",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "recipes": [
+        {
+          "code": "arroz-con-frijol",
+          "name": "Arroz con frijol",
+          "slots": [
+            "lunch",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "arroz",
+              "presentation": "arroz.1kg",
+              "quantity_milli": 450000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.946ml",
+              "quantity_milli": 15000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "huevo-con-frijol",
+          "name": "Huevo con frijol",
+          "slots": [
+            "breakfast",
+            "snack"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "huevo",
+              "presentation": "huevo.carton-12",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 150000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.946ml",
+              "quantity_milli": 10000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        },
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        }
+      ],
+      "meal_plan": [
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "arroz-con-frijol",
+          "servings_milli": null,
+          "eating_out": true
+        }
+      ],
+      "inventory": [],
+      "list_choices": [],
+      "quotes": [
+        {
+          "product": "arroz",
+          "store": "walmart",
+          "presentation": "arroz.1kg",
+          "price_cents": 2800,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "frijol",
+          "store": "walmart",
+          "presentation": "frijol.1kg",
+          "price_cents": 3000,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "aceite-soya",
+          "store": "walmart",
+          "presentation": "aceite-soya.946ml",
+          "price_cents": 3990,
+          "size_milli": 946000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "huevo",
+          "store": "walmart",
+          "presentation": "huevo.carton-12",
+          "price_cents": 6000,
+          "size_milli": 12000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "plan",
+        "funcion": "week_plan",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "plan": {
+      "error": "eating_out_conflict"
+    }
+  }
+}

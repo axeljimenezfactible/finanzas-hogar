@@ -1,0 +1,4 @@
+/* Hoja de entrada de prueba de C2-07: Tailwind 4 + tema de C2 */
+@import "tailwindcss";
+@import "../../../../contratos/tailwind.theme.css";
+@source "./prueba.html";

@@ -1,0 +1,312 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-tarjeta-sin-intereses",
+  "descripcion": "Tarjetas de fixture (límite 20,000.00, corte 5, pago 25), una con datos K18 y otra sin ellos: el cargo normal pagado completo un día antes o el mismo día de la fecha de pago da 0.00 con o sin datos (S3-08); MSI a 3 de 1,000.00: 333.33 x2 + 333.34 (truncado, el último ajusta); solo hojas FIRMES",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S3-08"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K18"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [
+        {
+          "credit": {
+            "id": 2,
+            "name": "Tarjeta con datos",
+            "kind": "bank_card",
+            "holder": "axel",
+            "limit_cents": 2000000,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": 5,
+            "payment_due_day": 25,
+            "annual_rate": {
+              "num": 455,
+              "den": 1000,
+              "decimales": 1
+            },
+            "rate_base": "daily",
+            "vat_on_interest_bp": 1600,
+            "min_payment_pct_bp": 500,
+            "min_payment_fixed_cents": 20000,
+            "term_rates": [],
+            "promotions": [
+              {
+                "id": 21,
+                "credit_id": 2,
+                "merchant": "Liverpool",
+                "store_id": null,
+                "term_count": 3,
+                "rate": {
+                  "num": 0,
+                  "den": 1,
+                  "decimales": 0
+                },
+                "min_purchase_cents": 90000,
+                "valid_from": "2026-10-01",
+                "valid_to": "2026-12-31",
+                "active": true
+              }
+            ]
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        },
+        {
+          "credit": {
+            "id": 3,
+            "name": "Tarjeta sin datos",
+            "kind": "bank_card",
+            "holder": "axel",
+            "limit_cents": 2000000,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": 5,
+            "payment_due_day": 25,
+            "annual_rate": null,
+            "rate_base": "",
+            "vat_on_interest_bp": null,
+            "min_payment_pct_bp": null,
+            "min_payment_fixed_cents": null,
+            "term_rates": [],
+            "promotions": []
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "cargo-con-datos",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 2,
+          "purchase": {
+            "date": "2026-10-12",
+            "principal_cents": 150000,
+            "term_count": 1,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 150000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "pago-total-dia-antes-con-datos",
+        "funcion": "interes_tarjeta",
+        "argumentos": {
+          "credit_id": 2,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [],
+            "source": "bank"
+          },
+          "paid_cents": 150000,
+          "paid_date": "2026-11-24"
+        }
+      },
+      {
+        "id": "pago-total-mismo-dia-con-datos",
+        "funcion": "interes_tarjeta",
+        "argumentos": {
+          "credit_id": 2,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [],
+            "source": "bank"
+          },
+          "paid_cents": 150000,
+          "paid_date": "2026-11-25"
+        }
+      },
+      {
+        "id": "cargo-sin-datos",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 3,
+          "purchase": {
+            "date": "2026-10-12",
+            "principal_cents": 150000,
+            "term_count": 1,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 150000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "pago-total-dia-antes-sin-datos",
+        "funcion": "interes_tarjeta",
+        "argumentos": {
+          "credit_id": 3,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [],
+            "source": "bank"
+          },
+          "paid_cents": 150000,
+          "paid_date": "2026-11-24"
+        }
+      },
+      {
+        "id": "pago-total-mismo-dia-sin-datos",
+        "funcion": "interes_tarjeta",
+        "argumentos": {
+          "credit_id": 3,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 150000,
+            "daily_balances_cents": [],
+            "source": "bank"
+          },
+          "paid_cents": 150000,
+          "paid_date": "2026-11-25"
+        }
+      },
+      {
+        "id": "msi-3",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 2,
+          "purchase": {
+            "date": "2026-10-20",
+            "principal_cents": 100000,
+            "term_count": 3,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": 21,
+            "store_id": null,
+            "merchant": "Liverpool",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 100000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "cargo-con-datos": {
+      "interest_cents": 0,
+      "total_cents": 150000,
+      "payments": [
+        {
+          "amount_cents": 150000
+        }
+      ],
+      "provisional": [
+        "S3-formula-tarjeta",
+        "S3-origen-cargo-normal"
+      ]
+    },
+    "pago-total-dia-antes-con-datos": {
+      "interest_cents": 0,
+      "provisional": []
+    },
+    "pago-total-mismo-dia-con-datos": {
+      "interest_cents": 0,
+      "provisional": []
+    },
+    "cargo-sin-datos": {
+      "interest_cents": 0,
+      "total_cents": 150000,
+      "payments": [
+        {
+          "amount_cents": 150000
+        }
+      ],
+      "provisional": [
+        "S3-formula-tarjeta",
+        "S3-origen-cargo-normal"
+      ]
+    },
+    "pago-total-dia-antes-sin-datos": {
+      "interest_cents": 0,
+      "provisional": []
+    },
+    "pago-total-mismo-dia-sin-datos": {
+      "interest_cents": 0,
+      "provisional": []
+    },
+    "msi-3": {
+      "interest_cents": 0,
+      "total_cents": 100000,
+      "payments": [
+        {
+          "amount_cents": 33333
+        },
+        {
+          "amount_cents": 33333
+        },
+        {
+          "amount_cents": 33334
+        }
+      ],
+      "provisional": [
+        "S3-formula-tarjeta",
+        "S3-serie-sin-intereses"
+      ]
+    }
+  }
+}

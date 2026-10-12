@@ -1,0 +1,133 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-kueski-despensa-2",
+  "descripcion": "Despensa 2 del canon con la semilla: capital, intereses, pagos, partes y disposición",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "despensas[1]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "disposicion_por_despensa[1]"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-01"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-04"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-19"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/kueski-semilla.json"
+    },
+    "consultas": [
+      {
+        "id": "despensas[1]",
+        "funcion": "vista_despensa",
+        "argumentos": {
+          "credit_id": 1,
+          "n": 2
+        }
+      },
+      {
+        "id": "disposicion_por_despensa[1]",
+        "funcion": "vista_disposicion",
+        "argumentos": {
+          "credit_id": 1,
+          "n": 2
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "despensas[1]": {
+      "n": 2,
+      "capital": 400000,
+      "intereses": 103474,
+      "total": 503474,
+      "pagos": [
+        {
+          "fecha": "2026-12-30",
+          "monto": 125868,
+          "axel": 88375,
+          "karen": 37493,
+          "capital_repuesto": 100000
+        },
+        {
+          "fecha": "2027-01-15",
+          "monto": 125868,
+          "axel": 88375,
+          "karen": 37493,
+          "capital_repuesto": 100000
+        },
+        {
+          "fecha": "2027-01-30",
+          "monto": 125868,
+          "axel": 88375,
+          "karen": 37493,
+          "capital_repuesto": 100000
+        },
+        {
+          "fecha": "2027-02-15",
+          "monto": 125870,
+          "axel": 88377,
+          "karen": 37493,
+          "capital_repuesto": 100000
+        }
+      ],
+      "axel": {
+        "capital": 280850,
+        "conjunto": 85100,
+        "propio": 195750,
+        "papel_dentro": 19900,
+        "libre": 260950,
+        "intereses": 72652,
+        "total": 353502,
+        "pago_por_quincena": 88375
+      },
+      "karen": {
+        "capital": 119150,
+        "conjunto": 85100,
+        "propio": 34050,
+        "papel_dentro": 0,
+        "libre": 119150,
+        "intereses": 30822,
+        "total": 149972,
+        "pago_por_quincena": 37493
+      }
+    },
+    "disposicion_por_despensa[1]": {
+      "despensa": 2,
+      "axel": {
+        "capital": 280850,
+        "conjunto": 85100,
+        "propio": 195750,
+        "papel_dentro": 19900,
+        "libre": 260950,
+        "intereses": 72652,
+        "total": 353502,
+        "pago_por_quincena": 88375
+      },
+      "karen": {
+        "capital": 119150,
+        "conjunto": 85100,
+        "propio": 34050,
+        "papel_dentro": 0,
+        "libre": 119150,
+        "intereses": 30822,
+        "total": 149972,
+        "pago_por_quincena": 37493
+      }
+    }
+  }
+}

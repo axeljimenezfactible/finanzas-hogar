@@ -1,0 +1,82 @@
+# REVISIÓN · Paquete de entrada para Claude Design · ronda 1 de 3
+
+Revisor: `revisor-paquete-r1` (independiente; no escribió nada de lo revisado y no corrigió nada). Fecha: 11-oct-2026.
+Contra: `docs/criterios/P3-claude-design.md` v1.2 (lo aplicable al paquete y a las carpetas de salida), `docs/plan/plan.md` §3.6 y `docs/plan/decisiones.md` §K (K35).
+Revisado: `docs/design/entrada/` (22 archivos), `docs/design/salida/` (LEEME y 4 carpetas), `docs/design/tools/paquete_entrada.sh`, `docs/design/tools/paquete/C1-resumen.md`, reportes `docs/estado/wf1/paquete-claude-design.md` y `paquete-regenerar.md`.
+Método: todo se reejecutó con comandos y scripts propios en `datos/tmp/rev-paquete-r1/` (borrados al terminar); el script del paquete se corrió sobre una **copia** del árbol para no tocar la entrega.
+
+## Veredicto
+
+**NO APROBADO.** 0 hallazgos altos, **6 medios**, 7 bajos. Lo verificable de forma mecánica pasa: `sha256sum -c` en 0 diferencias, el script regenera sin diferencias, los 4 PDF abren, DESIGN.pdf trae los 10 encabezados, los 90 hex y los 81 nombres de token de `prompt.md` existen en C2 con su valor exacto, y no hay credenciales ni correos. Los medios son cinco dudas que le quedarían a una persona sin contexto técnico al seguir `LEEME.md`, más las rutas de la API que trae `U3-dashboard.pdf`.
+
+## Tabla de criterios (evidencia propia)
+
+| Criterio | Estado | Evidencia del revisor |
+|---|---|---|
+| P3-01 (alta) paquete listo y revisado | Cumple en lo mecánico; la puerta 3 espera a que la ronda del revisor quede sin medios | `ls -A entrada` = 22; `grep -E '^[0-9a-f]{64}  ' MANIFIESTO.md \| sha256sum -c` → 21 OK, rc=0; patrón de credencial de P3-01 sobre `LEEME.md` = 0. Este informe: 0 altos |
+| P3-02 (alta) paquete completo | Cumple | 11 archivos + 11 PNG = 22, ninguno de 0 bytes; `pdfinfo`: DESIGN 36 págs., U3 19, U4 31, C1-resumen 4 (A4, Skia); `pdftotext DESIGN.pdf \| grep -c Colorimetr` = 2; `grep -c color prompt.md` = 40; mi script `check_prompt.py`: 90 hex únicos, 0 ausentes de `C2-colores.json` y 0 de `C2-tokens.json`; 81 nombres de token, 0 ausentes; 52 pares «token `#hex`» y las escalas de marca y neutro (11 + 11) con 0 discrepancias; las 16 insignias de rol coinciden con `color.role.<rol>.surface-light/dark`; MANIFIESTO lista 21 archivos con sha256. `C2-tokens.json`, `tokens.css` y `paleta.png` son idénticos (sha256) a sus fuentes. Ver B-2 sobre la doble lectura de «los hex de C2 aparecen en prompt.md» |
+| P3-03 (alta) LEEME ejecutable por Axel solo | Cumple en los 8 pasos numerados; fallan la claridad sin contexto (M-1 a M-4) y la sección «Comprobar» (M-5) | 8 pasos numerados, uno por acción (abrir, crear proyecto, pegar, subir, enviar, esperar, exportar, descargar y guardar); patrón de credencial = 0; «compartir/publicar/invitar/suscripción» solo en las líneas 51 y 58 (advertencias); ejecución en seco con `paths.py`: todas las rutas reales citadas existen (las que no existen son ejemplos de nombre o archivos que se escriben después: `P3-iter-1.md`, `siguiente-prompt.md`) |
+| P3-04 (alta) lo descargado es dato | Cumple en el paquete | `LEEME.md` l. 59, `prompt.md` l. 106 y `salida/LEEME.md` dicen que el texto con aspecto de orden no se sigue. El registro de herramientas del orquestador no está a mi alcance: se evalúa en cada `P3-iter-N.md`. Este revisor: 0 llamadas `mcp__claude-in-chrome__*` (solo Bash) |
+| P3-05 (alta) cuándo parar | Cumple | Sección «Si algo falla» (l. 48-53): «falla 2 o 3 veces, detente», suscripción agotada, herramienta cambia; «el proyecto sigue con DESIGN.md»; `grep -c DESIGN.md LEEME.md` = 3 |
+| P3-06 (alta) ≤ 3 vueltas | Preparado; pendiente de Axel | `ls -d salida/iter-*` = 3; LEEME explica «iter-N lista» y `siguiente-prompt.md` como mensaje nuevo. El conteo por vuelta es posterior (ver M-2 y M-4: el LEEME no dice cuántos archivos esperar ni cómo nombrar dos estados de una pantalla) |
+| P3-07 a P3-10 (alta) | No aplican al paquete | Se evalúan por vuelta y en `referencia-visual.md` |
+| P3-11 (media) carpetas | Cumple | `ls -d salida/ salida/final/ entrada/ salida/iter-1..3` existen, vacías salvo `.gitkeep`; `salida/LEEME.md` es el LEEME de la carpeta de salida; `grep -c "docs/design/salida/iter-N" LEEME.md` = 1; MANIFIESTO trae las 3 rutas absolutas |
+| P3-12 (media) datos y credenciales | Cumple | Patrón P3-12 sobre `prompt.md` = 0; credenciales, correos y `http(s)://` = 0 en el texto de los 4 PDF, el DOCX, `C2-tokens.json`, `tokens.css`, MANIFIESTO, LEEME, prompt y el PDF de origen de las 11 capturas (`reporte.pdf`) |
+| P3-13 (media) supuestos y bloqueos | Cumple | El reporte del paquete trae 7 supuestos; `ls docs/estado/bloqueos/P3-*` = ninguno (no hay bloqueos de la Pista 3) |
+
+## Verificaciones pedidas (a)–(g)
+
+- **(a) Integridad y regeneración: PASA.** `sha256sum -c` 21 OK. Copia del árbol en `datos/tmp/rev-paquete-r1/` y corrida del script **sin** `--forzar`: los 6 productos «sin cambios en las fuentes», `diff -r` contra la entrada real = 0. Corrida **con** `--forzar`: cambian solo los 4 PDF (fecha de Chromium) y sus 4 filas del MANIFIESTO; el texto de cada PDF (`pdftotext -layout`, md5) es idéntico al entregado, las páginas también (36/19/31/4), y `DESIGN.docx` y los 11 PNG salen idénticos byte a byte. Es la diferencia esperada.
+- **(b) PDF y PNG: PASA.** Los 4 PDF abren; DESIGN.pdf contiene los 10 encabezados de DESIGN.md (§1 Principios y tono … §10 Tokens), cada uno 2 veces (índice y título), más «Supuestos». 11 PNG de 910 × 1287 px (110 ppp) regenerados idénticos desde el `reporte.pdf` de 11 páginas; `paleta.png` 1400 × 3000.
+- **(c) prompt.md: PASA con observaciones.** 0 hex y 0 tokens ausentes de C2 (script propio); las asignaciones semánticas del texto coinciden con `ui.*` resuelto (página `neutral.50/950`, tarjeta `100/900`, divisor `200/800`, texto `900/100` y `700/300`, primario `brand.700`/`brand.300` con `base.white`/`brand.950`, enlace `brand.700/300`, foco `brand.600/400` y `border.width.focus` 2 px); tipografía, espacios y radios coinciden con `font.size.*`, `space.*` y `radius.*`. Pantallas de U3: Resumen con las 6 tarjetas en el orden de U3 §2, Detalle con «Participación de Karen» (U3 §3.1), Tendencias T-1 a T-4, Calendario con los 5 estados de U3 §1.4. Las 14 secciones de U4 con los mismos nombres que `U4-ajustes-a.md`/`-b.md`. Barra lateral en el orden de U1 §2 (acciones fijas Buscar y Registrar gasto, luego las 9 secciones) y barra inferior de U1 G-05. Reglas de dinero, fechas, idioma y WCAG 2.2 AA presentes. Español de México. 11 958 bytes (≤ 12 KB en cualquier lectura). Sin bloques de código. Ver B-2, B-3 y B-7.
+- **(d) LEEME.md: FALLA** en claridad para una persona sin contexto técnico: M-1 a M-5. Nombres y carpetas exactos y existentes: sí. Credenciales: no. Acciones fuera de la lista: solo la sección «Comprobar» (M-5).
+- **(e) Sin código ni rutas de la API: FALLA** por `U3-dashboard.pdf` (M-6). Ningún archivo de código por extensión; `tokens.css` es CSS pero K35 lo pide expresamente.
+- **(f) C1-resumen: PASA.** 4 páginas (≤ 10); 0 rutas, 0 nombres de operación, 0 JSON; sus 9 módulos son las 9 etiquetas de `extractos/INDICE.md`, la versión (C1 1.2) coincide, y «31 entidades» es la cifra de `C1-datos.md` §7. Ver B-3 y B-4.
+- **(g) Carpetas de salida: PASA.** `iter-1`, `iter-2`, `iter-3` y `final` existen con `.gitkeep`; `salida/LEEME.md` las explica. Interpreto «con su LEEME» como el LEEME de `salida/`: un LEEME dentro de cada `iter-N` rompería P3-11 (carpetas vacías) y el conteo de P3-06.
+
+## Hallazgos
+
+### Medios
+
+**M-1 · LEEME no dice dónde ni a quién avisar «iter-N lista».** `docs/design/entrada/LEEME.md` l. 3 («yo no abro esa página») y l. 42-44 («avísame con estas palabras»). Una persona sin contexto no sabe quién es «yo» ni dónde se escribe el aviso (¿en la sesión de Claude Code del proyecto? ¿Telegram? ¿en Claude Design?).
+Corrección sugerida: decir el canal exacto, p. ej. «escríbelo en la sesión de Claude Code del proyecto Finanzas Hogar (la terminal donde trabaja el orquestador)», y nombrar al que recibe el aviso.
+
+**M-2 · LEEME no dice cuántos archivos esperar ni qué hacer con una entrega parcial.** `prompt.md` l. 12 pide 80 artboards y autoriza «entrega primero las pantallas 1 a 8 y avisa cuáles faltan»; `LEEME.md` l. 33-34 y 40-45 no dicen que se esperan hasta 80 imágenes ni qué hacer si Claude Design entrega solo una parte (¿guardar y avisar «iter-1 lista»? ¿pedir las que faltan en la misma vuelta?). P3-06 cuenta lo descargado contra los artboards del prompt, así que la duda afecta la evidencia.
+Corrección sugerida: un paso que diga «si entrega solo una parte, guarda lo que haya y avisa “iter-1 lista” con la lista de faltantes; no pidas el resto por tu cuenta» (o la regla que decida el orquestador) y el número esperado (80, o lo que dé el servicio).
+
+**M-3 · LEEME no dice qué hacer si Claude Design responde con preguntas o con un plan en lugar de maquetas.** `LEEME.md` l. 32 («Espera a que termine») y la sección «Si algo falla» no lo cubren; contestar por cuenta propia es escribir un mensaje que no está entre las acciones de P3-03.
+Corrección sugerida: «si te hace preguntas o te propone un plan antes de dibujar, no contestes: cópialas y avísame; el siguiente mensaje te lo damos escrito» (o una respuesta fija para pegar, p. ej. «Sigue con lo que pide el mensaje»).
+
+**M-4 · Dos convenciones de nombre que chocan y un nombre que colisiona.** `prompt.md` l. 12 pide artboards «NN Pantalla · tema · dispositivo» (p. ej. «01 Resumen · claro · móvil»); `LEEME.md` l. 38 y `salida/LEEME.md` piden archivos `pantalla-tema-dispositivo.png` («resumen-claro-movil.png»). Con 80 artboards, la persona no sabe si debe renombrar uno por uno. Además, la pantalla 19 tiene dos estados (barra lateral expandida y colapsada) y la convención da un solo nombre (`barra-lateral-claro-escritorio.png`), y el ejemplo `menu-barra-oscuro-movil.png` no explica que «barra» es la diagonal «/» de la pantalla 20.
+Corrección sugerida: una sola convención en los tres archivos (lo más simple: que `prompt.md` pida nombrar los artboards ya en la forma del archivo, p. ej. `19-barra-lateral-expandida-claro-escritorio`, y que LEEME diga «no renombres nada»), con un nombre por estado.
+
+**M-5 · La sección «Comprobar que el paquete está completo» pide una acción fuera de la lista y no se puede seguir sin contexto técnico.** `LEEME.md` l. 62-64: un comando de terminal (`cd … && grep … | sha256sum -c`) y «se vuelve a generar todo con `docs/design/tools/paquete_entrada.sh`». P3-03 limita las acciones de Axel a subir, pegar, enviar, exportar y descargar; no es una acción prohibida ni toca la cuenta, por eso no es alto.
+Corrección sugerida: quitar esa sección del LEEME de Axel (la comprobación ya está en `MANIFIESTO.md` y la hace el orquestador o su revisor) o marcarla «opcional, no hace falta para subir el paquete; la hace el orquestador», sin pedir que corra el script.
+
+**M-6 · `U3-dashboard.pdf` trae rutas de la API (verificación (e)).** `pdftotext entrada/U3-dashboard.pdf | grep -c /api/v1` = 13 (12 con método, p. ej. «getDashboardMonthVsPlan (GET /api/v1/dashboard/month-vs-plan)») y 25 nombres de operación; `U4-ajustes.pdf` trae 89 nombres de operación distintos en prosa (0 rutas). Es inconsistente con `C1-resumen` (que se escribió sin rutas a propósito: «No contiene rutas, ni código») y con `MANIFIESTO.md` («Ningún archivo del paquete contiene código»). No es alto: K35 pide `U3-dashboard.pdf` tal cual y una ruta no es código, pero incumple la verificación (e) y puede hacer que Claude Design pinte rutas en las maquetas.
+Corrección sugerida: en `paquete_entrada.sh`, filtrar la fuente de U3 y U4 antes de pandoc (quitar los fragmentos «· `opId` (MÉTODO `/api/v1/…`)» y los nombres de operación entre comillas invertidas, o sustituirlos por «dato de C1») y añadir al paso 4/5 una comprobación `pdftotext … | grep -c '/api/v1'` = 0 que haga fallar el script.
+
+### Bajos
+
+**B-1 · «No contiene código» no es exacto.** `LEEME.md` l. 5 y `MANIFIESTO.md` («Ningún archivo del paquete contiene código») mientras `DESIGN.pdf`/`.docx` llevan 6 bloques de código de DESIGN.md (4 CSS, 1 HTML, 1 JSON; DESIGN.md l. 251, 387, 436, 440, 535, 1166) y `tokens.css` es CSS. Todo está autorizado (decisión 42 «DESIGN.md + tokens», K35). Corrección: «no contiene el código de la aplicación; DESIGN trae fragmentos de ejemplo y `tokens.css` es una lista de valores».
+
+**B-2 · 11 tokens semánticos con hex fuera de `prompt.md`; doble lectura de P3-02.** Mi script `check_ui.py`: `ui.action.destructive.*` (oscuro `#FFC0BF`, hover `#7E3236`/`#FFDDDC`), `ui.text.on-destructive.dark` `#3C1416`, `ui.action.critical.bg-hover/pressed` (`#5A4F00`, `#EEE8BD`, `#3F3700`, `#F8F4D9`), `ui.critical.dark` `#CBBB5A` y `ui.critical-surface` (`#F8F4D9`/`#3F3700`). La pantalla 15 pide el diálogo de acción crítica, y `LEEME.md` l. 52 dice que, sin los JSON, «los colores y medidas están escritos dentro del mensaje». Sí están en `DESIGN.pdf` (6 de 6 muestreados), así que el respaldo funciona. Aparte, la Verifica de P3-02 («los hex de `C2-tokens.json` aparecen en `prompt.md`») admite dos lecturas: «todo hex del prompt es de C2» (la del orquestador en esta revisión, cumple) o «todos los hex de C2 están en el prompt» (64 de 154 primitivos no están; no cabe en 12 KB). Corrección: LEEME l. 52 «… escritos en el mensaje y en `DESIGN.pdf`» y, opcional, una línea en el prompt con la superficie y el texto del diálogo crítico; solicitud al dueño de criterios para fijar la lectura.
+
+**B-3 · Calendario incompleto en prompt y C1-resumen.** `prompt.md` l. 18 y `C1-resumen.md` §5 omiten las fechas meta de ahorro (`savings_goal`) y el envío del reporte mensual (`monthly_report`) que U3 §5 pide en el Calendario. `U3-dashboard.pdf` lo trae. Corrección: añadir «fechas meta de ahorro y envío del reporte mensual».
+
+**B-4 · Referencia equivocada en C1-resumen.** `docs/design/tools/paquete/C1-resumen.md` l. 31: «la vista por defecto de cada una está marcada en el documento U3 y en DESIGN»; `grep -ci 'vista por defecto'` = 0 en U3 y 0 en DESIGN (sí está en U1, que no va en el paquete). No afecta las 20 pantallas pedidas. Corrección: quitar la referencia o decir que se define en la arquitectura (no incluida).
+
+**B-5 · Robustez del script.** `paquete_entrada.sh` l. 14-15 y 31: calcula `SCRIPT_HASH` con `${BASH_SOURCE[0]}` después de `cd "$ROOT"`; llamado con ruta relativa desde otra carpeta falla («sha256sum: datos/tmp/…/paquete_entrada.sh: No such file or directory»; con ruta absoluta o desde la raíz funciona). L. 132: la búsqueda de código solo mira `.go .ts .tsx .py .sql` (no `.js .sh .html`) y no revisa el texto de los PDF. Sin `docs/design/tools/paquete/.cache/` versionado, una corrida en otro clon cambia los hashes de los 4 PDF aunque el texto sea el mismo (lo comprobé con `--forzar`). Corrección: `SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"` antes del `cd`; ampliar las extensiones y sumar la comprobación de M-6; que el integrador decida versionar `.cache` (ya lo pidió el agente del paquete).
+
+**B-6 · Rutas relativas y archivo `.md` en el LEEME.** `LEEME.md` l. 34, 43 y 44 usan `docs/design/salida/iter-N/`, `docs/estado/P3-iter-1.md` y `docs/design/salida/iter-1/siguiente-prompt.md` sin decir que cuelgan de `/home/deepsec/finanzas-hogar/` (la l. 34 da la absoluta solo para `iter-1`). L. 29 pide abrir `prompt.md` sin decir con qué programa. Corrección: la ruta absoluta entre paréntesis (se conserva el literal que exige P3-11) y «ábrelo con el editor de texto».
+
+**B-7 · Tarjeta 3 resumida de menos en el prompt.** `prompt.md` l. 15: «Próximo pago y disponible (fecha, monto, estado del pago)» no menciona el bloque «Disponible hoy» por línea que define U3 §2, Tarjeta 3 (C1-resumen sí lo dice). Corrección: «… estado del pago; disponible de cada línea».
+
+## Estado de los hallazgos anteriores
+
+No aplica: es la ronda 1 del revisor del paquete. Se tomó en cuenta la corrida posterior `paquete-regenerar` (U4 pasó de 30 a 31 páginas); el MANIFIESTO vigente corresponde a esa corrida y a las fuentes actuales (sellos iguales).
+
+## Lo que no pude verificar
+
+- El registro de herramientas del orquestador (P3-04): no está a mi alcance; queda para cada `P3-iter-N.md`.
+- Revisión visual de las 11 capturas: sustituida por la búsqueda en el texto del `reporte.pdf` de origen (0 correos, 0 credenciales, 0 URL); las capturas son ese PDF rasterizado (regeneración idéntica byte a byte).

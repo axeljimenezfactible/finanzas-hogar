@@ -1,0 +1,136 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-tienda-abonos-interes",
+  "descripcion": "Crédito de tienda con datos K18 de fixture (60 % anual, base mensual, IVA 16 %, mínimo 10 % o 100.00) y sin term_rates: corte de 800.00 pagado un día después: HALF_UP(800.00 x 0.60 / 12) = 40.00 más IVA 6.40 = 46.40; mínimo máx(80.00, 100.00) = 100.00; la compra en 3 abonos con interés no tiene regla: unsupported",
+  "fuente": [
+    {
+      "tipo": "manual",
+      "ruta": "descripcion"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-10"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S3-formula-tarjeta.md",
+    "que": "pregunta 3: fórmula del periodo aplicada a la tienda y abonos con interés sin regla; otros bloqueos: docs/estado/bloqueos/U4-iva-credito.md (datos de «falta capturar» y lectura del IVA)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-10",
+      "credits": [
+        {
+          "credit": {
+            "id": 6,
+            "name": "Tienda con interés",
+            "kind": "store_credit",
+            "holder": "axel",
+            "limit_cents": null,
+            "frequency": "monthly",
+            "first_payment_min_days": null,
+            "reading": "B",
+            "reading_confirmed": false,
+            "reading_a_anchor": null,
+            "statement_day": null,
+            "payment_due_day": null,
+            "annual_rate": {
+              "num": 60,
+              "den": 100,
+              "decimales": 0
+            },
+            "rate_base": "monthly",
+            "vat_on_interest_bp": 1600,
+            "min_payment_pct_bp": 1000,
+            "min_payment_fixed_cents": 10000,
+            "term_rates": [],
+            "promotions": []
+          },
+          "purchases": [],
+          "payments": [],
+          "statements": []
+        }
+      ],
+      "cash": []
+    },
+    "consultas": [
+      {
+        "id": "interes",
+        "funcion": "interes_tarjeta",
+        "argumentos": {
+          "credit_id": 6,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 80000,
+            "daily_balances_cents": [],
+            "source": "computed"
+          },
+          "paid_cents": 80000,
+          "paid_date": "2026-11-26"
+        }
+      },
+      {
+        "id": "minimo",
+        "funcion": "minimo_tarjeta",
+        "argumentos": {
+          "credit_id": 6,
+          "statement": {
+            "statement_date": "2026-11-05",
+            "due_date": "2026-11-25",
+            "balance_cents": 80000,
+            "daily_balances_cents": [],
+            "source": "computed"
+          }
+        }
+      },
+      {
+        "id": "compra-3",
+        "funcion": "cotizar_compra",
+        "argumentos": {
+          "credit_id": 6,
+          "purchase": {
+            "date": "2026-10-20",
+            "principal_cents": 100000,
+            "term_count": 3,
+            "quoted_interest_cents": null,
+            "rate_decimals": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": "2026-11-20",
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 100000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "interes": {
+      "interest_cents": 4640,
+      "provisional": [
+        "S3-formula-tarjeta",
+        "U4-iva-credito"
+      ]
+    },
+    "minimo": {
+      "minimum_cents": 10000,
+      "provisional": [
+        "S3-formula-tarjeta",
+        "U4-iva-credito"
+      ]
+    },
+    "compra-3": {
+      "error": "unsupported"
+    }
+  }
+}

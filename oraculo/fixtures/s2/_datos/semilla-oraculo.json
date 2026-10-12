@@ -1,0 +1,626 @@
+{
+  "params": {
+    "today": "2026-10-11",
+    "holder": "axel",
+    "groceries_category": "despensa",
+    "paper_category": "papel",
+    "repeat_cadence_enabled": false
+  },
+  "persons": [
+    {
+      "code": "axel",
+      "display_name": "Axel",
+      "participation": "holder",
+      "pays_share_directly": false
+    },
+    {
+      "code": "karen",
+      "display_name": "Karen",
+      "participation": "external",
+      "pays_share_directly": true
+    }
+  ],
+  "categories": [
+    {
+      "code": "despensa",
+      "name": "Despensa",
+      "kind": "variable",
+      "is_active": true
+    },
+    {
+      "code": "papel",
+      "name": "Papel",
+      "kind": "variable",
+      "is_active": true
+    }
+  ],
+  "expenses": [
+    {
+      "id": 1,
+      "kind": "variable",
+      "category": "despensa",
+      "amount_cents": 309450,
+      "expense_date": "2026-10-10",
+      "accrual_months": 2,
+      "payment_method": "credit",
+      "paid_by": null,
+      "shares": [
+        {
+          "person": "axel",
+          "amount_cents": 190300
+        },
+        {
+          "person": "karen",
+          "amount_cents": 119150
+        }
+      ],
+      "credit_purchase_id": 1,
+      "planned_item_id": null
+    },
+    {
+      "id": 2,
+      "kind": "variable",
+      "category": "despensa",
+      "amount_cents": 400000,
+      "expense_date": "2026-12-10",
+      "accrual_months": 2,
+      "payment_method": "credit",
+      "paid_by": null,
+      "shares": [
+        {
+          "person": "axel",
+          "amount_cents": 280850
+        },
+        {
+          "person": "karen",
+          "amount_cents": 119150
+        }
+      ],
+      "credit_purchase_id": 2,
+      "planned_item_id": null
+    },
+    {
+      "id": 3,
+      "kind": "variable",
+      "category": "despensa",
+      "amount_cents": 400000,
+      "expense_date": "2027-02-10",
+      "accrual_months": 2,
+      "payment_method": "credit",
+      "paid_by": null,
+      "shares": [
+        {
+          "person": "axel",
+          "amount_cents": 280850
+        },
+        {
+          "person": "karen",
+          "amount_cents": 119150
+        }
+      ],
+      "credit_purchase_id": 3,
+      "planned_item_id": null
+    },
+    {
+      "id": 4,
+      "kind": "variable",
+      "category": "despensa",
+      "amount_cents": 400000,
+      "expense_date": "2027-04-10",
+      "accrual_months": 2,
+      "payment_method": "credit",
+      "paid_by": null,
+      "shares": [
+        {
+          "person": "axel",
+          "amount_cents": 280850
+        },
+        {
+          "person": "karen",
+          "amount_cents": 119150
+        }
+      ],
+      "credit_purchase_id": 4,
+      "planned_item_id": null
+    },
+    {
+      "id": 5,
+      "kind": "variable",
+      "category": "papel",
+      "amount_cents": 19900,
+      "expense_date": "2027-01-10",
+      "accrual_months": 1,
+      "payment_method": "cash",
+      "paid_by": "karen",
+      "shares": [
+        {
+          "person": "karen",
+          "amount_cents": 19900
+        }
+      ],
+      "credit_purchase_id": null,
+      "planned_item_id": null
+    },
+    {
+      "id": 6,
+      "kind": "variable",
+      "category": "papel",
+      "amount_cents": 19900,
+      "expense_date": "2027-03-10",
+      "accrual_months": 1,
+      "payment_method": "cash",
+      "paid_by": "karen",
+      "shares": [
+        {
+          "person": "karen",
+          "amount_cents": 19900
+        }
+      ],
+      "credit_purchase_id": null,
+      "planned_item_id": null
+    }
+  ],
+  "credit_purchases": [
+    {
+      "id": 1,
+      "credit_id": 1,
+      "expense_id": 1,
+      "purchase_date": "2026-10-10",
+      "principal_cents": 309450,
+      "interest_cents": 80050,
+      "total_cents": 389500,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 190300,
+          "interest_cents": 49228,
+          "total_cents": 239528
+        },
+        {
+          "person": "karen",
+          "principal_cents": 119150,
+          "interest_cents": 30822,
+          "total_cents": 149972
+        }
+      ],
+      "embedded": [
+        {
+          "category": "papel",
+          "person": "karen",
+          "amount_cents": 19900
+        }
+      ],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-10-30",
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2026-11-15",
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2026-11-30",
+          "amount_cents": 97375,
+          "principal_cents": 77363,
+          "interest_cents": 20012,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2026-12-15",
+          "amount_cents": 97375,
+          "principal_cents": 77361,
+          "interest_cents": 20014,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 59882
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 2,
+      "credit_id": 1,
+      "expense_id": 2,
+      "purchase_date": "2026-12-10",
+      "principal_cents": 400000,
+      "interest_cents": 103474,
+      "total_cents": 503474,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 280850,
+          "interest_cents": 72652,
+          "total_cents": 353502
+        },
+        {
+          "person": "karen",
+          "principal_cents": 119150,
+          "interest_cents": 30822,
+          "total_cents": 149972
+        }
+      ],
+      "embedded": [
+        {
+          "category": "papel",
+          "person": "axel",
+          "amount_cents": 19900
+        }
+      ],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2026-12-30",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2027-01-15",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2027-01-30",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2027-02-15",
+          "amount_cents": 125870,
+          "principal_cents": 100000,
+          "interest_cents": 25870,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88377
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 3,
+      "credit_id": 1,
+      "expense_id": 3,
+      "purchase_date": "2027-02-10",
+      "principal_cents": 400000,
+      "interest_cents": 103474,
+      "total_cents": 503474,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 280850,
+          "interest_cents": 72652,
+          "total_cents": 353502
+        },
+        {
+          "person": "karen",
+          "principal_cents": 119150,
+          "interest_cents": 30822,
+          "total_cents": 149972
+        }
+      ],
+      "embedded": [
+        {
+          "category": "papel",
+          "person": "axel",
+          "amount_cents": 19900
+        }
+      ],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2027-02-28",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2027-03-15",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2027-03-30",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2027-04-15",
+          "amount_cents": 125870,
+          "principal_cents": 100000,
+          "interest_cents": 25870,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88377
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    },
+    {
+      "id": 4,
+      "credit_id": 1,
+      "expense_id": 4,
+      "purchase_date": "2027-04-10",
+      "principal_cents": 400000,
+      "interest_cents": 103474,
+      "total_cents": 503474,
+      "status": "active",
+      "shares": [
+        {
+          "person": "axel",
+          "principal_cents": 280850,
+          "interest_cents": 72652,
+          "total_cents": 353502
+        },
+        {
+          "person": "karen",
+          "principal_cents": 119150,
+          "interest_cents": 30822,
+          "total_cents": 149972
+        }
+      ],
+      "embedded": [
+        {
+          "category": "papel",
+          "person": "axel",
+          "amount_cents": 19900
+        }
+      ],
+      "payments": [
+        {
+          "seq": 1,
+          "due_date": "2027-04-30",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 2,
+          "due_date": "2027-05-15",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 3,
+          "due_date": "2027-05-30",
+          "amount_cents": 125868,
+          "principal_cents": 100000,
+          "interest_cents": 25868,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88375
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        },
+        {
+          "seq": 4,
+          "due_date": "2027-06-15",
+          "amount_cents": 125870,
+          "principal_cents": 100000,
+          "interest_cents": 25870,
+          "shares": [
+            {
+              "person": "axel",
+              "amount_cents": 88377
+            },
+            {
+              "person": "karen",
+              "amount_cents": 37493
+            }
+          ],
+          "paid": []
+        }
+      ],
+      "projected": false
+    }
+  ],
+  "incomes": [],
+  "planned_items": [],
+  "budgets": [],
+  "savings_goals": [],
+  "savings_movements": [],
+  "cadence": {
+    "purchases": [],
+    "expenses": []
+  },
+  "stable_items": [
+    {
+      "label": "despensa",
+      "cycle_months": 2,
+      "total_cents": 503474,
+      "shares": [
+        {
+          "person": "karen",
+          "total_cents": 149972
+        },
+        {
+          "person": "axel",
+          "total_cents": 353502
+        }
+      ]
+    },
+    {
+      "label": "papel_contado",
+      "cycle_months": 2,
+      "total_cents": 19900,
+      "shares": [
+        {
+          "person": "karen",
+          "total_cents": 19900
+        }
+      ]
+    }
+  ]
+}

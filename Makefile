@@ -1,5 +1,6 @@
 # Makefile · Finanzas Hogar
-# Verificación reproducible de los cimientos (WF-0 «Cimientos»), de la puerta 1 (flujo P1) y de la puerta 1b (flujo P1c).
+# Verificación reproducible de los cimientos (WF-0 «Cimientos»), de la puerta 1 (flujo P1), de la puerta 1b (flujo P1c)
+# y de WF-1 «Motores y sistema de diseño».
 # Detalle en README.md. Las migraciones se toman por comodín (backend/db/migrations/*.sql, hoy 00001 a 00003).
 #
 #   make verify-wf0   SQL en base temporal, go build y go vet, colorimetría y validador OpenAPI
@@ -7,12 +8,14 @@
 #   make verify-s1    backend/db/tools/s1_verifica.py: esquema 1.3 (todas las migraciones), oráculo, negativas, Down y goose
 #   make verify-u1    docs/design/tools/verificar_u1.py: U1 1.2 contra model.json, data.json, C1 y las migraciones
 #   make verify-criterios  docs/criterios/tools/verif_final.sh: conteos (y conteo.py contra INDICE.md), trazabilidad, citas y cifras canon (18 archivos)
-#   make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios
+#   make verify-wf1   go test con cobertura K25, oráculos S2 a S5 con compara.py, recetario, tokens C2, contraste, U4 y paquete
+#   make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios + verify-wf1
 #   make clean        borra los temporales de este Makefile
 #
 # Requisitos: GNU Make y bash; sqlite3 >= 3.37 (tablas STRICT); Go 1.27 o posterior (go.mod: go 1.27);
 # Python 3.11 o posterior; uv y uvx con openapi-spec-validator 0.9.0 (y pyyaml y jsonschema
-# para verify-c1 y verify-criterios) en su caché. Sin caché, la primera vez: make verify-wf0 UVX_FLAGS= UV_FLAGS=
+# para verify-c1 y verify-criterios; jsonschema para verify-wf1) en su caché; Node 20+ con docs/design/tools/tokens/node_modules
+# (npm ci) y pdftotext para verify-wf1. Sin caché, la primera vez: make verify-wf0 UVX_FLAGS= UV_FLAGS=
 # Opcional: goose v3.28.0 en el PATH o con GOOSE=/ruta/a/goose para el ciclo up/down/up.
 # Los temporales van a datos/tmp/verify-wf0 y se borran al terminar bien; si algo falla,
 # quedan para revisarlos y «make clean» los quita.
@@ -47,7 +50,8 @@ AWK_UP     := '/^-- \+goose Up/{s=1;next} /^-- \+goose Down/{s=0} s'
 AWK_DOWN   := '/^-- \+goose Down/{s=1;next} /^-- \+goose Up/{s=0} s'
 RM_TMP     := rm -rf "$(TMP)"; rmdir "$(TMP_ROOT)" 2>/dev/null || true
 
-.PHONY: help verify-wf0 verify-sql verify-go verify-color verify-openapi verify-c1 verify-s1 verify-u1 verify-criterios verify-all clean
+.PHONY: help verify-wf0 verify-sql verify-go verify-color verify-openapi verify-c1 verify-s1 verify-u1 verify-criterios verify-all clean \
+        verify-wf1 verify-wf1-cobertura verify-wf1-oraculos verify-wf1-recetario verify-wf1-tokens verify-wf1-u4 verify-wf1-paquete
 
 help:
 	@echo "Finanzas Hogar · objetivos de make"
@@ -56,7 +60,8 @@ help:
 	@echo "  make verify-s1    backend/db/tools/s1_verifica.py (esquema 1.3, oráculo, negativas, Down y goose)"
 	@echo "  make verify-u1    docs/design/tools/verificar_u1.py (U1 1.2)"
 	@echo "  make verify-criterios  docs/criterios/tools/verif_final.sh (18 archivos de criterios)"
-	@echo "  make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios"
+	@echo "  make verify-wf1   go test -cover (K25), oráculos S2 a S5, recetario, tokens C2, contraste, U4 unido y paquete"
+	@echo "  make verify-all   verify-wf0 + verify-c1 + verify-s1 + verify-u1 + verify-criterios + verify-wf1"
 	@echo "  make clean        borra datos/tmp/verify-wf0, backend/bin y las carpetas __pycache__"
 
 verify-wf0: verify-sql verify-go verify-color verify-openapi
@@ -170,9 +175,140 @@ verify-criterios:
 	echo "   residuos «N-xx» y rutas /tmp en los criterios: 0 y 0; las 11 comprobaciones dan lo esperado"
 	@$(RM_TMP)
 
-verify-all: verify-wf0 verify-c1 verify-s1 verify-u1 verify-criterios
+# ---- WF-1 «Motores y sistema de diseño» (integrador-wf1, 11-oct-2026) ----
+# Cobertura K25: umbral de COVER_MIN % en cada paquete con pruebas de los árboles dominio, motor_fin, motor_cred,
+# recetas y precios (los programas main sin pruebas de esos árboles se informan); el resto se mide sin umbral.
+# Los motores se corren DESDE LA RAÍZ del repositorio: las fixtures citan datos/semilla/... con rutas relativas a ella
+# (desde backend/ el motor responde invalid_argument en 14 fixtures de S4 y S5 y compara.py da diferencias).
+COVER_MIN   ?= 85
+K25_RE      := ^finanzas-hogar/internal/(dominio|motor_fin|motor_cred|recetas|precios)(/|$$)
+K25_RAICES  := dominio motor_fin motor_cred recetas precios
+MOTORES     := s2 s3 s4 s5
+MODEL_SHA   := 1a57066689ddeed31e0001259f341c7a3f782a46cd4a05128ff453aad2f1bfd4
+VERIFY3_SHA := d86087f3797e08ceabd2c721bf423115345b318ae7fe5fa13b3400cd87b95041
+TOKENS_DIR  := $(ROOT)/docs/design/tools/tokens
+NODE        ?= node
+
+# Recetario: JSON Schema, 60 recetas sin ids ni nombres repetidos y orden = recetario-a + recetario-b.
+define RECETARIO_PY
+import json, sys
+import jsonschema
+s = json.load(open('datos/semilla/recetario.schema.json', encoding='utf-8'))
+d = json.load(open('datos/semilla/recetario.json', encoding='utf-8'))
+jsonschema.Draft202012Validator.check_schema(s)
+errores = list(jsonschema.Draft202012Validator(s).iter_errors(d))
+r = d['recetas']
+ids = [x['id'] for x in r]
+nombres = {x['nombre'].casefold() for x in r}
+partes = [x['id'] for p in ('a', 'b') for x in json.load(open('datos/semilla/recetario-%s.json' % p, encoding='utf-8'))['recetas']]
+sin_kcal = sum(1 for x in r if x.get('kcal_por_porcion') is None)
+print('   JSON Schema: %d errores · recetas: %d · ids únicos: %d · nombres únicos: %d · kcal_por_porcion null: %d · orden = a + b: %s'
+      % (len(errores), len(r), len(set(ids)), len(nombres), sin_kcal, ids == partes))
+sys.exit(0 if not errores and len(r) == 60 and len(set(ids)) == 60 and len(nombres) == 60 and ids == partes else 1)
+endef
+export RECETARIO_PY
+
+# U4 unido: encabezado e índice del integrador + parte a + línea en blanco + parte b, sin cambios; 14 secciones P-26.
+define U4_PY
+import re, sys
+t = open('docs/design/U4-ajustes.md', encoding='utf-8').read()
+a = open('docs/design/U4-ajustes-a.md', encoding='utf-8').read()
+b = open('docs/design/U4-ajustes-b.md', encoding='utf-8').read()
+ok = t.endswith(a + '\n' + b)
+n = len(re.findall(r'(?m)^## P-26\.', t))
+print('   U4-ajustes.md termina con parte a + parte b sin cambios: %s · secciones P-26: %d de 14' % (ok, n))
+sys.exit(0 if ok and n == 14 else 1)
+endef
+export U4_PY
+
+verify-wf1: verify-go verify-wf1-cobertura verify-wf1-oraculos verify-wf1-recetario verify-wf1-tokens verify-wf1-u4 verify-wf1-paquete
 	@$(RM_TMP)
-	@echo "== Verificación ampliada OK (WF-0, C1, S1, U1 y criterios)"
+	@echo "== WF-1: verificación completa OK (Go y cobertura K25, oráculos S2 a S5, recetario, tokens y contraste, U4 y paquete)"
+
+verify-wf1-cobertura:
+	@echo "== Go: go test ./... -count=1 -cover (umbral K25: $(COVER_MIN) % en dominio, motor_fin, motor_cred, recetas y precios)"
+	@mkdir -p "$(TMP)"; log="$(TMP)/gotest.log"; lista="$(TMP)/gopkgs.txt"; \
+	cd "$(ROOT)/backend" && $(GO) test ./... -count=1 -cover > "$$log" 2>&1 || { cat "$$log"; exit 1; }; \
+	$(GO) list -f '{{.ImportPath}} {{.Name}}' ./... > "$$lista"; \
+	awk -v re='$(K25_RE)' -v min=$(COVER_MIN) -v lista="$$lista" -v raices='$(K25_RAICES)' ' \
+	  BEGIN { while ((getline l < lista) > 0) { split(l, x, " "); nom[x[1]] = x[2] } } \
+	  { pkg = ""; cov = ""; ok = ($$1 == "ok"); \
+	    for (i = 1; i <= NF; i++) { if ($$i ~ /^finanzas-hogar/) pkg = $$i; if ($$i == "coverage:") { cov = $$(i + 1); sub(/%/, "", cov) } } \
+	    if (pkg == "" || cov == "") next; \
+	    if (pkg !~ re) { printf "   sin umbral  %-46s %5.1f %%%s\n", pkg, cov, (ok ? "" : " (sin pruebas)"); next } \
+	    if (ok) { medido[pkg] = 1; if (cov + 0 >= min) printf "   K25 OK      %-46s %5.1f %%\n", pkg, cov; else { printf "   K25 FALLA   %-46s %5.1f %% (< %d %%)\n", pkg, cov, min; f = 1 } } \
+	    else if (nom[pkg] == "main") printf "   K25 INFO    %-46s programa main sin pruebas (%s %%)\n", pkg, cov; \
+	    else { printf "   K25 FALLA   %-46s paquete sin pruebas\n", pkg; f = 1 } } \
+	  END { n = split(raices, r, " "); for (i = 1; i <= n; i++) { p = "finanzas-hogar/internal/" r[i]; \
+	          if (!(p in nom)) printf "   K25 INFO    %-46s todavía no existe (no es de WF-1)\n", p; \
+	          else if (!(p in medido)) { printf "   K25 FALLA   %-46s sin medición\n", p; f = 1 } } \
+	        exit f }' "$$log"
+
+verify-wf1-oraculos:
+	@echo "== Oráculos S2 a S5: run_fixtures reproduce oraculo/salidas, motor Go desde la raíz y compara.py con 0 diferencias"
+	@mkdir -p "$(TMP)"; cd "$(ROOT)/backend" && $(GO) build -o "$(TMP)/motores" ./cmd/motores
+	@cd "$(ROOT)" && for m in $(MOTORES); do \
+	  case $$m in s2) o=fin_run_fixtures.py;; s3) o=cred_run_fixtures.py;; s4) o=rec_run_fixtures.py;; s5) o=pre_run_fixtures.py;; esac; \
+	  $(PYTHON) -I "oraculo/$$o" --out "$(TMP)/oraculo-$$m.json" > "$(TMP)/oraculo-$$m.log" 2>&1 || { cat "$(TMP)/oraculo-$$m.log"; exit 1; }; \
+	  cmp -s "$(TMP)/oraculo-$$m.json" "oraculo/salidas/$$m.json" || { echo "   FALLA: oraculo/salidas/$$m.json difiere de lo que regenera $$o"; exit 1; }; \
+	  "$(TMP)/motores" $$m dump --fixtures "oraculo/fixtures/$$m" --out "$(TMP)/motor-$$m.json" || { echo "   FALLA: motores $$m dump"; exit 1; }; \
+	  $(PYTHON) -I oraculo/compara.py $$m --motor "$(TMP)/motor-$$m.json" > "$(TMP)/compara-$$m.log" 2>&1 || { grep -v '^DIF' "$(TMP)/compara-$$m.log"; grep -m20 '^DIF' "$(TMP)/compara-$$m.log" || true; exit 1; }; \
+	  grep -qx 'diferencias: 0' "$(TMP)/compara-$$m.log" || { cat "$(TMP)/compara-$$m.log"; exit 1; }; \
+	  echo "   $$m · $$(grep -m1 -E 'fixtures' "$(TMP)/oraculo-$$m.log" | cut -c1-60) · salidas/$$m.json idéntica"; \
+	  grep -E '^(oráculo contra motor|model.json \(ramas|data.json|provisionales)' "$(TMP)/compara-$$m.log" | paste -sd'|' | sed 's/|/ · /g; s/^/     /'; \
+	done
+	@cd "$(ROOT)" && $(PYTHON) -I oraculo/fin_verify.py | sed 's/^/   /'; \
+	$(PYTHON) -I oraculo/pre_verify.py > "$(TMP)/pre_verify.log" 2>&1 && grep -qx 'TODO COINCIDE' "$(TMP)/pre_verify.log" || { cat "$(TMP)/pre_verify.log"; exit 1; }; \
+	echo "   pre_verify.py: $$(grep -c '^OK ' "$(TMP)/pre_verify.log") comprobaciones OK · TODO COINCIDE"
+	@cd "$(ROOT)" && m=$$(sha256sum oraculo/model.json | cut -c1-64); v=$$(sha256sum oraculo/verify3.json | cut -c1-64); \
+	test "$$m" = "$(MODEL_SHA)" -a "$$v" = "$(VERIFY3_SHA)" || { echo "   FALLA: oraculo/model.json u oraculo/verify3.json cambió (sha256)"; exit 1; }; \
+	$(PYTHON) -I oraculo/model.py > "$(TMP)/model.log" 2>&1 || { cat "$(TMP)/model.log"; exit 1; }; \
+	grep -q 'igual a oraculo/model.json: True' "$(TMP)/model.log" || { echo "   FALLA: model.py no reproduce model.json"; exit 1; }; \
+	$(PYTHON) -I oraculo/verify3.py > /dev/null 2>&1 && cmp -s datos/tmp/verify3.json oraculo/verify3.json || { echo "   FALLA: verify3.py no reproduce verify3.json"; exit 1; }; \
+	rm -f datos/tmp/model.json datos/tmp/verify3.json; \
+	echo "   model.json y verify3.json intactos (sha256 $${m:0:12}… y $${v:0:12}…) y reproducidos por model.py y verify3.py"
+
+verify-wf1-recetario:
+	@echo "== Recetario: rec_genera_recetario.py --verifica, JSON Schema, unión a + b y pruebas Go del cargador"
+	@cd "$(ROOT)" && $(PYTHON) -I oraculo/rec_genera_recetario.py --verifica | sed 's/^/   /'
+	@cd "$(ROOT)" && $(UV) run $(UV_FLAGS) --no-project --with jsonschema $(PYTHON) -I -c "$$RECETARIO_PY"
+	@cd "$(ROOT)/backend" && $(GO) test ./internal/recetas -count=1 -run 'TestRecetarioValido|TestRecetarioProduccion|TestEscaladoRecetario|TestKcalRecetasAutor' | sed 's/^/   go test: /'
+
+verify-wf1-tokens:
+	@echo "== Tokens C2 y contraste: generar idéntico, build reproducible (sincronia.mjs), verificar_c2 y contraste_componentes --check"
+	@test -d "$(TOKENS_DIR)/node_modules" || { echo "   FALLA: falta docs/design/tools/tokens/node_modules (cd docs/design/tools/tokens && npm ci)"; exit 1; }
+	@mkdir -p "$(TMP)"; c2="$(ROOT)/docs/contratos/C2-tokens.json"; cp "$$c2" "$(TMP)/C2-tokens.antes.json"; \
+	cd "$(TOKENS_DIR)" && $(PYTHON) -I generar_c2_tokens.py > "$(TMP)/c2gen.log" 2>&1 || { cp "$(TMP)/C2-tokens.antes.json" "$$c2"; cat "$(TMP)/c2gen.log"; exit 1; }; \
+	if cmp -s "$$c2" "$(TMP)/C2-tokens.antes.json"; then echo "   generar_c2_tokens.py: C2-tokens.json idéntico byte a byte"; \
+	else cp "$(TMP)/C2-tokens.antes.json" "$$c2"; echo "   FALLA: generar_c2_tokens.py no reproduce C2-tokens.json (se restauró el versionado)"; exit 1; fi
+	@cd "$(TOKENS_DIR)" && $(PYTHON) -I verificar_c2.py > "$(TMP)/c2verify.log" 2>&1 || { cat "$(TMP)/c2verify.log"; exit 1; }; \
+	grep -E '^RESULTADO' "$(TMP)/c2verify.log" | sed 's/^/   verificar_c2.py: /'
+	@cd "$(TOKENS_DIR)" && $(NODE) sincronia.mjs > "$(TMP)/c2sync.log" 2>&1 || { cat "$(TMP)/c2sync.log"; exit 1; }; \
+	grep -E '^OK ' "$(TMP)/c2sync.log" | cut -c1-70 | sed 's/^/   sincronia.mjs: /'; rm -rf "$(TMP_ROOT)/c2-sync"
+	@cd "$(ROOT)" && $(PYTHON) -I docs/design/tools/contraste_componentes.py --check > "$(TMP)/contraste.log" 2>&1 || { cat "$(TMP)/contraste.log"; exit 1; }; \
+	grep -E 'IDENTICO|bajo umbral' "$(TMP)/contraste.log" | cut -c1-110 | sed 's/^/   contraste_componentes.py: /'
+
+verify-wf1-u4:
+	@echo "== U4: docs/design/U4-ajustes.md = encabezado e índice + U4-ajustes-a.md + U4-ajustes-b.md"
+	@cd "$(ROOT)" && $(PYTHON) -I -c "$$U4_PY"
+
+verify-wf1-paquete:
+	@echo "== Paquete para Claude Design: sha256sum -c contra MANIFIESTO.md y sin código en docs/design/entrada"
+	@cd "$(ROOT)/docs/design/entrada" && n=$$(grep -cE '^[0-9a-f]{64}  ' MANIFIESTO.md) && \
+	grep -E '^[0-9a-f]{64}  ' MANIFIESTO.md | sha256sum -c --quiet - && \
+	t=$$(ls -A | wc -l) && test "$$t" = $$((n + 1)) || { echo "   FALLA: MANIFIESTO.md no cubre los $$t archivos de entrada/"; exit 1; }; \
+	echo "   sha256sum -c: $$n archivos sin diferencias (más MANIFIESTO.md)"
+	@cd "$(ROOT)/docs/design/entrada" && otros=$$(ls -A | grep -vE '\.(pdf|png|md|json|css|docx)$$' || true); \
+	test -z "$$otros" || { echo "   FALLA: tipos no permitidos: $$otros"; exit 1; }; \
+	c=$$(grep -lE '<script|^#!|^(import|package|func|def) ' -- *.md *.json *.css 2>/dev/null || true); \
+	test -z "$$c" || { echo "   FALLA: parece código: $$c"; exit 1; }; \
+	k=0; if command -v pdftotext > /dev/null; then for f in *.pdf; do k=$$((k + $$(pdftotext "$$f" - | grep -c '/api/v1' || true))); done; fi; \
+	test "$$k" = 0 || { echo "   FALLA: los PDF citan /api/v1 $$k veces"; exit 1; }; \
+	echo "   solo pdf, png, md, json, css y docx; sin scripts ni código; pdftotext: 0 menciones de /api/v1"
+
+verify-all: verify-wf0 verify-c1 verify-s1 verify-u1 verify-criterios verify-wf1
+	@$(RM_TMP)
+	@echo "== Verificación ampliada OK (WF-0, C1, S1, U1, criterios y WF-1)"
 
 clean:
 	@rm -rf "$(TMP)" "$(ROOT)/backend/bin"

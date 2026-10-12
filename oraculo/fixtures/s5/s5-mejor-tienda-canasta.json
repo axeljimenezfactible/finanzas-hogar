@@ -1,0 +1,1120 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-mejor-tienda-canasta",
+  "descripcion": "Canasta por necesidad con los precios del 10-oct-2026 de data.json (§7.3, §7.4). Necesidades: las piezas de los 33 renglones idénticos (el atún, 6 latas) y, de los sustitutos, arroz 2250 g, crema 640 g y leche 4 l; cada tienda cubre con el menor costo de paquetes completos. Bodega suma 3,094.50 (igual a K-01: compra las mismas piezas); Walmart, 3,233.00 + 21.00 de la sexta lata = 3,254.00. Bodega es la más barata. Por ingrediente (unidad base): arroz Walmart 1 kg, crema Bodega 780 g, leche Walmart 6 l, aceite de soya Walmart, frijoles Bodega. Con las presentaciones recomendadas de la lista: Bodega 34 idénticos y 2 sustitutos (arroz 750 g, leche 4 l); Walmart 35 y 1 (crema 640 g).",
+  "fuente": [
+    {
+      "tipo": "data.json",
+      "ruta": "totales"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S5-03"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "Bodega Aurrera (sucursal Vallejo)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "Walmart (sucursal Acueducto de Guadalupe)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "aceite-oliva.nutrioli-oli-500ml",
+          "store": "bodega",
+          "price_cents": 15000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "aceite-oliva.nutrioli-oli-500ml",
+          "store": "walmart",
+          "price_cents": 15000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "aceite-soya.nutrioli-946ml",
+          "store": "bodega",
+          "price_cents": 4800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "aceite-soya.nutrioli-946ml",
+          "store": "walmart",
+          "price_cents": 4500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "frijoles-refritos.la-costena-220g",
+          "store": "bodega",
+          "price_cents": 1200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "frijoles-refritos.la-costena-220g",
+          "store": "walmart",
+          "price_cents": 1250,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "duraznos-almibar.la-costena-425g",
+          "store": "bodega",
+          "price_cents": 4000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "duraznos-almibar.la-costena-425g",
+          "store": "walmart",
+          "price_cents": 3900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "cafe-soluble.nescafe-verarica-180g",
+          "store": "bodega",
+          "price_cents": 11200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "cafe-soluble.nescafe-verarica-180g",
+          "store": "walmart",
+          "price_cents": 15000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "jamon-pavo.sabori-400g",
+          "store": "bodega",
+          "price_cents": 6200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "jamon-pavo.sabori-400g",
+          "store": "walmart",
+          "price_cents": 6300,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "salchicha-pavo.sabori-500g",
+          "store": "bodega",
+          "price_cents": 4000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "salchicha-pavo.sabori-500g",
+          "store": "walmart",
+          "price_cents": 5500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "avena.3-minutos-400g",
+          "store": "bodega",
+          "price_cents": 3600,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "avena.3-minutos-400g",
+          "store": "walmart",
+          "price_cents": 3700,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "blanqueador.cloralex-3750ml",
+          "store": "bodega",
+          "price_cents": 5800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "blanqueador.cloralex-3750ml",
+          "store": "walmart",
+          "price_cents": 5900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "caldo-pollo-cubos.knorr-24-cubos",
+          "store": "bodega",
+          "price_cents": 5600,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "caldo-pollo-cubos.knorr-24-cubos",
+          "store": "walmart",
+          "price_cents": 5600,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "pasta-dental.colgate-2x80ml",
+          "store": "bodega",
+          "price_cents": 3500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "pasta-dental.colgate-2x80ml",
+          "store": "walmart",
+          "price_cents": 3500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "jabon-manos.grisi-450ml",
+          "store": "bodega",
+          "price_cents": 6200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "jabon-manos.grisi-450ml",
+          "store": "walmart",
+          "price_cents": 6500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "acondicionador.pantene-170ml",
+          "store": "bodega",
+          "price_cents": 9000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "acondicionador.pantene-170ml",
+          "store": "walmart",
+          "price_cents": 9000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "desinfectante-aerosol.lysol-354g",
+          "store": "bodega",
+          "price_cents": 13900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "desinfectante-aerosol.lysol-354g",
+          "store": "walmart",
+          "price_cents": 14000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "detergente-polvo.roma-1kg",
+          "store": "bodega",
+          "price_cents": 3500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "detergente-polvo.roma-1kg",
+          "store": "walmart",
+          "price_cents": 3600,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "elote-grano.herdez-220g",
+          "store": "bodega",
+          "price_cents": 1350,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "elote-grano.herdez-220g",
+          "store": "walmart",
+          "price_cents": 1400,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "atun-agua.dolores-140g",
+          "store": "bodega",
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "atun-agua.dolores-140g",
+          "store": "walmart",
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "uva-verde.pieza-1kg",
+          "store": "bodega",
+          "price_cents": 8700,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "uva-verde.pieza-1kg",
+          "store": "walmart",
+          "price_cents": 8800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "jabon-trastes.salvo-1200ml",
+          "store": "bodega",
+          "price_cents": 6100,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "jabon-trastes.salvo-1200ml",
+          "store": "walmart",
+          "price_cents": 6300,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "pan-caja.oroweat-mantequilla-680g",
+          "store": "bodega",
+          "price_cents": 9200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "pan-caja.oroweat-mantequilla-680g",
+          "store": "walmart",
+          "price_cents": 9300,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "papel-higienico.cottonelle-30-rollos",
+          "store": "bodega",
+          "price_cents": 19900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "papel-higienico.cottonelle-30-rollos",
+          "store": "walmart",
+          "price_cents": 20900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "espagueti.la-moderna-250g",
+          "store": "bodega",
+          "price_cents": 1200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "espagueti.la-moderna-250g",
+          "store": "walmart",
+          "price_cents": 1250,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "queso-manchego.nochebuena-200g",
+          "store": "bodega",
+          "price_cents": 6100,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "queso-manchego.nochebuena-200g",
+          "store": "walmart",
+          "price_cents": 6200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "mayonesa-chipotle.mccormick-310g",
+          "store": "bodega",
+          "price_cents": 4400,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "mayonesa-chipotle.mccormick-310g",
+          "store": "walmart",
+          "price_cents": 4500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "salsa-soya.maggi-290ml",
+          "store": "bodega",
+          "price_cents": 3900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "salsa-soya.maggi-290ml",
+          "store": "walmart",
+          "price_cents": 3900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "catsup.heinz-397g",
+          "store": "bodega",
+          "price_cents": 2900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "catsup.heinz-397g",
+          "store": "walmart",
+          "price_cents": 3000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "mayonesa.mccormick-420g",
+          "store": "bodega",
+          "price_cents": 4900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "mayonesa.mccormick-420g",
+          "store": "walmart",
+          "price_cents": 5000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "salsa-inglesa.crosse-blackwell-290ml",
+          "store": "bodega",
+          "price_cents": 7000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "salsa-inglesa.crosse-blackwell-290ml",
+          "store": "walmart",
+          "price_cents": 7100,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "servilletas.petalo-420",
+          "store": "bodega",
+          "price_cents": 5000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "servilletas.petalo-420",
+          "store": "walmart",
+          "price_cents": 4700,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "toallas-papel.petalo-mega-jumbo-270",
+          "store": "bodega",
+          "price_cents": 3400,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "toallas-papel.petalo-mega-jumbo-270",
+          "store": "walmart",
+          "price_cents": 3600,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "yogur-griego.yoplait-750g",
+          "store": "bodega",
+          "price_cents": 7500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "yogur-griego.yoplait-750g",
+          "store": "walmart",
+          "price_cents": 7500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "yogur-bebible.alpura-10x220g",
+          "store": "bodega",
+          "price_cents": 10800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "yogur-bebible.alpura-10x220g",
+          "store": "walmart",
+          "price_cents": 10800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "petit-suisse.danonino-6x42g",
+          "store": "bodega",
+          "price_cents": 3700,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "petit-suisse.danonino-6x42g",
+          "store": "walmart",
+          "price_cents": 3800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-750g",
+          "store": "bodega",
+          "price_cents": 2200,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "store": "walmart",
+          "price_cents": 2800,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "sustituto-crema-cafe.coffee-mate-pack-780g",
+          "store": "bodega",
+          "price_cents": 9900,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "sustituto-crema-cafe.coffee-mate-640g",
+          "store": "walmart",
+          "price_cents": 10500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "leche.santa-clara-4x1l-taza",
+          "store": "bodega",
+          "price_cents": 13500,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "leche.santa-clara-entera-6x1l",
+          "store": "walmart",
+          "price_cents": 17000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ],
+      "shopping_list": [
+        {
+          "product": "aceite-oliva",
+          "needed_milli": 500000,
+          "quantity_milli": null,
+          "recommended_presentation": "aceite-oliva.nutrioli-oli-500ml"
+        },
+        {
+          "product": "aceite-soya",
+          "needed_milli": 2838000,
+          "quantity_milli": null,
+          "recommended_presentation": "aceite-soya.nutrioli-946ml"
+        },
+        {
+          "product": "frijoles-refritos",
+          "needed_milli": 880000,
+          "quantity_milli": null,
+          "recommended_presentation": "frijoles-refritos.la-costena-220g"
+        },
+        {
+          "product": "duraznos-almibar",
+          "needed_milli": 425000,
+          "quantity_milli": null,
+          "recommended_presentation": "duraznos-almibar.la-costena-425g"
+        },
+        {
+          "product": "cafe-soluble",
+          "needed_milli": 180000,
+          "quantity_milli": null,
+          "recommended_presentation": "cafe-soluble.nescafe-verarica-180g"
+        },
+        {
+          "product": "jamon-pavo",
+          "needed_milli": 400000,
+          "quantity_milli": null,
+          "recommended_presentation": "jamon-pavo.sabori-400g"
+        },
+        {
+          "product": "salchicha-pavo",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "recommended_presentation": "salchicha-pavo.sabori-500g"
+        },
+        {
+          "product": "avena",
+          "needed_milli": 400000,
+          "quantity_milli": null,
+          "recommended_presentation": "avena.3-minutos-400g"
+        },
+        {
+          "product": "blanqueador",
+          "needed_milli": 7500000,
+          "quantity_milli": null,
+          "recommended_presentation": "blanqueador.cloralex-3750ml"
+        },
+        {
+          "product": "caldo-pollo-cubos",
+          "needed_milli": 48000,
+          "quantity_milli": null,
+          "recommended_presentation": "caldo-pollo-cubos.knorr-24-cubos"
+        },
+        {
+          "product": "pasta-dental",
+          "needed_milli": 160000,
+          "quantity_milli": null,
+          "recommended_presentation": "pasta-dental.colgate-2x80ml"
+        },
+        {
+          "product": "jabon-manos",
+          "needed_milli": 900000,
+          "quantity_milli": null,
+          "recommended_presentation": "jabon-manos.grisi-450ml"
+        },
+        {
+          "product": "acondicionador",
+          "needed_milli": 340000,
+          "quantity_milli": null,
+          "recommended_presentation": "acondicionador.pantene-170ml"
+        },
+        {
+          "product": "desinfectante-aerosol",
+          "needed_milli": 354000,
+          "quantity_milli": null,
+          "recommended_presentation": "desinfectante-aerosol.lysol-354g"
+        },
+        {
+          "product": "detergente-polvo",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "recommended_presentation": "detergente-polvo.roma-1kg"
+        },
+        {
+          "product": "elote-grano",
+          "needed_milli": 1100000,
+          "quantity_milli": null,
+          "recommended_presentation": "elote-grano.herdez-220g"
+        },
+        {
+          "product": "atun-agua",
+          "needed_milli": 840000,
+          "quantity_milli": null,
+          "recommended_presentation": "atun-agua.dolores-140g"
+        },
+        {
+          "product": "uva-verde",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "recommended_presentation": "uva-verde.pieza-1kg"
+        },
+        {
+          "product": "jabon-trastes",
+          "needed_milli": 2400000,
+          "quantity_milli": null,
+          "recommended_presentation": "jabon-trastes.salvo-1200ml"
+        },
+        {
+          "product": "pan-caja",
+          "needed_milli": 680000,
+          "quantity_milli": null,
+          "recommended_presentation": "pan-caja.oroweat-mantequilla-680g"
+        },
+        {
+          "product": "papel-higienico",
+          "needed_milli": 30000,
+          "quantity_milli": null,
+          "recommended_presentation": "papel-higienico.cottonelle-30-rollos"
+        },
+        {
+          "product": "espagueti",
+          "needed_milli": 500000,
+          "quantity_milli": null,
+          "recommended_presentation": "espagueti.la-moderna-250g"
+        },
+        {
+          "product": "queso-manchego",
+          "needed_milli": 200000,
+          "quantity_milli": null,
+          "recommended_presentation": "queso-manchego.nochebuena-200g"
+        },
+        {
+          "product": "mayonesa-chipotle",
+          "needed_milli": 310000,
+          "quantity_milli": null,
+          "recommended_presentation": "mayonesa-chipotle.mccormick-310g"
+        },
+        {
+          "product": "salsa-soya",
+          "needed_milli": 290000,
+          "quantity_milli": null,
+          "recommended_presentation": "salsa-soya.maggi-290ml"
+        },
+        {
+          "product": "catsup",
+          "needed_milli": 397000,
+          "quantity_milli": null,
+          "recommended_presentation": "catsup.heinz-397g"
+        },
+        {
+          "product": "mayonesa",
+          "needed_milli": 420000,
+          "quantity_milli": null,
+          "recommended_presentation": "mayonesa.mccormick-420g"
+        },
+        {
+          "product": "salsa-inglesa",
+          "needed_milli": 290000,
+          "quantity_milli": null,
+          "recommended_presentation": "salsa-inglesa.crosse-blackwell-290ml"
+        },
+        {
+          "product": "servilletas",
+          "needed_milli": 420000,
+          "quantity_milli": null,
+          "recommended_presentation": "servilletas.petalo-420"
+        },
+        {
+          "product": "toallas-papel",
+          "needed_milli": 810000,
+          "quantity_milli": null,
+          "recommended_presentation": "toallas-papel.petalo-mega-jumbo-270"
+        },
+        {
+          "product": "yogur-griego",
+          "needed_milli": 750000,
+          "quantity_milli": null,
+          "recommended_presentation": "yogur-griego.yoplait-750g"
+        },
+        {
+          "product": "yogur-bebible",
+          "needed_milli": 2200000,
+          "quantity_milli": null,
+          "recommended_presentation": "yogur-bebible.alpura-10x220g"
+        },
+        {
+          "product": "petit-suisse",
+          "needed_milli": 252000,
+          "quantity_milli": null,
+          "recommended_presentation": "petit-suisse.danonino-6x42g"
+        },
+        {
+          "product": "arroz-grano-largo",
+          "needed_milli": 2250000,
+          "quantity_milli": null,
+          "recommended_presentation": "arroz-grano-largo.sos-uruguayo-1kg"
+        },
+        {
+          "product": "sustituto-crema-cafe",
+          "needed_milli": 640000,
+          "quantity_milli": null,
+          "recommended_presentation": "sustituto-crema-cafe.coffee-mate-pack-780g"
+        },
+        {
+          "product": "leche",
+          "needed_milli": 4000000,
+          "quantity_milli": null,
+          "recommended_presentation": "leche.santa-clara-entera-6x1l"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "canasta",
+        "funcion": "compare_basket",
+        "argumentos": {}
+      },
+      {
+        "id": "mejor-arroz",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "arroz-grano-largo"
+        }
+      },
+      {
+        "id": "mejor-crema",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "sustituto-crema-cafe"
+        }
+      },
+      {
+        "id": "mejor-leche",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "leche"
+        }
+      },
+      {
+        "id": "mejor-aceite-soya",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "aceite-soya"
+        }
+      },
+      {
+        "id": "mejor-frijoles",
+        "funcion": "quote_for",
+        "argumentos": {
+          "product": "frijoles-refritos"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "canasta": {
+      "stores": [
+        {
+          "store": "bodega",
+          "total_cents": 309450,
+          "identical_count": 34,
+          "substitute_count": 2,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 0
+        },
+        {
+          "store": "walmart",
+          "total_cents": 325400,
+          "identical_count": 35,
+          "substitute_count": 1,
+          "missing_count": 0,
+          "stale_count": 0,
+          "difference_vs_cheapest_cents": 15950
+        }
+      ],
+      "cheapest_store": "bodega"
+    },
+    "mejor-arroz": {
+      "quote": {
+        "product": "arroz-grano-largo",
+        "store": "walmart",
+        "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+        "price_cents": 2800,
+        "size_milli": 1000000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "mejor-crema": {
+      "quote": {
+        "product": "sustituto-crema-cafe",
+        "store": "bodega",
+        "presentation": "sustituto-crema-cafe.coffee-mate-pack-780g",
+        "price_cents": 9900,
+        "size_milli": 780000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "mejor-leche": {
+      "quote": {
+        "product": "leche",
+        "store": "walmart",
+        "presentation": "leche.santa-clara-entera-6x1l",
+        "price_cents": 17000,
+        "size_milli": 6000000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "mejor-aceite-soya": {
+      "quote": {
+        "product": "aceite-soya",
+        "store": "walmart",
+        "presentation": "aceite-soya.nutrioli-946ml",
+        "price_cents": 4500,
+        "size_milli": 946000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    },
+    "mejor-frijoles": {
+      "quote": {
+        "product": "frijoles-refritos",
+        "store": "bodega",
+        "presentation": "frijoles-refritos.la-costena-220g",
+        "price_cents": 1200,
+        "size_milli": 220000,
+        "observed_date": "2026-10-10",
+        "is_stale": false,
+        "recommended": true
+      }
+    }
+  }
+}

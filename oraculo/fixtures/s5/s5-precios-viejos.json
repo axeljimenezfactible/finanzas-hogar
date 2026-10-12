@@ -1,0 +1,284 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-precios-viejos",
+  "descripcion": "Insumo de la alerta de precios viejos (S5-12; ILUSTRATIVO): despensa el 2026-11-09 (se evalúa en esa fecha, no en hoy). p1 a 30 días (viejo, 60/61); p2 a 28 (fresco); p3 a 89 (viejo, 1/61); p4 a 90 (peso 0: no compite, sin precio); p5 sin precio; p6 con tienda asignada t2 a 70 días (viejo, 20/61) aunque t1 tenga uno fresco; sin tienda asignada p6 se cotiza en t1 (28 días) y no aparece.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-12"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "p1",
+            "name": "P1",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "p2",
+            "name": "P2",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "p3",
+            "name": "P3",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "p4",
+            "name": "P4",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "p5",
+            "name": "P5",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "p6",
+            "name": "P6",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "p1-1kg",
+            "product": "p1",
+            "name": "p1-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "p2-1kg",
+            "product": "p2",
+            "name": "p2-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "p3-1kg",
+            "product": "p3",
+            "name": "p3-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "p4-1kg",
+            "product": "p4",
+            "name": "p4-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "p5-1kg",
+            "product": "p5",
+            "name": "p5-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "p6-1kg",
+            "product": "p6",
+            "name": "p6-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "t1",
+          "kind": "chain",
+          "parent": null,
+          "name": "t1",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "t2",
+          "kind": "chain",
+          "parent": null,
+          "name": "t2",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "p1-1kg",
+          "store": "t1",
+          "price_cents": 1000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "p2-1kg",
+          "store": "t1",
+          "price_cents": 1000,
+          "observed_date": "2026-10-12",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "p3-1kg",
+          "store": "t2",
+          "price_cents": 1000,
+          "observed_date": "2026-08-12",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "p4-1kg",
+          "store": "t1",
+          "price_cents": 1000,
+          "observed_date": "2026-08-11",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "p6-1kg",
+          "store": "t1",
+          "price_cents": 1000,
+          "observed_date": "2026-10-12",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "p6-1kg",
+          "store": "t2",
+          "price_cents": 1000,
+          "observed_date": "2026-08-31",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "despensa",
+        "funcion": "stale_prices_for_plan",
+        "argumentos": {
+          "products": [
+            "p1",
+            "p2",
+            "p3",
+            "p4",
+            "p5",
+            "p6"
+          ],
+          "assigned_stores": {
+            "p6": "t2"
+          },
+          "grocery_date": "2026-11-09"
+        }
+      },
+      {
+        "id": "despensa-sin-asignar",
+        "funcion": "stale_prices_for_plan",
+        "argumentos": {
+          "products": [
+            "p6"
+          ],
+          "assigned_stores": {},
+          "grocery_date": "2026-11-09"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "despensa": {
+      "stale": [
+        {
+          "product": "p1",
+          "store": "t1",
+          "presentation": "p1-1kg",
+          "observed_date": "2026-10-10",
+          "age_days": 30,
+          "weight": {
+            "num": 60,
+            "den": 61
+          }
+        },
+        {
+          "product": "p3",
+          "store": "t2",
+          "presentation": "p3-1kg",
+          "observed_date": "2026-08-12",
+          "age_days": 89,
+          "weight": {
+            "num": 1,
+            "den": 61
+          }
+        },
+        {
+          "product": "p6",
+          "store": "t2",
+          "presentation": "p6-1kg",
+          "observed_date": "2026-08-31",
+          "age_days": 70,
+          "weight": {
+            "num": 20,
+            "den": 61
+          }
+        }
+      ],
+      "without_price": [
+        "p4",
+        "p5"
+      ]
+    },
+    "despensa-sin-asignar": {
+      "stale": [],
+      "without_price": []
+    }
+  }
+}

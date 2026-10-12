@@ -1,0 +1,109 @@
+{
+  "formato": "fixture/1",
+  "motor": "s3",
+  "caso": "s3-comparador-sin-restricciones",
+  "descripcion": "Caso 1 sin restricciones capturadas: «faltan restricciones» y 0 recomendaciones (K16).",
+  "fuente": [
+    {
+      "tipo": "manual",
+      "ruta": "docs/estado/S3-escenarios.md"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-12"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-13"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S3-14"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/comparador-caso-1.json"
+    },
+    "consultas": [
+      {
+        "id": "sin-restricciones",
+        "funcion": "comparar",
+        "argumentos": {
+          "timeout_seconds": 5,
+          "request": {
+            "amount_cents": 200000,
+            "desired_date": "2026-11-30",
+            "store_id": null,
+            "merchant_name": "",
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 200000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ],
+            "global": {
+              "min_available_buffer_cents": null,
+              "max_live_purchases": null,
+              "zero_debt_by_date": null,
+              "date_window_days": null
+            },
+            "override": {
+              "min_available_buffer_cents": null,
+              "max_live_purchases": null,
+              "zero_debt_by_date": null,
+              "date_window_days": null
+            },
+            "weights": {
+              "lowest_interest": 1,
+              "even_low_payment": 1,
+              "max_available": 1,
+              "most_value_per_peso": 1
+            },
+            "caps": [
+              {
+                "person": "axel",
+                "cap_cents": 120000
+              }
+            ],
+            "baskets": [
+              {
+                "store_id": 1,
+                "merchant_name": "Tienda Barata",
+                "base_units_milli": 60000,
+                "cost_cents": 200000
+              },
+              {
+                "store_id": 2,
+                "merchant_name": "Tienda Cara",
+                "base_units_milli": 40000,
+                "cost_cents": 200000
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "sin-restricciones": {
+      "status": "missing_constraints",
+      "missing_constraints": [
+        "min_available_buffer_cents",
+        "max_live_purchases",
+        "zero_debt_by_date",
+        "date_window_days"
+      ],
+      "evaluated_count": 0,
+      "valid": [],
+      "rejected": [],
+      "optima": null,
+      "recommendation": null,
+      "provisional": []
+    }
+  }
+}

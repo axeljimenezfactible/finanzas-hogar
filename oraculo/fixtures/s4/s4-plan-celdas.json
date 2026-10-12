@@ -1,0 +1,739 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-plan-celdas",
+  "descripcion": "S4-05, RN-14, RN-19, K38, K43 (hoy domingo 2026-10-11): celdas con receta, «fuera» (sin receta, kcal ni costo), colación vacía de persona-a y llena de persona-b, costos y kcal por celda, día y semana con metas (persona-a confirmada 2000; persona-b sugerida 1596). Costos (centavos): R1 a 2000 = 1260+900+63.27 = 2223, a 1000 = 1112; R2 a 2000 = 2000+450+42.18 = 2492, a 1000 = 1246; día 12 = 2223+1112 = 3335, día 13 = 2492+2492+1246 = 6230, semana 9565. kcal: R1 2762 y 1381; R2 877 y 439; persona-b el día 13 = 877+439 = 1316. Huecos: 19 de 21 (completos: comida del 12 y desayuno del 13). El domingo abre la semana siguiente (K38). ILUSTRATIVO.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-05"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-19"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K38"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K43"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "cuentas en descripcion"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog": {
+        "groups": [
+          {
+            "code": "verduras",
+            "name": "Verduras",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "frutas",
+            "name": "Frutas",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "carnes",
+            "name": "Carnes",
+            "purchase_channel": "market"
+          },
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "lacteos",
+            "name": "Lácteos y huevo",
+            "purchase_channel": "chain"
+          }
+        ],
+        "products": [
+          {
+            "code": "arroz",
+            "name": "Arroz",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "frijol",
+            "name": "Frijol",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "aceite-soya",
+            "name": "Aceite de soya",
+            "base_unit": "ml",
+            "group": "abarrotes",
+            "grams_per_unit_milli": 921
+          },
+          {
+            "code": "huevo",
+            "name": "Huevo",
+            "base_unit": "piece",
+            "group": "lacteos",
+            "grams_per_unit_milli": 50000
+          },
+          {
+            "code": "servilletas",
+            "name": "Servilletas",
+            "base_unit": "piece",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "harina",
+            "name": "Harina",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "jitomate",
+            "name": "Jitomate",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "cebolla",
+            "name": "Cebolla",
+            "base_unit": "g",
+            "group": "verduras",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "fresa",
+            "name": "Fresa",
+            "base_unit": "g",
+            "group": "frutas",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "pollo",
+            "name": "Pollo",
+            "base_unit": "g",
+            "group": "carnes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "arroz.1kg",
+            "product": "arroz",
+            "name": "Arroz 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "arroz.750g",
+            "product": "arroz",
+            "name": "Arroz 750 g",
+            "size_milli": 750000
+          },
+          {
+            "code": "frijol.1kg",
+            "product": "frijol",
+            "name": "Frijol 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "aceite-soya.946ml",
+            "product": "aceite-soya",
+            "name": "Aceite de soya 946 ml",
+            "size_milli": 946000
+          },
+          {
+            "code": "huevo.carton-12",
+            "product": "huevo",
+            "name": "Huevo cartón de 12",
+            "size_milli": 12000
+          },
+          {
+            "code": "servilletas.420",
+            "product": "servilletas",
+            "name": "Servilletas 420 piezas",
+            "size_milli": 420000
+          },
+          {
+            "code": "harina.1kg",
+            "product": "harina",
+            "name": "Harina 1 kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "harina.500g",
+            "product": "harina",
+            "name": "Harina 500 g",
+            "size_milli": 500000
+          },
+          {
+            "code": "jitomate.kilo",
+            "product": "jitomate",
+            "name": "Jitomate por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "cebolla.kilo",
+            "product": "cebolla",
+            "name": "Cebolla por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "fresa.kilo",
+            "product": "fresa",
+            "name": "Fresa por kilo",
+            "size_milli": 1000000
+          },
+          {
+            "code": "pollo.kilo",
+            "product": "pollo",
+            "name": "Pollo por kilo",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "recipes": [
+        {
+          "code": "arroz-con-frijol",
+          "name": "Arroz con frijol",
+          "slots": [
+            "lunch",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "arroz",
+              "presentation": "arroz.1kg",
+              "quantity_milli": 450000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.946ml",
+              "quantity_milli": 15000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "huevo-con-frijol",
+          "name": "Huevo con frijol",
+          "slots": [
+            "breakfast",
+            "snack"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "huevo",
+              "presentation": "huevo.carton-12",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "frijol",
+              "presentation": "frijol.1kg",
+              "quantity_milli": 150000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.946ml",
+              "quantity_milli": 10000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "stores": [
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        },
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "groups": [],
+          "next_visit": null
+        }
+      ],
+      "meal_plan": [
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "arroz-con-frijol",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-b",
+          "recipe": "arroz-con-frijol",
+          "servings_milli": 1000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-12",
+          "slot": "dinner",
+          "person": "persona-a",
+          "recipe": null,
+          "servings_milli": null,
+          "eating_out": true
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "breakfast",
+          "person": "persona-a",
+          "recipe": "huevo-con-frijol",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "breakfast",
+          "person": "persona-b",
+          "recipe": "huevo-con-frijol",
+          "servings_milli": 2000,
+          "eating_out": false
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "snack",
+          "person": "persona-b",
+          "recipe": "huevo-con-frijol",
+          "servings_milli": 1000,
+          "eating_out": false
+        }
+      ],
+      "inventory": [],
+      "list_choices": [],
+      "quotes": [
+        {
+          "product": "arroz",
+          "store": "walmart",
+          "presentation": "arroz.1kg",
+          "price_cents": 2800,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "frijol",
+          "store": "walmart",
+          "presentation": "frijol.1kg",
+          "price_cents": 3000,
+          "size_milli": 1000000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "aceite-soya",
+          "store": "walmart",
+          "presentation": "aceite-soya.946ml",
+          "price_cents": 3990,
+          "size_milli": 946000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        },
+        {
+          "product": "huevo",
+          "store": "walmart",
+          "presentation": "huevo.carton-12",
+          "price_cents": 6000,
+          "size_milli": 12000,
+          "observed_date": "2026-10-10",
+          "is_stale": false,
+          "recommended": true
+        }
+      ],
+      "nutrition": [
+        {
+          "product": "arroz",
+          "presentation": null,
+          "kcal_milli_per_100g": 360000,
+          "source": "manual",
+          "source_ref": "ILUSTRATIVO",
+          "status": "confirmed"
+        },
+        {
+          "product": "frijol",
+          "presentation": null,
+          "kcal_milli_per_100g": 340000,
+          "source": "manual",
+          "source_ref": "ILUSTRATIVO",
+          "status": "confirmed"
+        },
+        {
+          "product": "aceite-soya",
+          "presentation": null,
+          "kcal_milli_per_100g": 884000,
+          "source": "manual",
+          "source_ref": "ILUSTRATIVO",
+          "status": "confirmed"
+        },
+        {
+          "product": "huevo",
+          "presentation": null,
+          "kcal_milli_per_100g": 143000,
+          "source": "manual",
+          "source_ref": "ILUSTRATIVO",
+          "status": "confirmed"
+        }
+      ],
+      "health_profiles": [
+        {
+          "person": "persona-a",
+          "height_mm": null,
+          "birth_date": null,
+          "sex": null,
+          "activity": null,
+          "goal": null,
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": 2000,
+          "dietary_restrictions": null
+        },
+        {
+          "person": "persona-b",
+          "height_mm": 1650,
+          "birth_date": "1998-03-15",
+          "sex": "female",
+          "activity": "sedentary",
+          "goal": "maintain",
+          "adjust_lose_kcal": null,
+          "adjust_gain_kcal": null,
+          "daily_kcal_target": null,
+          "dietary_restrictions": null
+        }
+      ],
+      "weights": [
+        {
+          "person": "persona-b",
+          "date": "2026-10-01",
+          "weight_g": 60000
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "plan",
+        "funcion": "week_plan",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      },
+      {
+        "id": "semana-domingo",
+        "funcion": "default_week",
+        "argumentos": {
+          "date": "2026-10-11"
+        }
+      },
+      {
+        "id": "semana-lunes",
+        "funcion": "default_week",
+        "argumentos": {
+          "date": "2026-10-12"
+        }
+      },
+      {
+        "id": "semana-sabado",
+        "funcion": "default_week",
+        "argumentos": {
+          "date": "2026-10-10"
+        }
+      },
+      {
+        "id": "huecos-w42",
+        "funcion": "unplanned_slots",
+        "argumentos": {
+          "week": "2026-W42"
+        }
+      },
+      {
+        "id": "huecos-w43",
+        "funcion": "unplanned_slots",
+        "argumentos": {
+          "week": "2026-W43"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "plan": {
+      "week": "2026-W42",
+      "cells": [
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-a",
+          "recipe": "arroz-con-frijol",
+          "servings_milli": 2000,
+          "eating_out": false,
+          "cost_cents": 2223,
+          "kcal": 2762,
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10"
+        },
+        {
+          "date": "2026-10-12",
+          "slot": "lunch",
+          "person": "persona-b",
+          "recipe": "arroz-con-frijol",
+          "servings_milli": 1000,
+          "eating_out": false,
+          "cost_cents": 1112,
+          "kcal": 1381,
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10"
+        },
+        {
+          "date": "2026-10-12",
+          "slot": "dinner",
+          "person": "persona-a",
+          "recipe": null,
+          "servings_milli": null,
+          "eating_out": true,
+          "cost_cents": null,
+          "kcal": null,
+          "price_store": null,
+          "price_observed_date": null
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "breakfast",
+          "person": "persona-a",
+          "recipe": "huevo-con-frijol",
+          "servings_milli": 2000,
+          "eating_out": false,
+          "cost_cents": 2492,
+          "kcal": 877,
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10"
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "breakfast",
+          "person": "persona-b",
+          "recipe": "huevo-con-frijol",
+          "servings_milli": 2000,
+          "eating_out": false,
+          "cost_cents": 2492,
+          "kcal": 877,
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10"
+        },
+        {
+          "date": "2026-10-13",
+          "slot": "snack",
+          "person": "persona-b",
+          "recipe": "huevo-con-frijol",
+          "servings_milli": 1000,
+          "eating_out": false,
+          "cost_cents": 1246,
+          "kcal": 439,
+          "price_store": "walmart",
+          "price_observed_date": "2026-10-10"
+        }
+      ],
+      "days": [
+        {
+          "date": "2026-10-12",
+          "cost_cents": 3335,
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": 2762,
+              "daily_kcal_target": 2000,
+              "difference_kcal": 762
+            },
+            {
+              "person": "persona-b",
+              "kcal": 1381,
+              "daily_kcal_target": 1596,
+              "difference_kcal": -215
+            }
+          ]
+        },
+        {
+          "date": "2026-10-13",
+          "cost_cents": 6230,
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": 877,
+              "daily_kcal_target": 2000,
+              "difference_kcal": -1123
+            },
+            {
+              "person": "persona-b",
+              "kcal": 1316,
+              "daily_kcal_target": 1596,
+              "difference_kcal": -280
+            }
+          ]
+        },
+        {
+          "date": "2026-10-14",
+          "cost_cents": 0,
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": 0,
+              "daily_kcal_target": 2000,
+              "difference_kcal": -2000
+            },
+            {
+              "person": "persona-b",
+              "kcal": 0,
+              "daily_kcal_target": 1596,
+              "difference_kcal": -1596
+            }
+          ]
+        },
+        {
+          "date": "2026-10-15",
+          "cost_cents": 0,
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": 0,
+              "daily_kcal_target": 2000,
+              "difference_kcal": -2000
+            },
+            {
+              "person": "persona-b",
+              "kcal": 0,
+              "daily_kcal_target": 1596,
+              "difference_kcal": -1596
+            }
+          ]
+        },
+        {
+          "date": "2026-10-16",
+          "cost_cents": 0,
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": 0,
+              "daily_kcal_target": 2000,
+              "difference_kcal": -2000
+            },
+            {
+              "person": "persona-b",
+              "kcal": 0,
+              "daily_kcal_target": 1596,
+              "difference_kcal": -1596
+            }
+          ]
+        },
+        {
+          "date": "2026-10-17",
+          "cost_cents": 0,
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": 0,
+              "daily_kcal_target": 2000,
+              "difference_kcal": -2000
+            },
+            {
+              "person": "persona-b",
+              "kcal": 0,
+              "daily_kcal_target": 1596,
+              "difference_kcal": -1596
+            }
+          ]
+        },
+        {
+          "date": "2026-10-18",
+          "cost_cents": 0,
+          "persons": [
+            {
+              "person": "persona-a",
+              "kcal": 0,
+              "daily_kcal_target": 2000,
+              "difference_kcal": -2000
+            },
+            {
+              "person": "persona-b",
+              "kcal": 0,
+              "daily_kcal_target": 1596,
+              "difference_kcal": -1596
+            }
+          ]
+        }
+      ],
+      "week_cost_cents": 9565,
+      "unplanned_slots": 19,
+      "eating_out_slots": 1,
+      "leftovers": []
+    },
+    "semana-domingo": {
+      "week": "2026-W42",
+      "monday": "2026-10-12"
+    },
+    "semana-lunes": {
+      "week": "2026-W42",
+      "monday": "2026-10-12"
+    },
+    "semana-sabado": {
+      "week": "2026-W41",
+      "monday": "2026-10-05"
+    },
+    "huecos-w42": {
+      "unplanned_slots": 19
+    },
+    "huecos-w43": {
+      "unplanned_slots": 21
+    }
+  }
+}

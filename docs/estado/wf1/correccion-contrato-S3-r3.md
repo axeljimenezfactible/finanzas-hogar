@@ -1,0 +1,56 @@
+# Corrección del contrato S3 · ronda 3 (agente correccion-contrato-S3-r3)
+
+11-oct-2026 · WF-1 · Objeto: `docs/contratos/motores/S3-interfaz.md` v1.2 → **v1.3** (115,607 → 129,503 bytes) · Informe atendido: `docs/estado/wf1/REVISION-contrato-S3-r3.md` (4 hallazgos medios N1–N4; 0 altos). Vara: `docs/criterios/S3.md` 1.2, decisiones §C y §K, `oraculo/fixtures/FORMATO.md` 1.2. Ninguna cifra canon cambia; no se reabrió ninguna decisión de §A–§K.
+
+## Hecho
+1. **N1 (serie con intereses 0).** Bloqueo nuevo `docs/estado/bloqueos/S3-serie-sin-intereses.md` con las 3 opciones (a) capital = monto en todos los tipos, (b) RN-07 literal y CHECK que admite negativos, (c) RN-07 literal con el ajuste en el primer pago, cada una con su consecuencia recalculada. Marcas PROVISIONAL con cita del bloqueo en §5.1 (serie de la línea: sigue RN-07 literal, opción b, y se documenta que el CHECK de 00001 l. 808 la rechaza), §5.3 (MSI: capital = monto, opción a), §5.5 y §5.8 (tienda y renglones `bank_card`/`store_credit`). §14 (PROVISIONAL y «Hallazgo 5 → bloqueo») y §14.1 (orden, regla de `Purchase.Provisional`: toda compra de línea, MSI o tienda con `Interest` = 0 y `TermCount` ≥ 2; fixtures del comparador y del calendario unificado). Las fixtures `s3-promocion-0`, `s3-tarjeta-sin-intereses` y `s3-tienda-abonos` piden solo montos e interés total (FIRMES). Montos 77362 ×3 + 77364 y 33333, 33333, 33334 sin cambio.
+2. **N2 (decimales de la tasa cotizada).** `RateDecimals *int json:"rate_decimals"` en `PurchaseInput` (espejo de `credit_purchase.rate_decimals`, 00002 l. 123); viñeta nueva «Decimales de la tasa» en §5.1 con la precedencia (con `QuotedInterest` mandan los de la compra y nunca los del `TermRate` del mismo plazo; con promoción o `TermRate`, los de esa tasa y `RateDecimals` no se usa), `RateDecimals` < 0 → `ErrInvalid` (§5.8 comunes) y `Display()` con −1 → `""` (C1: `rate_pct` «ausente si falta rate_decimals»); comentarios de `QuotedRate` y `Display` en §3 y principio §1.3; `rate_decimals` 4 en d1 de la semilla y del ejemplo 1; `s3-tasa-plazo` con la variante sin decimales (`rate` `{80050, 309450, -1}`, `rate_display` `""`); `TestTasaPorCompra` en §11; §13 S3-06.
+3. **N3 (IVA, bloqueo abierto `U4-iva-credito`).** Citado en el encabezado (fuentes y marcas), comentario de `VATOnInterestBP` (§5), §5.3 (la lista de 4 datos de `ErrMissingCapture` y la lectura de nil son PROVISIONALES; con la opción 1 o 2 del bloqueo la lista pasa a 5), §5.4 (préstamo con `vatBP` nil), §5.5, §5.8 (`bank_card` y `store_credit`), §14 y §14.1: orden `… < S3-origen-cargo-normal < S3-serie-sin-intereses < U4-iva-credito`; listas de `interes_tarjeta` y `minimo_tarjeta` (fórmula: `S3-formula-tarjeta` y `U4-iva-credito`); préstamo con IVA null; «otros bloqueos» de `s3-tarjeta-minimo` y `s3-tienda-abonos-interes` (tabla de §10 y de §14.1) y de los `s3-unificado*` si el préstamo va sin IVA.
+4. **N4 (FORMATO 1.2 y autoría).** Todas las citas vigentes pasan a `FORMATO.md` 1.2 (encabezado, §2, §3, §9, §9.5, §10, §14.1; las bitácoras de cambios conservan su versión). §10.0 nuevo «Autoría de `oraculo/fixtures/s3/` y del oráculo, y orden de trabajo»: un renglón por archivo (casos y `_datos/kueski-semilla.json` + `cred_genera_fixtures.py` → regresión; `S3-escenarios.md`, `_datos/comparador-caso-N.json` y los 6 `s3-comparador-*` → optimizador; `cred_lib.py`, `cred_escenarios.py`, `cred_run_fixtures.py` → regresión; `compara.py` → agente Python de S2), la secuencia del comparador (tabla a mano → transcripción sin cambiar números → recién entonces correr → tiempos aparte) y qué hace cada agente mientras falten (núcleo con `seedFromModel` y mensaje «falta … (autor: …)», nunca `t.Skip`; optimizador con los ejemplos de §8.4 y §8.5; regresión con `compara.py s3 --sin-motor`). §2 con autores; §9.3 con la regla de claves de persona (una clave por parte de la compra, titular y externas, siempre, en el orden de §4); §11 (`TestCanonHojas437` sobre `seedFromModel` y, si existe, igualdad con la semilla; `TestOraculoFixtures` con archivo faltante; `TestProvisionalListas`); §13 S3-13 y S3-16.
+5. Bitácora «Cambios de la versión 1.3 (corrección r3)» en §14; versión y autoría en el encabezado.
+
+## Archivos
+- Modificado: `/home/deepsec/finanzas-hogar/docs/contratos/motores/S3-interfaz.md` (v1.3).
+- Creado: `/home/deepsec/finanzas-hogar/docs/estado/bloqueos/S3-serie-sin-intereses.md`.
+- Creado: `/home/deepsec/finanzas-hogar/docs/estado/wf1/correccion-contrato-S3-r3.md` (este reporte).
+- Temporales en `datos/tmp/s3r3/` (copia v1.2, scripts de edición y verificación): borrados.
+
+## Verificación
+- Cifras de N1 recalculadas con `fractions.Fraction` (python3 -I): 309450 a 4 q → montos [77362, 77362, 77362, 77364]; (a) intereses [0, 0, 0, 0]; (b) capital [77363 ×3, 77361], intereses [−1, −1, −1, +3] (= revisor); (c) capital [77361, 77363, 77363, 77363], intereses [+1, −1, −1, +1]. 100000 a 3 → montos [33333, 33333, 33334]; (a) y (b) intereses 0; (c) capital [33334, 33333, 33333], intereses [−1, 0, +1]. 400000 a 4 y 100000 a 4: las tres opciones coinciden. Con montos de RN-07 fijos, solo (a) deja intereses ≥ 0 en cada pago.
+- N2: HALF_UP(80050 × 100 × 10⁴ / 309450) = 258685 → «25.8685 %»; binary64 = 25.868476328970754 (sin cambio respecto a §9.3).
+- Script de contraste v1.2 contra v1.3: ningún número de la v1.2 desaparece salvo las 14 citas «1.1» de FORMATO (pasan a 1.2) y un falso positivo de tokenización («S3-06,»); §4, §6–§8 y §12 (las 437 hojas) intactas byte a byte; 0 filas de tabla con columnas distintas en todo el archivo; bloqueos citados existentes: `S3-convencion-prestamo`, `S3-formula-tarjeta`, `S3-objetivos-medida`, `S3-origen-cargo-normal`, `S3-serie-sin-intereses`, `U4-iva-credito` (`S3-tiempo-optimizador` es condicional en S3-12 y no debe existir aún); orden de §14.1 = orden por bytes (True); citas de FORMATO 1.1 fuera de las bitácoras: ninguna.
+- `sha256sum oraculo/model.json` = `1a57066689ddeed31e0001259f341c7a3f782a46cd4a05128ff453aad2f1bfd4` (intacto, S3-16).
+- Criterios del contrato tocados por N1–N4: S3-06 (§5.1 decimales, `s3-tasa-plazo`), S3-07 (montos FIRMES, serie PROVISIONAL), S3-08 y S3-10 (IVA y datos K18 PROVISIONALES con cita), S3-13 y S3-16 (§10.0, secuencia y autor del oráculo), S3-20 (§14 y §14.1 con los 6 bloqueos). El resto de criterios no cambia de sección.
+- Código existente fuera de mi alcance (no lo edité): `cd backend && go build ./internal/motor_cred/ && go vet ./internal/motor_cred/ && gofmt -l internal/motor_cred` → limpio, sin salida; no hay `*_test.go`, `comparador/` ni `evaluar/evaluar.go` todavía, así que no hay pruebas Go, cobertura, oráculo completo ni `compara.py s3` que correr para S3 (`oraculo/fixtures/s3/_datos/` vacío). Esa implementación aún no sigue la v1.3: ver Solicitudes 1 y 2.
+
+## Supuestos
+1. Roles de los agentes de implementación (núcleo, optimizador, regresión e integrador) tomados del encabezado del contrato y de `docs/estado/wf1/contrato-S3.md`. Asigné las fixtures del comparador al optimizador porque la tabla a mano es suya y así se cumple «fijados antes de correr» sin esperar a otro agente; el resto, al agente de regresión. Es autoría de archivos, no cifra, esquema ni endpoint; el integrador puede reasignar.
+2. `Display()` con −1 → `""`: lo fija C1 v1.2 (`rate_pct` «ausente si falta rate_decimals»); no es un valor nuevo.
+3. Comportamiento PROVISIONAL de la serie sin intereses: cada sección conserva la regla que tenía (línea = opción b; MSI y tienda = opción a), marcada; la decisión la toma Axel en el bloqueo.
+4. La opción (c) del revisor («el ajuste va al primer pago») la leí como «el pago que ajusta los centavos del capital es el primero»; sus consecuencias están calculadas en el bloqueo.
+5. `seedFromModel`: lo que no es hoja de `model.json` (15 días, lectura "B", decimales 2 y 4 de K12) sale del contrato.
+
+## Bloqueos
+- `/home/deepsec/finanzas-hogar/docs/estado/bloqueos/S3-serie-sin-intereses.md` (nuevo).
+- Citado, no abierto por mí: `/home/deepsec/finanzas-hogar/docs/estado/bloqueos/U4-iva-credito.md`.
+
+## Pendientes
+1. Hallazgos bajos B1–B9 de la r3, sin corregir porque el encargo eran solo los medios: B1 en §5.3 (pago total a tiempo antes de revisar datos); B2 en `docs/estado/bloqueos/S3-formula-tarjeta.md` y `S3-convencion-prestamo.md` (citas de secciones v1.0); B3 en §9.3 (hojas de texto `fecha`, `horizonte`); B4 en §8.2; B5 en §10.2 (salida de `cred_escenarios.py` sin argumentos: §10.0 ya fija el caso de archivos faltantes); B6 en §13 (S3-16: `oraculo/verify3.py` l. 89, de S2); B7 en §5.2 (`seq` fuera de rango); B8 en §5.8 (crédito `unsupported` en el calendario unificado); B9, nota de diseño para `docs/estado/S3-escenarios.md`.
+2. Implementación de S3 alineada a la v1.3 (Solicitudes 1 y 2).
+
+## Solicitudes fuera de alcance
+1. **Núcleo S3** · `backend/internal/motor_cred/money.go` l. 49–51: `Display()` usa 4 decimales cuando `Decimals` < 0; la v1.3 §5.1 pide `""` (N2). `backend/internal/motor_cred/state.go` y `revolving.go`: agregar `RateDecimals` a `PurchaseInput` con la precedencia de §5.1 y `ErrInvalid` si es < 0; listas `Provisional` con `S3-serie-sin-intereses` (intereses 0 y n ≥ 2) y `U4-iva-credito` (fórmula de tarjeta y tienda; préstamo con IVA null) según §14.1. Motivo: N1–N3.
+2. **Regresión S3** · `oraculo/cred_lib.py`, `cred_run_fixtures.py`, `cred_escenarios.py` y `oraculo/fixtures/s3/`: seguir §10.0 (autoría, `cred_genera_fixtures.py`, mensaje de archivo faltante con su autor, semilla con `rate_decimals` 4 en d1) y las mismas reglas de decimales y listas `provisional`. Motivo: N2 y N4.
+3. **Integrador** · `docs/estado/bloqueos/INDICE.md`: sumar `S3-serie-sin-intereses` a las preguntas de la puerta 2. Motivo: N1.
+4. **Integrador / dueño de U4** · `docs/estado/bloqueos/U4-iva-credito.md` (Impacto): anotar que `S3-interfaz.md` v1.3 marca PROVISIONAL la lista de 4 datos de `ErrMissingCapture` y la lectura de `vat_on_interest_bp` NULL (§5.3, §5.4, §5.5, §5.8, §14.1). Motivo: N3.
+5. **Dueño de `reglas-negocio.md`** · RN-07 (serie con intereses 0: PROVISIONAL `S3-serie-sin-intereses`) y RN-26 (NULL = trae IVA: PROVISIONAL `U4-iva-credito`), para que la regla y el contrato digan lo mismo hasta la puerta 2. Motivo: N1 y N3.
+
+## Paquetes instalados
+Ninguno.
+
+## Propuestas para Axel
+- `S3-serie-sin-intereses`: **opción (a)**, capital = monto cuando los intereses son 0, en los tres tipos. Por qué: con los montos de RN-07 fijos es la única serie con interés ≥ 0 en cada pago, cabe en el esquema sin migración, no cambia ninguna cifra canon ni los montos de S3-07, y es la que ya usaban los meses sin intereses y la tienda. (b) y (c) obligan a cambiar el CHECK y muestran intereses negativos de un centavo en una compra «sin intereses».
+- Sin valores K31 nuevos en esta ronda (`optimizer.date_window_days` = 7 días sigue siendo la propuesta de la ronda anterior).
+
+## Consumo aproximado
+~41 acciones de herramienta; ~250 KB leídos (por partes; el contrato solo por secciones); ~50 KB de texto propio escrito (scripts de edición ~30 KB, bloqueo 3.6 KB, reporte y progreso ~10 KB, script de verificación 2 KB). Los dos scripts reescribieron en disco el contrato completo (~250 KB entre las dos pasadas), sin volcarlo en el contexto.

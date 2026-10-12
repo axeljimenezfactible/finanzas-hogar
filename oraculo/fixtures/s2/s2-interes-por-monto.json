@@ -1,0 +1,141 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-interes-por-monto",
+  "descripcion": "Cruce con S3: 7 compras de interes_por_monto confirmadas por devengado y efectivo (28 hojas)",
+  "fuente": [
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto[0]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto[1]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto[2]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto[3]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto[4]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto[5]"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "interes_por_monto[6]"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S2-03"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/interes-por-monto.json"
+    },
+    "consultas": [
+      {
+        "id": "interes_por_monto[0]",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "purchase_id": 1
+        }
+      },
+      {
+        "id": "interes_por_monto[1]",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "purchase_id": 2
+        }
+      },
+      {
+        "id": "interes_por_monto[2]",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "purchase_id": 3
+        }
+      },
+      {
+        "id": "interes_por_monto[3]",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "purchase_id": 4
+        }
+      },
+      {
+        "id": "interes_por_monto[4]",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "purchase_id": 5
+        }
+      },
+      {
+        "id": "interes_por_monto[5]",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "purchase_id": 6
+        }
+      },
+      {
+        "id": "interes_por_monto[6]",
+        "funcion": "vista_interes_por_monto",
+        "argumentos": {
+          "purchase_id": 7
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "interes_por_monto[0]": {
+      "monto": 100,
+      "intereses": 26,
+      "total": 126,
+      "pago_quincenal": 31
+    },
+    "interes_por_monto[1]": {
+      "monto": 10000,
+      "intereses": 2587,
+      "total": 12587,
+      "pago_quincenal": 3147
+    },
+    "interes_por_monto[2]": {
+      "monto": 100000,
+      "intereses": 25868,
+      "total": 125868,
+      "pago_quincenal": 31467
+    },
+    "interes_por_monto[3]": {
+      "monto": 200000,
+      "intereses": 51737,
+      "total": 251737,
+      "pago_quincenal": 62934
+    },
+    "interes_por_monto[4]": {
+      "monto": 309450,
+      "intereses": 80050,
+      "total": 389500,
+      "pago_quincenal": 97375
+    },
+    "interes_por_monto[5]": {
+      "monto": 400000,
+      "intereses": 103474,
+      "total": 503474,
+      "pago_quincenal": 125868
+    },
+    "interes_por_monto[6]": {
+      "monto": 500000,
+      "intereses": 129342,
+      "total": 629342,
+      "pago_quincenal": 157336
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-ocr-parseo",
+  "descripcion": "Parseo del TSV de Tesseract (ILUSTRATIVO; §12, S5-06; no corre Tesseract): palabras de nivel 5 agrupadas por bloque, párrafo y línea; importe = último número con dos decimales (48.00, $45.00, 1,234.50); cantidad = número inicial (2 -> 2000; 0.750 KG -> 750, sin la unidad); confianza = promedio HALF_UP (94.2 -> 94; 90.25 -> 90; 60.4 -> 60; 362 / 4 = 90.5 -> 91). Una línea sin importe sale con importe nulo; una palabra vacía se ignora.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S5-06"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "§12 de S5-interfaz.md"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "a",
+            "name": "A",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "a-1kg",
+            "product": "a",
+            "name": "a-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "ticket",
+        "funcion": "ocr_parse_tsv",
+        "argumentos": {
+          "tsv_file": "oraculo/fixtures/s5/_datos/ocr-muestra.tsv"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "ticket": {
+      "lines": [
+        {
+          "description": "LECHE ENTERA 1L",
+          "quantity_milli": 2000,
+          "amount_cents": 4800,
+          "confidence": 94
+        },
+        {
+          "description": "MANZANA",
+          "quantity_milli": 750,
+          "amount_cents": 3150,
+          "confidence": 90
+        },
+        {
+          "description": "PAN BLANCO",
+          "quantity_milli": null,
+          "amount_cents": 4500,
+          "confidence": 81
+        },
+        {
+          "description": "BOLSA",
+          "quantity_milli": null,
+          "amount_cents": null,
+          "confidence": 60
+        },
+        {
+          "description": "TOTAL",
+          "quantity_milli": null,
+          "amount_cents": 123450,
+          "confidence": 99
+        },
+        {
+          "description": "GALLETAS MARIAS",
+          "quantity_milli": 3000,
+          "amount_cents": 1200,
+          "confidence": 91
+        }
+      ]
+    }
+  }
+}

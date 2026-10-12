@@ -1,0 +1,750 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-proyeccion-csv",
+  "descripcion": "Proyección apagada con partidas de fixture (sueldo quincenal, renta mensual «Hogar», venidero «Conjunto 50/50» a 2 meses) sin capturas ligadas; firme; resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-09"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K21"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-03"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-02"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "ingresos, partidas y devengo de ene-feb 2027 calculados a mano"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json",
+      "parche": {
+        "categories": [
+          {
+            "code": "despensa",
+            "name": "Despensa",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "papel",
+            "name": "Papel",
+            "kind": "variable",
+            "is_active": true
+          },
+          {
+            "code": "vivienda",
+            "name": "Vivienda",
+            "kind": "fixed",
+            "is_active": true
+          },
+          {
+            "code": "varios",
+            "name": "Varios",
+            "kind": "variable",
+            "is_active": true
+          }
+        ],
+        "planned_items": [
+          {
+            "id": 1,
+            "kind": "income",
+            "description": "Sueldo (dato de fixture)",
+            "amount_cents": 1200000,
+            "second_half_amount_cents": 1250000,
+            "frequency": "fortnightly",
+            "interval_count": 1,
+            "start_date": "2026-10-15",
+            "end_date": null,
+            "category": null,
+            "payment_method": null,
+            "accrual_months": null,
+            "person": "axel",
+            "share_rule": null,
+            "credit_id": null,
+            "is_active": true
+          },
+          {
+            "id": 2,
+            "kind": "fixed_expense",
+            "description": "Renta (dato de fixture)",
+            "amount_cents": 800000,
+            "second_half_amount_cents": null,
+            "frequency": "monthly",
+            "interval_count": 1,
+            "start_date": "2026-10-20",
+            "end_date": null,
+            "category": "vivienda",
+            "payment_method": "transfer",
+            "accrual_months": 1,
+            "person": null,
+            "share_rule": {
+              "parts": [],
+              "rest_person": "axel"
+            },
+            "credit_id": null,
+            "is_active": true
+          },
+          {
+            "id": 3,
+            "kind": "upcoming_expense",
+            "description": "Gasto venidero conjunto (dato de fixture)",
+            "amount_cents": 300001,
+            "second_half_amount_cents": null,
+            "frequency": "once",
+            "interval_count": 1,
+            "start_date": "2027-01-25",
+            "end_date": null,
+            "category": "varios",
+            "payment_method": "cash",
+            "accrual_months": 2,
+            "person": null,
+            "share_rule": {
+              "parts": [
+                {
+                  "person": "karen",
+                  "pct_bp": 5000
+                }
+              ],
+              "rest_person": "axel"
+            },
+            "credit_id": null,
+            "is_active": true
+          }
+        ]
+      }
+    },
+    "consultas": [
+      {
+        "id": "proyeccion",
+        "funcion": "proyeccion",
+        "argumentos": {
+          "from": "2026-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "proyeccion": {
+      "repeat_cadence_enabled": false,
+      "months": [
+        {
+          "index": 1,
+          "month": "2026-10",
+          "accrued": {
+            "total_cents": 994750,
+            "by_person": {
+              "axel": 919764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 897375,
+            "payments_cents": 97375,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 859882,
+              "karen": 37493
+            },
+            "by_category": {
+              "despensa": 97375,
+              "vivienda": 800000
+            },
+            "payment_count": 1,
+            "payments": [
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 1,
+                "due_date": "2026-10-30",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1590118,
+          "cumulative_diff_cents": 97375,
+          "provisional": null
+        },
+        {
+          "index": 2,
+          "month": "2026-11",
+          "accrued": {
+            "total_cents": 994750,
+            "by_person": {
+              "axel": 919764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 994750,
+            "payments_cents": 194750,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 919764,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 194750,
+              "vivienda": 800000
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 2,
+                "due_date": "2026-11-15",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 3,
+                "due_date": "2026-11-30",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1530236,
+          "cumulative_diff_cents": 97375,
+          "provisional": null
+        },
+        {
+          "index": 3,
+          "month": "2026-12",
+          "accrued": {
+            "total_cents": 1051737,
+            "by_person": {
+              "axel": 976751,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251737,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 1023243,
+            "payments_cents": 223243,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 948257,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 223243,
+              "vivienda": 800000
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 1,
+                "purchase_seq": 1,
+                "seq": 4,
+                "due_date": "2026-12-15",
+                "amount_cents": 97375,
+                "shares": {
+                  "axel": 59882,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 1,
+                "due_date": "2026-12-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1501743,
+          "cumulative_diff_cents": 125869,
+          "provisional": null
+        },
+        {
+          "index": 4,
+          "month": "2027-01",
+          "accrued": {
+            "total_cents": 1221638,
+            "by_person": {
+              "axel": 1051751,
+              "karen": 169887
+            },
+            "by_category": {
+              "despensa": 251737,
+              "papel": 19900,
+              "varios": 150001,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 1371637,
+            "payments_cents": 251736,
+            "cash_expenses_cents": 1119901,
+            "by_person": {
+              "axel": 1276751,
+              "karen": 94886
+            },
+            "by_category": {
+              "despensa": 251736,
+              "papel": 19900,
+              "varios": 300001,
+              "vivienda": 800000
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 2,
+                "due_date": "2027-01-15",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 3,
+                "due_date": "2027-01-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 1100001,
+          "net_cash_cents": 1173249,
+          "cumulative_diff_cents": -24130,
+          "provisional": null
+        },
+        {
+          "index": 5,
+          "month": "2027-02",
+          "accrued": {
+            "total_cents": 1201737,
+            "by_person": {
+              "axel": 1051751,
+              "karen": 149986
+            },
+            "by_category": {
+              "despensa": 251737,
+              "varios": 150000,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 1051738,
+            "payments_cents": 251738,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 976752,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251738,
+              "vivienda": 800000
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 2,
+                "purchase_seq": 2,
+                "seq": 4,
+                "due_date": "2027-02-15",
+                "amount_cents": 125870,
+                "shares": {
+                  "axel": 88377,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 1,
+                "due_date": "2027-02-28",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1473248,
+          "cumulative_diff_cents": 125869,
+          "provisional": null
+        },
+        {
+          "index": 6,
+          "month": "2027-03",
+          "accrued": {
+            "total_cents": 1071637,
+            "by_person": {
+              "axel": 976751,
+              "karen": 94886
+            },
+            "by_category": {
+              "despensa": 251737,
+              "papel": 19900,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 1071636,
+            "payments_cents": 251736,
+            "cash_expenses_cents": 819900,
+            "by_person": {
+              "axel": 976750,
+              "karen": 94886
+            },
+            "by_category": {
+              "despensa": 251736,
+              "papel": 19900,
+              "vivienda": 800000
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 2,
+                "due_date": "2027-03-15",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 3,
+                "due_date": "2027-03-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1473250,
+          "cumulative_diff_cents": 125870,
+          "provisional": null
+        },
+        {
+          "index": 7,
+          "month": "2027-04",
+          "accrued": {
+            "total_cents": 1051737,
+            "by_person": {
+              "axel": 976751,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251737,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 1051738,
+            "payments_cents": 251738,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 976752,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251738,
+              "vivienda": 800000
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 3,
+                "purchase_seq": 3,
+                "seq": 4,
+                "due_date": "2027-04-15",
+                "amount_cents": 125870,
+                "shares": {
+                  "axel": 88377,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 1,
+                "due_date": "2027-04-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1473248,
+          "cumulative_diff_cents": 125869,
+          "provisional": null
+        },
+        {
+          "index": 8,
+          "month": "2027-05",
+          "accrued": {
+            "total_cents": 1051737,
+            "by_person": {
+              "axel": 976751,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251737,
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 1051736,
+            "payments_cents": 251736,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 976750,
+              "karen": 74986
+            },
+            "by_category": {
+              "despensa": 251736,
+              "vivienda": 800000
+            },
+            "payment_count": 2,
+            "payments": [
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 2,
+                "due_date": "2027-05-15",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              },
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 3,
+                "due_date": "2027-05-30",
+                "amount_cents": 125868,
+                "shares": {
+                  "axel": 88375,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1473250,
+          "cumulative_diff_cents": 125870,
+          "provisional": null
+        },
+        {
+          "index": 9,
+          "month": "2027-06",
+          "accrued": {
+            "total_cents": 800000,
+            "by_person": {
+              "axel": 800000,
+              "karen": 0
+            },
+            "by_category": {
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 925870,
+            "payments_cents": 125870,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 888377,
+              "karen": 37493
+            },
+            "by_category": {
+              "despensa": 125870,
+              "vivienda": 800000
+            },
+            "payment_count": 1,
+            "payments": [
+              {
+                "purchase_id": 4,
+                "purchase_seq": 4,
+                "seq": 4,
+                "due_date": "2027-06-15",
+                "amount_cents": 125870,
+                "shares": {
+                  "axel": 88377,
+                  "karen": 37493
+                }
+              }
+            ]
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1561623,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        },
+        {
+          "index": 10,
+          "month": "2027-07",
+          "accrued": {
+            "total_cents": 800000,
+            "by_person": {
+              "axel": 800000,
+              "karen": 0
+            },
+            "by_category": {
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 800000,
+            "payments_cents": 0,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 800000,
+              "karen": 0
+            },
+            "by_category": {
+              "vivienda": 800000
+            },
+            "payment_count": 0,
+            "payments": []
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1650000,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        },
+        {
+          "index": 11,
+          "month": "2027-08",
+          "accrued": {
+            "total_cents": 800000,
+            "by_person": {
+              "axel": 800000,
+              "karen": 0
+            },
+            "by_category": {
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 800000,
+            "payments_cents": 0,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 800000,
+              "karen": 0
+            },
+            "by_category": {
+              "vivienda": 800000
+            },
+            "payment_count": 0,
+            "payments": []
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1650000,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        },
+        {
+          "index": 12,
+          "month": "2027-09",
+          "accrued": {
+            "total_cents": 800000,
+            "by_person": {
+              "axel": 800000,
+              "karen": 0
+            },
+            "by_category": {
+              "vivienda": 800000
+            }
+          },
+          "cash": {
+            "total_cents": 800000,
+            "payments_cents": 0,
+            "cash_expenses_cents": 800000,
+            "by_person": {
+              "axel": 800000,
+              "karen": 0
+            },
+            "by_category": {
+              "vivienda": 800000
+            },
+            "payment_count": 0,
+            "payments": []
+          },
+          "income_cents": 2450000,
+          "planned_expense_cents": 800000,
+          "net_cash_cents": 1650000,
+          "cumulative_diff_cents": 0,
+          "provisional": null
+        }
+      ]
+    }
+  }
+}

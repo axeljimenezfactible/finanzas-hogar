@@ -1,0 +1,198 @@
+{
+  "today": "2026-11-01",
+  "cash": [],
+  "credits": [
+    {
+      "credit": {
+        "id": 1,
+        "name": "Línea Uno",
+        "kind": "revolving_line",
+        "holder": "axel",
+        "limit_cents": 1500000,
+        "frequency": "fortnightly",
+        "first_payment_min_days": 15,
+        "reading": "B",
+        "reading_confirmed": false,
+        "reading_a_anchor": "2026-11-01",
+        "statement_day": null,
+        "payment_due_day": null,
+        "annual_rate": null,
+        "rate_base": "",
+        "vat_on_interest_bp": null,
+        "min_payment_pct_bp": null,
+        "min_payment_fixed_cents": null,
+        "term_rates": [
+          {
+            "term_count": 2,
+            "rate": {
+              "num": 53450,
+              "den": 309450,
+              "decimales": 2
+            },
+            "source": "manual",
+            "quote_date": null
+          },
+          {
+            "term_count": 4,
+            "rate": {
+              "num": 80050,
+              "den": 309450,
+              "decimales": 4
+            },
+            "source": "manual",
+            "quote_date": null
+          },
+          {
+            "term_count": 6,
+            "rate": {
+              "num": 35,
+              "den": 100,
+              "decimales": 0
+            },
+            "source": "manual",
+            "quote_date": null
+          }
+        ],
+        "promotions": [
+          {
+            "id": 1,
+            "credit_id": 1,
+            "merchant": "Tienda Cara",
+            "store_id": 2,
+            "term_count": 4,
+            "rate": {
+              "num": 0,
+              "den": 1,
+              "decimales": 0
+            },
+            "min_purchase_cents": 100000,
+            "valid_from": "2026-11-28",
+            "valid_to": "2026-11-29",
+            "active": true
+          }
+        ]
+      },
+      "purchases": [
+        {
+          "ref": "L1-f",
+          "status": "active",
+          "input": {
+            "date": "2027-01-20",
+            "principal_cents": 250000,
+            "term_count": 1,
+            "quoted_interest_cents": 0,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 250000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      ],
+      "payments": [],
+      "statements": []
+    },
+    {
+      "credit": {
+        "id": 2,
+        "name": "Línea Dos",
+        "kind": "revolving_line",
+        "holder": "axel",
+        "limit_cents": 600000,
+        "frequency": "fortnightly",
+        "first_payment_min_days": 15,
+        "reading": "B",
+        "reading_confirmed": false,
+        "reading_a_anchor": "2026-11-01",
+        "statement_day": null,
+        "payment_due_day": null,
+        "annual_rate": null,
+        "rate_base": "",
+        "vat_on_interest_bp": null,
+        "min_payment_pct_bp": null,
+        "min_payment_fixed_cents": null,
+        "term_rates": [
+          {
+            "term_count": 2,
+            "rate": {
+              "num": 8,
+              "den": 100,
+              "decimales": 0
+            },
+            "source": "manual",
+            "quote_date": null
+          },
+          {
+            "term_count": 4,
+            "rate": {
+              "num": 15,
+              "den": 100,
+              "decimales": 0
+            },
+            "source": "manual",
+            "quote_date": null
+          }
+        ],
+        "promotions": []
+      },
+      "purchases": [
+        {
+          "ref": "L2-a",
+          "status": "active",
+          "input": {
+            "date": "2026-10-25",
+            "principal_cents": 116550,
+            "term_count": 2,
+            "quoted_interest_cents": 9318,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 116550,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        },
+        {
+          "ref": "L2-b",
+          "status": "active",
+          "input": {
+            "date": "2026-11-01",
+            "principal_cents": 100000,
+            "term_count": 4,
+            "quoted_interest_cents": null,
+            "promotion_id": null,
+            "store_id": null,
+            "merchant": "",
+            "first_payment_date": null,
+            "shares": [
+              {
+                "person": "axel",
+                "external": false,
+                "principal_cents": 100000,
+                "joint_cents": null,
+                "paper_in_cents": null
+              }
+            ]
+          }
+        }
+      ],
+      "payments": [],
+      "statements": []
+    }
+  ]
+}

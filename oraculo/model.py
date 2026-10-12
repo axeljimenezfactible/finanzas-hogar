@@ -205,9 +205,16 @@ model = dict(version='v3',
     credito=dict(eventos=cred, comparacion_series=cred_cmp, minimo_A=min(c['disponible_A'] for c in cred), minimo_B=min(c['disponible_B'] for c in cred),
                  nota="Solo capital usa/repone la linea; intereses nunca regresan; papel de contado no mueve el credito. A: 10,000 libres hoy y los pagos suman encima; B: 10,000 es tope total (inicial 6,905.50)"),
     valor_estable=ve, sensibilidad=sens, papel=papel, disposicion_por_despensa=disp, horizonte=horizonte, interes_por_monto=ipm)
-out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'model.json')
-json.dump(model, open(out, 'w'), ensure_ascii=False, indent=1)
 if __name__ == '__main__':
+    # S2-04: importar este módulo no escribe nada; ejecutado, regenera en datos/tmp/model.json (ruta relativa
+    # a la raíz del repositorio) y lo compara con oraculo/model.json, que es canon y nunca se reescribe.
+    _raiz = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    out = os.path.join(_raiz, 'datos', 'tmp', 'model.json')
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as _fh:
+        json.dump(model, _fh, ensure_ascii=False, indent=1)
+    with open(out, 'rb') as _a, open(os.path.join(_raiz, 'oraculo', 'model.json'), 'rb') as _b:
+        print('datos/tmp/model.json igual a oraculo/model.json:', _a.read() == _b.read())
     print('OK asserts')
     for p in model['periodos']: print(p['periodo'], p['devengado'], p['efectivo']['total'], p['diferencia_acumulada'])
     print(ve['quincena']); print(horizonte)

@@ -1,0 +1,215 @@
+{
+  "formato": "fixture/1",
+  "motor": "s2",
+  "caso": "s2-deuda-viva-identidad",
+  "descripcion": "Identidad de K19 en los 7 cierres (S2-interfaz §3.4); resto calculado por el oráculo",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S2-07"
+    },
+    {
+      "tipo": "decision",
+      "ruta": "K19"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-21"
+    },
+    {
+      "tipo": "model.json",
+      "ruta": "horizonte.deuda_viva_10_abr"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "$ref": "_datos/semilla-oraculo.json"
+    },
+    "consultas": [
+      {
+        "id": "cierre-2026-10-31",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "cut": "2026-10-31"
+        }
+      },
+      {
+        "id": "cierre-2026-11-30",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "cut": "2026-11-30"
+        }
+      },
+      {
+        "id": "cierre-2026-12-31",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "cut": "2026-12-31"
+        }
+      },
+      {
+        "id": "cierre-2027-01-31",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "cut": "2027-01-31"
+        }
+      },
+      {
+        "id": "cierre-2027-02-28",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "cut": "2027-02-28"
+        }
+      },
+      {
+        "id": "cierre-2027-03-31",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "cut": "2027-03-31"
+        }
+      },
+      {
+        "id": "cierre-2027-04-10",
+        "funcion": "deuda_viva",
+        "argumentos": {
+          "cut": "2027-04-10"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "cierre-2026-10-31": {
+      "cut": "2026-10-31",
+      "live_debt_cents": 292125,
+      "by_purchase": [
+        {
+          "purchase_id": 1,
+          "purchase_seq": 1,
+          "pending_cents": 292125,
+          "started": true
+        }
+      ],
+      "accrued_to_date_cents": 194750,
+      "cash_to_date_cents": 97375,
+      "cumulative_diff_cents": 97375,
+      "unaccrued_balance_cents": 194750,
+      "identity_holds": true,
+      "identity_without_balance_holds": false
+    },
+    "cierre-2026-11-30": {
+      "cut": "2026-11-30",
+      "live_debt_cents": 97375,
+      "by_purchase": [
+        {
+          "purchase_id": 1,
+          "purchase_seq": 1,
+          "pending_cents": 97375,
+          "started": true
+        }
+      ],
+      "accrued_to_date_cents": 389500,
+      "cash_to_date_cents": 292125,
+      "cumulative_diff_cents": 97375,
+      "unaccrued_balance_cents": 0,
+      "identity_holds": true,
+      "identity_without_balance_holds": true
+    },
+    "cierre-2026-12-31": {
+      "cut": "2026-12-31",
+      "live_debt_cents": 377606,
+      "by_purchase": [
+        {
+          "purchase_id": 2,
+          "purchase_seq": 2,
+          "pending_cents": 377606,
+          "started": true
+        }
+      ],
+      "accrued_to_date_cents": 641237,
+      "cash_to_date_cents": 515368,
+      "cumulative_diff_cents": 125869,
+      "unaccrued_balance_cents": 251737,
+      "identity_holds": true,
+      "identity_without_balance_holds": false
+    },
+    "cierre-2027-01-31": {
+      "cut": "2027-01-31",
+      "live_debt_cents": 125870,
+      "by_purchase": [
+        {
+          "purchase_id": 2,
+          "purchase_seq": 2,
+          "pending_cents": 125870,
+          "started": true
+        }
+      ],
+      "accrued_to_date_cents": 912874,
+      "cash_to_date_cents": 787004,
+      "cumulative_diff_cents": 125870,
+      "unaccrued_balance_cents": 0,
+      "identity_holds": true,
+      "identity_without_balance_holds": true
+    },
+    "cierre-2027-02-28": {
+      "cut": "2027-02-28",
+      "live_debt_cents": 377606,
+      "by_purchase": [
+        {
+          "purchase_id": 3,
+          "purchase_seq": 3,
+          "pending_cents": 377606,
+          "started": true
+        }
+      ],
+      "accrued_to_date_cents": 1164611,
+      "cash_to_date_cents": 1038742,
+      "cumulative_diff_cents": 125869,
+      "unaccrued_balance_cents": 251737,
+      "identity_holds": true,
+      "identity_without_balance_holds": false
+    },
+    "cierre-2027-03-31": {
+      "cut": "2027-03-31",
+      "live_debt_cents": 125870,
+      "by_purchase": [
+        {
+          "purchase_id": 3,
+          "purchase_seq": 3,
+          "pending_cents": 125870,
+          "started": true
+        }
+      ],
+      "accrued_to_date_cents": 1436248,
+      "cash_to_date_cents": 1310378,
+      "cumulative_diff_cents": 125870,
+      "unaccrued_balance_cents": 0,
+      "identity_holds": true,
+      "identity_without_balance_holds": true
+    },
+    "cierre-2027-04-10": {
+      "cut": "2027-04-10",
+      "live_debt_cents": 629344,
+      "by_purchase": [
+        {
+          "purchase_id": 3,
+          "purchase_seq": 3,
+          "pending_cents": 125870,
+          "started": true
+        },
+        {
+          "purchase_id": 4,
+          "purchase_seq": 4,
+          "pending_cents": 503474,
+          "started": false
+        }
+      ],
+      "accrued_to_date_cents": 1436248,
+      "cash_to_date_cents": 1310378,
+      "cumulative_diff_cents": 125870,
+      "unaccrued_balance_cents": 503474,
+      "identity_holds": true,
+      "identity_without_balance_holds": false
+    }
+  }
+}

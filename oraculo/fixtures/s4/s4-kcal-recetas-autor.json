@@ -1,0 +1,931 @@
+{
+  "formato": "fixture/1",
+  "motor": "s4",
+  "caso": "s4-kcal-recetas-autor",
+  "descripcion": "S4-08 (prueba del AUTOR, no sustituye a S4-09): 5 recetas REALES de datos/semilla/recetario-a.json (huevos-a-la-mexicana, huevo-con-jamon-y-frijoles, avena-con-manzana-y-canela, yogur-griego-con-fresas-y-avena) y recetario-b.json (espagueti-con-atun-y-elote), a 2 y a 4 porciones (escalado 2->4 exacto), con nutrition_file = datos/semilla/nutricion/tabla.csv en modo review. Valores e id_fuente de tabla.csv: huevo 143 kcal/100 g (USDA 171287, propuesto); jitomate-saladet 18 kcal/100 g (USDA 170457, propuesto); cebolla-blanca 35 kcal/100 g (USDA 1104962, propuesto); chile-serrano 32 kcal/100 g (USDA 169395, propuesto); aceite-soya 884 kcal/100 g (USDA 171411, propuesto); sal 0 kcal/100 g (USDA 746775, propuesto); tortilla-maiz 218 kcal/100 g (USDA 175036, propuesto); jamon-pavo 106 kcal/100 g (USDA 172941, propuesto); frijoles-refritos 90 kcal/100 g (USDA 172438, propuesto); avena 189433/500 kcal/100 g (USDA 2346396, propuesto); leche 61 kcal/100 g (USDA 171265, propuesto); manzana 52 kcal/100 g (USDA 171688, propuesto); canela 247 kcal/100 g (USDA 171320, propuesto); azucar 385 kcal/100 g (USDA 334247, propuesto); yogur-griego 94507/1000 kcal/100 g (USDA 2259794, propuesto); fresa 31 kcal/100 g (USDA 327699, propuesto); espagueti 371 kcal/100 g (USDA 169736, propuesto); atun-agua 90 kcal/100 g (USDA 334194, propuesto); elote-grano 67 kcal/100 g (USDA 169214, propuesto); ajo 143 kcal/100 g (USDA 1104647, propuesto); aceite-oliva 884 kcal/100 g (USDA 171413, propuesto); oregano 265 kcal/100 g (USDA 171328, propuesto). Esperado calculado por una segunda vía independiente (fractions): kcal = Σ (gramos × kcal/100 g / 100), gramos de ml y pieza = cantidad × gramos_por_unidad; un solo redondeo HALF_UP al final.",
+  "fuente": [
+    {
+      "tipo": "criterio",
+      "ruta": "S4-08"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-17"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "segunda vía en rec_genera_fixtures.py"
+    },
+    {
+      "tipo": "manual",
+      "ruta": "datos/semilla/nutricion/tabla.csv"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S4-confirmacion-empates.md",
+    "que": "los renglones de tabla.csv de estas recetas están en estado propuesto; si al confirmarlos se corrige un valor, se regeneran el recetario y esta fixture"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-11",
+      "catalog_file": "datos/semilla/productos.json",
+      "recipes": [
+        {
+          "code": "huevos-a-la-mexicana",
+          "name": "Huevos a la mexicana con tortillas",
+          "slots": [
+            "breakfast",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 8,
+          "cook_minutes": 8,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "huevo",
+              "presentation": "huevo.carton-12",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "jitomate-saladet",
+              "presentation": "jitomate-saladet.kilo-granel",
+              "quantity_milli": 150000,
+              "optional": false
+            },
+            {
+              "product": "cebolla-blanca",
+              "presentation": "cebolla-blanca.kilo-granel",
+              "quantity_milli": 40000,
+              "optional": false
+            },
+            {
+              "product": "chile-serrano",
+              "presentation": "chile-serrano.kilo-granel",
+              "quantity_milli": 15000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.nutrioli-946ml",
+              "quantity_milli": 15000,
+              "optional": false
+            },
+            {
+              "product": "sal",
+              "presentation": "sal.bolsa-1kg",
+              "quantity_milli": 2000,
+              "optional": false
+            },
+            {
+              "product": "tortilla-maiz",
+              "presentation": "tortilla-maiz.kilo-granel",
+              "quantity_milli": 120000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "huevo-con-jamon-y-frijoles",
+          "name": "Huevo revuelto con jamón y frijoles refritos",
+          "slots": [
+            "breakfast",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 5,
+          "cook_minutes": 10,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "huevo",
+              "presentation": "huevo.carton-12",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "jamon-pavo",
+              "presentation": "jamon-pavo.sabori-400g",
+              "quantity_milli": 80000,
+              "optional": false
+            },
+            {
+              "product": "frijoles-refritos",
+              "presentation": "frijoles-refritos.la-costena-220g",
+              "quantity_milli": 220000,
+              "optional": false
+            },
+            {
+              "product": "tortilla-maiz",
+              "presentation": "tortilla-maiz.kilo-granel",
+              "quantity_milli": 120000,
+              "optional": false
+            },
+            {
+              "product": "aceite-soya",
+              "presentation": "aceite-soya.nutrioli-946ml",
+              "quantity_milli": 10000,
+              "optional": false
+            },
+            {
+              "product": "sal",
+              "presentation": "sal.bolsa-1kg",
+              "quantity_milli": 1000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "avena-con-manzana-y-canela",
+          "name": "Avena con manzana y canela",
+          "slots": [
+            "breakfast"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 5,
+          "cook_minutes": 10,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "avena",
+              "presentation": "avena.3-minutos-400g",
+              "quantity_milli": 80000,
+              "optional": false
+            },
+            {
+              "product": "leche",
+              "presentation": "leche.santa-clara-4x1l-taza",
+              "quantity_milli": 500000,
+              "optional": false
+            },
+            {
+              "product": "manzana",
+              "presentation": "manzana.kilo-granel",
+              "quantity_milli": 200000,
+              "optional": false
+            },
+            {
+              "product": "canela",
+              "presentation": "canela.bolsa-30g",
+              "quantity_milli": 2000,
+              "optional": false
+            },
+            {
+              "product": "azucar",
+              "presentation": "azucar.bolsa-1kg",
+              "quantity_milli": 20000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "yogur-griego-con-fresas-y-avena",
+          "name": "Yogur griego con fresas y avena",
+          "slots": [
+            "breakfast",
+            "snack"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 5,
+          "cook_minutes": 0,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "yogur-griego",
+              "presentation": "yogur-griego.yoplait-750g",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "fresa",
+              "presentation": "fresa.kilo-granel",
+              "quantity_milli": 150000,
+              "optional": false
+            },
+            {
+              "product": "avena",
+              "presentation": "avena.3-minutos-400g",
+              "quantity_milli": 40000,
+              "optional": false
+            },
+            {
+              "product": "azucar",
+              "presentation": "azucar.bolsa-1kg",
+              "quantity_milli": 10000,
+              "optional": false
+            }
+          ]
+        },
+        {
+          "code": "espagueti-con-atun-y-elote",
+          "name": "Espagueti con atún y elote",
+          "slots": [
+            "lunch",
+            "dinner"
+          ],
+          "base_servings": 2,
+          "prep_minutes": 10,
+          "cook_minutes": 20,
+          "origin": "claude_seed",
+          "is_active": true,
+          "ingredients": [
+            {
+              "product": "espagueti",
+              "presentation": "espagueti.la-moderna-250g",
+              "quantity_milli": 250000,
+              "optional": false
+            },
+            {
+              "product": "atun-agua",
+              "presentation": "atun-agua.dolores-140g",
+              "quantity_milli": 140000,
+              "optional": false
+            },
+            {
+              "product": "elote-grano",
+              "presentation": "elote-grano.herdez-220g",
+              "quantity_milli": 110000,
+              "optional": false
+            },
+            {
+              "product": "jitomate-saladet",
+              "presentation": "jitomate-saladet.kilo-granel",
+              "quantity_milli": 300000,
+              "optional": false
+            },
+            {
+              "product": "cebolla-blanca",
+              "presentation": "cebolla-blanca.kilo-granel",
+              "quantity_milli": 60000,
+              "optional": false
+            },
+            {
+              "product": "ajo",
+              "presentation": "ajo.kilo-granel",
+              "quantity_milli": 4000,
+              "optional": false
+            },
+            {
+              "product": "aceite-oliva",
+              "presentation": "aceite-oliva.nutrioli-oli-500ml",
+              "quantity_milli": 15000,
+              "optional": false
+            },
+            {
+              "product": "sal",
+              "presentation": "sal.bolsa-1kg",
+              "quantity_milli": 3000,
+              "optional": false
+            },
+            {
+              "product": "oregano",
+              "presentation": "oregano.bolsa-15g",
+              "quantity_milli": 1000,
+              "optional": false
+            }
+          ]
+        }
+      ],
+      "persons": [
+        {
+          "code": "persona-a",
+          "has_meal_plan": true
+        },
+        {
+          "code": "persona-b",
+          "has_meal_plan": true
+        },
+        {
+          "code": "externa-c",
+          "has_meal_plan": false
+        }
+      ],
+      "nutrition_file": "datos/semilla/nutricion/tabla.csv"
+    },
+    "consultas": [
+      {
+        "id": "huevos-a-la-mexicana-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "huevos-a-la-mexicana",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "huevos-a-la-mexicana-4",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "huevos-a-la-mexicana",
+          "servings_milli": 4000
+        }
+      },
+      {
+        "id": "huevo-con-jamon-y-frijoles-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "huevo-con-jamon-y-frijoles",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "huevo-con-jamon-y-frijoles-4",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "huevo-con-jamon-y-frijoles",
+          "servings_milli": 4000
+        }
+      },
+      {
+        "id": "avena-con-manzana-y-canela-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "avena-con-manzana-y-canela",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "avena-con-manzana-y-canela-4",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "avena-con-manzana-y-canela",
+          "servings_milli": 4000
+        }
+      },
+      {
+        "id": "yogur-griego-con-fresas-y-avena-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "yogur-griego-con-fresas-y-avena",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "yogur-griego-con-fresas-y-avena-4",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "yogur-griego-con-fresas-y-avena",
+          "servings_milli": 4000
+        }
+      },
+      {
+        "id": "espagueti-con-atun-y-elote-2",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "espagueti-con-atun-y-elote",
+          "servings_milli": 2000
+        }
+      },
+      {
+        "id": "espagueti-con-atun-y-elote-4",
+        "funcion": "recipe_detail",
+        "argumentos": {
+          "recipe": "espagueti-con-atun-y-elote",
+          "servings_milli": 4000
+        }
+      },
+      {
+        "id": "cobertura",
+        "funcion": "nutrition_coverage",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "huevos-a-la-mexicana-2": {
+      "recipe": "huevos-a-la-mexicana",
+      "servings_milli": 2000,
+      "ingredients": [
+        {
+          "product": "huevo",
+          "quantity": {
+            "num": 4000,
+            "den": 1
+          }
+        },
+        {
+          "product": "jitomate-saladet",
+          "quantity": {
+            "num": 150000,
+            "den": 1
+          }
+        },
+        {
+          "product": "cebolla-blanca",
+          "quantity": {
+            "num": 40000,
+            "den": 1
+          }
+        },
+        {
+          "product": "chile-serrano",
+          "quantity": {
+            "num": 15000,
+            "den": 1
+          }
+        },
+        {
+          "product": "aceite-soya",
+          "quantity": {
+            "num": 15000,
+            "den": 1
+          }
+        },
+        {
+          "product": "sal",
+          "quantity": {
+            "num": 2000,
+            "den": 1
+          }
+        },
+        {
+          "product": "tortilla-maiz",
+          "quantity": {
+            "num": 120000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 716,
+      "kcal_per_serving": 358,
+      "missing_nutrition": []
+    },
+    "huevos-a-la-mexicana-4": {
+      "recipe": "huevos-a-la-mexicana",
+      "servings_milli": 4000,
+      "ingredients": [
+        {
+          "product": "huevo",
+          "quantity": {
+            "num": 8000,
+            "den": 1
+          }
+        },
+        {
+          "product": "jitomate-saladet",
+          "quantity": {
+            "num": 300000,
+            "den": 1
+          }
+        },
+        {
+          "product": "cebolla-blanca",
+          "quantity": {
+            "num": 80000,
+            "den": 1
+          }
+        },
+        {
+          "product": "chile-serrano",
+          "quantity": {
+            "num": 30000,
+            "den": 1
+          }
+        },
+        {
+          "product": "aceite-soya",
+          "quantity": {
+            "num": 30000,
+            "den": 1
+          }
+        },
+        {
+          "product": "sal",
+          "quantity": {
+            "num": 4000,
+            "den": 1
+          }
+        },
+        {
+          "product": "tortilla-maiz",
+          "quantity": {
+            "num": 240000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 1431,
+      "kcal_per_serving": 358,
+      "missing_nutrition": []
+    },
+    "huevo-con-jamon-y-frijoles-2": {
+      "recipe": "huevo-con-jamon-y-frijoles",
+      "servings_milli": 2000,
+      "ingredients": [
+        {
+          "product": "huevo",
+          "quantity": {
+            "num": 4000,
+            "den": 1
+          }
+        },
+        {
+          "product": "jamon-pavo",
+          "quantity": {
+            "num": 80000,
+            "den": 1
+          }
+        },
+        {
+          "product": "frijoles-refritos",
+          "quantity": {
+            "num": 220000,
+            "den": 1
+          }
+        },
+        {
+          "product": "tortilla-maiz",
+          "quantity": {
+            "num": 120000,
+            "den": 1
+          }
+        },
+        {
+          "product": "aceite-soya",
+          "quantity": {
+            "num": 10000,
+            "den": 1
+          }
+        },
+        {
+          "product": "sal",
+          "quantity": {
+            "num": 1000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 912,
+      "kcal_per_serving": 456,
+      "missing_nutrition": []
+    },
+    "huevo-con-jamon-y-frijoles-4": {
+      "recipe": "huevo-con-jamon-y-frijoles",
+      "servings_milli": 4000,
+      "ingredients": [
+        {
+          "product": "huevo",
+          "quantity": {
+            "num": 8000,
+            "den": 1
+          }
+        },
+        {
+          "product": "jamon-pavo",
+          "quantity": {
+            "num": 160000,
+            "den": 1
+          }
+        },
+        {
+          "product": "frijoles-refritos",
+          "quantity": {
+            "num": 440000,
+            "den": 1
+          }
+        },
+        {
+          "product": "tortilla-maiz",
+          "quantity": {
+            "num": 240000,
+            "den": 1
+          }
+        },
+        {
+          "product": "aceite-soya",
+          "quantity": {
+            "num": 20000,
+            "den": 1
+          }
+        },
+        {
+          "product": "sal",
+          "quantity": {
+            "num": 2000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 1824,
+      "kcal_per_serving": 456,
+      "missing_nutrition": []
+    },
+    "avena-con-manzana-y-canela-2": {
+      "recipe": "avena-con-manzana-y-canela",
+      "servings_milli": 2000,
+      "ingredients": [
+        {
+          "product": "avena",
+          "quantity": {
+            "num": 80000,
+            "den": 1
+          }
+        },
+        {
+          "product": "leche",
+          "quantity": {
+            "num": 500000,
+            "den": 1
+          }
+        },
+        {
+          "product": "manzana",
+          "quantity": {
+            "num": 200000,
+            "den": 1
+          }
+        },
+        {
+          "product": "canela",
+          "quantity": {
+            "num": 2000,
+            "den": 1
+          }
+        },
+        {
+          "product": "azucar",
+          "quantity": {
+            "num": 20000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 803,
+      "kcal_per_serving": 402,
+      "missing_nutrition": []
+    },
+    "avena-con-manzana-y-canela-4": {
+      "recipe": "avena-con-manzana-y-canela",
+      "servings_milli": 4000,
+      "ingredients": [
+        {
+          "product": "avena",
+          "quantity": {
+            "num": 160000,
+            "den": 1
+          }
+        },
+        {
+          "product": "leche",
+          "quantity": {
+            "num": 1000000,
+            "den": 1
+          }
+        },
+        {
+          "product": "manzana",
+          "quantity": {
+            "num": 400000,
+            "den": 1
+          }
+        },
+        {
+          "product": "canela",
+          "quantity": {
+            "num": 4000,
+            "den": 1
+          }
+        },
+        {
+          "product": "azucar",
+          "quantity": {
+            "num": 40000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 1607,
+      "kcal_per_serving": 402,
+      "missing_nutrition": []
+    },
+    "yogur-griego-con-fresas-y-avena-2": {
+      "recipe": "yogur-griego-con-fresas-y-avena",
+      "servings_milli": 2000,
+      "ingredients": [
+        {
+          "product": "yogur-griego",
+          "quantity": {
+            "num": 300000,
+            "den": 1
+          }
+        },
+        {
+          "product": "fresa",
+          "quantity": {
+            "num": 150000,
+            "den": 1
+          }
+        },
+        {
+          "product": "avena",
+          "quantity": {
+            "num": 40000,
+            "den": 1
+          }
+        },
+        {
+          "product": "azucar",
+          "quantity": {
+            "num": 10000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 520,
+      "kcal_per_serving": 260,
+      "missing_nutrition": []
+    },
+    "yogur-griego-con-fresas-y-avena-4": {
+      "recipe": "yogur-griego-con-fresas-y-avena",
+      "servings_milli": 4000,
+      "ingredients": [
+        {
+          "product": "yogur-griego",
+          "quantity": {
+            "num": 600000,
+            "den": 1
+          }
+        },
+        {
+          "product": "fresa",
+          "quantity": {
+            "num": 300000,
+            "den": 1
+          }
+        },
+        {
+          "product": "avena",
+          "quantity": {
+            "num": 80000,
+            "den": 1
+          }
+        },
+        {
+          "product": "azucar",
+          "quantity": {
+            "num": 20000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 1040,
+      "kcal_per_serving": 260,
+      "missing_nutrition": []
+    },
+    "espagueti-con-atun-y-elote-2": {
+      "recipe": "espagueti-con-atun-y-elote",
+      "servings_milli": 2000,
+      "ingredients": [
+        {
+          "product": "espagueti",
+          "quantity": {
+            "num": 250000,
+            "den": 1
+          }
+        },
+        {
+          "product": "atun-agua",
+          "quantity": {
+            "num": 140000,
+            "den": 1
+          }
+        },
+        {
+          "product": "elote-grano",
+          "quantity": {
+            "num": 110000,
+            "den": 1
+          }
+        },
+        {
+          "product": "jitomate-saladet",
+          "quantity": {
+            "num": 300000,
+            "den": 1
+          }
+        },
+        {
+          "product": "cebolla-blanca",
+          "quantity": {
+            "num": 60000,
+            "den": 1
+          }
+        },
+        {
+          "product": "ajo",
+          "quantity": {
+            "num": 4000,
+            "den": 1
+          }
+        },
+        {
+          "product": "aceite-oliva",
+          "quantity": {
+            "num": 15000,
+            "den": 1
+          }
+        },
+        {
+          "product": "sal",
+          "quantity": {
+            "num": 3000,
+            "den": 1
+          }
+        },
+        {
+          "product": "oregano",
+          "quantity": {
+            "num": 1000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 1332,
+      "kcal_per_serving": 666,
+      "missing_nutrition": []
+    },
+    "espagueti-con-atun-y-elote-4": {
+      "recipe": "espagueti-con-atun-y-elote",
+      "servings_milli": 4000,
+      "ingredients": [
+        {
+          "product": "espagueti",
+          "quantity": {
+            "num": 500000,
+            "den": 1
+          }
+        },
+        {
+          "product": "atun-agua",
+          "quantity": {
+            "num": 280000,
+            "den": 1
+          }
+        },
+        {
+          "product": "elote-grano",
+          "quantity": {
+            "num": 220000,
+            "den": 1
+          }
+        },
+        {
+          "product": "jitomate-saladet",
+          "quantity": {
+            "num": 600000,
+            "den": 1
+          }
+        },
+        {
+          "product": "cebolla-blanca",
+          "quantity": {
+            "num": 120000,
+            "den": 1
+          }
+        },
+        {
+          "product": "ajo",
+          "quantity": {
+            "num": 8000,
+            "den": 1
+          }
+        },
+        {
+          "product": "aceite-oliva",
+          "quantity": {
+            "num": 30000,
+            "den": 1
+          }
+        },
+        {
+          "product": "sal",
+          "quantity": {
+            "num": 6000,
+            "den": 1
+          }
+        },
+        {
+          "product": "oregano",
+          "quantity": {
+            "num": 2000,
+            "den": 1
+          }
+        }
+      ],
+      "total_kcal": 2663,
+      "kcal_per_serving": 666,
+      "missing_nutrition": []
+    },
+    "cobertura": {
+      "unique": 22,
+      "with_source": 22,
+      "confirmed": 0,
+      "proposed": 22,
+      "missing": []
+    }
+  }
+}

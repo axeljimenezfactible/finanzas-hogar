@@ -1,0 +1,23 @@
+{
+  "name": "finanzas-hogar-tokens",
+  "version": "1.0.0",
+  "description": "Compilacion de tokens de diseno C2 (Style Dictionary 5.6.1)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "style-dictionary build --config config.mjs",
+    "test:tailwind": "tailwindcss -i prueba/entrada.css -o ../../../../datos/tmp/c2-prueba.css",
+    "generate": "python3 -I generar_c2_tokens.py",
+    "verify": "python3 -I verificar_c2.py",
+    "check:sync": "node sincronia.mjs",
+    "check": "npm run generate && npm run build && npm run verify && npm run check:sync && npm run test:tailwind"
+  },
+  "keywords": [],
+  "type": "module",
+  "private": "true",
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "style-dictionary": "5.6.1",
+    "tailwindcss": "4.3.3"
+  }
+}

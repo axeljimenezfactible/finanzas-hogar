@@ -1,0 +1,200 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-mejor-tienda-empate-viejos",
+  "descripcion": "Empate de total (3100) y de renglones recomendados (1 y 1): el precio de t2 para a tiene 40 días (viejo, no es la recomendada: su precio ajustado es mayor), así que t1 (0 viejos) va antes que t2 (1 viejo) aunque t2 vaya primero en `stores`.",
+  "fuente": [
+    {
+      "tipo": "regla",
+      "ruta": "RN-12"
+    },
+    {
+      "tipo": "criterio",
+      "ruta": "S5-03"
+    }
+  ],
+  "provisional": {
+    "bloqueo": "docs/estado/bloqueos/S5-reglas-comparativa.md",
+    "que": "pregunta 2: desempate por renglones recomendados, luego precios viejos, luego orden de `stores` (opción A)"
+  },
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog": {
+        "groups": [
+          {
+            "code": "abarrotes",
+            "name": "Abarrotes",
+            "purchase_channel": "chain"
+          },
+          {
+            "code": "verduras",
+            "name": "Frutas y verduras",
+            "purchase_channel": "market"
+          }
+        ],
+        "products": [
+          {
+            "code": "a",
+            "name": "A",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "b",
+            "name": "B",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          },
+          {
+            "code": "c",
+            "name": "C",
+            "base_unit": "g",
+            "group": "abarrotes",
+            "grams_per_unit_milli": null
+          }
+        ],
+        "presentations": [
+          {
+            "code": "a-1kg",
+            "product": "a",
+            "name": "a-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "b-1kg",
+            "product": "b",
+            "name": "b-1kg",
+            "size_milli": 1000000
+          },
+          {
+            "code": "c-1kg",
+            "product": "c",
+            "name": "c-1kg",
+            "size_milli": 1000000
+          }
+        ]
+      },
+      "stores": [
+        {
+          "code": "t2",
+          "kind": "chain",
+          "parent": null,
+          "name": "t2",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "t1",
+          "kind": "chain",
+          "parent": null,
+          "name": "t1",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "prices": [
+        {
+          "presentation": "a-1kg",
+          "store": "t1",
+          "price_cents": 1000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "a-1kg",
+          "store": "t2",
+          "price_cents": 1100,
+          "observed_date": "2026-09-02",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "b-1kg",
+          "store": "t1",
+          "price_cents": 2100,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        },
+        {
+          "presentation": "b-1kg",
+          "store": "t2",
+          "price_cents": 2000,
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "is_promotional": false,
+          "source_ref": null,
+          "created_at": "2026-10-10T12:00:00Z"
+        }
+      ],
+      "shopping_list": [
+        {
+          "product": "a",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "recommended_presentation": "a-1kg"
+        },
+        {
+          "product": "b",
+          "needed_milli": 1000000,
+          "quantity_milli": null,
+          "recommended_presentation": "b-1kg"
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "canasta",
+        "funcion": "compare_basket",
+        "argumentos": {}
+      }
+    ]
+  },
+  "esperado": {
+    "canasta": {
+      "stores": [
+        {
+          "store": "t1",
+          "total_cents": 3100,
+          "stale_count": 0
+        },
+        {
+          "store": "t2",
+          "total_cents": 3100,
+          "stale_count": 1
+        }
+      ],
+      "items": [
+        {
+          "recommended_store": "t1"
+        },
+        {
+          "recommended_store": "t2"
+        }
+      ],
+      "cheapest_store": "t1"
+    }
+  }
+}

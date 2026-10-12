@@ -1,0 +1,299 @@
+{
+  "formato": "fixture/1",
+  "motor": "s5",
+  "caso": "s5-unidad-sustitutos",
+  "descripcion": "Precio por unidad base de los 3 sustitutos de data.json (arroz 2933/2800, crema 12692/16406, leche 3375/2833, sin redondeo intermedio), redondeo HALF_UP en mitades exactas (6199 por 400 g = 15497.5 -> 15498; 12900 por 24 cubos = 537.5 por pieza -> 538) y el más barato por renglón con carritos de solo los 3 sustitutos (Bodega 300.00, Walmart 359.00).",
+  "fuente": [
+    {
+      "tipo": "data.json",
+      "ruta": "sustitutos"
+    },
+    {
+      "tipo": "regla",
+      "ruta": "RN-20"
+    }
+  ],
+  "provisional": null,
+  "entradas": {
+    "datos": {
+      "today": "2026-10-12",
+      "catalog_file": "datos/semilla/productos.json",
+      "stores": [
+        {
+          "code": "bodega",
+          "kind": "chain",
+          "parent": null,
+          "name": "Bodega Aurrera (sucursal Vallejo)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        },
+        {
+          "code": "walmart",
+          "kind": "chain",
+          "parent": null,
+          "name": "Walmart (sucursal Acueducto de Guadalupe)",
+          "profeco_name": null,
+          "municipality": null,
+          "visit_weekday": null,
+          "requires_membership": false,
+          "has_membership": false,
+          "membership_fee_cents": null,
+          "assisted_reading": false,
+          "groups": []
+        }
+      ],
+      "carts": [
+        {
+          "code": "bodega",
+          "store": "bodega",
+          "kind": "expense",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-750g",
+              "quantity_milli": 3000,
+              "unit_price_cents": 2200
+            },
+            {
+              "presentation": "sustituto-crema-cafe.coffee-mate-pack-780g",
+              "quantity_milli": 1000,
+              "unit_price_cents": 9900
+            },
+            {
+              "presentation": "leche.santa-clara-4x1l-taza",
+              "quantity_milli": 1000,
+              "unit_price_cents": 13500
+            }
+          ]
+        },
+        {
+          "code": "walmart",
+          "store": "walmart",
+          "kind": "cart",
+          "observed_date": "2026-10-10",
+          "source": "manual",
+          "lines": [
+            {
+              "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+              "quantity_milli": 3000,
+              "unit_price_cents": 2800
+            },
+            {
+              "presentation": "sustituto-crema-cafe.coffee-mate-640g",
+              "quantity_milli": 1000,
+              "unit_price_cents": 10500
+            },
+            {
+              "presentation": "leche.santa-clara-entera-6x1l",
+              "quantity_milli": 1000,
+              "unit_price_cents": 17000
+            }
+          ]
+        }
+      ]
+    },
+    "consultas": [
+      {
+        "id": "arroz-grano-largo-bodega",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-750g",
+          "price_cents": 2200
+        }
+      },
+      {
+        "id": "arroz-grano-largo-walmart",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "arroz-grano-largo.sos-uruguayo-1kg",
+          "price_cents": 2800
+        }
+      },
+      {
+        "id": "sustituto-crema-cafe-bodega",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "sustituto-crema-cafe.coffee-mate-pack-780g",
+          "price_cents": 9900
+        }
+      },
+      {
+        "id": "sustituto-crema-cafe-walmart",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "sustituto-crema-cafe.coffee-mate-640g",
+          "price_cents": 10500
+        }
+      },
+      {
+        "id": "leche-bodega",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "leche.santa-clara-4x1l-taza",
+          "price_cents": 13500
+        }
+      },
+      {
+        "id": "leche-walmart",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "leche.santa-clara-entera-6x1l",
+          "price_cents": 17000
+        }
+      },
+      {
+        "id": "redondeo-g",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "jamon-pavo.sabori-400g",
+          "price_cents": 6199
+        }
+      },
+      {
+        "id": "redondeo-pieza",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "caldo-pollo-cubos.knorr-24-cubos",
+          "price_cents": 12900
+        }
+      },
+      {
+        "id": "exacto-g",
+        "funcion": "base_unit_price",
+        "argumentos": {
+          "presentation": "queso-manchego.nochebuena-200g",
+          "price_cents": 6100
+        }
+      },
+      {
+        "id": "sustitutos-carritos",
+        "funcion": "compare_carts",
+        "argumentos": {
+          "base": "bodega",
+          "others": [
+            "walmart"
+          ]
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "arroz-grano-largo-bodega": {
+      "base_unit_price_cents": 2933,
+      "per": "kg",
+      "exact": {
+        "num": 8800,
+        "den": 3
+      }
+    },
+    "arroz-grano-largo-walmart": {
+      "base_unit_price_cents": 2800,
+      "per": "kg",
+      "exact": {
+        "num": 2800,
+        "den": 1
+      }
+    },
+    "sustituto-crema-cafe-bodega": {
+      "base_unit_price_cents": 12692,
+      "per": "kg",
+      "exact": {
+        "num": 165000,
+        "den": 13
+      }
+    },
+    "sustituto-crema-cafe-walmart": {
+      "base_unit_price_cents": 16406,
+      "per": "kg",
+      "exact": {
+        "num": 65625,
+        "den": 4
+      }
+    },
+    "leche-bodega": {
+      "base_unit_price_cents": 3375,
+      "per": "l",
+      "exact": {
+        "num": 3375,
+        "den": 1
+      }
+    },
+    "leche-walmart": {
+      "base_unit_price_cents": 2833,
+      "per": "l",
+      "exact": {
+        "num": 8500,
+        "den": 3
+      }
+    },
+    "redondeo-g": {
+      "base_unit_price_cents": 15498,
+      "per": "kg",
+      "exact": {
+        "num": 30995,
+        "den": 2
+      }
+    },
+    "redondeo-pieza": {
+      "base_unit_price_cents": 538,
+      "per": "piece",
+      "exact": {
+        "num": 1075,
+        "den": 2
+      }
+    },
+    "exacto-g": {
+      "base_unit_price_cents": 30500,
+      "per": "kg",
+      "exact": {
+        "num": 30500,
+        "den": 1
+      }
+    },
+    "sustitutos-carritos": {
+      "stores": [
+        {
+          "store": "bodega",
+          "total_cents": 30000,
+          "identical_count": 0,
+          "substitute_count": 3,
+          "piece_count": 5,
+          "difference_vs_cheapest_cents": 0
+        },
+        {
+          "store": "walmart",
+          "total_cents": 35900,
+          "identical_count": 0,
+          "substitute_count": 3,
+          "piece_count": 5,
+          "difference_vs_cheapest_cents": 5900
+        }
+      ],
+      "ties": 0,
+      "rows": [
+        {
+          "kind": "substitute",
+          "product": "arroz-grano-largo",
+          "winner_store": "walmart"
+        },
+        {
+          "kind": "substitute",
+          "product": "sustituto-crema-cafe",
+          "winner_store": "bodega"
+        },
+        {
+          "kind": "substitute",
+          "product": "leche",
+          "winner_store": "walmart"
+        }
+      ]
+    }
+  }
+}
