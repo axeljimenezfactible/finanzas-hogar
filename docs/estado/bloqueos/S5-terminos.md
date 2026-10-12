@@ -31,3 +31,12 @@ Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado
 - **Estado:** RESUELTO (la decisión de Axel; el bloqueo sigue ABIERTO, ver abajo)
 
 **Estado del bloqueo (puerta 2): ABIERTO** — la decisión (A) está tomada, pero el intento de lectura del 11-oct-2026 no obtuvo veredicto (ver «Resultado» arriba); falta que Axel decida el siguiente paso (B, URL legales, C o D) y S5-07 sigue sin cumplirse.
+
+## Respuesta de Axel (puerta 2 bis, 11-oct-2026, 22:55)
+Fuente: `docs/estado/puerta2/RESPUESTAS.md`, sección «Puerta 2 bis» (en el chat, con la herramienta de preguntas). Se registró como K53 en P2d (`docs/plan/decisiones.md` §K, agente `k53-aplicar`, 12-oct-2026).
+- **Palabras de Axel (literal):** «Ignoralo, todo el tema de la investigacion de los precios lo haremos aparte, a que me refiero con esto, crearemos el sistema para que tenga yo una sesion de claude code que pueda mediante claude chrome extension sacar los precios y los productos, si bien estos datos los podemos insertar manualmente esto tambien impacta a las recetas tambien pueden ser agregadas de forma autonoma por eso la regla no funciona ya que usaremos a un agente externo»
+- **Decisión (K53):** la aplicación NO lee sitios de tiendas. Se retira la lectura asistida, con su interruptor y el veredicto de términos. Un agente externo (sesión de Claude Code de Axel con Claude in Chrome) obtiene precios y productos, puede agregar recetas y los mete por la API con una credencial de servicio propia.
+- **Consecuencia:** ya no hace falta veredicto de términos de walmart.com.mx, bodegaaurrera.com.mx ni sams.com.mx. Las opciones B, C y D de este archivo quedan sin objeto. `docs/estado/S5-terminos.md` se conserva como registro histórico («no aplica desde K53»). S5-07 conserva id y severidad, con texto nuevo (`docs/criterios/S5.md`). K37 (en lo de `site_assisted`) y K48 quedan sustituidas en esa parte.
+- **Lo que Axel no decidió** (peso de esos precios en la comparativa, qué puede escribir el agente, recetas en borrador o directas) se pregunta en la puerta 4: bloqueo nuevo `S5-agente-externo`.
+
+**Estado del bloqueo (puerta 2 bis): RESUELTO** por K53.

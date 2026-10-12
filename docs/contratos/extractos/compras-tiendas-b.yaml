@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «compras-tiendas-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «compras-tiendas-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto compras-tiendas-b"
-  version: "1.3.0"
+  version: "1.4.0"
   description: "Extracto de la etiqueta «Compras y tiendas» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -11,106 +11,6 @@ tags:
   - name: "Compras y tiendas"
     description: "Lista de compras, comparar canasta, productos, precios e inventario."
 paths:
-  /api/v1/products/{product_id}/presentations:
-    post:
-      operationId: "createPresentation"
-      tags:
-        - "Compras y tiendas"
-      summary: "Nueva presentación"
-      description: "Nueva presentación."
-      x-necesidades:
-        - "N-175"
-      x-tablas:
-        - "audit_log"
-        - "idempotency_key"
-        - "presentation"
-      parameters:
-        - name: "product_id"
-          in: "path"
-          required: true
-          description: "Id del registro (product_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PresentationCreate"
-      responses:
-        "201":
-          description: "Creado."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-            Idempotent-Replayed:
-              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Presentation"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
-  /api/v1/presentations/{presentation_id}:
-    patch:
-      operationId: "updatePresentation"
-      tags:
-        - "Compras y tiendas"
-      summary: "Editar presentación"
-      description: "Editar presentación."
-      x-necesidades:
-        - "N-175"
-      x-tablas:
-        - "audit_log"
-        - "presentation"
-      parameters:
-        - name: "presentation_id"
-          in: "path"
-          required: true
-          description: "Id del registro (presentation_id)."
-          schema:
-            type: "integer"
-            minimum: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PresentationUpdate"
-      responses:
-        "200":
-          description: "Correcto."
-          headers:
-            X-Request-Id:
-              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Presentation"
-        "400":
-          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
-        "401":
-          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
-        "404":
-          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
-        "409":
-          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
-        "422":
-          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
-        default:
-          $ref: "componentes-comunes.yaml#/components/responses/Error"
   /api/v1/products/{product_id}/prices:
     get:
       operationId: "listProductPrices"
@@ -424,6 +324,185 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/Conflict"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/reference:
+    get:
+      operationId: "getExternalAgentReference"
+      tags:
+        - "Compras y tiendas"
+      summary: "Referencia para el agente externo"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Devuelve los ids de tiendas, grupos de producto y tiempos de comida con los que el agente arma sus lotes. Solo lectura. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "meal_slot"
+        - "product_group"
+        - "store"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalAgentReference"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/catalog:
+    post:
+      operationId: "importExternalCatalog"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar productos y presentaciones"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Alta o actualización por lotes. Llaves naturales: product.name (sin distinguir mayúsculas) y, dentro del producto, presentation.name. Repetir el mismo lote deja sus renglones en unchanged; además la petición lleva Idempotency-Key, como toda captura. Un renglón inválido sale rejected en el resultado sin detener a los demás; un lote vacío o de más de 500 renglones responde 422 (PROVISIONAL, bloqueo S5-agente-externo, pregunta g: tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel). PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "product"
+        - "product_group"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalCatalogImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/prices:
+    post:
+      operationId: "importExternalPrices"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar precios"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Precios por lotes con tienda, fecha y referencia del agente (external_ref, que se guarda en price.source_ref). Llave natural: la llave UNIQUE de price (presentación, tienda, fecha, fuente y promoción); repetir un precio lo actualiza o lo deja en unchanged, sin duplicarlo. Una tienda o presentación desconocida o una fecha futura sale rejected en su renglón. PROVISIONAL (bloqueo S5-agente-externo, preguntas a y d): source = site_assisted, que la documentación llama «agente externo», y compite como manual, con la misma frescura. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "price"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalPriceImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/recipes:
+    post:
+      operationId: "importExternalRecipes"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar recetas en borrador"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Recetas por lotes, con la forma de RecipeCreate. Llave natural: recipe.name (sin distinguir mayúsculas). PROVISIONAL (bloqueo S5-agente-externo, preguntas c y f): cada receta entra como borrador, con origen «external_agent», y no aparece en el plan hasta que una persona la confirma; una receta que ya existe con ese nombre no se sobrescribe (sale rejected); el esquema 1.4 todavía no guarda ni el borrador ni ese origen. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "meal_slot"
+        - "presentation"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalRecipeImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
   /api/v1/inventory-items:
     get:
       operationId: "listInventoryItems"
@@ -662,123 +741,89 @@ components:
       in: "cookie"
       name: "fh_session"
       description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
   schemas:
     Milli:
       type: "integer"
       description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
       examples:
         - 1000
-    Presentation:
+    RecipeIngredientInput:
       type: "object"
-      description: "Presentación (tabla `presentation`). Presentación comprable de un producto (marca y contenido), con su factor de equivalencia a la unidad base. Campos ausentes = sin valor (NULL)."
-      x-tabla: "presentation"
-      required:
-        - "id"
-        - "product_id"
-        - "name"
-        - "size_milli"
-        - "is_bulk"
-        - "is_active"
-        - "created_at"
-        - "updated_at"
+      additionalProperties: false
+      description: "Alta de ingrediente de receta (tabla `recipe_ingredient`)."
+      x-tabla: "recipe_ingredient"
       properties:
-        id:
-          type: "integer"
-          description: "id"
         product_id:
           type: "integer"
-          description: "Producto genérico"
-        name:
-          type: "string"
-          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
-        brand:
-          type: "string"
-          description: "Marca"
-        size_milli:
+          description: "Ingrediente (producto genérico)"
+        presentation_id:
+          type: "integer"
+          description: "Presentación comprable sugerida"
+        quantity_milli:
           $ref: "#/components/schemas/Milli"
-          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
-        is_bulk:
-          type: "boolean"
-          description: "1 = a granel: se vende por kilo o por unidad base"
-        barcode:
+          description: "Cantidad para base_servings en milésimas de la unidad base (250 g = 250000, media pieza = 500)"
+        display_text:
           type: "string"
-          description: "Código de barras EAN o UPC (cruce con Open Food Facts)"
-        is_active:
+          description: "Cantidad como la escribe la receta (1/2 taza)"
+        is_optional:
           type: "boolean"
-          description: "is_active"
-        notes:
-          type: "string"
-          description: "notes"
-        created_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "created_at"
-        updated_at:
-          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
-          description: "updated_at"
-    PresentationCreate:
+          description: "1 = ingrediente opcional"
+        sort_order:
+          type: "integer"
+          description: "Orden en la receta"
+      required:
+        - "product_id"
+        - "quantity_milli"
+    RecipeCreate:
       type: "object"
       additionalProperties: false
-      description: "Alta de presentación (tabla `presentation`)."
-      x-tabla: "presentation"
+      description: "Alta de receta (N-136). origin = household y author_person_id = persona de la sesión los pone la API."
+      x-tabla: "recipe"
       properties:
         name:
           type: "string"
-          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
-        brand:
+          description: "Nombre"
+        description:
           type: "string"
-          description: "Marca"
-        size_milli:
-          $ref: "#/components/schemas/Milli"
-          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
-        is_bulk:
-          type: "boolean"
-          description: "1 = a granel: se vende por kilo o por unidad base"
-        barcode:
+          description: "Descripción corta"
+        instructions:
           type: "string"
-          description: "Código de barras EAN o UPC (cruce con Open Food Facts)"
+          description: "Pasos de preparación"
+        base_servings:
+          type: "integer"
+          description: "Porciones para las que están escritas las cantidades (base 2)"
+        prep_minutes:
+          type: "integer"
+          description: "Minutos de preparación"
+        cook_minutes:
+          type: "integer"
+          description: "Minutos de cocción"
         is_active:
           type: "boolean"
           description: "is_active"
         notes:
           type: "string"
           description: "notes"
+        meal_slot_ids:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "integer"
+            minimum: 1
+          description: "Tiempos aptos (una fila de recipe_meal_slot por tiempo)."
+          x-columna: "recipe_meal_slot.meal_slot_id"
+        ingredients:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RecipeIngredientInput"
+          description: "Ingredientes (recipe_ingredient) en orden."
       required:
         - "name"
-        - "size_milli"
-    PresentationUpdate:
-      type: "object"
-      additionalProperties: false
-      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de presentación (tabla `presentation`)."
-      x-tabla: "presentation"
-      properties:
-        name:
-          type: "string"
-          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
-        brand:
-          type:
-            - "string"
-            - "null"
-          description: "Marca · null borra el valor"
-        size_milli:
-          $ref: "#/components/schemas/Milli"
-          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
-        is_bulk:
-          type: "boolean"
-          description: "1 = a granel: se vende por kilo o por unidad base"
-        barcode:
-          type:
-            - "string"
-            - "null"
-          description: "Código de barras EAN o UPC (cruce con Open Food Facts) · null borra el valor"
-        is_active:
-          type: "boolean"
-          description: "is_active"
-        notes:
-          type:
-            - "string"
-            - "null"
-          description: "notes · null borra el valor"
-      minProperties: 1
     NutritionFact:
       type: "object"
       description: "Dato nutricional (tabla `nutrition_fact`). Kilocalorías por 100 g de un producto (o de una presentación específica) con fuente citada. Macronutrientes previstos, se llenan después. Campos ausentes = sin valor (NULL)."
@@ -923,7 +968,7 @@ components:
             - "site_assisted"
             - "profeco"
             - "manual"
-          description: "Fuente: ticket capturado a mano, ticket por OCR ya confirmado, lectura asistida del sitio, PROFECO u otra captura manual"
+          description: "Fuente del precio: ticket_manual (ticket capturado a mano), ticket_ocr (ticket por OCR ya confirmado), site_assisted (agente externo desde K53: PROVISIONAL, bloqueo S5-agente-externo, pregunta d), profeco (referencia) o manual (captura a mano sin ticket)."
         is_promotional:
           type: "boolean"
           description: "1 = precio de promoción (sexta lata de atún a 2100), no se toma como precio regular"
@@ -1033,6 +1078,258 @@ components:
         - "stale_count"
         - "no_price_count"
         - "stores"
+      x-calculado: true
+    ExternalAgentReference:
+      type: "object"
+      description: "Datos de referencia para el agente externo (K53): ids de tiendas, grupos de producto y tiempos de comida con los que arma sus lotes. Los ids de productos y presentaciones los devuelve importExternalCatalog."
+      properties:
+        stores:
+          type: "array"
+          items:
+            type: "object"
+            description: "Tienda o mercado."
+            properties:
+              id:
+                type: "integer"
+                description: "store.id."
+              kind:
+                type: "string"
+                enum:
+                  - "chain"
+                  - "branch"
+                  - "market"
+                description: "store.kind."
+              name:
+                type: "string"
+                description: "store.name."
+              parent_id:
+                type: "integer"
+                description: "Cadena de la sucursal (store.parent_id); solo en branch."
+            required:
+              - "id"
+              - "kind"
+              - "name"
+            x-calculado: true
+          description: "Tiendas y mercados dados de alta, en orden de id."
+        product_groups:
+          type: "array"
+          items:
+            type: "object"
+            description: "Grupo de producto."
+            properties:
+              id:
+                type: "integer"
+                description: "product_group.id."
+              name:
+                type: "string"
+                description: "product_group.name."
+              purchase_channel:
+                type: "string"
+                enum:
+                  - "market"
+                  - "chain"
+                description: "product_group.purchase_channel."
+            required:
+              - "id"
+              - "name"
+              - "purchase_channel"
+            x-calculado: true
+          description: "Grupos de producto, en orden de id."
+        meal_slots:
+          type: "array"
+          items:
+            type: "object"
+            description: "Tiempo de comida."
+            properties:
+              id:
+                type: "integer"
+                description: "meal_slot.id."
+              code:
+                type: "string"
+                enum:
+                  - "breakfast"
+                  - "lunch"
+                  - "dinner"
+                  - "snack"
+                description: "meal_slot.code."
+              name:
+                type: "string"
+                description: "meal_slot.name."
+            required:
+              - "id"
+              - "code"
+              - "name"
+            x-calculado: true
+          description: "Tiempos de comida, en orden de sort_order."
+      required:
+        - "stores"
+        - "product_groups"
+        - "meal_slots"
+      x-calculado: true
+    ExternalCatalogItem:
+      type: "object"
+      description: "Producto del lote con sus presentaciones (entrada)."
+      properties:
+        name:
+          type: "string"
+          description: "Nombre genérico en español (product.name). Llave del alta o actualización, sin distinguir mayúsculas."
+        base_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad base (product.base_unit). Si el producto ya existe con otra unidad base, el renglón sale rejected: la unidad base no cambia por lote."
+        grams_per_unit_milli:
+          type: "integer"
+          description: "Gramos por unidad base ×1000 (product.grams_per_unit_milli); no se manda si base_unit = g."
+        product_group_id:
+          type: "integer"
+          description: "Grupo (product.product_group_id; ids de getExternalAgentReference)."
+        presentations:
+          type: "array"
+          items:
+            type: "object"
+            description: "Presentación del lote (entrada)."
+            properties:
+              name:
+                type: "string"
+                description: "Presentación como se ve en tienda (presentation.name). Llave dentro del producto: si ya existe, se actualizan los demás campos."
+              size_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Contenido en milésimas de la unidad base (presentation.size_milli), mayor que 0."
+              brand:
+                type: "string"
+                description: "Marca (presentation.brand)."
+              is_bulk:
+                type: "boolean"
+                description: "A granel (presentation.is_bulk); false si falta."
+              barcode:
+                type: "string"
+                description: "Código de barras EAN o UPC de 8 a 14 dígitos (presentation.barcode). Si ya pertenece a otra presentación, el renglón sale rejected."
+            required:
+              - "name"
+              - "size_milli"
+          description: "Presentaciones del producto (1 o más)."
+      required:
+        - "name"
+        - "base_unit"
+        - "presentations"
+    ExternalCatalogImport:
+      type: "object"
+      description: "Lote de productos y presentaciones del agente externo (K53): alta o actualización por nombre. PROVISIONAL (bloqueo S5-agente-externo, pregunta b): el agente escribe solo productos, presentaciones, precios y recetas; inventario no."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExternalCatalogItem"
+          description: "De 1 a 500 productos. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalPriceItem:
+      type: "object"
+      description: "Precio del lote (entrada)."
+      properties:
+        presentation_id:
+          type: "integer"
+          description: "Presentación (presentation.id; la devuelve importExternalCatalog)."
+        store_id:
+          type: "integer"
+          description: "Tienda (store.id; de getExternalAgentReference)."
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación con IVA (price.price_cents)."
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha en que el agente vio el precio (price.observed_date); no puede ser futura."
+        is_promotional:
+          type: "boolean"
+          description: "Precio de promoción (price.is_promotional); false si falta."
+        external_ref:
+          type: "string"
+          description: "Referencia del agente externo: URL de la ficha o clave del producto en la tienda. Se guarda en price.source_ref."
+      required:
+        - "presentation_id"
+        - "store_id"
+        - "price_cents"
+        - "observed_date"
+    ExternalPriceImport:
+      type: "object"
+      description: "Lote de precios del agente externo (K53). La API pone price.source; el lote no la manda. PROVISIONAL (bloqueo S5-agente-externo, preguntas a y d): source = site_assisted, que la documentación llama «agente externo», y en la comparativa compite como manual, con la misma frescura."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExternalPriceItem"
+          description: "De 1 a 500 precios. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalRecipeImport:
+      type: "object"
+      description: "Lote de recetas del agente externo (K53), con la forma de RecipeCreate. PROVISIONAL (bloqueo S5-agente-externo, preguntas c y f): cada receta entra como borrador, con origen «external_agent», y no aparece en el plan de comidas hasta que una persona la confirma; el esquema 1.4 todavía no guarda ni el borrador ni ese origen."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RecipeCreate"
+          description: "De 1 a 100 recetas. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalImportResult:
+      type: "object"
+      description: "Resultado de un lote del agente externo, renglón por renglón y en el orden recibido. Un renglón rechazado no detiene a los demás."
+      properties:
+        created_count:
+          type: "integer"
+          description: "Renglones creados."
+        updated_count:
+          type: "integer"
+          description: "Renglones que ya existían y cambiaron."
+        unchanged_count:
+          type: "integer"
+          description: "Renglones que ya existían iguales: repetir el lote no duplica nada."
+        rejected_count:
+          type: "integer"
+          description: "Renglones rechazados."
+        items:
+          type: "array"
+          items:
+            type: "object"
+            description: "Resultado de un renglón."
+            properties:
+              index:
+                type: "integer"
+                description: "Posición del renglón en el lote, desde 0."
+              status:
+                type: "string"
+                enum:
+                  - "created"
+                  - "updated"
+                  - "unchanged"
+                  - "rejected"
+                description: "Qué pasó con el renglón."
+              id:
+                type: "integer"
+                description: "Id del registro creado o actualizado (product, price o recipe, según la operación). Ausente si se rechazó."
+              presentation_ids:
+                type: "array"
+                items:
+                  type: "integer"
+                description: "Ids de las presentaciones del producto, en el orden recibido (solo importExternalCatalog)."
+              error:
+                $ref: "componentes-comunes.yaml#/components/schemas/FieldError"
+                description: "Motivo del rechazo, con el formato de FieldError. Solo si status = rejected."
+            required:
+              - "index"
+              - "status"
+            x-calculado: true
+          description: "Un resultado por renglón."
+      required:
+        - "created_count"
+        - "updated_count"
+        - "unchanged_count"
+        - "rejected_count"
+        - "items"
       x-calculado: true
     InventoryItem:
       type: "object"

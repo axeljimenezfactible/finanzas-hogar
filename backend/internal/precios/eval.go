@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -256,9 +257,16 @@ func ParseInput(raw json.RawMessage) (*Input, error) {
 		}
 		var ca time.Time
 		if x.CreatedAt != nil {
-			// §15.1: instante RFC 3339. time.Parse guarda nanosegundos (PROVISIONAL, bloqueo S5-precio-vigente-captura
-			// pregunta 2) y no acepta «t», «z» ni el segundo 60 (pregunta 3).
-			if ca, err = time.Parse(time.RFC3339, *x.CreatedAt); err != nil || !rfc3339Offset(*x.CreatedAt) {
+			// §15.1: instante RFC 3339. Primero la gramática de §5.6 en ASCII (rfc3339Text), porque time.Parse acepta
+			// la hora de un dígito y la coma decimal; después los rangos (time.Parse y rfc3339Offset). time.Parse
+			// guarda nanosegundos (PROVISIONAL, bloqueo S5-precio-vigente-captura pregunta 2). No se aceptan «t», «z»,
+			// el segundo 60 ni el año 0000, igual que el oráculo (PROVISIONAL, pregunta 3).
+			ok := rfc3339Text.MatchString(*x.CreatedAt)
+			if ok {
+				ca, err = time.Parse(time.RFC3339, *x.CreatedAt)
+				ok = err == nil && rfc3339Offset(*x.CreatedAt) && ca.Year() >= 1
+			}
+			if !ok {
 				return nil, fmt.Errorf("%w: created_at %q", ErrInvalidDate, *x.CreatedAt)
 			}
 		}
@@ -570,12 +578,17 @@ func Eval(raw json.RawMessage, fn string, args json.RawMessage) (any, error) {
 	return nil, fmt.Errorf("%w: función %q", ErrInvalidArgument, fn)
 }
 
+// rfc3339Text es la gramática de `date-time` de RFC 3339 §5.6 en ASCII, con «T» y «Z» mayúsculas (M-1 de
+// REVISION-motor-S5-r3): [0-9] es DIGIT = %x30-39 (RFC 5234) y el $ de RE2 no deja pasar un salto de línea final.
+// Los rangos (mes, día, hora, minuto, segundo y zona) los revisan time.Parse y rfc3339Offset.
+var rfc3339Text = regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$`)
+
 // rfc3339Offset revisa la zona de un instante que time.Parse(time.RFC3339) ya aceptó: RFC 3339 §5.6 la define como «Z» o
 // ±time-hour:time-minute, con hora 00-23 y minuto 00-59, y time.Parse también deja pasar +24:00 y +05:60.
 func rfc3339Offset(s string) bool {
 	if strings.HasSuffix(s, "Z") {
 		return true
 	}
-	z := s[len(s)-6:] // time.Parse ya exigió «Z» o ±hh:mm con dígitos
+	z := s[len(s)-6:] // rfc3339Text ya exigió «Z» o ±hh:mm con dígitos ASCII
 	return (z[1]-'0')*10+(z[2]-'0') <= 23 && (z[4]-'0')*10+(z[5]-'0') <= 59
 }

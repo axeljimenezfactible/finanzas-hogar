@@ -117,6 +117,7 @@ func TestEvalErrores(t *testing.T) {
 		{"base_unit_price", `{"presentation": "arroz-1kg", "price_cents": -1}`, "invalid_argument"},
 		{"base_unit_price", `{"presentation": 5, "price_cents": 1}`, "invalid_argument"},
 		{"freshness", `{"observed_date": "2026-13-01", "source": "manual"}`, "invalid_date"},
+		{"freshness", `{"observed_date": "0000-01-01", "source": "manual"}`, "invalid_date"},
 		{"freshness", `{"observed_date": "2026-10-13", "source": "manual"}`, "future_date"},
 		{"freshness", `{"observed_date": "2026-10-10"}`, "missing_field"},
 		{"freshness", `{"source": "manual"}`, "missing_field"},
@@ -389,5 +390,17 @@ func TestEvalCreatedAtZona(t *testing.T) {
 		if got := js(run(t, in, "current_price", `{"presentation": "arroz-1kg", "store": "walmart"}`)["price"]); got != c.want {
 			t.Errorf("%s: %s, se esperaba %s", c.created, got, c.want)
 		}
+	}
+}
+
+// M-1 de REVISION-motor-S5-r3: textos que time.Parse aceptaba y RFC 3339 §5.6 no admite, los que aceptaba el oráculo
+// (salto de línea final y dígitos no ASCII) y el año 0000 (PROVISIONAL, bloqueo S5-precio-vigente-captura pregunta 3).
+func TestEvalCreatedAtGramatica(t *testing.T) {
+	for _, s := range []string{"2026-10-10T7:00:00Z", "2026-10-10T7:00:00-06:00", "2026-10-10T12:30:00,5Z", `2026-10-10T12:30:00Z\n`,
+		"٢٠٢٦-١٠-١٠T١٣:٠٠:٠٠Z", "0000-01-01T00:00:00Z",
+		"0000-01-01T00:00:00+01:00", "2026-02-30T12:00:00Z"} {
+		in := json.RawMessage(`{"today": "2026-10-12", ` + evalCatalog + `, ` + evalStores + `, "prices": [
+ {"presentation": "arroz-1kg", "store": "walmart", "price_cents": 2100, "observed_date": "2026-10-10", "source": "ticket_manual", "is_promotional": false, "source_ref": null, "created_at": "` + s + `"}]}`)
+		code(t, in, "current_price", `{"presentation": "arroz-1kg", "store": "walmart"}`, "invalid_date")
 	}
 }

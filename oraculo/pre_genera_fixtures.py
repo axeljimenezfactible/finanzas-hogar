@@ -251,7 +251,7 @@ def fuentes():
             'Cinco fuentes, un precio cada una del 2026-10-10 (K22, K37, S5-04, S5-10): manual, ticket_manual y ticket_ocr valen 2900 y compiten con el mismo peso; '
             'site_assisted (1000) y profeco (900) son más baratos pero solo referencia: no aparecen como precio vigente ni ganan. Empate de las tres que compiten: gana la primera de `stores`.',
             [('decision', 'K37'), ('decision', 'K22'), ('criterio', 'S5-04'), ('criterio', 'S5-10')], datos, q, e)
-    # promociones (vigencia: PROVISIONAL, bloqueo S5-reglas-comparativa pregunta 3, opción A: solo en su observed_date)
+    # promociones (vigencia: FIRME, Q2-61 = A del bloqueo S5-reglas-comparativa, RESUELTO: solo en su observed_date)
     pr = [precio(pres, 'tienda-manual', 2900, '2026-10-10', 'manual'), precio(pres, 'tienda-manual', 2000, '2026-10-05', 'manual', promo=True),
           precio(pres, 'tienda-ticket', 2900, '2026-10-10', 'ticket_manual'), precio(pres, 'tienda-ticket', 2500, HOY, 'ticket_manual', promo=True)]
     datos = {'today': HOY, 'catalog_file': CAT, 'stores': [tienda('tienda-manual'), tienda('tienda-ticket')], 'prices': pr}
@@ -572,10 +572,27 @@ def ingesta():
                              'created_at con zona +05:60: RFC 3339 §5.6 limita el minuto de la zona a 00-59 (§15.1)'),
              'hora-24': ([precio('a-1kg', 't1', 1000, '2026-10-10', created='2026-10-10T24:00:00Z')], 'invalid_date',
                          'created_at a las 24:00:00Z: RFC 3339 §5.6 limita la hora a 00-23 (§15.1)')}
-    for nombre, (pr, code, desc) in casos.items():
+    # M-1 de REVISION-motor-S5-r3: textos en que un lado aceptaba y el otro respondía invalid_date. Gramática de RFC 3339 §5.6 en ASCII
+    # (DIGIT = %x30-39, RFC 5234) sobre el texto completo. El año 0000 no está decidido: PROVISIONAL (S5-precio-vigente-captura pregunta 3).
+    ca = lambda c: [precio('a-1kg', 't1', 1000, '2026-10-10', created=c)]
+    arabigos = ''.join(chr(0x660 + int(x)) if x in '0123456789' else x for x in '2026-10-10T13:00:00Z')
+    casos.update({
+        'hora-un-digito': (ca('2026-10-10T7:00:00Z'), 'invalid_date', 'created_at con la hora de un dígito (T7:00:00Z): RFC 3339 §5.6 pide time-hour = 2DIGIT (§15.1)'),
+        'hora-un-digito-zona': (ca('2026-10-10T7:00:00-06:00'), 'invalid_date',
+                                'created_at con la hora de un dígito y zona (T7:00:00-06:00): RFC 3339 §5.6 pide time-hour = 2DIGIT; leído como 13:00:00Z decidiría S-8 (§6, §15.1)'),
+        'coma-decimal': (ca('2026-10-10T12:30:00,5Z'), 'invalid_date', 'created_at con coma decimal (12:30:00,5Z): RFC 3339 §5.6 define time-secfrac = «.» 1*DIGIT (§15.1)'),
+        'salto-linea': (ca('2026-10-10T12:30:00Z\n'), 'invalid_date', 'created_at con un salto de línea al final: el texto no termina en time-offset (§15.1)'),
+        'digitos-no-ascii': (ca(arabigos), 'invalid_date', 'created_at con dígitos arábigo-índicos (U+0660 a U+0669): RFC 3339 usa DIGIT = %x30-39 de RFC 5234 (§15.1)'),
+        'anio-cero': (ca('0000-01-01T00:00:00Z'), 'invalid_date',
+                      'created_at del año 0000: RFC 3339 lo admite (date-fullyear = 4DIGIT) y los dos lados lo rechazan mientras no se decida (§15.1, §15.3)',
+                      prov('S5-precio-vigente-captura', 'año 0000 de created_at rechazado en los dos lados (pregunta 3, perfil de RFC 3339; sin respuesta)')),
+        'fecha-anio-cero': ([precio('a-1kg', 't1', 1000, '0000-01-01')], 'invalid_date',
+                            'observed_date del año 0000: los dos lados lo rechazan mientras no se decida (§15.3)',
+                            prov('S5-precio-vigente-captura', 'año 0000 de observed_date rechazado en los dos lados (pregunta 3; sin respuesta)'))})
+    for nombre, (pr, code, desc, *pv) in casos.items():
         fixture(f's5-ingesta-{nombre}', f'Validación común de la ingesta (§3, S5-10): {desc}. Toda consulta del caso sale con el error.',
                 [('criterio', 'S5-10')], {'today': HOY, 'catalog': cat, 'stores': [tienda('t1')], 'prices': pr},
-                [consulta('precio', 'current_price', presentation='a-1kg', store='t1')], {'precio': {'error': code}})
+                [consulta('precio', 'current_price', presentation='a-1kg', store='t1')], {'precio': {'error': code}}, pv[0] if pv else None)
 
 
 # ---------------------------------------------------------------- PROFECO y OCR (archivos de _datos/)

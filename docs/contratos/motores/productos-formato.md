@@ -64,7 +64,7 @@ Versión 1.1 · 11-oct-2026 · WF-1, agente `contrato-S4S5`; 1.1 por `correccion
 - `mercado`: el grupo debe tener `canal = mercado` (verduras, fruta y carne no especializada, decisiones §D).
 - `cadena`: el grupo debe tener `canal = cadena`.
 - `ambas`: el grupo da el canal de la lista (cualquiera de los dos) y el producto **también** se puede comprar en el otro. La base no guarda «ambas»: basta con que Axel declare el grupo en los mercados que lo surten (`store_product_group`), y S5 deja competir a esos mercados (`S5-interfaz.md` §7.4). El cargador lo usa solo para sugerir grupos al dar de alta un mercado.
-- Una cadena con precio compite por cualquier producto, también de vertical `mercado` (la uva verde del 10-oct se compró en Bodega Aurrera). Competir en S5 no mueve el artículo de grupo en la lista de compras: su tienda y su grupo siguen `S4-interfaz.md` §6.5 (vertical `mercado`: PROVISIONAL, bloqueo `S4-asignacion-mercado`).
+- Una cadena con precio compite por cualquier producto, también de vertical `mercado` (la uva verde del 10-oct se compró en Bodega Aurrera). Competir en S5 no mueve el artículo de grupo en la lista de compras: su tienda y su grupo siguen `S4-interfaz.md` §6.5 (vertical `mercado`: FIRME, Q2-39 a Q2-42 = A del bloqueo `S4-asignacion-mercado`, RESUELTO).
 
 ## 4. Grupos iniciales (propuesta del formato, editables en Ajustes)
 

@@ -28,8 +28,8 @@ type Health struct {
 	MissingInputs       []string `json:"missing_inputs"`
 }
 
-// BMIClass clasifica sobre bmi_tenths, el valor que se muestra (K7: 18.5 / 25 / 30; PROVISIONAL, bloqueo
-// S4-reglas-lista, pregunta 3, opción A).
+// BMIClass clasifica sobre bmi_tenths, el valor que se muestra (K7: 18.5 / 25 / 30; FIRME,
+// Q2-46 = A del bloqueo S4-reglas-lista, RESUELTO).
 func BMIClass(tenths int64) string {
 	switch {
 	case tenths < 185:

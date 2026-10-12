@@ -74,7 +74,7 @@ El orden de §15.2 (fecha descendente y luego fuente) es el mismo en los dos.
 - **A)** `s5 dump` (`backend/cmd/motores/s5.go`) responde a la consulta con `unknown_presentation`. Es el motor, en uso.
 - **B)** El oráculo cuenta el registro en `skipped`.
 
-En producción las ligas llevan el id numérico. No medí qué pasa con un id que no está en el catálogo. **Impacto:** el resultado de `profeco_import` cuando `vinculos.csv` trae un código que no existe.
+En producción las ligas llevan el id numérico. Lo midió `revisor-motor-S5-r2` (B-5 de `docs/estado/p2c/REVISION-motor-S5-r2.md`, sonda `rv2-profeco-desconocida`: 21 registros y una liga confirmada a `no-existe.x-1l`): el motor responde `{"error": "unknown_presentation"}` a toda la consulta y el oráculo da read 21, rejected 12, skipped 6 y loaded 0. **Impacto:** el resultado de `profeco_import` cuando `vinculos.csv` trae un código que no existe.
 
 ### 6. Tope de `rejections[]`
 - **A)** El motor guarda como máximo 100 rechazos con detalle (`Options.MaxRejections`, 0 = 100); los conteos siguen completos. En uso.

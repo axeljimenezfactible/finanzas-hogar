@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «compras-tiendas-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «compras-tiendas-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto compras-tiendas-a"
-  version: "1.3.0"
+  version: "1.4.0"
   description: "Extracto de la etiqueta «Compras y tiendas» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -639,6 +639,106 @@ paths:
           $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
         default:
           $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/products/{product_id}/presentations:
+    post:
+      operationId: "createPresentation"
+      tags:
+        - "Compras y tiendas"
+      summary: "Nueva presentación"
+      description: "Nueva presentación."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PresentationCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Presentation"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/presentations/{presentation_id}:
+    patch:
+      operationId: "updatePresentation"
+      tags:
+        - "Compras y tiendas"
+      summary: "Editar presentación"
+      description: "Editar presentación."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "presentation"
+      parameters:
+        - name: "presentation_id"
+          in: "path"
+          required: true
+          description: "Id del registro (presentation_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PresentationUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Presentation"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
 components:
   securitySchemes:
     cookieAuth:
@@ -646,6 +746,11 @@ components:
       in: "cookie"
       name: "fh_session"
       description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
   schemas:
     Milli:
       type: "integer"
@@ -1169,7 +1274,7 @@ components:
           description: "Sitio de la cadena. Solo en chain"
         assisted_reading_enabled:
           type: "boolean"
-          description: "Lectura asistida del sitio de la cadena. Queda en 0 hasta que docs/estado/S5-terminos.md tenga veredicto para ese sitio"
+          description: "Lectura asistida del sitio de la cadena. No aplica desde K53: la aplicación no lee sitios de tiendas; queda en false y true responde 409 assisted_reading_not_allowed. La columna sigue en el esquema 1.4 hasta que S1 la retire (bloqueo S5-agente-externo)."
         address:
           type: "string"
           description: "Dirección (sucursal o mercado)"
@@ -1215,7 +1320,7 @@ components:
             - "allowed"
             - "denied"
             - "missing"
-          description: "Veredicto de términos del sitio en docs/estado/S5-terminos.md."
+          description: "Veredicto de términos del sitio. No aplica desde K53: la aplicación no lee sitios de tiendas; docs/estado/S5-terminos.md queda como registro histórico y ningún veredicto habilita la lectura asistida."
           x-calculado: true
     ProductGroup:
       type: "object"
@@ -1430,6 +1535,40 @@ components:
       required:
         - "name"
         - "size_milli"
+    PresentationUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de presentación (tabla `presentation`)."
+      x-tabla: "presentation"
+      properties:
+        name:
+          type: "string"
+          description: "Presentación como se ve en tienda (Nutrioli Oli 500 ml)"
+        brand:
+          type:
+            - "string"
+            - "null"
+          description: "Marca · null borra el valor"
+        size_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Contenido en milésimas de la unidad base: 500 ml = 500000, 750 g = 750000, 1 pieza = 1000"
+        is_bulk:
+          type: "boolean"
+          description: "1 = a granel: se vende por kilo o por unidad base"
+        barcode:
+          type:
+            - "string"
+            - "null"
+          description: "Código de barras EAN o UPC (cruce con Open Food Facts) · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
     NutritionFact:
       type: "object"
       description: "Dato nutricional (tabla `nutrition_fact`). Kilocalorías por 100 g de un producto (o de una presentación específica) con fuente citada. Macronutrientes previstos, se llenan después. Campos ausentes = sin valor (NULL)."

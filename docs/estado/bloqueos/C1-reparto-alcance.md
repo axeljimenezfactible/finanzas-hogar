@@ -14,3 +14,5 @@ PROPUESTA del agente: B, porque «también los ya capturados» no distingue cóm
 Impacto: solo `scope = all`. `scope = onward` no toca nada guardado y no depende de esto. Ninguna cifra canon cambia (el valor inicial es 50/50 y no se cambia en la semilla). Lo usan C1 (texto de `CostShareRuleUpdate.scope` y §7.2), el motor de reparto (WF-3) y la vista previa de P-26.12 (U4).
 
 Cómo seguí: C1 v1.3 marca PROVISIONAL solo el alcance de `all` (`CostShareRuleUpdate.scope`, C1-datos §7.2 y §13), citando este archivo.
+
+- **Estado:** ABIERTO

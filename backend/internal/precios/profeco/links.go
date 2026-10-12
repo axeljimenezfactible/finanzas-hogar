@@ -47,7 +47,8 @@ type Links struct {
 	byKey map[string]Link
 }
 
-// LinkKey es la llave de comparación de una liga o de un registro.
+// LinkKey es la llave de comparación de una liga o de un registro. Liga normalizada con Fold: PROVISIONAL,
+// bloqueo S5-profeco-filtro pregunta 2 (Q2-57, opción A en uso).
 func LinkKey(producto, presentacion, marca string) string {
 	return Fold(producto) + "|" + Fold(presentacion) + "|" + Fold(marca)
 }

@@ -1,10 +1,16 @@
 # S5 · Interfaz del motor de precios y tiendas (`backend/internal/precios`)
 
-Versión 1.5 · 11-oct-2026 · WF-1 y puerta 2, agente `contrato-S4S5` (Opus); corregida por `correccion-contrato-S4S5-r1` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r1.md`) , por `correccion-contrato-S4S5-r2` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r2.md`) , por `correccion-contrato-S4S5-r3` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r3.md`) , por `correccion-contrato-S4S5-r4` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r4.md`) y, en la puerta 2 (ronda P2c), por `contratos-puerta2` (revisiones `docs/estado/wf1/REVISION-S5-r3.md` y `REVISION-contrato-S4S5-r5.md`, solicitudes de `docs/estado/wf1/correccion-S5-r2.md` y respuestas de `docs/estado/puerta2/RESPUESTAS.md`). Documento de contrato, **sin código**. Lo implementan los agentes de WF-1 del plan §3.4 fila S5 (comparador Opus; PROFECO y OCR Sonnet).
+Versión 1.6 · 12-oct-2026 · P2d, agente `k53-aplicar` (K53: se retira la lectura asistida y se define la fuente del agente externo). Versión 1.5 · 11-oct-2026 · WF-1 y puerta 2, agente `contrato-S4S5` (Opus); corregida por `correccion-contrato-S4S5-r1` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r1.md`) , por `correccion-contrato-S4S5-r2` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r2.md`) , por `correccion-contrato-S4S5-r3` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r3.md`) , por `correccion-contrato-S4S5-r4` (revisión `docs/estado/wf1/REVISION-contrato-S4S5-r4.md`) y, en la puerta 2 (ronda P2c), por `contratos-puerta2` (revisiones `docs/estado/wf1/REVISION-S5-r3.md` y `REVISION-contrato-S4S5-r5.md`, solicitudes de `docs/estado/wf1/correccion-S5-r2.md` y respuestas de `docs/estado/puerta2/RESPUESTAS.md`). Documento de contrato, **sin código**. Lo implementan los agentes de WF-1 del plan §3.4 fila S5 (comparador Opus; PROFECO y OCR Sonnet).
 
 **Fuentes (en este orden):** `docs/plan/decisiones.md` §D, §E, K7, K22, K24, K25, K37, K40, K44; `docs/contratos/reglas-negocio.md` 1.3 (RN-12, RN-13, RN-16, RN-20; C-01, C-02, C-05); esquema 1.3 (`store`, `product_group`, `store_product_group`, `product`, `presentation`, `price`, `attachment`, `app_setting`); C1 v1.2 por extractos (`compras-tiendas-a.yaml`: `BasketComparison`, `PriceAt`, `ShoppingListItem`; `compras-tiendas-b.yaml`: `Price`, `PriceSummary`; `ajustes-c.yaml`: `importProfeco`); criterios `docs/criterios/S5.md` 1.2; `datos/semilla/data.json`; `datos/semilla/profeco/QQP_diccionario.csv`.
 
 **Marcas.** «PROVISIONAL (bloqueo X)» = regla no decidida en §A–§K ni en RN; queda con la opción indicada hasta que Axel la decida (si no tuvo respuesta en la puerta 2, en WF-3), cita un bloqueo abierto y **no cambia ninguna cifra canon**. «FIRME (puerta 2, Q2-nn)» = regla que Axel decidió en la puerta 2 (`docs/estado/puerta2/RESPUESTAS.md`). «ILUSTRATIVO» = número de fixture que no viene del reporte ni del oráculo.
+
+**Cambios de la versión 1.6 (12-oct-2026, P2d, K53; no cambia ninguna cifra canon ni fixture):**
+- La aplicación no lee sitios de tiendas (K53).
+- §13 deja de describir la lectura asistida (interruptor, veredicto de términos, S5-07 «no aplica») y define la fuente del agente externo.
+- §1 y §3 al día. `site_assisted` queda como el valor de los precios del agente externo: el CHECK de `price.source` es cerrado y no tiene `external_agent`, así que solo la documentación lo renombra.
+- Su peso es PROVISIONAL (bloqueo `S5-agente-externo`): compite como `manual`, PROPUESTA del orquestador. HECHO: el motor de WF-1 y la fixture `s5-fuentes-compiten` todavía lo tratan como referencia; se alinean en WF-3.
 
 **Cambios de la versión 1.5 (11-oct-2026, puerta 2, ronda P2c; ninguna cifra canon cambia):**
 - H-r3-01 (Q2-02 = A): solicitudes 1 a 3 de `docs/estado/wf1/correccion-S5-r2.md` (§7.2, §7.4, §11, §12 y §15.2) y la regla de 3 canastas o más (§7.2 pasos 2 y 3). Las solicitudes 4 a 6 tocan otros archivos (criterios S5, plan y `oraculo-S5.md`) y van al integrador.
@@ -38,9 +44,9 @@ Versión 1.5 · 11-oct-2026 · WF-1 y puerta 2, agente `contrato-S4S5` (Opus); c
 
 | Tema | Regla |
 |---|---|
-| Rutas | `backend/internal/precios` (núcleo puro), `backend/internal/precios/profeco` (cargador), `backend/internal/precios/ocr` (Tesseract), `backend/internal/precios/asistida` (interruptor de lectura asistida). Subcomando `s5 dump` del binario común `backend/cmd/motores` (§15, FORMATO §4). |
+| Rutas | `backend/internal/precios` (núcleo puro), `backend/internal/precios/profeco` (cargador), `backend/internal/precios/ocr` (Tesseract), `backend/internal/precios/asistida` (interruptor de lectura asistida; no aplica desde K53 y se retira en WF-3). Subcomando `s5 dump` del binario común `backend/cmd/motores` (§15, FORMATO §4). |
 | Dependencias | Solo biblioteca estándar (+ modernc.org/sqlite solo en el cargador PROFECO y en la capa de datos). OCR y extracción de RAR por `os/exec` **sin shell** con herramientas locales (`tesseract`, `unrar` o `bsdtar`, instaladas y verificadas el 11-oct-2026: tesseract 5.5.3 con `spa`). |
-| Red | Ninguna en ejecución. `net/http` solo podría aparecer en `precios/asistida`, que en WF-1 **no implementa cliente HTTP** y está apagada (S5-07, S5-08). Ninguna URL de tiendas en el código. |
+| Red | Ninguna en ejecución. Desde K53 la aplicación no lee sitios de tiendas: ningún paquete tiene cliente HTTP hacia tiendas, y `precios/asistida` (solo el interruptor de WF-1, apagado) se retira en WF-3 (S5-07, S5-08). Ninguna URL de tiendas en el código. |
 | Aritmética | Centavos `int64` y milésimas `int64`; comparaciones de precio por unidad base con **fracciones exactas** (multiplicación cruzada); sin `float32`/`float64` fuera de `_test.go` (S5-13). Redondeo ROUND_HALF_UP solo al publicar. |
 | Hoy | Lo pasa el llamador (America/Mexico_City, C-05). La edad de un precio usa días de calendario. |
 | Parámetros | Se leen de `app_setting` (K44), nunca constantes en código: `price.stale_after_days` = 30, `price.zero_weight_after_days` = 90, `price.assisted_reading_enabled` = false, `price.profeco_import_max_gb` = 1. |
@@ -65,7 +71,7 @@ Versión 1.5 · 11-oct-2026 · WF-1 y puerta 2, agente `contrato-S4S5` (Opus); c
 | `ticket_manual` | renglones de un ticket capturados a mano (`expense_item`) al confirmar el gasto | **sí**, peso de frescura |
 | `ticket_ocr` | renglones del OCR **después** de la confirmación humana (§12); el borrador vive en `attachment.ocr_draft_json` (K3) y no crea precios | **sí**, el mismo peso que el ticket |
 | `manual` | captura a mano sin ticket (`createPrice`) | **sí**, el mismo peso y la misma frescura (K37) |
-| `site_assisted` | lectura asistida de sitios; apagada (§13) | **no**: solo referencia hasta que la cadena tenga veredicto de términos (K37) |
+| `site_assisted` («agente externo» desde K53) | lotes del agente externo por C1 v1.4 `importExternalPrices` (§13): la API pone esta fuente y guarda `external_ref` en `source_ref`. PROVISIONAL (bloqueo `S5-agente-externo`, pregunta d): el esquema 1.4 no tiene `external_agent`, así que se reutiliza este valor y solo la documentación lo renombra | PROVISIONAL (bloqueo `S5-agente-externo`, pregunta a; PROPUESTA del orquestador): **sí**, como `manual` y con la misma frescura. HECHO: el motor de WF-1 y la fixture `s5-fuentes-compiten` lo siguen tratando como referencia (regla anterior de K37); se alinean en WF-3 |
 | `profeco` | cargador PROFECO (§11) | **nunca**: solo referencia (K22) |
 
 **Validación común:** `price_cents` entero ≥ 0; `observed_date` ISO válida y **no futura** respecto a «hoy» (supuesto S-7: una fecha futura es error de captura); presentación y tienda existentes; `UNIQUE (presentation_id, store_id, observed_date, source, is_promotional)` (repetir devuelve conflicto). Cada precio guarda tienda, fecha, fuente y referencia (S5-10).
@@ -110,7 +116,7 @@ La diferencia entre días consecutivos de 30 a 90 es exactamente 1/61 y el peso 
 ## 6. Precio vigente
 
 - Por presentación y tienda, el **último precio regular** (`is_promotional = 0`) de una fuente que compite (RN-12). Si dos precios que compiten tienen la misma fecha, rige el de `created_at` más reciente (supuesto S-8: «la última captura»).
-- Los precios de referencia (`profeco`, `site_assisted`) se devuelven aparte (`References []PriceObs`) para mostrarlos; **nunca** entran en ganadores, totales de canasta ni costo de S4.
+- Los precios de referencia (`profeco`, y `site_assisted` en el motor de WF-1 hasta que WF-3 aplique §3: PROVISIONAL, bloqueo `S5-agente-externo`) se devuelven aparte (`References []PriceObs`) para mostrarlos; **nunca** entran en ganadores, totales de canasta ni costo de S4.
 - **Promociones** (`is_promotional = 1`): RN-12 las excluye de la comparativa. Su vigencia no tiene columna en el esquema (`promotion` es de promociones de crédito); FIRME (puerta 2, Q2-61 = A; bloqueo `S5-reglas-comparativa` pregunta 3): una promoción solo es vigente en su `observed_date`; se muestra junto al precio regular con la leyenda «promoción del <fecha>» y una vencida no se muestra ni cuenta (S5-10).
 - `PriceSummary` (C1): por producto, `fresh` si su mejor precio que compite no es viejo, `stale` si todos los que compiten son viejos, `no_price` si no hay ninguno que compita; por tienda, la fecha más reciente.
 
@@ -202,8 +208,24 @@ Contraejemplo de la revisión r4 (caso `s5-canasta-regla-unica`): Walmart tiene 
 - **Siempre a confirmación humana:** la salida es un borrador (`attachment.ocr_draft_json`, K3, «Guardar para después»). `PricesFromOCR(lineas, confirmado)` devuelve `ErrNotConfirmed` si `confirmado = false`: un OCR sin confirmar no crea ningún precio (S5-06). Confirmado → renglones de gasto y precios `ticket_ocr`.
 - **Medición:** `datos/semilla/tickets/` guarda **solo** las 5 fotos, `01` a `05`, en cualquier formato que Tesseract lea (`.jpg`, `.jpeg` o `.png`; K24 no fija el formato), así `ls datos/semilla/tickets/ | wc -l` = 5 (S5-06). La transcripción a mano de cada ticket va **fuera** de esa carpeta, en `datos/semilla/tickets-esperado/NN.csv` (`descripcion,cantidad,importe`; mismo `NN` que la foto), escrita **antes** de medir; no va en una subcarpeta `tickets/esperado/` porque `ls` la contaría y daría 6. Regla de descripción (propuesta para congelar en el reporte del agente OCR antes de medir): igualdad tras normalizar (mayúsculas, sin acentos, espacios colapsados, sin puntuación final) contra el texto **impreso** en el ticket; cantidad e importe exactos. Hoy la carpeta no existe: **«sin medir: faltan las fotos de Axel»**. Las instrucciones para Axel están en `datos/semilla/tickets-README.md`; las pruebas usan imágenes sintéticas de `datos/semilla/tickets-sinteticos/`, que no son las fotos de K24.
 
-## 13. Lectura asistida (`precios/asistida`; S5-07)
-`CanEnable(cadena, terminos)`: exige `price.assisted_reading_enabled = true`, `store.assisted_reading_enabled = 1` y, en `docs/estado/S5-terminos.md`, una sección por sitio (Walmart, Bodega Aurrera, Sam's Club) con las líneas `Veredicto:`, `URL:` y `Fecha de lectura:`; si falta cualquiera, `ErrNoTermsVerdict` y el interruptor no se activa. Aun activada, `site_assisted` sigue siendo referencia mientras rija K37 para esa cadena.
+## 13. Agente externo (K53; antes «Lectura asistida», S5-07)
+**La lectura asistida no aplica desde K53** (puerta 2 bis): la aplicación no lee sitios de tiendas.
+- Se retiran la lectura asistida, el interruptor (`price.assisted_reading_enabled`, `store.assisted_reading_enabled`) y el veredicto de términos.
+- `docs/estado/S5-terminos.md` queda como registro histórico.
+- HECHO: `backend/internal/precios/asistida/` sigue en el árbol, apagado y sin cliente HTTP: `CanEnable`, `SiteFor` y su prueba `TestLecturaAsistidaSinVeredicto`.
+- P2d no borra código. El paquete se retira en WF-3, junto con las fixtures `s5-lectura-asistida*`.
+
+**Fuente del agente externo.** Un agente externo, una sesión de Claude Code de Axel con Claude in Chrome, obtiene precios y productos y puede agregar recetas. Los mete por C1 v1.4 con la credencial de servicio `serviceToken`:
+- `importExternalCatalog`: productos y presentaciones.
+- `importExternalPrices`: precios.
+- `importExternalRecipes`: recetas en borrador.
+
+Para S5, un precio del agente es un `PriceObs` más. Entra por la misma ingesta que `manual` (§3: tienda y presentación conocidas, fecha no futura, llave UNIQUE de `price`), con `Source` = `site_assisted` y `SourceRef` = `external_ref`. Quedan PROVISIONAL (bloqueo `S5-agente-externo`):
+- El valor de la fuente (pregunta d).
+- Su peso (pregunta a). PROPUESTA del orquestador: compite como `manual`, con la misma frescura.
+- Qué más puede escribir el agente (pregunta b). Mientras se decide, no escribe inventario.
+
+La forma de una receta en borrador es de S4 y C1, no de este motor.
 
 ## 14. Funciones que consumen S4, S7 y la API
 
@@ -333,7 +355,7 @@ Salidas con claves en inglés y entidades por su código con la clave sin `_id` 
 | S5-04 Frescura y fuentes que compiten | §5, §3, §7.1 |
 | S5-05 PROFECO y cobertura | §11 (ligas confirmadas), §15.1 (rutas de `_datos/` desde la raíz) |
 | S5-06 OCR ≥ 80 % | §12 (carpetas de fotos y de transcripciones), §15.1 (`tsv_file` desde la raíz) |
-| S5-07 Lectura asistida desactivada | §13 |
+| S5-07 No aplica desde K53 (antes: lectura asistida desactivada) | §13 |
 | S5-08 Sin scraping ni red | §1, §13 |
 | S5-09 Membresía de Sam's | §8 |
 | S5-10 Fuentes y trazabilidad | §3, §6 |

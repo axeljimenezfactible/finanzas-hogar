@@ -1,12 +1,12 @@
-# Finanzas Hogar · Contrato C1 v1.3.0 (OpenAPI 3.1). Archivo generado: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.4.0 (OpenAPI 3.1). Archivo generado: no se edita a mano.
 # Generador: backend/internal/api/c1gen/ (agente S6a-contrato-c1, WF-0, 2026-10-10; v1.1: agente C1-v1.1, puerta 1, 2026-10-11). Regenerar: python3 -I backend/internal/api/c1gen/build.py (con --check compara sin escribir).
 # Fuente: esquema de S1 (backend/db/migrations/*.sql, aplicadas en orden) + necesidades de U1 (docs/design/U1-arquitectura.md). Ver docs/contratos/C1-datos.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1)"
-  version: "1.3.0"
-  summary: "Contrato C1 v1.3 del backend Go local de Finanzas Hogar."
-  description: "Contrato C1 v1.3 (11-oct-2026, respuestas de las puertas 1, 1b y 2). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura; parámetros operativos (K44) por clave de app_setting, con valor vigente, valor inicial y «restablecer», en las operaciones /api/v1/settings/*. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad) y `x-provisional` (depende de un bloqueo abierto)."
+  version: "1.4.0"
+  summary: "Contrato C1 v1.4 del backend Go local de Finanzas Hogar."
+  description: "Contrato C1 v1.4 (12-oct-2026, respuestas de las puertas 1, 1b, 2 y 2 bis). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura; parámetros operativos (K44) por clave de app_setting, con valor vigente, valor inicial y «restablecer», en las operaciones /api/v1/settings/*. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; las cuatro operaciones del agente externo (`/api/v1/external-agent/*`, K53) usan la credencial de servicio `serviceToken` en lugar de la cookie; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad), `x-provisional` (depende de un bloqueo abierto) y `x-agente-externo` (operación del agente externo con credencial de servicio, K53)."
 servers:
   - url: "https://finanzas.local:8443"
     description: "Máquina de casa, solo red local (decisión H)."
@@ -4809,7 +4809,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Nueva tienda o mercado"
-      description: "Mercado: visit_weekday obligatorio. La lectura asistida nace desactivada."
+      description: "Mercado: visit_weekday obligatorio. La lectura asistida nace desactivada y no se activa: no aplica desde K53 (la aplicación no lee sitios de tiendas)."
       x-necesidades:
         - "N-292"
       x-tablas:
@@ -4852,7 +4852,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Editar tienda"
-      description: "assisted_reading_enabled = true solo con veredicto favorable en docs/estado/S5-terminos.md; si no, 409 `assisted_reading_not_allowed`."
+      description: "Desde K53 la aplicación no lee sitios de tiendas: assisted_reading_enabled = true responde siempre 409 `assisted_reading_not_allowed`, porque ningún veredicto la habilita (docs/estado/S5-terminos.md queda como registro histórico)."
       x-necesidades:
         - "N-292"
       x-tablas:
@@ -5624,7 +5624,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Ajustes de precios"
-      description: "Interruptor general de lectura asistida y parámetros de frescura y de PROFECO (N-322; K6, K22, K40). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
+      description: "Interruptor general de lectura asistida (no aplica desde K53: la aplicación no lee sitios de tiendas) y parámetros de frescura y de PROFECO (N-322; K6, K22, K40). Parámetros operativos por clave de app_setting (K44, C1 §11.7): en parameters, el valor vigente (value), el valor inicial sembrado (initial_value; null si no lo hay), el tipo y la unidad."
       x-necesidades:
         - "N-291"
         - "N-322"
@@ -5651,7 +5651,7 @@ paths:
       tags:
         - "Ajustes"
       summary: "Cambiar ajustes de precios"
-      description: "Cambia el interruptor general de lectura asistida (N-292) y los parámetros de precios (N-322). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
+      description: "Cambia el interruptor general de lectura asistida (N-292; desde K53 true responde siempre 409 `assisted_reading_not_allowed`) y los parámetros de precios (N-322). Cambia o restablece parámetros operativos por clave de app_setting (K44, C1 §11.7): parameters trae el valor nuevo de cada clave y reset_parameters las claves que vuelven a su valor inicial. Un valor vacío, null o de otro tipo responde 422 validation_failed y no se sustituye por otro; un valor fuera del rango de la clave (minimum, maximum o pattern de su propiedad; puerta 2, K50) también responde 422. Responde con los valores vigentes."
       x-necesidades:
         - "N-292"
         - "N-322"
@@ -5808,6 +5808,185 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NutritionReloadResult"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/external-agent/reference:
+    get:
+      operationId: "getExternalAgentReference"
+      tags:
+        - "Compras y tiendas"
+      summary: "Referencia para el agente externo"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Devuelve los ids de tiendas, grupos de producto y tiempos de comida con los que el agente arma sus lotes. Solo lectura. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "meal_slot"
+        - "product_group"
+        - "store"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalAgentReference"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/external-agent/catalog:
+    post:
+      operationId: "importExternalCatalog"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar productos y presentaciones"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Alta o actualización por lotes. Llaves naturales: product.name (sin distinguir mayúsculas) y, dentro del producto, presentation.name. Repetir el mismo lote deja sus renglones en unchanged; además la petición lleva Idempotency-Key, como toda captura. Un renglón inválido sale rejected en el resultado sin detener a los demás; un lote vacío o de más de 500 renglones responde 422 (PROVISIONAL, bloqueo S5-agente-externo, pregunta g: tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel). PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "product"
+        - "product_group"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalCatalogImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/external-agent/prices:
+    post:
+      operationId: "importExternalPrices"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar precios"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Precios por lotes con tienda, fecha y referencia del agente (external_ref, que se guarda en price.source_ref). Llave natural: la llave UNIQUE de price (presentación, tienda, fecha, fuente y promoción); repetir un precio lo actualiza o lo deja en unchanged, sin duplicarlo. Una tienda o presentación desconocida o una fecha futura sale rejected en su renglón. PROVISIONAL (bloqueo S5-agente-externo, preguntas a y d): source = site_assisted, que la documentación llama «agente externo», y compite como manual, con la misma frescura. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "price"
+        - "store"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalPriceImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "#/components/responses/Error"
+  /api/v1/external-agent/recipes:
+    post:
+      operationId: "importExternalRecipes"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar recetas en borrador"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Recetas por lotes, con la forma de RecipeCreate. Llave natural: recipe.name (sin distinguir mayúsculas). PROVISIONAL (bloqueo S5-agente-externo, preguntas c y f): cada receta entra como borrador, con origen «external_agent», y no aparece en el plan hasta que una persona la confirma; una receta que ya existe con ese nombre no se sobrescribe (sale rejected); el esquema 1.4 todavía no guarda ni el borrador ni ese origen. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "meal_slot"
+        - "presentation"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalRecipeImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -9203,6 +9382,11 @@ components:
       in: "cookie"
       name: "fh_session"
       description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
   parameters:
     PersonId:
       name: "person_id"
@@ -11168,10 +11352,11 @@ components:
                 description: "Gasto variable estimado (método en /cash-flow/assumptions)."
               planned_savings_cents:
                 $ref: "#/components/schemas/MoneyCents"
-                description: "Aportación planificada a ahorro."
+                x-provisional: true
+                description: "Aportación planificada a ahorro de la quincena. PROVISIONAL (bloqueo S2-ahorro-quincenal): S2 1.3 §3.11 la entrega en null mientras no se decida su base mensual ni si resta del saldo; ausente = sin dato. No entra a balance_cents."
               balance_cents:
                 $ref: "#/components/schemas/MoneyCents"
-                description: "income − egresos − ahorro."
+                description: "Saldo de la quincena = ingresos − gasto variable registrado − pagos de crédito − gastos fijos y venideros (S2 1.3 §3.11: income.total_cents − spent_cents − committed_cents, con spent_cents = variable_spent_cents + fixed_upcoming.paid_cents + credit_payments.household_paid_cents). El gasto variable registrado (variable_spent_cents de S2) no viene en esta fila. No resta el ahorro planificado (planned_savings_cents) ni el gasto variable estimado (variable_estimate_cents)."
               cumulative_balance_cents:
                 $ref: "#/components/schemas/MoneyCents"
                 description: "Saldo acumulado."
@@ -11187,7 +11372,6 @@ components:
               - "credit_payments_cents"
               - "fixed_and_upcoming_cents"
               - "variable_estimate_cents"
-              - "planned_savings_cents"
               - "balance_cents"
               - "cumulative_balance_cents"
               - "is_actual"
@@ -11930,10 +12114,10 @@ components:
         status:
           type: "string"
           enum:
-            - "on_track"
-            - "behind"
+            - "in_progress"
             - "achieved"
-          description: "en ruta, atrasada o cumplida (motor S2)."
+            - "overdue"
+          description: "Estado de la meta (Q2-18 A; motor S2 1.3 §3.13): achieved si target_cents no es null y saved_cents ≥ target_cents; si no, overdue si target_date no es null y es anterior a hoy; si no, in_progress (también un fondo sin monto o sin fecha)."
           x-calculado: true
     SavingsGoalCreate:
       type: "object"
@@ -13889,7 +14073,7 @@ components:
           description: "Sitio de la cadena. Solo en chain"
         assisted_reading_enabled:
           type: "boolean"
-          description: "Lectura asistida del sitio de la cadena. Queda en 0 hasta que docs/estado/S5-terminos.md tenga veredicto para ese sitio"
+          description: "Lectura asistida del sitio de la cadena. No aplica desde K53: la aplicación no lee sitios de tiendas; queda en false y true responde 409 assisted_reading_not_allowed. La columna sigue en el esquema 1.4 hasta que S1 la retire (bloqueo S5-agente-externo)."
         address:
           type: "string"
           description: "Dirección (sucursal o mercado)"
@@ -13935,7 +14119,7 @@ components:
             - "allowed"
             - "denied"
             - "missing"
-          description: "Veredicto de términos del sitio en docs/estado/S5-terminos.md."
+          description: "Veredicto de términos del sitio. No aplica desde K53: la aplicación no lee sitios de tiendas; docs/estado/S5-terminos.md queda como registro histórico y ningún veredicto habilita la lectura asistida."
           x-calculado: true
     StoreCreate:
       type: "object"
@@ -14025,7 +14209,7 @@ components:
           description: "Sitio de la cadena. Solo en chain · null borra el valor"
         assisted_reading_enabled:
           type: "boolean"
-          description: "Lectura asistida del sitio de la cadena. Queda en 0 hasta que docs/estado/S5-terminos.md tenga veredicto para ese sitio"
+          description: "Lectura asistida del sitio de la cadena. No aplica desde K53: la aplicación no lee sitios de tiendas; queda en false y true responde 409 assisted_reading_not_allowed. La columna sigue en el esquema 1.4 hasta que S1 la retire (bloqueo S5-agente-externo)."
         address:
           type:
             - "string"
@@ -14560,7 +14744,7 @@ components:
             - "site_assisted"
             - "profeco"
             - "manual"
-          description: "Fuente: ticket capturado a mano, ticket por OCR ya confirmado, lectura asistida del sitio, PROFECO u otra captura manual"
+          description: "Fuente del precio: ticket_manual (ticket capturado a mano), ticket_ocr (ticket por OCR ya confirmado), site_assisted (agente externo desde K53: PROVISIONAL, bloqueo S5-agente-externo, pregunta d), profeco (referencia) o manual (captura a mano sin ticket)."
         is_promotional:
           type: "boolean"
           description: "1 = precio de promoción (sexta lata de atún a 2100), no se toma como precio regular"
@@ -14683,7 +14867,7 @@ components:
           description: "Motor OCR local (Tesseract 5.5.3, spa)."
         assisted_reading_enabled:
           type: "boolean"
-          description: "Interruptor general (app_setting price.assisted_reading_enabled)."
+          description: "Interruptor general (app_setting price.assisted_reading_enabled). No aplica desde K53: la aplicación no lee sitios de tiendas."
         sites:
           type: "array"
           items:
@@ -14702,7 +14886,7 @@ components:
                   - "allowed"
                   - "denied"
                   - "missing"
-                description: "Veredicto en docs/estado/S5-terminos.md."
+                description: "Veredicto en docs/estado/S5-terminos.md (registro histórico; no aplica desde K53)."
               assisted_reading_enabled:
                 type: "boolean"
                 description: "Activada para esa cadena."
@@ -14869,7 +15053,7 @@ components:
       properties:
         assisted_reading_enabled:
           type: "boolean"
-          description: "Interruptor general de la lectura asistida (price.assisted_reading_enabled, false por defecto)."
+          description: "Interruptor general de la lectura asistida (price.assisted_reading_enabled, false por defecto). No aplica desde K53: la aplicación no lee sitios de tiendas."
           x-app-setting: "price.assisted_reading_enabled"
         parameters:
           type: "object"
@@ -14899,7 +15083,7 @@ components:
       x-calculado: true
     PriceSettingsUpdate:
       type: "object"
-      description: "Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. El interruptor solo acepta true si existe veredicto favorable en docs/estado/S5-terminos.md (si no: 409 assisted_reading_not_allowed). price.zero_weight_after_days tiene que ser igual o mayor que price.stale_after_days con los valores que quedan después del cambio (Q2-77, K50, RN-12; también lo valida el motor de precios): si no, 422 validation_failed y no se guarda ninguno."
+      description: "Cambio de los ajustes de precios (N-292, N-322): el interruptor general de lectura asistida y los parámetros de K44. Desde K53 la aplicación no lee sitios de tiendas y ningún veredicto habilita el interruptor: true responde siempre 409 assisted_reading_not_allowed (docs/estado/S5-terminos.md queda como registro histórico). price.zero_weight_after_days tiene que ser igual o mayor que price.stale_after_days con los valores que quedan después del cambio (Q2-77, K50, RN-12; también lo valida el motor de precios): si no, 422 validation_failed y no se guarda ninguno."
       properties:
         assisted_reading_enabled:
           type: "boolean"
@@ -14940,6 +15124,258 @@ components:
           description: "Restablecer (K44): claves que vuelven a su valor inicial (initial_value de la lectura). Una clave no puede venir a la vez aquí y en parameters (422 validation_failed)."
       additionalProperties: false
       minProperties: 1
+    ExternalAgentReference:
+      type: "object"
+      description: "Datos de referencia para el agente externo (K53): ids de tiendas, grupos de producto y tiempos de comida con los que arma sus lotes. Los ids de productos y presentaciones los devuelve importExternalCatalog."
+      properties:
+        stores:
+          type: "array"
+          items:
+            type: "object"
+            description: "Tienda o mercado."
+            properties:
+              id:
+                type: "integer"
+                description: "store.id."
+              kind:
+                type: "string"
+                enum:
+                  - "chain"
+                  - "branch"
+                  - "market"
+                description: "store.kind."
+              name:
+                type: "string"
+                description: "store.name."
+              parent_id:
+                type: "integer"
+                description: "Cadena de la sucursal (store.parent_id); solo en branch."
+            required:
+              - "id"
+              - "kind"
+              - "name"
+            x-calculado: true
+          description: "Tiendas y mercados dados de alta, en orden de id."
+        product_groups:
+          type: "array"
+          items:
+            type: "object"
+            description: "Grupo de producto."
+            properties:
+              id:
+                type: "integer"
+                description: "product_group.id."
+              name:
+                type: "string"
+                description: "product_group.name."
+              purchase_channel:
+                type: "string"
+                enum:
+                  - "market"
+                  - "chain"
+                description: "product_group.purchase_channel."
+            required:
+              - "id"
+              - "name"
+              - "purchase_channel"
+            x-calculado: true
+          description: "Grupos de producto, en orden de id."
+        meal_slots:
+          type: "array"
+          items:
+            type: "object"
+            description: "Tiempo de comida."
+            properties:
+              id:
+                type: "integer"
+                description: "meal_slot.id."
+              code:
+                type: "string"
+                enum:
+                  - "breakfast"
+                  - "lunch"
+                  - "dinner"
+                  - "snack"
+                description: "meal_slot.code."
+              name:
+                type: "string"
+                description: "meal_slot.name."
+            required:
+              - "id"
+              - "code"
+              - "name"
+            x-calculado: true
+          description: "Tiempos de comida, en orden de sort_order."
+      required:
+        - "stores"
+        - "product_groups"
+        - "meal_slots"
+      x-calculado: true
+    ExternalCatalogItem:
+      type: "object"
+      description: "Producto del lote con sus presentaciones (entrada)."
+      properties:
+        name:
+          type: "string"
+          description: "Nombre genérico en español (product.name). Llave del alta o actualización, sin distinguir mayúsculas."
+        base_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad base (product.base_unit). Si el producto ya existe con otra unidad base, el renglón sale rejected: la unidad base no cambia por lote."
+        grams_per_unit_milli:
+          type: "integer"
+          description: "Gramos por unidad base ×1000 (product.grams_per_unit_milli); no se manda si base_unit = g."
+        product_group_id:
+          type: "integer"
+          description: "Grupo (product.product_group_id; ids de getExternalAgentReference)."
+        presentations:
+          type: "array"
+          items:
+            type: "object"
+            description: "Presentación del lote (entrada)."
+            properties:
+              name:
+                type: "string"
+                description: "Presentación como se ve en tienda (presentation.name). Llave dentro del producto: si ya existe, se actualizan los demás campos."
+              size_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Contenido en milésimas de la unidad base (presentation.size_milli), mayor que 0."
+              brand:
+                type: "string"
+                description: "Marca (presentation.brand)."
+              is_bulk:
+                type: "boolean"
+                description: "A granel (presentation.is_bulk); false si falta."
+              barcode:
+                type: "string"
+                description: "Código de barras EAN o UPC de 8 a 14 dígitos (presentation.barcode). Si ya pertenece a otra presentación, el renglón sale rejected."
+            required:
+              - "name"
+              - "size_milli"
+          description: "Presentaciones del producto (1 o más)."
+      required:
+        - "name"
+        - "base_unit"
+        - "presentations"
+    ExternalCatalogImport:
+      type: "object"
+      description: "Lote de productos y presentaciones del agente externo (K53): alta o actualización por nombre. PROVISIONAL (bloqueo S5-agente-externo, pregunta b): el agente escribe solo productos, presentaciones, precios y recetas; inventario no."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExternalCatalogItem"
+          description: "De 1 a 500 productos. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalPriceItem:
+      type: "object"
+      description: "Precio del lote (entrada)."
+      properties:
+        presentation_id:
+          type: "integer"
+          description: "Presentación (presentation.id; la devuelve importExternalCatalog)."
+        store_id:
+          type: "integer"
+          description: "Tienda (store.id; de getExternalAgentReference)."
+        price_cents:
+          $ref: "#/components/schemas/MoneyCents"
+          description: "Precio de una presentación con IVA (price.price_cents)."
+        observed_date:
+          $ref: "#/components/schemas/Date"
+          description: "Fecha en que el agente vio el precio (price.observed_date); no puede ser futura."
+        is_promotional:
+          type: "boolean"
+          description: "Precio de promoción (price.is_promotional); false si falta."
+        external_ref:
+          type: "string"
+          description: "Referencia del agente externo: URL de la ficha o clave del producto en la tienda. Se guarda en price.source_ref."
+      required:
+        - "presentation_id"
+        - "store_id"
+        - "price_cents"
+        - "observed_date"
+    ExternalPriceImport:
+      type: "object"
+      description: "Lote de precios del agente externo (K53). La API pone price.source; el lote no la manda. PROVISIONAL (bloqueo S5-agente-externo, preguntas a y d): source = site_assisted, que la documentación llama «agente externo», y en la comparativa compite como manual, con la misma frescura."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExternalPriceItem"
+          description: "De 1 a 500 precios. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalRecipeImport:
+      type: "object"
+      description: "Lote de recetas del agente externo (K53), con la forma de RecipeCreate. PROVISIONAL (bloqueo S5-agente-externo, preguntas c y f): cada receta entra como borrador, con origen «external_agent», y no aparece en el plan de comidas hasta que una persona la confirma; el esquema 1.4 todavía no guarda ni el borrador ni ese origen."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RecipeCreate"
+          description: "De 1 a 100 recetas. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalImportResult:
+      type: "object"
+      description: "Resultado de un lote del agente externo, renglón por renglón y en el orden recibido. Un renglón rechazado no detiene a los demás."
+      properties:
+        created_count:
+          type: "integer"
+          description: "Renglones creados."
+        updated_count:
+          type: "integer"
+          description: "Renglones que ya existían y cambiaron."
+        unchanged_count:
+          type: "integer"
+          description: "Renglones que ya existían iguales: repetir el lote no duplica nada."
+        rejected_count:
+          type: "integer"
+          description: "Renglones rechazados."
+        items:
+          type: "array"
+          items:
+            type: "object"
+            description: "Resultado de un renglón."
+            properties:
+              index:
+                type: "integer"
+                description: "Posición del renglón en el lote, desde 0."
+              status:
+                type: "string"
+                enum:
+                  - "created"
+                  - "updated"
+                  - "unchanged"
+                  - "rejected"
+                description: "Qué pasó con el renglón."
+              id:
+                type: "integer"
+                description: "Id del registro creado o actualizado (product, price o recipe, según la operación). Ausente si se rechazó."
+              presentation_ids:
+                type: "array"
+                items:
+                  type: "integer"
+                description: "Ids de las presentaciones del producto, en el orden recibido (solo importExternalCatalog)."
+              error:
+                $ref: "#/components/schemas/FieldError"
+                description: "Motivo del rechazo, con el formato de FieldError. Solo si status = rejected."
+            required:
+              - "index"
+              - "status"
+            x-calculado: true
+          description: "Un resultado por renglón."
+      required:
+        - "created_count"
+        - "updated_count"
+        - "unchanged_count"
+        - "rejected_count"
+        - "items"
+      x-calculado: true
     ProfecoImportResult:
       type: "object"
       description: "Resultado de importar un corte PROFECO (N-293)."

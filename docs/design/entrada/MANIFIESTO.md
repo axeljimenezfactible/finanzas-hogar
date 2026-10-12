@@ -13,10 +13,10 @@ Lo genera `docs/design/tools/paquete_entrada.sh`; no se edita a mano. Cambia sol
 |---|---|---|---|---|
 | 1 | `LEEME.md` | 4342 bytes (4.2 KB) | `5fb2baf45971af69c5ca21dc22f8b748a361e05bcee4e9ceab9c05e6cec591ef` | Qué pasa en la Pista 3 por Artifacts (K45): quién la ejecuta, dónde quedan las salidas y cómo aprueba Axel; ya no se sube nada. |
 | 2 | `prompt.md` | 15241 bytes (14.9 KB) | `e4d4ee729544a7286c4e76e1f5669fe5d9fe948aae6c5c007c83192da6aec62d` | Brief de los agentes de la Pista 3 (K45): pantallas de U1 a maquetar, cifras sintéticas, tokens de color en texto, reglas de dinero y accesibilidad. |
-| 3 | `DESIGN.pdf` | 2859638 bytes (2792.6 KB) | `1ec8161b894094eb79c5ac17840011a10a245abfbeda5ce152dfeb2a05d7b71d` | Sistema de diseño completo (principios, color, tipografía, componentes, accesibilidad). |
-| 4 | `DESIGN.docx` | 82222 bytes (80.3 KB) | `a48a7693d8840639c8d72fac9ae2fb35ce5349ea6d8ece54eabe72fa3d8bcbff` | El mismo sistema de diseño en Word, por si el PDF no se puede leer. |
-| 5 | `U3-dashboard.pdf` | 1163454 bytes (1136.2 KB) | `df8603fc682e643facec90e440b209a61e1bc05e299bf5ca6d50cfbe42336065` | Qué lleva el Inicio: Resumen (6 tarjetas), Detalle, Tendencias y Calendario. |
-| 6 | `U4-ajustes.pdf` | 1909203 bytes (1864.5 KB) | `ccb6a9d2ed6c6829236a182d67489231b3499ef4cac19a9b35bd4e4bca289e3b` | Las 14 secciones de Ajustes con sus campos y estados. |
+| 3 | `DESIGN.pdf` | 2864315 bytes (2797.2 KB) | `cc0dd99b7747a03c3e66ab302c023ba68d45a10d24dccba037c261ce838188fa` | Sistema de diseño completo (principios, color, tipografía, componentes, accesibilidad). |
+| 4 | `DESIGN.docx` | 82358 bytes (80.4 KB) | `de8e92dce38acdb7ae881ec3847c60c836a02d7ac700cb206837d3e36cea1735` | El mismo sistema de diseño en Word, por si el PDF no se puede leer. |
+| 5 | `U3-dashboard.pdf` | 1195651 bytes (1167.6 KB) | `07a6c46ab481e6efa325e22802bc943e5c03c0b770009166f0d38cc7d31822cb` | Qué lleva el Inicio: Resumen (6 tarjetas), Detalle, Tendencias y Calendario. |
+| 6 | `U4-ajustes.pdf` | 2019443 bytes (1972.1 KB) | `102cc9ad5bfb2470b32efcfc49a2f3e832f8186f51a11440a93eddfb591f0eee` | Las 14 secciones de Ajustes con sus campos y estados. |
 | 7 | `C1-resumen.pdf` | 280159 bytes (273.6 KB) | `48990e18e94a058f7905dc904b940a0907f278f412c3d4f1e9dd9130daa076a9` | Resumen sin código del contrato de datos: módulos, pantallas, entidades, métricas y formatos. |
 | 8 | `C2-tokens.json` | 100073 bytes (97.7 KB) | `570ff553cb58e03d096ab65c8b5f3486488633b31f8ec6088e9450386f49fe5d` | Todos los valores de diseño (colores, tipografía, espaciado, radios) en un solo archivo. |
 | 9 | `tokens.css` | 26121 bytes (25.5 KB) | `2b9429bc41836fc5a17fa74040ab519033bfdfec47b559a713de57bbaa06708d` | Los mismos valores como variables de hojas de estilo, para consulta. |
@@ -46,10 +46,10 @@ cd /home/deepsec/finanzas-hogar/docs/design/entrada && grep -E '^[0-9a-f]{64}  '
 ```
 5fb2baf45971af69c5ca21dc22f8b748a361e05bcee4e9ceab9c05e6cec591ef  LEEME.md
 e4d4ee729544a7286c4e76e1f5669fe5d9fe948aae6c5c007c83192da6aec62d  prompt.md
-1ec8161b894094eb79c5ac17840011a10a245abfbeda5ce152dfeb2a05d7b71d  DESIGN.pdf
-a48a7693d8840639c8d72fac9ae2fb35ce5349ea6d8ece54eabe72fa3d8bcbff  DESIGN.docx
-df8603fc682e643facec90e440b209a61e1bc05e299bf5ca6d50cfbe42336065  U3-dashboard.pdf
-ccb6a9d2ed6c6829236a182d67489231b3499ef4cac19a9b35bd4e4bca289e3b  U4-ajustes.pdf
+cc0dd99b7747a03c3e66ab302c023ba68d45a10d24dccba037c261ce838188fa  DESIGN.pdf
+de8e92dce38acdb7ae881ec3847c60c836a02d7ac700cb206837d3e36cea1735  DESIGN.docx
+07a6c46ab481e6efa325e22802bc943e5c03c0b770009166f0d38cc7d31822cb  U3-dashboard.pdf
+102cc9ad5bfb2470b32efcfc49a2f3e832f8186f51a11440a93eddfb591f0eee  U4-ajustes.pdf
 48990e18e94a058f7905dc904b940a0907f278f412c3d4f1e9dd9130daa076a9  C1-resumen.pdf
 570ff553cb58e03d096ab65c8b5f3486488633b31f8ec6088e9450386f49fe5d  C2-tokens.json
 2b9429bc41836fc5a17fa74040ab519033bfdfec47b559a713de57bbaa06708d  tokens.css

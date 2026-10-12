@@ -1,6 +1,6 @@
 # Índice de criterios de aceptación · Finanzas Hogar (Etapa B)
 
-Versión 1.3 (11-oct-2026, flujo P2c, puerta 2, agente `criterios-puerta2`: respuestas de la puerta 2 aplicadas a S1, S2, S4, S5, S7, C1, U3 y U4; §6, §10 y §12 al día; sin criterios nuevos ni quitados). Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas, conteo propio con `tools/conteo.py`, cambios en §11 y correcciones de la revisión r1 de criterios (A-01 a A-03, M-01, M-02) y de la revisión r2 (hallazgos 1 a 4, fila de §11) la ronda 4 de P1d (hallazgos A a G de la revisión r3, I-02, B-01 de r2 de C1 y U3-01; filas de §11) y la ronda 5 de P1e (hallazgos H-1 a H-6 de la revisión r4; filas de §11); versión 1.1 del 10-oct-2026 con filas y totales de la puerta 1 y conteo reconciliado por el integrador de P1, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
+Versión 1.4 (12-oct-2026, flujo P2d, agente `k53-aplicar`: K53 aplicada a S5-07 y a C1 v1.4; sin criterios nuevos ni quitados, 261 = 201 alta / 60 media). Versión 1.3 (11-oct-2026, flujo P2c, puerta 2, agente `criterios-puerta2`: respuestas de la puerta 2 aplicadas a S1, S2, S4, S5, S7, C1, U3 y U4; §6, §10 y §12 al día; sin criterios nuevos ni quitados). Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas, conteo propio con `tools/conteo.py`, cambios en §11 y correcciones de la revisión r1 de criterios (A-01 a A-03, M-01, M-02) y de la revisión r2 (hallazgos 1 a 4, fila de §11) la ronda 4 de P1d (hallazgos A a G de la revisión r3, I-02, B-01 de r2 de C1 y U3-01; filas de §11) y la ronda 5 de P1e (hallazgos H-1 a H-6 de la revisión r4; filas de §11); versión 1.1 del 10-oct-2026 con filas y totales de la puerta 1 y conteo reconciliado por el integrador de P1, §10) · Escrito en WF-0 por el agente «criterios»; corregido en la ronda 1 de revisión (§9) · Plan: `docs/plan/plan.md` §3.1 principio 4 («Criterios antes del trabajo… los revisores evalúan solo esos criterios»). Cada criterio se traza al plan, a `docs/plan/decisiones.md` o al protocolo (la parte que no deriva de una frase de esas fuentes se marca «convención propia del directorio» en su sección 5); los huecos son bloqueos en `docs/estado/bloqueos/criterios-*.md`.
 
 ## 1. Cómo usar estos archivos
 - **Un archivo por ítem** (18 + este índice). Cada uno trae: 1 Objetivo · 2 Criterios numerados `<ID>-nn` (enunciado medible, «Verifica» con comando o cálculo, «Evidencia», severidad) · 3 No aceptable · 4 Umbrales numéricos · 5 Trazabilidad.
@@ -133,7 +133,7 @@ Conteo propio por script sobre los 18 archivos (no incluye este índice): `pytho
 | `S2.md` | 16 (13 / 3 / 0) | 1.3 |
 | `S3.md` | 20 (17 / 3 / 0) | 1.2 |
 | `S4.md` | 15 (11 / 4 / 0) | 1.3 |
-| `S5.md` | 13 (10 / 3 / 0) | 1.3 |
+| `S5.md` | 13 (10 / 3 / 0) | 1.4 |
 | `S6.md` | 16 (12 / 4 / 0) | 1.2 |
 | `S7.md` | 14 (12 / 2 / 0) | 1.3 |
 | `S8.md` | 11 (8 / 3 / 0) | 1.1 |
@@ -143,7 +143,7 @@ Conteo propio por script sobre los 18 archivos (no incluye este índice): `pytho
 | `U3.md` | 12 (8 / 4 / 0) | 1.3 |
 | `U4.md` | 13 (10 / 3 / 0) | 1.3 |
 | `U5.md` | 13 (10 / 3 / 0) | 1.2 |
-| `C1.md` | 23 (21 / 2 / 0) | 1.3 |
+| `C1.md` | 23 (21 / 2 / 0) | 1.4 |
 | `C2.md` | 12 (8 / 4 / 0) | 1.2 |
 | `C3.md` | 11 (9 / 2 / 0) | 1.1 |
 | `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.3 |
@@ -160,13 +160,14 @@ Respuestas de la puerta 1b aplicadas (decisiones K35 a K44) y hallazgos bajos B-
 | K35 | La Pista 3 la ejecuta Axel; la puerta 3 se reduce a «paquete listo y revisado»; lista nueva del paquete con `LEEME.md` y `MANIFIESTO.md`; `iter-N/` y `siguiente-prompt.md` | `P3-claude-design.md` (P3-01 a P3-06, P3-11, §3 a §5), este índice (§1, §2, §3) |
 | K45 (11-oct-2026, cierre de WF-1; `P3-claude-design.md` pasa a 1.3) | Pista 3 por Artifacts, sustituye a K35: la ejecuta el orquestador sin navegador ni subida de archivos; cifras sintéticas; todas las pantallas de U1; la puerta 3 pasa a «Axel abre la URL del lienzo y aprueba la referencia visual» | `P3-claude-design.md` 1.3 (P3-01 a P3-13, §1, §3 a §5), este índice (§1, §2, §3, §10) |
 | K36 | Ajuste de calorías por persona, 0 y 0, «mantener» no ajusta | `S4.md` (S4-07), `U4.md` (U4-13), `C1.md` (C1-22) |
-| K37 | `manual` compite; `site_assisted` y PROFECO solo referencia | `S5.md` (S5-04, S5-10) |
+| K37 | `manual` compite; `site_assisted` y PROFECO solo referencia | `S5.md` (S5-04, S5-10); desde K53 (P2d), `site_assisted` es la fuente del agente externo y su peso es PROVISIONAL (bloqueo `S5-agente-externo`) |
 | K38 | Domingos: semana siguiente por defecto | `U1.md` (U1-16) |
 | K39 | Promedio semanal: diario exacto × 7, un solo redondeo (219.88 y 629.35) | `S2.md` (S2-08) |
 | K40 | Peso (90 − días) / 61 entre los días 30 y 90; 91 días no compite | `S5.md` (S5-04) |
 | K41 y K42 | Karen 333° y Bodega Aurrera 356° con refuerzo; Walmart oscuro `#7AA3EE` | `U2.md` (U2-02, U2-08) |
 | K43 | Adjunto 10 MB, comparador 5 s con 503, `send_time` y `advance_days`, casillas sin armar ≤ 21 | `C1.md` (C1-23), `S3.md` (S3-12), `S6.md` (S6-10) |
 | K44 | Todo parámetro operativo existe y es configurable, con valor inicial y «restablecer» | `U4.md` (U4-12, U4-04), `C1.md` (C1-22), `S3.md` (S3-12) |
+| K53 | La aplicación no lee sitios de tiendas; agente externo por la API (C1 v1.4); S5-07 «no aplica desde K53» | `S5.md` (S5-07), `C1.md` (C1-02, C1-13, C1-21) |
 | Pendiente 4 de `INTEGRACION.md` §7 | C1-15 define «bloqueo abierto = sin Respuesta de Axel»; C1-21 pide `INDICE.md` en los extractos y suma igual a `openapi.yaml` | `C1.md` (C1-15, C1-21) |
 | B-01 | §1 con 261; notas 8 y 10 (y 9 y 11) como resueltas; §6 con los 24 bloqueos y su estado; conteo propio y versiones | este índice (§1, §5, §6, §10), `tools/conteo.py` |
 | B-02 | «Día de pago 15 y 30» separado de las quincenas de K8; C1-07 comprueba la declaración 1–15 y 16–último día | `C1.md` (C1-06, C1-07) |
@@ -208,6 +209,6 @@ Respuestas de la puerta 2 aplicadas (`docs/estado/puerta2/RESPUESTAS.md`; decisi
 | S2 1.3 (Q2-13 a Q2-27; Q2-01 caso 1 = A) | Ventanas contiguas, ascendentes y disjuntas: la contigüidad es PROVISIONAL (`S2-ventanas` pregunta 4, caso 1) y el caso 2 (ventanas que no duran un mes) queda sin decidir; `provisional` siempre `null`; metas con tres estados y meta vencida PROVISIONAL; `variable_estimated_cents` y `savings_planned_cents` PROVISIONALES | `S2.md` (S2-09, S2-10, S2-12, S2-14, S2-16) |
 | S4 1.5 (Q2-06 a Q2-08, Q2-39 a Q2-46) | Cotización por elección (`choice_store`, `choice_presentation`); presentación de respaldo PROVISIONAL (`S4-presentacion-respaldo`); orden de las listas; reglas de mercado FIRMES; empates `propuesto` siguen PROVISIONALES | `S4.md` (S4-03, S4-06, S4-10, S4-12, S4-15) |
 | S5 1.5 (Q2-02 a Q2-05, Q2-47 a Q2-63) | Una sola «mejor tienda» en los dos modos; granel PROVISIONAL (`S5-carritos-granel`); lectura PROFECO como regla técnica; filtro y liga normalizada PROVISIONALES «en uso A»; orden de listas | `S5.md` (S5-03, S5-05, S5-12, S5-13) |
-| Q2-64 = A y puerta 2 bis (K48; K53 por registrar en P2d) | `docs/estado/S5-terminos.md` existe con 3 veredictos «no verificado» (desafío anti-robot): S5-07 queda **NO CUMPLE en el fondo**, no se marca cumplido; la lectura asistida sigue apagada; Axel respondió que la aplicación no leerá sitios de tiendas (K53) y eso se registra en P2d | `S5.md` (S5-07, §3, §4) |
-| PROPUESTAS (no añadidas) | (1) al registrar K53, reformular o retirar S5-07 con la firma de Axel; (2) un criterio C1 para la importación del agente externo de precios, cuando P2d la defina; (3) criterios propios para Q2-67 (IVA), Q2-69 (a) y Q2-82 (atajos) si Axel los quiere | este índice |
+| Q2-64 = A y puerta 2 bis (K48; K53, registrada en P2d) | `docs/estado/S5-terminos.md` existe con 3 veredictos «no verificado» (desafío anti-robot): S5-07 queda **NO CUMPLE en el fondo**, no se marca cumplido; la lectura asistida sigue apagada; Axel respondió que la aplicación no leerá sitios de tiendas (K53) y eso se registra en P2d | `S5.md` (S5-07, §3, §4). **P2d (12-oct-2026):** K53 registrada; S5-07 pasa a «No aplica desde K53» (`S5.md` 1.4), el bloqueo `S5-terminos` queda RESUELTO y se abre `S5-agente-externo` (puerta 4) |
+| PROPUESTAS (no añadidas) | (1) hecho en P2d: S5-07 se reformuló como «No aplica desde K53»; retirarlo del todo sigue pidiendo la firma de Axel; (2) un criterio C1 para la importación del agente externo: C1 v1.4 ya la define, pero el criterio no se añadió; (3) criterios propios para Q2-67 (IVA), Q2-69 (a) y Q2-82 (atajos) si Axel los quiere | este índice |
 | Conteo | Total **261 (201 / 60)** sin cambio; §2 y §10 solo cambian en versiones | este índice |

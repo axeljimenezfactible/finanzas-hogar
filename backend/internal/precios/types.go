@@ -1,7 +1,7 @@
 // Paquete precios: motor de precios y tiendas (S5). Núcleo puro, sin red ni base de datos:
 // ingesta por fuente, equivalencia por unidad base, frescura, precio vigente, comparativa
 // por ingrediente y por canasta, membresía de Sam's y mercados con día de visita.
-// Contrato: docs/contratos/motores/S5-interfaz.md 1.4; reglas RN-12, RN-13, RN-16, RN-20.
+// Contrato: docs/contratos/motores/S5-interfaz.md 1.5; reglas RN-12, RN-13, RN-16, RN-20.
 // Dinero en centavos int64; comparaciones con fracciones exactas; HALF_UP solo al publicar.
 package precios
 
@@ -179,7 +179,13 @@ func mul(a, b int64) (int64, error) {
 
 // ParseDate lee una fecha ISO (AAAA-MM-DD) como medianoche UTC (fecha de calendario).
 func ParseDate(s string) (time.Time, error) {
-	return time.Parse(time.DateOnly, s)
+	t, err := time.Parse(time.DateOnly, s)
+	if err == nil && t.Year() < 1 {
+		// Año 0000: invalid_date, igual que el oráculo (date.fromisoformat). PROVISIONAL, bloqueo
+		// S5-precio-vigente-captura pregunta 3.
+		return time.Time{}, fmt.Errorf("año 0000: %q", s)
+	}
+	return t, err
 }
 
 // AgeDays son los días de calendario entre observed y today (negativo si observed es futura).

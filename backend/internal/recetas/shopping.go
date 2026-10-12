@@ -110,7 +110,7 @@ func (e *Engine) ShoppingListFor(monday Date) (out *ShoppingList, err error) {
 		n := get(it.Product)
 		n.stock += estimateAt(it, monday)
 		if it.Mode == ModeRate && it.ReorderLevelMilli != nil && estimateAt(it, monday.AddDays(6)) <= *it.ReorderLevelMilli {
-			n.repl += weeklyConsumption(it) // PROVISIONAL (bloqueo S4-reglas-lista, pregunta 2, opción A)
+			n.repl += weeklyConsumption(it) // FIRME (Q2-45 = A; bloqueo S4-reglas-lista, pregunta 2, RESUELTO)
 		}
 	}
 	for _, ch := range e.Choices {
@@ -240,7 +240,7 @@ func (e *Engine) buildItem(p, kind string, needed *int64, ch *ListChoice, fallba
 			it.Store = ptr(quote.Store)
 		}
 	default:
-		it.Store = e.marketFor(p) // PROVISIONAL (bloqueo S4-asignacion-mercado, opción A)
+		it.Store = e.marketFor(p) // FIRME (Q2-39 y Q2-40 = A; bloqueo S4-asignacion-mercado, RESUELTO)
 	}
 	if chStore == "" {
 		it.RecommendedStore = it.PriceStore
@@ -256,7 +256,7 @@ func (e *Engine) buildItem(p, kind string, needed *int64, ch *ListChoice, fallba
 }
 
 // marketFor: entre los mercados que surten el grupo del producto, el de next_visit más cercana; en empate,
-// el primero en el orden de stores; sin ninguno, nil (§6.5 paso 3, PROVISIONAL).
+// el primero en el orden de stores; sin ninguno, nil (§6.5 paso 3; FIRME, Q2-39 y Q2-40 = A).
 func (e *Engine) marketFor(p string) *string {
 	g := e.Catalog.Products[p].Group
 	var best *Store

@@ -41,6 +41,8 @@ type Filter struct {
 }
 
 // NewFilter arma el filtro. Sin sucursales (con municipio) no pasa ningún registro.
+// Municipios solo de las sucursales, nombres comparados con Fold y sucursal buscada solo en la cadena que casó:
+// PROVISIONAL, bloqueo S5-profeco-filtro, opción A de las preguntas 1 a 3 (Q2-56 a Q2-58, sin respuesta).
 func NewFilter(s StoreSet) *Filter {
 	f := &Filter{chainByName: map[string]Chain{}, branchByName: map[string]Branch{}, munAny: map[string]bool{}, munState: map[string]bool{}}
 	for _, c := range s.Chains {

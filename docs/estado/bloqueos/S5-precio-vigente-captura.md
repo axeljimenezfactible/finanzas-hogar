@@ -5,8 +5,8 @@ Lo abrió el agente `correccion-motor-S5-r2` el 11-oct-2026, en la ronda P2c. Lo
 **Contexto.**
 - `S5-interfaz.md` 1.5, §6 (supuesto S-8): si dos precios que compiten tienen la misma fecha, rige el de `created_at` más reciente.
 - §15.1: `created_at` es un «instante RFC 3339».
-- M-1 ya quedó corregido. Los dos lados comparan el instante en UTC y rechazan con `invalid_date` lo que RFC 3339 §5.6 no admite: zona `+24:00` o `+05:60` y hora `24`.
-- Lo fijan cuatro fixtures nuevas: `s5-precio-vigente-zona`, `s5-ingesta-zona-hora`, `s5-ingesta-zona-minuto` y `s5-ingesta-hora-24`.
+- M-1 ya quedó corregido. Los dos lados comparan el instante en UTC y rechazan con `invalid_date` lo que RFC 3339 §5.6 no admite: zona `+24:00` o `+05:60` y hora `24`. Desde el 12-oct-2026 (`p2c-remanentes`, M-1 de `docs/estado/p2c/REVISION-motor-S5-r3.md`) rechazan también la hora de un dígito, la coma decimal, el salto de línea al final y los dígitos que no son ASCII: antes el motor aceptaba los dos primeros y el oráculo los dos últimos (ver la pregunta 3).
+- Lo fijan cuatro fixtures nuevas: `s5-precio-vigente-zona`, `s5-ingesta-zona-hora`, `s5-ingesta-zona-minuto` y `s5-ingesta-hora-24`. La corrección del 12-oct-2026 agregó siete: `s5-ingesta-hora-un-digito`, `s5-ingesta-hora-un-digito-zona`, `s5-ingesta-coma-decimal`, `s5-ingesta-salto-linea`, `s5-ingesta-digitos-no-ascii`, `s5-ingesta-anio-cero` y `s5-ingesta-fecha-anio-cero` (las dos últimas, PROVISIONAL por la pregunta 3).
 - Al medir salieron cuatro puntos que el contrato no fija. Ninguna fixture los usa, así que `compara.py s5` da 0 diferencias. Ninguno mueve una cifra canon.
 
 **Regla mientras no se conteste:** PROVISIONAL, **en uso: el motor**, igual que en `S5-motor-oraculo-reglas`.
@@ -67,7 +67,25 @@ RFC 3339 deja abiertas tres cosas:
 - Una nota de §5.6 deja que una aplicación use un espacio en lugar de «T».
 - §5.7 admite el segundo 60 (segundo intercalar).
 
-Los dos lados rechazan las cuatro formas con `invalid_date` (sondas `p-t-minus`, `p-z-minus`, `p-espacio` y `p-seg60`). Aquí **no** hay divergencia; falta que el contrato lo diga.
+Los dos lados rechazan las cuatro formas con `invalid_date` (sondas `p-t-minus`, `p-z-minus`, `p-espacio` y `p-seg60`). Falta que el contrato lo diga.
+
+**Corrección (12-oct-2026, `p2c-remanentes`; M-1 de `docs/estado/p2c/REVISION-motor-S5-r3.md`).** Aquí decía «aquí **no** hay divergencia», y no era cierto. El revisor midió seis textos en que un lado aceptaba y el otro respondía `invalid_date` (`manual` a 2000 con 12:30:00Z contra `ticket_manual` a 2100 con el texto de la tabla):
+
+| Texto del `ticket_manual` | ¿RFC 3339? | Motor antes | Oráculo antes | Los dos, desde el 12-oct |
+|---|---|---|---|---|
+| `2026-10-10T7:00:00Z` | no | 2000 `manual` | `invalid_date` | `invalid_date` |
+| `2026-10-10T7:00:00-06:00` | no | 2100 `ticket_manual` | `invalid_date` | `invalid_date` |
+| `2026-10-10T12:30:00,5Z` | no | 2100 `ticket_manual` | `invalid_date` | `invalid_date` |
+| `2026-10-10T12:30:00Z` y un salto de línea | no | `invalid_date` | 2100 `ticket_manual` | `invalid_date` |
+| `2026-10-10T13:00:00Z` con dígitos U+0660 a U+0669 | no | `invalid_date` | 2100 `ticket_manual` | `invalid_date` |
+| `0000-01-01T00:00:00Z` | **sí** | 2000 `manual` | `invalid_date` | `invalid_date` (PROVISIONAL) |
+
+- Los cinco primeros no son RFC 3339 y §15.1 pide RFC 3339: rechazarlos no decide nada nuevo. Los dos lados exigen ahora la gramática de §5.6 en ASCII antes de revisar los rangos (`eval.go`, `rfc3339Text`; `pre_comun.py`, `_RFC` con `[0-9]` y `fullmatch`).
+- **El año 0000 sí es RFC 3339** (`date-fullyear` = 4DIGIT). Si se acepta o si el perfil lo excluye **no está decidido** y se suma a esta pregunta. Mientras tanto los dos lados lo rechazan (PROVISIONAL), porque el oráculo ya lo hacía (`datetime.date` no admite el año 0) y así coinciden (§15.3).
+- Lo mismo pasa con `observed_date` `0000-01-01`: `time.Parse(time.DateOnly, …)` lo acepta y `date.fromisoformat` no (medido con un programa aparte el 12-oct). Hoy `ParseDate` (`types.go`) lo rechaza y los dos lados responden `invalid_date` (PROVISIONAL, esta pregunta).
+- Fixtures: `s5-ingesta-anio-cero` y `s5-ingesta-fecha-anio-cero`, con `provisional` que cita esta pregunta; las otras cinco van sin marca.
+
+**Opciones adicionales para el año:** **A1.** El perfil de A con el año 0001 o posterior (lo que hacen hoy los dos lados). **A2.** El perfil de A con el año 0000 permitido (cambian los dos lados; el oráculo ya no podría usar `datetime.date`).
 
 **Opciones:**
 - **A.** §15.1 fija el perfil en uso: «T» y «Z» mayúsculas, segundos 00-59 y zona «Z» o ±hh:mm con hora 00-23 y minuto 00-59.
@@ -98,3 +116,6 @@ Los dos lados rechazan las cuatro formas con `invalid_date` (sondas `p-t-minus`,
   - el motor, para que cumpla los rangos de la zona.
 - Agregué las cuatro fixtures de arriba. Ninguna depende de este bloqueo: no hay pares que empaten, la fracción es de 3 dígitos y las letras van en mayúscula.
 - Las cuatro preguntas quedan abiertas.
+- 12-oct-2026 (`p2c-remanentes`): corregí M-1 de `REVISION-motor-S5-r3` en los dos lados (gramática ASCII antes de los rangos; año 0000 rechazado, PROVISIONAL) y agregué las siete fixtures de arriba. `compara.py s5` sigue en 0 diferencias. No decidí ninguna de las cuatro preguntas.
+
+- **Estado:** ABIERTO

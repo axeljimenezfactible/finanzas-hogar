@@ -1,5 +1,7 @@
 # S5-terminos · Términos de las tiendas para la lectura asistida
 
+> **No aplica desde K53 (nota de cierre, 12-oct-2026, P2d, agente `k53-aplicar`).** En la puerta 2 bis (11-oct-2026, 22:55) Axel decidió que la aplicación no lee sitios de tiendas. Un agente externo, su sesión de Claude Code con Claude in Chrome, obtiene precios, productos y recetas, y los mete por la API (`docs/plan/decisiones.md` K53). Por eso la lectura asistida, su interruptor y este veredicto de términos ya no aplican. El bloqueo `S5-terminos` quedó RESUELTO por K53. Lo pendiente del agente externo está en `docs/estado/bloqueos/S5-agente-externo.md`. Este archivo se conserva **sin cambios** como registro histórico del intento del 11-oct-2026.
+
 Fecha: 11-oct-2026, noche (lecturas a las 22:28 CST). Agente: S5-terminos (flujo P2c). Autorización: Q2-64 = A (Axel, 11-oct-2026, `docs/estado/puerta2/RESPUESTAS.md`): solo portada para ubicar enlaces legales y páginas legales; sin productos, precios, búsqueda, carrito ni API. Contexto: decisiones §E y K37; criterio S5-07.
 
 **Lectura honesta de este archivo:** los tres sitios respondieron con una pantalla de verificación anti-robot y **no se pudo leer ninguna página legal**. No hay cláusulas que citar. Los tres veredictos son «no verificado». El conteo de la verificación S5-07 (tres líneas de veredicto) se cumple en lo mecánico, pero **S5-07 NO está cumplido en el fondo** (exige veredicto escrito sobre los términos leídos).

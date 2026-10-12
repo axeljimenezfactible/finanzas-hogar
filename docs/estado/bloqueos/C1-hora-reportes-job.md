@@ -14,3 +14,5 @@ PROPUESTA del agente: A. Sin decisión de Axel no se aplica.
 Impacto: hora y día de los reportes en S7 (WF-3) y la pantalla P-26.08 (U4). Ninguna cifra cambia. Mientras tanto queda la opción en uso: `updateJob` acepta `schedule` en todos los jobs.
 
 Cómo seguí: C1 v1.3 marca PROVISIONAL `JobUpdate.schedule` y la fila de §13, citando este archivo.
+
+- **Estado:** ABIERTO

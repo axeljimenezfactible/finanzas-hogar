@@ -1447,12 +1447,42 @@
         "quote": null
       }
     },
+    "s5-ingesta-anio-cero": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
+    "s5-ingesta-coma-decimal": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
+    "s5-ingesta-digitos-no-ascii": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
+    "s5-ingesta-fecha-anio-cero": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
     "s5-ingesta-fecha-futura": {
       "precio": {
         "error": "future_date"
       }
     },
     "s5-ingesta-hora-24": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
+    "s5-ingesta-hora-un-digito-zona": {
+      "precio": {
+        "error": "invalid_date"
+      }
+    },
+    "s5-ingesta-hora-un-digito": {
       "precio": {
         "error": "invalid_date"
       }
@@ -1465,6 +1495,11 @@
     "s5-ingesta-presentacion-desconocida": {
       "precio": {
         "error": "unknown_presentation"
+      }
+    },
+    "s5-ingesta-salto-linea": {
+      "precio": {
+        "error": "invalid_date"
       }
     },
     "s5-ingesta-tienda-desconocida": {

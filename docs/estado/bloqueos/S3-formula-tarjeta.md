@@ -44,4 +44,6 @@ Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado
 - **Qué cambia:** Calendario de la tarjeta en `S3-interfaz.md` (corte y fecha de pago, meses cortos, meses sin intereses) sin marca PROVISIONAL; fixtures `s3-unificado` y `s3-unificado-sin-corte`.
 - **Estado:** RESUELTO
 
+Remisión (P2c, 11-oct-2026, noche; la aplicó `p2c-remanentes` el 12-oct-2026): la respuesta (a) a las preguntas 1 a 3 (Q2-29 a Q2-31) espera los estados de cuenta en PDF; lo que sigue abierto vive en `docs/estado/bloqueos/S3-formula-tarjeta-pdf.md` (ABIERTO, lo abrió `correccion-contratos-r1`). La pregunta 4 (Q2-32 = A: calendario de la tarjeta y corte que sustituye pagos) es FIRME.
+
 **Estado del bloqueo (puerta 2): RESUELTO**

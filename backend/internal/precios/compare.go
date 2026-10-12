@@ -162,6 +162,8 @@ func (b *Book) CompareCarts(base Cart, others []Cart) (*CartComparison, error) {
 			}
 			a.qty += l.QuantityMilli
 			a.lines = append(a.lines, l)
+			// Total exacto de la canasta, también a granel, y un solo HALF_UP al publicar: PROVISIONAL, bloqueo
+			// S5-carritos-granel, opción A en uso (§7.2 paso 8).
 			exactTot[ci].Add(exactTot[ci], new(big.Int).Mul(big.NewInt(l.QuantityMilli), big.NewInt(l.UnitPriceCents)))
 		}
 		for _, a := range aggs[ci] {

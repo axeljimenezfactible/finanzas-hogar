@@ -19,4 +19,6 @@ Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado
 - **Qué cambia:** `S4-interfaz.md` §9.1 y `S5-interfaz.md` §11 quitan la marca PROVISIONAL de quién y cuándo; Axel confirma la lista de renglones «propuesto» (la de nutrición es la Q2-90, sin respuesta); en producción no se carga ningún renglón «propuesto»; no toca esquema ni C1. Acción pendiente de Axel en PUERTA-2 §7.
 - **Estado:** RESUELTO
 
+Remisión (P2c, 11-oct-2026, noche; la aplicó `p2c-remanentes` el 12-oct-2026): quién confirma y cuándo es FIRME (Q2-43 = A). La confirmación de los valores `propuesto` (Q2-90, sin respuesta) vive en `docs/estado/bloqueos/S4-empates-sin-confirmar.md` (ABIERTO, lo abrió `correccion-contratos-r1`).
+
 **Estado del bloqueo (puerta 2): RESUELTO**

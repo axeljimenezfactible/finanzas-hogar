@@ -63,7 +63,7 @@ func (e *Engine) weekEntries(monday Date) ([]PlanEntry, error) {
 
 // coverLeftovers: cada sobrante registrado (con receta y porciones > 0) cubre primero las entradas de su
 // receta en orden de fecha y tiempo, si no caducó antes de la entrada (§6.4, FIRME). Devuelve las porciones
-// cubiertas por entrada y los sobrantes que el plan no alcanza a consumir (PROVISIONAL, S4-reglas-lista).
+// cubiertas por entrada y los sobrantes que el plan no alcanza a consumir (FIRME: Q2-44 = A del bloqueo S4-reglas-lista, RESUELTO).
 func (e *Engine) coverLeftovers(entries []PlanEntry) ([]int64, []Leftover) {
 	covered := make([]int64, len(entries))
 	rest := []Leftover{}

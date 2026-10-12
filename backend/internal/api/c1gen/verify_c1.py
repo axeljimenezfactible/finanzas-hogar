@@ -79,7 +79,12 @@ print(f'C1-02 operaciones: {len(opset)} · operaciones sin N-xxx: {len(sin_n)} {
 print(f'C1-02 matriz §10: {len(filas)} filas · pares pantalla-necesidad de U1 §3.29: {len(pares_u1)} · solo en U1: {sorted(pares_u1 - pares_c1)[:5]} · solo en C1: {sorted(pares_c1 - pares_u1)[:5]} · pares necesidad-operación en §10 sin x-necesidades: {len(d1)} {d1[:5]} · en x-necesidades sin §10: {len(d2)} {d2[:5]}')
 ok(not sin_op_ni_local, 'C1-02 0 N-xxx sin operación ni Local (una N-xxx bloqueada no cuenta como cubierta)')
 ok(not p_sin_op and not p_fuera, 'C1-02 0 pantallas P-xx sin operación ni Local')
-ok(sin_n == ['GET /openapi.yaml'], 'C1-02 única operación sin N-xxx = GET /openapi.yaml (excepción «estáticos», C1 §11.2)')
+# C1 v1.4 (K53): además de GET /openapi.yaml, solo las 4 operaciones del agente externo van sin N-xxx (x-agente-externo, solo serviceToken).
+_ext = sorted(f'{m} {p}' for m, p, o in OPS if o.get('x-agente-externo'))
+_ext_ok = all(not o.get('x-necesidades') and o.get('security') == [{'serviceToken': []}] and o.get('tags') == ['Compras y tiendas'] for m, p, o in OPS if o.get('x-agente-externo'))
+_tok_solo = sorted(f'{m} {p}' for m, p, o in OPS if 'serviceToken' in str(o.get('security', '')) and not o.get('x-agente-externo'))
+print(f'C1-02 operaciones del agente externo (K53, x-agente-externo, sin N-xxx): {len(_ext)} {_ext} · con serviceToken sin la marca: {_tok_solo}')
+ok([x for x in sin_n if x not in _ext] == ['GET /openapi.yaml'] and len(_ext) == 4 and _ext_ok and not _tok_solo, 'C1-02 operaciones sin N-xxx = GET /openapi.yaml (excepción «estáticos», C1 §11.2) y las 4 del agente externo (K53: x-agente-externo, solo serviceToken, C1 §2)')
 ok(not (xn - NSET) and not inexist, 'C1-02 0 N-xxx citadas que no existen en U1 y 0 rutas de la matriz que no existen en openapi.yaml')
 ok(pares_u1 == pares_c1 and len(filas) == len(pares_c1), 'C1-02 matriz §10 = pares pantalla-necesidad de U1 §3.29 (una fila por par)')
 ok(not d1 and not d2, 'C1-02 matriz §10 = x-necesidades de openapi.yaml')
@@ -248,7 +253,7 @@ ids = [o['operationId'] for _, _, o in OPS]
 TAGS9 = ['Inicio', 'Gastos', 'Presupuesto', 'Comidas', 'Compras y tiendas', 'Créditos', 'Salud', 'Reportes', 'Ajustes']
 badtag = [o['operationId'] for _, _, o in OPS if not o.get('tags') or not set(o['tags']) <= set(TAGS9)]
 print(f'C1-13 operationId duplicadas: {len(ids) - len(set(ids))} · sin etiqueta válida: {badtag} · etiquetas: {[t["name"] for t in d["tags"]]} · info.version: {d["info"]["version"]}')
-ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.3' in c1 and d['info']['version'] == '1.3.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.3')
+ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.4' in c1 and d['info']['version'] == '1.4.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.4')
 # K44 (C1 v1.2, puerta 1b): cada parámetro @param de las migraciones tiene una sola lectura (GET con parameters) y un solo cambio con
 # «restablecer» (PATCH con parameters y reset_parameters); la tabla de §11.7 da su valor inicial y la base sembró ese valor.
 PRM = []

@@ -10,9 +10,9 @@ const (
 	RequiredVersion = "5.5.3"
 	Lang            = "spa"
 
-	// DefaultTimeoutSeconds es el tiempo máximo por imagen. PROVISIONAL: la
-	// clave ocr.timeout_seconds todavía no existe en app_setting (propuesta
-	// K31/K44, ver docs/estado/wf1/ocr.md); el valor 30 es la propuesta.
+	// DefaultTimeoutSeconds es el tiempo máximo por imagen: 30 s, FIRME (Q2-76,
+	// K50). La clave ocr.timeout_seconds de app_setting existe desde la
+	// migración 00004 y este es su valor inicial.
 	DefaultTimeoutSeconds = 30
 )
 

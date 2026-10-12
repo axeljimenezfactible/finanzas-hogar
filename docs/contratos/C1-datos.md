@@ -6,7 +6,7 @@
 | Autor | Agente S6a-contrato-c1 (flujo WF-0 «Cimientos», fase S6 parte a); corrección r1: agente correccion-C1-r1; corrección r2: agente correccion-C1-r2; v1.1 corrección r1: agente correccion-C1-r1; v1.1 corrección r4: agente correccion-C1-r4; v1.2: agente C1-v1.2; v1.2 corrección r1: agente correccion-C1-r1; v1.2 ronda 3 (P1d): agente correccion-C1-r3; v1.3: agente C1-puerta2 (P2c) |
 | Estado | Puerta 2 aplicada (C1 v1.3): respuestas de Axel de `docs/estado/puerta2/RESPUESTAS.md` sobre el esquema 1.4 de S1. Las preguntas sin recomendación quedan con la opción en uso y no cambian C1 |
 | Fuentes | `plan.md` §1, §3.4 (S6, S7), §3.5 (U1), §3.7; `decisiones.md`; esquema de S1, versión 1.4 (00001 a 00004: `backend/db/migrations/00001_esquema.sql`, `00002_puerta1.sql`, `00003_puerta1b.sql` y `00004_puerta2.sql`; `docs/contratos/diccionario-datos.md`, `docs/contratos/reglas-negocio.md`); U1 1.2 (`docs/design/U1-arquitectura.md`, necesidades N-xxx); puerta 2: `docs/estado/puerta2/PUERTA-2.md` y `RESPUESTAS.md`, contratos de motores S2 1.3, S4 1.5 y S5 1.5 (`docs/contratos/motores/`) y U3 1.3 |
-| Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): 168 rutas, 212 operaciones, 255 esquemas |
+| Archivo de máquina | `docs/contratos/openapi.yaml` (OpenAPI 3.1.1): 172 rutas, 216 operaciones, 262 esquemas |
 | Generador | Este documento, `openapi.yaml` y `backend/internal/api/routes.go` son archivos generados: no se editan a mano. Fuente: `backend/internal/api/c1gen/` (este texto sale de `c1_plantilla.md`; ver su `README.md`). Regenerar: `python3 -I backend/internal/api/c1gen/build.py`. Comprobar que nadie los editó a mano: `python3 -I backend/internal/api/c1gen/build.py --check`. Verificar C1-01 a C1-15, la matriz §10 y S6-03: `uv run --no-project --with pyyaml --with jsonschema python3 -I backend/internal/api/c1gen/verify_c1.py` |
 
 Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla **necesita**. El OpenAPI es la fuente de verdad de rutas y esquemas; aquí están las convenciones únicas, las métricas con su fórmula, la matriz pantalla → necesidad → endpoint y la cobertura de S1. Todo lo que no sale del plan, de las decisiones o del oráculo va marcado **PROVISIONAL** y apunta a su bloqueo en `docs/estado/bloqueos/`.
@@ -26,6 +26,29 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 | C1 v1.2 · corrección r1 | 11-oct-2026 | Hallazgo A-01 de `docs/estado/p1c/REVISION-C1-r1.md` (C1-23, K43). `params_json` de `Notification` y `NotificationUpdate` declara las propiedades `send_time` (`type: string`, patrón `HH:MM` de 24 horas) y `advance_days` (`type: integer`, `minimum: 0`), sin valor por omisión; `weekday` y `day_of_month` siguen por `additionalProperties: true` y la marca de lugar `x-provisional` (bloqueo `S1-parametros-avisos`) se queda. Detalle al final de §11.7. `verify_c1.py` comprueba C1-23. Sin cambios de rutas, operaciones, cifras ni versión (`info.version` 1.2.0). |
 | C1 v1.2, ronda 3 (P1d) | 11-oct-2026 | Hallazgos bajos N-01, N-02, N-03, B-02, B-03, B-04, B-05 e I-01 de `docs/estado/p1c/REVISION-C1-r2.md`. N-01: una sola constante de versión (`info.version` 1.2.0) para los encabezados generados de `openapi.yaml`, `routes.go` y los extractos. N-02: `minimum: 0` en `goal_adjust_lose_kcal` y `goal_adjust_gain_kcal` de `HealthProfileCreate` y `HealthProfileUpdate` (K36). N-03: el estado de la tarjeta (N-205) cita RN-26 y S3-08 (K18) en vez de un archivo de bloqueo. B-02: `NotificationUpdate` ya no lleva la marca de lugar en el esquema entero (`is_enabled` es FIRME); la llevan `params_json` y sus claves `send_time` y `advance_days`, en `Notification` y en `NotificationUpdate` (bloqueo `S1-parametros-avisos`). B-03: la descripción de `params_json` dice que los umbrales y los días antes del pago viven en `app_setting` desde 1.3 y que ahí quedan `send_time`, `advance_days`, `weekday` y `day_of_month`, con valor FIRME (decisión F) en las dos últimas. B-04: el mensaje de `verify_c1.py` sobre la regla del domingo dice FIRME (K38). B-05: el reporte de C1 v1.2 trae los comandos completos de verificación. I-01: esta cabecera dice puerta 1b aplicada, esquema 1.3 y U1 1.2. La nota de `send_time` en la 00003 dice que lo propone S7 en WF-3 (K31, puerta 4). Sin cambios de rutas, operaciones, cifras ni versión (`info.version` 1.2.0). |
 | C1 v1.3 (puerta 2) | 11-oct-2026 | Aplica las respuestas de Axel de la puerta 2 (`docs/estado/puerta2/RESPUESTAS.md`: lo recomendado de `PUERTA-2.md` más Q2-11 B) contra el esquema 1.4 de S1 (migraciones 00001 a 00004). Reportes y avisos: hora, día y anticipación pasan a `app_setting` con lectura y cambio por clave (operaciones nuevas `getReportSettings` y `updateReportSettings`; `AlertSettings` suma tres claves); `params_json` ya no declara `send_time` ni `advance_days`. Rango por clave en el cambio (`minimum`, `maximum`, `pattern`) y tipo nuevo `SettingParameterTime`. `Credit.missing_terms` con `vat` (5 datos) y `credit.vat_included`. Alcance `scope` en `CostShareRuleUpdate` (§7.2). Lista de compras con tienda asignada, fecha de visita y totales de Q2-42 A; comparativa con `cheapest_store_id`; acumulados de T-2; décimas del avance de una meta; segunda tienda de la tarjeta 5; tienda del escenario. Detalle en «C1 v1.3 (puerta 2)», abajo. `info.version` = 1.3.0. |
+| C1 v1.4 (puerta 2 bis) | 12-oct-2026 | Aplica K53 (`docs/plan/decisiones.md` §K; puerta 2 bis): la aplicación no lee sitios de tiendas y un agente externo mete productos, presentaciones, precios y recetas por la API. Cuatro operaciones nuevas sin N-xxx: `getExternalAgentReference`, `importExternalCatalog`, `importExternalPrices` e `importExternalRecipes`, con la etiqueta «Compras y tiendas» y la marca `x-agente-externo`. Esquema de seguridad nuevo `serviceToken` y esquemas `External*`. La lectura asistida queda «no aplica desde K53» en `updateStore`, `updatePriceSettings` y sus esquemas. Remanentes de P2c: `SavingsGoal.status` según Q2-18 A (I-2) y `getCashFlowFortnights` según S2 1.3 §3.11 (I-6). Detalle en «C1 v1.4 (puerta 2 bis)», abajo. `info.version` = 1.4.0. |
+| C1 v1.4 · corrección r1 (P2d) | 12-oct-2026 | Hallazgos M-1 y M-2 de `docs/estado/p2c/REVISION-k53-r1.md` (agente `correccion-k53-r1`). `info.version` sigue en 1.4.0; no cambian rutas, parámetros ni tipos, solo textos. M-1: el tamaño máximo de los lotes del agente externo (500 productos, 500 precios y 100 recetas; 422 fuera de rango) era un supuesto sin fuente; ahora cita la pregunta (g) del bloqueo `S5-agente-externo` en `ExternalCatalogImport`, `ExternalPriceImport`, `ExternalRecipeImport` e `importExternalCatalog`. M-2: la prosa de `balance_cents` en `CashFlowFortnights` resta también el gasto variable registrado, como S2 1.3 §3.11 (`spent_cents` incluye `variable_spent_cents`), y aclara que ese dato no viene en la fila. |
+
+### C1 v1.4 (puerta 2 bis)
+
+Agente `k53-aplicar` (flujo P2d, 12-oct-2026). Fuente: `docs/estado/puerta2/RESPUESTAS.md`, sección «Puerta 2 bis», registrada como K53 en `docs/plan/decisiones.md`. No cambia el esquema de S1: sigue el 1.4, migraciones 00001 a 00004.
+
+- **Agente externo (K53).** La aplicación no lee sitios de tiendas. Una sesión de Claude Code de Axel con Claude in Chrome obtiene precios y productos, y puede agregar recetas. Los mete con estas operaciones de la etiqueta «Compras y tiendas», que no tienen N-xxx porque no tienen pantalla (§11.2):
+  - `getExternalAgentReference`: ids de tiendas, grupos de producto y tiempos de comida.
+  - `importExternalCatalog`: productos y presentaciones por nombre.
+  - `importExternalPrices`: precios con tienda, fecha y `external_ref`, que se guarda en `price.source_ref`.
+  - `importExternalRecipes`: recetas en borrador.
+- **Idempotencia y resultado.** Las tres importaciones son idempotentes por llave natural y por `Idempotency-Key`. Responden `ExternalImportResult`, renglón por renglón.
+- **Lo PROVISIONAL del agente externo** (bloqueo `S5-agente-externo`):
+  - `source` = `site_assisted`, que la documentación llama «agente externo», y esos precios compiten como `manual`.
+  - Las recetas entran como borrador, con origen «external_agent». El esquema 1.4 todavía no guarda ni el borrador ni ese origen.
+  - El agente no escribe inventario.
+  - Tamaño máximo de un lote: 500 productos, 500 precios o 100 recetas; un lote vacío o más grande responde 422. Es supuesto de `k53-aplicar`, no decisión de Axel (bloqueo `S5-agente-externo`, pregunta g).
+- **Credencial de servicio.** Esquema de seguridad nuevo `serviceToken` (`Authorization: Bearer`), solo en las operaciones con `x-agente-externo`. El esquema 1.4 no tiene ninguna credencial de servicio que reutilizar. Dónde vive y a nombre de quién quedan `audit_log` e `idempotency_key` es PROVISIONAL (bloqueo `S5-agente-externo`, pregunta e).
+- **Lectura asistida retirada (K53).** Ningún veredicto la habilita, así que `true` responde siempre 409 `assisted_reading_not_allowed` en `updateStore` y en `updatePriceSettings`. `Store`, `PriceSources`, `PriceSettings` y `PriceSettingsUpdate` la describen como «no aplica desde K53». Las columnas siguen en el esquema 1.4 hasta que S1 las retire.
+- **Remanentes de P2c** (`docs/estado/p2c/INTEGRACION.md` §5):
+  - I-2: `SavingsGoal.status` pasa a `in_progress`, `achieved` y `overdue`, con la regla de S2 1.3 §3.13 (Q2-18 A).
+  - I-6: en `getCashFlowFortnights`, `planned_savings_cents` deja de ser obligatoria. S2 la entrega en null y es PROVISIONAL (bloqueo `S2-ahorro-quincenal`). `balance_cents` ya no resta el ahorro planificado ni el gasto variable estimado (S2 1.3 §3.11).
 
 ### C1 v1.3 (puerta 2)
 
@@ -77,7 +100,7 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 5. **Booleanos**: las columnas 0/1 de SQLite se exponen como `true`/`false`.
 6. **Valores nulos**: en las respuestas, una columna NULL **se omite** (campo ausente = sin valor; la pantalla muestra «—», U1 §0.2 «sin datos no es cero»). Los esquemas de lectura marcan como `required` solo las columnas NOT NULL.
 7. **Altas** (`POST`) aceptan las columnas escribibles; `id`, `created_at` y `updated_at` los pone el servidor. **Cambios** (`PATCH`) siguen JSON Merge Patch (RFC 7396): solo se cambian los campos enviados y `null` borra un valor que admite NULL. Reemplazos completos de listas (orden de categorías, destinatarios, grupos de producto) usan `PUT` con `{"ids": [...]}`.
-8. **Idempotencia**: todo `POST` de captura exige el encabezado `Idempotency-Key` (16 a 128 caracteres `[A-Za-z0-9_-]`, UUID v4 recomendado). Repetir la clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API guarda cada clave por cuenta en la tabla `idempotency_key` de S1, con la huella SHA-256 del cuerpo y la respuesta (S1 C-15), y la declara en `x-tablas` de cada operación que la exige; un job la purga por antigüedad. Retención de 24 h (K6). Gastos y pesos guardan además su clave en el propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9). Lo exigen 41 operaciones. No la llevan: las consultas por `POST` que no guardan nada (`previewCreditPurchase`, `compareScenarios`, `previewPlannedItemsImport`, `suggestRecipeWithAi`), las acciones de sesión (`login`, `logout`, `changeOwnPassword`, `revokeSessions`), el aviso de prueba (`sendTestNotification`) y la restauración, que lleva su propia confirmación escrita (`restoreBackup`).
+8. **Idempotencia**: todo `POST` de captura exige el encabezado `Idempotency-Key` (16 a 128 caracteres `[A-Za-z0-9_-]`, UUID v4 recomendado). Repetir la clave con el mismo cuerpo devuelve la respuesta original con `Idempotent-Replayed: true`; con otro cuerpo, 409 `idempotency_key_reused`. La API guarda cada clave por cuenta en la tabla `idempotency_key` de S1, con la huella SHA-256 del cuerpo y la respuesta (S1 C-15), y la declara en `x-tablas` de cada operación que la exige; un job la purga por antigüedad. Retención de 24 h (K6). Gastos y pesos guardan además su clave en el propio renglón, sin purga, y responden 200 con el mismo recurso al reintento (K9). Lo exigen 44 operaciones. No la llevan: las consultas por `POST` que no guardan nada (`previewCreditPurchase`, `compareScenarios`, `previewPlannedItemsImport`, `suggestRecipeWithAi`), las acciones de sesión (`login`, `logout`, `changeOwnPassword`, `revokeSessions`), el aviso de prueba (`sendTestNotification`) y la restauración, que lleva su propia confirmación escrita (`restoreBackup`).
 
    **Ciclo de una captura de gasto o de peso** (`createExpense` y `createWeightEntry`; K9 y K6). La cola del teléfono manda cada captura con su propia clave y su `captured_at`:
    - **Primer envío**: 201 con el recurso nuevo y su `id`. La clave queda en la tabla `idempotency_key` (con la huella del cuerpo y la respuesta) y en la columna `idempotency_key` del renglón (`expense` o `weight_entry`).
@@ -108,7 +131,8 @@ Este documento fija **cómo** se piden los datos que U1 dice que cada pantalla *
 ## 2. Autenticación, sesiones y permisos
 
 - **Esquema**: `cookieAuth`, cookie `fh_session` **HttpOnly; Secure; SameSite=Strict; Path=/**. El token en claro solo viaja en la cookie; la base guarda su SHA-256 (`device_session.token_hash`). Ninguna respuesta incluye hashes, tokens, `chat_id` ni llaves (C1-12). Los chats que detecta el bot se muestran con el nombre de Telegram y el `chat_id` enmascarado (`chat_id_masked`: «•••» y los últimos 4 caracteres; K4).
-- **Operaciones públicas**: solo `POST /api/v1/auth/login` y `GET /health` (sin datos). Todo lo demás, incluidos adjuntos, PDF y `GET /openapi.yaml`, exige sesión; sin sesión, vencida o cerrada responde **401 `unauthorized`**.
+- **Operaciones públicas**: solo `POST /api/v1/auth/login` y `GET /health` (sin datos). Todo lo demás (salvo las cuatro operaciones del agente externo, abajo), incluidos adjuntos, PDF y `GET /openapi.yaml`, exige sesión; sin sesión, vencida o cerrada responde **401 `unauthorized`**.
+- **Credencial de servicio del agente externo** (K53, C1 v1.4): las cuatro operaciones con `x-agente-externo` (`/api/v1/external-agent/*`) piden el esquema `serviceToken`, un encabezado `Authorization: Bearer` con un token propio, y no aceptan la cookie de sesión. Ninguna otra operación acepta ese token. Sin token, o con uno inválido, responden **401 `unauthorized`**. El token en claro nunca se guarda ni se registra. Dónde vive la credencial y a nombre de quién quedan `audit_log` e `idempotency_key` es PROVISIONAL (bloqueo `S5-agente-externo`, pregunta e).
 - **Inicio de sesión** (`login`, N-010): usuario y contraseña (argon2id en la base). Error de credenciales: 401 `invalid_credentials` con el mensaje genérico «Usuario o contraseña incorrectos». **Límite (decisión A): 5 intentos fallidos en 15 minutos** (`app_setting auth.max_failed_attempts = 5`, `auth.lockout_window_minutes = 15`). El intento siguiente responde **429 `too_many_attempts`**, mensaje «Demasiados intentos. Vuelve a intentar a las 21:45.» y `retry_at` (instante con -06:00), **aunque la contraseña sea correcta**; así se cubre también el «estado de bloqueo» (N-011) sin una consulta pública que revele usuarios. Aprobado en la puerta 1 (K11): ventana deslizante de 15 minutos; se cuentan los fallos por usuario y por IP (lo que llegue primero a 5); `retry_at` = hora del fallo más antiguo de la ventana + 15 minutos.
 - **Sesión larga por dispositivo** (decisión A, «meses»): 90 días desde el último uso, renovable con cada petición (K11; `device_session.expires_at`; `app_setting session.max_age_days = 90`, sembrado en 00002). `logout` cierra la del dispositivo; Ajustes lista las sesiones de **ambos** usuarios y cualquiera puede cerrarlas (`listSessions`, `revokeSession`, `revokeSessions`, N-271 y N-272). Una sesión cerrada responde 401 en la siguiente petición.
 - **Permisos**: Axel y Ximena son co-titulares con **los mismos permisos**; ninguna operación filtra ni oculta datos según quién inició sesión (U1 §0.5). El usuario de la sesión solo da valores por defecto (persona del gasto, del peso) y el «creado por» de `audit_log`. **No existe operación para crear cuentas**: Karen no tiene cuenta ni acceso (decisión A); `person` no se crea desde la API.
@@ -624,14 +648,18 @@ Una fila por necesidad y pantalla (las necesidades reutilizadas aparecen en cada
 
 ### 11.1 Resumen
 - Necesidades de U1: **211** (N-001 a N-327). Con operación: **208**. Locales sin API (U1): **3** (N-003, N-301, N-317). Sin endpoint por bloqueo: **0**. Con cobertura parcial por un bloqueo abierto de §13: **0**. FIRMES desde la puerta 1b (antes con marca): **10**; en 0 de ellas solo queda pendiente dónde viven `send_time` y `advance_days` (bloqueo abierto `S1-parametros-avisos`, §13).
-- Operaciones del contrato: **212** en **168** rutas. Con al menos una N-xxx: **211**. Excepciones técnicas sin N-xxx: **1** (§11.2). N-xxx citadas por el contrato que no existen en U1: **0**.
+- Operaciones del contrato: **216** en **172** rutas. Con al menos una N-xxx: **211**. Excepciones técnicas sin N-xxx: **5** (§11.2). N-xxx citadas por el contrato que no existen en U1: **0**.
 - Pantallas de la matriz de U1 §3.29: **41** (Global, P-00 a P-25 y P-26.01 a P-26.14); filas de la matriz: **236**.
-- Tablas de S1: **55**; con al menos una operación: **55** (§11.4). `idempotency_key` es infraestructura de S6: la declaran en `x-tablas` las **41** operaciones con `Idempotency-Key` (§1 punto 8).
+- Tablas de S1: **55**; con al menos una operación: **55** (§11.4). `idempotency_key` es infraestructura de S6: la declaran en `x-tablas` las **44** operaciones con `Idempotency-Key` (§1 punto 8).
 
 ### 11.2 Operaciones sin necesidad de U1 (excepciones técnicas, una por una)
 | Operación | Motivo |
 |---|---|
 | GET `/openapi.yaml` (`getOpenApiDocument`) | Estático y técnico: sirve este mismo contrato para desarrollo y para la prueba de contrato de S6 (S6-03). Requiere sesión. Excepción «estáticos» de C1-02. |
+| GET `/api/v1/external-agent/reference` (`getExternalAgentReference`) | Estático y técnico: sirve este mismo contrato para desarrollo y para la prueba de contrato de S6 (S6-03). Requiere sesión. Excepción «estáticos» de C1-02. |
+| POST `/api/v1/external-agent/catalog` (`importExternalCatalog`) | Estático y técnico: sirve este mismo contrato para desarrollo y para la prueba de contrato de S6 (S6-03). Requiere sesión. Excepción «estáticos» de C1-02. |
+| POST `/api/v1/external-agent/prices` (`importExternalPrices`) | Estático y técnico: sirve este mismo contrato para desarrollo y para la prueba de contrato de S6 (S6-03). Requiere sesión. Excepción «estáticos» de C1-02. |
+| POST `/api/v1/external-agent/recipes` (`importExternalRecipes`) | Estático y técnico: sirve este mismo contrato para desarrollo y para la prueba de contrato de S6 (S6-03). Requiere sesión. Excepción «estáticos» de C1-02. |
 
 Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «Sin conexión») sí tienen necesidad en U1, aunque C1-02 los admite como excepciones.
 
@@ -650,18 +678,18 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | `device_session` | 9 | `login`, `logout`, `getCurrentSession`, `changeOwnPassword`, `listUsers` … |
 | `login_attempt` | 1 | `login` |
 | `app_setting` | 28 | `login`, `getDashboardBestBasket`, `getProjectionSettings`, `updateProjectionSettings`, `suggestRecipeWithAi` … |
-| `audit_log` | 96 | `changeOwnPassword`, `revokeSession`, `revokeSessions`, `createExpense`, `getExpense` … |
-| `idempotency_key` | 41 | `createExpense`, `duplicateExpense`, `markExpensePaid`, `uploadExpenseAttachment`, `createTicketScan` … |
+| `audit_log` | 99 | `changeOwnPassword`, `revokeSession`, `revokeSessions`, `createExpense`, `getExpense` … |
+| `idempotency_key` | 44 | `createExpense`, `duplicateExpense`, `markExpensePaid`, `uploadExpenseAttachment`, `createTicketScan` … |
 | `period` | 10 | `getDashboardMonthVsPlan`, `listPeriods`, `getBudgetMonth`, `getBudgetByCategory`, `getBudgetFortnights` … |
 | `cost_share_rule` | 21 | `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary`, `getExpenseMonthlyTrend` … |
 | `cost_share_rule_part` | 14 | `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary`, `getExpenseMonthlyTrend` … |
 | `category` | 33 | `search`, `queryView`, `getDashboardMonthVsPlan`, `listExpenses`, `createExpense` … |
 | `budget` | 12 | `getDashboardMonthVsPlan`, `listBudgets`, `createBudget`, `updateBudget`, `deleteBudget` … |
-| `store` | 36 | `search`, `listCalendarEvents`, `queryView`, `getDashboardBestBasket`, `listExpenses` … |
-| `product_group` | 7 | `getShoppingList`, `generateShoppingList`, `listStores`, `setStoreProductGroups`, `listProductGroups` … |
+| `store` | 38 | `search`, `listCalendarEvents`, `queryView`, `getDashboardBestBasket`, `listExpenses` … |
+| `product_group` | 9 | `getShoppingList`, `generateShoppingList`, `listStores`, `setStoreProductGroups`, `listProductGroups` … |
 | `store_product_group` | 4 | `getShoppingList`, `generateShoppingList`, `listStores`, `setStoreProductGroups` |
-| `product` | 24 | `search`, `queryView`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
-| `presentation` | 27 | `search`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
+| `product` | 26 | `search`, `queryView`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
+| `presentation` | 30 | `search`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `listExpenseItems`, `getTicketScan` … |
 | `credit` | 31 | `search`, `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment` … |
 | `credit_term_rate` | 16 | `queryView`, `confirmTicketScan`, `listCredits`, `getCreditTotals`, `getDebtTrend` … |
 | `promotion` | 12 | `listCalendarEvents`, `queryView`, `confirmTicketScan`, `listCreditPurchases`, `createCreditPurchase` … |
@@ -671,7 +699,7 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | `expense_item` | 19 | `getDashboardBestBasket`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
 | `expense_share` | 28 | `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow`, `getPersonParticipation`, `listExpenses` … |
 | `attachment` | 19 | `queryView`, `listExpenses`, `createExpense`, `getExpenseTotals`, `getExpenseSummary` … |
-| `price` | 25 | `queryView`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `deleteAttachment`, `getTicketScan` … |
+| `price` | 26 | `queryView`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `deleteAttachment`, `getTicketScan` … |
 | `credit_purchase` | 46 | `search`, `listCalendarEvents`, `queryView`, `getDashboardMonthVsPlan`, `getDashboardFortnightFlow` … |
 | `credit_purchase_share` | 16 | `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `confirmTicketScan`, `getAccruedGroceries` … |
 | `scheduled_payment` | 28 | `listCalendarEvents`, `queryView`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation` … |
@@ -680,10 +708,10 @@ Nota: `POST /api/v1/auth/login` (N-010, N-011) y `GET /health` (N-004, franja «
 | `credit_payment` | 22 | `listCalendarEvents`, `getDashboardFortnightFlow`, `getDashboardNextPayment`, `getPersonParticipation`, `getCashFlowFortnights` … |
 | `savings_goal` | 14 | `search`, `listCalendarEvents`, `queryView`, `getDashboardSavings`, `getBudgetMonth` … |
 | `savings_movement` | 11 | `listCalendarEvents`, `queryView`, `getDashboardSavings`, `getSavingsSummary`, `getSavingsMonthlyTrend` … |
-| `meal_slot` | 11 | `getDashboardWeekMeals`, `listMealSlots`, `getMealPlanWeek`, `getMealPlanMonth`, `getMealPlanTrends` … |
-| `recipe` | 17 | `search`, `queryView`, `getDashboardWeekMeals`, `getMealPlanWeek`, `getMealPlanTrends` … |
-| `recipe_meal_slot` | 7 | `queryView`, `listRecipes`, `createRecipe`, `getRecipe`, `updateRecipe` … |
-| `recipe_ingredient` | 17 | `search`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `getMealPlanWeek`, `getMealPlanTrends` … |
+| `meal_slot` | 13 | `getDashboardWeekMeals`, `listMealSlots`, `getMealPlanWeek`, `getMealPlanMonth`, `getMealPlanTrends` … |
+| `recipe` | 18 | `search`, `queryView`, `getDashboardWeekMeals`, `getMealPlanWeek`, `getMealPlanTrends` … |
+| `recipe_meal_slot` | 8 | `queryView`, `listRecipes`, `createRecipe`, `getRecipe`, `updateRecipe` … |
+| `recipe_ingredient` | 18 | `search`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `getMealPlanWeek`, `getMealPlanTrends` … |
 | `meal_plan_entry` | 22 | `queryView`, `getDashboardWeekMeals`, `getDashboardBestBasket`, `getMealPlanWeek`, `getMealPlanMonth` … |
 | `inventory_item` | 14 | `queryView`, `getDashboardBestBasket`, `confirmTicketScan`, `getMealPlanWeek`, `getMealPlanTrends` … |
 | `inventory_movement` | 4 | `confirmTicketScan`, `createInventoryItem`, `listInventoryMovements`, `adjustInventoryItem` |
@@ -893,6 +921,10 @@ Parámetros que antes no tenían valor o vivían en `notification.params_json` y
 | POST `/api/v1/expenses/{expense_id}/duplicate` | `duplicateExpense` | Gastos | N-066 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, idempotency_key, person, store |
 | GET `/api/v1/expenses/{expense_id}/items` | `listExpenseItems` | Gastos | N-061 | cost_share_rule, cost_share_rule_part, expense_item, presentation, product |
 | POST `/api/v1/expenses/{expense_id}/mark-paid` | `markExpensePaid` | Gastos | N-065 | attachment, audit_log, category, cost_share_rule, cost_share_rule_part, credit_purchase, expense, expense_item, expense_share, idempotency_key, person, store |
+| POST `/api/v1/external-agent/catalog` | `importExternalCatalog` | Compras y tiendas | — | audit_log, idempotency_key, presentation, product, product_group |
+| POST `/api/v1/external-agent/prices` | `importExternalPrices` | Compras y tiendas | — | audit_log, idempotency_key, presentation, price, store |
+| POST `/api/v1/external-agent/recipes` | `importExternalRecipes` | Compras y tiendas | — | audit_log, idempotency_key, meal_slot, presentation, product, recipe, recipe_ingredient, recipe_meal_slot |
+| GET `/api/v1/external-agent/reference` | `getExternalAgentReference` | Compras y tiendas | — | meal_slot, product_group, store |
 | GET `/api/v1/health-profiles` | `listHealthProfiles` | Salud | N-230, N-311 | health_profile, person, weight_entry |
 | POST `/api/v1/health-profiles` | `createHealthProfile` | Ajustes | N-313, N-327 | audit_log, health_profile, idempotency_key, person |
 | PATCH `/api/v1/health-profiles/{health_profile_id}` | `updateHealthProfile` | Ajustes | N-313, N-327 | audit_log, health_profile |
@@ -1042,10 +1074,14 @@ Parámetros que antes no tenían valor o vivían en `notification.params_json` y
 | Hora de los reportes y `job.schedule` | cómo se relaciona `schedule` de los jobs de los reportes (`JobUpdate`, `updateJob`) con las claves `reports.*` de `updateReportSettings` es PROVISIONAL | `C1-hora-reportes-job` (abierto, de C1) |
 | «No incluye IVA» sin porcentaje | `Credit.missing_terms` lista `vat` con `vat_included` = 0 y sin `vat_on_interest_bp` (lectura en uso de S3 1.5 §5.3); PROVISIONAL | `S3-iva-lectura` (abierto, pregunta 2) |
 | Edición de un gasto anterior después de «solo los nuevos» | `updateExpense` recalcula sus partes con la regla vigente (opción en uso, RN-03 1.4); PROVISIONAL | `S1-reparto-edicion-gasto` (abierto) |
+| Agente externo (K53) | origen `site_assisted` y peso de sus precios (`importExternalPrices`), borrador y origen de sus recetas (`importExternalRecipes`), qué escribe el agente (`ExternalCatalogImport`), el tamaño máximo de sus lotes (los tres esquemas de importación) y dónde vive la credencial `serviceToken`; PROVISIONAL | `S5-agente-externo` (abierto, de P2d) |
+| Ahorro planificado por quincena | `planned_savings_cents` de `getCashFlowFortnights` es opcional, S2 1.3 §3.11 la entrega en null y no entra a `balance_cents`; PROVISIONAL | `S2-ahorro-quincenal` (abierto) |
 
 Cerrados en la puerta 1 y ya sin marca: filtro familia (K5), lista de compras (K1), huecos U1 ↔ S1 (K2, K3, K4), parámetros técnicos (K6), campos calculados (K7), quincena y semana (K8), inicio de sesión y sesión (K11), tasas (K12), tope por persona (K13), reposición de la parte externa (K15), restricciones del comparador (K16), puntaje (K17), promedios diario y mensual (K20), meses 7 a 12 (K21), frescura de precios (K22) y escala de actividad (K23). Cerrados en la puerta 1b (C1 v1.2) y ya sin marca: valores de K31 que tocan a C1 (K43: adjunto de 10 MB, comparador de 5 s, claves `send_time` y `advance_days`, «casillas sin armar»), ajuste por objetivo de la meta de kcal (K36), semana por omisión de `getMealPlanWeek` (K38; la lista de compras sigue con `week` obligatoria, R3-01), promedio semanal (K39) y parámetros configurables (K44, §11.7).
 
 Cerrados en la puerta 2 (C1 v1.3) y ya sin marca: lugar de la hora, el día y la anticipación de reportes y avisos (`S1-parametros-avisos`, Q2-11 B, K47), sus valores (Q2-72, Q2-73), la ventana de fechas y el OCR (Q2-75, Q2-76), los rangos (Q2-74, Q2-77, Q2-66 B), el IVA de un crédito (`U4-iva-credito`, Q2-67), el alcance de un cambio de reparto como pregunta (`U4-reparto-retroactivo`, Q2-68 C), la tienda asignada de la lista (`S4-asignacion-mercado`, Q2-39 a Q2-42) y los acumulados de T-2 (`U3-t2-acumulados`, Q2-65).
+
+Cerrado en la puerta 2 bis (C1 v1.4): el veredicto de términos de las tiendas (`S5-terminos`, K53). La lectura asistida no aplica y C1 no tenía marca que quitar.
 
 ## 14. Inconsistencias S1 ↔ U1 encontradas (sin tocar sus archivos)
 

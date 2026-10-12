@@ -134,3 +134,30 @@ Agente C1-puerta2 (flujo P2c, 11-oct-2026). Aplica las respuestas de la puerta 2
 - `gen4_build.py`: `C1_VERSION` 1.3.0 y textos de `info`.
 - `gen6_c1.py` y `c1_plantilla.md`: §11.7 con la columna «Rango (cambio)» (comprobada contra openapi), reglas entre claves y parámetros cerrados (`{{PARAMS_RANGO}}` sustituye a `{{PARAMS_K43}}`); N-297 y N-300 FIRMES (K43, K47) sin marca de lugar; §7.2 nueva (alcance de un cambio de reparto); §13 con los bloqueos abiertos que tocan a C1; fila y detalle «C1 v1.3 (puerta 2)».
 - `verify_c1.py`: exige 1.3.0 y «C1 v1.3»; C1-23 pasa a la puerta 2: `params_json` sin las cuatro claves ni marca de lugar (openapi y extracto), rangos aprobados de las 12 claves de la puerta 2 en el cambio y en §11.7.
+
+## C1 v1.4 (puerta 2 bis)
+
+Agente `k53-aplicar` (flujo P2d, 12-oct-2026). Aplica K53 (`docs/plan/decisiones.md` §K) y dos remanentes de P2c (I-2 e I-6 de `docs/estado/p2c/INTEGRACION.md` §5). El esquema de S1 no cambia: sigue el 1.4. Reporte: `docs/estado/p2c/k53-aplicar.md`.
+
+- `gen2_schemas.py`:
+  - Esquemas `ExternalAgentReference`, `ExternalCatalogItem`, `ExternalCatalogImport`, `ExternalPriceItem`, `ExternalPriceImport`, `ExternalRecipeImport` y `ExternalImportResult`.
+  - «No aplica desde K53» en `Store`, `PriceSources`, `PriceSettings` y `PriceSettingsUpdate`.
+  - `SavingsGoal.status` con `in_progress`, `achieved` y `overdue` (Q2-18 A).
+  - `CashFlowFortnights`: `planned_savings_cents` opcional y PROVISIONAL (`S2-ahorro-quincenal`), y `balance_cents` sin restar el ahorro ni el variable.
+- `gen3_ops.py`:
+  - `opx()` marca las operaciones del agente externo (`ext`).
+  - `getExternalAgentReference`, `importExternalCatalog`, `importExternalPrices` e `importExternalRecipes` (`/api/v1/external-agent/*`, etiqueta «Compras y tiendas», sin N-xxx).
+  - Textos de `createStore`, `updateStore`, `getPriceSettings` y `updatePriceSettings`.
+- `gen4_build.py`:
+  - `C1_VERSION` 1.4.0.
+  - Esquema de seguridad `serviceToken` (`SERVICE_TOKEN`, http bearer, PROVISIONAL `S5-agente-externo`).
+  - Las operaciones `ext` llevan `security: [{serviceToken: []}]` y `x-agente-externo: true`.
+  - Textos de `info`.
+- `gen6_c1.py`: §11.2 da el motivo de cada excepción, sea «estáticos» o «agente externo».
+- `c1_plantilla.md`:
+  - Fila y detalle «C1 v1.4 (puerta 2 bis)».
+  - Viñeta de la credencial de servicio en §2.
+  - Dos filas en §13 (`S5-agente-externo`, `S2-ahorro-quincenal`).
+- `verify_c1.py`:
+  - Exige 1.4.0 y «C1 v1.4».
+  - C1-02 acepta sin N-xxx solo `GET /openapi.yaml` y las 4 operaciones con `x-agente-externo`. Esas 4 llevan solo `serviceToken` y la etiqueta «Compras y tiendas», y ninguna otra operación acepta `serviceToken`.

@@ -18,4 +18,6 @@ Fuente: `docs/estado/puerta2/RESPUESTAS.md` y hoja de respuestas de `docs/estado
 - **Qué cambia:** Migración 00004 (`credit.vat_included`, admite NULL = falta capturar), C1 v1.3 (`Credit.missing_terms` incluye `vat`), motor S3 y la semilla; campo «¿la tasa incluye IVA?» de P-26.05 en `docs/design/U4-ajustes-a.md` sin marca PROVISIONAL. Ninguna cifra cambia: Kueski ya incluye IVA.
 - **Estado:** RESUELTO
 
+Remisión (P2c, 11-oct-2026, noche; la aplicó `p2c-remanentes` el 12-oct-2026): Q2-67 = 1 es FIRME. Los dos casos que no cubre (préstamo con `vat_included` NULL; `vat_included` = 0 sin porcentaje) viven en `docs/estado/bloqueos/S3-iva-lectura.md` (ABIERTO, lo abrió `correccion-contratos-r1`).
+
 **Estado del bloqueo (puerta 2): RESUELTO**

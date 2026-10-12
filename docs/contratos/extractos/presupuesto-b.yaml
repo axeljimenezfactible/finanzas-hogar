@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.3.0 · extracto «presupuesto-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.4.0 · extracto «presupuesto-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto presupuesto-b"
-  version: "1.3.0"
+  version: "1.4.0"
   description: "Extracto de la etiqueta «Presupuesto» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -588,6 +588,11 @@ components:
       in: "cookie"
       name: "fh_session"
       description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
   schemas:
     LiveDebt:
       type: "object"
@@ -1032,10 +1037,10 @@ components:
         status:
           type: "string"
           enum:
-            - "on_track"
-            - "behind"
+            - "in_progress"
             - "achieved"
-          description: "en ruta, atrasada o cumplida (motor S2)."
+            - "overdue"
+          description: "Estado de la meta (Q2-18 A; motor S2 1.3 §3.13): achieved si target_cents no es null y saved_cents ≥ target_cents; si no, overdue si target_date no es null y es anterior a hoy; si no, in_progress (también un fondo sin monto o sin fecha)."
           x-calculado: true
     SavingsMovement:
       type: "object"
