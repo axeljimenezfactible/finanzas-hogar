@@ -58,7 +58,8 @@ const textoMeta = (x: InsumosSalud) => { const m = metaSugerida(x); return 'falt
 const textoImc = (g?: number | null, mm?: number | null) => (!mm ? t.falta(t.faltas.estatura) : !g ? t.falta(t.faltas.peso) : `${decimas(imcDecimas(g, mm))} (${t.clases[claseImc(imcDecimas(g, mm))]})`)
 const aMm = (s: string) => { const x = s.trim(); if (!/^\d+(\.\d{1,3})?$/.test(x)) return null; const [e, d = ''] = x.split('.'); const mm = Number(e) * 1000 + Number(d.padEnd(3, '0')); return mm > 0 ? mm : null }
 
-type CampoP = { etiqueta: string; clave: keyof Esquemas['HealthProfileUpdate']; inicial: string; tipo?: 'texto' | 'fecha' | 'opcion'; opciones?: [string, string][]; interpretar: (s: string) => unknown; mensaje?: string; previa?: (s: string) => Cambio[]; extra?: ReactNode; atenuado?: boolean; resaltado?: boolean }
+/** `extra` puede recibir el estado de guardado del campo, para que sus botones muestren el error de U4 §0.3 debajo del campo (R4-02). */
+type CampoP = { etiqueta: string; clave: keyof Esquemas['HealthProfileUpdate']; inicial: string; tipo?: 'texto' | 'fecha' | 'opcion'; opciones?: [string, string][]; interpretar: (s: string) => unknown; mensaje?: string; previa?: (s: string) => Cambio[]; extra?: ReactNode | ((g: ReturnType<typeof useGuardado>) => ReactNode); atenuado?: boolean; resaltado?: boolean }
 function CampoPerfil({ c, perfil, recargar }: { c: CampoP; perfil: HP; recargar: () => void }) {
   const sinRed = useSinRed()
   const g = useGuardado()
@@ -80,7 +81,7 @@ function CampoPerfil({ c, perfil, recargar }: { c: CampoP; perfil: HP; recargar:
       {c.tipo === 'opcion'
         ? <select {...comun} className={estilosControl} value={v} onChange={(e) => setV(e.target.value)}>{c.opciones!.map(([k, n]) => <option key={k} value={k}>{n}</option>)}</select>
         : <input {...comun} type={c.tipo === 'fecha' ? 'date' : 'text'} className={cn(estilosControl, 'tabular-nums')} value={v} onChange={(e) => setV(e.target.value)} />}
-      {c.extra}
+      {typeof c.extra === 'function' ? c.extra(g) : c.extra}
       {error ? <p className="text-caption text-role-error">{error}</p> : <IndicadorGuardado g={g} />}
       {v !== c.inicial && c.previa && c.interpretar(v) !== undefined && <AntesDespues cambios={c.previa(v)} />}
     </div>
@@ -108,8 +109,8 @@ function Perfil({ p, perfil, casa, recargar }: { p: Pe; perfil?: HP; casa: HS; r
   const ajuste = (k: 'goal_adjust_lose_kcal' | 'goal_adjust_gain_kcal', etiqueta: string, casaN: number, objetivo: string): CampoP => ({
     etiqueta, clave: k, inicial: perfil[k] === undefined || perfil[k] === null ? '' : String(perfil[k]), interpretar: entero, mensaje: T.validar.kcal, atenuado: mantener, resaltado: perfil.goal === objetivo,
     previa: (s) => previaCon(k === 'goal_adjust_lose_kcal' ? { ajusteBajar: entero(s) ?? casaN } : { ajusteSubir: entero(s) ?? casaN }),
-    extra: <span className="flex flex-wrap items-center gap-2 text-caption text-text-secondary">{mantener ? t.sinAjuste : t.elDeLaCasa(casaN)}
-      {perfil[k] !== undefined && perfil[k] !== null && <Boton variante="enlace" deshabilitadoPor={sinRed} onClick={() => void pedir('patch', '/api/v1/health-profiles/{health_profile_id}', { ruta: { health_profile_id: perfil.id }, cuerpo: { [k]: null } }).then(recargar)}>{t.usarCasa}</Boton>}</span>,
+    extra: (g) => <span className="flex flex-wrap items-center gap-2 text-caption text-text-secondary">{mantener ? t.sinAjuste : t.elDeLaCasa(casaN)}
+      {perfil[k] !== undefined && perfil[k] !== null && <Boton variante="enlace" deshabilitadoPor={sinRed} onClick={() => void g.ejecutar(async () => { await pedir('patch', '/api/v1/health-profiles/{health_profile_id}', { ruta: { health_profile_id: perfil.id }, cuerpo: { [k]: null } }); recargar() })}>{t.usarCasa}</Boton>}</span>,
   })
   const campos: CampoP[] = [
     { etiqueta: t.estatura, clave: 'height_mm', inicial: perfil.height_mm ? (perfil.height_mm / 1000).toFixed(2) : '', interpretar: (s) => aMm(s) ?? undefined, mensaje: t.estaturaMal, previa: (s) => previaCon({ height_mm: aMm(s) }, true) },
@@ -121,7 +122,7 @@ function Perfil({ p, perfil, casa, recargar }: { p: Pe; perfil?: HP; casa: HS; r
     ajuste('goal_adjust_lose_kcal', t.ajusteBajar, perfil.household_goal_adjust_lose_kcal ?? casa['health.goal_adjust_lose_kcal'].value ?? 0, 'lose'),
     ajuste('goal_adjust_gain_kcal', t.ajusteSubir, perfil.household_goal_adjust_gain_kcal ?? casa['health.goal_adjust_gain_kcal'].value ?? 0, 'gain'),
     { etiqueta: t.confirmada, clave: 'daily_kcal_target', inicial: perfil.daily_kcal_target ? String(perfil.daily_kcal_target) : '', interpretar: (s) => (s.trim() === '' ? null : /^\d+$/.test(s.trim()) && Number(s) > 0 ? Number(s) : undefined), mensaje: t.kcalMal,
-      extra: perfil.suggested_kcal_target !== undefined && <Boton variante="enlace" deshabilitadoPor={sinRed} onClick={() => void pedir('patch', '/api/v1/health-profiles/{health_profile_id}', { ruta: { health_profile_id: perfil.id }, cuerpo: { daily_kcal_target: perfil.suggested_kcal_target } }).then(recargar)}>{t.usarSugerida}</Boton> },
+      extra: (g) => perfil.suggested_kcal_target !== undefined && <Boton variante="enlace" deshabilitadoPor={sinRed} onClick={() => void g.ejecutar(async () => { await pedir('patch', '/api/v1/health-profiles/{health_profile_id}', { ruta: { health_profile_id: perfil.id }, cuerpo: { daily_kcal_target: perfil.suggested_kcal_target } }); recargar() })}>{t.usarSugerida}</Boton> },
     { etiqueta: t.restricciones, clave: 'dietary_restrictions', inicial: perfil.dietary_restrictions ?? '', interpretar: (s) => s.trim() || null },
     { etiqueta: t.notas, clave: 'notes', inicial: perfil.notes ?? '', interpretar: (s) => s.trim() || null },
   ]
@@ -189,6 +190,23 @@ function Metas({ metas, recargar }: { metas: G[]; recargar: () => void }) {
         clave: 'P-26.13-metas', filas, idFila: (m) => m.id, vistas: ['tabla', 'tablero', 'calendario', 'galeria'], fecha: (m) => m.target_date, titulo: (m) => m.name,
         columnasTablero: { propiedad: 'status', columnas: [t.estados.in_progress, t.estados.achieved, t.estados.overdue] },
         vacio: <Vacio texto={t.sinMetas} accion={boton} />,
+        // `Ctrl+/` (U4 P-26.13, Atajos y vista previa (3); H-08): «Activa» de varias metas a la vez. Antes de aplicar, el total
+        // reservado para metas en el mes en curso sumado sobre las seleccionadas; `Enter` aplica a todas (un `updateSavingsGoal`
+        // por meta) y `Esc` cancela sin cambiar ninguna.
+        editarVarias: {
+          propiedades: [{ id: 'is_active', nombre: t.activa, tipo: 'opcion', opciones: [{ valor: 'si', texto: T.comun.si }, { valor: 'no', texto: T.comun.no }] }],
+          vistaPrevia: async (sel, _p, v) => {
+            const activa = v === 'si'
+            const cambian = sel.filter((m) => m.is_active !== activa)
+            const ids = new Set(cambian.map((m) => m.id))
+            const d = reservado(metas.map((m) => (ids.has(m.id) ? { ...m, is_active: activa } : m)))
+            const sinAportacion = cambian.length > 0 && cambian.every((m) => !m.planned_monthly_cents)
+            return [{ etiqueta: t.efectoReserva(mesHoy), antes: dinero(reservado(metas)), despues: sinAportacion ? `${dinero(d)} · ${t.sinAportacion}` : dinero(d) }]
+          },
+          guardar: async (sel, _p, v) => {
+            try { for (const m of sel) await actualizarMeta(m.id, { is_active: v === 'si' }) } finally { recargar() }
+          },
+        },
         propiedades: [
           { id: 'name', nombre: t.nombre, valor: (m) => m.name, editar: { tipo: 'texto', textoInicial: (m) => m.name, guardar: async (m, v) => { if (!v.trim()) invalido(t.nombreMal); await actualizarMeta(m.id, { name: v.trim() }); recargar() } } },
           { id: 'kind', nombre: t.tipo, valor: (m) => t.tipos[m.kind], editar: { tipo: 'opcion', opciones: [{ valor: 'fund', texto: t.tipos.fund }, { valor: 'goal', texto: t.tipos.goal }], textoInicial: (m) => m.kind, guardar: async (m, v) => { await actualizarMeta(m.id, { kind: v as G['kind'] }); recargar() } } },

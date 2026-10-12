@@ -209,7 +209,23 @@ func semilla(args []string) error {
 	fs := flag.NewFlagSet("semilla", flag.ExitOnError)
 	dbPath := fs.String("db", envOr("FINANZAS_DB", "datos/finanzas.db"), "base SQLite")
 	dir := fs.String("dir", "datos/semilla", "carpeta de la semilla real")
+	dev := fs.Bool("desarrollo", false, "carga SOLO el overlay de desarrollo (presupuesto, sueldo, plan de comidas…) sobre una base ya sembrada; nunca en producción")
+	conGasto := fs.Bool("con-gasto-fijo", false, "con --desarrollo: agrega la renta mensual (rompe las cifras P1–P6 de model.json)")
 	_ = fs.Parse(args)
+	if *conGasto && !*dev {
+		return errors.New("--con-gasto-fijo solo va con --desarrollo")
+	}
+	if *dev {
+		if devSeedRunner == nil {
+			return errors.New("la semilla de desarrollo no está instalada (falta internal/semilla)")
+		}
+		d, err := openDB(*dbPath)
+		if err != nil {
+			return err
+		}
+		defer d.Close()
+		return devSeedRunner(context.Background(), d, *dir, *conGasto)
+	}
 	if seedRunner == nil {
 		return errors.New("la carga de la semilla todavía no está implementada (falta internal/semilla)")
 	}

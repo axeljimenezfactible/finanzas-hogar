@@ -41,6 +41,10 @@ type Options struct {
 	Argon2 *dominio.Argon2Params
 	// Clock da «hoy» (rechazo de fechas futuras de PROFECO); nil = reloj del sistema.
 	Clock dominio.Clock
+	// FixturesDir es oraculo/fixtures/s2 (solo la semilla de desarrollo, desarrollo.go); vacío = Dir/../../oraculo/fixtures/s2.
+	FixturesDir string
+	// DevFixedExpense agrega la renta (gasto fijo) a la semilla de desarrollo; rompe P1–P6 canon (ver RunDev).
+	DevFixedExpense bool
 	// ImportPlannedCSV importa gastos_fijos_ingresos.csv cuando el archivo existe. Lo instala quien tenga el
 	// importador de Ajustes (PROVISIONAL: solicitud fuera de alcance); nil = solo avisa.
 	ImportPlannedCSV func(ctx context.Context, db dominio.Querier, path string) (int, error)
@@ -120,6 +124,7 @@ type loader struct {
 	cat  *recetas.Catalog   // catálogo validado de productos.json
 	nut  *recetas.Nutrition // tabla nutricional validada (modo revisión: incluye «propuesto»)
 	pres map[string]int64   // nombre exacto de la presentación y nombres de ticket → id
+	req  string             // request_id de audit_log; vacío = RequestID (la semilla de desarrollo usa RequestIDDev)
 }
 
 func (l *loader) id(key string) int64 { return l.ids[key] }
@@ -148,7 +153,11 @@ func (l *loader) insert(table, q string, args ...any) (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-	if err := dominio.Audit(l.ctx, l.tx, nil, "insert", table, id, nil, after, RequestID); err != nil {
+	req := l.req
+	if req == "" {
+		req = RequestID
+	}
+	if err := dominio.Audit(l.ctx, l.tx, nil, "insert", table, id, nil, after, req); err != nil {
 		return 0, err
 	}
 	return id, nil

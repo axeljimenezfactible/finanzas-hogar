@@ -20,6 +20,13 @@ DOC = RAIZ / 'docs/contratos/C3-integracion.md'
 INI, FIN = '<!-- c3:matriz:inicio (generado por frontend/scripts/c3-integracion.py; no editar a mano) -->', '<!-- c3:matriz:fin -->'
 METODOS = ('get', 'post', 'put', 'patch', 'delete')
 LOCALES = {'N-003', 'N-301', 'N-317'}  # U1 §3.29: viven en el teléfono, sin API
+# Excepciones técnicas PROVISIONALES (bloqueo C3-matriz, punto 3c; decisión del orquestador 2026-10-12): operaciones con
+# pantalla en U1 que el frontend no llama. Solo se admiten si TODAS sus necesidades las cubre otra operación que la
+# pantalla sí llama (el script lo comprueba) y con la justificación escrita aquí. Una operación no llamada y no listada
+# aquí hace fallar el script.
+EXCEPCIONES_NO_LLAMADA = {
+    'listPeriods': 'el mes sale del selector de la pantalla; sus necesidades las cubren getBudgetMonth y getBudgetFortnights (P-06) y getIncomeMonth (P-08), que traen las quincenas y su estado; no hay lista de periodos que mostrar',
+}
 
 
 def leer(p):
@@ -217,7 +224,7 @@ def construir(a):
         else:
             prob = f'no · {go_txt}{" (faltan: " + ", ".join(go_falta) + ")" if go_falta else ""} · {pw_txt}'
             informe['no_prob'].append(i)
-        opcol = ('Local (contenedor de P-26.01…P-26.14; PROVISIONAL, bloqueo C3-matriz)' if i == 'P-26' else
+        opcol = ('Local (contenedor de P-26.01…P-26.14; PROVISIONAL, decisión del orquestador, bloqueo C3-matriz punto 1)' if i == 'P-26' else
                  'Local (N-301, sin API)' if local else ', '.join(fila_ops))
         # Cada estado en dos columnas: «sí»/«no» sola (para `grep -c "| no |"` de C3-06) y su evidencia.
         est = lambda x: ' | '.join(x.split(' · ', 1))
@@ -233,9 +240,16 @@ def construir(a):
     claves = {v['clave'] for v in ops.values()}
     fuera = sorted(invocadas - claves)
     no_llamadas = sorted((o, [i for i in ids if o in usadas_por_fila[i]]) for o in en_filas if ops[o]['clave'] not in invocadas)
+    # Cobertura de cada operación no llamada: por necesidad, las otras operaciones del contrato que la cubren y que sí se llaman.
+    cobertura, no_llamadas_malas = {}, []
+    for o, _ in no_llamadas:
+        cub = {n: sorted(x for x, v in ops.items() if x != o and n in v['n'] and v['clave'] in invocadas and v['clave'] in regs) for n in sorted(ops[o]['n'])}
+        cobertura[o] = cub
+        if o not in EXCEPCIONES_NO_LLAMADA or not all(cub.values()):
+            no_llamadas_malas.append(o)
     sin_reg = sorted(invocadas - regs)
     return dict(filas=filas, exc=exc, sin_justificar=sin_justificar, informe=informe, ids=ids, ops=ops, regs=regs,
-                invocadas=invocadas, fuera=fuera, no_llamadas=no_llamadas, sin_reg=sin_reg, tot_pw=tot_pw, go_ok=go_ok, nombres=nombres)
+                invocadas=invocadas, fuera=fuera, no_llamadas=no_llamadas, cobertura=cobertura, no_llamadas_malas=no_llamadas_malas, sin_reg=sin_reg, tot_pw=tot_pw, go_ok=go_ok, nombres=nombres)
 
 
 def tabla(r):
@@ -243,8 +257,13 @@ def tabla(r):
            '|---|---|---|---|---|---|---|---|---|']
     exc = ['', '**Operaciones sin pantalla (excepciones técnicas, una por una):**', '',
            '| Operación | Motivo |', '|---|---|'] + [f'| {o} | {m} |' for o, m in r['exc']]
-    exc += ['', '**Operaciones con pantalla en U1 que el frontend no llama en ninguna parte** (sus necesidades las cubre otra operación; ver bloqueo C3-matriz):', '',
-            '| Operación | Filas donde aparece |', '|---|---|'] + [f'| {o} | {", ".join(f)} |' for o, f in r['no_llamadas']]
+    exc += ['', '**Operaciones con pantalla en U1 que el frontend no llama en ninguna parte** (excepciones técnicas PROVISIONALES, una por una; decisión del orquestador 2026-10-12, bloqueo C3-matriz punto 3c; solo se admiten si otra operación llamada cubre cada una de sus necesidades):', '',
+            '| Operación | Filas donde aparece | Necesidades cubiertas por otra operación llamada | Motivo |', '|---|---|---|---|']
+    for o, f in r['no_llamadas']:
+        cub = '; '.join(f'{n}: {", ".join(v) or "SIN COBERTURA"}' for n, v in r['cobertura'][o].items())
+        exc.append(f"| {o} | {', '.join(f)} | {cub} | {EXCEPCIONES_NO_LLAMADA.get(o, 'SIN JUSTIFICAR (ver bloqueo C3-matriz)')} |")
+    if not r['no_llamadas']:
+        exc.append('| (ninguna) | — | — | — |')
     if r['sin_justificar']:
         exc += [f'| {o} | SIN JUSTIFICAR (ver bloqueo C3-matriz) |' for o in r['sin_justificar']]
     return '\n'.join([INI] + enc + r['filas'] + exc + [FIN])
@@ -269,7 +288,7 @@ def main():
     print(f"Estado: implementado sí {impl}/{len(r['filas'])}; probado sí {prob}/{len(r['filas'])}; capturado sí 0/{len(r['filas'])} (WF-3b)")
     for i, f in r['informe']['no_impl']: print('  NO-IMPLEMENTADO', i, f if isinstance(f, str) else ', '.join(f))
     for i in r['informe']['no_prob']: print('  NO-PROBADO', i)
-    print(f"Operaciones con pantalla que el frontend no llama: {len(r['no_llamadas'])} {[o for o, _ in r['no_llamadas']]}")
+    print(f"Operaciones con pantalla que el frontend no llama: {len(r['no_llamadas'])} {[o for o, _ in r['no_llamadas']]}; sin excepción justificada o sin cobertura: {len(r['no_llamadas_malas'])} {r['no_llamadas_malas']}")
     nueva = tabla(r)
     texto = leer(DOC) if DOC.exists() else ''
     actual = texto[texto.find(INI):texto.find(FIN) + len(FIN)] if INI in texto and FIN in texto else ''
@@ -280,7 +299,7 @@ def main():
         print('Matriz escrita en', DOC.relative_to(RAIZ))
     else:
         print('Matriz del documento = matriz generada:', 'sí' if actual == nueva else 'NO')
-    malo = r['fuera'] or r['sin_reg'] or faltan_p or r['informe']['sin_operacion'] or r['sin_justificar'] or (not a.escribir and actual != nueva)
+    malo = r['fuera'] or r['sin_reg'] or faltan_p or r['informe']['sin_operacion'] or r['sin_justificar'] or r['no_llamadas_malas'] or (not a.escribir and actual != nueva)
     sys.exit(1 if malo else 0)
 
 

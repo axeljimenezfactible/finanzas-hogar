@@ -1,5 +1,6 @@
 // P-12 Receta (U1 §2.1–§2.2, §3.14 N-140 a N-144): escalado, costo y kcal del motor S4; «nueva» crea (N-136).
-import { useState } from 'react'
+// «Agregar al plan» usa N-123 aquí mismo (createMealPlanEntries; WF-3a bis, C3-matriz punto 2).
+import { useMemo, useState } from 'react'
 import { Minus, Plus, Trash2 } from 'lucide-react'
 import { ICONO_MD } from '../../componentes/Icono'
 import type { PropsPantalla } from '../../app/registro'
@@ -13,13 +14,13 @@ import { rutaDe } from '../../app/rutas'
 import { textos } from '../../textos/es-MX'
 import { Boton } from '../../componentes/Boton'
 import { Campo, estilosControl } from '../../componentes/Campo'
-import { ChipSeleccionable } from '../../componentes/Chip'
+import { ChipSeleccionable, MarcaPersona } from '../../componentes/Chip'
 import { ConDatos, Franja } from '../../componentes/Estados'
 import { Hoja } from '../../componentes/Hoja'
 import { TarjetaMetrica } from '../../componentes/TarjetaMetrica'
 import { useAvisos } from '../../componentes/Avisos'
 import { VistaBD } from '../../vistas-bd/VistaBD'
-import { BarraAcciones, MenuMas, Seccion, aMilli, cantidad, invalidar, kcal, mensajeError, porId, porciones, usarCatalogo } from './comun'
+import { BarraAcciones, MenuMas, Seccion, SelectorSemana, aMilli, cantidad, conSemana, diaCorto, diasDe, invalidar, kcal, mensajeError, personasPlan, porId, porciones, semanaPorDefecto, usarCatalogo } from './comun'
 import { textosCC as t } from './textos'
 
 type Cuerpo = Esquemas['RecipeCreate']
@@ -47,7 +48,7 @@ function DetalleReceta({ id }: { id: number }) {
   const conexion = useConexion()
   const avisar = useAvisos()
   const [porc, setPorc] = useState<number | null>(null)
-  const [hoja, setHoja] = useState<'editar' | 'eliminar' | null>(null)
+  const [hoja, setHoja] = useState<'editar' | 'eliminar' | 'plan' | null>(null)
   const det = usarConsulta('get', '/api/v1/recipes/{recipe_id}', { ruta: { recipe_id: id }, consulta: porc ? { servings_milli: porc } : {} })
   const uso = usarConsulta('get', '/api/v1/recipes/{recipe_id}/usage', { ruta: { recipe_id: id } })
   const productos = porId(usarCatalogo('productos'))
@@ -67,7 +68,7 @@ function DetalleReceta({ id }: { id: number }) {
       return (
         <div className="flex flex-col gap-4">
           <BarraAcciones acciones={<>
-            <Boton variante="primario" deshabilitadoPor={sinRed} onClick={() => navegar(`${rutaDe('P-10')}?hoja=asignar&receta=${id}`)}>{t.agregarAlPlan}</Boton>
+            <Boton variante="primario" deshabilitadoPor={sinRed} onClick={() => setHoja('plan')}>{t.agregarAlPlan}</Boton>
             <MenuMas acciones={[{ texto: t.editar, alHacer: () => setHoja('editar'), deshabilitadoPor: sinRed }, { texto: t.duplicar, alHacer: duplicar, deshabilitadoPor: sinRed }, { texto: t.eliminar, alHacer: () => setHoja('eliminar'), deshabilitadoPor: sinRed }]} />
           </>}>
             <h2 className="text-title-2 font-semibold">{r.name}</h2>
@@ -107,6 +108,7 @@ function DetalleReceta({ id }: { id: number }) {
             ) : <p className="text-small text-text-secondary">{t.sinPasos}</p>}
             {r.notes && <Franja rol="info">{r.notes}</Franja>}
           </Seccion>
+          {hoja === 'plan' && <HojaAgregarPlan receta={r} cerrar={() => setHoja(null)} alGuardar={uso.recargar} />}
           {hoja === 'editar' && (
             <Hoja abierta alCambiar={(a) => !a && setHoja(null)} titulo={t.editarReceta}>
               <FormReceta inicial={aCuerpo(d)} textoGuardar={textos.app.guardar} alGuardar={async (c) => {
@@ -128,6 +130,73 @@ function DetalleReceta({ id }: { id: number }) {
         </div>
       )
     }}</ConDatos>
+  )
+}
+
+/** N-123: día o días de la semana elegida, tiempo (los aptos de la receta), persona (Ambos por defecto) y porciones por
+ *  persona (1 por defecto; con Ambos son 2 por día, decisión D). Una sola llamada a createMealPlanEntries. */
+function HojaAgregarPlan({ receta, cerrar, alGuardar }: { receta: Detalle['recipe']; cerrar: () => void; alGuardar: () => void }) {
+  const avisar = useAvisos()
+  const conexion = useConexion()
+  const tiemposCat = usarCatalogo('tiempos')
+  const personas = personasPlan(usarCatalogo('personas'))
+  const aptos = useMemo(() => {
+    const l = [...(tiemposCat ?? [])].sort((a, b) => a.sort_order - b.sort_order)
+    const ids = receta.meal_slot_ids ?? []
+    return ids.length ? l.filter((x) => ids.includes(x.id)) : l
+  }, [tiemposCat, receta.meal_slot_ids])
+  const [porDefecto] = useState(() => semanaPorDefecto())
+  const [semana, setSemana] = useState(porDefecto)
+  const diaInicial = (s: string) => { const d = diasDe(s); const hoy = hoyISO(); return [d.includes(hoy) ? hoy : d[0]] }
+  const [dias, setDias] = useState<string[]>(() => diaInicial(porDefecto))
+  const [tiempo, setTiempo] = useState<number | null>(null)
+  const [quien, setQuien] = useState<number | 'ambos'>('ambos')
+  const [cuantas, setCuantas] = useState('1')
+  const [error, setError] = useState<string | null>(null)
+  const [ocupado, setOcupado] = useState(false)
+  const tiempoSel = tiempo ?? aptos[0]?.id ?? null
+  const ids = quien === 'ambos' ? personas.map((p) => p.id) : [quien]
+  const milli = aMilli(cuantas)
+  const sinRed = conexion ? undefined : textos.conexion.requiere
+  // Un reintento de la misma captura reutiliza la misma clave (CONVENCIONES §4); cambiar cualquier dato hace otra.
+  const clave = useMemo(() => nuevaClave(), [semana, dias.join(), tiempoSel, quien, cuantas])
+  const cambiarSemana = (s: string) => { setSemana(s); setDias(diaInicial(s)) }
+  async function guardar() {
+    setError(null)
+    if (milli === null) return setError(t.cantidadInvalida)
+    if (!tiempoSel || !ids.length || !dias.length) return setError(t.elegir)
+    setOcupado(true)
+    try {
+      await pedir('post', '/api/v1/meal-plan-entries', { idempotencia: clave, cuerpo: { plan_dates: [...dias].sort(), meal_slot_id: tiempoSel, person_ids: ids, recipe_id: receta.id, servings_milli: milli, is_eating_out: false } })
+      const s = semana
+      avisar({ texto: t.agregadaEnPlan(dias.length * ids.length), rol: 'exito', accion: { texto: t.verPlan, alHacer: () => navegar(conSemana(rutaDe('P-10'), s, porDefecto)) } })
+      alGuardar(); cerrar()
+    } catch (e) { setError(mensajeError(e)) } finally { setOcupado(false) }
+  }
+  return (
+    <Hoja abierta alCambiar={(a) => !a && cerrar()} titulo={t.agregarAlPlanDe(receta.name)}
+      pie={<Boton tam="hoja" variante="primario" deshabilitadoPor={sinRed} disabled={ocupado || milli === null || !tiempoSel} onClick={() => void guardar()}>{t.agregarAlPlan}</Boton>}>
+      <div className="flex flex-col gap-3">
+        <SelectorSemana semana={semana} porDefecto={porDefecto} cambiar={cambiarSemana} />
+        <fieldset className="flex flex-col gap-1"><legend className="text-small font-medium text-text-secondary">{t.tiempo}</legend>
+          <div className="flex flex-wrap gap-2">{aptos.map((x) => <ChipSeleccionable key={x.id} seleccionado={x.id === tiempoSel} onClick={() => setTiempo(x.id)}>{x.name}</ChipSeleccionable>)}</div>
+          {(receta.meal_slot_ids ?? []).length > 0 && <p className="text-caption text-text-secondary">{t.tiemposDeReceta}</p>}
+        </fieldset>
+        <fieldset className="flex flex-col gap-1"><legend className="text-small font-medium text-text-secondary">{t.dias}</legend>
+          <div className="flex flex-wrap gap-2">{diasDe(semana).map((f) => <ChipSeleccionable key={f} seleccionado={dias.includes(f)} onClick={() => setDias((d) => (d.includes(f) ? (d.length > 1 ? d.filter((x) => x !== f) : d) : [...d, f]))}>{diaCorto(f)}</ChipSeleccionable>)}</div>
+        </fieldset>
+        <fieldset className="flex flex-col gap-1"><legend className="text-small font-medium text-text-secondary">{t.persona}</legend>
+          <div className="flex flex-wrap gap-2">
+            <ChipSeleccionable seleccionado={quien === 'ambos'} marca={<MarcaPersona codigo="shared" />} onClick={() => setQuien('ambos')}>{t.ambos}</ChipSeleccionable>
+            {personas.map((p) => <ChipSeleccionable key={p.id} seleccionado={quien === p.id} marca={<MarcaPersona codigo={p.code} />} onClick={() => setQuien(p.id)}>{p.display_name}</ChipSeleccionable>)}
+          </div>
+        </fieldset>
+        <Campo etiqueta={t.porcionesPersona} inputMode="decimal" value={cuantas} onChange={(e) => setCuantas(e.target.value)}
+          error={milli === null ? t.cantidadInvalida : undefined} ayuda={milli !== null ? t.porcionesPorDia(porciones(milli * ids.length)) : undefined} />
+        {error && <Franja rol="error" alerta>{error}</Franja>}
+        {sinRed && <Franja rol="sinConexion">{sinRed}</Franja>}
+      </div>
+    </Hoja>
   )
 }
 

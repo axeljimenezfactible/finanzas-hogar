@@ -99,9 +99,15 @@ export function codigoTienda(s: Tienda | undefined, mapa?: Map<number, Tienda>):
   if (s.kind === 'branch' && s.parent_id && mapa?.get(s.parent_id)) return codigoTienda(mapa.get(s.parent_id), mapa)
   return s.name.normalize('NFD').replace(/[̀-ͯ']/g, '').toLowerCase().trim().replace(/\s+/g, '-')
 }
+/** Nombre visible: una sucursal con cadena se muestra «Cadena · Sucursal» (PROVISIONAL, bloqueo WF3a-bis-comidas-compras punto 3). */
+export function nombreTienda(s: Tienda | undefined, mapa?: Map<number, Tienda>): string {
+  if (!s) return '—'
+  const cadena = s.kind === 'branch' && s.parent_id ? mapa?.get(s.parent_id) : undefined
+  return cadena ? `${cadena.name} · ${s.name}` : s.name
+}
 export function Tiendita({ id, mapa }: { id?: number | null; mapa: Map<number, Tienda> }) {
   const s = id ? mapa.get(id) : undefined
-  return s ? <ChipTienda codigo={codigoTienda(s, mapa)} nombre={s.name} /> : <span className="text-text-secondary">{t.sinTienda}</span>
+  return s ? <ChipTienda codigo={codigoTienda(s, mapa)} nombre={nombreTienda(s, mapa)} /> : <span className="text-text-secondary">{t.sinTienda}</span>
 }
 
 // ── Cantidades (Milli: milésimas de la unidad base) ──

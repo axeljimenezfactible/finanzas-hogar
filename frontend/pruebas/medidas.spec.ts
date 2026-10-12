@@ -5,7 +5,7 @@
 // visible con cifras tabulares.
 import { expect, test, type BrowserContext, type Page } from '@playwright/test'
 import { ApiFalsa } from './apoyo/api-falsa'
-import { controlesChicos, dineroSinTabulares, iconosFueraDeNorma } from './apoyo/medidas'
+import { controlesChicos, dineroSinTabulares, iconosFueraDeNorma, textosEnIngles } from './apoyo/medidas'
 import { instalarInicio } from './inicio/datos'
 import { AreaFalsa } from './gastos-presupuesto/datos'
 import { instalarArea, type Pet } from './comidas-compras/datos'
@@ -29,11 +29,16 @@ const GRUPOS: { nombre: string; instalar: Instalar; rutas: string[] }[] = [
     rutas: ['/comidas', '/comidas?sub=resumen', '/comidas/recetas', '/comidas/recetas/1', '/compras', '/compras/comparar', '/compras/comparar?sub=detalle', '/compras/productos', '/compras/inventario', '/compras/inventario?sub=resumen'],
   },
 ]
+// U5-07 · Pendiente FUERA del alcance de frontend-base: src/pantallas/inicio/GraficaInicio.tsx:49 (dueño front-inicio)
+// arma su propia gráfica con la descripción automática de ECharts en inglés. Va como solicitud en
+// docs/estado/wf3/frontend-base-fix.md; aquí se cuenta y se imprime como PENDIENTE, sin ocultarlo, para no romper la
+// verificación de la base. Al corregirse, esta lista debe quedar vacía (y la prueba lo exige: ver abajo).
+const PENDIENTES_INGLES = [/^\/inicio\?sub=tendencias aria-label «This is a chart/]
 for (const g of GRUPOS) {
   test(`U5-06 a 412 px táctil · ${g.nombre}: controles ≥ 44 × 44, iconos 20/24 px con trazo 1.5 (24 en solo icono) y dinero tabular`, async ({ page, context }) => {
     test.setTimeout(150_000)
     await g.instalar(context, page)
-    const chicos: string[] = [], iconos: string[] = [], dinero: string[] = []
+    const chicos: string[] = [], iconos: string[] = [], dinero: string[] = [], ingles: string[] = []
     let controles = 0, totalIconos = 0
     for (const ruta of g.rutas) {
       await page.goto(ruta)
@@ -41,29 +46,34 @@ for (const g of GRUPOS) {
       await page.waitForLoadState('networkidle')
       await page.waitForTimeout(300)
       const c = await controlesChicos(page), i = await iconosFueraDeNorma(page), d = await dineroSinTabulares(page)
+      ingles.push(...(await textosEnIngles(page)).map((x) => `${ruta} ${x}`))
       controles += c.total; totalIconos += i.total
       chicos.push(...c.chicos.map((x) => `${ruta} ${x.control} ${x.ancho}×${x.alto}`))
       iconos.push(...i.mal.map((x) => `${ruta} ${x.regla}: ${x.control} ${x.clase} ${x.ancho}×${x.alto} trazo ${x.trazo}`))
       dinero.push(...d.map((x) => `${ruta} «${x}»`))
     }
-    console.log(`U5-06 ${g.nombre} (${g.rutas.length} vistas): controles ${controles}, menores de 44 px ${chicos.length}; iconos ${totalIconos}, fuera de 20/24 px, de trazo 1.5 o de 24 px en solo icono: ${iconos.length}; dinero sin tabulares ${dinero.length}`)
-    for (const x of [...chicos, ...iconos, ...dinero]) console.log(`   ${x}`)
+    console.log(`U5-06 ${g.nombre} (${g.rutas.length} vistas): controles ${controles}, menores de 44 px ${chicos.length}; iconos ${totalIconos}, fuera de 20/24 px, de trazo 1.5 o de 24 px en solo icono: ${iconos.length}; dinero sin tabulares ${dinero.length}; U5-07 inglés (texto y aria-label, incluida la descripción de las gráficas) ${ingles.length}`)
+    for (const x of [...chicos, ...iconos, ...dinero, ...ingles]) console.log(`   ${x}`)
     expect(controles).toBeGreaterThan(0)
     expect(totalIconos).toBeGreaterThan(0)
     expect(chicos).toEqual([])
     expect(iconos).toEqual([])
     expect(dinero).toEqual([])
+    const pendientes = ingles.filter((x) => PENDIENTES_INGLES.some((r) => r.test(x)))
+    for (const x of pendientes) console.log(`   PENDIENTE U5-07 (solicitud a front-inicio): ${x}`)
+    expect(ingles.filter((x) => !pendientes.includes(x))).toEqual([])
   })
 }
 test('U5-06 a 412 px táctil · estados abiertos: hoja F-1 con «Más opciones», panel de la cola, menú «/» y vista previa', async ({ page, context }) => {
   test.setTimeout(150_000)
   const api = new ApiFalsa()
   await api.instalar(context); await new AreaFalsa(api).instalar(context)
-  const chicos: string[] = [], iconos: string[] = [], dinero: string[] = [], estados: string[] = []
+  const chicos: string[] = [], iconos: string[] = [], dinero: string[] = [], ingles: string[] = [], estados: string[] = []
   let controles = 0, totalIconos = 0
   const medir = async (estado: string) => {
     await page.waitForTimeout(300)
     const c = await controlesChicos(page), i = await iconosFueraDeNorma(page), d = await dineroSinTabulares(page)
+    ingles.push(...(await textosEnIngles(page)).map((x) => `${estado}: ${x}`))
     controles += c.total; totalIconos += i.total
     estados.push(`${estado} (${c.total} controles, ${i.total} iconos)`)
     chicos.push(...c.chicos.map((x) => `${estado}: ${x.control} ${x.ancho}×${x.alto}`))
@@ -82,7 +92,8 @@ test('U5-06 a 412 px táctil · estados abiertos: hoja F-1 con «Más opciones»
   await expect(hoja.getByRole('button', { name: 'Menos opciones' })).toBeVisible()
   await hoja.getByRole('button', { name: 'Más', exact: true }).tap()
   await hoja.getByLabel('Forma de pago').selectOption('credit')
-  await expect(hoja.getByRole('button', { name: 'Ir a compra a crédito' })).toBeVisible()
+  // N-053 en la hoja (R4-01): la API falsa genérica no tiene líneas, así que se mide su estado vacío con «Ir a Ajustes › Créditos».
+  await expect(hoja.getByText('No hay líneas de crédito activas')).toBeVisible()
   await medir('F-1 Gasto · Más opciones')
   for (const pestana of ['Ingreso', 'Peso', 'Ticket']) {
     await hoja.getByRole('tab', { name: pestana }).tap()
@@ -138,6 +149,8 @@ test('U5-06 a 412 px táctil · estados abiertos: hoja F-1 con «Más opciones»
   expect(chicos).toEqual([])
   expect(iconos).toEqual([])
   expect(dinero).toEqual([])
+  for (const x of ingles) console.log(`   U5-07 ${x}`)
+  expect(ingles).toEqual([])
 })
 test('U5-06 P-13: la casilla «Marcar … como comprado» dibuja 20 px dentro de un área de toque de 44 × 44 que la marca', async ({ page, context }) => {
   const pets: Pet[] = []
@@ -154,4 +167,37 @@ test('U5-06 P-13: la casilla «Marcar … como comprado» dibuja 20 px dentro de
   expect(area.x + 3 < dibujo.x && area.y + 3 < dibujo.y).toBe(true)
   await page.touchscreen.tap(area.x + 3, area.y + 3)
   await expect.poll(() => pets.find((p) => p.metodo === 'PATCH')?.consulta.get('week')).toBe('2026-W42')
+})
+
+test('U5-06 · G-05 barra inferior (DESIGN §7.10): iconos de 24 px, fondo ui.surface.raised y píldora de 56 × 32 en ui.surface.selected', async ({ page, context }) => {
+  await new ApiFalsa().instalar(context)
+  await instalarInicio(context)
+  for (const tema of ['light', 'dark'] as const) {
+    await page.emulateMedia({ colorScheme: tema })
+    await page.goto('/inicio')
+    const barra = page.getByRole('navigation', { name: 'Navegación inferior' })
+    await expect(barra).toBeVisible()
+    const m = await barra.evaluate((nav) => {
+      const raiz = getComputedStyle(document.documentElement)
+      const color = (v: string) => { const d = document.createElement('div'); d.style.color = raiz.getPropertyValue(v).trim(); document.body.append(d); const c = getComputedStyle(d).color; d.remove(); return c }
+      const activo = nav.querySelector('[aria-current="page"]')!
+      const pildora = activo.querySelector<HTMLElement>('[data-prueba="pildora"]')!
+      const r = pildora.getBoundingClientRect()
+      const iconos = Array.from(nav.querySelectorAll('svg.lucide')).map((s) => Math.round(s.getBoundingClientRect().width))
+      const inactiva = nav.querySelector('a:not([aria-current]) [data-prueba="pildora"]')!
+      return {
+        fondo: getComputedStyle(nav).backgroundColor, raised: color('--ui-surface-raised'),
+        pildora: `${Math.round(r.width)}×${Math.round(r.height)}`, fondoPildora: getComputedStyle(pildora).backgroundColor, selected: color('--ui-surface-selected'),
+        colorIcono: getComputedStyle(pildora.querySelector('svg')!).color, iconSelected: color('--ui-icon-selected'),
+        fondoInactiva: getComputedStyle(inactiva).backgroundColor, iconos, activo: activo.textContent,
+      }
+    })
+    console.log(`G-05 (${tema}): fondo ${m.fondo} (raised ${m.raised}); píldora «${m.activo}» ${m.pildora} ${m.fondoPildora} (selected ${m.selected}); icono ${m.colorIcono} (icon.selected ${m.iconSelected}); iconos ${m.iconos.join(', ')} px`)
+    expect(m.fondo).toBe(m.raised)
+    expect(m.pildora).toBe('56×32')
+    expect(m.fondoPildora).toBe(m.selected)
+    expect(m.colorIcono).toBe(m.iconSelected)
+    expect(m.fondoInactiva).toBe('rgba(0, 0, 0, 0)')
+    expect(m.iconos).toEqual([24, 24, 24, 24, 24])
+  }
 })

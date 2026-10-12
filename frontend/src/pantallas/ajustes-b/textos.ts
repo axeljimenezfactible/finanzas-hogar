@@ -80,6 +80,7 @@ export const textosAjustesB = {
     proposito: 'Configura las 4 alertas, quién recibe cada una y registra los chats de Telegram de Axel y Ximena en el bot.',
     que: 'los avisos',
     alertas: 'Alertas', alerta: 'Alerta', activa: 'Activa',
+    inactiva: 'Inactiva', alertasActivas: 'Alertas activas', deTotal: (a: number, b: number) => `${a} de ${b}`,
     parametros: 'Parámetros de las alertas',
     diasPago: 'Días antes del pago', diasPagoAyuda: 'Separa los días con comas: 1 es el día anterior y 0 el mismo día',
     primerAviso: 'Primer aviso del presupuesto', tope: 'Aviso de tope del presupuesto',
@@ -227,6 +228,9 @@ export const textosAjustesB = {
     unidades: { g: 'g', ml: 'ml', piece: 'pieza' } as Record<string, string>,
     sobrante: (n: string) => `Sobrante de receta ${n}`, porciones: 'porciones',
     faltaRitmo: 'Falta el ritmo',
+    // `Ctrl+/` sobre {n} filas (U4 P-26.14, vista previa): «{k} pasan a Reponer, {j} a Agotado y {s} a Suficiente».
+    pasan: (k: number, j: number, s: number) => `${k} ${k === 1 ? 'pasa' : 'pasan'} a Reponer, ${j} a Agotado y ${s} a Suficiente`,
+    conteo: (l: [string, number][]) => l.map(([e, n]) => `${e} ${n}`).join(' · '),
     nivelMal: 'Escribe una cantidad en g, ml o piezas, o deja vacío para no avisar', cantMal: 'Escribe cuánto se consume', diasMal: 'Escribe en cuántos días se consume esa cantidad',
     existenciaInicial: 'Existencia inicial',
     efectoEstado: 'Estado', efectoEstimada: 'Existencia estimada hoy', efectoDias: 'Días restantes', efectoSemana: 'Consumo por semana',

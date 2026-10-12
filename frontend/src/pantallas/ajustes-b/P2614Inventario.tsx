@@ -79,7 +79,28 @@ function Tabla({ items, productos, recargar, vacio }: { items: I[]; productos: P
     const a = resumen(ins(i), unidad(i)); const b = resumen({ ...ins(i), ...cambio }, unidad(i))
     return b.map(([k, v]) => ({ etiqueta: k, antes: a.find((x) => x[0] === k)?.[1] ?? '—', despues: v }))
   }
+  // `Ctrl+/` sobre {n} filas (U4 P-26.14, vista previa; H-08): estado de cada fila antes → después con la regla K7 y RN-15 (en el
+  // navegador, como la vista previa de una sola fila), «{k} pasan a Reponer, {j} a Agotado y {s} a Suficiente» con el conteo de
+  // estados de las seleccionadas antes → después, y la lista de las filas que cambian.
+  const estadoDe = (x: InsumosInventario) => estadoInventario(existenciaHoy(x), x.reorder_level_milli)
+  const textoEstado = (e: string | null) => (e ? t.estados[e] : t.faltaRitmo)
+  const previaVarias = (sel: I[], cambio: Partial<InsumosInventario>): Cambio[] => {
+    const l = sel.map((i) => ({ i, a: estadoDe(ins(i)), b: estadoDe({ ...ins(i), ...cambio }) }))
+    const cambian = l.filter((x) => x.a !== x.b)
+    const pasan = (e: string) => cambian.filter((x) => x.b === e).length
+    const conteo = (k: 'a' | 'b') => {
+      const c: [string, number][] = (['sufficient', 'reorder', 'out'] as const).map((e) => [t.estados[e], l.filter((x) => x[k] === e).length])
+      const sinRitmo = l.filter((x) => x[k] === null).length
+      return t.conteo(sinRitmo ? [...c, [t.faltaRitmo, sinRitmo]] : c)
+    }
+    return [
+      { etiqueta: t.pasan(pasan('reorder'), pasan('out'), pasan('sufficient')), antes: conteo('a'), despues: conteo('b') },
+      ...cambian.map((x) => ({ etiqueta: nombre(x.i), antes: textoEstado(x.a), despues: textoEstado(x.b) })),
+    ]
+  }
   const milli = (v: string, msg: string, positivo = false) => { if (v.trim() === '') return null; const m = aMilesimas(v); if (m === null || (positivo && m <= 0)) invalido(msg); return m }
+  const cambioVarias = (p: string, v: string): Esquemas['InventoryItemUpdate'] & Partial<InsumosInventario> =>
+    (p === 'tracking_mode' ? { tracking_mode: v as I['tracking_mode'] } : { reorder_level_milli: milli(v, t.nivelMal) })
   const filas = [...items].sort((a, b) => (ORDEN[a.status ?? ''] ?? 3) - (ORDEN[b.status ?? ''] ?? 3) || nombre(a).localeCompare(nombre(b), 'es-MX'))
   const [mov, setMov] = useState<{ i: I; modo: I['tracking_mode'] } | null>(null)
   const avisar = useAvisos()
@@ -110,6 +131,19 @@ function Tabla({ items, productos, recargar, vacio }: { items: I[]; productos: P
       // U4 §0.2 punto 2 y P-26.14 (H-08): al soltar la tarjeta en el otro modo queda ahí con la vista previa del estado antes → después;
       // «Aplicar» (o Enter, con el foco en el botón) guarda y Esc la regresa a su columna sin guardar. Nada se guarda al soltar.
       columnasTablero: { propiedad: 'tracking_mode', columnas: MODOS, moverA: async (i, columna) => setMov({ i, modo: columna === t.modos.stock ? 'stock' : 'consumption_rate' }) },
+      // `Ctrl+/` (U4 P-26.14, Atajos): modo o nivel de las filas seleccionadas con la vista previa sumada; `Enter` aplica a todas
+      // (un `updateInventoryItem` por fila) y `Esc` cancela sin cambiar ninguna. Un nivel que no es cantidad no calcula vista previa.
+      editarVarias: {
+        propiedades: [
+          { id: 'tracking_mode', nombre: t.modo, tipo: 'opcion', opciones: [{ valor: 'stock', texto: t.modos.stock }, { valor: 'consumption_rate', texto: t.modos.consumption_rate }] },
+          { id: 'reorder', nombre: t.nivel, tipo: 'numero' },
+        ],
+        vistaPrevia: async (sel, p, v) => previaVarias(sel, cambioVarias(p, v)),
+        guardar: async (sel, p, v) => {
+          const c = cambioVarias(p, v)
+          try { for (const i of sel) await actualizar(i.id, c) } finally { recargar() }
+        },
+      },
       propiedades: [
         { id: 'producto', nombre: t.producto, valor: nombre },
         { id: 'tracking_mode', nombre: t.modo, valor: (i) => t.modos[i.tracking_mode], grupo: (i) => t.modos[mov?.i.id === i.id ? mov.modo : i.tracking_mode],

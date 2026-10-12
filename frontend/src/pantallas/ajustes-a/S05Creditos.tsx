@@ -5,6 +5,7 @@ import { Plus } from 'lucide-react'
 import { nuevaClave, pedir } from '../../api/cliente'
 import { useConexion } from '../../api/conexion'
 import { usarConsulta } from '../../api/consulta'
+import { ErrorApi } from '../../api/errores'
 import { aCentavos, dinero, fecha, hoyISO, porcentaje } from '../../api/formatos'
 import type { Esquemas } from '../../api/tipos'
 import { Enlace } from '../../app/enrutador'
@@ -18,6 +19,7 @@ import { VistaBD } from '../../vistas-bd/VistaBD'
 import { aFraccion, aPuntosBase, corteYPago, multDiv, normalizar, pctDeFraccion, pctDePuntosBase } from './calculos'
 import { Aviso, Bloque, DialogoCritico, Editable, Fila, Parametro, textoDinero, vDia, vDinero, vEntero, vFecha, vNombre, vOpcion, vPct, vPlazo, type Previa } from './comunes'
 import { comoLista } from './comunes'
+import { guardarVarias, nota as notaGrupo, resumen, siNo } from './grupo'
 import { t } from './textos'
 const k = t.creditos
 type Cr = Esquemas['Credit']; type Tasa = Esquemas['CreditTermRate']; type Promo = Esquemas['Promotion']; type Cal = Esquemas['CreditPurchasePreview']; type Compra = Esquemas['CreditPurchase']
@@ -156,14 +158,16 @@ function Linea({ c, alCambiar, alCerrar }: { c: Cr; alCambiar: () => void; alCer
   }
   const previaTasaPrestamo = async (s: string): Promise<Previa> => {
     const f = aFraccion(s)
-    const compras = await pedir('get', '/api/v1/credit-purchases', { consulta: { credit_id: [c.id], limit: 1 } })
+    // R2-05: la compra vigente más reciente del préstamo (filtro status=active, orden -purchase_date) con SU frecuencia de pagos.
+    const compras = await pedir('get', '/api/v1/credit-purchases', { consulta: { credit_id: [c.id], status: 'active', sort: '-purchase_date,-id', limit: 1 } })
     const x = (compras.items as Esquemas['CreditPurchase'][])[0]
-    const periodos = { weekly: 52, fortnightly: 24, monthly: 12 }[c.payment_frequency]
+    const periodos = { weekly: 52, fortnightly: 24, monthly: 12 }[x?.payment_frequency ?? c.payment_frequency]
     const iva = c.vat_included === false ? c.vat_on_interest_bp : undefined
     const cambios: Cambio[] = [{ etiqueta: k.tasaAnual, antes: tasaDe(c.annual_rate_num, c.annual_rate_den, c.annual_rate_decimals), despues: f ? pctDeFraccion(f.num, f.den, f.decimales) : '—' }]
     if (x && f && c.annual_rate_num != null && c.annual_rate_den) {
       const A = amortizar(x.principal_cents, c.annual_rate_num, c.annual_rate_den, periodos, x.term_count, iva), B = amortizar(x.principal_cents, f.num, f.den, periodos, x.term_count, iva)
       cambios.push({ etiqueta: k.proximoPago, antes: dinero(A.pago), despues: dinero(B.pago) }, { etiqueta: k.intereses.split(' de una')[0], antes: dinero(A.intereses), despues: dinero(B.intereses) })
+      return { cambios, notas: [k.ejemploTexto(dinero(x.principal_cents), x.term_count, fecha(x.first_payment_date ?? x.purchase_date))] }
     }
     return { cambios }
   }
@@ -221,18 +225,22 @@ function LecturaAB({ c, guardar }: { c: Cr; guardar: (x: Esquemas['CreditUpdate'
   const [elegida, setElegida] = useState<'A' | 'B'>(c.availability_reading)
   const previa = usarConsulta('get', '/api/v1/credits/{credit_id}/availability-preview', { ruta: { credit_id: c.id } }, abierta)
   const serie = usarConsulta('get', '/api/v1/credits/{credit_id}/availability-series', { ruta: { credit_id: c.id } }, abierta)
-  const otra = c.availability_reading === 'A' ? 'B' : 'A'
+  // N-284 (U1 §3.29; C3-matriz punto 2): el valor del interruptor A/B y el aviso «pendiente confirmar» salen de getCredit.
+  const detalle = usarConsulta('get', '/api/v1/credits/{credit_id}', { ruta: { credit_id: c.id } })
+  const linea = detalle.datos ?? c
+  const otra = linea.availability_reading === 'A' ? 'B' : 'A'
+  const guardarYLeer = async (x: Esquemas['CreditUpdate']) => { await guardar(x); detalle.recargar() }
   return (
     <>
       <Fila etiqueta={k.lectura}>
         <div className="flex flex-col gap-2">
-          <span className="px-2">{c.availability_reading === 'A' ? k.lecturaA : k.lecturaB}</span>
+          <span className="px-2" data-prueba="lectura-activa">{linea.availability_reading === 'A' ? k.lecturaA : k.lecturaB}</span>
           <Boton className="w-fit" deshabilitadoPor={!conexion ? textos.conexion.requiere : undefined} onClick={() => { setElegida(otra); setAbierta(true) }}>{k.usar(otra)}</Boton>
-          {!c.availability_confirmed && <Aviso rol="advertencia">{k.pendienteConfirmar}</Aviso>}
-          <label className="flex min-h-11 items-center gap-2 px-2"><input type="checkbox" className="size-5" checked={c.availability_confirmed} disabled={!conexion} onChange={(e) => void guardar({ availability_confirmed: e.target.checked })} />{k.yaConfirme}</label>
+          {!linea.availability_confirmed && <Aviso rol="advertencia">{k.pendienteConfirmar}</Aviso>}
+          <label className="flex min-h-11 items-center gap-2 px-2"><input type="checkbox" className="size-5" checked={linea.availability_confirmed} disabled={!conexion} onChange={(e) => void guardarYLeer({ availability_confirmed: e.target.checked })} />{k.yaConfirme}</label>
         </div>
       </Fila>
-      <Hoja abierta={abierta} alCambiar={setAbierta} titulo={k.lectura} pie={<div className="flex justify-end gap-2"><Boton onClick={() => setAbierta(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!previa.datos ? t.comun.noCalculo : undefined} onClick={async () => { await guardar({ availability_reading: elegida }); setAbierta(false) }}>{k.usar(elegida)}</Boton></div>}>
+      <Hoja abierta={abierta} alCambiar={setAbierta} titulo={k.lectura} pie={<div className="flex justify-end gap-2"><Boton onClick={() => setAbierta(false)}>{textos.app.cancelar}</Boton><Boton variante="primario" deshabilitadoPor={!previa.datos ? t.comun.noCalculo : undefined} onClick={async () => { await guardarYLeer({ availability_reading: elegida }); setAbierta(false) }}>{k.usar(elegida)}</Boton></div>}>
         <ConDatos consulta={previa}>{(p) => (
           <div className="flex flex-col gap-3 desktop:grid desktop:grid-cols-2" data-prueba="lecturas-ab">
             {(['A', 'B'] as const).map((l) => { const r = l === 'A' ? p.reading_a : p.reading_b; return (
@@ -241,7 +249,7 @@ function LecturaAB({ c, guardar }: { c: Cr; guardar: (x: Esquemas['CreditUpdate'
                 <p className="tabular-nums">{k.hoy}: {dinero(r.available_today_cents)}</p><p className="tabular-nums">{k.minimo}: {dinero(r.horizon_min_cents)}</p>
                 {serie.datos && <p className="text-small tabular-nums text-text-secondary">{k.serie}: {serie.datos.events.map((e) => dinero(l === 'A' ? e.available_a_cents : e.available_b_cents)).join(' · ')}</p>}
               </div>) })}
-            {!c.availability_confirmed && <Aviso rol="advertencia">{k.pendienteConfirmar}</Aviso>}
+            {!linea.availability_confirmed && <Aviso rol="advertencia">{k.pendienteConfirmar}</Aviso>}
           </div>
         )}</ConDatos>
       </Hoja>
@@ -296,6 +304,26 @@ function Promociones({ filas, creditos, alCambiar, alNueva }: { filas: Promo[]; 
   const guardar = (x: Promo) => async (c: Esquemas['PromotionUpdate']) => { await pedir('patch', '/api/v1/promotions/{promotion_id}', { ruta: { promotion_id: x.id }, cuerpo: c }); alCambiar() }
   const nota = (): Previa => ({ notas: [k.notaPromo] })
   const tasa = (x: Promo) => (x.rate_num === 0 ? k.sinIntereses : tasaDe(x.rate_num, x.rate_den, x.rate_decimals, x.rate_pct))
+  // Ctrl+/ (U4 P-26.05 «Atajos»: «editar a la vez varias promociones»). Campos PROVISIONALES (bloqueo WF3a-bis-ajustes-a §2):
+  // activa, línea, plazo, compra mínima y fin de vigencia; cada uno con el aviso de R5-3 (punto 11) y, si cambia la vigencia, el conteo de vigentes hoy.
+  const lineaDe = (id?: number | null) => creditos.find((c) => c.id === id)?.name ?? k.cualquiera
+  const errorGrupo = (sel: Promo[], prop: string, v: string): string | null =>
+    prop === 'term_count' ? vPlazo(v) : prop === 'min_purchase_cents' ? vDinero()(v) : prop === 'valid_to' ? (vFecha()(v) ?? (sel.some((x) => v < x.valid_from) ? t.v.v08 : null)) : null
+  const conValor = (x: Promo, prop: string, v: string): Promo => ({ ...x, ...cuerpoGrupo(prop, v) } as Promo)
+  const cuerpoGrupo = (prop: string, v: string): Esquemas['PromotionUpdate'] =>
+    prop === 'is_active' ? { is_active: v === 'si' } : prop === 'credit_id' ? { credit_id: v === 'cualquiera' ? null : Number(v) } : prop === 'term_count' ? { term_count: Number(v) } : prop === 'min_purchase_cents' ? { min_purchase_cents: aCentavos(v) ?? 0 } : { valid_to: v }
+  const mostrarGrupo = (x: Promo, prop: string): string =>
+    prop === 'is_active' ? (x.is_active ? t.comun.si : t.comun.no) : prop === 'credit_id' ? lineaDe(x.credit_id) : prop === 'term_count' ? String(x.term_count) : prop === 'min_purchase_cents' ? dinero(x.min_purchase_cents) : fecha(x.valid_to)
+  const nombreGrupo: Record<string, string> = { is_active: t.comun.activa, credit_id: k.linea, term_count: k.plazoPagos, min_purchase_cents: k.compraMin, valid_to: k.hasta }
+  const previaGrupo = (sel: Promo[], prop: string, v: string): Cambio[] => {
+    const e = errorGrupo(sel, prop, v)
+    if (e) return [notaGrupo(e)]
+    const nuevas = sel.map((x) => conValor(x, prop, v)), hoy = hoyISO()
+    const cambios: Cambio[] = [{ etiqueta: nombreGrupo[prop], antes: resumen(sel.map((x) => mostrarGrupo(x, prop))), despues: mostrarGrupo(nuevas[0], prop) }]
+    if (prop === 'is_active' || prop === 'valid_to') cambios.push({ etiqueta: t.grupo.vigentesHoy, antes: t.grupo.deN(sel.filter((x) => x.is_current).length, sel.length), despues: t.grupo.deN(nuevas.filter((x) => x.is_active && x.valid_from <= hoy && hoy <= x.valid_to).length, sel.length) })
+    cambios.push(notaGrupo(k.notaPromo))
+    return cambios
+  }
   if (!filas.length) return <Vacio texto={k.sinPromos} accion={<Boton variante="primario" onClick={alNueva}>{k.nuevaPromo}</Boton>} />
   // ←/→: mes anterior o siguiente del calendario (U4 P-26.05 «Atajos»), fuera de los campos de texto.
   const flechas = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -307,6 +335,21 @@ function Promociones({ filas, creditos, alCambiar, alNueva }: { filas: Promo[]; 
     <div onKeyDown={flechas} data-prueba="promociones">
       <VistaBD def={{ clave: 'P-26.05-promociones', filas, idFila: (x) => x.id, vistas: ['calendario', 'tabla', 'tablero'], fecha: (x) => x.valid_from, titulo: (x) => `${x.merchant_name} · ${tasa(x)}`,
         columnasTablero: { propiedad: 'credit_id', columnas: [k.cualquiera, ...creditos.map((c) => c.name)] },
+        editarVarias: {
+          propiedades: [
+            { id: 'is_active', nombre: t.comun.activa, tipo: 'opcion', opciones: siNo },
+            { id: 'credit_id', nombre: k.linea, tipo: 'opcion', opciones: [{ valor: 'cualquiera', texto: k.cualquiera }, ...creditos.map((c) => ({ valor: String(c.id), texto: c.name }))] },
+            { id: 'term_count', nombre: k.plazoPagos, tipo: 'numero' },
+            { id: 'min_purchase_cents', nombre: k.compraMin, tipo: 'dinero' },
+            { id: 'valid_to', nombre: k.hasta, tipo: 'fecha' },
+          ],
+          vistaPrevia: async (sel, prop, v) => previaGrupo(sel, prop, v),
+          guardar: async (sel, prop, v) => {
+            const e = errorGrupo(sel, prop, v)
+            if (e) throw new ErrorApi(422, 'validation_error', e)
+            await guardarVarias(sel, (x) => pedir('patch', '/api/v1/promotions/{promotion_id}', { ruta: { promotion_id: x.id }, cuerpo: cuerpoGrupo(prop, v) }), alCambiar)
+          },
+        },
         propiedades: [
           { id: 'merchant_name', nombre: k.comercio, valor: (x) => x.merchant_name, pintar: (x) => <Editable etiqueta={k.comercio} valor={x.merchant_name} mostrar={x.merchant_name} validar={vNombre} guardar={(s) => guardar(x)({ merchant_name: s.trim() })} /> },
           { id: 'credit_id', nombre: k.linea, valor: (x) => x.credit_id, grupo: (x) => creditos.find((c) => c.id === x.credit_id)?.name ?? k.cualquiera, pintar: (x) => creditos.find((c) => c.id === x.credit_id)?.name ?? k.cualquiera },

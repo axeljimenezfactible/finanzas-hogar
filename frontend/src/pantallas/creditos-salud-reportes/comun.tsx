@@ -126,7 +126,7 @@ export function Agenda({ pagos, per, nombreLinea }: { pagos: Pago[]; per: Person
     </ul>
   )
 }
-const agruparEstado = (partes: Parte[], per: Personas) => agrupar(partes, (s) => s.amount_cents, per).map(([k, v]) => `${k} ${dinero(v)}`).join(' · ') + ' · ' + [...new Set(partes.map((s) => ESTADO_PARTE[s.status]))].join(' / ').toLowerCase()
+export const agruparEstado = (partes: Parte[], per: Personas) => agrupar(partes, (s) => s.amount_cents, per).map(([k, v]) => `${k} ${dinero(v)}`).join(' · ') + ' · ' + [...new Set(partes.map((s) => ESTADO_PARTE[s.status]))].join(' / ').toLowerCase()
 
 /** Hoja «Marcar pago» (G-06, N-210): una parte por persona, fecha real (hoy) y monto programado por defecto; Deshacer desmarca. */
 export function HojaPago({ pagos, per, alCambiar, consulta }: { pagos: Pago[]; per: Personas; alCambiar: () => void; consulta: URLSearchParams }) {

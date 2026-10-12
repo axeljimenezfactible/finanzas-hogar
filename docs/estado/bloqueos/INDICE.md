@@ -581,3 +581,14 @@ Los dio de alta `integrador-wf3a` al cerrar WF-3a. Son 37 archivos, más los 3 d
 | `WF3-inicio-tiendas.md` | `front-inicio` | Color de tienda sin código en C1 | — | WF-3b |
 | `WF3-inicio-vacios.md` | `front-inicio` | Reglas de «vacío» y destinos de P-01 que C1 y U3 no fijan | — | WF-3b |
 | `WF3-integrador-red.md` | `integrador-backend` | IP fija 192.168.50.56, nombre `finanzas.local` permanente y CA en el sistema | — | WF-4 |
+
+## Bloqueos nuevos de WF-3a bis (12-oct-2026, para WF-3b y la puerta 4)
+
+Los dio de alta `integrador-wf3a-bis` al cerrar la ronda acotada de corrección del frontend (WF-3a bis). Son **4 archivos nuevos, todos ABIERTOS**, más `C3-matriz.md` (ya contado en WF-3a), que ahora trae la sección «Decisiones del orquestador (2026-10-12, WF-3a bis)»: sus decisiones 1 a 5 están aplicadas, pero siguen PROVISIONALES hasta la puerta 4, así que el archivo sigue ABIERTO. **Conteo con la carpeta en disco: 129 archivos de bloqueo** (85 hasta P2d y la Pista 3, 40 de WF-3a y 4 de WF-3a bis). El código funciona con la opción PROVISIONAL de cada punto, que cita su archivo; ninguno cambia cifras de los motores ni sus oráculos.
+
+| Archivo | Lo abrió | Tema (pregunta para Axel o para el siguiente flujo) | K31 | Fase que lo usa |
+|---|---|---|---|---|
+| `WF3a-bis-ajustes-a.md` | `front-ajustes-a-fix` | 3 puntos de la edición en grupo con `Ctrl+/` en Ajustes 02, 04, 05 y 07: avisos sin cifra en el bloque sumado, qué campos de una promoción se editan a la vez y cómo se cambia una selección múltiple (tiempos aptos) | — | WF-3b y puerta 4 |
+| `WF3a-bis-comidas-compras.md` | `front-comidas-compras-fix` | 4 puntos: cifras de P-14 con la semilla de desarrollo distintas de las canon de U1 §3.16 (Walmart $3,359.00 contra $3,233.00), P-13 sin lista sembrada, nombre visible de una sucursal y `Esc` dentro de una hoja | — | WF-3b (semilla y C3-09) |
+| `WF3a-bis-gastos-presupuesto.md` | `front-gastos-presupuesto-fix` | 7 puntos: filtros de `queryView` que faltan para N-040, id del adjunto en `Expense` (N-064), galería N-046, N-073, N-053 con préstamos a plazo y tarjetas (R5-03 de `REVISION-frontend-core-r5`), `listPeriods` como excepción técnica y detalles menores | — | WF-3b y puerta 4 (dueño de C1) |
+| `WF3a-bis-semilla-dev.md` | `semilla-dev` | 7 puntos de la semilla de desarrollo (`finanzas semilla --desarrollo`): renta contra P1–P6, candado «nunca en producción», presupuesto solo de Despensa, P3–P6 de `getAccrualVsCash` contra model.json, costo y kcal de la semana en 0, ingresos y precios de Walmart | — | WF-3b (C3-09) y puerta 4 |

@@ -15,12 +15,27 @@ import { Campo } from '../../componentes/Campo'
 import { ConDatos, Vacio } from '../../componentes/Estados'
 import { Hoja } from '../../componentes/Hoja'
 import { textos } from '../../textos/es-MX'
+import type { Cambio } from '../../vistas-bd/tipos'
 import { VistaBD } from '../../vistas-bd/VistaBD'
 import { Aviso, Bloque, BloquePrevia, DialogoCritico, Editable, Fila, vNombre } from './comunes'
 import { comoLista } from './comunes'
+import { guardarVarias, nota } from './grupo'
 import { t } from './textos'
 const r = t.recetas
 type Rec = Esquemas['Recipe']; type Fuente = Esquemas['RecipeSettings']['nutrition_sources'][number]
+type Tiempo = Esquemas['RecipeSettings']['meal_slots'][number]
+// Ctrl+/ (U4 P-26.07 «Atajos»: «cambiar a la vez los tiempos aptos de varias»). La selección múltiple se edita en grupo con
+// «Agregar {tiempo}» o «Quitar {tiempo}» (valor `+id` o `-id`): PROVISIONAL, bloqueo WF3a-bis-ajustes-a §3.
+const nuevosTiempos = (x: Rec, v: string) => { const id = Number(v.slice(1)), a = x.meal_slot_ids ?? []; return v.startsWith('+') ? [...new Set([...a, id])].sort((p, q) => p - q) : a.filter((s) => s !== id) }
+const sinTiempo = (sel: Rec[], v: string) => sel.filter((x) => nuevosTiempos(x, v).length === 0).length
+export function previaTiempos(sel: Rec[], v: string, slots: Tiempo[]): Cambio[] {
+  const id = Number(v.slice(1)), n = sel.length, nombre = slots.find((m) => m.id === id)?.name ?? ''
+  const tiene = (ids: number[]) => ids.includes(id)
+  const cambios: Cambio[] = [{ etiqueta: t.grupo.aptasPara(nombre), antes: t.grupo.deN(sel.filter((x) => tiene(x.meal_slot_ids ?? [])).length, n), despues: t.grupo.deN(sel.filter((x) => tiene(nuevosTiempos(x, v))).length, n) }]
+  const k = sinTiempo(sel, v)
+  if (k) cambios.push(nota(t.grupo.sinTiempo(k)))
+  return cambios
+}
 
 export default function S07Recetas() {
   const ajustes = usarConsulta('get', '/api/v1/settings/recipes')
@@ -49,6 +64,14 @@ export default function S07Recetas() {
           const guardar = (x: Rec) => async (c: Esquemas['RecipeUpdate']) => { await pedir('patch', '/api/v1/recipes/{recipe_id}', { ruta: { recipe_id: x.id }, cuerpo: c }); recetas.recargar() }
           return <VistaBD def={{ clave: 'P-26.07-recetario', filas: d.items, idFila: (x) => x.id, vistas: ['tabla', 'tablero', 'galeria'], titulo: (x) => x.name,
             columnasTablero: { propiedad: 'origin', columnas: Object.values(r.origenes) },
+            editarVarias: {
+              propiedades: [{ id: 'meal_slot_ids', nombre: r.aptos, tipo: 'opcion', opciones: slots.flatMap((m) => [{ valor: `+${m.id}`, texto: t.grupo.agregar(m.name) }, { valor: `-${m.id}`, texto: t.grupo.quitar(m.name) }]) }],
+              vistaPrevia: async (sel, _p, v) => previaTiempos(sel, v, slots),
+              guardar: async (sel, _p, v) => {
+                if (sinTiempo(sel, v)) throw new ErrorApi(422, 'validation_error', t.v.tiempos)
+                await guardarVarias(sel, (x) => pedir('patch', '/api/v1/recipes/{recipe_id}', { ruta: { recipe_id: x.id }, cuerpo: { meal_slot_ids: nuevosTiempos(x, v) } }), recetas.recargar)
+              },
+            },
             propiedades: [
               { id: 'name', nombre: r.nombre, valor: (x) => x.name, pintar: (x) => <Editable etiqueta={`${r.nombre} · ${x.name}`} valor={x.name} mostrar={x.name} validar={vNombre} guardar={(s) => guardar(x)({ name: s.trim() })} /> },
               { id: 'slots', nombre: r.aptos, valor: (x) => (x.meal_slot_ids ?? []).length, pintar: (x) => <Tiempos x={x} slots={slots} guardar={guardar(x)} /> },

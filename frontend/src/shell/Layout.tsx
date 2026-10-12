@@ -6,6 +6,7 @@ import { navegar, useUbicacion } from '../app/enrutador'
 import { resolver, type Subseccion } from '../app/rutas'
 import { PANTALLAS_REGISTRADAS } from '../app/registro'
 import { Cargando, Vacio } from '../componentes/Estados'
+import { BarreraErrores } from '../componentes/BarreraErrores'
 import { BarraLateral, ContenidoBarra } from './BarraLateral'
 import { BarraInferior, BarraSuperior } from './Barras'
 import { FranjaSinConexion, PanelCola } from './FranjaSinConexion'
@@ -55,9 +56,11 @@ export function Layout() {
         <BarraSuperior p={p} sub={sub} />
         <FranjaSinConexion />
         <main id="contenido" className="mx-auto w-full max-w-6xl flex-1 px-4 py-4">
-          <Suspense fallback={<Cargando />}>
-            {Pantalla ? <Pantalla key={p.id + JSON.stringify(params)} params={params} sub={sub} consulta={consulta} /> : <Vacio texto={`${textos.pendiente.titulo}. ${textos.pendiente.cuerpo(p.id)}`} />}
-          </Suspense>
+          <BarreraErrores key={p.id + JSON.stringify(params)} clave={`${sub ?? ''}?${consulta.toString()}`}>
+            <Suspense fallback={<Cargando />}>
+              {Pantalla ? <Pantalla key={p.id + JSON.stringify(params)} params={params} sub={sub} consulta={consulta} /> : <Vacio texto={`${textos.pendiente.titulo}. ${textos.pendiente.cuerpo(p.id)}`} />}
+            </Suspense>
+          </BarreraErrores>
         </main>
       </div>
       <BarraInferior />

@@ -1,8 +1,9 @@
 // P-26.02 Presupuesto (U4 parte a): montos por categoría con alcance (K2), gastos fijos con vista previa 3,
 // despensa programada con vista previa 4 (previewCreditPurchase) e interruptor de la proyección de los meses 7 a 12 (K21).
 import { useEffect, useState } from 'react'
-import { Plus } from 'lucide-react'
+import { CircleAlert, Plus } from 'lucide-react'
 import { nuevaClave, pedir } from '../../api/cliente'
+import { ErrorApi } from '../../api/errores'
 import { useConexion } from '../../api/conexion'
 import { usarConsulta } from '../../api/consulta'
 import { aCentavos, dinero, fecha, hoyISO, mes } from '../../api/formatos'
@@ -17,6 +18,7 @@ import { VistaBD } from '../../vistas-bd/VistaBD'
 import { fechasEnMes, mesDe, mesSiguiente, montoEn, proximas, repartir, totalEnMes, ultimoDia } from './calculos'
 import { Aviso, Bloque, DialogoCritico, Editable, Fila, Interruptor, textoDinero, vDinero, vEntero, vFecha, vNombre, vOpcion, vPlazo, type Previa } from './comunes'
 import { comoLista } from './comunes'
+import { guardarVarias, nota, siNo } from './grupo'
 import { t } from './textos'
 const p = t.presupuesto
 type PI = Esquemas['PlannedItem']; type Cat = Esquemas['Category']; type Regla = Esquemas['CostShareRule']; type Per = Esquemas['Person']
@@ -61,6 +63,8 @@ export default function S02Presupuesto() {
 function Montos({ presupuestos, cats, mesActual, alCambiar }: { presupuestos: Esquemas['Budget'][]; cats: Cat[]; mesActual: string; alCambiar: () => void }) {
   const [pendiente, setPendiente] = useState<{ cat: Cat | null; b?: Esquemas['Budget']; monto: number } | null>(null)
   const [alcance, setAlcance] = useState<'onward' | 'this_month'>('onward')
+  /** Fallo al confirmar el monto (R4-01): `traslape` = 409 budget_overlap (V-17); `guardar` = cualquier otro (U4 §0.3). */
+  const [fallo, setFallo] = useState<'traslape' | 'guardar' | null>(null)
   const [quitar, setQuitar] = useState<{ cat: Cat; b: Esquemas['Budget'] } | null>(null)
   const filas = [...cats.filter((c) => c.is_active).map((c) => ({ cat: c as Cat | null, b: presupuestos.find((x) => x.category_id === c.id) })), { cat: null, b: presupuestos.find((x) => x.category_id == null) }]
   const total = presupuestos.filter((x) => x.category_id != null).reduce((s, x) => s + x.amount_cents, 0)
@@ -69,10 +73,18 @@ function Montos({ presupuestos, cats, mesActual, alCambiar }: { presupuestos: Es
   const confirmar = async () => {
     if (!pendiente) return
     const [a, m] = mesActual.split('-').map(Number)
-    if (pendiente.b) await pedir('patch', '/api/v1/budgets/{budget_id}', { ruta: { budget_id: pendiente.b.id }, consulta: { scope: alcance, month: mesActual }, cuerpo: { amount_cents: pendiente.monto } })
-    else await pedir('post', '/api/v1/budgets', { idempotencia: nuevaClave(), cuerpo: { category_id: pendiente.cat?.id, amount_cents: pendiente.monto, valid_from_date: `${mesActual}-01`, ...(alcance === 'this_month' ? { valid_to_date: `${mesActual}-${ultimoDia(a, m)}` } : {}) } })
+    setFallo(null)
+    try {
+      if (pendiente.b) await pedir('patch', '/api/v1/budgets/{budget_id}', { ruta: { budget_id: pendiente.b.id }, consulta: { scope: alcance, month: mesActual }, cuerpo: { amount_cents: pendiente.monto } })
+      else await pedir('post', '/api/v1/budgets', { idempotencia: nuevaClave(), cuerpo: { category_id: pendiente.cat?.id, amount_cents: pendiente.monto, valid_from_date: `${mesActual}-01`, ...(alcance === 'this_month' ? { valid_to_date: `${mesActual}-${ultimoDia(a, m)}` } : {}) } })
+    } catch (e) {
+      // U4 P-26.02 «Si se traslapa con otro monto» → V-17; cualquier otro fallo, el texto de §0.3. La hoja sigue abierta con el monto y el alcance capturados.
+      setFallo(e instanceof ErrorApi && e.codigo === 'budget_overlap' ? 'traslape' : 'guardar')
+      return
+    }
     setPendiente(null); alCambiar()
   }
+  const cerrar = () => { setPendiente(null); setFallo(null) }
   if (!presupuestos.length && !cats.length) return <Vacio texto={p.sinMontos} />
   return (
     <>
@@ -83,21 +95,23 @@ function Montos({ presupuestos, cats, mesActual, alCambiar }: { presupuestos: Es
             <span className={cat ? "text-body desktop:col-span-2" : "text-body font-medium desktop:col-span-2"}>{nombre(cat)}{b?.is_single_month && <span className="ml-2 rounded-full bg-surface-selected px-2 text-caption">{p.soloEsteMes}</span>}
               {b?.is_single_month && b.following_month_amount_cents != null && <span className="block text-caption text-text-secondary">{p.siguienteMes(dinero(b.following_month_amount_cents))}</span>}</span>
             <Editable etiqueta={`${p.monto} ${nombre(cat)}`} tipo="dinero" valor={textoDinero(b?.amount_cents)} mostrar={<span className="w-full text-right tabular-nums">{b ? dinero(b.amount_cents) : p.fijarMonto}</span>}
-              validar={vDinero()} guardar={async (s) => { setAlcance('onward'); setPendiente({ cat, b, monto: aCentavos(s) ?? 0 }) }} />
+              validar={vDinero()} guardar={async (s) => { setAlcance('onward'); setFallo(null); setPendiente({ cat, b, monto: aCentavos(s) ?? 0 }) }} />
             {cat && b ? <Boton variante="fantasma" onClick={() => setQuitar({ cat, b })}>{t.comun.eliminar}</Boton> : <span />}
           </li>
         ))}
       </ul>
-      <Hoja abierta={!!pendiente} alCambiar={(a) => !a && setPendiente(null)} titulo={p.alcance}
-        pie={<div className="flex justify-end gap-2"><Boton onClick={() => setPendiente(null)}>{textos.app.cancelar}</Boton><Boton variante="primario" onClick={() => void confirmar()}>{textos.app.confirmar}</Boton></div>}>
+      <Hoja abierta={!!pendiente} alCambiar={(a) => !a && cerrar()} titulo={p.alcance}
+        pie={<div className="flex justify-end gap-2"><Boton onClick={cerrar}>{textos.app.cancelar}</Boton><Boton variante="primario" onClick={() => void confirmar()}>{textos.app.confirmar}</Boton></div>}>
         {pendiente && (
           <fieldset className="flex flex-col gap-3">
             <legend className="sr-only">{p.alcance}</legend>
             {(['onward', 'this_month'] as const).map((a) => (
-              <label key={a} className="flex min-h-11 items-center gap-2"><input type="radio" name="alcance" className="size-5" checked={alcance === a} onChange={() => setAlcance(a)} />{a === 'onward' ? p.enAdelante : p.soloMes}</label>
+              <label key={a} className="flex min-h-11 items-center gap-2"><input type="radio" name="alcance" className="size-5" checked={alcance === a} onChange={() => { setAlcance(a); setFallo(null) }} />{a === 'onward' ? p.enAdelante : p.soloMes}</label>
             ))}
             <Aviso rol="info"><span className="tabular-nums">{alcance === 'onward' ? p.previaAdelante(mes(mesActual), dinero(pendiente.monto)) : p.previaSolo(mes(mesActual), dinero(pendiente.monto), mes(sig), dinero(pendiente.b?.amount_cents ?? 0))}</span></Aviso>
             {pendiente.cat && <p className="text-small tabular-nums">{p.totalMes(mes(mesActual))}: {dinero(total)} → {dinero(total - (pendiente.b?.amount_cents ?? 0) + pendiente.monto)}</p>}
+            {fallo === 'traslape' && <p role="alert" className="flex items-start gap-1 text-small text-role-error"><CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0" />{t.v.v17}</p>}
+            {fallo === 'guardar' && <p role="alert" className="flex flex-wrap items-center gap-1 text-small text-role-error"><CircleAlert aria-hidden className="size-4" />{t.comun.noGuardo} · <button type="button" className="min-h-11 text-text-link underline-offset-2 hover:underline desktop:min-h-0" onClick={() => void confirmar()}>{textos.app.reintentar}</button></p>}
           </fieldset>
         )}
       </Hoja>
@@ -144,6 +158,28 @@ export function previaFijo(antes: PI, despues: PI, todas: PI[], ctx: Ctx, mesAct
   notas.push(p.avisoP07)
   return { cambios, notas }
 }
+/** Vista previa 3 (h): edición múltiple con Ctrl+/ de la categoría o de «activo», sumada sobre las partidas elegidas en el mes en curso. */
+export function previaFijosGrupo(sel: PI[], prop: string, valor: string, todas: PI[], ctx: Ctx, m: string): Cambio[] {
+  const cambiar = (x: PI): PI => (prop === 'category_id' ? { ...x, category_id: Number(valor) } : { ...x, is_active: valor === 'si' })
+  const ids = new Set(sel.map((x) => x.id))
+  const suma = (lista: PI[]) => lista.filter((x) => x.is_active && x.kind === 'fixed_expense' && !esDespensa(x)).reduce((s, x) => s + totalEnMes(x, m), 0)
+  const cambios: Cambio[] = [{ etiqueta: p.fijosDe(mes(m)), antes: dinero(suma(todas)), despues: dinero(suma(todas.map((x) => (ids.has(x.id) ? cambiar(x) : x)))) }]
+  const pa = new Map<number, number>(), pd = new Map<number, number>(), restos = new Set<number>()
+  let pasa: PI | null = null
+  for (const x of sel) {
+    const y = cambiar(x), a = partesMes(x, ctx, m), d = partesMes(y, ctx, m)
+    if (!d) { pasa ??= y; continue }
+    a?.forEach((c, id) => pa.set(id, (pa.get(id) ?? 0) + c))
+    d.forEach((c, id) => pd.set(id, (pd.get(id) ?? 0) + c))
+    for (const r of [reglaDe(x, ctx), reglaDe(y, ctx)]) if (r?.remainder_person_id != null) restos.add(r.remainder_person_id)
+  }
+  ctx.personas.filter((o) => pa.has(o.id) || pd.has(o.id)).forEach((o) => cambios.push({ etiqueta: `${restos.has(o.id) ? p.resto : o.display_name} · ${mes(m)}`, antes: dinero(pa.get(o.id) ?? 0), despues: dinero(pd.get(o.id) ?? 0) }))
+  if (pasa) { const fija = reglaDe(pasa, ctx)?.parts?.find((x) => x.fixed_cents != null && x.fixed_cents > pasa.amount_cents); cambios.push(nota(p.parteFijaPasa(ctx.personas.find((x) => x.id === fija?.person_id)?.display_name ?? '', dinero(fija?.fixed_cents ?? 0), dinero(pasa.amount_cents)))) }
+  if (sel.some((x) => !x.frequency || !x.start_date)) cambios.push(nota(p.completa))
+  if (prop === 'category_id') cambios.push(nota(t.grupo.tomanCategoria(sel.filter((x) => x.cost_share_rule_id == null).length, sel.length)))
+  cambios.push(nota(p.avisoP07))
+  return cambios
+}
 function Fijos({ todas, ctx, mesActual, hoy, alCambiar, alNuevo }: { todas: PI[]; ctx: Ctx; mesActual: string; hoy: string; alCambiar: () => void; alNuevo: () => void }) {
   const filas = todas.filter((x) => x.kind === 'fixed_expense' && !esDespensa(x)).sort((a, b) => Number(a.start_date.slice(8)) - Number(b.start_date.slice(8)))
   const guardar = (x: PI) => async (cambio: Partial<PI>) => { await pedir('patch', '/api/v1/planned-items/{planned_item_id}', { ruta: { planned_item_id: x.id }, cuerpo: cambio as Esquemas['PlannedItemUpdate'] }); alCambiar() }
@@ -156,6 +192,15 @@ function Fijos({ todas, ctx, mesActual, hoy, alCambiar, alNuevo }: { todas: PI[]
   const cats = opc(ctx.cats.map((c) => ({ id: c.id, nombre: c.name })), t.v.v22)
   return (
     <VistaBD def={{ clave: 'P-26.02-fijos', filas, idFila: (x) => x.id, vistas: ['tabla'], titulo: (x) => x.description,
+      // Ctrl+/ (U4 P-26.02 «Atajos» y punto h): categoría o activo de varias partidas, un updatePlannedItem por partida.
+      editarVarias: {
+        propiedades: [
+          { id: 'category_id', nombre: p.categoria, tipo: 'opcion', opciones: ctx.cats.filter((c) => c.is_active).map((c) => ({ valor: String(c.id), texto: c.name })) },
+          { id: 'is_active', nombre: t.comun.activo, tipo: 'opcion', opciones: siNo },
+        ],
+        vistaPrevia: async (sel, prop, valor) => previaFijosGrupo(sel, prop, valor, todas, ctx, mesActual),
+        guardar: (sel, prop, valor) => guardarVarias(sel, (x) => pedir('patch', '/api/v1/planned-items/{planned_item_id}', { ruta: { planned_item_id: x.id }, cuerpo: prop === 'category_id' ? { category_id: Number(valor) } : { is_active: valor === 'si' } }), alCambiar),
+      },
       propiedades: [
         { id: 'description', nombre: p.concepto, valor: (x) => x.description, pintar: (x) => campo(x, 'description', p.concepto, 'texto', { valor: x.description, mostrar: x.description, aCambio: (s) => ({ description: s.trim() }), validar: vNombre }) },
         { id: 'category_id', nombre: p.categoria, valor: (x) => x.category_id, grupo: (x) => ctx.cats.find((c) => c.id === x.category_id)?.name ?? '', pintar: (x) => campo(x, 'category_id', p.categoria, 'opcion', { valor: String(x.category_id ?? ''), mostrar: ctx.cats.find((c) => c.id === x.category_id)?.name ?? '—', opciones: cats, aCambio: (s) => ({ category_id: num(s) ?? undefined }), validar: vOpcion(), conPrevia: x.cost_share_rule_id == null }) },

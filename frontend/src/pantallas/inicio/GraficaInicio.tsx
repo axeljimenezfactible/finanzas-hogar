@@ -11,20 +11,11 @@ import { textosInicio as t } from './textos'
 echarts.use([BarChart, LineChart, AriaComponent, GridComponent, LegendComponent, MarkAreaComponent, MarkLineComponent, TooltipComponent, SVGRenderer])
 
 export const token = (v: string) => getComputedStyle(document.documentElement).getPropertyValue(v).trim()
-/** «$12.3 mil»: formato compacto, solo en ejes (U3 §4); aritmética entera. */
-export function compacto(c: number) {
-  const pesos = Math.round(Math.abs(c) / 100), signo = c < 0 ? '−' : ''
-  if (pesos < 1000) return `${signo}$${pesos}`
-  const d = Math.round(pesos / 100)
-  return `${signo}$${Math.floor(d / 10)}${d % 10 ? `.${d % 10}` : ''} mil`
-}
-/** Índices con etiqueta (DESIGN §8.5): el último valor y los extremos, nunca uno en cada punto. */
-export function selectivos(v: (number | null)[]) {
-  const idx = v.map((x, i) => [x, i] as const).filter(([x]) => x !== null) as [number, number][]
-  if (!idx.length) return new Set<number>()
-  const max = idx.reduce((a, b) => (b[0] > a[0] ? b : a)), min = idx.reduce((a, b) => (b[0] < a[0] ? b : a))
-  return new Set([idx[idx.length - 1][1], max[1], min[1]])
-}
+/** «$12.3 mil»: formato compacto, solo en ejes (U3 §4, DESIGN §8.5). Vive en api/formatos.ts (`dineroCompacto`) para que
+ *  Grafica y Tendencias usen el mismo. */
+export { dineroCompacto as compacto } from '../../api/formatos'
+/** Índices con etiqueta (DESIGN §8.5): el último valor y los extremos. Es el mismo de componentes/Grafica. */
+export { selectivos } from '../../componentes/Grafica'
 function usarTema() {
   const [n, setN] = useState(0)
   useEffect(() => {
@@ -70,7 +61,7 @@ export function FiguraGrafica({ id, titulo, subtitulo, resumen, notas, filtros, 
         <span className="text-small text-text-default tabular-nums">{resumen}</span>
       </figcaption>
       {filtros}
-      {!comoTabla && <div ref={ref} aria-hidden className="h-60 w-full tablet:h-72" />}
+      {!comoTabla && <div ref={ref} aria-hidden className="h-60 w-full tabular-nums tablet:h-72" />}
       {tablaHtml}
       {notas?.map((n) => <p key={n} className="text-caption text-text-secondary">{n}</p>)}
       <Boton variante="enlace" className="w-max" aria-pressed={comoTabla} onClick={() => setComoTabla((x) => !x)}>{comoTabla ? t.acciones.verComoGrafica : t.acciones.verComoTabla}</Boton>

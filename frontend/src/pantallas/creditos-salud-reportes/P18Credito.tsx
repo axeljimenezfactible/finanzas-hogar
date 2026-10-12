@@ -1,25 +1,75 @@
 // P-18 Crédito (U1 §2.1, §2.2, §3.20: N-200..N-210). Variante por tipo: revolvente (A/B, serie, tasas por plazo),
 // tarjeta (estado del ciclo), préstamo (amortización) y tienda (abonos). Sin valores supuestos: «Falta capturar» (K18).
+// Calendario de la línea (N-208 = N-192 filtrado por la línea): C1 listCalendarEvents con credit_id y los tipos de crédito.
 import { useEffect, type ReactNode } from 'react'
 import { Calculator, CircleCheck, Plus, Settings2 } from 'lucide-react'
 import type { PropsPantalla } from '../../app/registro'
 import { rutaDe } from '../../app/rutas'
 import { Enlace, conConsulta, navegar } from '../../app/enrutador'
 import { usarConsulta } from '../../api/consulta'
-import { dinero, fecha, fechaConDia, mes } from '../../api/formatos'
+import { dinero, fecha, fechaConDia, hoyISO, mes } from '../../api/formatos'
 import type { Esquemas } from '../../api/tipos'
 import { Boton } from '../../componentes/Boton'
-import { ConDatos, Vacio } from '../../componentes/Estados'
+import { ConDatos, Franja, Vacio } from '../../componentes/Estados'
 import { Grafica } from '../../componentes/Grafica'
 import { TarjetaMetrica } from '../../componentes/TarjetaMetrica'
 import { VistaBD } from '../../vistas-bd/VistaBD'
-import { itemsDe, Agenda, Barra, Datos, FaltaCapturar, HojaPago, Seccion, agrupar, enAgenda, rutaCondiciones, textoPartes, usarPersonas, type Pago, type Personas } from './comun'
-import { FranjaAB, conFaltantes } from './P17Lineas'
-import { ESTADO_COMPRA, ESTADO_PARTE, EVENTO, FRECUENCIA, TIPO_CREDITO, plazo, t } from './textos'
+import { itemsDe, Barra, Datos, FaltaCapturar, HojaPago, Seccion, agrupar, agruparEstado, enAgenda, rutaCondiciones, sumarDias, textoPartes, usarPersonas, type Pago, type Personas } from './comun'
+import { FranjaLinea, conFaltantes } from './P17Lineas'
+import { ESTADO_COMPRA, ESTADO_PARTE, EVENTO, EVENTO_LINEA, FRECUENCIA, TIPO_CREDITO, plazo, t } from './textos'
 
 type Credito = Esquemas['Credit']
 type Compra = Esquemas['CreditPurchase']
+type Evento = Esquemas['CalendarEvent']
 const c = t.creditos
+/** Tipos de evento de una línea en el calendario (C1 listCalendarEvents: N-192 y N-208 = credit_payment, promotion y card_statement). */
+const TIPOS_LINEA: ('credit_payment' | 'promotion' | 'card_statement')[] = ['credit_payment', 'promotion', 'card_statement']
+/** Rango de N-208: del día 1 del mes en curso (o del pago sin marcar más viejo) a hoy + 60 días; sintaxis `desde..hasta` de C1 Period. */
+export function periodoLinea(pagos: Pago[], hoy = hoyISO()) {
+  const inicioMes = `${hoy.slice(0, 7)}-01`
+  const viejo = pagos.filter((p) => p.status !== 'paid' && p.due_date < inicioMes).map((p) => p.due_date).sort()[0]
+  return `${viejo ?? inicioMes}..${sumarDias(hoy, 60)}`
+}
+const claveEvento = (e: Evento) => `${e.event_type}-${e.ref_table}-${e.ref_id}`
+const estadoEvento = (e: Evento) => (e.status === 'paid' || e.status === 'pending' || e.status === 'overdue' ? ESTADO_PARTE[e.status] : '')
+/** Partes de un pago tal como las trae el evento (hogar y persona externa), si el pago programado no está en la lista cargada. */
+function partesEvento(e: Evento, per: Personas) {
+  const partes: [string, number | undefined][] = [[t.comun.hogar, e.household_share_cents], [per.externaPrincipal?.display_name ?? '', e.external_share_cents]]
+  const est = estadoEvento(e)
+  return [...partes.filter(([k, v]) => k && v).map(([k, v]) => `${k} ${dinero(v!)}`), ...(est ? [est.toLowerCase()] : [])].join(' · ')
+}
+const abrirEvento = (e: Evento, id: number) => (e.event_type === 'credit_payment' && e.ref_table === 'scheduled_payment' ? navegar(conConsulta({ hoja: 'pago', pago: String(e.ref_id) })) : navegar(rutaCondiciones(id)))
+/** Agenda de la línea (N-208, móvil y escritorio): pagos y cortes de hoy a 60 días y los pagos sin marcar con fecha pasada, en el orden de C1. */
+function AgendaLinea({ eventos, pagos, per }: { eventos: Evento[]; pagos: Pago[]; per: Personas }) {
+  if (!eventos.length) return <p className="py-4 text-small text-text-secondary">{c.sinPagos}</p>
+  return (
+    <ul className="flex flex-col divide-y divide-border-divider rounded-lg border border-border-divider bg-surface-card" data-prueba="agenda-linea">
+      {eventos.map((e) => {
+        const pago = e.event_type === 'credit_payment' && e.ref_table === 'scheduled_payment' ? pagos.find((p) => p.id === e.ref_id) : undefined
+        const detalle = e.event_type === 'credit_payment' ? (pago?.shares?.length ? agruparEstado(pago.shares, per) : partesEvento(e, per)) : e.event_type === 'card_statement' ? c.saldoCorte : EVENTO_LINEA[e.event_type as keyof typeof EVENTO_LINEA]
+        const cuerpo = <>
+          <span className="flex flex-wrap justify-between gap-2 text-body text-text-default"><span>{fechaConDia(e.date)} · {e.title}</span>{e.amount_cents != null && <span className="tabular-nums font-medium">{dinero(e.amount_cents)}</span>}</span>
+          <span className="text-small tabular-nums text-text-secondary">{detalle}</span>
+        </>
+        return <li key={claveEvento(e)}>{e.event_type === 'credit_payment' && e.ref_table === 'scheduled_payment'
+          ? <button type="button" data-prueba="pago-agenda" onClick={() => navegar(conConsulta({ hoja: 'pago', pago: String(e.ref_id) }))} className="flex min-h-11 w-full flex-col gap-1 px-4 py-3 text-left hover:bg-surface-hover-subtle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus">{cuerpo}</button>
+          : <div className="flex min-h-11 w-full flex-col gap-1 px-4 py-3">{cuerpo}</div>}</li>
+      })}
+    </ul>
+  )
+}
+/** Pestaña «Calendario» de P-18 (N-208): agenda, promociones vigentes como franjas y, de tableta en adelante, el mes visible. */
+function CalendarioLinea({ eventos, pagos, per, id }: { eventos: Evento[]; pagos: Pago[]; per: Personas; id: number }) {
+  const hoy = hoyISO(), fin = sumarDias(hoy, 60)
+  const agenda = eventos.filter((e) => e.event_type !== 'promotion' && e.date <= fin && (e.date >= hoy || (e.event_type === 'credit_payment' && e.status === 'overdue')))
+  const promos = eventos.filter((e) => e.event_type === 'promotion' && (e.end_date ?? e.date) >= hoy)
+  return <div className="flex flex-col gap-6">
+    <Seccion titulo={c.agenda}><AgendaLinea eventos={agenda} pagos={pagos} per={per} /></Seccion>
+    {promos.length > 0 && <Seccion titulo={c.promociones}>{promos.map((e) => <Franja key={claveEvento(e)} rol="info">{e.title} · {c.vigencia(fecha(e.date), fecha(e.end_date ?? e.date))}</Franja>)}</Seccion>}
+    <div className="hidden tablet:block"><Seccion titulo={c.calendarioLinea}><VistaBD def={{ clave: 'P-18-calendario', filas: eventos, idFila: claveEvento, vistas: ['calendario', 'tabla'], fecha: (e) => e.date, titulo: (e) => (e.amount_cents != null ? `${e.title} · ${dinero(e.amount_cents)}` : e.title), alAbrir: (e) => abrirEvento(e, id),
+      propiedades: [{ id: 'date', nombre: t.comun.fecha, valor: (e) => e.date, pintar: (e) => fechaConDia(e.date) }, { id: 'event_type', nombre: c.tipo, valor: (e) => EVENTO_LINEA[e.event_type as keyof typeof EVENTO_LINEA], grupo: (e) => EVENTO_LINEA[e.event_type as keyof typeof EVENTO_LINEA] }, { id: 'title', nombre: c.evento, valor: (e) => e.title }, { id: 'amount', nombre: t.comun.monto, valor: (e) => e.amount_cents ?? null, pintar: (e) => (e.amount_cents == null ? t.comun.sinDato : dinero(e.amount_cents)), alinear: 'derecha' }, { id: 'status', nombre: t.comun.estado, valor: (e) => estadoEvento(e) }] }} /></Seccion></div>
+  </div>
+}
 
 function DatosLinea({ l }: { l: Credito }) {
   const falta = (k: string) => (conFaltantes(l) && l.missing_terms?.includes(k as never) ? <FaltaCapturar credito={l.id} que={[k]} /> : null)
@@ -79,12 +129,13 @@ export default function P18Credito({ params, sub, consulta }: PropsPantalla) {
   const linea = usarConsulta('get', '/api/v1/credits/{credit_id}', { ruta: { credit_id: id } })
   const pagos = usarConsulta('get', '/api/v1/scheduled-payments', { consulta: { credit_id: [id], limit: 200 } })
   const compras = usarConsulta('get', '/api/v1/credit-purchases', { consulta: { credit_id: [id], limit: 200 } }, sub === 'detalle')
+  const eventos = usarConsulta('get', '/api/v1/calendar/events', { consulta: { period: periodoLinea(pagos.datos?.items ?? []), credit_id: [id], event_type: TIPOS_LINEA, limit: 200 } }, sub === 'calendario' && !pagos.cargando)
   const rev = linea.datos?.kind === 'revolving_line'
   const serie = usarConsulta('get', '/api/v1/credits/{credit_id}/availability-series', { ruta: { credit_id: id } }, sub === 'tendencias' && rev)
   const trend = usarConsulta('get', '/api/v1/credits/debt-trend', undefined, sub === 'tendencias')
   const per = usarPersonas()
   useEffect(() => { if (consulta.get('hoja') === 'pago') pagos.recargar() }, [consulta.get('hoja')]) // eslint-disable-line react-hooks/exhaustive-deps
-  const recargar = () => { pagos.recargar(); linea.recargar() }
+  const recargar = () => { pagos.recargar(); linea.recargar(); eventos.recargar() }
   const siguiente = enAgenda(pagos.datos?.items ?? []).find((p) => p.status !== 'paid')
   return (
     <div className="flex flex-col gap-6 tabular-nums">
@@ -95,8 +146,8 @@ export default function P18Credito({ params, sub, consulta }: PropsPantalla) {
         <Boton variante="primario" deshabilitadoPor={siguiente ? undefined : c.sinPagosPendientes} onClick={() => siguiente && navegar(conConsulta({ hoja: 'pago', pago: String(siguiente.id) }))}><CircleCheck aria-hidden className="size-4" />{c.marcarPago}</Boton>
       </Barra>
       <ConDatos consulta={linea}>{(l) => {
-        const nombre = () => l.name
-        if (sub === 'calendario') return <ConDatos consulta={pagos}>{(pg) => <Seccion titulo={c.agenda}><Agenda pagos={enAgenda(pg.items)} per={per} nombreLinea={nombre} /></Seccion>}</ConDatos>
+        // Mientras cargan los pagos (dan el inicio del rango), la consulta de eventos espera: se muestra «Cargando», no un error.
+        if (sub === 'calendario') return <ConDatos consulta={{ ...eventos, cargando: eventos.cargando || pagos.cargando }}>{(ev) => <CalendarioLinea eventos={itemsDe<Evento>(ev)} pagos={pagos.datos?.items ?? []} per={per} id={id} />}</ConDatos>
         if (sub === 'tendencias') return <div className="flex flex-col gap-6">
           {rev && <ConDatos consulta={serie}>{(s) => <Seccion titulo={c.serie}>
             <p className="text-small tabular-nums text-text-secondary">{c.minimos(dinero(s.min_a_cents), dinero(s.min_b_cents))}</p>
@@ -113,7 +164,7 @@ export default function P18Credito({ params, sub, consulta }: PropsPantalla) {
         const partes = prox ? textoPartes(agrupar(prox.shares, (s) => s.amount_cents, per)) : undefined
         return <div className="flex flex-col gap-6">
           <p className="text-small text-text-secondary">{TIPO_CREDITO[l.kind]}{l.lender ? ` · ${l.lender}` : ''}</p>
-          <FranjaAB lineas={[l]} />
+          <FranjaLinea l={l} />
           <div className="grid grid-cols-1 gap-3 tablet:grid-cols-2 desktop:grid-cols-3">
             <TarjetaMetrica titulo={c.deudaViva} valor={l.live_debt_cents == null ? t.comun.sinDato : dinero(l.live_debt_cents)} rol="debt" />
             <TarjetaMetrica titulo={c.proximoPago} valor={prox ? dinero(prox.amount_cents) : c.sinProximo} nota={prox && `${fechaConDia(prox.due_date)}${partes ? ` · ${partes}` : ''}`} alAbrir={prox ? () => navegar(conConsulta({ sub: 'calendario' })) : undefined} />

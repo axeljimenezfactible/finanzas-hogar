@@ -17,6 +17,7 @@ Autor: agente `frontend-base` (12-oct-2026). Las siguen al pie de la letra los a
 | `src/mocks/` | msw para las 216 operaciones de C1 (`npm run dev:mocks`) | frontend-base |
 | `src/pantallas/<area>/` | Pantallas, textos, mocks y componentes propios del área | **el agente del área** |
 | `pruebas/<area>/` | Pruebas Playwright del área | **el agente del área** |
+| `pruebas/apoyo/`, `pruebas/banco/`, `pruebas/*.spec.ts` | API falsa, mediciones (`medidas.ts`), banco de pruebas de la base (Vite de desarrollo, nunca entra a `dist/`) y pruebas de la base | frontend-base |
 
 Nunca se editan a mano: `src/estilos/tokens.css` y `src/estilos/tailwind.theme.css` (copias exactas de `docs/contratos/`, `npm run tokens`), `public/fonts/` (Inter de `docs/design/fuentes/inter/web/`), `src/api/esquema.gen.ts`, `src/mocks/*.gen.json`, `public/icons/`.
 
@@ -76,16 +77,54 @@ Tasas: tal como se capturaron (K12); no se reformatean.
 - Solo clases de los tokens de C2 (`bg-surface-card`, `text-text-secondary`, `border-border-divider`, `bg-role-expense-surface`, `text-title-2`, `rounded-md`, `shadow-1`, puntos de quiebre `phone: tablet: desktop: wide:`, variante `coarse:` para 44 px). Tailwind trae **solo** esas escalas: un color o tamaño fuera de C2 no existe. Prohibido `dark:` y colores en línea: el tema lo resuelven las variables `--ui-*`.
 - `Boton` (`variante`: primario, secundario, fantasma, destructivo, enlace; `tam`: normal, hoja 48 px, icono; `deshabilitadoPor` = motivo visible), `Campo` (etiqueta, `error`, `ayuda`), `ChipPersona`/`ChipTienda`/`ChipSeleccionable` (forma + nombre, orden fijo `ORDEN_PERSONAS`/`ORDEN_TIENDAS`, K41), `TarjetaMetrica` (≤ 6 por Resumen; `alAbrir` baja al detalle), `useAvisos()` (`{ texto, rol, accion: { texto: textos.app.deshacer, alHacer } }`), `Franja`, `Vacio`, `Cargando`, `ErrorCarga`, `ConDatos`, `Hoja`, `Grafica` (`tipo` barras/lineas/area; series en orden fijo con color `--ui-chart-N`, marcador, trazo y patrón K27; tabla alterna incluida).
 - Íconos: `lucide-react` (empaquetado, autoalojado). Con `aria-hidden` si hay texto al lado.
+- `Grafica`: la descripción accesible es `«{titulo}. {resumen}»` (se pasa a ECharts en `aria.label.description`), así que **el `resumen` debe ser una frase en español con el dinero ya formateado** (`dinero()`), nunca centavos. La descripción emergente, la guía vertical y la leyenda usan tokens (`--ui-surface-raised`, `--ui-border-divider`, `--ui-text-default`, `--ui-viz-baseline`) y se releen al cambiar el tema; las series no se recolorean al pasar el puntero (`emphasis.disabled`). Una pantalla que arme su propia gráfica con ECharts (p. ej. `GraficaInicio`) debe hacer lo mismo: `aria: { enabled: true, label: { description: `${titulo}. ${resumen}` } }`.
+- Deshabilitado (§7.0): `Boton` con `deshabilitadoPor` (motivo visible), y `Campo`/`ChipSeleccionable` con `disabled` ya traen relleno `surface-disabled`, texto `text-disabled`, borde punteado y sin hover. El anillo de foco no tiene transición (la del Botón cubre solo color, fondo y borde).
+- `BarreraErrores` (`src/componentes/BarreraErrores.tsx`): el cascarón ya envuelve cada pantalla (Layout); si una pantalla lanza al pintarse se ve «No se pudo mostrar esta página · Reintentar» y el resto de la aplicación sigue viva. No hace falta envolver nada más.
 
 ## 7. Vistas de base de datos
 
 `<VistaBD def={…}>` con `DefVista<T>`: `clave` (Local), `filas`, `idFila`, `propiedades` (`id`, `nombre`, `valor`, `pintar`, `alinear: 'derecha'` para dinero, `grupo`, `editar`), `vistas` (`tabla | tablero | calendario | galeria`), `fecha` (calendario), `columnasTablero` (`propiedad`, `columnas`, `moverA`), `titulo`, `alAbrir`. La edición en el lugar con efecto numérico declara `editar.vistaPrevia` (devuelve `Cambio[]` para «Antes → Después»); sin vista previa calculada no guarda (U4 §0.2).
+
+- **Calendario**: desde 768 px, mes en cuadrícula; por debajo, agenda por día (DESIGN §7.5.4) con renglones de 44 px. La pantalla no hace nada distinto: usa `vistas: [..., 'calendario']` y `fecha`.
+- **Edición en grupo con `Ctrl+/`** (U4 §0.2 punto 2 y §0.7; U1 §5.3): con `def.editarVarias`, la vista tabla muestra una casilla por fila y «Seleccionar todas» (área de toque 36 px fino / 44 px grueso), «n seleccionadas · Editar seleccionadas (Ctrl+/) · Quitar selección», y `Ctrl+/` con el foco dentro de la vista abre el bloque «Editar n registros a la vez»: propiedad → valor nuevo → **vista previa sumada «Antes → Después»** (la calcula la pantalla) → `Enter` o «Aplicar a n» aplica a todas; `Esc` o «Cancelar» cierra sin cambiar ninguna y el foco regresa a donde estaba. Sin vista previa calculada (o si falla: «No se pudo calcular el efecto · Reintentar») no aplica; sin conexión, «Aplicar» queda deshabilitado con «Requiere conexión…». Al aplicar: aviso «Guardado en n registros» y se limpia la selección; si `guardar` lanza, se muestra el mensaje y el bloque sigue abierto.
+
+```ts
+// API (src/vistas-bd/tipos.ts)
+interface PropiedadVarias { id: string; nombre: string; tipo: 'opcion' | 'texto' | 'dinero' | 'numero' | 'fecha'; opciones?: { valor: string; texto: string }[] }
+interface EditarVarias<T> {
+  propiedades: PropiedadVarias[]
+  vistaPrevia: (filas: T[], propiedad: string, valor: string) => Promise<Cambio[]> // SUMADA sobre las filas
+  guardar: (filas: T[], propiedad: string, valor: string) => Promise<void>        // todas o ninguna
+}
+```
+
+```tsx
+// Ejemplo (P-26.02, gastos fijos = planned-items de C1; solo la categoría, que existe en PlannedItemUpdate).
+// `valor` llega como texto: el id de la opción o lo tecleado (dinero con aCentavos(), nunca flotantes). Cómo se
+// edita «activo» lo decide la pantalla con C1 (PlannedItemUpdate no trae un campo `active`): no se inventa.
+<VistaBD def={{ clave: 'P-26.02-fijos', filas, idFila: (f) => f.id, vistas: ['tabla'], titulo: (f) => f.description, propiedades,
+  editarVarias: {
+    propiedades: [{ id: 'category_id', nombre: t.categoria, tipo: 'opcion', opciones: categorias.map((c) => ({ valor: String(c.id), texto: c.name })) }],
+    vistaPrevia: async (sel, _prop, valor) => [
+      { etiqueta: t.cambianDeCategoria, antes: '0', despues: String(sel.filter((f) => String(f.category_id) !== valor).length) },
+      { etiqueta: t.montoQueSeMueve, antes: dinero(0), despues: dinero(sel.filter((f) => String(f.category_id) !== valor).reduce((s, f) => s + f.amount_cents, 0)) },
+    ],
+    guardar: async (sel, _prop, valor) => {
+      for (const f of sel) await pedir('patch', '/api/v1/planned-items/{planned_item_id}', { ruta: { planned_item_id: f.id }, cuerpo: { category_id: Number(valor) } })
+      recargar()
+    },
+  } }} />
+```
+
+La prueba de referencia está en `pruebas/base.escritorio.spec.ts` («H-07/H-08 · Ctrl+/…»): marcar casillas, `page.keyboard.press('Control+/')`, `selectOption` del valor, comprobar el bloque `getByTestId('vista-previa')`, `Escape` sin escrituras y `Enter` con una escritura por fila. En la pantalla, la prueba equivalente cuenta los PATCH con `context.route`.
 
 ## 8. Pruebas
 
 - Archivos en `pruebas/<area>/*.spec.ts` (proyecto `movil` 412×915 táctil); los que terminan en `.escritorio.spec.ts` corren también en 1440×900.
 - API falsa: `const api = new ApiFalsa(); await api.instalar(context)` (sesión, personas, categorías, gastos y peso con idempotencia; GET desconocidos → página vacía; demás → 501). Para rutas del área registra después tu `context.route(…)` y llama `route.fallback()` en lo que no atiendas (Playwright prueba primero la última ruta registrada).
 - Cero hosts externos (U5-08): no se usan fuentes, íconos ni librerías remotas.
+- Mediciones compartidas (`pruebas/apoyo/medidas.ts`): `controlesChicos` (44 × 44), `iconosFueraDeNorma` (20/24 px, trazo 1.5, 24 en solo icono y en la barra inferior), `dineroSinTabulares` y `textosEnIngles` (U5-07 en texto, `aria-label`, `title` y `alt`, incluida la descripción automática de ECharts «This is a chart…»).
+- Banco de pruebas de la base (`pruebas/apoyo/banco.ts` + `pruebas/banco/`): `const banco = await iniciarBanco()` levanta un Vite de desarrollo en 127.0.0.1 (puerto 5181 o el siguiente libre) y `banco.url('vistabd' | 'grafica' | 'calendario' | 'controles' | 'barrera')` monta la pieza sola. Lo usan solo las pruebas de la base.
 
 ## 9. Pantalla de ejemplo completa (P-21 Salud, solo como guía)
 

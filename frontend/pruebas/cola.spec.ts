@@ -96,12 +96,21 @@ test('falla del servidor (500) al enviar la cola: sigue en la cola, la franja la
   expect(api.gastos.length).toBe(0)
   console.log(`U5-13 paso 7 (500): franja visible, «1 en cola», aviso «No se pudo enviar · Revisar»; registros ${api.gastos.length}`)
   // Sigue guardada en el teléfono: tras recargar (otro intento con 500) la franja la sigue contando.
+  const postsAntes = api.peticiones.filter((p) => p.metodo === 'POST' && p.url === '/api/v1/expenses').length
   await page.reload()
   await expect(page.getByTestId('contador-cola')).toHaveText('1 en cola')
   await expect(page.getByTestId('franja-conexion')).toContainText('No se pudo enviar')
+  // I-01: el intento automático tras recargar vuelve a pintar la franja. Se espera a que termine (POST contado y el
+  // candado «fh-cola-envio» libre) antes de que el servidor se recupere, para que «Revisar» no cambie bajo el dedo.
+  await expect.poll(() => api.peticiones.filter((p) => p.metodo === 'POST' && p.url === '/api/v1/expenses').length).toBeGreaterThan(postsAntes)
+  await expect.poll(() => page.evaluate(async () => (await navigator.locks.query()).held?.some((l) => l.name === 'fh-cola-envio') ?? false)).toBe(false)
+  await expect(page.getByTestId('franja-conexion')).toContainText('No se pudo enviar')
   // El servidor se recupera: «Revisar» → «Reintentar envío» la manda una sola vez y la franja desaparece.
   api.fallaServidorGastos = false
-  await page.getByTestId('franja-conexion').getByRole('button', { name: 'Revisar' }).tap()
+  await expect(async () => {
+    await page.getByTestId('franja-conexion').getByRole('button', { name: 'Revisar' }).tap({ timeout: 2000 })
+    await expect(page.getByRole('button', { name: 'Reintentar envío' })).toBeVisible({ timeout: 2000 })
+  }).toPass({ timeout: 10_000 })
   await page.getByRole('button', { name: 'Reintentar envío' }).tap()
   await expect.poll(() => api.gastos.length).toBe(1)
   await expect(page.getByTestId('franja-conexion')).toHaveCount(0)

@@ -307,3 +307,126 @@ Cuatro agentes de construcción se pasaron del tope de 150 KB escritos del proto
 | Reservar la IP 192.168.50.56 en el módem | `finanzas.local` siempre apunta a la misma máquina | Unos minutos en el módem | Sin reservarla, el teléfono puede perder la app tras un reinicio | Sí |
 | Semilla con presupuesto e ingreso de octubre | Inicio muestra cifras en las 6 tarjetas para las capturas | Bajo | Ninguno | Sí, antes de WF-3b |
 | Probar en Android la CA de mkcert (S6-11) | Confirma que la PWA se instala sin aviso de certificado | 10 minutos con `ops/mkcert.md` §4 | Si falla, la app no se instala en el teléfono | Hacerlo antes de WF-3b |
+
+## 15. WF-3a bis (12-oct-2026): ronda acotada de corrección del frontend
+
+Agente `integrador-wf3a-bis` (Opus). El orquestador encargó esta ronda antes de WF-3b, con el precedente de P1d y P1e. Nada de esto cambia cifras de los motores ni decisiones de Axel. Las decisiones del orquestador sobre `docs/estado/bloqueos/C3-matriz.md` fueron: punto 1 (a), fila P-26 «Local (contenedor)»; punto 2, implementar las necesidades sin llamada; punto 3 (b), N-064, N-173 y N-175, y (c), excepción técnica PROVISIONAL solo donde la pantalla ya cubre la necesidad; punto 4 (a) ahora y (b) en WF-3b; punto 5 (b), semilla de desarrollo. Todas siguen PROVISIONALES hasta la puerta 4.
+
+Trabajaron: `frontend-base-fix`, `front-ajustes-a-fix`, `front-ajustes-b-fix`, `front-comidas-compras-fix`, `front-creditos-salud-reportes-fix`, `front-gastos-presupuesto-fix`, `semilla-dev`, `correccion-frontend-core-r4`, `correccion-frontend-areas-r4` y `c3-regen`. Revisaron (rondas 4 y 5): `revisor-frontend-core-r4/r5` y `revisor-frontend-areas-r4/r5`. Sus reportes están en `docs/estado/wf3/`.
+
+### 15.1 En corto
+
+- **HECHO.** Quedaron cerrados el alto y los 5 medios abiertos al cierre de WF-3a (§7): objetivos táctiles y calendario (H-03), gráficas accesibles en español (N-04), barra inferior (N-05), edición en grupo con `Ctrl+/` y vista previa (H-07, H-08), foco y estados (H-10). También se cerraron los 4 medios que salieron en la ronda 4 y la prueba intermitente de la cola (I-01).
+- **HECHO.** C3 v0.95 (borrador sin firma): implementado **42 de 42**, probado 42 de 42 y capturado 0 de 42 (WF-3b). `listPeriods` es la única operación sin llamada y queda como excepción técnica PROVISIONAL, con su cobertura comprobada por el script.
+- **HECHO.** Semilla de desarrollo (`finanzas semilla --desarrollo`). El servidor de desarrollo quedó re-sembrado y **corriendo** (PID 2419156), y las 6 tarjetas de Inicio responden con cifras (§15.6).
+- **PREGUNTA.** El frontend **no quedó aprobado tras 5 rondas**. Quedan 2 medios y 7 bajos nuevos o reabiertos, más bajos viejos (§15.4). Ninguno toca cifras.
+- **PREGUNTA.** `make verify-wf3` queda en **rojo** (rc 2) por una sola prueba: `pruebas/gastos-presupuesto/correccion-bis.escritorio.spec.ts:79` [escritorio]. Falla en **cada** corrida completa: 2 de 2 de `c3-regen` y 2 de 2 de este integrador. Aislada pasa. Es R5-05 de `REVISION-frontend-core-r5`, que el revisor clasificó como baja porque la vio pasar sola. `make verify-all` pasa (rc 0).
+
+### 15.2 Verificación (corrida por este integrador, 12-oct-2026, 08:13–08:40)
+
+| Paso | Resultado |
+|---|---|
+| `cd frontend && npm run build` | rc 0 (preparar, `tsc --noEmit` y vite; precache 81 entradas) |
+| `npx playwright test` completo (API simulada, JSON) | 235 ejecutadas: **230 pasan, 4 omitidas, 1 falla** (5.1 min). Omitidas: 3 de `Ctrl+/` en el proyecto móvil (atajo de teclado) y `ajustes-a/ajustes.escritorio.spec.ts:372` en escritorio (es de 412 táctil). La falla es `gastos-presupuesto/correccion-bis.escritorio.spec.ts:79` [escritorio], «P-02 Ctrl+/ · editar el tipo de varias filas…»: «Expected: 2 / Received: 0» en `expect.poll(() => parches.length)` tras `Enter` |
+| `npx playwright test pruebas/cola.spec.ts --repeat-each=3` | **12 passed** (3 corridas × 4 pruebas, 1.0 min). I-01 ya no se reproduce |
+| `node scripts/rutas-api.mjs` | «C3-03 frontend: 208 rutas invocadas; fuera de openapi.yaml: 0; sin registrar en routes.go: 0 (registradas: 216)» |
+| `node scripts/hosts-externos.mjs dist` | «U5-08 dist: hosts externos que se pedirían = 0» (solo literales que no son peticiones: w3.org, react.dev, tailwindcss.com, licencia de Inter y bit.ly en workbox) |
+| `cd backend && go test ./... -count=1` | rc 0: 32 paquetes OK, 5 sin pruebas, 0 fallas (entre ellos `internal/semilla`, con las 8 pruebas nuevas de la semilla de desarrollo) |
+| `make -k verify-wf3` | **rc 2**. Pasan: Go (S6-01: build, vet, gofmt, `go mod tidy -diff` y 32 paquetes OK), K25 (S6-02: dominio 87.0 %, motor_fin 89.2 %, motor_cred 94.0 %, recetas 93.2 % y precios 88.8 %) y contrato (S6-03: «los 23 archivos coinciden byte a byte», «216 operaciones en 172 rutas, 0 diferencias»). Falla `verify-wf3-frontend` (`npm run verify`): build, rutas, hosts y manifiesto OK; Playwright 230 / 4 / **1 falla**, la misma prueba |
+| `make verify-all GOOSE=/home/deepsec/finanzas-hogar-orq/gobin/goose` | **rc 0**: «Verificación ampliada OK (WF-0, C1, S1, U1, criterios y WF-1)» |
+| `go test ./internal/api -run 'TestContrato_Operaciones\|TestContrato_Rutas'` + `python3 -I frontend/scripts/c3-integracion.py --pw-json … --go-log …` (sin `--escribir`) | 216 subpruebas PASS. «implementado sí 42/42; probado sí 42/42; capturado sí 0/42», «sin pantalla: 5 (sin justificar: 0)», «no llama: 1 ['listPeriods']; sin excepción o sin cobertura: 0», **«Matriz del documento = matriz generada: sí»** |
+| Servidor: `bash ops/dev-stop.sh`; `finanzas migrate`; `finanzas semilla`; `finanzas semilla --desarrollo`; `bash ops/dev-run.sh` | Todo rc 0: «migraciones aplicadas: versión 4»; semilla real con todo «ya estaba» (idempotente); semilla de desarrollo con 0 nuevos y «ya estaban» 1 presupuesto, 1 partida, 1 meta, 1 aportación, 36 + 36 precios y 12 comidas; servidor en `127.0.0.1:8443` y `192.168.50.56:8443`, PID 2419156 |
+| Humo con la CA de mkcert (script propio, sin imprimir credenciales) | `GET /` 200 e **igual byte a byte** a `frontend/dist/index.html`; 3 recursos de `/assets/` y `/sw.js` iguales a los del disco. Inicio de sesión como Axel: 200. Tarjetas en §15.6 |
+| Secretos en lo que entra al commit (script propio, solo conteos) | 0 llaves privadas, 0 tokens de bot, 0 llaves de API, 0 hashes argon2 y 0 contraseñas de desarrollo. 0 archivos `.db`, certificados, `node_modules`, `dist` o `tsbuildinfo` |
+
+### 15.3 Hallazgos cerrados (con la ronda en que se cerraron)
+
+| Revisión | Id | Sev. | Qué era | Cerrado en |
+|---|---|---|---|---|
+| frontend-areas | H-03 | alta | evento del calendario de 40 × 44 en 412, «Ver como tabla» de 20 px y descripción emergente con colores fijos | r4 (`frontend-base-fix`) |
+| frontend-areas | H-07, H-08 | media | edición en grupo con `Ctrl+/` y vista previa en Ajustes 02, 04, 05, 07, 09, 13 y 14 | r4 (`frontend-base-fix`, `front-ajustes-a-fix`, `front-ajustes-b-fix`) |
+| frontend-areas | H-10 | media | foco con transición, series recoloreadas y estilo de deshabilitado | r4 |
+| frontend-areas | R2-05, R2-06, R2-07, R3-02 | bajas | detalles de Ajustes y celda sin nombre | r4 |
+| frontend-areas | R4-01, R4-02 | media | P-26.02 sin V-17 ni «No se pudo guardar»; P-26.13 sin aviso | r5 (`correccion-frontend-areas-r4`) |
+| frontend-core | N-04 | media | descripción de ECharts en inglés | r4 |
+| frontend-core | N-05 | media | barra inferior fuera de DESIGN §7.10 | r4 |
+| frontend-core | N-06, N-03 | bajas | barrera de errores global; botones de 32 px | r4 |
+| frontend-core | I-01 | baja | `cola.spec.ts` intermitente | `frontend-base-fix`; aquí, 12 de 12 en 3 corridas |
+| frontend-core | R4-01, R4-02 | media | P-03 sin pestaña Ingreso (N-102) ni líneas de crédito (N-053); eje compacto y etiquetas de dinero en las gráficas | r5 (`correccion-frontend-core-r4`) |
+
+### 15.4 Hallazgos abiertos (frontend-core r5 y frontend-areas r5)
+
+Los dos revisores usan el id «R5-01» para hallazgos distintos; aquí van como «core R5-01» y «áreas R5-01».
+
+| Id | Sev. | Ruta | Dueño | Qué pasa |
+|---|---|---|---|---|
+| core R5-01 | **media** | `frontend/src/pantallas/comidas-compras/P10Plan.tsx:245` | front-comidas-compras | P-10 Tendencias rotula las semanas «Lun 5 oct-2026»: formato híbrido fuera de U5-07. La corrección es `fechaConDia()` o `fecha()` (CONVENCIONES-frontend §5) |
+| áreas R5-01 | **media** | `frontend/src/pantallas/ajustes-a/comunes.tsx:228` (`DialogoCritico`) y 6 manejadores en S02, S03 y S05 | front-ajustes-a | guardados y borrados de P-26.01, 02, 03, 05 y 07 que fallan sin avisar (U4 §0.3); V-18 nunca aparece al eliminar una promoción en uso |
+| R5-05 (core) | baja según el revisor; aquí **bloquea `make verify-wf3`** | `frontend/pruebas/gastos-presupuesto/correccion-bis.escritorio.spec.ts:79-97` | front-gastos-presupuesto | falla en 4 de 4 corridas completas y pasa aislada. El `Enter` llega con el foco en el `<select>` del bloque y no produce los 2 PATCH. Sugerencia del revisor: esperar el foco del bloque `edicion-varias` o tocar «Aplicar», y revisar dónde escucha `Enter` `EdicionVarias.tsx:55` |
+| R5-02 (core) | baja / PREGUNTA | `frontend/src/shell/HojaRegistro.tsx:89` | frontend-base | con «A crédito», «Guardar» no hace nada ni avisa |
+| R5-03 (core) | baja / PREGUNTA | `gastos-presupuesto/hoja-registro.tsx:36`, `:54` | front-gastos-presupuesto | N-053 también ofrece préstamos a plazo y tarjetas; ya está en `WF3a-bis-gastos-presupuesto.md` punto 5 (PROVISIONAL) |
+| R5-04 (core) | baja | `frontend/src/pantallas/inicio/GraficaInicio.tsx:76` | front-inicio | leyenda en `ui.text.secondary` en lugar de `ui.text.default` |
+| H-13 (áreas, reabierto) | baja | `creditos-salud-reportes/P20Comparador.tsx:67`, `:113` | front-creditos-salud-reportes | con 503 `unavailable`, P-20 dice «tiempo máximo agotado» en lugar de «Comparador no disponible» (N-226) |
+| R3-01 (áreas) | baja | `frontend/package.json` | frontend-base | `ajv` sin declarar en `devDependencies` |
+| R4-03, R4-04, R4-05, H-07, H-08, H-09 (core) | bajas | `GraficaInicio.tsx` (descripción automática en inglés dentro de `aria-hidden`), alto de la barra inferior, `api-falsa.ts:41`, `Layout.tsx:48 max-w-[85vw]`, Inicio sin `TarjetaMetrica` | frontend-base, front-inicio | sin cambios |
+
+### 15.5 C3 v0.95
+
+`docs/contratos/C3-integracion.md` v0.95 la regeneró `c3-regen` con `python3 -I frontend/scripts/c3-integracion.py --escribir`. Este integrador la volvió a generar sin `--escribir` con sus propias corridas, y salió igual: «Matriz del documento = matriz generada: sí».
+
+- Implementado: **42 de 42** (antes 35). Las 7 filas en «no» (P-02, P-03, P-05, P-12, P-17, P-18 y P-26.05) ya llaman sus operaciones: `deleteAttachment` en P-04 («Quitar adjunto»), `listNutritionFacts`, `updateProduct` y `updatePresentation` en P-15, `queryView` en P-02 (tablero, calendario y galería) y P-04, y `listIncomes` en P-08, entre otras.
+- Probado: 42 de 42, con la regla PROVISIONAL de `C3-matriz` punto 4 (a). Capturado: 0 de 42 (WF-3b).
+- La fila P-26 dice «Local (contenedor de P-26.01…P-26.14)» (punto 1 (a), PROVISIONAL).
+- `listPeriods` es la única operación con pantalla que no se llama. Es excepción técnica PROVISIONAL (punto 3 (c)): N-080 lo cubre `getBudgetMonth`, N-082 `getBudgetFortnights` y N-100 `getIncomeMonth`/`listIncomes`. El script falla (rc 1) si aparece otra sin excepción escrita o sin cobertura.
+- Sigue **sin firma** (C3-07). La firma va en WF-3b, con las capturas U5, C3-08 (flujos contra el servidor real) y C3-09 completo.
+
+### 15.6 Semilla de desarrollo (`finanzas semilla --desarrollo`, agente `semilla-dev`)
+
+Es una capa idempotente sobre la semilla real (`backend/internal/semilla/desarrollo.go`, banderas en `backend/cmd/finanzas`). Exige la semilla real ya cargada, marca todo con «(desarrollo)» y se niega si `FINANZAS_ENTORNO=produccion` (candado PROVISIONAL). Los montos **no están en el código**: los lee en ejecución de las fixtures del oráculo S2 (`oraculo/fixtures/s2`).
+
+| Qué siembra | Valor | De qué fixture |
+|---|---|---|
+| Sueldo quincenal de Axel (partida planificada desde el 15-oct) | $12,000.00 el 15 y $12,500.00 el 30 | `s2-proyeccion-csv`, `planned_items[1]` |
+| Presupuesto de Despensa desde el 1-oct-2026 | $2,000.00 | `s2-presupuesto-scope`, `budgets[1]` |
+| Meta de ahorro (desarrollo) y aportación del 5-oct | $6,293.44 al 10-abr-2027, plan $449.53 al mes; aportación $3,146.72 (50.0 %) | `s2-metas` |
+| Precios de la compra del 10-oct | 36 de Bodega Aurrera (renglones del ticket, `ticket_manual`) y 36 de Walmart (carrito comparado de `datos/semilla/data.json`, `manual`) | ticket y carrito de la semilla |
+| Plan de comidas del 12 al 17-oct | 12 entradas, 6 recetas del recetario | sin fixture: dato de desarrollo |
+| Renta $8,000.00 mensual | solo con `--con-gasto-fijo`; por omisión **no** se siembra, porque movería P1–P6 | `s2-proyeccion-csv`, `planned_items[2]` |
+
+Inicio con la base re-sembrada (API con sesión de Axel; centavos):
+- **Mes contra plan:** real 119,764 de 200,000, `normal`, quedan 80,236.
+- **Quincena 1–15 oct:** ingreso 1,200,000 (esperado), gastado 0, saldo 1,200,000.
+- **Comidas de la semana 12–18 oct:** responde, pero con costo 0 (bloqueo `WF3a-bis-semilla-dev` punto 5).
+- **Mejor canasta:** 309,450, con 26,450 menos que la segunda tienda.
+- **Ahorro:** 314,672 ahorrado y plan 44,953 al mes, de una meta de 629,344.
+- **Próximo pago:** 30-oct, 97,375 (hogar 59,882 y Karen 37,493); disponible B 690,550.
+
+Resultado: **5 de 6 tarjetas con montos distintos de 0**; antes de esta ronda eran 1 de 6. `getAccrualVsCash` queda igual que con la semilla real sola.
+
+### 15.7 Bloqueos nuevos de WF-3a bis
+
+Hay **4 archivos nuevos, todos ABIERTOS**, dados de alta en `docs/estado/bloqueos/INDICE.md`, sección «Bloqueos nuevos de WF-3a bis». La carpeta tiene 129 archivos.
+- `WF3a-bis-ajustes-a.md`: 3 puntos de `Ctrl+/` en Ajustes.
+- `WF3a-bis-comidas-compras.md`: 4 puntos. El principal: las cifras de P-14 con la semilla de desarrollo (Walmart $3,359.00) no son las canon de U1 §3.16 ($3,233.00).
+- `WF3a-bis-gastos-presupuesto.md`: 7 puntos. Entre ellos, los filtros que le faltan a `queryView`, el id del adjunto en `Expense`, N-053 y `listPeriods`.
+- `WF3a-bis-semilla-dev.md`: 7 puntos. Entre ellos, la renta contra P1–P6, P3–P6 de la semilla real contra model.json, y el costo y las kcal de la semana en 0.
+
+`C3-matriz.md` sigue ABIERTO, con las decisiones del orquestador anotadas y aplicadas, pero PROVISIONALES.
+
+### 15.8 Pendientes y preguntas
+
+- **PREGUNTA (orquestador).** ¿Se hace otra ronda mínima antes de WF-3b, o se pasa a WF-3b con estos pendientes anotados? Esa ronda tendría 3 cambios locales, sin cifras:
+  1. core R5-01: `fechaConDia()` en `P10Plan.tsx:245`, más una aserción en la prueba.
+  2. áreas R5-01: `catch` en `DialogoCritico` y en los 6 manejadores, V-18 con «Desactivar», y 4 pruebas.
+  3. R5-05: la prueba `correccion-bis.escritorio.spec.ts:79`. Es la única que deja `make verify-wf3` en rojo.
+- **PREGUNTA (Axel, puerta 4).** R5-02: con «A crédito», ¿«Guardar» se deshabilita con su motivo o se esconde? R5-03 / N-053: ¿se ofrecen también préstamos a plazo y tarjetas?
+- **PENDIENTE (WF-3b).** Capturas U5, C3-08 con F-1 a F-6 contra el servidor real, C3-09 completo (antes, decidir `WF3a-bis-semilla-dev` punto 4) y firma de C3.
+- **Solicitudes fuera de alcance, sin aplicar:**
+  1. `ops/dev-run.sh`, rama `--sembrar`: agregar `"$BIN" semilla --desarrollo -db "$DB" -dir "$ROOT/datos/semilla"` después de `finanzas semilla`. Hoy se aplica a mano (`semilla-dev`).
+  2. `ops/runbook.md`: «`finanzas semilla --desarrollo` solo en desarrollo; producción lleva `FINANZAS_ENTORNO=produccion`».
+  3. `frontend/package.json`: agregar `"ajv": "8.20.0"` a `devDependencies` (R3-01).
+  4. `.gitignore`: agregar `frontend/tsconfig.tsbuildinfo`. Es un archivo generado (06:46) que no entró al commit.
+
+### 15.9 Paquetes instalados y consumo
+
+Paquetes: ninguno en toda la ronda (cada reporte dice «Ninguno»). Consumo de este integrador: unas 58 acciones, unos 180 KB leídos y unos 30 KB escritos.

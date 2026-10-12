@@ -17,6 +17,8 @@ import { Bloque, Cargar, DialogoCritico, FilaParametro, IndicadorGuardado, Inter
 import { Destinatarios } from './P2608Reportes'
 import { divHalfUp, sumarDias } from './calculos'
 import { DIAS_SEMANA, textosAjustesB as T } from './textos'
+import { GrupoVarias } from './varias'
+import type { EditarVarias } from '../../vistas-bd/tipos'
 
 const t = T.n
 type N = Esquemas['Notification']; type R = Esquemas['NotificationRecipient']; type Pe = Esquemas['Person']; type C = Esquemas['TelegramChatCandidate']
@@ -45,13 +47,16 @@ export default function P2609Notificaciones() {
       <Cargar c={datos} que={t.que} esqueleto={esqueleto}>{([ns, aj, rs, cs, ps]) => {
         const ctx = { params: aj.parameters, recips: rs.items, personas: ps.items, recargar: datos.recargar, total: presupuesto.datos?.planned_spending_cents, vence: pago.datos?.next_payment?.due_date }
         const pendientes = cs.items.filter((c) => !c.confirmed_at)
+        const alertas = ALERTAS.flatMap((code) => ns.items.filter((x) => x.code === code))
         return (
           <>
             {pendientes.length > 0 && <Detectados cs={pendientes} personas={ps.items} recargar={datos.recargar} />}
             <Bloque titulo={t.alertas} accion={<PruebaAviso alertas={ns.items.filter((n) => (ALERTAS as readonly string[]).includes(n.code))} personas={ps.items} recips={rs.items} />}>
-              <div className="flex flex-col gap-3">
-                {ALERTAS.map((code) => { const n = ns.items.find((x) => x.code === code); return n ? <Alerta key={code} n={n} {...ctx} /> : <p key={code} role="alert" className="text-small text-role-error">{T.r.faltaReporte}</p> })}
-              </div>
+              <GrupoVarias filas={alertas} idFila={(n) => n.id} nombre={(n) => n.name} ev={grupoAlertas(alertas, datos.recargar)}>{(casilla) => (
+                <div className="flex flex-col gap-3">
+                  {ALERTAS.map((code) => { const n = ns.items.find((x) => x.code === code); return n ? <Alerta key={code} n={n} casilla={casilla(n)} {...ctx} /> : <p key={code} role="alert" className="text-small text-role-error">{T.r.faltaReporte}</p> })}
+                </div>
+              )}</GrupoVarias>
               <FilaParametro etiqueta={t.horaAvisos} tipo="hora" param={aj.parameters['alerts.send_time']} mensaje={T.validar.hora}
                 guardar={async (v: string) => { await guardarAlerta({ 'alerts.send_time': v }); datos.recargar() }} restablecer={async () => { await guardarAlerta(undefined, ['alerts.send_time']); datos.recargar() }} />
             </Bloque>
@@ -103,7 +108,28 @@ function resumen({ n, params }: Ctx): string {
   if (n.code === 'stale_prices') return t.llegara(params['alerts.stale_prices_advance_days'].value ?? 0)
   return t.seRevisa(DIAS_SEMANA[(params['alerts.meal_plan_missing_weekday'].value ?? 7) - 1])
 }
-function Alerta(c: Ctx) {
+/** `Ctrl+/` (U4 P-26.09, Atajos; H-08): activa o desactiva a la vez las alertas seleccionadas. Antes de aplicar, la vista previa
+ *  sumada dice cuántas alertas quedan activas y cuáles cambian; `Enter` aplica a todas (un `updateNotification` por alerta) y
+ *  `Esc` cancela sin cambiar ninguna. */
+function grupoAlertas(alertas: N[], recargar: () => void): EditarVarias<N> {
+  const estado = (v: boolean) => (v ? t.activa : t.inactiva)
+  return {
+    propiedades: [{ id: 'is_enabled', nombre: t.activa, tipo: 'opcion', opciones: [{ valor: 'si', texto: T.comun.si }, { valor: 'no', texto: T.comun.no }] }],
+    vistaPrevia: async (sel, _p, v) => {
+      const activar = v === 'si'
+      const cambian = sel.filter((n) => n.is_enabled !== activar)
+      const antes = alertas.filter((n) => n.is_enabled).length
+      return [
+        { etiqueta: t.alertasActivas, antes: t.deTotal(antes, alertas.length), despues: t.deTotal(antes + (activar ? cambian.length : -cambian.length), alertas.length) },
+        ...cambian.map((n) => ({ etiqueta: n.name, antes: estado(n.is_enabled), despues: estado(activar) })),
+      ]
+    },
+    guardar: async (sel, _p, v) => {
+      try { for (const n of sel) await pedir('patch', '/api/v1/notifications/{notification_id}', { ruta: { notification_id: n.id }, cuerpo: { is_enabled: v === 'si' } }) } finally { recargar() }
+    },
+  }
+}
+function Alerta({ casilla, ...c }: Ctx & { casilla?: ReactNode }) {
   const g = useGuardado()
   const sinRed = useSinRed()
   const escritorio = useEsEscritorio()
@@ -113,7 +139,7 @@ function Alerta(c: Ctx) {
   return (
     <article className="flex flex-col gap-2 rounded-md border border-border-divider p-3" data-prueba={`alerta-${c.n.code}`}>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h4 className="text-body font-semibold">{c.n.name}</h4>
+        <span className="flex items-center gap-1">{casilla}<h4 className="text-body font-semibold">{c.n.name}</h4></span>
         <span className="flex items-center gap-2"><Interruptor ocultarEtiqueta etiqueta={`${t.activa} · ${c.n.name}`} activo={c.n.is_enabled} deshabilitadoPor={sinRed} alCambiar={(v) => void activa(v)} /><IndicadorGuardado g={g} /></span>
       </div>
       <p className="text-small text-text-secondary">{resumen(c)}</p>

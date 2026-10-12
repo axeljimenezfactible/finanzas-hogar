@@ -1,4 +1,4 @@
-// P-17 Todas las líneas (U1 §2.1, §2.2, §3.19: N-190..N-194). Galería de líneas, totales, aviso A/B, tendencias y calendario unificado.
+// P-17 Todas las líneas (U1 §2.1, §2.2, §3.19: N-190..N-194). Galería de líneas, totales, aviso A/B (N-193 con getCredit), tendencias y calendario unificado.
 import { useEffect, type ReactNode } from 'react'
 import { CalendarDays, Calculator, Plus } from 'lucide-react'
 import type { PropsPantalla } from '../../app/registro'
@@ -19,10 +19,21 @@ type Credito = Esquemas['Credit']
 const c = t.creditos
 export const conFaltantes = (l: Credito) => (l.kind === 'bank_card' || l.kind === 'store_credit') && !!l.missing_terms?.length
 
+/** Aviso A/B de una línea (N-193): lectura activa (A o B) y el texto fijo de Kueski, solo si la línea revolvente no tiene la reposición confirmada. */
+export function FranjaLinea({ l }: { l: Credito }) {
+  if (l.kind !== 'revolving_line' || l.availability_confirmed) return null
+  return <Franja rol="advertencia" accion={<Enlace a={rutaCondiciones(l.id)} className="inline-flex min-h-11 items-center text-small text-text-link underline">{c.confirmarEnAjustes}</Enlace>}><span data-prueba="aviso-ab">{c.lecturaActiva(l.availability_reading)} · {l.name} · {c.avisoAB}</span></Franja>
+}
+/** N-193 en P-17 sale de getCredit (C1: GET /api/v1/credits/{credit_id}, lectura A/B activa y availability_confirmed).
+ *  Mientras llega, o si falla sin copia, se pinta con lo que trajo listCredits para no esconder el aviso. */
+function AvisoAB({ l }: { l: Credito }) {
+  const linea = usarConsulta('get', '/api/v1/credits/{credit_id}', { ruta: { credit_id: l.id } })
+  return <FranjaLinea l={linea.datos ?? l} />
+}
 export function FranjaAB({ lineas }: { lineas: Credito[] }) {
-  const sin = lineas.filter((l) => l.kind === 'revolving_line' && !l.availability_confirmed)
-  if (!sin.length) return null
-  return <>{sin.map((l) => <Franja key={l.id} rol="advertencia" accion={<Enlace a={rutaCondiciones(l.id)} className="inline-flex min-h-11 items-center text-small text-text-link underline">{c.confirmarEnAjustes}</Enlace>}>{c.lecturaActiva(l.availability_reading)} · {l.name} · {c.avisoAB}</Franja>)}</>
+  const rev = lineas.filter((l) => l.kind === 'revolving_line')
+  if (!rev.length) return null
+  return <>{rev.map((l) => <AvisoAB key={l.id} l={l} />)}</>
 }
 function TarjetaLinea({ l }: { l: Credito }) {
   const disp = l.kind === 'revolving_line' ? [c.disponibleLectura(l.availability_reading), l.available_cents] : l.kind === 'bank_card' ? [c.disponible, l.available_cents] : [c.disponible, null]

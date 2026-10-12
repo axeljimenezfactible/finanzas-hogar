@@ -15,9 +15,11 @@ import { ErrorApi } from '../../api/errores'
 import { textos } from '../../textos/es-MX'
 import { ListaOrdenable } from '../../vistas-bd/ListaOrdenable'
 import { VistaBD } from '../../vistas-bd/VistaBD'
+import type { Cambio } from '../../vistas-bd/tipos'
 import { repartir } from './calculos'
 import { Bloque, BloquePrevia, Editable, vNombre, type Previa } from './comunes'
 import { comoLista } from './comunes'
+import { guardarVarias, nota, siNo } from './grupo'
 import { t } from './textos'
 const k = t.categorias
 type Cat = Esquemas['Category']; type Regla = Esquemas['CostShareRule']; type Per = Esquemas['Person']; type PI = Esquemas['PlannedItem']
@@ -66,6 +68,34 @@ export default function S04Categorias() {
           return { cambios, notas: [k.aplicaDesde] }
         }
         const opRegla = [{ valor: '', texto: k.porDefecto }, ...rs.map((r) => ({ valor: String(r.id), texto: r.name }))]
+        // Ctrl+/ (U4 P-26.04 «Atajos» y «Vista previa del efecto»): tipo, reparto o activa de varias, con el bloque sumado antes de aplicar.
+        const g = t.grupo
+        const previaGrupo = (sel: Cat[], prop: string, valor: string): Cambio[] => {
+          const n = sel.length
+          if (prop === 'kind') { const nombre = valor === 'fixed' ? k.fijo : valor === 'variable' ? k.variable : k.sinClasificar; return [{ etiqueta: g.conTipo(nombre), antes: g.deN(sel.filter((c) => (c.kind ?? 'ninguno') === valor).length, n), despues: g.deN(n, n) }] }
+          if (prop === 'is_active') {
+            const cambios: Cambio[] = [{ etiqueta: k.activa, antes: g.deN(sel.filter((c) => c.is_active).length, n), despues: g.deN(valor === 'si' ? n : 0, n) }]
+            if (valor === 'no') { if (sel.some((c) => c.code === 'groceries' || c.code === 'eating_out')) cambios.push(nota(k.usanCalculos)); cambios.push(nota(k.archivar(sel.reduce((s, c) => s + (c.expense_count ?? 0), 0)))) }
+            return cambios
+          }
+          const id = valor === 'defecto' ? null : Number(valor), nueva = reglaDe(id), nombre = id == null ? k.porDefecto : (nueva?.name ?? '')
+          const cambios: Cambio[] = [{ etiqueta: g.pasanA(n, nombre), antes: g.deN(sel.filter((c) => (c.default_cost_share_rule_id ?? null) === id).length, n), despues: g.deN(n, n) }]
+          const actuales = [...new Set(sel.map((c) => c.default_cost_share_rule_id ?? null))].filter((r) => r !== id)
+          actuales.forEach((r) => cambios.push({ etiqueta: `${k.ejemplo} · ${r == null ? k.porDefecto : (rs.find((x) => x.id === r)?.name ?? '')}`, antes: partesTexto(EJEMPLO, reglaDe(r), ps), despues: partesTexto(EJEMPLO, nueva, ps) }))
+          // Gastos fijos activos sin reparto propio de las categorías que cambian (R5-2): partes por vez sumadas, regla de la vista previa 3 (d) de P-26.02.
+          const sin = (fijos.datos?.items ?? []).filter((x: PI) => x.cost_share_rule_id == null && x.is_active && sel.some((c) => c.id === x.category_id && (c.default_cost_share_rule_id ?? null) !== id))
+          const pa = new Map<number, number>(), pd = new Map<number, number>(), restos = new Set<number>()
+          sin.forEach((x) => {
+            const antes = reglaDe(filas.find((c) => c.id === x.category_id)?.default_cost_share_rule_id)
+            repartir(x.amount_cents, antes)?.forEach((s) => pa.set(s.persona, (pa.get(s.persona) ?? 0) + s.cents))
+            repartir(x.amount_cents, nueva)?.forEach((s) => pd.set(s.persona, (pd.get(s.persona) ?? 0) + s.cents))
+            for (const r of [antes, nueva]) if (r?.remainder_person_id != null) restos.add(r.remainder_person_id)
+          })
+          ps.filter((o) => pa.has(o.id) || pd.has(o.id)).forEach((o) => cambios.push({ etiqueta: `${k.fijosCambian(sin.length)} · ${restos.has(o.id) ? t.presupuesto.resto : o.display_name}`, antes: dinero(pa.get(o.id) ?? 0), despues: dinero(pd.get(o.id) ?? 0) }))
+          cambios.push(nota(k.aplicaDesde))
+          return cambios
+        }
+        const cuerpoGrupo = (prop: string, valor: string): Esquemas['CategoryUpdate'] => (prop === 'kind' ? { kind: valor === 'ninguno' ? null : (valor as 'fixed' | 'variable') } : prop === 'reparto' ? { default_cost_share_rule_id: valor === 'defecto' ? null : Number(valor) } : { is_active: valor === 'si' })
         if (orden) return <ListaOrdenable items={filas} idDe={(c) => String(c.id)} pintar={(c) => <span>{c.name}</span>} alReordenar={async (n) => { await pedir('put', '/api/v1/categories/order', { cuerpo: { ids: n.map((c) => c.id) } as Esquemas['IdList'] }); cats.recargar() }} />
         const aplicarMov = async () => {
           if (!mov) return
@@ -78,6 +108,15 @@ export default function S04Categorias() {
             <div className="flex flex-wrap gap-2"><Boton variante="primario" onClick={aplicarMov}>{k.aplicar}</Boton><Boton onClick={() => setMov(null)}>{t.comun.cancelar}</Boton></div>
           </div>)}
         <VistaBD def={{ clave: 'P-26.04-categorias', filas, idFila: (c) => c.id, vistas: ['tabla', 'tablero'], titulo: (c) => c.name,
+          editarVarias: {
+            propiedades: [
+              { id: 'kind', nombre: k.tipo, tipo: 'opcion', opciones: [{ valor: 'ninguno', texto: k.sinClasificar }, { valor: 'fixed', texto: k.fijo }, { valor: 'variable', texto: k.variable }] },
+              { id: 'reparto', nombre: k.reparto, tipo: 'opcion', opciones: [{ valor: 'defecto', texto: k.porDefecto }, ...rs.map((r) => ({ valor: String(r.id), texto: r.name }))] },
+              { id: 'is_active', nombre: k.activa, tipo: 'opcion', opciones: siNo },
+            ],
+            vistaPrevia: async (sel, prop, valor) => previaGrupo(sel, prop, valor),
+            guardar: (sel, prop, valor) => guardarVarias(sel, (c) => pedir('patch', '/api/v1/categories/{category_id}', { ruta: { category_id: c.id }, cuerpo: cuerpoGrupo(prop, valor) }), cats.recargar),
+          },
           columnasTablero: { propiedad: 'reparto', columnas: [k.porDefecto, ...rs.map((r) => r.name)], moverA: async (c, columna) => setMov({ c, columna, regla: columna === k.porDefecto ? null : rs.find((r) => r.name === columna)?.id ?? null }) },
           propiedades: [
             { id: 'name', nombre: k.nombre, valor: (c) => c.name, pintar: (c) => <Editable etiqueta={`${k.nombre} · ${c.name}`} valor={c.name} mostrar={c.name} validar={vNombre} guardar={(s) => guardar(c)({ name: s.trim() })} /> },

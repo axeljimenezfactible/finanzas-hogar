@@ -126,7 +126,7 @@ export const t = {
     frescura: (f: string, v: string, dv: number, pv: string, dm: number, pm: string, c: string, dc: number) => `Un precio del ${f} queda viejo el ${v} (día ${dv}, peso ${pv}); el día ${dm} pesa ${pm}; el ${c} (día ${dc}) su peso llega a 0 y desde el día siguiente solo se muestra marcado.`,
     gruposVacios: 'Sin grupos elegidos', municipioSin: 'Sin municipio',
     calendario: 'Calendario por día de visita', semanaAnterior: 'Semana anterior', semanaSiguiente: 'Semana siguiente', semana: (a: string, b: string) => `Semana del ${a} al ${b}`,
-    sinMercados: 'Sin mercados ni tianguis con día de visita', conteoTitulo: 'Precios que pasan hoy de fresco a viejo', bloqueoConteo: 'bloqueo WF3-ajustes-precios-conteo',
+    sinMercados: 'Sin mercados ni tianguis con día de visita', conteoTitulo: 'Precios que pasan hoy de fresco a viejo', bloqueoConteo: 'bloqueo WF3-ajustes-precios-conteo', bloqueoEquilibrio: 'bloqueo WF3-ajustes-a §2',
     conteo: (n: number) => (n === 1 ? 'Con este valor, 1 producto pasa hoy de precio fresco a viejo' : `Con este valor, ${n} productos pasan hoy de precio fresco a viejo`),
     importando: 'Importando el corte; puede tardar unos minutos', avanceTarea: 'el avance como tarea queda pendiente (PROVISIONAL, bloqueo S6-compras-b-fuentes)',
   },
@@ -138,5 +138,14 @@ export const t = {
     recargarTexto: (f: string, fe: string, n: number) => `Se reemplazará la base ${f} cargada el ${fe} (${n} alimentos) por la del archivo local; las kcal de las recetas se recalculan.`,
     recargada: (n: number) => `Base recargada: ${n} alimentos.`, fuentes: { usda_fdc: 'USDA', open_food_facts: 'Open Food Facts', mx_table: 'Tablas mexicanas', store_label: 'Etiquetas', manual: 'Manual' } as Record<string, string>,
     restricciones: 'Restricciones alimentarias', de: (p: string) => `Restricciones de ${p}`, iaRecetas: 'Sugerir recetas con IA', sinCarga: 'sin cargar',
+  },
+  // Edición en grupo con Ctrl+/ (U4 §0.2 punto 2 y §0.7) en 02, 04, 05 y 07.
+  grupo: {
+    deN: (k: number, n: number) => `${k} de ${n}`, varios: (n: number) => `${n} valores distintos`,
+    tomanCategoria: (k: number, n: number) => `${k} de ${n} partidas toman el reparto de su categoría; las demás conservan el suyo`,
+    pasanA: (n: number, x: string) => `${n === 1 ? '1 categoría pasa' : `${n} categorías pasan`} a ${x}`, conTipo: (x: string) => `Con tipo ${x}`,
+    vigentesHoy: 'Promociones vigentes hoy', aptasPara: (x: string) => `Recetas aptas para ${x}`,
+    agregar: (x: string) => `Agregar ${x}`, quitar: (x: string) => `Quitar ${x}`,
+    sinTiempo: (k: number) => `${k === 1 ? '1 receta se quedaría' : `${k} recetas se quedarían`} sin tiempo de comida. Elige al menos un tiempo de comida.`,
   },
 } as const

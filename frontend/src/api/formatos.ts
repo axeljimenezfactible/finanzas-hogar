@@ -15,6 +15,16 @@ export function dinero(centavos: number, signo: 'ninguno' | 'gasto' | 'ingreso' 
   return signo === 'ingreso' && abs > 0 ? '+' + texto : texto
 }
 
+/** Dinero compacto, SOLO en ejes de gráficas (DESIGN §7.7 y §8.5): 0 → «$0», 50000 → «$500», 500000 → «$5 mil»,
+ *  1234567 → «$12.3 mil»; negativos con U+2212. Aritmética entera con ROUND_HALF_UP; en etiquetas, tablas y
+ *  descripciones va siempre `dinero()` (formato completo). */
+export function dineroCompacto(centavos: number): string {
+  const pesos = Math.round(Math.abs(centavos) / 100), signo = centavos < 0 && pesos > 0 ? MENOS : ''
+  if (pesos < 1000) return `${signo}$${pesos}`
+  const decimas = Math.round(pesos / 100)
+  return `${signo}$${Math.floor(decimas / 10)}${decimas % 10 ? `.${decimas % 10}` : ''} mil`
+}
+
 /** Texto tecleado → centavos con ROUND_HALF_UP («185.5» → 18550; «1,000.005» → 100001). null si no es válido. */
 export function aCentavos(texto: string): number | null {
   const limpio = texto.replace(/[$,\s]/g, '')

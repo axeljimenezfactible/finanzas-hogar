@@ -1,9 +1,10 @@
-// Botón (DESIGN §7.2) con el patrón de shadcn/ui (cva + cn) y solo tokens C2.
+// Botón (DESIGN §7.2) con el patrón de shadcn/ui (cva + cn) y solo tokens C2. El anillo de foco aparece sin transición
+// (§7.0, §4.5): la transición cubre color, fondo y borde, nunca outline-color.
 import type { ComponentProps } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from './utils'
 export const estilosBoton = cva(
-  'inline-flex select-none items-center justify-center gap-2 rounded-md text-small font-medium transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus aria-disabled:cursor-not-allowed aria-disabled:border aria-disabled:border-dashed aria-disabled:border-border-control aria-disabled:bg-surface-disabled aria-disabled:text-text-disabled',
+  'inline-flex select-none items-center justify-center gap-2 rounded-md text-small font-medium transition-[color,background-color,border-color] duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus aria-disabled:cursor-not-allowed aria-disabled:border aria-disabled:border-dashed aria-disabled:border-border-control aria-disabled:bg-surface-disabled aria-disabled:text-text-disabled',
   {
     variants: {
       variante: {

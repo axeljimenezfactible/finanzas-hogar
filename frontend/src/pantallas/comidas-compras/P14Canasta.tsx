@@ -16,7 +16,7 @@ import { ConDatos, Franja, Vacio } from '../../componentes/Estados'
 import { useAvisos } from '../../componentes/Avisos'
 import { cn } from '../../componentes/utils'
 import { VistaBD } from '../../vistas-bd/VistaBD'
-import { BarraAcciones, Seccion, SelectorSemana, Selector, Tiendita, cantidad, conSemana, filasDe, mensajeError, porId, textoSemana, usarCatalogo, useSemana } from './comun'
+import { BarraAcciones, Seccion, SelectorSemana, Selector, Tiendita, cantidad, nombreTienda, conSemana, filasDe, mensajeError, porId, textoSemana, usarCatalogo, useSemana } from './comun'
 import { textosCC as t } from './textos'
 
 type Comparacion = Esquemas['BasketComparison']
@@ -32,7 +32,7 @@ export default function P14Canasta({ sub, consulta }: PropsPantalla) {
   const comp = usarConsulta('get', '/api/v1/basket-comparison', { consulta: gasto ? { basket: 'expense', expense_id: gasto, week: sem.semana } : { basket: 'shopping_list', week: sem.semana } })
   const tiendas = porId(usarCatalogo('tiendas'))
   const productos = porId(usarCatalogo('productos'))
-  const nombreT = (id?: number) => (id ? tiendas.get(id)?.name ?? '—' : '—')
+  const nombreT = (id?: number) => (id ? nombreTienda(tiendas.get(id), tiendas) : '—')
   const sinRed = conexion ? undefined : textos.conexion.requiere
   async function usar(storeId: number) {
     try {
@@ -120,7 +120,7 @@ function Detalle({ c, nombreT, nombreP, unidad, tiendas }: { c: Comparacion; nom
             return (
               <span className={cn('flex flex-col items-end', i.winner_store_id === s && 'font-semibold')}>
                 <span className="tabular-nums">{dinero(p.price_cents)}{p.is_stale && <span className="ml-1 rounded-sm bg-role-warning-surface px-1 text-caption text-role-warning">{t.viejo}</span>}</span>
-                <span className="text-caption font-normal text-text-secondary">{t.porUnidad(dinero(p.base_unit_price_cents), t.unidades[unidad(i.product_id) ?? 'piece'])} · {fecha(p.observed_date)} · {t.fuentes[p.source]}</span>
+                <span className="text-caption font-normal text-text-secondary">{t.porUnidad(dinero(p.base_unit_price_cents), t.unidadPrecio[unidad(i.product_id) ?? 'piece'])} · {fecha(p.observed_date)} · {t.fuentes[p.source]}</span>
               </span>
             )
           },

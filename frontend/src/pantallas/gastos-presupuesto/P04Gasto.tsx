@@ -1,10 +1,13 @@
 // P-04 Gasto (U1 §2.1, §2.2, §3.6: N-060 a N-066). Propiedades editables, reparto, devengo, efectivo, renglones y adjunto.
+// WF-3a bis: foto del ticket (downloadAttachment) y «Quitar adjunto» (deleteAttachment, N-064). Expense solo trae
+// has_attachment: el id del adjunto sale de queryView en galería (image_attachment_id) o de la respuesta al adjuntar
+// (PROVISIONAL, bloqueo WF3a-bis-gastos-presupuesto: un PDF adjuntado antes no se puede ubicar).
 import { useRef, useState } from 'react'
-import { Copy, CreditCard, Paperclip, Receipt, Trash2, CircleCheck } from 'lucide-react'
+import { Copy, CreditCard, Paperclip, Trash2, CircleCheck, Unlink } from 'lucide-react'
 import type { PropsPantalla } from '../../app/registro'
 import { rutaDe } from '../../app/rutas'
 import { navegar } from '../../app/enrutador'
-import { nuevaClave, pedir } from '../../api/cliente'
+import { armarUrl, nuevaClave, pedir } from '../../api/cliente'
 import { usarConsulta } from '../../api/consulta'
 import { ErrorApi } from '../../api/errores'
 import { aCentavos, dinero, fecha, hoyISO, mes } from '../../api/formatos'
@@ -41,7 +44,12 @@ function Detalle({ gasto, recargar }: { gasto: Gasto; recargar: () => void }) {
   const avisar = useAvisos()
   const sinRed = useSinRed()
   const archivo = useRef<HTMLInputElement>(null)
-  const [hoja, setHoja] = useState<'pagado' | 'eliminar' | null>(null)
+  const [hoja, setHoja] = useState<'pagado' | 'eliminar' | 'quitar' | null>(null)
+  const [subido, setSubido] = useState<{ id: number; mime: string } | null>(null)
+  const galeria = usarConsulta('get', '/api/v1/views/{entity}', { ruta: { entity: 'expense' }, consulta: { mode: 'gallery', period: gasto.expense_date.slice(0, 7), limit: 200 } }, gasto.has_attachment)
+  const fotoId = (galeria.datos?.items as Esquemas['ViewItem'][] | undefined)?.find((i) => i.id === gasto.id)?.image_attachment_id
+  const adjunto = fotoId ? { id: fotoId, mime: 'image' } : subido
+  const urlAdjunto = adjunto ? armarUrl('/api/v1/attachments/{attachment_id}/file', { attachment_id: adjunto.id }) : ''
   const [pago, setPago] = useState({ monto: centavosATexto(gasto.amount_cents), fecha: hoyISO(), error: '' })
   const ruta = { expense_id: gasto.id }
   const parchar = async (_: Gasto, cuerpo: Esquemas['ExpenseUpdate']) => { await pedir('patch', '/api/v1/expenses/{expense_id}', { ruta, cuerpo }); recargar() }
@@ -69,7 +77,8 @@ function Detalle({ gasto, recargar }: { gasto: Gasto; recargar: () => void }) {
   const adjuntar = (f: File | undefined) => {
     if (!f) return
     const datos = new FormData(); datos.append('file', f); datos.append('kind', 'ticket_photo')
-    accion(() => pedir('post', '/api/v1/expenses/{expense_id}/attachments', { ruta, cuerpo: datos, idempotencia: nuevaClave() }), t.p04.adjuntado)
+    accion(() => pedir('post', '/api/v1/expenses/{expense_id}/attachments', { ruta, cuerpo: datos, idempotencia: nuevaClave() }), t.p04.adjuntado,
+      (r) => { const a = r as Esquemas['Attachment']; setSubido({ id: a.id, mime: a.mime_type }); recargar(); galeria.recargar() })
   }
   const irCompra = async () => {
     try { const c = await pedir('get', '/api/v1/credit-purchases/{credit_purchase_id}', { ruta: { credit_purchase_id: gasto.credit_purchase_id! } }); navegar(rutaDe('P-19', { id: c.credit_id, compra: c.id })) }
@@ -83,16 +92,24 @@ function Detalle({ gasto, recargar }: { gasto: Gasto; recargar: () => void }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap gap-2">
-        {gasto.has_attachment
-          ? <Boton variante="primario" deshabilitadoPor={t.p04.verTicketPendiente}><Receipt aria-hidden className="size-5" />{textos.registro.tipos.ticket}</Boton>
-          : <Boton variante="primario" deshabilitadoPor={sinRed} onClick={() => archivo.current?.click()}><Paperclip aria-hidden className="size-5" />{t.p04.adjuntar}</Boton>}
+        {!gasto.has_attachment && <Boton variante="primario" deshabilitadoPor={sinRed} onClick={() => archivo.current?.click()}><Paperclip aria-hidden className="size-5" />{t.p04.adjuntar}</Boton>}
         <input ref={archivo} type="file" hidden accept="image/jpeg,image/png,image/webp,application/pdf" onChange={(e) => adjuntar(e.target.files?.[0])} />
         <Boton deshabilitadoPor={sinRed} onClick={() => accion(() => pedir('post', '/api/v1/expenses/{expense_id}/duplicate', { ruta, idempotencia: nuevaClave() }), t.p04.duplicado, (r) => navegar(rutaDe('P-04', { id: (r as Gasto).id })))}><Copy aria-hidden className="size-5" />{t.p04.duplicar}</Boton>
         {gasto.kind === 'upcoming' && <Boton deshabilitadoPor={sinRed} onClick={() => setHoja('pagado')}><CircleCheck aria-hidden className="size-5" />{t.p04.marcarPagado}</Boton>}
         {gasto.credit_purchase_id != null && <Boton onClick={irCompra}><CreditCard aria-hidden className="size-5" />{t.p04.compraCredito}</Boton>}
         <Boton variante="destructivo" deshabilitadoPor={sinRed} onClick={() => setHoja('eliminar')}><Trash2 aria-hidden className="size-5" />{t.comun.eliminar}</Boton>
       </div>
-      {gasto.has_attachment && <p className="text-small text-text-secondary">{t.p04.conTicket}</p>}
+      {gasto.has_attachment && (
+        <Bloque titulo={t.p04.ticketTitulo} accion={<Boton deshabilitadoPor={sinRed ?? (adjunto ? undefined : t.p04.sinUbicar)} onClick={() => setHoja('quitar')}><Unlink aria-hidden className="size-5" />{t.p04.quitarAdjunto}</Boton>}>
+          {adjunto ? (
+            adjunto.mime.startsWith('image')
+              ? <a href={urlAdjunto} target="_blank" rel="noopener" className="self-start rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus" aria-label={t.p04.abrirArchivo}>
+                  <img src={urlAdjunto} alt={t.p04.fotoTicket} className="max-h-96 w-full rounded-lg border border-border-divider object-contain tablet:w-96" />
+                </a>
+              : <a href={urlAdjunto} target="_blank" rel="noopener" className="self-start text-body text-text-link underline">{t.p04.abrirArchivo}</a>
+          ) : galeria.cargando ? <Esqueleto /> : <p className="text-small text-text-secondary">{t.p04.sinUbicar}</p>}
+        </Bloque>
+      )}
       <Bloque titulo={t.p04.propiedades}>
         <div>{props.map((p) => <Fila key={p.id} etiqueta={p.nombre}>{p.editar && !sinRed ? <CeldaEditable fila={gasto} prop={p}>{p.pintar ? p.pintar(gasto) : String(p.valor(gasto))}</CeldaEditable> : (p.pintar ? p.pintar(gasto) : String(p.valor(gasto)))}</Fila>)}</div>
       </Bloque>
@@ -115,6 +132,8 @@ function Detalle({ gasto, recargar }: { gasto: Gasto; recargar: () => void }) {
           <Campo etiqueta={t.p04.fechaReal} type="date" value={pago.fecha} onChange={(e) => setPago({ ...pago, fecha: e.target.value })} />
         </div>
       </Hoja>
+      <Confirmar abierta={hoja === 'quitar'} alCambiar={(a) => setHoja(a ? 'quitar' : null)} titulo={t.p04.quitarAdjunto} texto={t.p04.confirmarQuitar} accion={t.p04.quitarAdjunto}
+        alConfirmar={() => accion(() => pedir('delete', '/api/v1/attachments/{attachment_id}', { ruta: { attachment_id: adjunto!.id } }), t.p04.quitado, () => { setHoja(null); setSubido(null); recargar() })} />
       <Confirmar abierta={hoja === 'eliminar'} alCambiar={(a) => setHoja(a ? 'eliminar' : null)} titulo={t.comun.eliminar} texto={t.p04.confirmarEliminar} accion={t.comun.eliminar}
         alConfirmar={() => accion(() => pedir('delete', '/api/v1/expenses/{expense_id}', { ruta }), t.p04.eliminado, () => navegar(rutaDe('P-02')))} />
     </div>

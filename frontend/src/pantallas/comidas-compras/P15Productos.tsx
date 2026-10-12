@@ -1,4 +1,5 @@
 // P-15 Productos y precios (U1 §2.1–§2.2, §3.17 N-170 a N-176). Los precios de PROFECO no se editan (N-176).
+// WF-3a bis: N-173 con listNutritionFacts y N-175 con edición en el lugar (updateProduct, updatePresentation y `Ctrl+/`).
 import { useDeferredValue, useState } from 'react'
 import { Package } from 'lucide-react'
 import { ICONO_MD } from '../../componentes/Icono'
@@ -19,11 +20,18 @@ import { TarjetaMetrica } from '../../componentes/TarjetaMetrica'
 import { Grafica } from '../../componentes/Grafica'
 import { useAvisos } from '../../componentes/Avisos'
 import { VistaBD } from '../../vistas-bd/VistaBD'
-import { BarraAcciones, MenuMas, Seccion, Selector, Tiendita, aMilli, cantidad, filasDe, invalidar, mensajeError, numero, porId, usarCatalogo } from './comun'
+import { CeldaEditable } from '../../vistas-bd/CeldaEditable'
+import type { Propiedad } from '../../vistas-bd/tipos'
+import { BarraAcciones, MenuMas, Seccion, Selector, Tiendita, aMilli, cantidad, filasDe, invalidar, mensajeError, numero, porId, usarCatalogo, nombreTienda } from './comun'
 import { textosCC as t } from './textos'
 
 type Producto = Esquemas['Product']
 type Precio = Esquemas['Price']
+type Presentacion = Esquemas['Presentation']
+/** C1: base_unit_price_cents es el precio por 1 kg, 1 l o 1 pieza (K7); el contenido viene en milésimas de g, ml o pieza. */
+const MILLI_POR_UNIDAD_PRECIO: Record<string, number> = { g: 1_000_000, ml: 1_000_000, piece: 1_000 }
+/** a × b ÷ c con HALF_UP en enteros (§6: centavos enteros, nunca flotantes en el resultado). */
+const mulDivHalfUp = (a: number, b: number, c: number) => Math.floor((2 * a * b + c) / (2 * c))
 const EDITABLES = ['manual', 'ticket_manual', 'ticket_ocr']
 const opc = (r: Record<string, string>) => Object.entries(r).map(([valor, texto]) => ({ valor, texto }))
 
@@ -41,6 +49,12 @@ export default function P15Productos({ sub, consulta }: PropsPantalla) {
   const hoja = consulta.get('hoja')
   const cerrar = () => navegar(conConsulta({ hoja: null, id: null }), { reemplazar: true })
   const mejor = (p: Producto) => p.best_price
+  const opcionesGrupo = [{ valor: '', texto: t.sinCategoria }, ...(gruposL ?? []).map((g) => ({ valor: String(g.id), texto: g.name }))]
+  const editarProducto = async (p: Producto, cuerpo: Esquemas['ProductUpdate']) => {
+    await pedir('patch', '/api/v1/products/{product_id}', { ruta: { product_id: p.id }, cuerpo })
+    invalidar('productos'); productos.recargar()
+  }
+  const grupoDe = (p: Producto) => (p.product_group_id ? String(p.product_group_id) : '')
   return (
     <div className="flex flex-col gap-4">
       <BarraAcciones acciones={<>
@@ -74,18 +88,28 @@ export default function P15Productos({ sub, consulta }: PropsPantalla) {
             clave: 'P-15-productos', filas, idFila: (p) => p.id, vistas: ['tabla', 'tablero', 'galeria'], titulo: (p) => p.name, alAbrir: (p) => navegar(conConsulta({ hoja: 'producto', id: String(p.id) })),
             columnasTablero: { propiedad: 'frescura', columnas: Object.values(t.frescuras) },
             propiedades: [
-              { id: 'nombre', nombre: t.nombre, valor: (p) => p.name },
-              { id: 'categoria', nombre: t.categoria, valor: (p) => grupos.get(p.product_group_id ?? 0)?.name ?? '' },
+              { id: 'nombre', nombre: t.nombre, valor: (p) => p.name }, // abre la ficha; el nombre se edita en el lugar dentro de ella
+              { id: 'categoria', nombre: t.categoria, valor: (p) => grupos.get(p.product_group_id ?? 0)?.name ?? '', pintar: (p) => grupos.get(p.product_group_id ?? 0)?.name ?? t.sinCategoria,
+                editar: { tipo: 'opcion', opciones: opcionesGrupo, textoInicial: grupoDe, guardar: (p, v) => editarProducto(p, { product_group_id: v ? Number(v) : null }) } },
               { id: 'unidad', nombre: t.unidadBase, valor: (p) => t.unidadesNombre[p.base_unit] },
               { id: 'mejor', nombre: t.mejorPrecio, valor: (p) => mejor(p)?.base_unit_price_cents ?? null, alinear: 'derecha',
-                pintar: (p) => { const b = mejor(p); return b ? <span className="flex flex-col items-end"><span className="tabular-nums">{t.porUnidad(dinero(b.base_unit_price_cents), t.unidades[p.base_unit])}</span><Tiendita id={b.store_id} mapa={tiendas} /></span> : '—' } },
+                pintar: (p) => { const b = mejor(p); return b ? <span className="flex flex-col items-end"><span className="tabular-nums">{t.porUnidad(dinero(b.base_unit_price_cents), t.unidadPrecio[p.base_unit])}</span><Tiendita id={b.store_id} mapa={tiendas} /></span> : '—' } },
               { id: 'ultimo', nombre: t.ultimoPrecio, valor: (p) => p.last_observed_date ?? null, pintar: (p) => (p.last_observed_date ? fecha(p.last_observed_date) : '—') },
               { id: 'frescura', nombre: t.frescura, valor: (p) => t.frescuras[p.freshness ?? 'no_price'], grupo: (p) => t.frescuras[p.freshness ?? 'no_price'] },
             ],
+            // Edición en grupo (U1 §5.3 `Ctrl+/`): categoría de varios productos, con vista previa sumada antes de aplicar.
+            editarVarias: {
+              propiedades: [{ id: 'product_group_id', nombre: t.categoria, tipo: 'opcion', opciones: opcionesGrupo }],
+              vistaPrevia: async (sel, _prop, v) => [{ etiqueta: t.cambianCategoria, antes: numero(0), despues: numero(sel.filter((p) => grupoDe(p) !== v).length) }],
+              guardar: async (sel, _prop, v) => {
+                for (const p of sel.filter((x) => grupoDe(x) !== v)) await pedir('patch', '/api/v1/products/{product_id}', { ruta: { product_id: p.id }, cuerpo: { product_group_id: v ? Number(v) : null } })
+                invalidar('productos'); productos.recargar()
+              },
+            },
           }} />
         }}</ConDatos>
       </>}
-      {hoja === 'producto' && consulta.get('id') && <HojaProducto id={Number(consulta.get('id'))} cerrar={cerrar} />}
+      {hoja === 'producto' && consulta.get('id') && <HojaProducto id={Number(consulta.get('id'))} cerrar={cerrar} alCambiar={productos.recargar} />}
       {hoja === 'precio' && <HojaPrecio cerrar={cerrar} alGuardar={productos.recargar} />}
       {hoja === 'nuevo' && <HojaNuevo cerrar={cerrar} alGuardar={productos.recargar} />}
     </div>
@@ -107,32 +131,70 @@ function Historial() {
         const fechas = [...new Set(l.map((x) => x.observed_date))].sort()
         const ids = [...new Set(l.map((x) => x.store_id))]
         // Precio vigente por tienda: el último capturado hasta cada fecha (se mantiene hasta que cambia)
-        const series = ids.map((s) => { let ult = 0; return { nombre: tiendas.get(s)?.name ?? '—', valores: fechas.map((fe) => { const x = l.filter((y) => y.store_id === s && y.observed_date === fe).pop(); if (x) ult = x.base_unit_price_cents ?? ult; return ult }) } })
+        const series = ids.map((s) => { let ult = 0; return { nombre: nombreTienda(tiendas.get(s), tiendas), valores: fechas.map((fe) => { const x = l.filter((y) => y.store_id === s && y.observed_date === fe).pop(); if (x) ult = x.base_unit_price_cents ?? ult; return ult }) } })
         return <Grafica titulo={t.historial} resumen={t.resumenHistorial(p?.name ?? '')} tipo="lineas" categorias={fechas.map(fecha)} series={series} />
       }}</ConDatos>}
     </div>
   )
 }
 
-function HojaProducto({ id, cerrar }: { id: number; cerrar: () => void }) {
+/** Esc dentro de una edición en el lugar descarta solo esa edición (U4 §0.2), no cierra la hoja: Radix escucha Esc antes
+ *  que la celda, así que la hoja ignora el cierre mientras el foco está en un control de `[data-edicion-en-lugar]`. */
+const editandoEnLugar = () => { const el = document.activeElement; return el instanceof HTMLElement && /^(INPUT|SELECT)$/.test(el.tagName) && !!el.closest('[data-edicion-en-lugar]') }
+
+function HojaProducto({ id, cerrar, alCambiar }: { id: number; cerrar: () => void; alCambiar: () => void }) {
   const avisar = useAvisos()
   const conexion = useConexion()
   const tiendas = porId(usarCatalogo('tiendas'))
   const det = usarConsulta('get', '/api/v1/products/{product_id}', { ruta: { product_id: id } })
   const precios = usarConsulta('get', '/api/v1/products/{product_id}/prices', { ruta: { product_id: id }, consulta: { sort: '-observed_date', limit: 100 } })
+  const nutricion = usarConsulta('get', '/api/v1/products/{product_id}/nutrition-facts', { ruta: { product_id: id }, consulta: { limit: 50 } })
   const [corrige, setCorrige] = useState<{ id: number; precio: string; confirmarBorrar?: boolean } | null>(null)
   const [nut, setNut] = useState({ kcal: '', cita: '' })
   const [pres, setPres] = useState({ nombre: '', tam: '' })
   const sinRed = conexion ? undefined : textos.conexion.requiere
-  const hacer = async (f: () => Promise<unknown>) => { try { await f(); avisar({ texto: t.guardado, rol: 'exito' }); setCorrige(null); det.recargar(); precios.recargar() } catch (e) { avisar({ texto: mensajeError(e), rol: 'error' }) } }
+  const hacer = async (f: () => Promise<unknown>) => { try { await f(); avisar({ texto: t.guardado, rol: 'exito' }); setCorrige(null); det.recargar(); precios.recargar(); nutricion.recargar() } catch (e) { avisar({ texto: mensajeError(e), rol: 'error' }) } }
+  // N-175: edición en el lugar de la presentación (CeldaEditable guarda con Enter o al salir; Esc descarta)
+  const editarPres = async (x: Presentacion, cuerpo: Esquemas['PresentationUpdate']) => {
+    await pedir('patch', '/api/v1/presentations/{presentation_id}', { ruta: { presentation_id: x.id }, cuerpo })
+    det.recargar(); precios.recargar(); invalidar('productos'); alCambiar()
+  }
+  const propNombre: Propiedad<Esquemas['ProductDetail']> = { id: 'nombre', nombre: t.nombre, valor: (x) => x.name,
+    editar: { tipo: 'texto', textoInicial: (x) => x.name, guardar: async (x, v) => {
+      await pedir('patch', '/api/v1/products/{product_id}', { ruta: { product_id: x.id }, cuerpo: { name: v.trim() } })
+      det.recargar(); invalidar('productos'); alCambiar()
+    } } }
   return (
-    <Hoja abierta alCambiar={(a) => !a && cerrar()} titulo={det.datos?.name ?? t.producto}>
+    <Hoja abierta alCambiar={(a) => !a && !editandoEnLugar() && cerrar()} titulo={det.datos?.name ?? t.producto}>
       <ConDatos consulta={det}>{(p) => {
         const nombreP = (pid: number) => p.presentations.find((x) => x.id === pid)?.name ?? '—'
         return (
           <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1" data-edicion-en-lugar><span className="text-small font-medium text-text-secondary">{t.nombre}</span>
+              <CeldaEditable fila={p} prop={propNombre}><span className="font-medium">{p.name}</span></CeldaEditable></div>
             <Seccion titulo={t.presentaciones}>
-              <ul className="flex flex-col gap-1 text-small">{p.presentations.map((x) => <li key={x.id}>{x.name}{x.brand ? ` · ${x.brand}` : ''} · {cantidad(x.size_milli, p.base_unit)}{x.is_bulk ? ` · ${t.granel}` : ''}</li>)}</ul>
+              {p.presentations.length > 0 && <div data-edicion-en-lugar><VistaBD def={{
+                clave: 'P-15-presentaciones', filas: p.presentations, idFila: (x) => x.id, vistas: ['tabla'], titulo: (x) => x.name,
+                propiedades: [
+                  { id: 'nombre', nombre: t.presentacion, valor: (x) => x.name, editar: { tipo: 'texto', textoInicial: (x) => x.name, guardar: (x, v) => editarPres(x, { name: v.trim() }) } },
+                  { id: 'marca', nombre: t.marca, valor: (x) => x.brand ?? '', pintar: (x) => x.brand || '—', editar: { tipo: 'texto', textoInicial: (x) => x.brand ?? '', guardar: (x, v) => editarPres(x, { brand: v.trim() || null }) } },
+                  { id: 'tamano', nombre: `${t.tamano} (${t.unidades[p.base_unit]})`, valor: (x) => x.size_milli, alinear: 'derecha',
+                    pintar: (x) => <span className="tabular-nums">{cantidad(x.size_milli, p.base_unit)}{x.is_bulk ? ` · ${t.granel}` : ''}</span>,
+                    editar: { tipo: 'numero', textoInicial: (x) => String(x.size_milli / 1000),
+                      // El tamaño cambia el precio por kg, l o pieza: «Antes → Después» con el último precio de la presentación
+                      vistaPrevia: async (x, v) => {
+                        const nuevo = aMilli(v)
+                        if (nuevo === null) throw new Error(t.cantidadInvalida)
+                        const suyos = filasDe<Precio>(precios.datos ?? { items: [] }).filter((y) => y.presentation_id === x.id)
+                        const cambios = [{ etiqueta: t.tamano, antes: cantidad(x.size_milli, p.base_unit), despues: cantidad(nuevo, p.base_unit) }]
+                        const u = suyos[0]
+                        if (u && u.base_unit_price_cents != null) cambios.push({ etiqueta: t.ultimoPrecioUnidad(t.unidadPrecio[p.base_unit], nombreTienda(tiendas.get(u.store_id), tiendas), fecha(u.observed_date)), antes: dinero(u.base_unit_price_cents), despues: dinero(mulDivHalfUp(u.price_cents, MILLI_POR_UNIDAD_PRECIO[p.base_unit], nuevo)) })
+                        if (suyos.length) cambios.push({ etiqueta: t.preciosSeRecalculan, antes: numero(0), despues: numero(suyos.length) })
+                        return cambios
+                      },
+                      guardar: (x, v) => editarPres(x, { size_milli: aMilli(v)! }) } },
+                ],
+              }} /></div>}
               <div className="grid grid-cols-2 items-end gap-2">
                 <Campo etiqueta={t.nuevaPresentacion} value={pres.nombre} onChange={(e) => setPres({ ...pres, nombre: e.target.value })} />
                 <Campo etiqueta={`${t.tamano} (${t.unidades[p.base_unit]})`} inputMode="decimal" value={pres.tam} onChange={(e) => setPres({ ...pres, tam: e.target.value })} />
@@ -147,7 +209,7 @@ function HojaProducto({ id, cerrar }: { id: number; cerrar: () => void }) {
                       <Tiendita id={x.store_id} mapa={tiendas} />
                       <span className="tabular-nums font-medium">{dinero(x.price_cents)}{x.is_stale && <span className="ml-1 rounded-sm bg-role-warning-surface px-1 text-caption text-role-warning">{t.viejo}</span>}</span>
                     </div>
-                    <span className="text-caption text-text-secondary">{[nombreP(x.presentation_id), x.base_unit_price_cents != null ? t.porUnidad(dinero(x.base_unit_price_cents), t.unidades[p.base_unit]) : '', fecha(x.observed_date), t.fuentes[x.source], x.age_days != null ? t.diasN(x.age_days) : ''].filter(Boolean).join(' · ')}</span>
+                    <span className="text-caption tabular-nums text-text-secondary">{[nombreP(x.presentation_id), x.base_unit_price_cents != null ? t.porUnidad(dinero(x.base_unit_price_cents), t.unidadPrecio[p.base_unit]) : '', fecha(x.observed_date), t.fuentes[x.source], x.age_days != null ? t.diasN(x.age_days) : ''].filter(Boolean).join(' · ')}</span>
                     {!EDITABLES.includes(x.source) ? <span className="text-caption text-text-secondary">{t.profecoNoSeEdita}</span> : corrige?.id === x.id ? (
                       corrige.confirmarBorrar
                         ? <div className="flex flex-wrap items-center gap-2"><span className="text-small">{t.confirmarEliminarPrecio}</span><Boton onClick={() => setCorrige(null)}>{textos.app.cancelar}</Boton><Boton variante="destructivo" deshabilitadoPor={sinRed} onClick={() => hacer(() => pedir('delete', '/api/v1/prices/{price_id}', { ruta: { price_id: x.id } }))}>{t.eliminar}</Boton></div>
@@ -160,7 +222,10 @@ function HojaProducto({ id, cerrar }: { id: number; cerrar: () => void }) {
               )}</ConDatos>
             </Seccion>
             <Seccion titulo={t.nutricion}>
-              {p.nutrition_facts.length ? <ul className="flex flex-col gap-1 text-small">{p.nutrition_facts.map((n) => <li key={n.id}>{t.kcal100(numero(n.kcal_milli_per_100g / 1000), p.base_unit === 'ml' ? 'ml' : 'g')} · {t.fuentesNutricion[n.source]}{n.source_ref ? ` · ${n.source_ref}` : ''}</li>)}</ul> : <p className="text-small text-text-secondary">{t.sinNutricion}</p>}
+              <ConDatos consulta={nutricion}>{(dn) => {
+                const datos = filasDe<Esquemas['NutritionFact']>(dn)
+                return datos.length ? <ul className="flex flex-col gap-1 text-small" data-prueba="nutricion">{datos.map((n) => <li key={n.id}><span className="tabular-nums">{t.kcal100(numero(n.kcal_milli_per_100g / 1000), p.base_unit === 'ml' ? 'ml' : 'g')}</span> · {t.fuentesNutricion[n.source]}{n.source_ref ? ` · ${n.source_ref}` : ''}{n.is_preferred ? ` · ${t.preferida}` : ''}</li>)}</ul> : <p className="text-small text-text-secondary">{t.sinNutricion}</p>
+              }}</ConDatos>
               <div className="grid grid-cols-2 items-end gap-2">
                 <Campo etiqueta={t.kcalPor100} inputMode="decimal" value={nut.kcal} onChange={(e) => setNut({ ...nut, kcal: e.target.value })} />
                 <Campo etiqueta={t.cita} value={nut.cita} onChange={(e) => setNut({ ...nut, cita: e.target.value })} />

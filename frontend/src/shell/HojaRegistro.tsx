@@ -1,6 +1,8 @@
 // P-03 Registrar gasto (hoja global) con sus pestañas Gasto · Ingreso · Peso · Ticket, y P-22 Registrar peso.
 // F-1 en 3 toques (K10): «+» abre con el monto enfocado y los valores por defecto (N-052); chip de categoría; Guardar.
 // Sin conexión (K9): Guardar deja el gasto o el peso en la cola del teléfono con su clave y su captured_at.
+// U1 §3.5: la pestaña «Ingreso» registra el ingreso extra en la misma hoja (N-102) y la forma de pago «A crédito» lista
+// las líneas activas (N-053); las dos piezas son del área Gastos y Presupuesto (pantallas/gastos-presupuesto/hoja-registro).
 import { useMemo, useRef, useState, type FormEvent } from 'react'
 import { textos } from '../textos/es-MX'
 import { nuevaClave, pedir } from '../api/cliente'
@@ -19,6 +21,7 @@ import { cn } from '../componentes/utils'
 import { navegar } from '../app/enrutador'
 import { rutaDe } from '../app/rutas'
 import { useSesion } from '../app/sesion'
+import { FormIngreso, LineaCredito } from '../pantallas/gastos-presupuesto/hoja-registro'
 import { avisarCambio, cambiar, useShell, type TipoRegistro } from './estado'
 const TIPOS: TipoRegistro[] = ['gasto', 'ingreso', 'peso', 'ticket']
 type Persona = { id: number; code: string; display_name: string; participation: string }
@@ -36,7 +39,7 @@ export function HojaRegistro() {
       </div>
       {registro === 'gasto' && <FormGasto refMonto={ref} alTerminar={cerrar} />}
       {registro === 'peso' && <FormPeso refPeso={ref} alTerminar={cerrar} />}
-      {registro === 'ingreso' && <IrA texto={textos.registro.ingresoIr} boton={textos.registro.irIngresos} a={`${rutaDe('P-08')}?hoja=ingreso`} />}
+      {registro === 'ingreso' && <FormIngreso refMonto={ref} alTerminar={cerrar} />}
       {registro === 'ticket' && <IrA texto={textos.registro.ticketIr} boton={textos.registro.irTicket} a={rutaDe('P-05')} />}
     </Hoja>
   )
@@ -131,7 +134,7 @@ function FormGasto({ refMonto, alTerminar }: { refMonto: React.RefObject<HTMLInp
             </select></label>
           <Campo etiqueta={textos.registro.descripcion} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           <Campo etiqueta={textos.registro.nota} value={nota} onChange={(e) => setNota(e.target.value)} className="phone:col-span-2" />
-          {forma === 'credit' && <div className="phone:col-span-2"><Franja rol="info" accion={<Boton variante="enlace" onClick={() => { cambiar({ registro: null }); navegar(`${rutaDe('P-17')}?hoja=compra&monto=${aCentavos(monto) ?? ''}&fecha=${dia}`) }}>{textos.registro.irCredito}</Boton>}>{textos.registro.creditoAviso}</Franja></div>}
+          {forma === 'credit' && <div className="phone:col-span-2"><LineaCredito monto={monto} dia={dia} comercio={descripcion} alSalir={() => cambiar({ registro: null })} /></div>}
         </div>
       )}
       {errores._ && <Franja rol="error" alerta>{errores._}</Franja>}

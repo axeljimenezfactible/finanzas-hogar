@@ -258,4 +258,16 @@ export const textosCC = {
   porcionesSobrantes: 'Porciones que sobraron',
   existenciaAjustada: 'Existencia ajustada',
   sobranteRegistrado: 'Sobrante registrado',
+  // WF-3a bis (front-comidas-compras-fix): N-123 en P-12; N-173 y N-175 en P-15; precio por kg, l o pieza (C1: «Precio por 1 kg, 1 l o 1 pieza», K7)
+  agregarAlPlanDe: (receta: string) => `Agregar al plan · ${receta}`,
+  porcionesPorDia: (n: string) => `Porciones por día en total: ${n}`,
+  agregadaEnPlan: (n: number) => (n === 1 ? 'Receta agregada al plan en 1 casilla' : `Receta agregada al plan en ${n} casillas`),
+  verPlan: 'Ver plan',
+  tiemposDeReceta: 'Solo los tiempos aptos de esta receta',
+  unidadPrecio: { g: 'kg', ml: 'l', piece: 'pieza' } as Record<string, string>,
+  preferida: 'preferida',
+  sinCategoria: 'Sin categoría',
+  cambianCategoria: 'Productos que cambian de categoría',
+  ultimoPrecioUnidad: (u: string, tienda: string, f: string) => `Último precio por ${u} (${tienda}, ${f})`,
+  preciosSeRecalculan: 'Precios de esta presentación que se recalculan',
 }

@@ -29,7 +29,7 @@ export function ChipSeleccionable({ seleccionado, marca, forma = 'pildora', clas
     <button
       type="button"
       aria-pressed={seleccionado}
-      className={cn(base, 'h-8 cursor-pointer px-3 hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus coarse:h-11', forma === 'pildora' ? 'rounded-full' : 'rounded-sm', seleccionado && 'border-border-selected bg-surface-selected', className)}
+      className={cn(base, 'h-8 cursor-pointer px-3 enabled:hover:bg-surface-hover disabled:cursor-not-allowed disabled:border-dashed disabled:border-border-control disabled:bg-surface-disabled disabled:text-text-disabled focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-focus coarse:h-11', forma === 'pildora' ? 'rounded-full' : 'rounded-sm', seleccionado && 'border-border-selected bg-surface-selected', className)}
       {...resto}
     >
       {seleccionado && <Check aria-hidden className="size-5 text-icon-selected" />}

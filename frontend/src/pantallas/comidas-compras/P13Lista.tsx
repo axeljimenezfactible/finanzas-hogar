@@ -17,7 +17,7 @@ import { ConDatos, Franja, Vacio } from '../../componentes/Estados'
 import { Hoja } from '../../componentes/Hoja'
 import { useAvisos } from '../../componentes/Avisos'
 import { VistaBD } from '../../vistas-bd/VistaBD'
-import { BarraAcciones, MenuMas, Seccion, SelectorSemana, Selector, Tiendita, aMilli, cantidad, conSemana, mensajeError, porId, usarCatalogo, useSemana, type Tienda } from './comun'
+import { BarraAcciones, MenuMas, Seccion, SelectorSemana, Selector, Tiendita, aMilli, cantidad, conSemana, mensajeError, porId, usarCatalogo, useSemana, type Tienda, nombreTienda } from './comun'
 import { textosCC as t } from './textos'
 
 type Lista = Esquemas['ShoppingList']
@@ -36,7 +36,7 @@ export default function P13Lista({ consulta }: PropsPantalla) {
   const sinRed = conexion ? undefined : textos.conexion.requiere
   const nombre = (i: Esquemas['ShoppingListItem']) => i.free_text ?? productos.get(i.product_id ?? 0)?.name ?? '—'
   const unidad = (i: Esquemas['ShoppingListItem']) => i.free_text_unit ?? productos.get(i.product_id ?? 0)?.base_unit
-  const etiqueta = (g: Grupo) => (g.store_id ? tiendas.get(g.store_id)?.name ?? '—' : g.purchase_channel === 'market' ? t.mercados : t.cadenas)
+  const etiqueta = (g: Grupo) => (g.store_id ? nombreTienda(tiendas.get(g.store_id), tiendas) : g.purchase_channel === 'market' ? t.mercados : t.cadenas)
   async function cambiar(i: Esquemas['ShoppingListItem'], cuerpo: Esquemas['ShoppingListItemUpdate']) {
     try { await pedir('patch', '/api/v1/shopping-list/items/{shopping_list_item_id}', { ruta: { shopping_list_item_id: i.id }, consulta: { week: sem.semana }, cuerpo }) }
     catch (e) { avisar({ texto: mensajeError(e), rol: 'error' }) }

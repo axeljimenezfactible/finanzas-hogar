@@ -1,12 +1,15 @@
 // P-02 Todos los gastos (U1 §2.1, §2.2, §3.4: N-040 a N-047). Subsecciones Resumen · Detalle* · Tendencias · Calendario.
-import { useState } from 'react'
+// WF-3a bis: tablero (N-043), calendario (N-045) y galería de tickets (N-046) sobre queryView (C1 §8: entidad expense,
+// group_by category_id, date_field expense_date, importe principal = parte del hogar); la foto con downloadAttachment.
+// `Ctrl+/` edita a la vez categoría o tipo de las filas elegidas (U1 §5.3), con vista previa sumada.
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Camera, Filter, Plus } from 'lucide-react'
 import type { PropsPantalla } from '../../app/registro'
 import { rutaDe } from '../../app/rutas'
 import { conConsulta, navegar } from '../../app/enrutador'
-import { pedir } from '../../api/cliente'
+import { armarUrl, pedir } from '../../api/cliente'
 import { usarConsulta } from '../../api/consulta'
-import { aCentavos, dinero, fecha, mes } from '../../api/formatos'
+import { aCentavos, dinero, fecha, mes, porcentaje } from '../../api/formatos'
 import type { Consulta, Esquemas } from '../../api/tipos'
 import { Boton } from '../../componentes/Boton'
 import { ConDatos, Vacio } from '../../componentes/Estados'
@@ -16,13 +19,28 @@ import { useAvisos } from '../../componentes/Avisos'
 import { abrirRegistro } from '../../shell/estado'
 import { textos } from '../../textos/es-MX'
 import { VistaBD } from '../../vistas-bd/VistaBD'
-import type { Propiedad } from '../../vistas-bd/tipos'
+import type { EditarVarias, Propiedad } from '../../vistas-bd/tipos'
 import { SelectorMes, Selector, centavosATexto, mensajeDe, periodoDe, rejillaTarjetas, useAlCambiarDatos, useCatalogos } from './comun'
 import { t } from './textos'
 
 type Gasto = Esquemas['Expense']
 type Filtro = Consulta<'/api/v1/expenses', 'get'>
 const FILTROS = ['familia', 'tipo', 'pago', 'ticket', 'categoria'] as const
+type Suma = { total: number; count: number; bp: number }
+/** queryView (C1 §8) acepta periodo, familia y categoría, pero no tipo, forma de pago ni «con ticket»: con alguno de esos
+ *  filtros las sumas del tablero y del calendario salen de lo cargado (PROVISIONAL, bloqueo WF3a-bis-gastos-presupuesto). */
+const filtrosVista = (f: Filtro) => ({ period: f.period, family: f.family, category_id: f.category_id })
+const vistaCubre = (f: Filtro) => !f.kind && !f.payment_method && f.has_attachment === undefined
+/** Puntos base → «56 %», entero con ROUND_HALF_UP (protocolo §6). */
+const pctDeBp = (bp: number) => porcentaje(Math.floor((bp + 50) / 100))
+function sumasLocales(filas: Gasto[], clave: (g: Gasto) => string): Map<string, Suma> {
+  const m = new Map<string, Suma>()
+  for (const g of filas) { const k = clave(g), s = m.get(k) ?? { total: 0, count: 0, bp: 0 }; s.total += g.household_share_cents ?? 0; s.count += 1; m.set(k, s) }
+  const todo = [...m.values()].reduce((a, s) => a + s.total, 0)
+  for (const s of m.values()) s.bp = todo > 0 ? Math.floor((s.total * 10000 + Math.floor(todo / 2)) / todo) : 0
+  return m
+}
+const sumasDeGrupos = (grupos: Esquemas['ViewGroup'][]) => new Map(grupos.map((g) => [g.key, { total: g.total_cents ?? 0, count: g.count, bp: g.share_bp ?? 0 }]))
 
 export default function P02Gastos({ sub, consulta }: PropsPantalla) {
   const periodo = periodoDe(consulta)
@@ -104,32 +122,40 @@ function Tendencias({ filtro }: { filtro: Filtro }) {
 function Lista({ filtro, soloCalendario, conFiltros, quitar, periodo }: { filtro: Filtro; soloCalendario: boolean; conFiltros: boolean; quitar: () => void; periodo: string }) {
   const lista = usarConsulta('get', '/api/v1/expenses', { consulta: { ...filtro, limit: 50 } })
   const tot = usarConsulta('get', '/api/v1/expenses/totals', { consulta: { period: filtro.period, family: filtro.family, category_id: filtro.category_id } })
+  const cubre = vistaCubre(filtro)
+  // N-043 (columnas por categoría con su total) o N-045 (suma por día): solo los grupos; N-046: id de la foto de cada gasto.
+  const grupos = usarConsulta('get', '/api/v1/views/{entity}', { ruta: { entity: 'expense' }, consulta: soloCalendario
+    ? { mode: 'calendar', date_field: 'expense_date', ...filtrosVista(filtro), limit: 200 }
+    : { mode: 'board', group_by: 'category_id', ...filtrosVista(filtro), limit: 200 } }, cubre)
+  const galeria = usarConsulta('get', '/api/v1/views/{entity}', { ruta: { entity: 'expense' }, consulta: { mode: 'gallery', ...filtrosVista(filtro), limit: 200 } }, !soloCalendario)
   const [mas, setMas] = useState<{ filas: Gasto[]; cursor: string | null | undefined }>({ filas: [], cursor: undefined })
-  useAlCambiarDatos(lista.recargar, tot.recargar, () => setMas({ filas: [], cursor: undefined }))
+  const recargarTodo = () => { lista.recargar(); tot.recargar(); grupos.recargar(); galeria.recargar(); setMas({ filas: [], cursor: undefined }) }
+  useAlCambiarDatos(lista.recargar, tot.recargar, grupos.recargar, galeria.recargar, () => setMas({ filas: [], cursor: undefined }))
   const cats = useCatalogos()
   const avisar = useAvisos()
   const parchar = async (g: Gasto, cuerpo: Esquemas['ExpenseUpdate']) => {
     // Si falla, CeldaEditable regresa al valor anterior y avisa (U1 §2.2).
-    await pedir('patch', '/api/v1/expenses/{expense_id}', { ruta: { expense_id: g.id }, cuerpo }); lista.recargar(); tot.recargar(); setMas({ filas: [], cursor: undefined })
+    await pedir('patch', '/api/v1/expenses/{expense_id}', { ruta: { expense_id: g.id }, cuerpo }); recargarTodo()
   }
+  const fotos = new Map(((galeria.datos?.items ?? []) as Esquemas['ViewItem'][]).filter((i) => i.image_attachment_id).map((i) => [i.id, i.image_attachment_id!]))
   const opcionesCat = cats.categorias.map((c) => ({ valor: String(c.id), texto: c.name }))
-  const propiedades: Propiedad<Gasto>[] = [
-    { id: 'expense_date', nombre: t.comun.fecha, valor: (g) => g.expense_date, pintar: (g) => fecha(g.expense_date), editar: { tipo: 'fecha', textoInicial: (g) => g.expense_date, guardar: (g, v) => parchar(g, { expense_date: v }) } },
-    { id: 'description', nombre: t.comun.descripcion, valor: (g) => g.description ?? '', editar: { tipo: 'texto', textoInicial: (g) => g.description ?? '', guardar: (g, v) => parchar(g, { description: v || null }) } },
-    { id: 'category_id', nombre: t.comun.categoria, valor: (g) => cats.categoria(g.category_id), grupo: (g) => cats.categoria(g.category_id), editar: { tipo: 'opcion', opciones: opcionesCat, textoInicial: (g) => String(g.category_id), guardar: (g, v) => parchar(g, { category_id: Number(v) }) } },
-    { id: 'amount_cents', nombre: t.comun.monto, valor: (g) => g.amount_cents, pintar: (g) => dinero(g.amount_cents), alinear: 'derecha',
-      editar: { tipo: 'dinero', textoInicial: (g) => centavosATexto(g.amount_cents),
-        vistaPrevia: async (g, v) => { const c = aCentavos(v); if (c == null || c <= 0) throw new Error(textos.registro.montoInvalido); return [{ etiqueta: t.comun.monto, antes: dinero(g.amount_cents), despues: dinero(c) }] },
-        guardar: (g, v) => parchar(g, { amount_cents: aCentavos(v)! }) } },
-    { id: 'person_id', nombre: t.comun.persona, valor: (g) => cats.persona(g.person_id), grupo: (g) => cats.persona(g.person_id) },
-    { id: 'reparto', nombre: t.comun.reparto, valor: (g) => g.household_share_cents ?? 0, alinear: 'derecha', pintar: (g) => `${t.comun.hogar} ${dinero(g.household_share_cents ?? 0)} · ${t.comun.karen} ${dinero(g.external_share_cents ?? 0)}` },
-    { id: 'kind', nombre: t.comun.tipo, valor: (g) => t.tipos[g.kind], grupo: (g) => t.tipos[g.kind], editar: { tipo: 'opcion', opciones: Object.entries(t.tipos).map(([valor, texto]) => ({ valor, texto })), textoInicial: (g) => g.kind, guardar: (g, v) => parchar(g, { kind: v as Gasto['kind'] }) } },
-    { id: 'payment_method', nombre: t.comun.formaPago, valor: (g) => textos.registro.formas[g.payment_method], grupo: (g) => textos.registro.formas[g.payment_method] },
-    { id: 'store_id', nombre: t.comun.tienda, valor: (g) => cats.tienda(g.store_id), grupo: (g) => cats.tienda(g.store_id) },
-  ]
+  const opcionesTipo = Object.entries(t.tipos).map(([valor, texto]) => ({ valor, texto }))
   const masPaginas = async (cursor: string) => {
     try { const p = await pedir('get', '/api/v1/expenses', { consulta: { ...filtro, limit: 50, cursor } }); setMas((m) => ({ filas: [...m.filas, ...p.items], cursor: p.next_cursor })) }
     catch (e) { avisar({ texto: mensajeDe(e), rol: 'error' }) }
+  }
+  const tituloGasto = (g: Gasto) => <span className="flex justify-between gap-2"><span>{g.description || cats.categoria(g.category_id)}{g.kind === 'upcoming' && <span className="text-caption text-role-warning"> · {t.p02.venidero}</span>}</span><span className="tabular-nums">{dinero(g.amount_cents, 'gasto')}</span></span>
+  const editarVarias: EditarVarias<Gasto> = {
+    propiedades: [{ id: 'category_id', nombre: t.comun.categoria, tipo: 'opcion', opciones: opcionesCat }, { id: 'kind', nombre: t.comun.tipo, tipo: 'opcion', opciones: opcionesTipo }],
+    vistaPrevia: async (sel, prop, valor) => {
+      const cambian = sel.filter((g) => (prop === 'kind' ? g.kind : String(g.category_id)) !== valor)
+      const parte = cambian.reduce((a, g) => a + (g.household_share_cents ?? 0), 0)
+      return [{ etiqueta: t.p02.cambian, antes: '0', despues: String(cambian.length) }, { etiqueta: prop === 'kind' ? t.p02.parteTipo : t.p02.parteCategoria, antes: dinero(0), despues: dinero(parte) }]
+    },
+    guardar: async (sel, prop, valor) => {
+      try { for (const g of sel) await pedir('patch', '/api/v1/expenses/{expense_id}', { ruta: { expense_id: g.id }, cuerpo: prop === 'kind' ? { kind: valor as Gasto['kind'] } : { category_id: Number(valor) } }) }
+      finally { recargarTodo() }
+    },
   }
   return (
     <ConDatos consulta={lista}>{(d) => {
@@ -138,24 +164,76 @@ function Lista({ filtro, soloCalendario, conFiltros, quitar, periodo }: { filtro
       const vacio = conFiltros
         ? <Vacio texto={t.p02.sinCoincidencias} accion={<Boton onClick={quitar}>{t.p02.quitarFiltros}</Boton>} />
         : <Vacio texto={t.p02.vacio(mes(periodo))} accion={<Boton variante="primario" onClick={() => abrirRegistro('gasto')}>{t.p02.registrar}</Boton>} />
+      const sumas = cubre && grupos.datos?.groups ? sumasDeGrupos(grupos.datos.groups) : sumasLocales(filas, soloCalendario ? (g) => g.expense_date : (g) => String(g.category_id))
+      const totales = tot.datos && filas.length > 0 && (
+        <dl aria-label={t.p02.totales} className="grid grid-cols-2 gap-2 rounded-lg bg-surface-card p-3 text-small desktop:grid-cols-4">
+          {[[t.p02.numero, String(tot.datos.expense_count)], [t.p02.sumaMontos, dinero(tot.datos.amount_cents)], [t.p02.parteHogar, dinero(tot.datos.household_share_cents)], [t.p02.parteKaren, dinero(tot.datos.external_share_cents)]].map(([k, v]) => (
+            <div key={k} className="flex flex-col"><dt className="text-text-secondary">{k}</dt><dd className="font-semibold tabular-nums text-text-default">{v}</dd></div>))}
+        </dl>
+      )
+      const masBoton = cursor && <Boton className="self-center" onClick={() => masPaginas(cursor)}>{t.p02.mostrarMas}</Boton>
+      if (soloCalendario) return <div className="flex flex-col gap-3">{totales}<Calendario filas={filas} sumas={sumas} titulo={tituloGasto} vacio={vacio} />{masBoton}</div>
+      // N-043: columnas por categoría con su total (parte del hogar) y % en la cabecera; orden descendente por monto.
+      const etiquetaCat = (id: number) => { const s = sumas.get(String(id)); return t.p02.columna(cats.categoria(id), dinero(s?.total ?? 0), pctDeBp(s?.bp ?? 0)) }
+      const ordenadas = [...cats.categorias].sort((a, b) => (sumas.get(String(b.id))?.total ?? 0) - (sumas.get(String(a.id))?.total ?? 0))
+      const porEtiqueta = new Map(ordenadas.map((c) => [etiquetaCat(c.id), c.id]))
+      const propiedades: Propiedad<Gasto>[] = [
+        { id: 'description', nombre: t.comun.descripcion, valor: (g) => g.description ?? '', editar: { tipo: 'texto', textoInicial: (g) => g.description ?? '', guardar: (g, v) => parchar(g, { description: v || null }) } },
+        { id: 'ticket', nombre: t.p02.ticket, valor: (g) => (g.has_attachment ? t.comun.si : t.comun.no), pintar: (g) => <Ticket g={g} foto={fotos.get(g.id)} /> },
+        { id: 'expense_date', nombre: t.comun.fecha, valor: (g) => g.expense_date, pintar: (g) => fecha(g.expense_date), editar: { tipo: 'fecha', textoInicial: (g) => g.expense_date, guardar: (g, v) => parchar(g, { expense_date: v }) } },
+        { id: 'category_id', nombre: t.comun.categoria, valor: (g) => cats.categoria(g.category_id), grupo: (g) => etiquetaCat(g.category_id), editar: { tipo: 'opcion', opciones: opcionesCat, textoInicial: (g) => String(g.category_id), guardar: (g, v) => parchar(g, { category_id: Number(v) }) } },
+        { id: 'amount_cents', nombre: t.comun.monto, valor: (g) => g.amount_cents, pintar: (g) => dinero(g.amount_cents), alinear: 'derecha',
+          editar: { tipo: 'dinero', textoInicial: (g) => centavosATexto(g.amount_cents),
+            vistaPrevia: async (g, v) => { const c = aCentavos(v); if (c == null || c <= 0) throw new Error(textos.registro.montoInvalido); return [{ etiqueta: t.comun.monto, antes: dinero(g.amount_cents), despues: dinero(c) }] },
+            guardar: (g, v) => parchar(g, { amount_cents: aCentavos(v)! }) } },
+        { id: 'person_id', nombre: t.comun.persona, valor: (g) => cats.persona(g.person_id), grupo: (g) => cats.persona(g.person_id) },
+        { id: 'reparto', nombre: t.comun.reparto, valor: (g) => g.household_share_cents ?? 0, alinear: 'derecha', pintar: (g) => `${t.comun.hogar} ${dinero(g.household_share_cents ?? 0)} · ${t.comun.karen} ${dinero(g.external_share_cents ?? 0)}` },
+        { id: 'kind', nombre: t.comun.tipo, valor: (g) => t.tipos[g.kind], grupo: (g) => t.tipos[g.kind], editar: { tipo: 'opcion', opciones: opcionesTipo, textoInicial: (g) => g.kind, guardar: (g, v) => parchar(g, { kind: v as Gasto['kind'] }) } },
+        { id: 'payment_method', nombre: t.comun.formaPago, valor: (g) => textos.registro.formas[g.payment_method], grupo: (g) => textos.registro.formas[g.payment_method] },
+        { id: 'store_id', nombre: t.comun.tienda, valor: (g) => cats.tienda(g.store_id), grupo: (g) => cats.tienda(g.store_id) },
+      ]
       return (
         <div className="flex flex-col gap-3">
-          {tot.datos && filas.length > 0 && (
-            <dl aria-label={t.p02.totales} className="grid grid-cols-2 gap-2 rounded-lg bg-surface-card p-3 text-small desktop:grid-cols-4">
-              {[[t.p02.numero, String(tot.datos.expense_count)], [t.p02.sumaMontos, dinero(tot.datos.amount_cents)], [t.p02.parteHogar, dinero(tot.datos.household_share_cents)], [t.p02.parteKaren, dinero(tot.datos.external_share_cents)]].map(([k, v]) => (
-                <div key={k} className="flex flex-col"><dt className="text-text-secondary">{k}</dt><dd className="font-semibold tabular-nums text-text-default">{v}</dd></div>))}
-            </dl>
-          )}
+          {totales}
           <VistaBD def={{
-            clave: soloCalendario ? 'P-02-calendario' : 'P-02-gastos', filas, idFila: (g) => g.id, propiedades,
-            vistas: soloCalendario ? ['calendario'] : ['tabla', 'tablero', 'calendario', 'galeria'], fecha: (g) => g.expense_date,
-            columnasTablero: { propiedad: 'category_id', columnas: cats.categorias.map((c) => c.name), moverA: (g, col) => { const c = cats.categorias.find((x) => x.name === col); return c ? parchar(g, { category_id: c.id }) : Promise.resolve() } },
-            titulo: (g) => <span className="flex justify-between gap-2"><span>{g.description || cats.categoria(g.category_id)}{g.kind === 'upcoming' && <span className="text-caption text-role-warning"> · {t.p02.venidero}</span>}</span><span className="tabular-nums">{dinero(g.amount_cents, 'gasto')}</span></span>,
-            alAbrir: (g) => navegar(rutaDe('P-04', { id: g.id })), vacio,
+            clave: 'P-02-gastos', filas, idFila: (g) => g.id, propiedades, vistas: ['tabla', 'tablero', 'calendario', 'galeria'], fecha: (g) => g.expense_date,
+            columnasTablero: { propiedad: 'category_id', columnas: ordenadas.map((c) => etiquetaCat(c.id)), moverA: (g, col) => { const id = porEtiqueta.get(col); return id ? parchar(g, { category_id: id }) : Promise.resolve() } },
+            titulo: tituloGasto, alAbrir: (g) => navegar(rutaDe('P-04', { id: g.id })), vacio, editarVarias,
           }} />
-          {cursor && <Boton className="self-center" onClick={() => masPaginas(cursor)}>{t.p02.mostrarMas}</Boton>}
+          {masBoton}
         </div>
       )
     }}</ConDatos>
+  )
+}
+
+/** Celda «Ticket»: en la tabla, «Sí» o «No» sin descargar nada; en la galería (N-046), la miniatura con downloadAttachment.
+ *  PROVISIONAL: DefVista no tiene portada de tarjeta, así que se distingue por estar o no dentro de la tabla (solicitud a frontend-base). */
+function Ticket({ g, foto }: { g: Gasto; foto?: number }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const [enTabla, setEnTabla] = useState(true)
+  useLayoutEffect(() => setEnTabla(!!ref.current?.closest('table')), [])
+  if (enTabla) return <span ref={ref}>{g.has_attachment ? t.comun.si : t.comun.no}</span>
+  if (!g.has_attachment) return <span className="text-caption">{t.p02.sinTicket}</span>
+  if (!foto) return <span>{t.p02.galeriaSinFoto}</span>
+  return <img src={armarUrl('/api/v1/attachments/{attachment_id}/file', { attachment_id: foto })} loading="lazy" alt={t.p02.fotoDe(g.description || g.expense_date)}
+    className="mt-1 block h-40 w-full rounded-md border border-border-divider bg-surface-hover object-cover" />
+}
+
+/** N-045: por día, la suma de la parte del hogar (primer renglón del día) y la lista de gastos; los venideros con su marca. */
+type FilaCal = { tipo: 'total'; dia: string; suma: Suma } | { tipo: 'gasto'; g: Gasto }
+function Calendario({ filas, sumas, titulo, vacio }: { filas: Gasto[]; sumas: Map<string, Suma>; titulo: (g: Gasto) => React.ReactNode; vacio: React.ReactNode }) {
+  const dias = [...new Set(filas.map((g) => g.expense_date))].sort()
+  const filasCal: FilaCal[] = [...dias.map((dia): FilaCal => ({ tipo: 'total', dia, suma: sumas.get(dia) ?? { total: 0, count: 0, bp: 0 } })), ...filas.map((g): FilaCal => ({ tipo: 'gasto', g }))]
+  return (
+    <VistaBD def={{
+      clave: 'P-02-calendario', filas: filasCal, idFila: (f) => (f.tipo === 'total' ? `dia-${f.dia}` : f.g.id), vistas: ['calendario'], fecha: (f) => (f.tipo === 'total' ? f.dia : f.g.expense_date),
+      propiedades: [
+        { id: 'description', nombre: t.comun.descripcion, valor: (f) => (f.tipo === 'total' ? '' : f.g.description ?? '') },
+        { id: 'amount_cents', nombre: t.comun.monto, valor: (f) => (f.tipo === 'total' ? f.suma.total : f.g.amount_cents), alinear: 'derecha' },
+      ],
+      titulo: (f) => (f.tipo === 'total' ? <span className="font-semibold tabular-nums">{t.p02.totalDia(dinero(f.suma.total), f.suma.count)}</span> : titulo(f.g)),
+      alAbrir: (f) => navegar(f.tipo === 'total' ? conConsulta({ sub: 'detalle' }) : rutaDe('P-04', { id: f.g.id })), vacio,
+    }} />
   )
 }

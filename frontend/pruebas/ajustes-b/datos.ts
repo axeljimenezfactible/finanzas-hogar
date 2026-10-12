@@ -47,6 +47,7 @@ export const RESPUESTAS: Record<string, unknown> = {
   'GET /api/v1/inventory-items': { items: [
     { id: 1, product_id: 1, tracking_mode: 'consumption_rate', quantity_milli: 2838000, counted_date: '2026-09-12', rate_quantity_milli: 946000, rate_period_days: 21, reorder_level_milli: 946000, status: 'sufficient', estimated_quantity_milli: 1486571, weekly_consumption_milli: 315333, days_left: 32, ...sello },
     { id: 2, product_id: 2, tracking_mode: 'stock', quantity_milli: 0, status: 'out', ...sello },
+    { id: 3, product_id: 3, tracking_mode: 'stock', quantity_milli: 1500000, reorder_level_milli: 500000, status: 'sufficient', ...sello },
   ], next_cursor: null },
   'GET /api/v1/products': { items: [{ id: 1, name: 'Aceite de cocina', base_unit: 'ml', is_active: true, ...sello }, { id: 2, name: 'Arroz', base_unit: 'g', is_active: true, ...sello }, { id: 3, name: 'Frijol', base_unit: 'g', is_active: true, ...sello }], next_cursor: null },
 } satisfies RespuestasGet
@@ -68,7 +69,18 @@ function respuestaEscritura(metodo: string, ruta: string, cuerpo: unknown): [num
     case 'PATCH /api/v1/settings/alerts': return [200, conCambios(leer('/api/v1/settings/alerts'), cuerpo) satisfies Respuesta<'/api/v1/settings/alerts', 'patch'>]
     case 'PATCH /api/v1/inventory-items/{id}': {
       const actual = (leer('/api/v1/inventory-items').items as Esquemas['InventoryItem'][]).find((x) => x.id === Number(ruta.split('/')[4]))!
-      return [200, { ...actual, tracking_mode: (cuerpo as Cuerpo<'/api/v1/inventory-items/{inventory_item_id}', 'patch'>).tracking_mode ?? actual.tracking_mode } satisfies Respuesta<'/api/v1/inventory-items/{inventory_item_id}', 'patch'>]
+      const c = cuerpo as Cuerpo<'/api/v1/inventory-items/{inventory_item_id}', 'patch'>
+      return [200, { ...actual, tracking_mode: c.tracking_mode ?? actual.tracking_mode, ...(typeof c.reorder_level_milli === 'number' ? { reorder_level_milli: c.reorder_level_milli } : {}) } satisfies Respuesta<'/api/v1/inventory-items/{inventory_item_id}', 'patch'>]
+    }
+    case 'PATCH /api/v1/notifications/{id}': {
+      const actual = (leer('/api/v1/notifications').items as Esquemas['Notification'][]).find((x) => x.id === Number(ruta.split('/')[4]))!
+      const c = cuerpo as Cuerpo<'/api/v1/notifications/{notification_id}', 'patch'>
+      return [200, { ...actual, is_enabled: c.is_enabled ?? actual.is_enabled } satisfies Respuesta<'/api/v1/notifications/{notification_id}', 'patch'>]
+    }
+    case 'PATCH /api/v1/savings-goals/{id}': {
+      const actual = (leer('/api/v1/savings-goals').items as Esquemas['SavingsGoal'][]).find((x) => x.id === Number(ruta.split('/')[4]))!
+      const c = cuerpo as Cuerpo<'/api/v1/savings-goals/{savings_goal_id}', 'patch'>
+      return [200, { ...actual, is_active: c.is_active ?? actual.is_active } satisfies Respuesta<'/api/v1/savings-goals/{savings_goal_id}', 'patch'>]
     }
     case 'PATCH /api/v1/ai/providers/local_model': {
       const actual = leer('/api/v1/ai/providers').providers.find((x) => x.provider === 'local_model')!

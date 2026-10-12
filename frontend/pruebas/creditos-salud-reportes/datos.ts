@@ -13,7 +13,7 @@ const pagina = <T,>(items: T[]) => ({ items, next_cursor: null })
 const FECHAS = ['2026-10-30', '2026-11-15', '2026-11-30', '2026-12-15']
 export const PAGOS: Esquemas['ScheduledPayment'][] = FECHAS.map((due_date, i) => ({ id: 101 + i, credit_purchase_id: 1, credit_id: 1, seq: i + 1, due_date, amount_cents: 97375, principal_cents: 77363 + (i === 3 ? 1 : 0), interest_cents: 20012 - (i === 3 ? 1 : 0), status: 'pending', balance_after_cents: 97375 * (3 - i), ...base,
   shares: [{ person_id: 1, amount_cents: 59882, paid_cents: 0, status: 'pending' }, { person_id: 3, amount_cents: 37493, paid_cents: 0, status: 'pending' }] }))
-const KUESKI: Respuesta<'/api/v1/credits/{credit_id}', 'get'> = { id: 1, name: 'Kueski Pay', kind: 'revolving_line', lender: 'Kueski', holder_person_id: 1, credit_limit_cents: 1200000, payment_frequency: 'fortnightly', availability_reading: 'B', availability_confirmed: false, is_active: true, live_debt_cents: 389500, available_cents: 810500, next_payment_date: '2026-10-30', next_payment_cents: 97375, live_purchase_count: 1, ...base }
+export const KUESKI: Respuesta<'/api/v1/credits/{credit_id}', 'get'> = { id: 1, name: 'Kueski Pay', kind: 'revolving_line', lender: 'Kueski', holder_person_id: 1, credit_limit_cents: 1200000, payment_frequency: 'fortnightly', availability_reading: 'B', availability_confirmed: false, is_active: true, live_debt_cents: 389500, available_cents: 810500, next_payment_date: '2026-10-30', next_payment_cents: 97375, live_purchase_count: 1, ...base }
 const TARJETA: Respuesta<'/api/v1/credits/{credit_id}', 'get'> = { id: 2, name: 'Tarjeta Oro', kind: 'bank_card', lender: 'Banco', holder_person_id: 1, credit_limit_cents: 3000000, payment_frequency: 'monthly', availability_reading: 'A', availability_confirmed: true, is_active: true, statement_day: 5, payment_due_day: 25, annual_rate_pct: '45.5', live_debt_cents: 120000, available_cents: 2880000, live_purchase_count: 0, missing_terms: ['min_payment_pct_bp'], ...base }
 export const COMPRA: Respuesta<'/api/v1/credit-purchases/{credit_purchase_id}', 'get'> = { id: 1, credit_id: 1, kind: 'installment_plan', description: 'Despensa Walmart', purchase_date: '2026-10-15', principal_cents: 309450, interest_cents: 80050, total_cents: 389500, term_count: 4, payment_frequency: 'fortnightly', first_payment_date: '2026-10-30', interest_source: 'quoted', interest_includes_vat: true, status: 'active', payments_made: 0, payments_total: 4, balance_cents: 389500, ...base,
   shares: [{ id: 1, credit_purchase_id: 1, person_id: 1, principal_cents: 190298, interest_cents: 49230, total_cents: 239528, fortnight_payment_cents: 59882, ...base }, { id: 2, credit_purchase_id: 1, person_id: 3, principal_cents: 119152, interest_cents: 30820, total_cents: 149972, fortnight_payment_cents: 37493, ...base }] }
@@ -32,6 +32,20 @@ const mensual = (month: string, conPdf: boolean): Respuesta<'/api/v1/monthly-rep
   external_participation: [{ person_id: 3, month, accrued_groceries_cents: 149972, purchases: [], payment_shares: [{ scheduled_payment_id: 101, due_date: '2026-10-30', amount_cents: 37493, status: 'pending' }], live_debt_cents: 149972 }],
   ...(conPdf ? { pdf: REPORTES[0] } : {}) })
 
+/** Eventos del calendario (C1 listCalendarEvents) de las dos líneas: pagos de Kueski con sus partes, la promoción Walmart y un corte de la tarjeta. */
+const EVENTOS: Esquemas['CalendarEvent'][] = [
+  { event_type: 'promotion', date: '2026-10-01', end_date: '2026-10-31', title: 'Promoción: Walmart a 4 pagos', credit_id: 1, ref_table: 'promotion', ref_id: 5 },
+  ...PAGOS.map((p): Esquemas['CalendarEvent'] => ({ event_type: 'credit_payment', date: p.due_date, title: 'Pago de Kueski Pay', amount_cents: p.amount_cents, household_share_cents: 59882, external_share_cents: 37493, status: 'pending', credit_id: 1, ref_table: 'scheduled_payment', ref_id: p.id })),
+  { event_type: 'card_statement', date: '2026-11-05', title: 'Corte de Tarjeta Oro', amount_cents: 120000, credit_id: 2, ref_table: 'credit_statement', ref_id: 7 },
+]
+/** Filtra EVENTOS como el servidor: period `desde..hasta`, credit_id y event_type separados por coma; orden por fecha. */
+function eventosDe(q: URLSearchParams) {
+  const [desde, hasta] = (q.get('period') ?? '').split('..')
+  const tipos = (q.get('event_type') ?? '').split(',').filter(Boolean), lineas = (q.get('credit_id') ?? '').split(',').filter(Boolean).map(Number)
+  return EVENTOS.filter((e) => (!tipos.length || tipos.includes(e.event_type)) && (!lineas.length || lineas.includes(e.credit_id ?? 0)) && (!desde || ((e.end_date ?? e.date) >= desde && e.date <= hasta)))
+    .sort((a, b) => a.date.localeCompare(b.date))
+}
+
 export interface Registro { metodo: string; ruta: string; cuerpo: unknown; clave?: string }
 /** Instala las rutas del área; devuelve las escrituras recibidas para revisarlas en la prueba. */
 export async function instalarArea(ctx: BrowserContext) {
@@ -43,6 +57,7 @@ export async function instalarArea(ctx: BrowserContext) {
     switch (r) {
       case 'GET /api/v1/credits': return json(r, pagina([KUESKI, TARJETA]))
       case 'GET /api/v1/credits/1': return json(r, KUESKI)
+      case 'GET /api/v1/calendar/events': return json(r, pagina(eventosDe(q)))
       case 'GET /api/v1/credits/2': return json(r, TARJETA)
       case 'GET /api/v1/credits/totals': return json(r, mensual('2026-10', false).credits)
       case 'GET /api/v1/credits/debt-trend': return json(r, { months: ['2026-10', '2026-11', '2026-12'].map((month, i) => ({ month, live_debt_cents: 389500 - i * 194750, credits: [{ credit_id: 1, live_debt_cents: 389500 - i * 194750 }], interest_paid_cents: 40024, interest_pending_cents: 40026 - i * 20013 })) })
