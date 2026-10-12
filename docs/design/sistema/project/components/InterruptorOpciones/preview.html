@@ -1,0 +1,45 @@
+<!-- @dsCard group="Formularios" height=320 subtitle="Interruptor encendido y apagado; lista de opciones con vista previa Antes → Después" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Interruptor y lista de opciones</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.panel{max-width:var(--layout-reading-max-width)}
+.fila{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-4);padding:var(--space-3) 0;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.textos{flex:1;min-width:200px}
+.textos p,.textos label{display:block;margin:0}
+.desc{color:var(--ui-text-secondary)}
+.switch{display:inline-flex;align-items:center;justify-content:center;flex:none;width:var(--size-touch-min);height:var(--size-touch-min);padding:0;border:0;border-radius:var(--radius-sm);background:none;cursor:pointer}
+.pista{position:relative;width:var(--size-switch-width);height:var(--size-switch-height);border-radius:var(--radius-full);background:var(--ui-border-control);transition:background-color var(--duration-fast) var(--ease-standard)}
+.perilla{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:var(--radius-full);background:var(--ui-surface-page);transition:transform var(--duration-fast) var(--ease-standard)}
+.switch[aria-checked="true"] .pista{background:var(--ui-action-primary-bg)}
+.switch[aria-checked="true"] .perilla{background:var(--ui-text-on-primary);transform:translateX(16px)}
+.campo{height:var(--size-control-coarse);min-width:200px;padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field);color:var(--ui-text-default);font-family:inherit}
+@media (pointer:fine) and (not (any-pointer:coarse)){.campo{height:var(--size-control-fine)}}
+.campo:hover{border-color:var(--ui-border-control-hover)}
+.previa{display:flex;flex-basis:100%;flex-wrap:wrap;align-items:center;gap:var(--space-1) var(--space-2);margin:0;padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);background:var(--ui-surface-card)}
+.previa .antes{color:var(--ui-text-secondary)}
+.previa .icon{color:var(--ui-icon-default)}
+.ayuda{flex-basis:100%;margin:0;color:var(--ui-text-secondary)}
+</style>
+</head>
+<body>
+<div class="panel">
+<div class="fila"><div class="textos"><p class="body" id="t1">Gasto fijo activo</p><p class="desc small">Internet de la casa · $689.00 al mes</p></div><button class="switch" type="button" role="switch" aria-checked="true" aria-labelledby="t1"><span class="pista"><span class="perilla"></span></span></button></div>
+<div class="fila"><div class="textos"><label class="body" for="periodo">Periodicidad</label><p class="desc small">Colegiatura · $850.00 por pago</p></div><select class="campo body" id="periodo" aria-describedby="previa ayuda"><option>Mensual</option><option selected>Quincenal</option><option>Bimestral</option></select>
+<p class="previa small" id="previa" role="status"><span class="antes">Total del mes</span><span class="money antes">$9,412.30</span><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="m12 5 7 7-7 7"/></svg><span class="money">$10,262.30</span></p><p class="ayuda caption" id="ayuda">Enter guarda · Esc vuelve a la opción guardada</p></div>
+<div class="fila"><div class="textos"><p class="body" id="t3">Meta activa</p><p class="desc small">Fondo de emergencia · $600.00 al mes</p></div><button class="switch" type="button" role="switch" aria-checked="false" aria-labelledby="t3"><span class="pista"><span class="perilla"></span></span></button></div>
+</div>
+</body>
+</html>

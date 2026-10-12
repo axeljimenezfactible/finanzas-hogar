@@ -1,0 +1,9 @@
+Fila de Ajustes con interruptor o lista de opciones que, cuando el cambio mueve cifras, muestra debajo un bloque «Antes → Después» antes de guardar.
+
+- **Cuándo:** interruptores y listas de opciones que guardan al elegir; con vista previa en línea cuando el cambio tiene efecto numérico (periodicidad, persona, reparto, categoría o «activo» de un gasto fijo; «Activa» de una meta de ahorro).
+- **Provee quien lo usa:** nombre y descripción de la fila, el estado (`role="switch"` con `aria-checked`, o el `<select>` con su opción), y las cifras de antes y después ya calculadas.
+- **Hacer:** pista de `var(--size-switch-width)` × `var(--size-switch-height)` dentro de `var(--size-touch-min)`; encendido `var(--ui-action-primary-bg)` con perilla `var(--ui-text-on-primary)`; apagado `var(--ui-border-control)` con perilla `var(--ui-surface-page)`; la posición y el texto dicen el estado. La vista previa va en `role="status"`; `Enter` o salir guarda y `Esc` vuelve a la opción guardada; si no se puede calcular: «No se pudo calcular el efecto · Reintentar» y no guarda.
+- **No hacer:** depender solo del color para encendido o apagado; guardar mientras la vista previa no se ve.
+- **Supuesto provisional (P3-huecos-componentes, punto 3):** perilla de 16 px con 2 px de aire (20 − 2 × 2) y desplazamiento de 16 px; DESIGN §7.3 fija solo la pista.
+- **Supuesto provisional (P3-huecos-componentes, punto 2):** aspecto del bloque «Antes → Después»: fondo `var(--ui-surface-card)`, `var(--radius-sm)`, relleno `var(--space-2)` × `var(--space-3)`, texto `small`, «antes» en `var(--ui-text-secondary)`, flecha `arrow-right` en `var(--ui-icon-default)` y `role="status"`; DESIGN no lo fija.
+- **Tokens:** `var(--ui-action-primary-bg)`, `var(--ui-text-on-primary)`, `var(--ui-border-control)`, `var(--ui-surface-page)`, `var(--ui-surface-field)`, `var(--ui-surface-card)`, `var(--ui-text-secondary)`, `var(--ui-border-divider)`.

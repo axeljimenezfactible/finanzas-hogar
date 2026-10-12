@@ -1,0 +1,38 @@
+<!-- @dsCard group="Datos" height=190 subtitle="Cifra neutra, cifra de rol y barra de avance en advertencia" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Tarjeta de métrica</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.fila{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);max-width:760px}
+.tarjeta{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);background:var(--ui-surface-card);border:var(--border-width-default) solid transparent;border-radius:var(--radius-md);box-shadow:var(--shadow-0);color:var(--ui-text-default);text-decoration:none;transition:border-color var(--duration-fast) var(--ease-standard)}
+.tarjeta:hover{border-color:var(--ui-border-control-hover)}
+.tarjeta:active{border-color:var(--ui-border-selected)}
+.etiqueta{margin:0;color:var(--ui-text-secondary)}
+.cifra,.dato{display:flex;align-items:center;gap:var(--space-1);margin:0}
+.gasto{color:var(--ui-role-expense)}
+.ingreso{color:var(--ui-role-income)}
+.aviso{color:var(--ui-role-warning)}
+.pista{height:var(--size-meter-height);border-radius:var(--radius-full);background:var(--ui-viz-track);overflow:hidden}
+.llenado{height:100%;border-radius:var(--radius-full);background:var(--ui-role-warning)}
+</style>
+</head>
+<body>
+<div class="fila">
+<a class="tarjeta" href="#" aria-label="Gasto del mes, $6,418.25, 9 % más que septiembre"><p class="etiqueta small">Gasto del mes</p><p class="cifra title-2 money">$6,418.25</p><p class="dato small gasto"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>9 % más que septiembre</p></a>
+<a class="tarjeta" href="#" aria-label="Ingresos de noviembre, más $12,305.00, 2 depósitos"><p class="etiqueta small">Ingresos de noviembre</p><p class="cifra title-2 money ingreso"><svg class="icon i24" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17"/> <path d="M17 17H7V7"/></svg>+$12,305.00</p><p class="dato small mute">2 depósitos</p></a>
+<a class="tarjeta" href="#" aria-label="Despensa, $3,684.20 de $4,500.00, 82 % del plan"><p class="etiqueta small">Despensa</p><p class="cifra title-2 money">$3,684.20</p><div class="pista" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="82" aria-valuetext="82 % del plan"><div class="llenado" style="width:82%"></div></div><p class="dato small aviso"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/> <path d="M12 9v4"/> <path d="M12 17h.01"/></svg>82 % usado de $4,500.00</p></a>
+</div>
+</body>
+</html>

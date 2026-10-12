@@ -1,0 +1,59 @@
+<!-- @dsCard group="Hojas y diálogos" height=380 subtitle="Vista previa de un registro: cerrar, título editable, propiedades y cuerpo" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Vista previa de registro</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);flex:none;height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:none;color:var(--ui-text-default);font-family:inherit;font-weight:var(--font-weight-medium);cursor:pointer;transition:background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn{height:var(--size-control-fine)}}
+.primario{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.primario:hover{background:var(--ui-action-primary-bg-hover)}
+.primario:active{background:var(--ui-action-primary-bg-pressed)}
+.texto:hover{background:var(--ui-surface-hover)}
+.texto:active{background:var(--ui-surface-pressed)}
+.btn-icono{width:var(--size-touch-min);padding:0;color:var(--ui-icon-default)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn-icono{width:var(--size-control-fine)}}
+.btn-icono:hover{background:var(--ui-surface-hover)}
+.panel{max-width:var(--layout-preview-width-desktop);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-1)}
+.enc{display:flex;justify-content:flex-end;padding:var(--space-2) var(--space-2) 0}
+.cont{padding:0 var(--space-4) var(--space-4)}
+.titulo{display:block;width:100%;box-sizing:border-box;margin:0;padding:0 var(--space-1);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:none;color:var(--ui-text-default);font-family:inherit}
+.titulo.title-2{font-weight:var(--font-weight-semibold)}
+.titulo:hover{border-color:var(--ui-border-control-hover)}
+.props{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:var(--space-2) var(--space-4);margin:var(--space-4) 0 0}
+.props dt{color:var(--ui-text-secondary)}
+.props dd{margin:0}
+.gasto{display:inline-flex;align-items:center;gap:var(--space-1);color:var(--ui-role-expense)}
+.mas{margin-top:var(--space-2);margin-left:calc(-1 * var(--space-3))}
+.nota{margin:var(--space-4) 0 0;padding-top:var(--space-4);border-top:var(--border-width-default) solid var(--ui-border-divider)}
+</style>
+</head>
+<body>
+<aside class="panel" aria-label="Vista previa del gasto">
+<div class="enc"><button class="btn btn-icono" type="button" aria-label="Cerrar vista previa"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></button></div>
+<div class="cont">
+<label class="sr" for="titulo">Título del gasto</label>
+<input class="titulo title-2" id="titulo" value="Súper del viernes">
+<dl class="props small">
+<dt>Monto</dt><dd><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$318.45</span></dd>
+<dt>Fecha</dt><dd class="money">6-nov-2026</dd>
+<dt>Tienda</dt><dd>Walmart</dd>
+<dt>Persona</dt><dd>Ximena</dd>
+</dl>
+<button class="btn texto small mas" type="button" aria-expanded="false">Mostrar 2 más</button>
+<p class="nota body">Compra de la semana; incluye artículos de limpieza.</p>
+</div>
+</aside>
+</body>
+</html>

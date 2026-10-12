@@ -1,0 +1,50 @@
+<!-- @dsCard group="Vistas de base de datos" height=230 subtitle="Encabezado, filas y fila seleccionada" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Tabla</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.vista{max-width:760px;overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{height:var(--size-control-coarse);padding:0 var(--space-2);border-bottom:var(--border-width-default) solid var(--ui-border-divider);white-space:nowrap}
+@media (pointer:fine) and (not (any-pointer:coarse)){th,td{height:var(--size-control-fine)}}
+th{text-align:left;font-weight:var(--font-weight-medium);color:var(--ui-text-secondary)}
+th span,.cifra,.chip{display:inline-flex;align-items:center;gap:var(--space-1)}
+tbody tr:hover{background:var(--ui-surface-hover-subtle)}
+tr[aria-selected="true"]{background:var(--ui-surface-selected)}
+tr:focus-visible{outline-offset:-2px}
+.num{text-align:right}
+.sel{width:var(--size-touch-min)}
+input[type="checkbox"]{width:var(--size-checkbox);height:var(--size-checkbox);margin:0;accent-color:var(--ui-action-primary-bg)}
+.gasto{color:var(--ui-role-expense)}
+.chip{height:var(--size-chip-height);padding:0 var(--space-2);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-full);color:var(--ui-text-default)}
+.punto{width:var(--size-mark-category);height:var(--size-mark-category);border-radius:var(--radius-full)}
+.axel{background:var(--ui-person-axel)}
+.ximena{background:var(--ui-person-ximena)}
+.karen{background:var(--ui-person-karen)}
+</style>
+</head>
+<body>
+<div class="vista">
+<table class="small" role="grid" aria-label="Gastos de noviembre">
+<thead><tr><th class="sel" scope="col"><span class="sr">Seleccionar</span></th><th scope="col"><span><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17V7"/> <path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/> <path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg>Concepto</span></th><th scope="col" aria-sort="descending"><span><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v3"/> <path d="M16 2v3"/> <rect x="3" y="3" width="18" height="18" rx="2"/> <path d="M3 9h18"/></svg>Fecha</span></th><th scope="col"><span><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/> <path d="M16 3.128a4 4 0 0 1 0 7.744"/> <path d="M22 21v-2a4 4 0 0 0-3-3.87"/> <circle cx="9" cy="7" r="4"/></svg>Persona</span></th><th class="num" scope="col">Monto</th></tr></thead>
+<tbody>
+<tr aria-selected="false"><td class="sel"><input type="checkbox" aria-label="Seleccionar Súper de la semana"></td><td>Súper de la semana</td><td class="money">12-nov-2026</td><td><span class="chip"><span class="punto ximena" aria-hidden="true"></span>Ximena</span></td><td class="num money"><span class="cifra gasto"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$1,846.30</span></td></tr>
+<tr aria-selected="true"><td class="sel"><input type="checkbox" checked aria-label="Seleccionar Gas del mes"></td><td>Gas del mes</td><td class="money">6-nov-2026</td><td><span class="chip"><span class="punto axel" aria-hidden="true"></span>Axel</span></td><td class="num money"><span class="cifra gasto"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$612.00</span></td></tr>
+<tr aria-selected="false"><td class="sel"><input type="checkbox" aria-label="Seleccionar Farmacia"></td><td>Farmacia</td><td class="money">4-nov-2026</td><td><span class="chip"><span class="punto karen" aria-hidden="true"></span>Karen</span></td><td class="num money"><span class="cifra gasto"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$238.90</span></td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

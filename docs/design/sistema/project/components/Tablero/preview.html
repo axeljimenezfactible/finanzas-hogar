@@ -1,0 +1,56 @@
+<!-- @dsCard group="Vistas de base de datos" height=300 subtitle="Columnas por categoría, tarjeta elegida y tarjeta en arrastre" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Tablero</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.tablero{display:flex;gap:var(--space-4);overflow-x:auto;align-items:flex-start}
+.columna{flex:none;width:var(--layout-board-column-width);display:flex;flex-direction:column;gap:var(--space-2)}
+.cabeza{display:flex;justify-content:space-between;gap:var(--space-2);margin:0;padding:0 var(--space-1);font-weight:var(--font-weight-medium)}
+.cabeza span{color:var(--ui-text-secondary);font-weight:var(--font-weight-regular)}
+.lista{display:flex;flex-direction:column;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.tarjeta{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);background:var(--ui-surface-card);border:var(--border-width-default) solid transparent;border-radius:var(--radius-md);box-shadow:var(--shadow-0);cursor:pointer;transition:border-color var(--duration-fast) var(--ease-standard)}
+.tarjeta:hover{border-color:var(--ui-border-control-hover)}
+.tarjeta[aria-selected="true"]{background:var(--ui-surface-selected)}
+.tarjeta.arrastre{background:var(--ui-surface-raised);border-color:var(--ui-border-divider);box-shadow:var(--shadow-1)}
+.linea{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);margin:0}
+.titulo{font-weight:var(--font-weight-medium)}
+.fecha{color:var(--ui-text-secondary)}
+.gasto{display:inline-flex;align-items:center;gap:var(--space-1);color:var(--ui-role-expense)}
+.chip{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-chip-height);padding:0 var(--space-2);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-sm);color:var(--ui-text-default)}
+.cuadro{width:var(--size-mark-category);height:var(--size-mark-category)}
+.walmart{background:var(--ui-store-walmart)}
+.sams{background:var(--ui-store-sams-club)}
+.mercado{background:var(--ui-store-market)}
+.nuevo{display:inline-flex;align-items:center;gap:var(--space-1);align-self:flex-start;height:var(--size-control-coarse);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:none;color:var(--ui-text-secondary);font-family:inherit;cursor:pointer}
+.nuevo:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+</style>
+</head>
+<body>
+<div class="tablero small">
+<section class="columna" aria-labelledby="c1"><h3 class="cabeza small" id="c1">Despensa <span class="money">2 · $2,431.75</span></h3>
+<ul class="lista" role="listbox" aria-labelledby="c1" aria-multiselectable="true">
+<li class="tarjeta" role="option" aria-selected="false" tabindex="0"><p class="linea"><span class="titulo">Súper quincenal</span><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$1,286.40</span></p><p class="linea"><span class="chip"><span class="cuadro walmart" aria-hidden="true"></span>Walmart</span><span class="fecha money">12-nov-2026</span></p></li>
+<li class="tarjeta" role="option" aria-selected="false" tabindex="-1"><p class="linea"><span class="titulo">Compra de mayoreo</span><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$1,145.35</span></p><p class="linea"><span class="chip"><span class="cuadro sams" aria-hidden="true"></span>Sam's Club</span><span class="fecha money">7-nov-2026</span></p></li>
+</ul>
+<button class="nuevo" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="M12 5v14"/></svg>Nuevo</button></section>
+<section class="columna" aria-labelledby="c2"><h3 class="cabeza small" id="c2">Frutas y verduras <span class="money">2 · $444.60</span></h3>
+<ul class="lista" role="listbox" aria-labelledby="c2" aria-multiselectable="true">
+<li class="tarjeta" role="option" aria-selected="true" tabindex="-1"><p class="linea"><span class="titulo">Tianguis del sábado</span><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$348.60</span></p><p class="linea"><span class="chip"><span class="cuadro mercado" aria-hidden="true"></span>Mercado</span><span class="fecha money">14-nov-2026</span></p></li>
+<li class="tarjeta arrastre" role="option" aria-selected="false" tabindex="-1"><p class="linea"><span class="titulo">Tortillería</span><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$96.00</span></p><p class="linea"><span class="chip"><span class="cuadro mercado" aria-hidden="true"></span>Mercado</span><span class="fecha money">11-nov-2026</span></p></li>
+</ul>
+<button class="nuevo" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="M12 5v14"/></svg>Nuevo</button></section>
+</div>
+</body>
+</html>

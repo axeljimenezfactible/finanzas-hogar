@@ -1,0 +1,40 @@
+<!-- @dsCard group="Formularios" height=150 subtitle="Etiqueta, ayuda y error" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Campo de texto</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4) var(--space-6);max-width:760px}
+.grupo{display:flex;flex-direction:column;gap:var(--space-2)}
+.grupo label{font-weight:var(--font-weight-medium)}
+.campo{display:flex;align-items:center;gap:var(--space-1);height:var(--size-control-coarse);padding:0 var(--space-3);background:var(--ui-surface-field);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);transition:border-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.campo{height:var(--size-control-fine)}}
+.campo:hover{border-color:var(--ui-border-control-hover)}
+.campo:focus-within{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.campo input{flex:1;min-width:0;padding:0;border:0;background:none;color:var(--ui-text-default);font-family:inherit;outline:none}
+.campo input::placeholder{color:var(--ui-text-secondary)}
+.afijo{color:var(--ui-text-secondary)}
+.ayuda{margin:0;color:var(--ui-text-secondary)}
+.error .campo{border-color:var(--ui-border-error)}
+.msg{display:flex;align-items:center;gap:var(--space-1);margin:0;color:var(--ui-role-error)}
+</style>
+</head>
+<body>
+<form>
+<div class="grupo"><label class="small" for="monto">Monto</label><div class="campo"><span class="afijo body" aria-hidden="true">$</span><input class="body money" id="monto" inputmode="decimal" value="4,826.37" aria-describedby="monto-ayuda"></div><p class="ayuda caption" id="monto-ayuda">Con centavos; se guarda al salir del campo.</p></div>
+<div class="grupo"><label class="small" for="nota">Nota</label><div class="campo"><input class="body" id="nota" placeholder="Opcional"></div></div>
+<div class="grupo error"><label class="small" for="tasa">Tasa anual</label><div class="campo"><input class="body money" id="tasa" inputmode="decimal" value="" aria-invalid="true" aria-required="true" aria-describedby="tasa-error"><span class="afijo body" aria-hidden="true">%</span></div><p class="msg caption" id="tasa-error"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <line x1="12" x2="12" y1="8" y2="12"/> <line x1="12" x2="12.01" y1="16" y2="16"/></svg>Falta capturar la tasa de esta tarjeta</p></div>
+</form>
+</body>
+</html>

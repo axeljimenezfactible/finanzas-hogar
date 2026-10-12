@@ -1,0 +1,7 @@
+Gráfica en SVG con título, resumen de una frase, retícula horizontal, un solo eje Y, marcas con forma y trazo propios, etiquetas directas y leyenda.
+
+- **Cuándo:** líneas para el tiempo, barras horizontales para categorías, columnas para pocos meses, área apilada para devengado contra pagado, dona para un total de hasta 5 partes.
+- **Provee quien lo usa:** los datos en su orden fijo de series, el título y el periodo, la frase de resumen, los montos ya formateados y la tabla equivalente para «Ver como tabla».
+- **Hacer:** `<figure>` con `<figcaption>`; fondo `var(--ui-surface-card)`; retícula `var(--ui-viz-grid)` y base `var(--ui-viz-baseline)`; series `var(--ui-chart-1)` … `var(--ui-chart-8)` con marcador, trazo (`var(--viz-series-2-dash)` …) y patrón; marcadores de `var(--size-viz-marker)` con anillo de 2 px en `var(--ui-surface-card)`; texto en `var(--ui-text-default)` o `var(--ui-text-secondary)` con cifras tabulares; alto `var(--size-chart-height-compact)` en móvil y `var(--size-chart-height)` desde 768.
+- **No hacer:** texto en el color de la serie; doble eje; montos solo en la descripción emergente; animar la entrada; personas y tiendas en la misma gráfica.
+- **Tokens:** `var(--ui-chart-1)` a `var(--ui-chart-8)`, `var(--viz-series-1-dash)` a `var(--viz-series-8-dash)`, `var(--ui-viz-grid)`, `var(--ui-viz-baseline)`, `var(--ui-viz-other)`, `var(--size-viz-line)`, `var(--size-viz-marker)`.

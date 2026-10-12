@@ -1,0 +1,38 @@
+<!-- @dsCard group="Avisos" height=230 subtitle="Éxito con Deshacer, error sin cierre automático y guardado sin conexión" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Aviso breve</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.pila{display:flex;flex-direction:column;gap:var(--space-2);max-width:var(--layout-toast-max-width)}
+.aviso{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-1) var(--space-1) var(--space-3);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-2);color:var(--ui-text-default);animation:entra var(--duration-base) var(--ease-emphasized)}
+.texto{flex:1;margin:0}
+.exito{color:var(--ui-role-success)}
+.error{color:var(--ui-role-error)}
+.info{color:var(--ui-role-info)}
+.accion{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-touch-min);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:none;color:var(--ui-text-link);font-family:inherit;font-weight:var(--font-weight-medium);text-decoration:underline;cursor:pointer}
+.accion:hover{color:var(--ui-text-link-hover)}
+.cerrar{display:inline-flex;align-items:center;justify-content:center;flex:none;width:var(--size-touch-min);height:var(--size-touch-min);padding:0;border:0;border-radius:var(--radius-sm);background:none;color:var(--ui-icon-default);cursor:pointer}
+.cerrar:hover{background:var(--ui-surface-hover)}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="pila small">
+<div class="aviso" role="status"><span class="exito"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <path d="m16 9-5.5 5.5L8 12"/></svg></span><p class="texto">Guardado</p><button class="accion" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/> <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>Deshacer</button><button class="cerrar" type="button" aria-label="Cerrar aviso"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></button></div>
+<div class="aviso" role="alert"><span class="error"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <line x1="12" x2="12" y1="8" y2="12"/> <line x1="12" x2="12.01" y1="16" y2="16"/></svg></span><p class="texto">No se pudo guardar el gasto. Revisa la conexión e intenta de nuevo.</p><button class="accion" type="button">Reintentar</button><button class="cerrar" type="button" aria-label="Cerrar aviso"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></button></div>
+<div class="aviso" role="status"><span class="info"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <path d="M12 16v-4"/> <path d="M12 8h.01"/></svg></span><p class="texto">Gasto guardado en el teléfono · Se enviará al volver a la red de casa</p><button class="accion" type="button">Deshacer</button><button class="cerrar" type="button" aria-label="Cerrar aviso"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></button></div>
+</div>
+</body>
+</html>

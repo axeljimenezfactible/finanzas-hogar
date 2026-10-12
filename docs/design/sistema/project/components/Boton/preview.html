@@ -1,0 +1,45 @@
+<!-- @dsCard group="Acciones" height=150 subtitle="Primario, secundario, destructivo, deshabilitado y foco" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Botón</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.fila{display:flex;flex-wrap:wrap;gap:var(--space-6) var(--space-4);align-items:flex-start}
+.estado{display:flex;flex-direction:column;gap:var(--space-2)}
+.btn{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);font-family:inherit;font-weight:var(--font-weight-medium);cursor:pointer;transition:background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn{height:var(--size-control-fine)}}
+.primario{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.primario:hover{background:var(--ui-action-primary-bg-hover)}
+.primario:active{background:var(--ui-action-primary-bg-pressed)}
+.secundario{background:none;border-color:var(--ui-border-control);color:var(--ui-text-default)}
+.secundario:hover{background:var(--ui-surface-hover);border-color:var(--ui-border-control-hover)}
+.secundario:active{background:var(--ui-surface-pressed)}
+.destructivo{background:var(--ui-action-destructive-bg);color:var(--ui-text-on-destructive)}
+.destructivo:hover{background:var(--ui-action-destructive-bg-hover)}
+.destructivo:active{background:var(--ui-action-destructive-bg-pressed)}
+.btn[aria-disabled="true"]{background:var(--ui-surface-disabled);color:var(--ui-text-disabled);border:var(--border-width-default) dashed var(--ui-border-control);cursor:not-allowed}
+.btn.foco{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.nota{margin:0;max-width:200px}
+</style>
+</head>
+<body>
+<div class="fila">
+<div class="estado"><span class="caption mute">Primario</span><button class="btn primario body" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="M12 5v14"/></svg>Registrar gasto</button></div>
+<div class="estado"><span class="caption mute">Secundario</span><button class="btn secundario body" type="button">Cambiar semana</button></div>
+<div class="estado"><span class="caption mute">Destructivo</span><button class="btn destructivo body" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 11v6"/> <path d="M14 11v6"/> <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/> <path d="M3 6h18"/> <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Borrar gasto</button></div>
+<div class="estado"><span class="caption mute">Deshabilitado</span><button class="btn primario body" type="button" aria-disabled="true" aria-describedby="razon">Marcar pago</button><p class="caption mute nota" id="razon">Requiere conexión con el servidor de casa</p></div>
+<div class="estado"><span class="caption mute">Foco</span><button class="btn secundario body foco" type="button">Cancelar</button></div>
+</div>
+</body>
+</html>

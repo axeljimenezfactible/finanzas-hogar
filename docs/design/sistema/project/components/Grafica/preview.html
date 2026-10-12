@@ -1,0 +1,94 @@
+<!-- @dsCard group="Gráficas" height=560 subtitle="Líneas con marcador, trazo y etiqueta directa; orden fijo de las 8 series" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Gráfica</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+figure{max-width:760px;margin:0;padding:var(--space-4);background:var(--ui-surface-card);border-radius:var(--radius-md)}
+figcaption p,h4{margin:0}
+.titulo,h4{color:var(--ui-text-secondary);font-weight:var(--font-weight-regular)}
+.trazo{display:block;width:100%;max-width:600px;height:auto;margin-top:var(--space-3)}
+.defs{position:absolute;width:0;height:0}
+.grid{stroke:var(--ui-viz-grid);stroke-width:var(--border-width-default)}
+.base{stroke:var(--ui-viz-baseline);stroke-width:var(--border-width-default)}
+.eje{fill:var(--ui-text-secondary);font-variant-numeric:tabular-nums}
+.etq{fill:var(--ui-text-default);font-variant-numeric:tabular-nums}
+.l{fill:none;stroke-width:var(--size-viz-line);stroke-linecap:round;stroke-linejoin:round}
+.s1{stroke:var(--ui-chart-1);stroke-dasharray:var(--viz-series-1-dash)}
+.s2{stroke:var(--ui-chart-2);stroke-dasharray:var(--viz-series-2-dash)}
+.s3{stroke:var(--ui-chart-3);stroke-dasharray:var(--viz-series-3-dash)}
+.s4{stroke:var(--ui-chart-4);stroke-dasharray:var(--viz-series-4-dash)}
+.s5{stroke:var(--ui-chart-5);stroke-dasharray:var(--viz-series-5-dash)}
+.s6{stroke:var(--ui-chart-6);stroke-dasharray:var(--viz-series-6-dash)}
+.s7{stroke:var(--ui-chart-7);stroke-dasharray:var(--viz-series-7-dash)}
+.s8{stroke:var(--ui-chart-8);stroke-dasharray:var(--viz-series-8-dash)}
+.mk{stroke:var(--ui-surface-card);stroke-width:2px}
+.f1{fill:var(--ui-chart-1)}.f2{fill:var(--ui-chart-2)}.f3{fill:var(--ui-chart-3)}.f4{fill:var(--ui-chart-4)}
+.f5{fill:var(--ui-chart-5)}.f6{fill:var(--ui-chart-6)}.f7{fill:var(--ui-chart-7)}.f8{fill:var(--ui-chart-8)}
+.x6,.x7{fill:none;stroke-width:2px;stroke-linecap:round}
+.x6{stroke:var(--ui-chart-6)}.x7{stroke:var(--ui-chart-7)}
+.a8{fill:var(--ui-surface-card);stroke:var(--ui-chart-8);stroke-width:2px}
+.pt{fill:none;stroke:var(--ui-surface-card);stroke-width:1.5px}
+.pd{fill:var(--ui-surface-card)}
+.leyenda{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-1) var(--space-4);margin:var(--space-2) 0 var(--space-3);padding:0;list-style:none}
+.leyenda li{display:flex;align-items:center;gap:var(--space-2)}
+.muestra{flex:none;width:88px;height:20px}
+.texto{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-control-coarse);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:none;color:var(--ui-text-secondary);font-family:inherit;cursor:pointer}
+.texto:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+</style>
+</head>
+<body>
+<svg class="defs" aria-hidden="true"><defs>
+<pattern id="p2" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="pt" d="M0 0V6"/></pattern>
+<pattern id="p3" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(135)"><path class="pt" d="M0 0V6"/></pattern>
+<pattern id="p4" width="6" height="6" patternUnits="userSpaceOnUse"><circle class="pd" cx="3" cy="3" r="1"/></pattern>
+<pattern id="p5" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="pt" d="M0 0V8M0 0H8"/></pattern>
+<pattern id="p6" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="pt" d="M0 0V10"/></pattern>
+<pattern id="p7" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(135)"><path class="pt" d="M0 0V10"/></pattern>
+<pattern id="p8" width="8" height="8" patternUnits="userSpaceOnUse"><circle class="pd" cx="4" cy="4" r="1.5"/></pattern>
+</defs></svg>
+<figure class="small">
+<figcaption><p class="titulo">Gasto por categoría · may–oct 2026</p><p>La despensa subió 6 % respecto a septiembre</p></figcaption>
+<svg class="trazo" viewBox="0 0 600 248" role="img" aria-label="Líneas del gasto mensual de mayo a octubre de 2026: despensa termina en $4,812.40, servicios en $2,348.75 y transporte en $1,136.50">
+<line class="grid" x1="52" y1="20" x2="460" y2="20"/><line class="grid" x1="52" y1="86.7" x2="460" y2="86.7"/><line class="grid" x1="52" y1="153.3" x2="460" y2="153.3"/><line class="base" x1="52" y1="220" x2="460" y2="220"/>
+<g class="caption eje" text-anchor="end"><text x="44" y="24">$6 mil</text><text x="44" y="90.7">$4 mil</text><text x="44" y="157.3">$2 mil</text><text x="44" y="224">$0</text></g>
+<g class="caption eje" text-anchor="middle"><text x="56" y="240">may</text><text x="136" y="240">jun</text><text x="216" y="240">jul</text><text x="296" y="240">ago</text><text x="376" y="240">sep</text><text x="456" y="240">oct</text></g>
+<polyline class="l s3" points="56,182.7 136,187.3 216,178 296,185.2 376,180.3 456,182.1"/>
+<polyline class="l s2" points="56,149.8 136,145.3 216,147.3 296,142.8 376,143.7 456,141.7"/>
+<polyline class="l s1" points="56,79.7 136,73.8 216,81.7 296,71.3 376,68.7 456,59.6"/>
+<g class="mk f3"><polygon points="56,176.9 61,185.6 51,185.6"/><polygon points="136,181.5 141,190.2 131,190.2"/><polygon points="216,172.2 221,180.9 211,180.9"/><polygon points="296,179.4 301,188.1 291,188.1"/><polygon points="376,174.5 381,183.2 371,183.2"/><polygon points="456,176.3 461,185 451,185"/></g>
+<g class="mk f2"><rect x="51" y="144.8" width="10" height="10"/><rect x="131" y="140.3" width="10" height="10"/><rect x="211" y="142.3" width="10" height="10"/><rect x="291" y="137.8" width="10" height="10"/><rect x="371" y="138.7" width="10" height="10"/><rect x="451" y="136.7" width="10" height="10"/></g>
+<g class="mk f1"><circle cx="56" cy="79.7" r="5"/><circle cx="136" cy="73.8" r="5"/><circle cx="216" cy="81.7" r="5"/><circle cx="296" cy="71.3" r="5"/><circle cx="376" cy="68.7" r="5"/><circle cx="456" cy="59.6" r="5"/></g>
+<g class="small etq"><text x="468" y="57.6">Despensa</text><text x="468" y="73.6">$4,812.40</text><text x="468" y="139.7">Servicios</text><text x="468" y="155.7">$2,348.75</text><text x="468" y="180.1">Transporte</text><text x="468" y="196.1">$1,136.50</text></g>
+</svg>
+<ul class="leyenda" aria-label="Leyenda">
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s1" x1="2" y1="10" x2="50" y2="10"/><circle class="mk f1" cx="26" cy="10" r="5"/></svg>Despensa</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s2" x1="2" y1="10" x2="50" y2="10"/><rect class="mk f2" x="21" y="5" width="10" height="10"/></svg>Servicios</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s3" x1="2" y1="10" x2="50" y2="10"/><polygon class="mk f3" points="26,4.2 31,12.9 21,12.9"/></svg>Transporte</li>
+</ul>
+<h4 class="caption">Orden fijo de las 8 series: color, marcador, trazo y patrón</h4>
+<ul class="leyenda">
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s1" x1="2" y1="10" x2="50" y2="10"/><circle class="mk f1" cx="26" cy="10" r="5"/><rect class="f1" x="62" y="3" width="24" height="14"/></svg>1 · índigo</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s2" x1="2" y1="10" x2="50" y2="10"/><rect class="mk f2" x="21" y="5" width="10" height="10"/><rect class="f2" x="62" y="3" width="24" height="14"/><rect x="62" y="3" width="24" height="14" fill="url(#p2)"/></svg>2 · verde azulado</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s3" x1="2" y1="10" x2="50" y2="10"/><polygon class="mk f3" points="26,4.2 31,12.9 21,12.9"/><rect class="f3" x="62" y="3" width="24" height="14"/><rect x="62" y="3" width="24" height="14" fill="url(#p3)"/></svg>3 · óxido</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s4" x1="2" y1="10" x2="50" y2="10"/><polygon class="mk f4" points="26,4 32,10 26,16 20,10"/><rect class="f4" x="62" y="3" width="24" height="14"/><rect x="62" y="3" width="24" height="14" fill="url(#p4)"/></svg>4 · naranja</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s5" x1="2" y1="10" x2="50" y2="10"/><polygon class="mk f5" points="21,7.1 31,7.1 26,15.8"/><rect class="f5" x="62" y="3" width="24" height="14"/><rect x="62" y="3" width="24" height="14" fill="url(#p5)"/></svg>5 · magenta</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s6" x1="2" y1="10" x2="50" y2="10"/><path class="x6" d="M26 5v10M21 10h10"/><rect class="f6" x="62" y="3" width="24" height="14"/><rect x="62" y="3" width="24" height="14" fill="url(#p6)"/></svg>6 · azul cielo</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s7" x1="2" y1="10" x2="50" y2="10"/><path class="x7" d="M22.5 6.5l7 7M29.5 6.5l-7 7"/><rect class="f7" x="62" y="3" width="24" height="14"/><rect x="62" y="3" width="24" height="14" fill="url(#p7)"/></svg>7 · violeta</li>
+<li><svg class="muestra" viewBox="0 0 88 20" aria-hidden="true"><line class="l s8" x1="2" y1="10" x2="50" y2="10"/><circle class="a8" cx="26" cy="10" r="4"/><rect class="f8" x="62" y="3" width="24" height="14"/><rect x="62" y="3" width="24" height="14" fill="url(#p8)"/></svg>8 · verde</li>
+</ul>
+<button class="texto" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18"/> <path d="M9 3v18"/> <rect x="3" y="3" width="18" height="18" rx="2"/></svg>Ver como tabla</button>
+</figure>
+</body>
+</html>

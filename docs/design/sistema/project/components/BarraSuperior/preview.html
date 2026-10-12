@@ -1,0 +1,93 @@
+<!-- @dsCard group="Navegación" height=420 subtitle="Barra superior en móvil y desde 768, título de página y pestañas de subsección" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Barra superior</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);flex:none;height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:none;color:var(--ui-text-default);font-family:inherit;font-weight:var(--font-weight-medium);cursor:pointer;transition:background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn{height:var(--size-control-fine)}}
+.primario{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.primario:hover{background:var(--ui-action-primary-bg-hover)}
+.primario:active{background:var(--ui-action-primary-bg-pressed)}
+.texto:hover{background:var(--ui-surface-hover)}
+.texto:active{background:var(--ui-surface-pressed)}
+.btn-icono{width:var(--size-touch-min);padding:0;color:var(--ui-icon-default)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn-icono{width:var(--size-control-fine)}}
+.btn-icono:hover{background:var(--ui-surface-hover)}
+.secundario{border-color:var(--ui-border-control)}
+.secundario:hover{background:var(--ui-surface-hover);border-color:var(--ui-border-control-hover)}
+.secundario .icon{color:var(--ui-icon-default)}
+.ejemplos{display:flex;flex-direction:column;gap:var(--space-6)}
+.ejemplo{display:flex;flex-direction:column;gap:var(--space-1)}
+.marco{background:var(--ui-surface-page);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);overflow:hidden}
+.movil .marco{max-width:var(--breakpoint-base)}
+.escritorio .marco{max-width:var(--layout-dialog-width-long)}
+.barra{display:flex;align-items:center;gap:var(--space-1);padding:0 var(--space-2) 0 var(--space-4)}
+.movil .barra{height:var(--layout-topbar-height-mobile)}
+.escritorio .barra{height:var(--layout-topbar-height-desktop)}
+.barra nav{flex:1;min-width:0}
+.migas{display:flex;align-items:center;gap:var(--space-1);margin:0;padding:0;list-style:none;color:var(--ui-text-secondary)}
+.migas li{display:flex;align-items:center;gap:var(--space-1);min-width:0}
+.migas a{display:inline-flex;align-items:center;gap:var(--space-1);color:var(--ui-text-secondary);border-radius:var(--radius-sm)}
+.migas .icon{color:var(--ui-icon-default)}
+.migas [aria-current="page"]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.titulo{padding:var(--space-2) var(--space-4) 0}
+.titulo h1{margin:0}
+.props{margin:var(--space-1) 0 0;color:var(--ui-text-secondary)}
+.tabs{display:flex;gap:var(--space-1);padding:var(--space-2) var(--space-4) 0;overflow-x:auto}
+.tab{position:relative;flex:none;height:var(--size-control-coarse);padding:0 var(--space-3);border:0;border-radius:var(--radius-sm) var(--radius-sm) 0 0;background:none;color:var(--ui-text-secondary);font-family:inherit;cursor:pointer;transition:color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.tab{height:var(--size-control-fine)}}
+.tab:hover{color:var(--ui-text-default)}
+.tab[aria-selected="true"]{color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ui-border-selected)}
+.tab:focus-visible{outline-offset:-2px}
+</style>
+</head>
+<body>
+<div class="ejemplos">
+<div class="ejemplo movil"><span class="caption mute">Móvil, menos de 768</span>
+<div class="marco">
+<header class="barra">
+<nav class="small" aria-label="Migas"><ol class="migas"><li><a href="#"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Créditos</a></li></ol></nav>
+<button class="btn primario body" type="button">Marcar pago</button>
+<button class="btn btn-icono" type="button" aria-label="Más acciones" aria-haspopup="menu"><svg class="icon i24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/> <circle cx="19" cy="12" r="1"/> <circle cx="5" cy="12" r="1"/></svg></button>
+</header>
+<div class="titulo"><h1 class="title-1">Crédito de despensa</h1><p class="props small">Pago 3 de 6 · vence el 5-nov-2026</p></div>
+<div class="tabs" role="tablist" aria-label="Subsecciones">
+<button class="tab small" type="button" role="tab" aria-selected="true">Resumen</button>
+<button class="tab small" type="button" role="tab" aria-selected="false" tabindex="-1">Detalle</button>
+<button class="tab small" type="button" role="tab" aria-selected="false" tabindex="-1">Tendencias</button>
+<button class="tab small" type="button" role="tab" aria-selected="false" tabindex="-1">Calendario</button>
+</div>
+</div></div>
+<div class="ejemplo escritorio"><span class="caption mute">Desde 768</span>
+<div class="marco">
+<header class="barra">
+<nav class="small" aria-label="Migas"><ol class="migas"><li><a href="#">Créditos</a><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></li><li><span aria-current="page">Crédito de despensa</span></li></ol></nav>
+<button class="btn btn-icono" type="button" aria-label="Buscar"><svg class="icon i24" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/> <circle cx="11" cy="11" r="8"/></svg></button>
+<button class="btn secundario small" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="M12 5v14"/></svg>Registrar</button>
+<button class="btn primario small" type="button">Marcar pago</button>
+<button class="btn btn-icono" type="button" aria-label="Más acciones" aria-haspopup="menu"><svg class="icon i24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/> <circle cx="19" cy="12" r="1"/> <circle cx="5" cy="12" r="1"/></svg></button>
+</header>
+<div class="titulo"><h1 class="title-1">Crédito de despensa</h1><p class="props small">Pago 3 de 6 · vence el 5-nov-2026</p></div>
+<div class="tabs" role="tablist" aria-label="Subsecciones">
+<button class="tab small" type="button" role="tab" aria-selected="false" tabindex="-1">Resumen</button>
+<button class="tab small" type="button" role="tab" aria-selected="false" tabindex="-1">Detalle</button>
+<button class="tab small" type="button" role="tab" aria-selected="false" tabindex="-1">Tendencias</button>
+<button class="tab small" type="button" role="tab" aria-selected="true">Calendario</button>
+</div>
+</div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!-- @dsCard group="Avisos" height=380 subtitle="Carga, vacío, error, falta capturar y sin conexión" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Estados vacío, carga y error</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);max-width:760px;align-items:start}
+.columna{display:flex;flex-direction:column;gap:var(--space-3)}
+.tarjeta{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);background:var(--ui-surface-card);border-radius:var(--radius-md)}
+.hueso{border-radius:var(--radius-sm);background:var(--ui-skeleton-on-card)}
+.h1{width:45%;height:var(--space-4)}
+.h2{width:70%;height:var(--space-8)}
+.h3{width:55%;height:var(--space-3)}
+.vacio{display:flex;flex-direction:column;align-items:center;gap:var(--space-3);padding:var(--space-6) var(--space-4);text-align:center}
+.vacio p{margin:0;color:var(--ui-text-secondary)}
+.vacio > .icon{color:var(--ui-icon-default)}
+.franja{display:flex;align-items:flex-start;flex-wrap:wrap;gap:var(--space-2);padding:var(--space-3);border-radius:var(--radius-md);color:var(--ui-text-default)}
+.franja p{flex:1;min-width:160px;margin:0}
+.f-error{background:var(--ui-role-error-surface)}
+.f-error .icon{color:var(--ui-role-error)}
+.f-aviso{background:var(--ui-role-warning-surface)}
+.f-aviso .icon{color:var(--ui-role-warning)}
+.franja a{color:var(--ui-text-link);font-weight:var(--font-weight-medium)}
+.btn{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);font-family:inherit;font-weight:var(--font-weight-medium);cursor:pointer}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn{height:var(--size-control-fine)}}
+.primario{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.secundario{background:none;border-color:var(--ui-border-control);color:var(--ui-text-default)}
+</style>
+</head>
+<body>
+<div class="rejilla">
+<div class="columna">
+<div class="tarjeta" role="status"><span class="sr">Cargando el gasto del mes</span><div class="hueso h1" aria-hidden="true"></div><div class="hueso h2" aria-hidden="true"></div><div class="hueso h3" aria-hidden="true"></div></div>
+<div class="vacio"><svg class="icon i24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17V7"/> <path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/> <path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg><p class="small">Aún no hay gastos este mes</p><button class="btn primario body" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/> <path d="M12 5v14"/></svg>Registrar gasto</button></div>
+</div>
+<div class="columna small">
+<div class="franja f-error" role="alert"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <line x1="12" x2="12" y1="8" y2="12"/> <line x1="12" x2="12.01" y1="16" y2="16"/></svg><p>No se pudieron cargar los gastos. Lo que capturaste sigue guardado.</p><button class="btn secundario small" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/> <path d="M21 3v5h-5"/> <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/> <path d="M8 16H3v5"/></svg>Reintentar</button></div>
+<div class="franja f-aviso" role="status"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/> <path d="M12 9v4"/> <path d="M12 17h.01"/></svg><p>Falta capturar la tasa de la tarjeta de la casa · <a href="#">Capturar</a></p></div>
+<div class="franja f-aviso" role="status"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h.01"/> <path d="M8.5 16.429a5 5 0 0 1 7 0"/> <path d="M5 12.859a10 10 0 0 1 5.17-2.69"/> <path d="M19 12.859a10 10 0 0 0-2.007-1.523"/> <path d="M2 8.82a15 15 0 0 1 4.177-2.643"/> <path d="M22 8.82a15 15 0 0 0-11.288-3.764"/> <path d="m2 2 20 20"/></svg><p>Sin conexión con el servidor de casa · 2 en cola</p></div>
+</div>
+</div>
+</body>
+</html>

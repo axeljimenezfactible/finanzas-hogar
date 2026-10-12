@@ -1,0 +1,89 @@
+<!-- @dsCard group="Vistas de base de datos" height=330 subtitle="Selector de vista, Filtrar, Ordenar, Agrupar, búsqueda y filtros activos; en móvil, «Filtrar» y chips bajo el título" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Barra de la vista</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.ejemplos{display:flex;flex-direction:column;gap:var(--space-6)}
+.ejemplo{display:flex;flex-direction:column;gap:var(--space-1)}
+.marco{background:var(--ui-surface-page);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);padding:var(--space-2) var(--space-4)}
+.movil .marco{max-width:var(--breakpoint-base)}
+.barra{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
+.grupo{display:flex;align-items:center;gap:var(--space-2)}
+.selector{margin-right:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);flex:none;height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:none;color:var(--ui-text-secondary);font-family:inherit;font-weight:var(--font-weight-medium);cursor:pointer;transition:background-color var(--duration-fast) var(--ease-standard),color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn{height:var(--size-control-fine)}}
+.btn .icon{color:var(--ui-icon-default)}
+.btn:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.btn:active{background:var(--ui-surface-pressed);color:var(--ui-text-default)}
+.btn[aria-pressed="true"],.btn[aria-pressed="true"]:hover{background:var(--ui-surface-selected)}
+.btn[aria-pressed="true"] .icon{color:var(--ui-icon-selected)}
+.campo{display:flex;align-items:center;gap:var(--space-1);height:var(--size-control-coarse);padding:0 var(--space-3);background:var(--ui-surface-field);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);transition:border-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.campo{height:var(--size-control-fine)}}
+.campo:hover{border-color:var(--ui-border-control-hover)}
+.campo:focus-within{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.campo .icon{color:var(--ui-icon-default)}
+.campo input{flex:1;min-width:0;padding:0;border:0;background:none;color:var(--ui-text-default);font-family:inherit;outline:none}
+.campo input::placeholder{color:var(--ui-text-secondary)}
+.filtros{display:flex;align-items:center;gap:var(--space-2);flex-basis:100%}
+.movil .filtros{flex-basis:auto;flex:1;min-width:0;overflow-x:auto}
+.chip{display:inline-flex;align-items:center;gap:var(--space-1);flex:none;height:var(--size-control-coarse);padding:0 var(--space-2);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-full);color:var(--ui-text-default);font-family:inherit;cursor:pointer;transition:background-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.chip{height:var(--size-control-fine)}}
+.chip.tienda{border-radius:var(--radius-sm)}
+.chip:hover{background:var(--ui-surface-hover)}
+.chip .x{display:inline-flex;color:var(--ui-icon-default)}
+.marca{flex:none;width:var(--size-mark-category);height:var(--size-mark-category)}
+.circulo{border-radius:var(--radius-full)}
+.ximena{background:var(--ui-person-ximena)}
+.walmart{background:var(--ui-store-walmart)}
+.titulo{margin:var(--space-1) 0 var(--space-2)}
+</style>
+</head>
+<body>
+<div class="ejemplos">
+<div class="ejemplo escritorio"><span class="caption mute">Escritorio: una fila sobre la vista, a todo el ancho del área</span>
+<div class="marco">
+<div class="barra small">
+<div class="grupo selector" role="group" aria-label="Vista">
+<button class="btn small" type="button" aria-pressed="true"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18"/> <path d="M9 3v18"/> <rect x="3" y="3" width="18" height="18" rx="2"/></svg>Tabla</button>
+<button class="btn small" type="button" aria-pressed="false"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v14"/> <path d="M12 3v8"/> <path d="M19 3v18"/></svg>Tablero</button>
+<button class="btn small" type="button" aria-pressed="false"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v3"/> <path d="M16 2v3"/> <rect x="3" y="3" width="18" height="18" rx="2"/> <path d="M3 9h18"/></svg>Calendario</button>
+<button class="btn small" type="button" aria-pressed="false"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/> <rect width="7" height="7" x="14" y="3" rx="1"/> <rect width="7" height="7" x="14" y="14" rx="1"/> <rect width="7" height="7" x="3" y="14" rx="1"/></svg>Galería</button>
+</div>
+<div class="grupo">
+<button class="btn small" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h20"/> <path d="M6 12h12"/> <path d="M9 19h6"/></svg>Filtrar</button>
+<button class="btn small" type="button"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 16-4 4-4-4"/> <path d="M17 20V4"/> <path d="m3 8 4-4 4 4"/> <path d="M7 4v16"/></svg>Ordenar</button>
+<button class="btn small" type="button">Agrupar</button>
+<div class="campo"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/> <circle cx="11" cy="11" r="8"/></svg><input class="small" type="search" size="14" placeholder="Buscar" aria-label="Buscar en gastos"></div>
+</div>
+<div class="filtros" role="group" aria-label="Filtros activos">
+<button class="chip small" type="button" aria-label="Quitar filtro Ximena"><span class="marca circulo ximena" aria-hidden="true"></span>Ximena<span class="x"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></span></button>
+<button class="chip tienda small" type="button" aria-label="Quitar filtro Walmart"><span class="marca walmart" aria-hidden="true"></span>Walmart<span class="x"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></span></button>
+</div>
+</div>
+</div></div>
+<div class="ejemplo movil"><span class="caption mute">Móvil, menos de 768: «Filtrar» abre una hoja; filtros activos bajo el título</span>
+<div class="marco">
+<h1 class="title-1 titulo">Gastos</h1>
+<div class="barra">
+<button class="btn body" type="button" aria-haspopup="dialog"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h20"/> <path d="M6 12h12"/> <path d="M9 19h6"/></svg>Filtrar</button>
+<div class="filtros" role="group" aria-label="Filtros activos">
+<button class="chip small" type="button" aria-label="Quitar filtro Ximena"><span class="marca circulo ximena" aria-hidden="true"></span>Ximena<span class="x"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></span></button>
+<button class="chip tienda small" type="button" aria-label="Quitar filtro Walmart"><span class="marca walmart" aria-hidden="true"></span>Walmart<span class="x"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></span></button>
+</div>
+</div>
+</div></div>
+</div>
+</body>
+</html>

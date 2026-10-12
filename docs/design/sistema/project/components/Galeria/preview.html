@@ -1,0 +1,54 @@
+<!-- @dsCard group="Vistas de base de datos" height=600 subtitle="Tarjetas con portada 4:3, tarjeta elegida, «Foto no disponible» y tickets en 2 columnas a 360" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Galería</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.ejemplos{display:flex;flex-direction:column;gap:var(--space-6)}
+.ejemplo{display:flex;flex-direction:column;gap:var(--space-1)}
+.movil{max-width:var(--breakpoint-base)}
+.galeria{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);margin:0;padding:0;list-style:none}
+.movil .galeria{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tarjeta{display:flex;flex-direction:column;gap:var(--space-2);min-width:0;padding:var(--space-3);background:var(--ui-surface-card);border:var(--border-width-default) solid transparent;border-radius:var(--radius-md);box-shadow:var(--shadow-0);cursor:pointer;transition:border-color var(--duration-fast) var(--ease-standard)}
+.tarjeta:hover{border-color:var(--ui-border-control-hover)}
+.tarjeta[aria-selected="true"]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected)}
+.portada{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);aspect-ratio:4/3;background:var(--ui-surface-hover);border-radius:var(--radius-sm);color:var(--ui-icon-default)}
+.portada .aviso{margin:0;color:var(--ui-text-secondary)}
+.linea{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);margin:0;min-width:0}
+.titulo{font-weight:var(--font-weight-medium);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fecha{color:var(--ui-text-secondary)}
+.gasto{display:inline-flex;align-items:center;gap:var(--space-1);color:var(--ui-role-expense)}
+.chip{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-chip-height);padding:0 var(--space-2);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-sm);color:var(--ui-text-default);white-space:nowrap}
+.cuadro{flex:none;width:var(--size-mark-category);height:var(--size-mark-category)}
+.walmart{background:var(--ui-store-walmart)}
+.sams{background:var(--ui-store-sams-club)}
+.mercado{background:var(--ui-store-market)}
+</style>
+</head>
+<body>
+<div class="ejemplos">
+<div class="ejemplo"><span class="caption mute">Galería de gastos (tickets) en 3 columnas, como a 768: reposo, elegida y error de imagen</span>
+<ul class="galeria small" role="listbox" aria-label="Tickets de noviembre" aria-multiselectable="true">
+<li class="tarjeta" role="option" aria-selected="false" tabindex="0"><div class="portada" aria-hidden="true"><svg class="icon i24" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/> <path d="M17 3h2a2 2 0 0 1 2 2v2"/> <path d="M21 17v2a2 2 0 0 1-2 2h-2"/> <path d="M7 21H5a2 2 0 0 1-2-2v-2"/> <path d="M7 12h10"/></svg></div><p class="linea"><span class="titulo">Súper quincenal</span><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$842.37</span></p><p class="linea"><span class="chip"><span class="cuadro walmart" aria-hidden="true"></span>Walmart</span><span class="fecha money">13-nov-2026</span></p></li>
+<li class="tarjeta" role="option" aria-selected="true" tabindex="-1"><div class="portada" aria-hidden="true"><svg class="icon i24" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/> <path d="M17 3h2a2 2 0 0 1 2 2v2"/> <path d="M21 17v2a2 2 0 0 1-2 2h-2"/> <path d="M7 21H5a2 2 0 0 1-2-2v-2"/> <path d="M7 12h10"/></svg></div><p class="linea"><span class="titulo">Compra de mayoreo</span><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$1,163.90</span></p><p class="linea"><span class="chip"><span class="cuadro sams" aria-hidden="true"></span>Sam's Club</span><span class="fecha money">20-nov-2026</span></p></li>
+<li class="tarjeta" role="option" aria-selected="false" tabindex="-1"><div class="portada"><svg class="icon i24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/> <path d="M17 3h2a2 2 0 0 1 2 2v2"/> <path d="M21 17v2a2 2 0 0 1-2 2h-2"/> <path d="M7 21H5a2 2 0 0 1-2-2v-2"/> <path d="M7 12h10"/></svg><p class="aviso caption">Foto no disponible</p></div><p class="linea"><span class="titulo">Tianguis del sábado</span><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$275.48</span></p><p class="linea"><span class="chip"><span class="cuadro mercado" aria-hidden="true"></span>Mercado</span><span class="fecha money">27-nov-2026</span></p></li>
+</ul></div>
+<div class="ejemplo movil"><span class="caption mute">Tickets a 360: 2 columnas</span>
+<ul class="galeria small" role="listbox" aria-label="Tickets de noviembre, móvil">
+<li class="tarjeta" role="option" aria-selected="false" tabindex="0"><div class="portada" aria-hidden="true"><svg class="icon i24" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/> <path d="M17 3h2a2 2 0 0 1 2 2v2"/> <path d="M21 17v2a2 2 0 0 1-2 2h-2"/> <path d="M7 21H5a2 2 0 0 1-2-2v-2"/> <path d="M7 12h10"/></svg></div><p class="linea"><span class="titulo">Súper quincenal</span></p><p class="linea"><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$842.37</span></p><p class="linea"><span class="chip"><span class="cuadro walmart" aria-hidden="true"></span>Walmart</span></p></li>
+<li class="tarjeta" role="option" aria-selected="false" tabindex="-1"><div class="portada" aria-hidden="true"><svg class="icon i24" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/> <path d="M17 3h2a2 2 0 0 1 2 2v2"/> <path d="M21 17v2a2 2 0 0 1-2 2h-2"/> <path d="M7 21H5a2 2 0 0 1-2-2v-2"/> <path d="M7 12h10"/></svg></div><p class="linea"><span class="titulo">Compra de mayoreo</span></p><p class="linea"><span class="gasto money"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/> <path d="M7 17 17 7"/></svg>−$1,163.90</span></p><p class="linea"><span class="chip"><span class="cuadro sams" aria-hidden="true"></span>Sam's Club</span></p></li>
+</ul></div>
+</div>
+</body>
+</html>

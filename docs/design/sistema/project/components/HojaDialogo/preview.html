@@ -1,0 +1,85 @@
+<!-- @dsCard group="Hojas y diálogos" height=470 subtitle="Hoja inferior en móvil, diálogo desde 768 y diálogo de acción crítica" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Hoja y diálogo</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);flex:none;height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:none;color:var(--ui-text-default);font-family:inherit;font-weight:var(--font-weight-medium);cursor:pointer;transition:background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){.btn{height:var(--size-control-fine)}}
+.primario{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}
+.primario:hover{background:var(--ui-action-primary-bg-hover)}
+.primario:active{background:var(--ui-action-primary-bg-pressed)}
+.texto:hover{background:var(--ui-surface-hover)}
+.texto:active{background:var(--ui-surface-pressed)}
+.critico{background:var(--ui-action-critical-bg);color:var(--ui-text-on-critical)}
+.critico:hover{background:var(--ui-action-critical-bg-hover)}
+.critico:active{background:var(--ui-action-critical-bg-pressed)}
+.btn.foco{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.btn.ancho{width:100%;height:var(--size-control-primary-sheet)}
+.fila{display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start}
+.ejemplo{display:flex;flex-direction:column;gap:var(--space-1)}
+.columna{display:flex;flex-direction:column;gap:var(--space-4);flex:1;min-width:280px;max-width:var(--layout-dialog-width-short)}
+.telefono{position:relative;width:var(--breakpoint-base);max-width:100%;height:400px;background:var(--ui-surface-page);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);overflow:hidden}
+.velo{position:absolute;inset:0;background:var(--ui-overlay-scrim)}
+.hoja{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;max-height:90%;background:var(--ui-surface-raised);border-top:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-lg) var(--radius-lg) 0 0;box-shadow:var(--shadow-2)}
+.asa{flex:none;width:var(--size-sheet-handle-width);height:var(--size-sheet-handle-height);margin:var(--space-2) auto;border-radius:var(--radius-full);background:var(--ui-border-control)}
+.hoja h2,.dialogo h2{margin:0}
+.hoja h2{padding:0 var(--space-4) var(--space-2)}
+.cuerpo{flex:1;overflow:auto;display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-2) var(--space-4)}
+.grupo{display:flex;flex-direction:column;gap:var(--space-1)}
+.grupo label{font-weight:var(--font-weight-medium)}
+.campo{height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field);color:var(--ui-text-default);font-family:inherit}
+.campo:hover{border-color:var(--ui-border-control-hover)}
+.campo.monto{font-weight:var(--font-weight-semibold)}
+.pie{flex:none;padding:var(--space-2) var(--space-4) var(--space-4)}
+.velo-dialogo{display:flex;justify-content:center;padding:var(--space-4);background:var(--ui-overlay-scrim);border-radius:var(--radius-md)}
+.dialogo{width:100%;max-width:var(--layout-dialog-width-short);box-sizing:border-box;padding:var(--space-6);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-lg);box-shadow:var(--shadow-2)}
+.dialogo p{margin:var(--space-2) 0 0;color:var(--ui-text-secondary)}
+.encabezado{display:flex;align-items:center;gap:var(--space-2)}
+.encabezado .icon{color:var(--ui-critical)}
+.acciones{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2);margin-top:var(--space-6)}
+</style>
+</head>
+<body>
+<div class="fila">
+<div class="ejemplo"><span class="caption mute">Hoja inferior, móvil</span>
+<div class="telefono">
+<div class="velo"></div>
+<div class="hoja" role="dialog" aria-labelledby="h-hoja">
+<div class="asa" aria-hidden="true"></div>
+<h2 class="title-2" id="h-hoja">Registrar gasto</h2>
+<div class="cuerpo">
+<div class="grupo"><label class="small" for="monto">Monto</label><input class="campo title-2 monto money" id="monto" inputmode="decimal" value="$318.45"></div>
+<div class="grupo"><label class="small" for="categoria">Categoría</label><select class="campo body" id="categoria"><option>Despensa</option><option>Farmacia</option></select></div>
+</div>
+<div class="pie"><button class="btn primario ancho body" type="button">Guardar gasto</button></div>
+</div>
+</div></div>
+<div class="columna">
+<div class="ejemplo"><span class="caption mute">Diálogo de confirmación, desde 768</span>
+<div class="velo-dialogo"><div class="dialogo" role="dialog" aria-labelledby="h-d1" aria-describedby="p-d1">
+<h2 class="title-2" id="h-d1">¿Descartar cambios?</h2>
+<p class="body" id="p-d1">El gasto tiene cambios sin guardar. Si cierras, se pierden.</p>
+<div class="acciones"><button class="btn texto small" type="button">Cancelar</button><button class="btn primario small" type="button">Descartar cambios</button></div>
+</div></div></div>
+<div class="ejemplo"><span class="caption mute">Diálogo de acción crítica: el foco empieza en «Cancelar»</span>
+<div class="velo-dialogo"><div class="dialogo" role="dialog" aria-labelledby="h-d2" aria-describedby="p-d2">
+<div class="encabezado"><svg class="icon i24" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/> <path d="M12 8v4"/> <path d="M12 16h.01"/></svg><h2 class="title-2" id="h-d2">¿Borrar 12 gastos?</h2></div>
+<p class="body" id="p-d2">Se borran los 12 gastos elegidos y sus montos salen de los totales del mes. No se puede deshacer.</p>
+<div class="acciones"><button class="btn texto small foco" type="button">Cancelar</button><button class="btn critico small" type="button">Borrar 12 gastos</button></div>
+</div></div></div>
+</div>
+</div>
+</body>
+</html>

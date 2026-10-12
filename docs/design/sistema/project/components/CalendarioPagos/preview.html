@@ -1,0 +1,51 @@
+<!-- @dsCard group="Vistas de base de datos" height=230 subtitle="Semana del mes con hoy, día elegido y los cinco estados de pago" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Calendario de pagos</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.resumen{margin:0 0 var(--space-3)}
+.mes{display:grid;grid-template-columns:repeat(7,minmax(96px,1fr));max-width:800px;border-top:var(--border-width-default) solid var(--ui-border-divider);border-left:var(--border-width-default) solid var(--ui-border-divider)}
+.fila{display:contents}
+.dia-sem,.celda{border-right:var(--border-width-default) solid var(--ui-border-divider);border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.dia-sem{padding:var(--space-1) var(--space-2);color:var(--ui-text-secondary)}
+.celda{display:flex;flex-direction:column;gap:var(--space-1);min-height:var(--size-calendar-cell);padding:var(--space-1);background:var(--ui-surface-page)}
+.celda:hover{background:var(--ui-surface-hover-subtle)}
+.celda[aria-selected="true"]{background:var(--ui-surface-selected)}
+.celda:focus-visible{outline-offset:-2px}
+.num{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;min-width:var(--space-6);height:var(--space-6);border-radius:var(--radius-full);color:var(--ui-text-secondary)}
+.hoy .num{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary);font-weight:var(--font-weight-medium)}
+.pago{display:flex;flex-direction:column;align-items:flex-start;padding:var(--space-1);background:var(--ui-surface-card);border:0;border-radius:var(--radius-sm);color:var(--ui-text-default);font-family:inherit;text-align:left;cursor:pointer}
+.estado{display:inline-flex;align-items:center;gap:var(--space-1)}
+.estado .icon{color:var(--ui-icon-default)}
+.aviso,.aviso .icon{color:var(--ui-role-warning)}
+.ok,.ok .icon{color:var(--ui-role-success)}
+</style>
+</head>
+<body>
+<p class="resumen small">Este mes pagas <span class="money">$7,914.35</span> en 8 pagos</p>
+<div class="mes small" role="grid" aria-label="Noviembre de 2026, semana del 2 al 8">
+<div class="fila" role="row"><span class="dia-sem caption" role="columnheader">Lun</span><span class="dia-sem caption" role="columnheader">Mar</span><span class="dia-sem caption" role="columnheader">Mié</span><span class="dia-sem caption" role="columnheader">Jue</span><span class="dia-sem caption" role="columnheader">Vie</span><span class="dia-sem caption" role="columnheader">Sáb</span><span class="dia-sem caption" role="columnheader">Dom</span></div>
+<div class="fila" role="row">
+<div class="celda" role="gridcell"><span class="num money">2</span><button class="pago caption" type="button" aria-label="lunes 2 de noviembre, Préstamo del auto, pago 4 de 12, $1,312.50, falta la parte de Karen"><span class="estado"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/> <circle cx="12" cy="12" r="10"/></svg>Falta la parte de Karen</span><span class="money">$1,312.50</span></button></div>
+<div class="celda" role="gridcell"><span class="num money">3</span><button class="pago caption" type="button" aria-label="martes 3 de noviembre, Tarjeta de la casa, $845.00, pagado"><span class="estado ok"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <path d="m16 9-5.5 5.5L8 12"/></svg>Pagado</span><span class="money">$845.00</span></button></div>
+<div class="celda" role="gridcell"><span class="num money">4</span><button class="pago caption" type="button" aria-label="miércoles 4 de noviembre, Crédito de muebles, pago 2 de 9, $1,045.80, vencido"><span class="estado aviso"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v3"/> <path d="M16 2v3"/> <rect x="3" y="3" width="18" height="18" rx="2"/> <path d="M3 9h18"/> <path d="m14 13-4 4"/> <path d="m10 13 4 4"/></svg>Vencido</span><span class="money">$1,045.80</span></button></div>
+<div class="celda hoy" role="gridcell" aria-current="date"><span class="num money">5</span><button class="pago caption" type="button" aria-label="jueves 5 de noviembre, hoy, Crédito de despensa, pago 3 de 6, $689.90, vence hoy"><span class="estado aviso"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 14v2.2l1.6 1"/> <path d="M16 2v3"/> <path d="M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338"/> <path d="M3 9h5.859"/> <path d="M8 2v3"/> <circle cx="16" cy="16" r="6"/></svg>Vence hoy</span><span class="money">$689.90</span></button></div>
+<div class="celda" role="gridcell" aria-selected="true"><span class="num money">6</span><button class="pago caption" type="button" aria-label="viernes 6 de noviembre, Tarjeta departamental, $1,321.40, vence mañana"><span class="estado aviso"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 14v2.2l1.6 1"/> <path d="M16 2v3"/> <path d="M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338"/> <path d="M3 9h5.859"/> <path d="M8 2v3"/> <circle cx="16" cy="16" r="6"/></svg>Vence mañana</span><span class="money">$1,321.40</span></button></div>
+<div class="celda" role="gridcell"><span class="num money">7</span><button class="pago caption" type="button" aria-label="sábado 7 de noviembre, Préstamo personal, pago 5 de 10, $1,198.25, pendiente"><span class="estado"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"/> <path d="M13.9 21.818a10 10 0 0 1-3.8 0"/> <path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/> <path d="M2.182 13.9a10 10 0 0 1 0-3.8"/> <path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/> <path d="M21.818 10.1a10 10 0 0 1 0 3.8"/> <path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/> <path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/></svg>Pendiente</span><span class="money">$1,198.25</span></button></div>
+<div class="celda" role="gridcell"><span class="num money">8</span></div>
+</div>
+</div>
+</body>
+</html>

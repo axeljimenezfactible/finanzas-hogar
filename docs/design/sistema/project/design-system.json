@@ -1,0 +1,14 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": { "v": 1, "at": "2026-10-12T04:57:11Z" },
+  "title": "Finanzas Hogar",
+  "namespace": "FinanzasHogar",
+  "libraries": [],
+  "sections": {},
+  "groups": [],
+  "assetGroups": {},
+  "blobs": {},
+  "docs": { "readme": "project/README.md", "sections": [] },
+  "lastChange": { "by": "Axel", "at": "2026-10-12T05:40:25Z", "via": "Claude Code", "note": "Corrección ds-r2: iconos de 24 px en los botones de solo icono de la barra superior; componentes BarraVista (§7.5.1) y Galeria (§7.5.5); CalendarioPagos declara su relación con §7.5.4" }
+}

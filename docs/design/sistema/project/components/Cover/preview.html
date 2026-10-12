@@ -1,0 +1,55 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Finanzas Hogar</title>
+<style>
+html,body{margin:0;height:100%}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);overflow:hidden}
+.cover{position:relative;height:288px;overflow:hidden}
+.art{position:absolute;top:0;left:480px;width:480px;height:288px;overflow:hidden}
+.art svg{display:block;width:480px;height:288px}
+.marca{fill:var(--color-brand-700)}
+.tinte{fill:var(--color-brand-300)}
+.neutro{fill:var(--color-neutral-700)}
+.critica{fill:var(--color-critical-700)}
+.lg{rx:var(--radius-lg)}
+.md{rx:var(--radius-md)}
+.sm{rx:var(--radius-sm)}
+.palabras{position:absolute;left:var(--space-6);bottom:var(--space-6);max-width:440px}
+.nombre{margin:0;font-size:88px;line-height:.95;font-weight:var(--font-weight-bold);color:var(--ui-text-default)}
+.lema{margin:var(--space-2) 0 0;color:var(--ui-text-secondary)}
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  bloques     color-brand-700 192×248 sangrando arriba (la marca, el mayor) · color-brand-300 144×160 (el tinte) · color-neutral-700 112×208 sangrando a la derecha (neutro tintado, tinta en los dos temas) · color-critical-700 48×32 una vez (el oliva solo confirma lo irreversible) ≈ 31 % de 960×288
+  disposición una losa alta de marca con satélites, bases alineadas a 56 px del borde inferior, medianiles de space-4
+  patrón      teselas cortadas por los radios, algunas unidas a dos de ancho como chips y celdas: «geométrico, modular, interfaz densa», el que dice DESIGN (vistas de base de datos, tablero, calendario, radios 6/10/14 sobre la retícula de 4 pt); 13 teselas de marca sobre el tinte que ralean hacia arriba y 10 de tinte recortadas en la losa
+  escalas     lados en múltiplos de space-2; medianil space-4; paso de teselas space-6 (16 + 8); esquinas radius-lg (losa), radius-md (tinte y neutro), radius-sm (crítico y teselas)
+-->
+<rect class="marca lg" x="24" y="-16" width="192" height="248" rx="14"/>
+<rect class="tinte md" x="232" y="72" width="144" height="160" rx="10"/>
+<rect class="neutro md" x="392" y="24" width="112" height="208" rx="10"/>
+<rect class="critica sm" x="232" y="24" width="48" height="32" rx="6"/>
+<rect class="marca sm" x="248" y="184" width="40" height="16" rx="6"/><rect class="marca sm" x="296" y="184" width="16" height="16" rx="6"/><rect class="marca sm" x="320" y="184" width="40" height="16" rx="6"/>
+<rect class="marca sm" x="248" y="160" width="16" height="16" rx="6"/><rect class="marca sm" x="272" y="160" width="16" height="16" rx="6"/><rect class="marca sm" x="296" y="160" width="40" height="16" rx="6"/><rect class="marca sm" x="344" y="160" width="16" height="16" rx="6"/>
+<rect class="marca sm" x="248" y="136" width="40" height="16" rx="6"/><rect class="marca sm" x="320" y="136" width="16" height="16" rx="6"/><rect class="marca sm" x="344" y="136" width="16" height="16" rx="6"/>
+<rect class="marca sm" x="272" y="112" width="16" height="16" rx="6"/><rect class="marca sm" x="320" y="112" width="16" height="16" rx="6"/>
+<rect class="marca sm" x="296" y="88" width="16" height="16" rx="6"/>
+<rect class="tinte sm" x="40" y="208" width="40" height="16" rx="6"/><rect class="tinte sm" x="88" y="208" width="16" height="16" rx="6"/><rect class="tinte sm" x="112" y="208" width="40" height="16" rx="6"/><rect class="tinte sm" x="160" y="208" width="16" height="16" rx="6"/><rect class="tinte sm" x="184" y="208" width="16" height="16" rx="6"/>
+<rect class="tinte sm" x="40" y="184" width="16" height="16" rx="6"/><rect class="tinte sm" x="64" y="184" width="40" height="16" rx="6"/><rect class="tinte sm" x="136" y="184" width="40" height="16" rx="6"/>
+<rect class="tinte sm" x="40" y="160" width="16" height="16" rx="6"/><rect class="tinte sm" x="112" y="160" width="16" height="16" rx="6"/>
+</svg>
+</div>
+<div class="palabras">
+<h1 class="nombre">Finanzas Hogar</h1>
+<p class="lema small">Las cuentas de la casa, claras y en calma.</p>
+</div>
+</div>
+</body>
+</html>

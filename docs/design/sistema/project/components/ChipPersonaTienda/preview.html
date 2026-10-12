@@ -1,0 +1,61 @@
+<!-- @dsCard group="Datos" height=260 subtitle="Persona: píldora con círculo. Tienda: rectángulo con cuadro. Filtros e insignias de rol" -->
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Chip de persona y de tienda</title>
+<style>
+html,body{margin:0}
+body{background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans);padding:var(--space-4)}
+.icon{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i20{width:var(--size-icon-sm);height:var(--size-icon-sm);stroke-width:var(--icon-stroke-user-units-sm)}
+.i24{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mute{color:var(--ui-text-secondary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+.grupo{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin:0 0 var(--space-4)}
+.titulo{flex-basis:100%;margin:0;color:var(--ui-text-secondary)}
+.chip{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-chip-height);padding:0 var(--space-2);background:var(--ui-surface-raised);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-full);color:var(--ui-text-default);font-family:inherit}
+.chip.tienda{border-radius:var(--radius-sm)}
+button.chip{height:var(--size-control-coarse);cursor:pointer;transition:background-color var(--duration-fast) var(--ease-standard)}
+@media (pointer:fine) and (not (any-pointer:coarse)){button.chip{height:var(--size-control-fine)}}
+button.chip:hover{background:var(--ui-surface-hover)}
+.chip[aria-pressed="true"]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected)}
+.chip .x{color:var(--ui-icon-default)}
+.marca{flex:none;box-sizing:border-box;width:var(--size-mark-category);height:var(--size-mark-category)}
+.circulo{border-radius:var(--radius-full)}
+.anillo{border:2px solid var(--ui-person-shared);border-radius:var(--radius-full)}
+.axel{background:var(--ui-person-axel)}
+.ximena{background:var(--ui-person-ximena)}
+.karen{background:var(--ui-person-karen)}
+.walmart{background:var(--ui-store-walmart)}
+.bodega{background:var(--ui-store-bodega-aurrera)}
+.sams{background:var(--ui-store-sams-club)}
+.mercado{background:var(--ui-store-market)}
+.insignia{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-1);border-radius:var(--radius-sm);font-weight:var(--font-weight-medium)}
+.ahorro{background:var(--ui-role-savings-surface);color:var(--ui-role-savings)}
+.deuda{background:var(--ui-role-debt-surface);color:var(--ui-role-debt)}
+</style>
+</head>
+<body>
+<div class="grupo small"><p class="titulo caption">Personas</p>
+<span class="chip"><span class="marca circulo axel" aria-hidden="true"></span>Axel</span>
+<span class="chip"><span class="marca circulo ximena" aria-hidden="true"></span>Ximena</span>
+<span class="chip"><span class="marca circulo karen" aria-hidden="true"></span>Karen</span>
+<span class="chip"><span class="marca anillo" aria-hidden="true"></span>Conjunto</span></div>
+<div class="grupo small"><p class="titulo caption">Tiendas</p>
+<span class="chip tienda"><span class="marca walmart" aria-hidden="true"></span>Walmart</span>
+<span class="chip tienda"><span class="marca bodega" aria-hidden="true"></span>Bodega Aurrera</span>
+<span class="chip tienda"><span class="marca sams" aria-hidden="true"></span>Sam's Club</span>
+<span class="chip tienda"><span class="marca mercado" aria-hidden="true"></span>Mercado</span></div>
+<div class="grupo small"><p class="titulo caption">Filtros</p>
+<button class="chip small" type="button" aria-pressed="true"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="marca circulo ximena" aria-hidden="true"></span>Ximena</button>
+<button class="chip small" type="button" aria-pressed="false"><span class="marca circulo karen" aria-hidden="true"></span>Karen</button>
+<button class="chip tienda small" type="button" aria-label="Quitar filtro Walmart"><span class="marca walmart" aria-hidden="true"></span>Walmart<span class="x"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/> <path d="m6 6 12 12"/></svg></span></button></div>
+<div class="grupo"><p class="titulo caption">Insignias de rol</p>
+<span class="insignia caption ahorro"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/> <path d="M16 10h.01"/> <path d="M2 8v1a2 2 0 0 0 2 2h1"/></svg>Ahorro</span>
+<span class="insignia caption deuda"><svg class="icon i20" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/> <line x1="2" x2="22" y1="10" y2="10"/> <path d="M6 14h2"/></svg>Crédito</span></div>
+</body>
+</html>
