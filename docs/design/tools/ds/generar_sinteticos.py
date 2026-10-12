@@ -666,9 +666,11 @@ for (m, pl, rl) in MESES_H:
         for c, v in zip(vars_, prop(rl - sum(real.values()), pesos)): real[c["id"]] = v
         cats = [dict(categoria_id=c["id"], plan_cents=plan[c["id"]], real_cents=real[c["id"]], usado_pct=rh(real[c["id"]] * 100, plan[c["id"]])) for c in CAT]
     TPC_MESES.append(dict(mes=m, plan_cents=pl, real_cents=rl, por_categoria=cats))
-SEIS_MAYORES = [c["id"] for c in sorted(CAT, key=lambda c: (-c["plan_cents"], c["id"]))[:6]]  # las 6 de mayor plan; el resto va en «Otras»
+# las 6 con más gasto del hogar devengado en el rango (U1 N-044): Σ real_cents de los 6 meses; desempate por el orden de CAT (P-26.04); el resto va en «Otras»
+GASTO_RANGO = {c["id"]: sum(x["real_cents"] for t in TPC_MESES for x in t["por_categoria"] if x["categoria_id"] == c["id"]) for c in CAT}
+SEIS_MAYORES = [c["id"] for _, _, c in sorted((-GASTO_RANGO[c["id"]], i, c) for i, c in enumerate(CAT))[:6]]
 for t in TPC_MESES: t["otras_real_cents"] = sum(c["real_cents"] for c in t["por_categoria"] if c["categoria_id"] not in SEIS_MAYORES); t["otras_plan_cents"] = sum(c["plan_cents"] for c in t["por_categoria"] if c["categoria_id"] not in SEIS_MAYORES)
-TENDENCIA_POR_CATEGORIA = dict(nota="6 meses (mayo a octubre de 2026), no 12: los meses anteriores a mayo se dibujan como estado vacío «—». Cada mes suma el plan y el real de presupuesto.tendencia", seis_mayores=SEIS_MAYORES, meses=TPC_MESES)
+TENDENCIA_POR_CATEGORIA = dict(nota="6 meses (mayo a octubre de 2026), no 12: los meses anteriores a mayo se dibujan como estado vacío «—». Cada mes suma el plan y el real de presupuesto.tendencia. seis_mayores = las 6 categorías con más gasto del hogar devengado de mayo a octubre (U1 N-044), de mayor a menor", seis_mayores=SEIS_MAYORES, meses=TPC_MESES)
 # historial de precios por producto × presentación × tienda (P-15 › Tendencias, N-171): el último punto es el precio vigente de «precios»
 def dia_ok(d): return d.day not in (9, 10, 15, 28, 30, 31)
 for P_ in PRODS:

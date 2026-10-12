@@ -106,7 +106,11 @@ for t, pt in zip(TP["meses"], PT):
     bien &= [c["categoria_id"] for c in pc] == ids and sum(c["plan_cents"] for c in pc) == t["plan_cents"] == pt["plan_cents"] and sum(c["real_cents"] for c in pc) == t["real_cents"] == pt["real_cents"] and all(c["usado_pct"] == rh(c["real_cents"] * 100, c["plan_cents"]) for c in pc if c["plan_cents"])
     bien &= t["otras_real_cents"] == sum(c["real_cents"] for c in pc if c["categoria_id"] not in TP["seis_mayores"]) and t["otras_plan_cents"] == sum(c["plan_cents"] for c in pc if c["categoria_id"] not in TP["seis_mayores"])
 bien &= [(c["categoria_id"], c["plan_cents"], c["real_cents"]) for c in TP["meses"][-1]["por_categoria"]] == [(c["id"], c["plan_cents"], c["real_cents"]) for c in C] and len(TP["seis_mayores"]) == 6 and set(TP["seis_mayores"]) <= set(ids)
-ok(bien, "gastos_resumen.tendencia_por_categoria (P-02 N-044, P-06 N-085): 6 meses; cada mes suma el plan y el real de presupuesto.tendencia; % ROUND_HALF_UP; octubre = categorias; «Otras» = las 7 que no son de las 6 mayores")
+# criterio de U1 N-044: las 6 con más gasto del hogar devengado del rango (Σ real de los 6 meses), desempate por el orden de categorias; recalculado desde los datos
+_g = {i: sum(x["real_cents"] for t in TP["meses"] for x in t["por_categoria"] if x["categoria_id"] == i) for i in ids}
+_esp = [i for _, _, i in sorted((-_g[i], k, i) for k, i in enumerate(ids))[:6]]
+if TP["seis_mayores"] != _esp: bien = False; print("     seis_mayores dice", TP["seis_mayores"], "y el gasto real del rango da", _esp)
+ok(bien, "gastos_resumen.tendencia_por_categoria (P-02 N-044, P-06 N-085): 6 meses; cada mes suma el plan y el real de presupuesto.tendencia; % ROUND_HALF_UP; octubre = categorias; seis_mayores = las 6 con más gasto del hogar devengado de mayo a octubre (U1 N-044, recalculado); «Otras» = las 7 restantes")
 PR = D["productos"]; pp = [e for p in PR for e in p["precios"]]; bien = True; npar = 0
 for p in PR:
     HP = {(h["tienda_id"], h["presentacion_id"]): h["puntos"] for h in p["historial_precios"]}; bien &= len(HP) == len(p["historial_precios"]) == len(p["precios"])

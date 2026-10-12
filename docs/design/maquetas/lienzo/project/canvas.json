@@ -1,0 +1,1090 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-12T07:30:00Z"
+ },
+ "title": "Finanzas Hogar · Pantallas",
+ "launch": {
+  "view": "canvas",
+  "page": "shell"
+ },
+ "pages": [
+  {
+   "id": "shell",
+   "name": "Shell: entrar, barra lateral, hojas"
+  },
+  {
+   "id": "inicio",
+   "name": "Inicio"
+  },
+  {
+   "id": "gastos",
+   "name": "Gastos"
+  },
+  {
+   "id": "presupuesto",
+   "name": "Presupuesto"
+  },
+  {
+   "id": "comidas",
+   "name": "Comidas"
+  },
+  {
+   "id": "compras",
+   "name": "Compras y tiendas"
+  },
+  {
+   "id": "creditos",
+   "name": "Créditos"
+  },
+  {
+   "id": "salud-reportes",
+   "name": "Salud y Reportes"
+  },
+  {
+   "id": "ajustes",
+   "name": "Ajustes"
+  }
+ ],
+ "boards": {
+  "shell/shell-p00-entrar-m.dc.html": {
+   "w": 412,
+   "h": 915,
+   "title": "P-00 · Iniciar sesión · móvil",
+   "page": "shell",
+   "is_interactive": false,
+   "x": 0,
+   "y": 0
+  },
+  "shell/shell-p00-entrar-e.dc.html": {
+   "w": 1440,
+   "h": 1000,
+   "title": "P-00 · Iniciar sesión · escritorio",
+   "page": "shell",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 492,
+   "y": 0
+  },
+  "shell/shell-barra-lateral-m.dc.html": {
+   "w": 412,
+   "h": 1854,
+   "title": "G-01 · Barra lateral y menú «/» · móvil",
+   "page": "shell",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 0
+  },
+  "shell/shell-barra-lateral-e.dc.html": {
+   "w": 1440,
+   "h": 1160,
+   "title": "G-01 · Barra lateral y menú «/» · escritorio",
+   "page": "shell",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 2504,
+   "y": 0
+  },
+  "shell/shell-p03-registrar-gasto-m.dc.html": {
+   "w": 412,
+   "h": 915,
+   "title": "P-03 · Registrar gasto · móvil",
+   "page": "shell",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 0
+  },
+  "shell/shell-p03-registrar-gasto-e.dc.html": {
+   "w": 1440,
+   "h": 1200,
+   "title": "P-03 · Registrar gasto · escritorio",
+   "page": "shell",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 4516,
+   "y": 0
+  },
+  "shell/shell-p22-registrar-peso-m.dc.html": {
+   "w": 412,
+   "h": 915,
+   "title": "P-22 · Registrar peso · móvil",
+   "page": "shell",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 0
+  },
+  "shell/shell-p22-registrar-peso-e.dc.html": {
+   "w": 1440,
+   "h": 900,
+   "title": "P-22 · Registrar peso · escritorio",
+   "page": "shell",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 6528,
+   "y": 0
+  },
+  "inicio/inicio-p01-resumen-m.dc.html": {
+   "w": 412,
+   "h": 1840,
+   "title": "P-01 · Inicio › Resumen · móvil",
+   "page": "inicio",
+   "is_interactive": false,
+   "x": 0,
+   "y": 2274
+  },
+  "inicio/inicio-p01-resumen-e.dc.html": {
+   "w": 1440,
+   "h": 1250,
+   "title": "P-01 · Inicio › Resumen · escritorio",
+   "page": "inicio",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 492,
+   "y": 2274
+  },
+  "inicio/inicio-p01-detalle-m.dc.html": {
+   "w": 412,
+   "h": 4250,
+   "title": "P-01 · Inicio › Detalle · móvil",
+   "page": "inicio",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 2274
+  },
+  "inicio/inicio-p01-detalle-e.dc.html": {
+   "w": 1440,
+   "h": 3000,
+   "title": "P-01 · Inicio › Detalle · escritorio",
+   "page": "inicio",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 2504,
+   "y": 2274
+  },
+  "inicio/inicio-p01-tendencias-m.dc.html": {
+   "w": 412,
+   "h": 2450,
+   "title": "P-01 · Inicio › Tendencias · móvil",
+   "page": "inicio",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 2274
+  },
+  "inicio/inicio-p01-tendencias-e.dc.html": {
+   "w": 1440,
+   "h": 1950,
+   "title": "P-01 · Inicio › Tendencias · escritorio",
+   "page": "inicio",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 4516,
+   "y": 2274
+  },
+  "inicio/inicio-p01-calendario-m.dc.html": {
+   "w": 412,
+   "h": 3050,
+   "title": "P-01 · Inicio › Calendario · móvil",
+   "page": "inicio",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 2274
+  },
+  "inicio/inicio-p01-calendario-e.dc.html": {
+   "w": 1440,
+   "h": 1600,
+   "title": "P-01 · Inicio › Calendario · escritorio",
+   "page": "inicio",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 6528,
+   "y": 2274
+  },
+  "gastos/gastos-p02-todos-m.dc.html": {
+   "w": 412,
+   "h": 2870,
+   "title": "P-02 · Todos los gastos · móvil",
+   "page": "gastos",
+   "is_interactive": true,
+   "x": 0,
+   "y": 6944
+  },
+  "gastos/gastos-p02-todos-e.dc.html": {
+   "w": 1440,
+   "h": 2200,
+   "title": "P-02 · Todos los gastos · escritorio",
+   "page": "gastos",
+   "expand": "fill",
+   "is_interactive": true,
+   "x": 492,
+   "y": 6944
+  },
+  "gastos/gastos-p04-gasto-m.dc.html": {
+   "w": 412,
+   "h": 2180,
+   "title": "P-04 · Gasto · móvil",
+   "page": "gastos",
+   "is_interactive": true,
+   "x": 2012,
+   "y": 6944
+  },
+  "gastos/gastos-p04-gasto-e.dc.html": {
+   "w": 1440,
+   "h": 2200,
+   "title": "P-04 · Gasto · escritorio",
+   "page": "gastos",
+   "expand": "fill",
+   "is_interactive": true,
+   "x": 2504,
+   "y": 6944
+  },
+  "gastos/gastos-p05-ticket-m.dc.html": {
+   "w": 412,
+   "h": 1790,
+   "title": "P-05 · Capturar ticket · móvil",
+   "page": "gastos",
+   "is_interactive": true,
+   "x": 4024,
+   "y": 6944
+  },
+  "gastos/gastos-p05-ticket-e.dc.html": {
+   "w": 1440,
+   "h": 1600,
+   "title": "P-05 · Capturar ticket · escritorio",
+   "page": "gastos",
+   "expand": "fill",
+   "is_interactive": true,
+   "x": 4516,
+   "y": 6944
+  },
+  "presupuesto/presupuesto-p06-mes-m.dc.html": {
+   "w": 412,
+   "h": 4400,
+   "title": "P-06 · Presupuesto del mes · móvil",
+   "page": "presupuesto",
+   "is_interactive": false,
+   "x": 0,
+   "y": 10234
+  },
+  "presupuesto/presupuesto-p06-mes-e.dc.html": {
+   "w": 1440,
+   "h": 2650,
+   "title": "P-06 · Presupuesto del mes · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 492,
+   "y": 10234
+  },
+  "presupuesto/presupuesto-p07-flujo-m.dc.html": {
+   "w": 412,
+   "h": 3440,
+   "title": "P-07 · Flujo y proyección · móvil",
+   "page": "presupuesto",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 10234
+  },
+  "presupuesto/presupuesto-p07-flujo-e.dc.html": {
+   "w": 1440,
+   "h": 2340,
+   "title": "P-07 · Flujo y proyección · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 2504,
+   "y": 10234
+  },
+  "presupuesto/presupuesto-p08-ingresos-m.dc.html": {
+   "w": 412,
+   "h": 1880,
+   "title": "P-08 · Ingresos · móvil",
+   "page": "presupuesto",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 10234
+  },
+  "presupuesto/presupuesto-p08-ingresos-e.dc.html": {
+   "w": 1440,
+   "h": 1480,
+   "title": "P-08 · Ingresos · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 4516,
+   "y": 10234
+  },
+  "presupuesto/presupuesto-p09-ahorro-m.dc.html": {
+   "w": 412,
+   "h": 2830,
+   "title": "P-09 · Ahorro y metas · móvil",
+   "page": "presupuesto",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 10234
+  },
+  "presupuesto/presupuesto-p09-ahorro-e.dc.html": {
+   "w": 1440,
+   "h": 1880,
+   "title": "P-09 · Ahorro y metas · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 6528,
+   "y": 10234
+  },
+  "comidas/comidas-p10-semana-m.dc.html": {
+   "w": 412,
+   "h": 2700,
+   "title": "P-10 · Plan de la semana · móvil",
+   "page": "comidas",
+   "is_interactive": false,
+   "x": 0,
+   "y": 15054
+  },
+  "comidas/comidas-p10-semana-e.dc.html": {
+   "w": 1440,
+   "h": 2300,
+   "title": "P-10 · Plan de la semana · escritorio",
+   "page": "comidas",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 492,
+   "y": 15054
+  },
+  "comidas/comidas-p11-recetario-m.dc.html": {
+   "w": 412,
+   "h": 2700,
+   "title": "P-11 · Recetario · móvil",
+   "page": "comidas",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 15054
+  },
+  "comidas/comidas-p11-recetario-e.dc.html": {
+   "w": 1440,
+   "h": 1700,
+   "title": "P-11 · Recetario · escritorio",
+   "page": "comidas",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 2504,
+   "y": 15054
+  },
+  "comidas/comidas-p12-receta-m.dc.html": {
+   "w": 412,
+   "h": 2650,
+   "title": "P-12 · Receta · móvil",
+   "page": "comidas",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 15054
+  },
+  "comidas/comidas-p12-receta-e.dc.html": {
+   "w": 1440,
+   "h": 1750,
+   "title": "P-12 · Receta · escritorio",
+   "page": "comidas",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 4516,
+   "y": 15054
+  },
+  "compras/compras-p13-lista-m.dc.html": {
+   "w": 412,
+   "h": 2950,
+   "title": "P-13 · Lista de compras · móvil",
+   "page": "compras",
+   "is_interactive": false,
+   "x": 0,
+   "y": 18174
+  },
+  "compras/compras-p13-lista-e.dc.html": {
+   "w": 1440,
+   "h": 2560,
+   "title": "P-13 · Lista de compras · escritorio",
+   "page": "compras",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 492,
+   "y": 18174
+  },
+  "compras/compras-p14-canasta-m.dc.html": {
+   "w": 412,
+   "h": 2250,
+   "title": "P-14 · Comparar canasta · móvil",
+   "page": "compras",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 18174
+  },
+  "compras/compras-p14-canasta-e.dc.html": {
+   "w": 1440,
+   "h": 3350,
+   "title": "P-14 · Comparar canasta · escritorio",
+   "page": "compras",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 2504,
+   "y": 18174
+  },
+  "compras/compras-p15-productos-m.dc.html": {
+   "w": 412,
+   "h": 1320,
+   "title": "P-15 · Productos y precios · móvil",
+   "page": "compras",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 18174
+  },
+  "compras/compras-p15-productos-e.dc.html": {
+   "w": 1440,
+   "h": 2800,
+   "title": "P-15 · Productos y precios · escritorio",
+   "page": "compras",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 4516,
+   "y": 18174
+  },
+  "compras/compras-p16-inventario-m.dc.html": {
+   "w": 412,
+   "h": 1500,
+   "title": "P-16 · Inventario · móvil",
+   "page": "compras",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 18174
+  },
+  "compras/compras-p16-inventario-e.dc.html": {
+   "w": 1440,
+   "h": 1700,
+   "title": "P-16 · Inventario · escritorio",
+   "page": "compras",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 6528,
+   "y": 18174
+  },
+  "creditos/creditos-p17-lineas-m.dc.html": {
+   "w": 412,
+   "h": 3000,
+   "title": "P-17 · Todas las líneas · móvil",
+   "page": "creditos",
+   "is_interactive": true,
+   "x": 0,
+   "y": 21944
+  },
+  "creditos/creditos-p17-lineas-e.dc.html": {
+   "w": 1440,
+   "h": 2700,
+   "title": "P-17 · Todas las líneas · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": true,
+   "x": 492,
+   "y": 21944
+  },
+  "creditos/creditos-p18-credito-m.dc.html": {
+   "w": 412,
+   "h": 1800,
+   "title": "P-18 · Crédito · móvil",
+   "page": "creditos",
+   "is_interactive": true,
+   "x": 2012,
+   "y": 21944
+  },
+  "creditos/creditos-p18-credito-e.dc.html": {
+   "w": 1440,
+   "h": 1300,
+   "title": "P-18 · Crédito · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": true,
+   "x": 2504,
+   "y": 21944
+  },
+  "creditos/creditos-p19-compra-m.dc.html": {
+   "w": 412,
+   "h": 2250,
+   "title": "P-19 · Compra a crédito · móvil",
+   "page": "creditos",
+   "is_interactive": true,
+   "x": 4024,
+   "y": 21944
+  },
+  "creditos/creditos-p19-compra-e.dc.html": {
+   "w": 1440,
+   "h": 1700,
+   "title": "P-19 · Compra a crédito · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": true,
+   "x": 4516,
+   "y": 21944
+  },
+  "creditos/creditos-p20-comparador-m.dc.html": {
+   "w": 412,
+   "h": 2650,
+   "title": "P-20 · Comparador de escenarios · móvil",
+   "page": "creditos",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 21944
+  },
+  "creditos/creditos-p20-comparador-e.dc.html": {
+   "w": 1440,
+   "h": 1910,
+   "title": "P-20 · Comparador de escenarios · escritorio",
+   "page": "creditos",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 6528,
+   "y": 21944
+  },
+  "salud-reportes/salud-p21-salud-m.dc.html": {
+   "w": 412,
+   "h": 2300,
+   "title": "P-21 · Salud · móvil",
+   "page": "salud-reportes",
+   "is_interactive": true,
+   "x": 0,
+   "y": 25364
+  },
+  "salud-reportes/salud-p21-salud-e.dc.html": {
+   "w": 1440,
+   "h": 2400,
+   "title": "P-21 · Salud · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 492,
+   "y": 25364
+  },
+  "salud-reportes/reportes-p23-centro-m.dc.html": {
+   "w": 412,
+   "h": 2600,
+   "title": "P-23 · Centro de reportes · móvil",
+   "page": "salud-reportes",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 25364
+  },
+  "salud-reportes/reportes-p23-centro-e.dc.html": {
+   "w": 1440,
+   "h": 2450,
+   "title": "P-23 · Centro de reportes · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 2504,
+   "y": 25364
+  },
+  "salud-reportes/reportes-p24-mensual-m.dc.html": {
+   "w": 412,
+   "h": 3400,
+   "title": "P-24 · Reporte mensual · móvil",
+   "page": "salud-reportes",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 25364
+  },
+  "salud-reportes/reportes-p24-mensual-e.dc.html": {
+   "w": 1440,
+   "h": 3100,
+   "title": "P-24 · Reporte mensual · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 4516,
+   "y": 25364
+  },
+  "salud-reportes/reportes-p25-karen-m.dc.html": {
+   "w": 412,
+   "h": 2000,
+   "title": "P-25 · Estado de cuenta de Karen · móvil",
+   "page": "salud-reportes",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 25364
+  },
+  "salud-reportes/reportes-p25-karen-e.dc.html": {
+   "w": 1440,
+   "h": 2000,
+   "title": "P-25 · Estado de cuenta de Karen · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 6528,
+   "y": 25364
+  },
+  "ajustes/ajustes-p26-indice-m.dc.html": {
+   "w": 412,
+   "h": 1900,
+   "title": "P-26 · Ajustes · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 0,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-indice-e.dc.html": {
+   "w": 1440,
+   "h": 2130,
+   "title": "P-26 · Ajustes · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 492,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s01-cuenta-roles-m.dc.html": {
+   "w": 412,
+   "h": 4860,
+   "title": "P-26.01 · Cuenta y roles · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s01-cuenta-roles-e.dc.html": {
+   "w": 1440,
+   "h": 3840,
+   "title": "P-26.01 · Cuenta y roles · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 2504,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s02-presupuesto-m.dc.html": {
+   "w": 412,
+   "h": 7940,
+   "title": "P-26.02 · Presupuesto · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s02-presupuesto-e.dc.html": {
+   "w": 1440,
+   "h": 4610,
+   "title": "P-26.02 · Presupuesto · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 4516,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s03-ingresos-m.dc.html": {
+   "w": 412,
+   "h": 2030,
+   "title": "P-26.03 · Ingresos · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s03-ingresos-e.dc.html": {
+   "w": 1440,
+   "h": 2090,
+   "title": "P-26.03 · Ingresos · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 6528,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s04-categorias-m.dc.html": {
+   "w": 412,
+   "h": 5160,
+   "title": "P-26.04 · Categorías · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 8048,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s04-categorias-e.dc.html": {
+   "w": 1440,
+   "h": 2180,
+   "title": "P-26.04 · Categorías · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 8540,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s05-creditos-condiciones-m.dc.html": {
+   "w": 412,
+   "h": 7600,
+   "title": "P-26.05 · Créditos y condiciones · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 10060,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s05-creditos-condiciones-e.dc.html": {
+   "w": 1440,
+   "h": 8510,
+   "title": "P-26.05 · Créditos y condiciones · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 10552,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s06-tiendas-precios-m.dc.html": {
+   "w": 412,
+   "h": 5220,
+   "title": "P-26.06 · Tiendas y precios · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 12072,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s06-tiendas-precios-e.dc.html": {
+   "w": 1440,
+   "h": 4210,
+   "title": "P-26.06 · Tiendas y precios · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 12564,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s07-recetas-m.dc.html": {
+   "w": 412,
+   "h": 5300,
+   "title": "P-26.07 · Recetas · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 14084,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s07-recetas-e.dc.html": {
+   "w": 1440,
+   "h": 3300,
+   "title": "P-26.07 · Recetas · escritorio",
+   "page": "ajustes",
+   "expand": "fill",
+   "is_interactive": false,
+   "x": 14576,
+   "y": 29184
+  },
+  "ajustes/ajustes-p26-s08-reportes-m.dc.html": {
+   "w": 412,
+   "h": 1508,
+   "title": "P-26.08 · Reportes y frecuencias · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 0,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s08-reportes-e.dc.html": {
+   "w": 1440,
+   "h": 2265,
+   "title": "P-26.08 · Reportes y frecuencias · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 492,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s09-notificaciones-m.dc.html": {
+   "w": 412,
+   "h": 1823,
+   "title": "P-26.09 · Notificaciones · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 2012,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s09-notificaciones-e.dc.html": {
+   "w": 1440,
+   "h": 2280,
+   "title": "P-26.09 · Notificaciones · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 2504,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s10-apariencia-m.dc.html": {
+   "w": 412,
+   "h": 915,
+   "title": "P-26.10 · Apariencia · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 4024,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s10-apariencia-e.dc.html": {
+   "w": 1440,
+   "h": 972,
+   "title": "P-26.10 · Apariencia · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 4516,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s11-datos-respaldos-m.dc.html": {
+   "w": 412,
+   "h": 3251,
+   "title": "P-26.11 · Datos y respaldos · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 6036,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s11-datos-respaldos-e.dc.html": {
+   "w": 1440,
+   "h": 2946,
+   "title": "P-26.11 · Datos y respaldos · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 6528,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s12-personas-reparto-m.dc.html": {
+   "w": 412,
+   "h": 1502,
+   "title": "P-26.12 · Personas y reparto · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 8048,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s12-personas-reparto-e.dc.html": {
+   "w": 1440,
+   "h": 1902,
+   "title": "P-26.12 · Personas y reparto · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 8540,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s13-salud-metas-m.dc.html": {
+   "w": 412,
+   "h": 4060,
+   "title": "P-26.13 · Salud y metas de ahorro · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 10060,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s13-salud-metas-e.dc.html": {
+   "w": 1440,
+   "h": 2577,
+   "title": "P-26.13 · Salud y metas de ahorro · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 10552,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s14-inventario-m.dc.html": {
+   "w": 412,
+   "h": 2102,
+   "title": "P-26.14 · Inventario · móvil",
+   "page": "ajustes",
+   "is_interactive": false,
+   "x": 12072,
+   "y": 38114
+  },
+  "ajustes/ajustes-p26-s14-inventario-e.dc.html": {
+   "w": 1440,
+   "h": 1762,
+   "title": "P-26.14 · Inventario · escritorio",
+   "page": "ajustes",
+   "is_interactive": false,
+   "expand": "fill",
+   "x": 12564,
+   "y": 38114
+  }
+ },
+ "order": [
+  "shell/shell-barra-lateral-e.dc.html",
+  "shell/shell-p00-entrar-m.dc.html",
+  "shell/shell-p00-entrar-e.dc.html",
+  "shell/shell-barra-lateral-m.dc.html",
+  "shell/shell-p03-registrar-gasto-m.dc.html",
+  "shell/shell-p03-registrar-gasto-e.dc.html",
+  "shell/shell-p22-registrar-peso-m.dc.html",
+  "shell/shell-p22-registrar-peso-e.dc.html",
+  "inicio/inicio-p01-resumen-m.dc.html",
+  "inicio/inicio-p01-resumen-e.dc.html",
+  "inicio/inicio-p01-detalle-m.dc.html",
+  "inicio/inicio-p01-detalle-e.dc.html",
+  "inicio/inicio-p01-tendencias-m.dc.html",
+  "inicio/inicio-p01-tendencias-e.dc.html",
+  "inicio/inicio-p01-calendario-m.dc.html",
+  "inicio/inicio-p01-calendario-e.dc.html",
+  "gastos/gastos-p02-todos-m.dc.html",
+  "gastos/gastos-p02-todos-e.dc.html",
+  "gastos/gastos-p04-gasto-m.dc.html",
+  "gastos/gastos-p04-gasto-e.dc.html",
+  "gastos/gastos-p05-ticket-m.dc.html",
+  "gastos/gastos-p05-ticket-e.dc.html",
+  "presupuesto/presupuesto-p06-mes-m.dc.html",
+  "presupuesto/presupuesto-p06-mes-e.dc.html",
+  "presupuesto/presupuesto-p07-flujo-m.dc.html",
+  "presupuesto/presupuesto-p07-flujo-e.dc.html",
+  "presupuesto/presupuesto-p08-ingresos-m.dc.html",
+  "presupuesto/presupuesto-p08-ingresos-e.dc.html",
+  "presupuesto/presupuesto-p09-ahorro-m.dc.html",
+  "presupuesto/presupuesto-p09-ahorro-e.dc.html",
+  "comidas/comidas-p10-semana-m.dc.html",
+  "comidas/comidas-p10-semana-e.dc.html",
+  "comidas/comidas-p11-recetario-m.dc.html",
+  "comidas/comidas-p11-recetario-e.dc.html",
+  "comidas/comidas-p12-receta-m.dc.html",
+  "comidas/comidas-p12-receta-e.dc.html",
+  "compras/compras-p13-lista-m.dc.html",
+  "compras/compras-p13-lista-e.dc.html",
+  "compras/compras-p14-canasta-m.dc.html",
+  "compras/compras-p14-canasta-e.dc.html",
+  "compras/compras-p15-productos-m.dc.html",
+  "compras/compras-p15-productos-e.dc.html",
+  "compras/compras-p16-inventario-m.dc.html",
+  "compras/compras-p16-inventario-e.dc.html",
+  "creditos/creditos-p17-lineas-m.dc.html",
+  "creditos/creditos-p17-lineas-e.dc.html",
+  "creditos/creditos-p18-credito-m.dc.html",
+  "creditos/creditos-p18-credito-e.dc.html",
+  "creditos/creditos-p19-compra-m.dc.html",
+  "creditos/creditos-p19-compra-e.dc.html",
+  "creditos/creditos-p20-comparador-m.dc.html",
+  "creditos/creditos-p20-comparador-e.dc.html",
+  "salud-reportes/salud-p21-salud-m.dc.html",
+  "salud-reportes/salud-p21-salud-e.dc.html",
+  "salud-reportes/reportes-p23-centro-m.dc.html",
+  "salud-reportes/reportes-p23-centro-e.dc.html",
+  "salud-reportes/reportes-p24-mensual-m.dc.html",
+  "salud-reportes/reportes-p24-mensual-e.dc.html",
+  "salud-reportes/reportes-p25-karen-m.dc.html",
+  "salud-reportes/reportes-p25-karen-e.dc.html",
+  "ajustes/ajustes-p26-indice-m.dc.html",
+  "ajustes/ajustes-p26-indice-e.dc.html",
+  "ajustes/ajustes-p26-s01-cuenta-roles-m.dc.html",
+  "ajustes/ajustes-p26-s01-cuenta-roles-e.dc.html",
+  "ajustes/ajustes-p26-s02-presupuesto-m.dc.html",
+  "ajustes/ajustes-p26-s02-presupuesto-e.dc.html",
+  "ajustes/ajustes-p26-s03-ingresos-m.dc.html",
+  "ajustes/ajustes-p26-s03-ingresos-e.dc.html",
+  "ajustes/ajustes-p26-s04-categorias-m.dc.html",
+  "ajustes/ajustes-p26-s04-categorias-e.dc.html",
+  "ajustes/ajustes-p26-s05-creditos-condiciones-m.dc.html",
+  "ajustes/ajustes-p26-s05-creditos-condiciones-e.dc.html",
+  "ajustes/ajustes-p26-s06-tiendas-precios-m.dc.html",
+  "ajustes/ajustes-p26-s06-tiendas-precios-e.dc.html",
+  "ajustes/ajustes-p26-s07-recetas-m.dc.html",
+  "ajustes/ajustes-p26-s07-recetas-e.dc.html",
+  "ajustes/ajustes-p26-s08-reportes-m.dc.html",
+  "ajustes/ajustes-p26-s08-reportes-e.dc.html",
+  "ajustes/ajustes-p26-s09-notificaciones-m.dc.html",
+  "ajustes/ajustes-p26-s09-notificaciones-e.dc.html",
+  "ajustes/ajustes-p26-s10-apariencia-m.dc.html",
+  "ajustes/ajustes-p26-s10-apariencia-e.dc.html",
+  "ajustes/ajustes-p26-s11-datos-respaldos-m.dc.html",
+  "ajustes/ajustes-p26-s11-datos-respaldos-e.dc.html",
+  "ajustes/ajustes-p26-s12-personas-reparto-m.dc.html",
+  "ajustes/ajustes-p26-s12-personas-reparto-e.dc.html",
+  "ajustes/ajustes-p26-s13-salud-metas-m.dc.html",
+  "ajustes/ajustes-p26-s13-salud-metas-e.dc.html",
+  "ajustes/ajustes-p26-s14-inventario-m.dc.html",
+  "ajustes/ajustes-p26-s14-inventario-e.dc.html"
+ ],
+ "notes": {
+  "titulo-shell": {
+   "x": 0,
+   "y": -300,
+   "text": "Shell: entrar, barra lateral, hojas",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "shell"
+  },
+  "titulo-inicio": {
+   "x": 0,
+   "y": 1974,
+   "text": "Inicio",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "inicio"
+  },
+  "titulo-gastos": {
+   "x": 0,
+   "y": 6644,
+   "text": "Gastos",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "gastos"
+  },
+  "titulo-presupuesto": {
+   "x": 0,
+   "y": 9934,
+   "text": "Presupuesto",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "presupuesto"
+  },
+  "titulo-comidas": {
+   "x": 0,
+   "y": 14754,
+   "text": "Comidas",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "comidas"
+  },
+  "titulo-compras": {
+   "x": 0,
+   "y": 17874,
+   "text": "Compras y tiendas",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "compras"
+  },
+  "titulo-creditos": {
+   "x": 0,
+   "y": 21644,
+   "text": "Créditos",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "creditos"
+  },
+  "titulo-salud-reportes": {
+   "x": 0,
+   "y": 25064,
+   "text": "Salud y Reportes",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "salud-reportes"
+  },
+  "titulo-ajustes-a": {
+   "x": 0,
+   "y": 28884,
+   "text": "Ajustes 1 a 7",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "ajustes"
+  },
+  "titulo-ajustes-b": {
+   "x": 0,
+   "y": 37814,
+   "text": "Ajustes 8 a 14",
+   "kind": "title1",
+   "maxW": 1840,
+   "page": "ajustes"
+  }
+ },
+ "designSystems": [
+  {
+   "title": "Finanzas Hogar",
+   "namespace": "finanzas-hogar",
+   "artifact": "https://claude.ai/artifact/D6r3woEKMBvpWiK6gzr3Ra",
+   "version": null,
+   "copiedAt": "2026-10-12T07:30:00Z"
+  }
+ ]
+}

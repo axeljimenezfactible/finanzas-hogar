@@ -1,0 +1,74 @@
+{
+ "boards": {
+  "salud-reportes/salud-p21-salud-m.dc.html": {
+   "w": 412,
+   "h": 2300,
+   "title": "P-21 · Salud · móvil",
+   "page": "salud-reportes",
+   "is_interactive": true
+  },
+  "salud-reportes/salud-p21-salud-e.dc.html": {
+   "w": 1440,
+   "h": 2400,
+   "title": "P-21 · Salud · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "salud-reportes/reportes-p23-centro-m.dc.html": {
+   "w": 412,
+   "h": 2600,
+   "title": "P-23 · Centro de reportes · móvil",
+   "page": "salud-reportes",
+   "is_interactive": false
+  },
+  "salud-reportes/reportes-p23-centro-e.dc.html": {
+   "w": 1440,
+   "h": 2450,
+   "title": "P-23 · Centro de reportes · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "salud-reportes/reportes-p24-mensual-m.dc.html": {
+   "w": 412,
+   "h": 3400,
+   "title": "P-24 · Reporte mensual · móvil",
+   "page": "salud-reportes",
+   "is_interactive": false
+  },
+  "salud-reportes/reportes-p24-mensual-e.dc.html": {
+   "w": 1440,
+   "h": 3100,
+   "title": "P-24 · Reporte mensual · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "salud-reportes/reportes-p25-karen-m.dc.html": {
+   "w": 412,
+   "h": 2000,
+   "title": "P-25 · Estado de cuenta de Karen · móvil",
+   "page": "salud-reportes",
+   "is_interactive": false
+  },
+  "salud-reportes/reportes-p25-karen-e.dc.html": {
+   "w": 1440,
+   "h": 2000,
+   "title": "P-25 · Estado de cuenta de Karen · escritorio",
+   "page": "salud-reportes",
+   "expand": "fill",
+   "is_interactive": false
+  }
+ },
+ "order": [
+  "salud-reportes/salud-p21-salud-m.dc.html",
+  "salud-reportes/salud-p21-salud-e.dc.html",
+  "salud-reportes/reportes-p23-centro-m.dc.html",
+  "salud-reportes/reportes-p23-centro-e.dc.html",
+  "salud-reportes/reportes-p24-mensual-m.dc.html",
+  "salud-reportes/reportes-p24-mensual-e.dc.html",
+  "salud-reportes/reportes-p25-karen-m.dc.html",
+  "salud-reportes/reportes-p25-karen-e.dc.html"
+ ]
+}

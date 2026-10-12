@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Inicio · Calendario</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--ui-text-link-hover)}
+*{box-sizing:border-box}
+a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ic24{width:var(--size-icon-md);height:var(--size-icon-md)}
+.n{font-variant-numeric:tabular-nums}
+.t2{color:var(--ui-text-secondary)}
+.row{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+.card{background:var(--ui-surface-card);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-0)}
+.cl{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);color:var(--ui-text-default);text-decoration:none}
+.cl:hover{color:var(--ui-text-default);border-color:var(--ui-border-control-hover)}
+.go{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-touch-min);color:var(--ui-text-link);text-decoration:underline;font-weight:var(--font-weight-medium)}
+.bd{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);width:max-content}
+.bd .ic{width:var(--space-4);height:var(--space-4)}
+.bw{color:var(--ui-role-warning);background:var(--ui-role-warning-surface)}
+.bi{color:var(--ui-role-info);background:var(--ui-role-info-surface)}
+.bic{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default)}
+.tabs{display:flex;gap:var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider);overflow-x:auto}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-touch-min);color:var(--ui-text-secondary);text-decoration:none;border-bottom:var(--border-width-focus) solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.inc{color:var(--ui-role-income)} .exp{color:var(--ui-role-expense)} .sav{color:var(--ui-role-savings)}
+.dot{width:var(--size-viz-marker);height:var(--size-viz-marker);border-radius:var(--radius-full);flex:none}
+.sq{width:var(--size-viz-marker);height:var(--size-viz-marker);flex:none}
+.meter{display:block;height:var(--size-meter-height);border-radius:var(--radius-full);background:var(--ui-viz-track);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:var(--radius-full);background:var(--ui-viz-meter)}
+.bb{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:var(--size-bottombar-item-min-width);height:var(--size-bottombar-item-height);color:var(--ui-text-secondary);text-decoration:none}
+.pill{display:flex;align-items:center;justify-content:center;width:var(--size-bottombar-indicator-width);height:var(--size-bottombar-indicator-height);border-radius:var(--radius-full)}
+.li{display:flex;align-items:center;gap:var(--space-3);min-height:var(--size-agenda-row);border-top:var(--border-width-default) solid var(--ui-border-divider);color:var(--ui-text-default);text-decoration:none}
+.li:hover{background:var(--ui-surface-hover-subtle);color:var(--ui-text-default)}
+.col{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
+.fr{display:flex;gap:var(--space-2);align-items:flex-start;padding:var(--space-3);border-radius:var(--radius-md);background:var(--ui-role-info-surface);color:var(--ui-text-default)}
+.fr .ic{color:var(--ui-role-info)}
+.bf{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--size-touch-min);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-default);font:inherit;font-weight:var(--font-weight-medium);text-decoration:none}
+.icd{color:var(--ui-icon-default)} .mkt{color:var(--ui-store-market)}
+.pend{stroke-dasharray:3 2.2}
+</style>
+</helmet>
+<div style="width:412px;min-height:3050px;box-sizing:border-box;display:flex;flex-direction:column;background:var(--ui-surface-page)">
+  <header style="display:flex;align-items:center;justify-content:space-between;height:var(--layout-topbar-height-mobile);padding:0 var(--space-2)">
+    <a class="bic" href="../shell/shell-barra-lateral-m.dc.html" aria-label="Abrir menú"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M4 6h16M4 18h16"/></svg></a>
+    <span class="small t2">Finanzas Hogar</span>
+    <button class="bic" type="button" aria-label="Más acciones: Foto de ticket"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></svg></button>
+  </header>
+  <main style="display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-2) var(--space-4) var(--space-6)">
+    <h1 class="title-1" style="display:flex;align-items:center;gap:var(--space-2);margin:0"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</h1>
+    <div class="tabs small" role="tablist" aria-label="Subsecciones de Inicio">
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-resumen-m.dc.html">Resumen</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-detalle-m.dc.html">Detalle</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-tendencias-m.dc.html">Tendencias</a>
+      <a class="tab" role="tab" aria-selected="true" href="inicio-p01-calendario-m.dc.html">Calendario</a>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <span class="small t2">De hoy al Vie 20 nov 2026</span>
+      <button class="bf small" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M7 12h10M10 18h4"/></svg>Filtrar</button>
+    </div>
+    <div class="fr small" role="status"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4M16 2v4M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM3 10h18"/></svg>En curso: Promoción Bodega Aurrera (9.5000 %) · del 19 oct al 18 nov</div>
+    <section aria-label="Agenda del hogar" style="display:flex;flex-direction:column">
+      <span class="caption t2" style="padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);background:var(--ui-surface-hover-subtle)">2.ª quincena de octubre · del 16 al 31</span>
+      <sc-for list="{{ dias }}" as="d" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column">
+          <sc-if value="{{ d.q }}" hint-placeholder-val="{{ false }}"><span class="caption t2" style="margin-top:var(--space-3);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);background:var(--ui-surface-hover-subtle)">{{ d.q }}</span></sc-if>
+          <h2 class="small" style="margin:0;padding:var(--space-3) 0 var(--space-1);font-weight:var(--font-weight-medium)">{{ d.f }}</h2>
+          <sc-if value="{{ d.vacio }}" hint-placeholder-val="{{ false }}"><span class="caption t2" style="padding-bottom:var(--space-2)">Sin eventos</span></sc-if>
+          <sc-for list="{{ d.ev }}" as="e" hint-placeholder-count="2">
+            <a class="li" href="{{ e.href }}"><svg class="{{ e.ic }}" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ e.d }}"/></svg><span class="col" style="flex:1"><span class="small">{{ e.t }}</span><span class="caption t2 n">{{ e.s }}</span></span><span class="col" style="align-items:flex-end"><span class="small n {{ e.cls }}">{{ e.a }}</span><span class="row" style="gap:var(--space-1)"><sc-if value="{{ e.pend }}" hint-placeholder-val="{{ false }}"><svg class="ic icd pend" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/></svg></sc-if><span class="{{ e.stc }}">{{ e.st }}</span></span></span></a>
+          </sc-for>
+        </div>
+      </sc-for>
+    </section>
+    <button class="bf small" type="button" style="align-self:center">Ver 30 días más</button>
+  </main>
+  <nav aria-label="Navegación principal" style="margin-top:auto;display:flex;justify-content:space-around;align-items:center;height:var(--layout-bottombar-height);background:var(--ui-surface-raised);border-top:var(--border-width-default) solid var(--ui-border-divider)">
+    <a class="bb" aria-current="page" href="inicio-p01-resumen-m.dc.html"><span class="pill" style="background:var(--ui-surface-selected);color:var(--ui-icon-selected)"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="caption" style="color:var(--ui-text-default);font-weight:var(--font-weight-medium)">Inicio</span></a>
+    <a class="bb" href="../comidas/comidas-p10-semana-m.dc.html"><span class="pill"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span><span class="caption">Comidas</span></a>
+    <a class="bb" href="../shell/shell-p03-registrar-gasto-m.dc.html" aria-label="Registrar gasto"><span style="display:flex;align-items:center;justify-content:center;width:var(--size-bottombar-add);height:var(--size-bottombar-add);border-radius:var(--radius-full);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></span></a>
+    <a class="bb" href="../compras/compras-p13-lista-m.dc.html"><span class="pill"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span><span class="caption">Compras</span></a>
+    <a class="bb" href="#"><span class="pill"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg></span><span class="caption">Buscar</span></a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":3050}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const P = {
+      inc: ['M17 7 7 17M17 17H7V7', 'inc', '../presupuesto/presupuesto-p08-ingresos-m.dc.html'],
+      pay: ['M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20', 'icd', '../creditos/creditos-p18-credito-m.dc.html'],
+      exp: ['M7 7h10v10M7 17 17 7', 'exp', '../gastos/gastos-p02-todos-m.dc.html'],
+      cut: ['M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5M16 2v4M8 2v4M3 10h5M17.5 17.5 16 16.3V14M10 16a6 6 0 1 0 12 0a6 6 0 1 0-12 0', 'icd', '../creditos/creditos-p18-credito-m.dc.html'],
+      gro: ['M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12', 'icd', '../compras/compras-p13-lista-m.dc.html'],
+      mkt: ['M15 21v-5a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v5M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05M2 7l2.9-4.2A2 2 0 0 1 6.5 2h11a2 2 0 0 1 1.6.8L22 7a2.5 2.5 0 0 1-5 .5 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0A2.5 2.5 0 0 1 2 7', 'mkt', '../compras/compras-p13-lista-m.dc.html'],
+      pro: ['M8 2v4M16 2v4M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM3 10h18', 'icd', '#'],
+      rep: ['M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M8 18v-1M12 18v-6M16 18v-3', 'icd', '../salud-reportes/reportes-p24-mensual-m.dc.html']
+    };
+    const ev = ([k, t, a, s, st]) => ({ d: P[k][0], ic: 'ic ' + P[k][1], cls: k === 'inc' ? 'inc' : (k === 'exp' ? 'exp' : ''), href: P[k][2], t, a, s, st, pend: st === 'Pendiente', stc: st === 'Esperado' ? 'bd bi caption' : 'caption t2' });
+
+    const dias = [
+      ['Hoy · Mié 21 oct 2026', '', []],
+      ['Vie 23 oct 2026', '', [['exp', 'Agua (recibo)', '−$238.40', 'Gasto fijo', '']]],
+      ['Sáb 24 oct 2026', '', [['exp', 'Luz (recibo)', '−$684.30', 'Gasto fijo', ''], ['mkt', 'Visita a Mercado Portales', '', 'Día de mercado', '']]],
+      ['Lun 26 oct 2026', '', [['exp', 'Consulta con nutriólogo de Ximena', '−$850.00', 'Gasto venidero', '']]],
+      ['Mar 27 oct 2026', '', [['exp', 'Seguro del auto', '−$1,086.00', 'Gasto fijo', ''], ['mkt', 'Visita al Tianguis de la Narvarte', '', 'Día de mercado', '']]],
+      ['Vie 30 oct 2026', '', [['inc', 'Quincena de Axel', '+$14,780.00', 'Ingreso', 'Esperado'], ['pay', 'Kueski Pay', '$954.60', 'Hogar $572.76 · Karen $381.84', 'Pendiente'], ['pay', 'Kueski Pay', '$906.98', 'Hogar $453.49 · Karen $453.49', 'Pendiente']]],
+      ['Sáb 31 oct 2026', '', [['mkt', 'Visita a Mercado Portales', '', 'Día de mercado', '']]],
+      ['Dom 1 nov 2026', '1.ª quincena de noviembre · del 1 al 15', [['exp', 'Renta', '−$7,200.00', 'Gasto fijo', ''], ['rep', 'Envío del reporte mensual', '', '08:00', '']]],
+      ['Lun 2 nov 2026', '', [['pro', 'Promoción Walmart (sin intereses)', '', 'Del 2 al 20 nov', '']]],
+      ['Mar 3 nov 2026', '', [['mkt', 'Visita al Tianguis de la Narvarte', '', 'Día de mercado', '']]],
+      ['Vie 6 nov 2026', '', [['pay', 'Banorte Oro', '$6,104.85', 'Hogar $6,104.85', 'Pendiente'], ['exp', 'Telefonía móvil Axel', '−$399.00', 'Gasto fijo', ''], ['exp', 'Telefonía móvil Ximena', '−$349.00', 'Gasto fijo', ''], ['cut', 'Fecha límite de pago de Banorte Oro', '', 'Tarjeta', '']]],
+      ['Sáb 7 nov 2026', '', [['mkt', 'Visita a Mercado Portales', '', 'Día de mercado', '']]],
+      ['Jue 12 nov 2026', '', [['exp', 'Internet del hogar', '−$599.00', 'Gasto fijo', ''], ['pro', 'Promoción Liverpool (6 meses sin intereses)', '', 'Del 12 al 22 nov', '']]],
+      ['Sáb 14 nov 2026', '', [['exp', 'Streaming', '−$219.00', 'Gasto fijo', '']]],
+      ['Dom 15 nov 2026', '', [['inc', 'Quincena de Axel', '+$14,260.00', 'Ingreso', 'Esperado'], ['pay', 'Kueski Pay', '$906.98', 'Hogar $453.49 · Karen $453.49', 'Pendiente'], ['pay', 'Kueski Pay', '$803.27', 'Hogar $0.00 · Karen $803.27', 'Pendiente']]],
+      ['Mar 17 nov 2026', '2.ª quincena de noviembre · del 16 al 30', [['cut', 'Corte de Banorte Oro', '', 'Tarjeta', '']]],
+      ['Mié 18 nov 2026', '', [['pay', 'Préstamo personal', '$1,452.91', 'Hogar $1,452.91', 'Pendiente']]],
+      ['Vie 20 nov 2026', '', [['pay', 'Crédito Coppel', '$883.39', 'Hogar $883.39', 'Pendiente']]]
+    ].map(([f, q, e]) => ({ f, q, vacio: e.length === 0, ev: e.map(ev) }));
+    return { dias };
+  }
+}
+</script>
+</body>
+</html>

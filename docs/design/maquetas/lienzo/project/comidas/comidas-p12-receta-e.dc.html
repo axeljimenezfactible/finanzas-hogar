@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Receta (escritorio)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link)} a:hover{color:var(--ui-text-link-hover)}
+*,*::before,*::after{box-sizing:border-box}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);fill:none;stroke:currentColor;stroke-width:var(--icon-stroke-user-units-sm);stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.md{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.tn{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mut{color:var(--ui-text-secondary)} .fw5{font-weight:var(--font-weight-medium)} .fw6{font-weight:var(--font-weight-semibold)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.row{display:flex;align-items:center;gap:var(--space-2)} .col{display:flex;flex-direction:column;gap:var(--space-2)} .wr{flex-wrap:wrap} .sp{margin-left:auto} .g1{gap:var(--space-1)} .g3{gap:var(--space-3)} .g4{gap:var(--space-4)}
+.na,.na:hover{text-decoration:none} .na{color:var(--ui-text-secondary)} .na:hover{color:var(--ui-text-default)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:none;font-weight:var(--font-weight-medium);text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn.p{background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)} .btn.p:hover{background:var(--ui-action-primary-bg-hover)}
+.btn.s{border-color:var(--ui-border-control);color:var(--ui-text-default)} .btn.s:hover{background:var(--ui-surface-hover);border-color:var(--ui-border-control-hover)}
+.btn.t{color:var(--ui-text-secondary)} .btn.t:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.btn.i{width:var(--size-control-coarse);padding:0}
+.btn[aria-pressed="true"]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected);color:var(--ui-text-default)}
+@media (pointer:fine) and (not (any-pointer:coarse)){ .btn{min-height:var(--size-control-fine)} .btn.i{width:var(--size-control-fine)} }
+.mk{display:inline-block;width:var(--size-mark-category);height:var(--size-mark-category);flex:none;border-radius:var(--radius-full)}
+.mk.a{background:var(--ui-person-axel)} .mk.x{background:var(--ui-person-ximena)}
+.mk.sq{border-radius:0} .mk.w{background:var(--ui-store-walmart)} .mk.b{background:var(--ui-store-bodega-aurrera)} .mk.s{background:var(--ui-store-sams-club)} .mk.mc{background:var(--ui-store-market)}
+.ins{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);white-space:nowrap}
+.ins.wa{background:var(--ui-role-warning-surface);color:var(--ui-role-warning)} .ins.in{background:var(--ui-role-info-surface);color:var(--ui-role-info)}
+.ins.ne{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.chip{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-chip-height);padding:0 var(--space-2);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-full);background:var(--ui-surface-raised);white-space:nowrap}
+.fch{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-full);background:none;cursor:pointer;white-space:nowrap}
+.fch:hover{background:var(--ui-surface-hover)} .fch[aria-pressed="true"]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected)}
+.card{background:var(--ui-surface-card);border-radius:var(--radius-md);padding:var(--space-3)}
+.tabs{display:flex;gap:var(--space-1);border-bottom:var(--border-width-default) solid var(--ui-border-divider);overflow-x:auto}
+.tab{flex:none;min-height:var(--size-control-coarse);padding:0 var(--space-3);border:0;border-bottom:2px solid transparent;background:none;color:var(--ui-text-secondary);cursor:pointer}
+.tab:hover{color:var(--ui-text-default)} .tab[aria-selected="true"]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.sk{background:var(--ui-skeleton-on-card);border-radius:var(--radius-sm)}
+.ban{display:flex;gap:var(--space-2);align-items:flex-start;padding:var(--space-3);border-radius:var(--radius-md);background:var(--ui-role-error-surface)}
+.ban .ic{color:var(--ui-role-error)}
+.fld{display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-control-coarse);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field)}
+.fld input{flex:1;min-width:0;border:0;background:none;outline:0;height:var(--size-control-coarse)}
+.fld:focus-within{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.fld input::placeholder{color:var(--ui-text-secondary);opacity:1}
+.lnk{color:var(--ui-text-link);text-decoration:underline;cursor:pointer}
+summary{list-style:none;cursor:pointer} summary::-webkit-details-marker{display:none}
+.chev{transition:transform var(--duration-base) var(--ease-standard)} details[open]>summary .chev{transform:rotate(90deg)}
+.pg{display:flex;flex-wrap:wrap;align-items:stretch;min-height:100vh}
+.side{flex:0 0 var(--layout-sidebar-width);max-width:100%;display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-2);background:var(--ui-surface-card)}
+.side ul{display:flex;flex-direction:column}
+.side .it{display:flex;align-items:center;gap:var(--space-2);flex:1;min-height:var(--size-control-coarse);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:none;text-align:left;cursor:pointer}
+.side .it:hover{background:var(--ui-surface-hover)}
+.side .it[aria-current="page"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.side .it .ic{color:var(--ui-icon-default)} .side .it[aria-current="page"] .ic{color:var(--ui-icon-selected)}
+.side .sub{padding-left:var(--space-4)}
+.side .fila{display:flex;align-items:center;gap:var(--space-1)}
+.side .pie{display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-2);padding-top:var(--space-2);border-top:var(--border-width-default) solid var(--ui-border-divider)}
+.avt{display:inline-flex;align-items:center;justify-content:center;width:var(--size-avatar);height:var(--size-avatar);border:0;border-radius:var(--radius-full);background:var(--ui-surface-hover);box-shadow:0 0 0 2px var(--ui-person-axel);font-weight:var(--font-weight-medium)}
+.main{flex:999 1 560px;min-width:0;padding:var(--space-6) var(--space-8);display:flex;flex-direction:column;gap:var(--space-4)}
+.scx{overflow-x:auto}
+
+.rn{text-decoration:underline}
+.pr{display:grid;gap:var(--space-3) var(--space-6)}
+.pr dt{color:var(--ui-text-secondary)}
+.pst{display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-3);border-radius:var(--radius-sm);background:var(--ui-surface-page)}
+.pst .nu{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;flex:none;border-radius:var(--radius-full);background:var(--ui-surface-hover);font-weight:var(--font-weight-medium)}
+.ig{width:100%;border-collapse:collapse}
+.ig th,.ig td{padding:var(--space-3) var(--space-2);border-bottom:var(--border-width-default) solid var(--ui-border-divider);vertical-align:top;text-align:left}
+.ig .r{text-align:right}
+.ig thead th{color:var(--ui-text-secondary);font-weight:var(--font-weight-medium);vertical-align:bottom}
+.stp{display:flex;align-items:center;gap:var(--space-1)}
+
+.pr{grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.pr>div{display:flex;gap:var(--space-3);justify-content:space-between;padding:var(--space-1) 0;border-bottom:var(--border-width-default) solid var(--ui-border-divider)}
+.est3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:var(--space-4)}
+.est3>div{display:flex;flex-direction:column;gap:var(--space-2);align-items:flex-start}</style></helmet>
+<div class="pg">
+<nav class="side small" aria-label="Secciones">
+<div class="row"><p class="fw6 small" style="margin-left:var(--space-2)">Finanzas Hogar</p><span class="sp"></span><button class="avt caption" type="button" aria-label="Axel, menú de cuenta">A</button></div>
+<ul><li><button class="it na" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg> Buscar</button></li>
+<li><a class="it na" href="../shell/shell-p03-registrar-gasto-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Registrar gasto</a></li></ul>
+<ul>
+<li><a class="it na" href="../inicio/inicio-p01-resumen-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</a></li>
+<li><div class="fila"><a class="it na" href="../gastos/gastos-p02-todos-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17V7"/><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg>Gastos</a><button class="btn t i" type="button" aria-expanded="false" aria-label="Desplegar Gastos"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></li>
+<li><div class="fila"><a class="it na" href="../presupuesto/presupuesto-p06-mes-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>Presupuesto</a><button class="btn t i" type="button" aria-expanded="false" aria-label="Desplegar Presupuesto"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></li>
+<li><div class="fila"><a class="it na" href="../comidas/comidas-p10-semana-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg> Comidas</a><button class="btn t i" type="button" aria-expanded="true" aria-label="Plegar Comidas"><svg class="ic chev" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(90deg)"><path d="m9 18 6-6-6-6"/></svg></button></div><ul class="sub"><li><a class="it na" href="../comidas/comidas-p10-semana-e.dc.html">Plan de la semana</a></li><li><a class="it na" href="../comidas/comidas-p11-recetario-e.dc.html" aria-current="page">Recetario</a></li></ul></li>
+<li><div class="fila"><a class="it na" href="../compras/compras-p13-lista-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m2.05 2.05 1.099-.028a1 1 0 0 1 1.008.815l2.69 14.347A1 1 0 0 0 7.83 18H18"/><path d="M4.563 5h16.435a1 1 0 0 1 .981 1.204l-1.026 6.226A2 2 0 0 1 18.962 14H6.25"/><circle cx="18" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg>Compras y tiendas</a><button class="btn t i" type="button" aria-expanded="false" aria-label="Desplegar Compras y tiendas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></li>
+<li><div class="fila"><a class="it na" href="../creditos/creditos-p17-lineas-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><path d="M6 14h2"/></svg>Créditos</a><button class="btn t i" type="button" aria-expanded="false" aria-label="Desplegar Créditos"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></li>
+<li><a class="it na" href="../salud-reportes/salud-p21-salud-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>Salud</a></li>
+<li><div class="fila"><a class="it na" href="../salud-reportes/reportes-p23-centro-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 18v-1"/><path d="M12 18v-6"/><path d="M16 18v-3"/></svg>Reportes</a><button class="btn t i" type="button" aria-expanded="false" aria-label="Desplegar Reportes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></li>
+<li><div class="fila"><a class="it na" href="../ajustes/ajustes-p26-indice-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>Ajustes</a><button class="btn t i" type="button" aria-expanded="false" aria-label="Desplegar Ajustes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div></li>
+</ul>
+<div class="pie"><div class="row g1" role="group" aria-label="Tema"><button class="btn t i" type="button" aria-pressed="true" aria-label="Tema del sistema"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></button><button class="btn t i" type="button" aria-pressed="false" aria-label="Tema claro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button><button class="btn t i" type="button" aria-pressed="false" aria-label="Tema oscuro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></button></div><button class="btn t i" type="button" aria-label="Colapsar barra lateral"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg></button></div>
+</nav>
+<main class="main">
+<div class="row wr g3">
+<nav aria-label="Migas de pan" class="row g1 small mut"><a class="na" href="../comidas/comidas-p10-semana-e.dc.html">Comidas</a><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><a class="na" href="../comidas/comidas-p11-recetario-e.dc.html">Recetario</a><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span aria-current="page" class="fw5" style="color:var(--ui-text-default)">Pollo asado con arroz y ensalada</span></nav>
+<span class="sp"></span>
+<button class="btn s" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Duplicar</button>
+<button class="btn t i" type="button" aria-label="Más acciones: eliminar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+<a class="btn p" href="../comidas/comidas-p10-semana-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Agregar al plan</a>
+</div>
+<div class="col g1"><h1 class="title-1">Pollo asado con arroz y ensalada</h1><p class="small mut">Todo se edita en el lugar y se guarda solo. Costo y kcal los calcula el sistema.</p></div>
+<dl class="pr" aria-label="Propiedades de la receta"><div><dt class="small">Tiempos aptos</dt><dd class="small fw5">Comida · Cena</dd></div><div><dt class="small">Porciones base</dt><dd class="small fw5">2 porciones</dd></div><div><dt class="small">Tiempo total</dt><dd class="small fw5">50 min</dd></div><div><dt class="small">Origen</dt><dd class="small fw5">Recetario inicial</dd></div><div><dt class="small">Preparación</dt><dd class="small fw5">15 min</dd></div><div><dt class="small">Cocción</dt><dd class="small fw5">35 min</dd></div><div><dt class="small">Veces en 8 semanas</dt><dd class="small fw5">6</dd></div><div><dt class="small">Próxima fecha en el plan</dt><dd class="small fw5">Sáb 24 oct 2026</dd></div></dl>
+<div class="row wr g4" style="align-items:flex-start">
+<section class="col g3" style="flex:2 1 640px;min-width:0" aria-labelledby="ing"><h2 id="ing" class="title-3">Ingredientes</h2>
+<div class="row wr g3"><span id="plb" class="small fw6">Porciones</span><div class="stp" role="group" aria-labelledby="plb"><button class="btn s i" type="button" aria-label="Menos porciones"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><output class="title-3 tn" style="min-width:var(--space-8);text-align:center" aria-live="polite">2</output><button class="btn s i" type="button" aria-label="Más porciones"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button></div><span class="caption mut">Receta base de 2 porciones. Cantidades, costo y kcal se escalan al cambiar.</span></div>
+<div class="scx"><table class="ig" style="min-width:720px"><caption class="sr">Ingredientes para 2 porciones, con presentación comprable, costo y kcal</caption>
+<thead><tr><th scope="col" class="small">Ingrediente</th><th scope="col" class="small">Cantidad</th><th scope="col" class="small">Presentación comprable</th><th scope="col" class="small r">Costo (tienda y fecha)</th><th scope="col" class="small r">kcal</th></tr></thead>
+<tbody>
+<tr><th scope="row"><div class="small fw5">Pechuga de pollo</div><div class="caption mut">Sin marca</div></th><td class="small tn">500 g</td><td class="small">charola 2 kg<div class="caption mut tn">1 pieza a comprar · <span class="tn ">$193.80</span></div></td><td class="r small"><div class="fw5"><span class="tn ">$48.45</span></div><div class="caption mut row g1" style="justify-content:flex-end"><i class="mk sq s"></i>Sam's Club · 18-oct-2026</div></td><td class="r small"><div class="fw5"><span class="tn">825 kcal</span></div><details open><summary class="caption lnk">Fuente nutricional</summary><p class="caption mut">USDA Foundation Foods 04/2026 (ejemplo) · 165 kcal por 100 g</p></details></td></tr>
+<tr><th scope="row"><div class="small fw5">Arroz blanco</div><div class="caption mut">Morelos</div></th><td class="small tn">160 g</td><td class="small">bolsa 900 g<div class="caption mut tn">1 pieza a comprar · <span class="tn ">$26.70</span></div></td><td class="r small"><div class="fw5"><span class="tn ">$4.75</span></div><div class="caption mut row g1" style="justify-content:flex-end"><i class="mk sq w"></i>Walmart · 19-oct-2026</div></td><td class="r small"><div class="fw5"><span class="tn">576 kcal</span></div><details><summary class="caption lnk">Fuente nutricional</summary><p class="caption mut">USDA Foundation Foods 04/2026 (ejemplo) · 360 kcal por 100 g</p></details></td></tr>
+<tr><th scope="row"><div class="small fw5">Jitomate saladet</div><div class="caption mut">Sin marca</div></th><td class="small tn">150 g</td><td class="small">1 kg<div class="caption mut tn">1 pieza a comprar · <span class="tn ">$31.30</span></div></td><td class="r small"><div class="fw5"><span class="tn ">$4.70</span></div><div class="caption mut row g1" style="justify-content:flex-end"><i class="mk sq mc"></i>Tianguis de la Narvarte · 13-oct-2026</div></td><td class="r small"><div class="fw5"><span class="tn">27 kcal</span></div><details><summary class="caption lnk">Fuente nutricional</summary><p class="caption mut">USDA Foundation Foods 04/2026 (ejemplo) · 18 kcal por 100 g</p></details></td></tr>
+<tr><th scope="row"><div class="small fw5">Limón con semilla</div><div class="caption mut">Sin marca</div></th><td class="small tn">40 g</td><td class="small">1 kg<div class="caption mut tn">1 pieza a comprar · <span class="tn ">$29.10</span></div></td><td class="r small"><div class="fw5"><span class="tn ">$1.16</span></div><div class="caption mut row g1" style="justify-content:flex-end"><i class="mk sq mc"></i>Tianguis de la Narvarte · 19-oct-2026</div></td><td class="r small"><div class="fw5"><span class="tn">12 kcal</span></div><details><summary class="caption lnk">Fuente nutricional</summary><p class="caption mut">USDA Foundation Foods 04/2026 (ejemplo) · 30 kcal por 100 g</p></details></td></tr>
+<tr><th scope="row"><div class="small fw5">Zanahoria</div><div class="caption mut">Sin marca</div></th><td class="small tn">100 g</td><td class="small">1 kg<div class="caption mut tn">1 pieza a comprar · <span class="tn ">$19.10</span></div></td><td class="r small"><div class="fw5"><span class="tn ">$1.91</span></div><div class="caption mut row g1" style="justify-content:flex-end"><i class="mk sq mc"></i>Mercado Portales · 19-oct-2026</div></td><td class="r small"><div class="fw5"><span class="tn">41 kcal</span></div><details><summary class="caption lnk">Fuente nutricional</summary><p class="caption mut">USDA Foundation Foods 04/2026 (ejemplo) · 41 kcal por 100 g</p></details></td></tr>
+<tr><th scope="row"><div class="small fw5">Aceite vegetal</div><div class="caption mut">1-2-3</div></th><td class="small tn">15 ml</td><td class="small">3 L<div class="caption mut tn">1 pieza a comprar · <span class="tn ">$131.80</span></div></td><td class="r small"><div class="fw5"><span class="tn ">$0.66</span></div><div class="caption mut row g1" style="justify-content:flex-end"><i class="mk sq s"></i>Sam's Club · 18-oct-2026</div></td><td class="r small"><div class="fw5"><span class="tn">133 kcal</span></div><details><summary class="caption lnk">Fuente nutricional</summary><p class="caption mut">USDA Foundation Foods 04/2026 (ejemplo) · 884 kcal por 100 ml</p></details></td></tr>
+</tbody>
+<tfoot><tr><th scope="row" class="small fw6" colspan="3">Total · 2 porciones</th><td class="r small fw6"><span class="tn ">$61.63</span></td><td class="r small fw6"><span class="tn">1,614 kcal</span></td></tr>
+<tr><th scope="row" class="small fw6" colspan="3">Por porción</th><td class="r small fw6"><span class="tn ">$30.82</span></td><td class="r small fw6"><span class="tn">807 kcal</span></td></tr></tfoot></table></div>
+<div><button class="btn t" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Agregar ingrediente</button></div>
+</section>
+<div class="col g3" style="flex:1 1 320px;min-width:0">
+<section class="card col g3" aria-labelledby="tot"><h2 id="tot" class="title-3">Costo y kcal</h2>
+<dl style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)"><div class="col" style="gap:0"><dt class="caption mut">Costo total</dt><dd class="title-3 tn"><span class="tn ">$61.63</span></dd></div><div class="col" style="gap:0"><dt class="caption mut">Costo por porción</dt><dd class="title-3 tn"><span class="tn ">$30.82</span></dd></div><div class="col" style="gap:0"><dt class="caption mut">kcal total</dt><dd class="title-3 tn">1,614</dd></div><div class="col" style="gap:0"><dt class="caption mut">kcal por porción</dt><dd class="title-3 tn">807</dd></div></dl>
+<p class="caption mut">Fuente nutricional: USDA Foundation Foods 04/2026 (ejemplo). Precios de 13-oct-2026 a 19-oct-2026, por ingrediente.</p></section>
+<section class="card col g3" aria-labelledby="pas"><h2 id="pas" class="title-3">Pasos</h2><ol class="col"><li class="pst"><span class="nu small tn">1</span><p class="small">Prepara los ingredientes.</p></li><li class="pst"><span class="nu small tn">2</span><p class="small">Cocina según el tiempo indicado.</p></li><li class="pst"><span class="nu small tn">3</span><p class="small">Sirve.</p></li></ol><div><button class="btn t" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Agregar paso</button></div></section>
+</div></div>
+<section class="card col g3" aria-labelledby="est"><h2 id="est" class="title-3">Estados</h2>
+<div class="est3">
+<div><h3 class="small fw6">Vacío</h3><p class="small mut">No aplica: la receta ya existe y siempre tiene ingredientes.</p></div>
+<div><h3 class="small fw6">Carga</h3><div aria-hidden="true" class="col" style="width:100%"><div class="sk" style="height:var(--space-6)"></div><div class="sk" style="height:var(--space-6)"></div><div class="sk" style="height:var(--space-6)"></div></div><p class="small mut" role="status">Cargando la receta…</p></div>
+<div><h3 class="small fw6">Ingrediente sin precio o sin kcal</h3><p class="small">Costo <span class="tn fw5">—</span> · Sin precio: aún no hay precio de este producto en ninguna tienda.</p><p class="small">kcal <span class="tn fw5">—</span> · sin fuente.</p><p class="caption mut">Ninguno bloquea la receta.</p></div>
+</div></section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1750}}'>class Component extends DCLogic { renderVals() { return { pantalla: 'P-12', hoy: '2026-10-21' }; } }</script>
+</body>
+</html>

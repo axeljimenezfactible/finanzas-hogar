@@ -1,0 +1,22 @@
+{
+  "boards": {
+    "shell/shell-p00-entrar-m.dc.html": {"w": 412, "h": 915, "title": "P-00 · Iniciar sesión · móvil", "page": "shell", "is_interactive": false},
+    "shell/shell-p00-entrar-e.dc.html": {"w": 1440, "h": 1000, "title": "P-00 · Iniciar sesión · escritorio", "page": "shell", "expand": "fill", "is_interactive": false},
+    "shell/shell-barra-lateral-m.dc.html": {"w": 412, "h": 1854, "title": "G-01 · Barra lateral y menú «/» · móvil", "page": "shell", "is_interactive": false},
+    "shell/shell-barra-lateral-e.dc.html": {"w": 1440, "h": 1160, "title": "G-01 · Barra lateral y menú «/» · escritorio", "page": "shell", "expand": "fill", "is_interactive": false},
+    "shell/shell-p03-registrar-gasto-m.dc.html": {"w": 412, "h": 915, "title": "P-03 · Registrar gasto · móvil", "page": "shell", "is_interactive": false},
+    "shell/shell-p03-registrar-gasto-e.dc.html": {"w": 1440, "h": 1200, "title": "P-03 · Registrar gasto · escritorio", "page": "shell", "expand": "fill", "is_interactive": false},
+    "shell/shell-p22-registrar-peso-m.dc.html": {"w": 412, "h": 915, "title": "P-22 · Registrar peso · móvil", "page": "shell", "is_interactive": false},
+    "shell/shell-p22-registrar-peso-e.dc.html": {"w": 1440, "h": 900, "title": "P-22 · Registrar peso · escritorio", "page": "shell", "expand": "fill", "is_interactive": false}
+  },
+  "order": [
+    "shell/shell-p00-entrar-m.dc.html",
+    "shell/shell-p00-entrar-e.dc.html",
+    "shell/shell-barra-lateral-m.dc.html",
+    "shell/shell-barra-lateral-e.dc.html",
+    "shell/shell-p03-registrar-gasto-m.dc.html",
+    "shell/shell-p03-registrar-gasto-e.dc.html",
+    "shell/shell-p22-registrar-peso-m.dc.html",
+    "shell/shell-p22-registrar-peso-e.dc.html"
+  ]
+}

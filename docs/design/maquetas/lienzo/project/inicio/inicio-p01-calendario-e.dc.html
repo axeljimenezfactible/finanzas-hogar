@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Inicio · Calendario</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--ui-text-link-hover)}
+*{box-sizing:border-box}
+a:focus-visible,button:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+.ic{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ic24{width:var(--size-icon-md);height:var(--size-icon-md)}
+.n{font-variant-numeric:tabular-nums}
+.t2{color:var(--ui-text-secondary)}
+.row{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+.card{background:var(--ui-surface-card);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);box-shadow:var(--shadow-0)}
+.cl{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);color:var(--ui-text-default);text-decoration:none}
+.cl:hover{color:var(--ui-text-default);border-color:var(--ui-border-control-hover)}
+.go{display:inline-flex;align-items:center;gap:var(--space-1);min-height:var(--size-touch-min);color:var(--ui-text-link);text-decoration:underline;font-weight:var(--font-weight-medium)}
+.bd{display:inline-flex;align-items:center;gap:var(--space-1);height:var(--size-badge-height);padding:0 var(--space-2);border-radius:var(--radius-sm);width:max-content}
+.bd .ic{width:var(--space-4);height:var(--space-4)}
+.bw{color:var(--ui-role-warning);background:var(--ui-role-warning-surface)}
+.bi{color:var(--ui-role-info);background:var(--ui-role-info-surface)}
+.bic{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default)}
+.tabs{display:flex;gap:var(--space-4);border-bottom:var(--border-width-default) solid var(--ui-border-divider);overflow-x:auto}
+.tab{display:inline-flex;align-items:center;min-height:var(--size-touch-min);color:var(--ui-text-secondary);text-decoration:none;border-bottom:var(--border-width-focus) solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ui-text-default);font-weight:var(--font-weight-medium);border-bottom-color:var(--ui-border-selected)}
+.inc{color:var(--ui-role-income)} .exp{color:var(--ui-role-expense)} .sav{color:var(--ui-role-savings)}
+.dot{width:var(--size-viz-marker);height:var(--size-viz-marker);border-radius:var(--radius-full);flex:none}
+.sq{width:var(--size-viz-marker);height:var(--size-viz-marker);flex:none}
+.meter{display:block;height:var(--size-meter-height);border-radius:var(--radius-full);background:var(--ui-viz-track);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:var(--radius-full);background:var(--ui-viz-meter)}
+.nv{display:flex;align-items:center;gap:var(--space-2);min-height:var(--size-sidebar-item);padding:0 var(--space-2);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-secondary);text-decoration:none;flex:1;font:inherit}
+.nv:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.nv[aria-current="page"]{background:var(--ui-surface-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.nv[aria-current="page"] svg{color:var(--ui-icon-selected)}
+.chv{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);min-width:var(--size-sidebar-item);height:var(--size-sidebar-item);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--ui-icon-default);font:inherit}
+.av{display:inline-flex;align-items:center;justify-content:center;width:var(--size-avatar);height:var(--size-avatar);border-radius:var(--radius-full);background:var(--ui-surface-hover);border:var(--border-width-focus) solid var(--ui-person-axel);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.b2{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--size-control-fine);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-default);font:inherit;font-weight:var(--font-weight-medium);text-decoration:none}
+.b2:hover{background:var(--ui-surface-hover);color:var(--ui-text-default)}
+.bp{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--size-control-fine);padding:0 var(--space-3);border-radius:var(--radius-sm);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary);font-weight:var(--font-weight-medium);text-decoration:none}
+.bp:hover{background:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+.cle{padding:var(--space-6);flex:1 1 18rem;min-width:0}
+.cle .go{margin-top:auto}
+.sk{display:block;background:var(--ui-skeleton-on-card);border-radius:var(--radius-sm)}
+.err{color:var(--ui-role-error)}
+.li{display:flex;align-items:center;gap:var(--space-3);min-height:var(--size-agenda-row);border-top:var(--border-width-default) solid var(--ui-border-divider);color:var(--ui-text-default);text-decoration:none}
+.li:hover{background:var(--ui-surface-hover-subtle);color:var(--ui-text-default)}
+.col{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
+.fr{display:flex;gap:var(--space-2);align-items:flex-start;padding:var(--space-3);border-radius:var(--radius-md);background:var(--ui-role-info-surface);color:var(--ui-text-default)}
+.fr .ic{color:var(--ui-role-info)}
+.bf{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--size-touch-min);padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-default);font:inherit;font-weight:var(--font-weight-medium);text-decoration:none}
+.icd{color:var(--ui-icon-default)} .mkt{color:var(--ui-store-market)}
+.pend{stroke-dasharray:3 2.2}
+
+.bf{min-height:var(--size-control-fine)}
+.cell{display:flex;flex-direction:column;align-items:stretch;gap:var(--space-1);min-height:var(--size-calendar-cell-wide);padding:var(--space-2);border:0;border-top:var(--border-width-focus) solid var(--ui-border-selected);background:var(--ui-surface-card);color:var(--ui-text-default);font:inherit;text-align:left}
+.cell:hover{background:var(--ui-surface-hover-subtle)}
+.q2{border-top-style:dashed;border-top-color:var(--ui-viz-baseline)}
+.out{background:var(--ui-surface-page);border-top-color:transparent}
+.sel,.sel:hover{background:var(--ui-surface-selected)}
+.chip{display:flex;align-items:flex-start;gap:var(--space-1)}
+.chip .ic{width:var(--space-4);height:var(--space-4)}
+.hoyn{display:inline-flex;align-items:center;justify-content:center;min-width:var(--size-avatar);height:var(--size-avatar);border-radius:var(--radius-full);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary)}</style>
+</helmet>
+<div style="display:flex;flex-wrap:wrap;align-items:stretch;min-height:1600px;background:var(--ui-surface-page)">
+  <nav aria-label="Secciones" style="flex:1 1 var(--layout-sidebar-width);display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-3) var(--space-2);background:var(--ui-surface-card);border-right:var(--border-width-default) solid var(--ui-border-divider)">
+    <div class="row" style="justify-content:space-between;padding:0 0 var(--space-2) var(--space-2)">
+      <span class="small" style="font-weight:var(--font-weight-semibold)">Finanzas Hogar</span>
+      <button class="chv" type="button" aria-haspopup="menu" aria-label="Menú de Axel: Cuenta, Apariencia, Cerrar sesión"><span class="av caption">A</span><span class="small">Axel</span></button>
+    </div>
+    <a class="nv small" href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg><span style="flex:1">Buscar</span><span class="caption t2">Ctrl+K</span></a>
+    <a class="nv small" href="../shell/shell-p03-registrar-gasto-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg><span>Registrar gasto</span></a>
+    <span style="display:block;height:var(--space-2)"></span>
+    <a class="nv small" aria-current="page" href="inicio-p01-resumen-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Inicio</span></a>
+    <sc-for list="{{ nav }}" as="it" hint-placeholder-count="8">
+      <div style="display:flex;align-items:center;gap:var(--space-1)">
+        <a class="nv small" href="{{ it.href }}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ it.d }}"/></svg><span>{{ it.name }}</span></a>
+        <sc-if value="{{ it.kids }}" hint-placeholder-val="{{ true }}"><button class="chv" type="button" aria-expanded="false" aria-label="{{ it.lbl }}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></sc-if>
+      </div>
+    </sc-for>
+    <div class="row" style="margin-top:auto;padding-top:var(--space-4)">
+      <button class="nv small" type="button" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>Tema oscuro</button>
+      <button class="chv" type="button" aria-label="Colapsar barra lateral"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM9 3v18"/></svg></button>
+    </div>
+  </nav>
+  <main style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column">
+    <header class="row" style="justify-content:space-between;min-height:var(--layout-topbar-height-desktop);padding:0 clamp(var(--space-4),4vw,var(--space-12));border-bottom:var(--border-width-default) solid var(--ui-border-divider)">
+      <nav aria-label="Migas de pan" class="small t2"><span aria-current="page">Inicio</span></nav>
+      <div class="row">
+        <a class="b2 small" href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34M3 11a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/></svg>Buscar<span class="caption t2">Ctrl+K</span></a>
+        <a class="bp small" href="../shell/shell-p03-registrar-gasto-e.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>Registrar gasto</a>
+        <button class="bic" type="button" aria-label="Más acciones: Foto de ticket"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></svg></button>
+      </div>
+    </header>
+    <div style="width:100%;max-width:76rem;margin:0 auto;padding:var(--space-6) clamp(var(--space-4),4vw,var(--space-12)) var(--space-12);display:flex;flex-direction:column;gap:var(--space-6)">
+    <h1 class="title-1" style="display:flex;align-items:center;gap:var(--space-2);margin:0"><svg class="ic ic24" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Inicio</h1>
+    <div class="tabs small" role="tablist" aria-label="Subsecciones de Inicio">
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-resumen-e.dc.html">Resumen</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-detalle-e.dc.html">Detalle</a>
+      <a class="tab" role="tab" aria-selected="false" href="inicio-p01-tendencias-e.dc.html">Tendencias</a>
+      <a class="tab" role="tab" aria-selected="true" href="inicio-p01-calendario-e.dc.html">Calendario</a>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <div class="row">
+        <button class="bf small" type="button" aria-label="Mes anterior"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <h2 class="title-3" style="margin:0">Octubre 2026</h2>
+        <button class="bf small" type="button" aria-label="Mes siguiente"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+        <button class="bf small" type="button">Hoy</button>
+      </div>
+      <div class="row" role="group" aria-label="Filtros"><button class="bf small" type="button">Tipos</button><button class="bf small" type="button">Crédito</button><button class="bf small" type="button">Familia</button></div>
+    </div>
+    <p class="caption t2" style="margin:0">Franja continua sobre cada día: 1.ª quincena, del 1 al 15. Franja punteada: 2.ª quincena, del 16 al 31. La semana va de lunes a domingo.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start">
+      <div style="flex:999 1 36rem;min-width:0;overflow-x:auto">
+        <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--size-viz-gap);min-width:42rem;background:var(--ui-border-divider);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md);overflow:hidden">
+          <span class="caption t2" style="padding:var(--space-1) var(--space-2);background:var(--ui-surface-page)">Lun</span><span class="caption t2" style="padding:var(--space-1) var(--space-2);background:var(--ui-surface-page)">Mar</span><span class="caption t2" style="padding:var(--space-1) var(--space-2);background:var(--ui-surface-page)">Mié</span><span class="caption t2" style="padding:var(--space-1) var(--space-2);background:var(--ui-surface-page)">Jue</span><span class="caption t2" style="padding:var(--space-1) var(--space-2);background:var(--ui-surface-page)">Vie</span><span class="caption t2" style="padding:var(--space-1) var(--space-2);background:var(--ui-surface-page)">Sáb</span><span class="caption t2" style="padding:var(--space-1) var(--space-2);background:var(--ui-surface-page)">Dom</span>
+          <sc-for list="{{ celdas }}" as="c" hint-placeholder-count="35">
+            <button type="button" class="{{ c.cls }}" aria-pressed="{{ c.sel }}"><span class="row" style="gap:var(--space-1)"><span class="caption n {{ c.ncls }}">{{ c.n }}</span><sc-if value="{{ c.q }}" hint-placeholder-val="{{ false }}"><span class="caption t2">{{ c.q }}</span></sc-if></span><sc-for list="{{ c.ev }}" as="e" hint-placeholder-count="1"><span class="chip caption"><svg class="{{ e.ic }}" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ e.d }}"/></svg><span class="n">{{ e.t }}</span></span></sc-for><sc-if value="{{ c.mas }}" hint-placeholder-val="{{ false }}"><span class="caption t2">{{ c.mas }}</span></sc-if></button>
+          </sc-for>
+        </div>
+      </div>
+      <aside class="card" aria-labelledby="dia-sel" style="flex:1 1 18rem;min-width:0;display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-6)">
+        <h2 id="dia-sel" class="title-3" style="margin:0">Vie 30 oct 2026</h2>
+        <span class="caption t2">2.ª quincena · del 16 al 31 oct · 3 eventos</span>
+        <div>
+          <a class="li" href="../presupuesto/presupuesto-p08-ingresos-e.dc.html"><svg class="ic inc" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7 7 17M17 17H7V7"/></svg><span class="col" style="flex:1"><span class="small">Quincena de Axel</span><span class="caption t2">Ingreso</span></span><span class="col" style="align-items:flex-end"><span class="small n inc">+$14,780.00</span><span class="bd bi caption">Esperado</span></span></a>
+          <a class="li" href="../creditos/creditos-p18-credito-e.dc.html"><svg class="ic icd" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20"/></svg><span class="col" style="flex:1"><span class="small">Kueski Pay</span><span class="caption t2 n">Hogar $572.76 · Karen $381.84</span></span><span class="col" style="align-items:flex-end"><span class="small n">$954.60</span><span class="row caption t2" style="gap:var(--space-1)"><svg class="ic icd pend" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/></svg>Pendiente</span></span></a>
+          <a class="li" href="../creditos/creditos-p18-credito-e.dc.html"><svg class="ic icd" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20"/></svg><span class="col" style="flex:1"><span class="small">Kueski Pay</span><span class="caption t2 n">Hogar $453.49 · Karen $453.49</span></span><span class="col" style="align-items:flex-end"><span class="small n">$906.98</span><span class="row caption t2" style="gap:var(--space-1)"><svg class="ic icd pend" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/></svg>Pendiente</span></span></a>
+        </div>
+        <span class="small n" style="font-weight:var(--font-weight-medium)">Pagos de crédito del día: $1,861.58 en 2 pagos</span>
+        <a class="go small" href="../creditos/creditos-p18-credito-e.dc.html">Ver crédito<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+      </aside>
+    </div>
+    <section class="card" aria-labelledby="estados-calendario" style="display:flex;flex-wrap:wrap;gap:var(--space-4) var(--space-8);padding:var(--space-6)">
+      <h2 id="estados-calendario" class="title-3" style="margin:0;flex-basis:100%">Estados</h2>
+      <div style="flex:1 1 14rem;display:flex;flex-direction:column;gap:var(--space-2)"><span class="caption t2">Vacío</span><span class="small t2">No hay eventos en este periodo. Sin créditos, ingresos ni despensa programada: «Aún no hay pagos ni ingresos programados».</span><a class="go small" href="../ajustes/ajustes-p26-s03-ingresos-e.dc.html">Capturar ingreso</a></div>
+      <div style="flex:1 1 14rem;display:flex;flex-direction:column;gap:var(--space-2)" aria-busy="true" aria-label="Calendario cargando"><span class="caption t2">Carga</span><span style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--space-1)"><span class="sk" style="height:var(--space-6)"></span><span class="sk" style="height:var(--space-6)"></span><span class="sk" style="height:var(--space-6)"></span><span class="sk" style="height:var(--space-6)"></span><span class="sk" style="height:var(--space-6)"></span><span class="sk" style="height:var(--space-6)"></span><span class="sk" style="height:var(--space-6)"></span></span><span class="caption t2">Rejilla esqueleto</span></div>
+      <div style="flex:1 1 14rem;display:flex;flex-direction:column;gap:var(--space-2)"><span class="caption t2">Error</span><span class="small" style="display:flex;align-items:flex-start;gap:var(--space-2)"><svg class="ic err" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12a10 10 0 1 0 20 0a10 10 0 1 0-20 0M12 8v4M12 16h.01"/></svg>No se pudo cargar el calendario. Revisa que estés en la red de casa.</span><button class="b2 small" type="button" style="align-self:flex-start"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></svg>Reintentar</button></div>
+    </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const n = (name, href, d, kids) => ({ name, href: '../' + href + '-e.dc.html', d, kids, lbl: 'Desplegar ' + name });
+    const nav = [
+      n('Gastos', 'gastos/gastos-p02-todos', 'M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1ZM16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11', true),
+      n('Presupuesto', 'presupuesto/presupuesto-p06-mes', 'M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4', true),
+      n('Comidas', 'comidas/comidas-p10-semana', 'M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7', true),
+      n('Compras y tiendas', 'compras/compras-p13-lista', 'M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12', true),
+      n('Créditos', 'creditos/creditos-p17-lineas', 'M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20', true),
+      n('Salud', 'salud-reportes/salud-p21-salud', 'M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7ZM3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27', false),
+      n('Reportes', 'salud-reportes/reportes-p23-centro', 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M8 18v-1M12 18v-6M16 18v-3', true),
+      n('Ajustes', 'ajustes/ajustes-p26-s01-cuenta-roles', 'M14 17H5M19 7h-9M14 17a3 3 0 1 0 6 0a3 3 0 1 0-6 0M4 7a3 3 0 1 0 6 0a3 3 0 1 0-6 0', true)
+    ];
+    const P = {
+      inc: ['M17 7 7 17M17 17H7V7', 'inc', '../presupuesto/presupuesto-p08-ingresos-e.dc.html'],
+      pay: ['M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20', 'icd', '../creditos/creditos-p18-credito-e.dc.html'],
+      exp: ['M7 7h10v10M7 17 17 7', 'exp', '../gastos/gastos-p02-todos-e.dc.html'],
+      cut: ['M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5M16 2v4M8 2v4M3 10h5M17.5 17.5 16 16.3V14M10 16a6 6 0 1 0 12 0a6 6 0 1 0-12 0', 'icd', '../creditos/creditos-p18-credito-e.dc.html'],
+      gro: ['M7 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M18 21a1 1 0 1 0 2 0a1 1 0 1 0-2 0M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12', 'icd', '../compras/compras-p13-lista-e.dc.html'],
+      mkt: ['M15 21v-5a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v5M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05M2 7l2.9-4.2A2 2 0 0 1 6.5 2h11a2 2 0 0 1 1.6.8L22 7a2.5 2.5 0 0 1-5 .5 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0A2.5 2.5 0 0 1 2 7', 'mkt', '../compras/compras-p13-lista-e.dc.html'],
+      pro: ['M8 2v4M16 2v4M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM3 10h18', 'icd', '#'],
+      rep: ['M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M8 18v-1M12 18v-6M16 18v-3', 'icd', '../salud-reportes/reportes-p24-mensual-e.dc.html']
+    };
+    const ev = ([k, t, a, s, st]) => ({ d: P[k][0], ic: 'ic ' + P[k][1], cls: k === 'inc' ? 'inc' : (k === 'exp' ? 'exp' : ''), href: P[k][2], t, a, s, st, pend: st === 'Pendiente', stc: st === 'Esperado' ? 'bd bi caption' : 'caption t2' });
+
+    const E = ([k, t]) => ({ d: P[k][0], ic: 'ic ' + P[k][1], t });
+    const evs = {
+      1: [['exp', 'Renta −$7,200.00'], ['rep', 'Reporte mensual · Enviado']],
+      3: [['mkt', 'Mercado Portales · Realizada']],
+      6: [['pay', 'Banorte Oro $5,213.40 · Pagado'], ['exp', 'Telefonía Axel −$399.00'], ['exp', 'Telefonía Ximena −$349.00'], ['mkt', 'Tianguis de la Narvarte']],
+      12: [['exp', 'Internet −$599.00'], ['gro', 'Despensa bimestral (Walmart) $2,918.40']],
+      13: [['mkt', 'Tianguis de la Narvarte · Realizada']],
+      14: [['exp', 'Streaming −$219.00']],
+      15: [['inc', 'Quincena +$14,260.00 · Capturada'], ['pay', 'Kueski Pay $954.61 · Pagado']],
+      17: [['cut', 'Corte de Banorte Oro'], ['mkt', 'Mercado Portales · Realizada']],
+      18: [['pay', 'Préstamo personal $1,452.91 · Pagado']],
+      19: [['pro', 'Promoción Bodega Aurrera, del 19 oct al 18 nov']],
+      20: [['pay', 'Crédito Coppel $883.39 · Pagado'], ['mkt', 'Tianguis de la Narvarte · Realizada']],
+      23: [['exp', 'Agua −$238.40']],
+      24: [['exp', 'Luz −$684.30'], ['mkt', 'Mercado Portales']],
+      26: [['exp', 'Nutriólogo de Ximena −$850.00']],
+      27: [['exp', 'Seguro del auto −$1,086.00'], ['mkt', 'Tianguis de la Narvarte']],
+      30: [['inc', 'Quincena +$14,780.00 · Esperado'], ['pay', 'Kueski Pay $954.60 · Pendiente'], ['pay', 'Kueski Pay $906.98 · Pendiente']],
+      31: [['mkt', 'Mercado Portales']]
+    };
+    const celdas = [];
+    for (let i = 0; i < 35; i++) {
+      const out = i < 3 || i > 33;
+      const n = i < 3 ? 28 + i : (i > 33 ? 1 : i - 2);
+      const lista = out ? (i > 33 ? [['exp', 'Renta −$7,200.00'], ['rep', 'Reporte mensual']] : []) : (evs[n] || []);
+      const sel = !out && n === 30, hoy = !out && n === 21;
+      celdas.push({ n: String(n), sel, cls: 'cell' + (out ? ' out' : (n >= 16 ? ' q2' : '')) + (sel ? ' sel' : ''), ncls: hoy ? 'hoyn' : (out ? 't2' : ''), q: out ? '' : (n === 1 ? '1.ª quincena' : (n === 16 ? '2.ª quincena' : (hoy ? 'Hoy' : ''))), ev: lista.slice(0, 3).map(E), mas: lista.length > 3 ? '+' + (lista.length - 3) + ' más' : '' });
+    }
+    return { nav, celdas };
+  }
+}
+</script>
+</body>
+</html>

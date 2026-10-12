@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Registrar peso · móvil</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../ds/finanzas-hogar/tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:var(--ui-surface-page);color:var(--ui-text-default);font-family:var(--font-sans)}
+a{color:var(--ui-text-link)} a:hover{color:var(--ui-text-link-hover)}
+.i{width:var(--size-icon-sm);height:var(--size-icon-sm);flex:none;fill:none;stroke:currentColor;stroke-width:var(--icon-stroke-user-units-sm);stroke-linecap:round;stroke-linejoin:round}
+.i-md{width:var(--size-icon-md);height:var(--size-icon-md);stroke-width:var(--icon-stroke-user-units-md)}
+.money{font-variant-numeric:tabular-nums}
+.lbl{font-weight:var(--font-weight-medium)}
+.ib{display:inline-flex;align-items:center;justify-content:center;width:var(--size-touch-min);height:var(--size-touch-min);flex:none;border-radius:var(--radius-sm);color:var(--ui-icon-default);text-decoration:none}
+.seg{display:grid;gap:var(--space-1);padding:var(--space-1);border:var(--border-width-default) solid var(--ui-border-divider);border-radius:var(--radius-md)}
+.seg>*{display:flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--size-touch-min);border:var(--border-width-default) solid transparent;border-radius:var(--radius-sm);background:transparent;color:var(--ui-text-secondary);font:inherit;text-decoration:none;cursor:pointer}
+.seg>[aria-current="page"],.seg>[aria-pressed="true"]{background:var(--ui-surface-selected);border-color:var(--ui-border-selected);color:var(--ui-text-default);font-weight:var(--font-weight-medium)}
+.mark{width:var(--size-mark-category);height:var(--size-mark-category);border-radius:var(--radius-full);flex:none}
+.prim{display:flex;align-items:center;justify-content:center;min-height:var(--size-control-primary-sheet);padding:0 var(--space-4);border-radius:var(--radius-sm);background:var(--ui-action-primary-bg);color:var(--ui-text-on-primary);font-weight:var(--font-weight-medium);text-decoration:none}
+.prim:hover{background:var(--ui-action-primary-bg-hover);color:var(--ui-text-on-primary)}
+:focus-visible{outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)}
+</style>
+</helmet>
+<div role="dialog" aria-modal="true" aria-labelledby="t-peso" style="width:412px;height:915px;box-sizing:border-box;display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-2) var(--space-4) var(--space-4);background:var(--ui-surface-raised);border-radius:var(--radius-lg) var(--radius-lg) 0 0">
+  <span aria-hidden="true" style="align-self:center;width:var(--size-sheet-handle-width);height:var(--size-sheet-handle-height);border-radius:var(--radius-full);background:var(--ui-border-control)"></span>
+  <div style="display:flex;align-items:center;gap:var(--space-2)">
+    <h2 id="t-peso" class="title-2" style="margin:0;flex:1">Registrar peso</h2>
+    <a class="ib" href="../inicio/inicio-p01-resumen-m.dc.html" aria-label="Cerrar"><svg class="i i-md" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></a>
+  </div>
+
+  <nav class="seg small" aria-label="Tipo de registro" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    <a href="shell-p03-registrar-gasto-m.dc.html">Gasto</a>
+    <a href="../presupuesto/presupuesto-p08-ingresos-m.dc.html">Ingreso</a>
+    <a href="#" aria-current="page">Peso</a>
+    <a href="../gastos/gastos-p05-ticket-m.dc.html">Ticket</a>
+  </nav>
+
+  <div role="group" aria-labelledby="l-persona" style="display:flex;flex-direction:column;gap:var(--space-2)">
+    <span id="l-persona" class="small lbl">Persona</span>
+    <div class="seg body" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <button type="button" aria-pressed="true"><span class="mark" aria-hidden="true" style="background:var(--ui-person-axel)"></span>Axel</button>
+      <button type="button" aria-pressed="false"><span class="mark" aria-hidden="true" style="background:var(--ui-person-ximena)"></span>Ximena</button>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+    <label for="peso" class="small lbl">Peso</label>
+    <div style="display:flex;align-items:center;gap:var(--space-2);min-height:calc(var(--size-control-primary-sheet) + var(--space-4));padding:0 var(--space-3);border:var(--border-width-default) solid var(--ui-border-control);border-radius:var(--radius-sm);background:var(--ui-surface-field);outline:var(--border-width-focus) solid var(--ui-border-focus);outline-offset:var(--focus-offset)">
+      <input id="peso" class="title-2 money" type="text" inputmode="decimal" autocomplete="off" aria-required="true" aria-describedby="antes" value="" style="flex:1;min-width:0;min-height:var(--size-control-coarse);align-self:stretch;border:0;background:transparent;color:var(--ui-text-default);font-weight:var(--font-weight-semibold);padding:0">
+      <span class="title-3" aria-hidden="true" style="color:var(--ui-text-secondary)">kg</span>
+    </div>
+    <p id="antes" class="small money" style="margin:0;color:var(--ui-text-secondary)">Antes: 84.6 kg el 19-oct-2026</p>
+  </div>
+
+  <p class="small" style="margin:0;display:flex;gap:var(--space-2);align-items:center;color:var(--ui-text-secondary)"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>Hoy, Mié 21 oct 2026</p>
+
+  <div style="margin-top:auto;display:flex;flex-direction:column">
+    <a class="prim body" href="../inicio/inicio-p01-resumen-m.dc.html">Guardar</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":915}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { persona: 'Axel', ultimoPesoKg: 84.6, ultimoPesoFecha: '2026-10-19', fecha: '2026-10-21' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{
+ "boards": {
+  "presupuesto/presupuesto-p06-mes-m.dc.html": {
+   "w": 412,
+   "h": 4400,
+   "title": "P-06 · Presupuesto del mes · móvil",
+   "page": "presupuesto",
+   "is_interactive": false
+  },
+  "presupuesto/presupuesto-p06-mes-e.dc.html": {
+   "w": 1440,
+   "h": 2650,
+   "title": "P-06 · Presupuesto del mes · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "presupuesto/presupuesto-p07-flujo-m.dc.html": {
+   "w": 412,
+   "h": 3440,
+   "title": "P-07 · Flujo y proyección · móvil",
+   "page": "presupuesto",
+   "is_interactive": false
+  },
+  "presupuesto/presupuesto-p07-flujo-e.dc.html": {
+   "w": 1440,
+   "h": 2340,
+   "title": "P-07 · Flujo y proyección · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "presupuesto/presupuesto-p08-ingresos-m.dc.html": {
+   "w": 412,
+   "h": 1880,
+   "title": "P-08 · Ingresos · móvil",
+   "page": "presupuesto",
+   "is_interactive": false
+  },
+  "presupuesto/presupuesto-p08-ingresos-e.dc.html": {
+   "w": 1440,
+   "h": 1480,
+   "title": "P-08 · Ingresos · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false
+  },
+  "presupuesto/presupuesto-p09-ahorro-m.dc.html": {
+   "w": 412,
+   "h": 2830,
+   "title": "P-09 · Ahorro y metas · móvil",
+   "page": "presupuesto",
+   "is_interactive": false
+  },
+  "presupuesto/presupuesto-p09-ahorro-e.dc.html": {
+   "w": 1440,
+   "h": 1880,
+   "title": "P-09 · Ahorro y metas · escritorio",
+   "page": "presupuesto",
+   "expand": "fill",
+   "is_interactive": false
+  }
+ },
+ "order": [
+  "presupuesto/presupuesto-p06-mes-m.dc.html",
+  "presupuesto/presupuesto-p06-mes-e.dc.html",
+  "presupuesto/presupuesto-p07-flujo-m.dc.html",
+  "presupuesto/presupuesto-p07-flujo-e.dc.html",
+  "presupuesto/presupuesto-p08-ingresos-m.dc.html",
+  "presupuesto/presupuesto-p08-ingresos-e.dc.html",
+  "presupuesto/presupuesto-p09-ahorro-m.dc.html",
+  "presupuesto/presupuesto-p09-ahorro-e.dc.html"
+ ]
+}
