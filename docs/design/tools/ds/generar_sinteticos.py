@@ -399,27 +399,27 @@ def pag_q(y, m, q, solo=None):
 def con_q(y, m, q, desde=1, hasta=31, venid=None):
     lo, hi = max(desde, 1 if q == 1 else 16), min(hasta, 15 if q == 1 else 31)
     return sum(g["hogar_cents"] for g in GAS if g["forma_pago"] == "contado" and g["fecha"][:7] == f"{y}-{m:02d}" and lo <= int(g["fecha"][8:]) <= hi and (venid is None or (g["estado"] == "venidero") == venid))
-SALDO_INI = 1200000  # efectivo disponible al arrancar octubre (inventado)
+SALDO_INI = 0  # S2-interfaz 1.3 §3.11: el acumulado parte de 0 (el modelo no tiene saldo inicial de cuentas); la llave se conserva en 0
 FQ = []
 for k in range(24):
     y, m = addm(2026, 10, k // 2); q = k % 2 + 1; idx = k // 2; pc = sum(p["hogar_cents"] for p in pag_q(y, m, q)); fx = sum(f["monto_cents"] for f in FIJOS if (f["dia_del_mes"] <= 15) == (q == 1))
     if k == 0: ing = ING["quincenas"][0]["monto_cents"] + ING["extras"][0]["monto_cents"]
     elif k == 1: ing = ING["quincenas"][1]["monto_cents"] + ING["extras"][1]["monto_cents"]
     else: ing = ING["esperado"]["q15_cents"] if q == 1 else ING["esperado"]["q30_cents"]
-    var = VAR_EST if idx < 6 else 0; ah = AHO_Q if idx < 6 else 0
-    if k < 2: var, fx = 0, con_q(y, m, q)  # octubre: lo real y lo comprometido ya está en «contado» (incluye fijos y venideros)
+    # S2-interfaz 1.3 §3.11: variable_estimado_cents y savings_planned_cents van en null (PROVISIONAL, bloqueos S2-flujo-quincenal y S2-ahorro-quincenal) y no entran a ningún saldo, en NINGUNA quincena
+    var = ah = None
+    if k < 2: fx = con_q(y, m, q)  # octubre: lo real y lo comprometido ya está en «contado» (incluye fijos y venideros)
     FQ.append(dict(quincena=f"{y}-{m:02d}-q{q}", inicio=iso(date(y, m, 1 if q == 1 else 16)), fin=iso(date(y, m, 15 if q == 1 else calendar.monthrange(y, m)[1])), mes_n=idx + 1, ingresos_cents=ing, ingreso_esperado=k >= 1,
         pagos_credito_cents=pc, gasto_contado_o_fijo_cents=fx, variable_estimado_cents=var, ahorro_planificado_cents=ah, base="real/comprometido" if k < 2 else ("fijos + variable estimado" if idx < 6 else "solo compromisos contratados")))
 acc = SALDO_INI
 for r in FQ:
-    r["saldo_cents"] = r["ingresos_cents"] - r["pagos_credito_cents"] - r["gasto_contado_o_fijo_cents"] - r["variable_estimado_cents"] - r["ahorro_planificado_cents"]; acc += r["saldo_cents"]; r["saldo_acumulado_cents"] = acc
+    r["saldo_cents"] = r["ingresos_cents"] - r["pagos_credito_cents"] - r["gasto_contado_o_fijo_cents"]; acc += r["saldo_cents"]; r["saldo_acumulado_cents"] = acc
 # tarjeta de Inicio · flujo de la quincena en curso (16 a 31 oct)
 HECHOS = con_q(2026, 10, 2, 16, 21) + sum(p["hogar_cents"] for p in pag_q(2026, 10, 2) if p["hogar_estado"] == "pagada" and int(p["fecha"][8:]) <= 21)
 COMPR = con_q(2026, 10, 2, 22, 31) + sum(p["hogar_cents"] for p in pag_q(2026, 10, 2) if p["hogar_estado"] != "pagada")
 ING_Q2 = FQ[1]["ingresos_cents"]; CIERRE = ING_Q2 - HECHOS - COMPR
 FQ[1].update(pagos_credito_cents=sum(p["hogar_cents"] for p in pag_q(2026, 10, 2)), gasto_contado_o_fijo_cents=con_q(2026, 10, 2)); FQ[1]["saldo_cents"] = ING_Q2 - FQ[1]["pagos_credito_cents"] - FQ[1]["gasto_contado_o_fijo_cents"]
-# quincena en curso: con el bloqueo S2-ahorro-quincenal abierto (U3 §3 D-2, S2-interfaz 1.3 §3.11) el variable estimado y el ahorro planificado van en null y no entran a ningún saldo
-FQ[1]["variable_estimado_cents"] = None; FQ[1]["ahorro_planificado_cents"] = None
+# el saldo de la quincena en curso ya no necesita corrección aparte: la regla de §3.11 vale para las 24 filas (variable estimado y ahorro planificado en null, acumulado desde 0)
 acc = SALDO_INI
 for r in FQ: acc += r["saldo_cents"]; r["saldo_acumulado_cents"] = acc
 # ---------------- proyección 12 meses (devengado contra efectivo)
