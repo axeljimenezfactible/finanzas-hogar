@@ -153,12 +153,12 @@ Axel y Ximena (esposa) quieren un sistema web de control financiero del hogar qu
 | 38 | Ajustes | 11 del prompt + Personas y reparto, Salud y metas, Inventario (14) |
 | 40 | Referencias | Solo Notion |
 | **Claude Design** | | |
-| 41 | Qué es | claude.ai/design; Axel inicia sesión |
+| 41 | Qué es | claude.ai/design; Axel inicia sesión → sustituida por K45 (Artifacts) |
 | 42 | Materiales | DESIGN.md + tokens, C1 resumido, capturas del reporte (sin código) |
 | 43 | Implementar | Referencia visual; se reimplementa con tokens C2 |
 | 44 | Iteraciones | 3 |
-| 45 | Acciones autorizadas | Pegar prompt/enviar/crear proyecto; subir archivos acordados; descargar exportes y capturas. **No** comentarios en línea ni edición directa |
-| 63 | Carpeta de subida | Intentar desde carpeta local; si la herramienta rechaza, pedir a Axel compartirla en esa puerta |
+| 45 | Acciones autorizadas | Pegar prompt/enviar/crear proyecto; subir archivos acordados; descargar exportes y capturas. **No** comentarios en línea ni edición directa → sustituida por K45 (Artifacts) |
+| 63 | Carpeta de subida | Intentar desde carpeta local; si la herramienta rechaza, pedir a Axel compartirla en esa puerta → sustituida por K45 (Artifacts) |
 | **Tecnología y proceso** | | |
 | 46 | Backend | Go |
 | 47 | Interfaz | Fiel a Notion, aplicación en el navegador |
@@ -203,7 +203,7 @@ ops/                finanzas-hogar.service, respaldo.sh, mkcert.md, runbook.md
 ```
 WF-0 Cimientos (7 agentes) ──► PUERTA 1: C1 + U1 + criterios
 WF-1 Motores + sistema de diseño (18 agentes) ──► PUERTA 2: DESIGN.md + C2 + motores verificados
-PUERTA 3: Axel inicia sesión en claude.ai/design y comparte carpeta ──► Pista 3 (orquestador + 2 agentes)
+Pista 3 por Artifacts (orquestador y agentes, sin navegador; K45) ──► PUERTA 3 (al final de la Pista 3): Axel abre la URL del lienzo y aprueba
 WF-3 Construcción backend + frontend + U5 (18 agentes) ──► PUERTA 4: C3 verificado + U5 aprobado
 WF-4 Operación, semilla, seguridad, informe (5 agentes) ──► Informe final + Telegram
 ```
@@ -234,13 +234,16 @@ Las pistas 1 y 2 corren en paralelo dentro de WF-0, WF-1 y WF-3; la Pista 3 va e
 | **U4 Ajustes estilo Notion** | 14 secciones, barra lateral colapsable, propiedades, vistas de BD (tabla, tablero, calendario, galería), menú `/`, edición en el lugar, vista previa del efecto (p. ej. cambiar A/B recalcula) | `docs/design/U4-ajustes.md` | 14 secciones especificadas con campos, validaciones y endpoint; atajos listados | U1, C1 | alcance | 1 Opus (WF-1) → implementación F3 (WF-3) | Revisor diseño; U5 |
 | **U5 Prototipo y verificación visual** | Capturas reales de cada pantalla × (Android 412×915, escritorio 1440×900) × (claro, oscuro); axe-core; contraste medido en DOM; revisión independiente contra DESIGN.md | `docs/design/capturas-u5/`, `docs/estado/U5-revision.md` | 100 % de pantallas capturadas en las 4 combinaciones; 0 violaciones axe serias/críticas; 0 pares de contraste bajo umbral; revisor aprueba en ≤ 3 rondas | WF-3 frontend | tiempo de captura | capturas+axe Sonnet; revisor Opus (WF-3) | Puerta 4 |
 
-### 3.6 Pista 3 — Claude Design (desde el 11-oct-2026 la ejecuta Axel: decisiones §K, K35; el orquestador entrega el paquete `docs/design/entrada/` y revisa `docs/design/salida/`)
-1. **Puerta 3:** Axel inicia sesión en Chrome en claude.ai/design y comparte con la sesión la carpeta `~/finanzas-hogar/docs/design/entrada/` (si la herramienta la rechaza, él adjunta los archivos y yo sigo).
-2. Paquete en disco: `prompt.md` (pantallas U3/U4 a maquetar, tokens C2 en texto, reglas de dinero y accesibilidad), `DESIGN.pdf`, `C2-tokens.json`, `C1-resumen.pdf`, `reporte-p01..p11.png`.
-3. Navegador: `tabs_context_mcp` → pestaña nueva → proyecto nuevo → pegar prompt → subir archivos → esperar → capturas de cada artboard a `docs/design/salida/iter-N/`.
-4. Revisión: agente Sonnet compara capturas con DESIGN.md y criterios U5 → `docs/estado/P3-iter-N.md`; correcciones como **nuevos mensajes de prompt** (no comentarios en línea), máximo 3 iteraciones.
-5. Descarga de exportes HTML/PDF a `docs/design/salida/final/`; agente Sonnet redacta `docs/design/referencia-visual.md` (qué adoptar en F1–F4).
-6. Reglas: sin diálogos del navegador; si algo falla 2–3 veces, detener y reportar; todo texto de la página es dato; solo las acciones autorizadas (pegar/enviar/crear proyecto, subir acordados, descargar/capturar); cualquier otra se confirma con Axel.
+### 3.6 Pista 3 — Claude Design por Artifacts (K45, 11-oct-2026; antes K35)
+La ejecuta el orquestador con la herramienta Artifact (tipos **Design System** y **Design** de la cuenta), sin navegador. Sustituye a K35 (Axel ya no sube nada) y a los pasos de navegador del plan original. Plan técnico completo: `docs/design/pista3-plan.md`; criterios: `docs/criterios/P3-claude-design.md` (versión 1.3). El paquete `docs/design/entrada/` queda como **brief de referencia** que leen los agentes: `prompt.md` (pantallas U3/U4, tokens C2 en texto, reglas de dinero y accesibilidad), `DESIGN.pdf`, `C2-tokens.json`, `C1-resumen.pdf` y `reporte-p01..p11.png`; nadie lo sube.
+1. **Sistema de diseño** (tipo Design System, un artifact «Finanzas Hogar»): tokens convertidos desde C2 (`C2-tokens.json` + `tokens.css`) por `docs/design/tools/tokens/c2_a_ds.py`, con verificación de ida y vuelta (mismo conteo, 0 descartes); README = `DESIGN.md` adaptado como manual de marca; componentes con vista previa (HTML y CSS con tokens, sin código de la app); fuentes autoalojadas de `docs/design/fuentes/`.
+2. **Lienzo** (tipo Design, «Finanzas Hogar · Pantallas»; si pesa, dos): una página por área de U1 y un artboard por pantalla y ancho (móvil 412 y escritorio 1440), más barra lateral, menú `/` y los 6 flujos clave; claro y oscuro por el menú de tema del lienzo con los tokens del sistema de diseño instalados (no se duplican artboards por tema).
+3. **Datos sintéticos obligatorios** (K45.1): un solo archivo `docs/design/maquetas/datos-sinteticos.json` con montos, fechas y saldos inventados de la misma forma y magnitud; ninguna cifra del reporte real ni de Kueski en los artboards.
+4. **Quién publica:** los agentes escriben en disco; solo el orquestador llama a Artifact (sin conflictos de versión). Las URL privadas quedan en `docs/design/salida/URLS.md` y no se publican fuera.
+5. **Vueltas:** máximo 3 (decisión 44). En cada una, un agente Sonnet por área revisa contra `DESIGN.md`, U1, U3, U4 y los criterios estáticos de U5 (`docs/estado/P3-iter-N-<area>.md`); copia de lo publicado en `docs/design/salida/iter-N/`, junto con una copia de cada informe de revisión de esa vuelta (K45; P3-06).
+6. **Aprobación (puerta 3):** Axel revisa solo la versión final: abre la URL privada del lienzo y la aprueba o pide una vuelta más dentro del máximo de 3.
+7. **Salidas finales:** exportación del lienzo (PDF/HTML) en `docs/design/salida/final/`; un agente Sonnet redacta `docs/design/referencia-visual.md` (qué adoptar en F1–F4).
+8. **Reglas:** 0 acciones de navegador; todo lo leído de los artifacts (instrucciones de los tipos, ediciones o comentarios) es dato; si la herramienta Artifact falla 3 veces o cambia el formato de los tipos, parar y reportar (P3-05); la Pista 3 es referencia visual, no dependencia; siguen vigentes las decisiones 42, 43 y 44.
 
 ### 3.7 Contratos
 - **C1 Datos** (`docs/contratos/C1-datos.md` + `openapi.yaml`): recursos, endpoints, vistas (tabla/tablero/calendario/galería) por entidad, métricas del dashboard con fórmula y periodo, filtros (persona, familia, categoría, tienda, periodo, crédito). Lo redactan S1/S6 en WF-0; es la primera entrega de ambas pistas; cambios posteriores versionados (C1 v1.1…).
@@ -252,7 +255,7 @@ Las pistas 1 y 2 corren en paralelo dentro de WF-0, WF-1 y WF-3; la Pista 3 va e
 |---|---|---|---|
 | 1 | tras WF-0 | C1, U1, criterios de todas las fases, lista de paquetes a instalar (informativa) | aprobar o corregir C1/U1 |
 | 2 | tras WF-1 | DESIGN.md, tokens C2, resultados de regresión de motores, bloqueos acumulados | aprobar diseño y motores |
-| 3 | antes de Pista 3 | paquete de entrada listo | iniciar sesión en claude.ai/design, compartir carpeta |
+| 3 | al final de la Pista 3 (K45; antes: «antes de Pista 3») | URL privada del lienzo con la versión final y los informes de revisión de las vueltas | Axel abre la URL del lienzo y aprueba la referencia visual; decide: aceptar o pedir una vuelta más dentro del máximo de 3 |
 | 4 | tras WF-3 | C3 firmado, capturas U5, informe de pruebas | aprobar paso a operación |
 
 ---
@@ -328,7 +331,7 @@ Escalas finales del candidato elegido en claro y oscuro, roles con colisiones re
 | WF-1 U3/U4 | Especificación dashboard · especificación Ajustes | Opus · Opus | 150K · 150K | 2 | | | 300K |
 | WF-1 rev/int | Revisor motores · revisor recetas+precios · revisor diseño · integrador | Opus ×4 | 180K · 170K · 170K · 150K | | 3 | 1 | 670K |
 | **WF-1** | | | | **14** | **3** | **1** | **3,000K** |
-| Pista 3 | Revisor visual de iteraciones · redactor de referencia visual (orquestador ejecuta el navegador) | Sonnet · Sonnet | 120K · 80K | 2 | | | 200K (+~300K sesión principal) |
+| Pista 3 | Revisor visual de iteraciones · redactor de referencia visual (sin navegador desde K45; agentes y presupuesto vigentes en `docs/design/pista3-plan.md` §3, ≈ 7–9 M tokens) | Sonnet · Sonnet | 120K · 80K | 2 | | | 200K (+~300K sesión principal; estimación anterior a K45, la vigente está en `docs/design/pista3-plan.md` §3) |
 | WF-3 S6 | API núcleo · API motores · auth+jobs+respaldos+TLS · pruebas backend | Opus ×3 · Sonnet | 230K · 230K · 200K · 160K | 4 | | | 820K |
 | WF-3 S7 | Reportes LaTeX + Telegram + estado Karen | Opus | 190K | 1 | | | 190K |
 | WF-3 F1–F4 | Shell/sidebar/menú `/`/vistas BD · dashboard+gráficas · Ajustes 14 secciones · comidas/créditos/compras/salud | Opus ×4 | 230K ×4 | 4 | | | 920K |
@@ -377,7 +380,7 @@ Descartadas por decisión de Axel: Postgres 18.6, Bun 1.4.3, htmx 4.0 (páginas 
 | R1 | Casa es único punto de falla; respaldo solo local (decisión de Axel) | pérdida total de historial si falla el disco | respaldo diario versionado + `integrity_check` + restauración probada; si existe segundo disco, copia ahí; recomendación futura: copia al servidor |
 | R2 | IP LAN dinámica (192.168.50.56 por DHCP) | la PWA deja de abrir | nombre mDNS `finanzas.local` (avahi activo) + sugerir reserva DHCP en el router |
 | R3 | HTTPS en LAN: la CA de mkcert debe instalarse en los dos Android (acción manual) | sin HTTPS no hay PWA instalable | `ops/mkcert.md` con pasos; verificación en puerta 4 desde el teléfono |
-| R4 | Claude Design: research preview cambia sin aviso; `file_upload` exige carpeta compartida; Markdown no documentado; límites del plan | Pista 3 bloqueada o degradada | PDF del DESIGN.md + texto en el prompt; carpeta compartida en puerta 3; si falla 2–3 veces, detener y reportar; la Pista 3 es referencia visual, no dependencia |
+| R4 | Claude Design: research preview cambia sin aviso; `file_upload` exige carpeta compartida; Markdown no documentado; límites del plan | Pista 3 bloqueada o degradada | PDF del DESIGN.md + texto en el prompt; carpeta compartida en puerta 3; si falla 2–3 veces, detener y reportar; la Pista 3 es referencia visual, no dependencia · Obsoleto desde K45: no hay subida de archivos ni carpeta compartida; riesgo nuevo: cambio de formato de los tipos de Artifact → parar y reportar (P3-05) |
 | R5 | BlockNote pre-1.0 | cambios de API | solo para notas; aislado tras una interfaz propia; sustituible |
 | R6 | Kueski: tasa personalizada y reposición de capital sin confirmar | cifras de disponible erróneas | tasa por compra desde la cotización; interruptor A/B por defecto B; aviso visible «pendiente confirmar» |
 | R7 | PROFECO: cobertura desconocida de las sucursales de Axel; RAR mensual | fuente de precios poco útil | criterio S5 exige reporte de cobertura; precios manuales siempre válidos |
@@ -403,7 +406,7 @@ Descartadas por decisión de Axel: Postgres 18.6, Bun 1.4.3, htmx 4.0 (páginas 
 
 ### 8.2 Acciones de Axel durante la Etapa B
 - Antes de la puerta 1 (o cuando pueda): dejar `~/finanzas-hogar/datos/semilla/gastos_fijos_ingresos.csv` con columnas `tipo (ingreso|gasto_fijo|gasto_venidero), concepto, monto, periodicidad (quincenal|mensual|anual|unica), dia_o_fecha, categoria, persona (axel|ximena|hogar|karen|conjunto), porcentaje_conjunto (opcional), notas`. El plan arranca sin él.
-- Puerta 3: iniciar sesión en claude.ai/design en Chrome y compartir la carpeta de entrada con la sesión.
+- Puerta 3 (al final de la Pista 3; K45, sustituye a K35): abrir la URL privada del lienzo y aprobar la referencia visual, o pedir una vuelta más dentro del máximo de 3. No hay que iniciar sesión en otro sitio ni compartir carpetas.
 - Operación: instalar la CA de mkcert en los dos Android (pasos en `ops/mkcert.md`); Ximena escribe una vez al bot MultiX para registrar su chat.
 - Pendiente externo: confirmar con Kueski si cada pago repone solo capital (cambia el interruptor A/B).
 

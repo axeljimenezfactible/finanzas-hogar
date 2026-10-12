@@ -292,7 +292,7 @@ f327, f230 = txt('N-327').lower(), txt('N-230').lower()
 ok('0 kcal y 0 kcal' in txt('N-326') and 'K36' in txt('N-326') and all(k in f327 for k in ('el de la casa', 'restablecer', 'kcal', 'k36'))
    and 'N-327' in mrow.get('P-21', set()) and 'N-327' in mrow.get('P-26.13', set()) and 'el de la casa' in f230 and 'k36' in f230 and 'N-327' in sec('### 3.23 ', '### 3.24 '),
    'K36 ajuste por objetivo: casa 0 y 0 kcal en P-26.13 (N-326); por persona en P-21 (N-327, §3.23) con «el de la casa» y «Restablecer»; N-230 lo muestra')
-ok('K35' in s7 and 'docs/design/entrada/' in s7, 'K35 §7: la Pista 3 la ejecuta Axel con el paquete de docs/design/entrada/')
+ok('K45' in s7 and 'docs/design/entrada/' in s7, 'K45 §7: la Pista 3 la ejecuta el orquestador con Artifacts; docs/design/entrada/ queda como brief de referencia (sustituye a K35)')
 ok(fila_de('N-324')[1:3] == ['E', '09'] and 'Descartar' in txt('N-324') and 'N-324' in mrow.get('P-26.09', set()) and 'N-324' in txt('N-299'),
    'Descartar chat detectado: N-324 (E, P-26.09), citado en N-299 y en la matriz')
 

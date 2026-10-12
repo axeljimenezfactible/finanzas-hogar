@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regenera el paquete de entrada para Claude Design (K35, criterios P3-02).
+# Regenera el brief de referencia de la Pista 3 (K45, sustituye a K35; criterios P3-02). No se sube a ningún sitio.
 # Uso: docs/design/tools/paquete_entrada.sh [--forzar]
 #   Sin opciones solo reconstruye lo que cambió en las fuentes: así MANIFIESTO.md
 #   solo cambia si cambian las fuentes (los PDF de Chromium llevan fecha de creación
@@ -178,8 +178,8 @@ log "  pdftotext | grep -c '/api/v1' = 0 en los 4 PDF; sin nombres de operación
 
 log "5/5 MANIFIESTO.md"
 declare -A SIRVE=(
-  [LEEME.md]="Pasos para Axel: qué subir, qué pegar, dónde guardar lo que baje y cuándo parar."
-  [prompt.md]="Mensaje que se pega en Claude Design: pantallas a maquetar, tokens de color en texto, reglas de dinero y accesibilidad."
+  [LEEME.md]="Qué pasa en la Pista 3 por Artifacts (K45): quién la ejecuta, dónde quedan las salidas y cómo aprueba Axel; ya no se sube nada."
+  [prompt.md]="Brief de los agentes de la Pista 3 (K45): pantallas de U1 a maquetar, cifras sintéticas, tokens de color en texto, reglas de dinero y accesibilidad."
   [DESIGN.pdf]="Sistema de diseño completo (principios, color, tipografía, componentes, accesibilidad)."
   [DESIGN.docx]="El mismo sistema de diseño en Word, por si el PDF no se puede leer."
   [U3-dashboard.pdf]="Qué lleva el Inicio: Resumen (6 tarjetas), Detalle, Tendencias y Calendario."
@@ -191,18 +191,18 @@ declare -A SIRVE=(
 )
 ORDEN=(LEEME.md prompt.md DESIGN.pdf DESIGN.docx U3-dashboard.pdf U4-ajustes.pdf C1-resumen.pdf C2-tokens.json tokens.css paleta.png)
 for i in 01 02 03 04 05 06 07 08 09 10 11; do
-  SIRVE[reporte-p$i.png]="Página $((10#$i)) de 11 del reporte previo de compras: referencia de cifras reales del hogar."
+  SIRVE[reporte-p$i.png]="Página $((10#$i)) de 11 del reporte previo de compras: referencia de forma y orden; sus cifras son reales y no se copian a las maquetas (K45.1)."
   ORDEN+=("reporte-p$i.png")
 done
 M="$OUT/MANIFIESTO.md"
 {
-  echo "# MANIFIESTO · Paquete de entrada para Claude Design"
+  echo "# MANIFIESTO · Brief de referencia de la Pista 3 (K45)"
   echo
   echo "Lo genera \`docs/design/tools/paquete_entrada.sh\`; no se edita a mano. Cambia solo si cambian los archivos de origen."
   echo
-  echo "- Carpeta de entrada (lo que se sube): \`/home/deepsec/finanzas-hogar/docs/design/entrada/\`"
-  echo "- Carpeta de cada vuelta (lo que se baja): \`/home/deepsec/finanzas-hogar/docs/design/salida/iter-N/\`, con N = 1, 2 o 3"
-  echo "- Carpeta de los exportes finales: \`/home/deepsec/finanzas-hogar/docs/design/salida/final/\`"
+  echo "- Carpeta del brief de referencia (no se sube; K45): \`/home/deepsec/finanzas-hogar/docs/design/entrada/\`"
+  echo "- Copia en disco de cada vuelta (la hace el orquestador): \`/home/deepsec/finanzas-hogar/docs/design/salida/iter-N/\`, con N = 1, 2 o 3"
+  echo "- Exportación final del lienzo: \`/home/deepsec/finanzas-hogar/docs/design/salida/final/\`"
   echo "- Ningún archivo del paquete contiene código ni credenciales."
   echo
   echo "## Archivos (${#ORDEN[@]}; este MANIFIESTO no se lista a sí mismo)"

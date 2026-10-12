@@ -1,0 +1,16 @@
+# K45 · Pista 3 (Claude Design) la ejecuta el orquestador con Artifacts — BORRADOR para decisiones.md §K
+(aplicar DESPUÉS del commit [WF-1]; no tocar el repo mientras corre wf_b42c6402-0c2)
+
+- **K45 Proceso · Pista 3 por Artifacts (11-oct-2026, 19:20–19:25). Sustituye a K35.** Axel: nota pegada «Claude Design ya no es solo un sitio aparte. Desde el 16 de septiembre funciona también dentro de Claude como un tipo de Artifact (Design, Design System y Slides). El sitio independiente (claude.ai/design) cierra el 14 de diciembre de 2026. […] Ahora puedes hacerlo todo tú, desde los artefacts». Verificado por el orquestador con la herramienta Artifact (`list scope=types`): la cuenta tiene los tipos **Design** (lienzo de artboards) y **Design System** (README, tokens por tema, componentes con vista previa, assets). Decisiones de Axel (AskUserQuestion):
+  1. **Cifras sintéticas** en las maquetas: montos, fechas y saldos inventados con la misma forma y magnitud; nada del reporte real ni de Kueski sale de casa. (Supuesto declarado del orquestador: los nombres Axel, Ximena y Karen sí aparecen, porque son los usuarios de la interfaz y la paleta categórica de DESIGN.md los nombra; si Axel prefiere seudónimos, se cambian en el archivo de datos sintéticos y nada más.)
+  2. **Alcance: todas las pantallas de U1** (~25), en móvil 412 y escritorio 1440; claro y oscuro por el menú de tema del lienzo (tokens C2 instalados), más la barra lateral, el menú `/` y los 6 flujos clave.
+  3. **Axel revisa solo la versión final**: agentes Sonnet revisan las vueltas 1 y 2 contra DESIGN.md, U1/U3/U4 y los criterios; máximo 3 iteraciones (decisión 44); la puerta 3 pasa a ser «Axel abre la URL del lienzo y aprueba la referencia visual».
+  Consecuencias: el orquestador NO abre claude.ai/design ni Claude in Chrome (sigue sin navegador); no hay subida manual de archivos ni carpeta compartida (decisión 63 y riesgo R4 definitivamente obsoletos); el paquete `docs/design/entrada/` deja de ser «para subir» y queda como **brief de referencia** (prompt.md = brief; PDF/PNG = material de consulta); `docs/design/salida/iter-N/` guarda las copias en disco de los artboards de cada vuelta y el informe de revisión; `docs/design/salida/final/` guarda la exportación final (PDF/HTML del lienzo) y `docs/design/referencia-visual.md`. Siguen vigentes 42 (sin código en los materiales), 43 (referencia visual; se reimplementa con tokens C2) y 44 (3 iteraciones). La PROPUESTA «WF-3 no espera a la Pista 3» sigue en pie para la puerta 2.
+
+## Archivos del repo a actualizar en el commit de la puerta 2
+- docs/plan/decisiones.md §K: añadir K45 (texto arriba); marcar K35 como sustituida.
+- docs/plan/plan.md §3.6 (Pista 3) y §3.8 (puerta 3): reescribir con el flujo por Artifacts; R4 → obsoleto; decisión 41/45/63 → notas de sustitución.
+- docs/criterios/P3-claude-design.md: reescribir P3-01..P3-13 (ver pista3-plan.md §4) conservando ids; P3-04 pasa a «0 acciones de navegador y 0 credenciales» (sigue medible en el journal).
+- docs/design/entrada/LEEME.md: cabecera «Este paquete ya no se sube: es el brief de referencia (K45)»; pasos 1–9 se sustituyen por «lo ejecuta el orquestador»; MANIFIESTO.md se regenera.
+- docs/estado/bloqueos/INDICE.md: nada nuevo (K45 no abre bloqueos).
+- Memoria: project_finanzas_hogar.md ya lo registra (19:25).

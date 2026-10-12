@@ -6,7 +6,7 @@ Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas,
 - **Un archivo por ítem** (18 + este índice). Cada uno trae: 1 Objetivo · 2 Criterios numerados `<ID>-nn` (enunciado medible, «Verifica» con comando o cálculo, «Evidencia», severidad) · 3 No aceptable · 4 Umbrales numéricos · 5 Trazabilidad.
 - **Severidad:** *alta* bloquea la puerta; *media* el revisor la devuelve y debe quedar corregida o justificada por escrito antes de la ronda final; *baja* se registra en el informe del revisor. (Hoy los 261 criterios de la tabla son alta o media: 201 alta y 60 media; ninguno baja.)
 - **Evidencia:** cada criterio deja una línea que **empieza con su ID** en `docs/estado/<flujo>/<agente>.md` (flujos `wf0`, `wf1`, `wf3`, `wf4`), con el comando ejecutado y su salida resumida; los archivos con nombre fijo del plan son `docs/estado/S3-escenarios.md`, `S5-terminos.md`, `S5-cobertura-profeco.md`, `U5-revision.md`, `P3-iter-N.md` e `informe-final.md`. El revisor **reejecuta** los comandos; no se aprueba por la sola palabra del agente.
-- **Lo que depende de Axel** (instalar la CA en los Android, abrir la PWA en Android, reiniciar la máquina, que Ximena escriba al bot, subir el paquete a Claude Design, iterar y avisar «iter-N lista»: la Pista 3 la ejecuta Axel, K35) **no se declara cumplido** hasta que Axel lo confirme: queda «pendiente de Axel» o «no verificado» en el informe final.
+- **Lo que depende de Axel** (instalar la CA en los Android, abrir la PWA en Android, reiniciar la máquina, que Ximena escriba al bot, aprobar la referencia visual final en la URL privada del lienzo: la Pista 3 la ejecuta el orquestador con Artifacts, K45, que sustituye a K35) **no se declara cumplido** hasta que Axel lo confirme: queda «pendiente de Axel» o «no verificado» en el informe final.
 - **Rutas y comandos:** absolutos, desde `/home/deepsec/finanzas-hogar`. `jq` no está instalado en la máquina (se usa `python3 -I`). Los scripts auxiliares los entrega cada agente y se nombran en su reporte; si falta una herramienta (`goose`, `govulncheck`, `mkcert`, validador OpenAPI, `style-dictionary`, `jsonschema`), se instala (autorizado) y se anota en «Paquetes instalados».
 - **Identificadores de U1 y C1:** pantalla `P-xx` (inventario de U1 §2.1; `P-26.xx` para las 14 secciones de Ajustes, §2.3); necesidad de datos `N-xxx` (U1 §3; tipo L lectura o E escritura); componente global `G-xx`; flujo clave `F-x` (U1 §0.1). En los criterios, «pantalla» es siempre `P-xx` y «necesidad» es siempre `N-xxx`; T es el número de pantallas `P-xx` más secciones `P-26.xx` que declara U1-02.
 - **Cifras:** toda cifra de `oraculo/model.json` (sha256 `1a57066689ddeed31e0001259f341c7a3f782a46cd4a05128ff453aad2f1bfd4`, 596 hojas numéricas) se reproduce exactamente; si difiere es hallazgo (protocolo §6).
@@ -25,7 +25,7 @@ Versión 1.2 (11-oct-2026, flujo P1c, puerta 1b: respuestas K35 a K44 aplicadas,
 | `C2.md` | Contrato de tokens | WF-1 | Revisor diseño → puerta 2 | 12 (8 / 4) |
 | `U3.md` | Dashboard | WF-1 | Revisor diseño → puerta 2 (y U5) | 12 (8 / 4) |
 | `U4.md` | Ajustes estilo Notion | WF-1 | Revisor diseño → puerta 2 (y U5) | 13 (10 / 3) |
-| `P3-claude-design.md` | Pista 3 · Claude Design | Entre puertas 3 y 4 (paquete: orquestador; Pista 3: Axel, K35) | Revisor visual Sonnet; puerta 4 | 13 (10 / 3) |
+| `P3-claude-design.md` | Pista 3 · Claude Design | Pista 3, después de la puerta 2; termina en la puerta 3 (la ejecuta el orquestador con Artifacts, K45; antes K35) | Revisor visual Sonnet; puerta 4 | 13 (10 / 3) |
 | `S6.md` | Backend local | WF-3 | Revisores backend ×2 → puerta 4 | 16 (12 / 4) |
 | `S7.md` | Reportes | WF-3 | Revisor backend → puerta 4 | 14 (12 / 2) |
 | `U5.md` | Prototipo y verificación visual | WF-3 | Revisor visual → puerta 4 | 13 (10 / 3) |
@@ -41,7 +41,7 @@ Notas: S4 y S5 también dependen de WF-1 y S6/S7 de WF-3 (plan §3.3). F1–F5 d
 |---|---|---|
 | 1 · tras WF-0 | C1, U1, criterios de todas las fases | `C1.md`, `U1.md`, `S1.md`; este directorio completo |
 | 2 · tras WF-1 | DESIGN.md, C2, regresión de motores, bloqueos acumulados | `S2.md`, `S3.md`, `S4.md`, `S5.md`, `U2.md`, `C2.md`, `U3.md`, `U4.md` |
-| 3 · paquete para la Pista 3 (K35) | paquete de entrada listo y revisado (la Pista 3 la ejecuta Axel) | P3-01, P3-02 y P3-11 de `P3-claude-design.md` |
+| 3 · al final de la Pista 3 (K45; antes K35) | la URL privada del lienzo con la referencia visual final: Axel la aprueba o pide una vuelta más dentro del máximo de 3 (la Pista 3 la ejecuta el orquestador con Artifacts) | P3-01, P3-06 y P3-12 de `P3-claude-design.md` (PROPUESTA de `aplicar-k45`; la confirma el orquestador) |
 | 4 · tras WF-3 | C3 firmado, capturas U5, informe de pruebas | `S6.md`, `S7.md`, `U5.md`, `C3.md`, `P3-claude-design.md` |
 | Cierre · WF-4 | informe final | `S8.md`, `WF4-operacion.md` |
 
@@ -146,7 +146,7 @@ Conteo propio por script sobre los 18 archivos (no incluye este índice): `pytho
 | `C1.md` | 23 (21 / 2 / 0) | 1.2 |
 | `C2.md` | 12 (8 / 4 / 0) | 1.2 |
 | `C3.md` | 11 (9 / 2 / 0) | 1.1 |
-| `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.2 |
+| `P3-claude-design.md` | 13 (10 / 3 / 0) | 1.3 |
 | **Total (18 archivos)** | **261 (201 / 60 / 0)** | |
 
 Reconciliación con los cambios de P1c (el total pasa de 257 a 261): C1 suma C1-22 y C1-23 (21 alta / 2 media) y U4 suma U4-12 y U4-13 (10 alta / 3 media); los demás archivos conservan su número de criterios (P3 sigue en 13: P3-03, P3-04, P3-05 y P3-11 cambian de contenido, no de cantidad). Los 257 de la versión 1.1 fueron: `S1–S8` y `WF4` = 134 (105 / 29), sin cambio; las diferencias con los reportes de P1 (`criterios-S-1.1.md` daba 248 y `criterios-UC-1.1.md` 256) eran U5-13, agregado en la ronda 1 de correcciones, y los cambios de U1 y C1.
@@ -158,6 +158,7 @@ Respuestas de la puerta 1b aplicadas (decisiones K35 a K44) y hallazgos bajos B-
 | Origen | Qué cambió | Archivos y criterios |
 |---|---|---|
 | K35 | La Pista 3 la ejecuta Axel; la puerta 3 se reduce a «paquete listo y revisado»; lista nueva del paquete con `LEEME.md` y `MANIFIESTO.md`; `iter-N/` y `siguiente-prompt.md` | `P3-claude-design.md` (P3-01 a P3-06, P3-11, §3 a §5), este índice (§1, §2, §3) |
+| K45 (11-oct-2026, cierre de WF-1; `P3-claude-design.md` pasa a 1.3) | Pista 3 por Artifacts, sustituye a K35: la ejecuta el orquestador sin navegador ni subida de archivos; cifras sintéticas; todas las pantallas de U1; la puerta 3 pasa a «Axel abre la URL del lienzo y aprueba la referencia visual» | `P3-claude-design.md` 1.3 (P3-01 a P3-13, §1, §3 a §5), este índice (§1, §2, §3, §10) |
 | K36 | Ajuste de calorías por persona, 0 y 0, «mantener» no ajusta | `S4.md` (S4-07), `U4.md` (U4-13), `C1.md` (C1-22) |
 | K37 | `manual` compite; `site_assisted` y PROFECO solo referencia | `S5.md` (S5-04, S5-10) |
 | K38 | Domingos: semana siguiente por defecto | `U1.md` (U1-16) |
