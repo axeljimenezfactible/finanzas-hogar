@@ -207,6 +207,7 @@ func (s *snapshot) state(c dominio.CreditRow) mc.CreditState {
 // líneas». Así getCreditTotals (K-3, P-17) y getDebtTrend (G-5) dan la misma cifra que getLiveDebt (motor S2) a la misma
 // fecha y que el barómetro (PaymentsByMonth). PROVISIONAL, bloqueo S6-tablero-lineas-archivadas, opción (a) (punto 5,
 // que pidió el hallazgo M-1 de REVISION-backend-cierre-r1), y bloqueo S6-deuda-viva-hoy (decisión 1 del orquestador).
+// El comparador no usa states sino activeStates (hallazgo A-1 de REVISION-backend-cierre-r2).
 func (s *snapshot) states(ids []int64) []mc.CreditState {
 	want := map[int64]bool{}
 	for _, id := range ids {
@@ -215,6 +216,21 @@ func (s *snapshot) states(ids []int64) []mc.CreditState {
 	var out []mc.CreditState
 	for _, c := range s.credits {
 		if len(ids) == 0 || want[c.ID] {
+			out = append(out, s.state(c))
+		}
+	}
+	return out
+}
+
+// activeStates arma los CreditState solo de las líneas activas: lo que recibe el comparador (comparador.Request.Credits,
+// «créditos activos», S3-interfaz.md §8, Request). Una línea archivada «deja de ofrecerse en capturas nuevas»
+// (diccionario-datos.md, credit.is_active; U1 N-053), así que compareScenarios no genera, no puntúa (la normalización de
+// S3-14 es entre los escenarios generados) ni recomienda escenarios en ella. states sigue con todas las líneas para
+// getCreditTotals y getDebtTrend (hallazgo A-1 de REVISION-backend-cierre-r2).
+func (s *snapshot) activeStates() []mc.CreditState {
+	var out []mc.CreditState
+	for _, c := range s.credits {
+		if c.IsActive {
 			out = append(out, s.state(c))
 		}
 	}

@@ -20,4 +20,10 @@ Fecha: 2026-10-12 · Agente: `correccion-frontend-cierre-r1` (Opus, WF-3a cierre
 | A. PROPUESTA (aplicada): estado de error del bloque con «Reintentar» | Nunca una cifra distinta del oráculo; misma conducta que con N | Ninguno | Bajo: se pierde la lista mientras falla una lectura secundaria |
 | B. Las filas sin la línea «Hogar · Karen» y con el estado de pago sin las variantes «Falta la parte de…» | Se ven fecha, línea y monto | Bajo | Medio: un pago con una parte ya pagada diría «Pendiente» en vez de «Falta la parte de Karen» |
 
-Impacto: solo el caso de falla de `listPersons`; con la lectura bien, K-4 no cambia. La misma conducta falta en D-3 (`Detalle.tsx`) y en el Calendario (`Calendario.tsx`), que usan `karen(c)` igual; quedó como solicitud para el agente de Inicio. Decide Axel en la puerta 4 o el orquestador.
+Impacto: solo el caso de falla de `listPersons`; con la lectura bien, K-4 no cambia. La misma conducta faltaba en D-3 (`Detalle.tsx`) y en el Calendario (`Calendario.tsx`), que usan `karen(c)` igual. Decide Axel en la puerta 4 o el orquestador.
+
+## Ampliación a D-3 (12-oct-2026, M-1 de `docs/estado/wf3/REVISION-frontend-cierre-r2.md`)
+- D-3 «Pagos y disponible» de P-01 Detalle aplica ya la misma opción A: esqueleto mientras `listPersons` no llega; si falla o nunca se cargó, el estado de error de D-3 («No se pudieron cargar los pagos. Revisa que estés en la red de casa.» · «Reintentar», que vuelve a pedir `listPersons`). «Disponible por línea» no depende de `listPersons` y se sigue viendo.
+- Además, una parte de una persona que no aparece en `listPersons` ya no se suma a «Hogar»: esa fila se queda sin la línea «Hogar · Karen».
+- Código: `frontend/src/pantallas/inicio/Detalle.tsx` (`D3`); pruebas: `frontend/pruebas/inicio/inicio.escritorio.spec.ts`; reporte: `docs/estado/wf3/correccion-m1-detalle.md`.
+- Sigue pendiente la insignia de `Calendario.tsx` (los montos vienen del servidor; solo cambiaría con un pago a medias).

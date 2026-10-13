@@ -673,7 +673,7 @@ func compareScenarios(reg *api.Registry) api.HandlerFunc {
 			return motorErr(err, "comparator.timeout_seconds")
 		}
 		req := comparador.Request{Today: mdateOf(s.today), Amount: mc.Cents(in.AmountCents), DesiredDate: mdateOf(desired),
-			StoreID: in.StoreID, Merchant: deref(in.MerchantName, ""), Shares: shares, Credits: s.states(nil),
+			StoreID: in.StoreID, Merchant: deref(in.MerchantName, ""), Shares: shares, Credits: s.activeStates(), // solo líneas activas (A-1)
 			Global: comparador.Constraints{MinAvailableBuffer: centsPtr(c.buffer), MaxLivePurchases: intPtr(c.maxLive),
 				ZeroDebtBy: mdatePtr(c.zeroDebt), DateWindowDays: intPtr(&window)},
 			Override: comparador.Constraints{MinAvailableBuffer: centsPtr(in.MinAvailableBufferCents), MaxLivePurchases: intPtr(in.MaxLivePurchases),

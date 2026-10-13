@@ -6,7 +6,7 @@ import { usarConsulta } from '../../api/consulta'
 import { dinero, fecha, fechaConDia, porcentaje } from '../../api/formatos'
 import { MarcaPersona, MarcaTienda } from '../../componentes/Chip'
 import { ChipSeleccionable } from '../../componentes/Chip'
-import { EnlaceAccion, EsqueletoFilas, Estados, Filtros, IconoAviso, IconoInfo, IconoOk, Insignia, InsigniaPago, Panel, codigoTienda, decimas, diasAviso, entero, estadoPago, karen, listaDe, nombreCredito, titulares, useInicio, type GrupoFiltro } from './comun'
+import { EnlaceAccion, EsqueletoFilas, Estados, FallaBloque, Filtros, IconoAviso, IconoInfo, IconoOk, Insignia, InsigniaPago, Panel, codigoTienda, decimas, diasAviso, entero, estadoPago, karen, listaDe, nombreCredito, titulares, useInicio, type GrupoFiltro } from './comun'
 import { mesDe, semanaISO, semanaVigente, sumarDias } from './fechas'
 import { textosInicio as t } from './textos'
 import type { Esquemas } from '../../api/tipos'
@@ -91,19 +91,31 @@ function D3({ persona, familia, credito, aviso }: { persona: string[]; familia: 
     const proximos = usarConsulta('get', '/api/v1/scheduled-payments', { consulta: { ...filtros, status: 'pending', period: `${hoy}..${sumarDias(hoy, 60)}` } })
     const aviso2 = diasAviso(c), idK = karen(c)?.id
     const av = c.proximo.datos?.availability ?? []
+    // «Hogar · Karen» y la insignia del pago dependen de quién es Karen (listPersons). Igual que K-4 (Tablero.tsx): mientras esa
+    // lectura no llega no se pinta ninguna fila (esqueleto); sin ella todo caería en el hogar («Hogar $973.75»), una cifra distinta
+    // del oráculo (R-13; M-1 de REVISION-frontend-cierre-r2). Si falla, el estado de error de D-3 con «Reintentar»; esta conducta
+    // es PROVISIONAL (bloqueo docs/estado/bloqueos/U3-tablero-k4-personas.md). Una parte de una persona que no está en listPersons
+    // no se suma al hogar: esa fila se queda sin la línea «Hogar · Karen».
+    const sinPersonas = c.personas.datos === undefined && (Boolean(c.personas.error) || c.personas.nuncaCargada)
+    const conocidas = new Set(listaDe(c.personas).map((x) => x.id))
     const Fila = ({ p }: { p: Pago }) => {
-      const k = p.shares?.find((s) => s.person_id === idK), h = (p.shares ?? []).filter((s) => s.person_id !== idK).reduce((a, s) => a + s.amount_cents, 0)
+      const partes = p.shares ?? [], suma = (xs: typeof partes) => xs.reduce((a, s) => a + s.amount_cents, 0)
+      const resueltas = partes.every((s) => conocidas.has(s.person_id))
+      const k = suma(partes.filter((s) => s.person_id === idK)), h = suma(partes.filter((s) => s.person_id !== idK && conocidas.has(s.person_id)))
       return <li className="flex flex-col gap-1 border-t border-border-divider py-2 text-small tabular-nums">
         <span className="flex flex-wrap items-center justify-between gap-2"><span className="font-medium">{fechaConDia(p.due_date)} · {nombreCredito(c, p.credit_id)}</span><span>{dinero(p.amount_cents)}</span></span>
-        <span className="flex flex-wrap items-center justify-between gap-2 text-text-secondary"><span>{t.comun.hogarYKaren(dinero(h), k && k.amount_cents > 0 ? dinero(k.amount_cents) : undefined)}</span><InsigniaPago e={estadoPago(p, hoy, aviso2, idK)} /></span>
+        <span className="flex flex-wrap items-center justify-between gap-2 text-text-secondary">{resueltas && <span>{t.comun.hogarYKaren(dinero(h), k > 0 ? dinero(k) : undefined)}</span>}<InsigniaPago e={estadoPago(p, hoy, aviso2, idK)} /></span>
       </li>
     }
     return <Panel etiqueta={t.d3.titulo} titulo={t.d3.titulo}><Avisos a={aviso} />
+      {sinPersonas ? <FallaBloque texto={t.d3.falla} alReintentar={c.personas.recargar} />
+        : c.personas.datos === undefined ? <EsqueletoFilas n={5} />
+        : <>
       {np?.is_overdue && <Estados consulta={vencidos} falla={t.d3.falla} esqueleto={<EsqueletoFilas n={2} />}>{(d) => <div><h3 className="text-small font-medium">{t.d3.vencidos}</h3><ul>{(d.items as Pago[]).map((p) => <Fila key={p.id} p={p} />)}</ul>{d.next_cursor && <p className="text-small">{t.d3.masVencidos}</p>}</div>}</Estados>}
       <Estados consulta={proximos} falla={t.d3.falla} esqueleto={<EsqueletoFilas n={5} />}>{(d) => {
         if (!d.items.length && !np?.is_overdue) return listaDe(c.creditos).length || av.length ? <p className="text-body text-text-secondary">{t.d3.sinPagos}</p> : <div className="flex flex-col gap-2"><p className="text-body text-text-secondary">{t.d3.sinCreditos}</p><EnlaceAccion a={rutaDe('P-26', { seccion: '05' })} texto={t.d3.accionVacio} /></div>
         return <div><h3 className="text-small font-medium">{t.d3.proximos}</h3><ul>{(d.items as Pago[]).map((p) => <Fila key={p.id} p={p} />)}</ul></div>
-      }}</Estados>
+      }}</Estados></>}
       {av.length > 0 && <div className="flex flex-col gap-2"><h3 className="text-small font-medium">{t.d3.disponible}</h3>{av.map((a) => <Disponible key={a.credit_id} id={a.credit_id} />)}</div>}
       <EnlaceAccion a={rutaDe('P-17')} texto={t.acciones.verTodo} /></Panel>
   }

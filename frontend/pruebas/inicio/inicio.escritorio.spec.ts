@@ -71,6 +71,60 @@ test('P-01 Detalle: D-3 con tres pagos y sin pedir vencidos (A-16), lecturas A y
   await expect(d7.getByRole('link', { name: 'Estado de cuenta de Karen' })).toBeVisible()
 })
 
+const d3 = (page: Page) => page.getByRole('region', { name: 'Pagos y disponible' })
+const PARTES = 'Hogar $598.82 · Karen $374.93'
+
+test('P-01 Detalle: D-3 no pinta ninguna fila mientras listPersons no responde; nunca «Hogar $973.75» sin la parte de Karen (M-1 de REVISION-frontend-cierre-r2, C3-09, R-13)', async ({ page, context }) => {
+  const reg: string[] = []
+  // Registra si en algún instante la página dijo «Hogar $973.75» (el pago entero cargado al hogar porque aún no se sabe quién es Karen).
+  await page.addInitScript(() => {
+    const w = window as unknown as { __hogarTodo: boolean }; w.__hogarTodo = false
+    new MutationObserver(() => { if (document.body?.textContent?.includes('Hogar $973.75')) w.__hogarTodo = true }).observe(document, { subtree: true, childList: true, characterData: true })
+  })
+  await new ApiFalsa().instalar(context); await instalarInicio(context, {}, reg); await reloj(page)
+  let soltar = () => {}
+  const personas = new Promise<void>((r) => { soltar = r })
+  await context.route(/\/api\/v1\/persons(\?|$)/, async (route) => { await personas; await route.fallback() })
+  await page.goto('/inicio?sub=detalle')
+  // Los pagos próximos y el disponible ya respondieron y listPersons sigue retenida: esqueleto, sin filas ni cifras repartidas.
+  await expect.poll(() => reg.some((x) => x.startsWith('/api/v1/scheduled-payments') && x.includes('status=pending'))).toBe(true)
+  await expect(d3(page)).toContainText('Lectura B $6,905.50')
+  await page.waitForTimeout(400)
+  await expect(d3(page).getByRole('listitem')).toHaveCount(0)
+  await expect(d3(page)).not.toContainText('$973.75')
+  await expect(d3(page)).not.toContainText('Hogar')
+  soltar()
+  // Al soltarla, las tres filas con las dos partes separadas (oráculo R-13).
+  for (const f of ['Vie 30 oct 2026 · Kueski', 'Dom 15 nov 2026 · Kueski', 'Lun 30 nov 2026 · Kueski']) await expect(d3(page)).toContainText(f)
+  await expect(d3(page).getByText(PARTES, { exact: true })).toHaveCount(3)
+  expect(await page.evaluate(() => (window as unknown as { __hogarTodo: boolean }).__hogarTodo)).toBe(false)
+})
+
+test('P-01 Detalle: D-3 con listPersons en falla muestra su estado de error con «Reintentar» y sin cifras repartidas; «Reintentar» lo recupera (PROVISIONAL, bloqueo U3-tablero-k4-personas)', async ({ page, context }) => {
+  await new ApiFalsa().instalar(context); await instalarInicio(context, { '/api/v1/persons': 500 }); await reloj(page)
+  await page.goto('/inicio?sub=detalle')
+  await expect(d3(page)).toContainText('No se pudieron cargar los pagos. Revisa que estés en la red de casa.')
+  await expect(d3(page)).toContainText('Lectura B $6,905.50') // el disponible no depende de listPersons
+  await expect(d3(page)).not.toContainText('$973.75')
+  await expect(d3(page)).not.toContainText('Hogar')
+  await context.unrouteAll({ behavior: 'ignoreErrors' })
+  await new ApiFalsa().instalar(context); await instalarInicio(context)
+  await d3(page).getByRole('button', { name: 'Reintentar' }).click()
+  await expect(d3(page)).toContainText('Vie 30 oct 2026 · Kueski')
+  await expect(d3(page).getByText(PARTES, { exact: true })).toHaveCount(3)
+})
+
+test('P-01 Detalle: en D-3 una parte de una persona que no está en listPersons no se suma al hogar (M-1 de REVISION-frontend-cierre-r2)', async ({ page, context }) => {
+  const parte = (person_id: number, amount_cents: number) => ({ person_id, amount_cents, paid_cents: 0, status: 'pending' })
+  const pago = { id: 1, credit_purchase_id: 1, seq: 1, due_date: '2026-10-30', amount_cents: 97375, principal_cents: 90000, interest_cents: 7375, created_at: '2026-10-01T09:00:00-06:00', updated_at: '2026-10-01T09:00:00-06:00', credit_id: 1, status: 'pending', shares: [parte(1, 59882), parte(9, 37493)] }
+  await new ApiFalsa().instalar(context); await instalarInicio(context, { '/api/v1/scheduled-payments': { items: [pago], next_cursor: null } }); await reloj(page)
+  await page.goto('/inicio?sub=detalle')
+  await expect(d3(page)).toContainText('Vie 30 oct 2026 · Kueski')
+  await expect(d3(page).getByRole('listitem')).toHaveCount(1)
+  await expect(d3(page)).toContainText('Pendiente')
+  await expect(d3(page)).not.toContainText('Hogar')
+})
+
 test('P-01 Tendencias: T-2 con R-45 y R-46 en la tabla, figuras con figcaption y la pestaña recordada', async ({ page, context }) => {
   await new ApiFalsa().instalar(context); await instalarInicio(context); await reloj(page)
   await page.goto('/inicio?sub=tendencias')

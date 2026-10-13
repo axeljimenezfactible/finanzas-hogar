@@ -593,3 +593,79 @@ func TestOp_getCreditTotals_LineaArchivada(t *testing.T) {
 		t.Fatalf("deuda viva proyectada de la línea archivada: %+v", dt.Months[0])
 	}
 }
+
+// A-1 de REVISION-backend-cierre-r2: el comparador recibe solo las líneas activas. Una línea archivada con límite, con
+// tasa más baja y con su compra viva, no se ofrece ni se recomienda, y el resultado es el mismo que con solo la línea
+// activa (misma cuenta de evaluados, mismos válidos y descartados, misma recomendación y mismo score_bp, porque la
+// normalización de S3-14 es entre los escenarios generados). getCreditTotals sí la sigue contando (RN-30, M-1).
+func TestOp_compareScenarios_LineaArchivada(t *testing.T) {
+	s := testutil.NewServer(t, creditos.Register, presupuesto.Register) // presupuesto: getLiveDebt
+	e := &env{s: s, c: s.SessionFor(t, testutil.AxelUser), axel: s.Fx.AxelPersonID, karen: s.Fx.KarenPersonID}
+	// Una línea revolvente con límite, tasa a 4 quincenas rateNum/309450 y la despensa del 10-oct (R-13).
+	line := func(name string, rateNum int64) int64 {
+		var cr api.Credit
+		must(t, e.c.Do("POST", "/api/v1/credits", map[string]any{"name": name, "kind": "revolving_line", "holder_person_id": e.axel,
+			"credit_limit_cents": 1000000, "payment_frequency": "fortnightly", "first_payment_min_days": 15}, "Idempotency-Key", key()), 201, &cr)
+		must(t, e.c.Do("POST", fmt.Sprintf("/api/v1/credits/%d/term-rates", cr.ID), map[string]any{"term_count": 4, "rate_num": rateNum,
+			"rate_den": 309450, "source": "quote", "quote_date": "2026-10-10", "rate_decimals": 4}, "Idempotency-Key", key()), 201, nil)
+		e.kueski = cr.ID
+		e.purchase(t, 201)
+		return cr.ID
+	}
+	req := map[string]any{"amount_cents": 250000, "desired_date": "2026-10-30", "merchant_name": "Chedraui",
+		"min_available_buffer_cents": 0, "max_live_purchases": 5, "zero_debt_by_date": "2027-12-31", "date_window_days": 1}
+	compare := func() (string, api.ScenarioResult) {
+		var res api.ScenarioResult
+		r := e.c.Do("POST", "/api/v1/scenario-comparisons", req)
+		must(t, r, 200, &res)
+		return string(r.Body), res
+	}
+	onLine := func(res api.ScenarioResult, id int64) (n int) {
+		for _, v := range res.Valid {
+			if v.CreditID == id {
+				n++
+			}
+		}
+		for _, r := range res.Rejected {
+			if r.Scenario.CreditID == id {
+				n++
+			}
+		}
+		return n
+	}
+	kueski := line("Kueski Pay", 80050) // 25.8685 %
+	baseBody, base := compare()
+	if base.Status != "ok" || base.Recommendation == nil || base.Recommendation.CreditID != kueski || onLine(base, kueski) != int(base.EvaluatedCount) {
+		t.Fatalf("solo la línea activa: %s", baseBody)
+	}
+	// Segunda línea con tasa más baja y la misma compra: mientras está activa, el comparador la ofrece y la recomienda.
+	archived := line("Línea archivada", 40000)
+	activeBody, active := compare()
+	if onLine(active, archived) == 0 || active.Recommendation == nil || active.Recommendation.CreditID != archived ||
+		active.EvaluatedCount <= base.EvaluatedCount {
+		t.Fatalf("con las dos líneas activas esperaba escenarios y recomendación en la línea %d: %s", archived, activeBody)
+	}
+	must(t, e.c.Do("PATCH", fmt.Sprintf("/api/v1/credits/%d", archived), map[string]any{"is_active": false}), 200, nil)
+	afterBody, after := compare()
+	if n := onLine(after, archived); n != 0 {
+		t.Fatalf("la línea archivada %d sigue en %d escenarios (válidos o descartados): %s", archived, n, afterBody)
+	}
+	if after.Recommendation == nil || after.Recommendation.CreditID == archived {
+		t.Fatalf("recomendación en la línea archivada: %s", afterBody)
+	}
+	ra, rb := after.Recommendation, base.Recommendation
+	sameRec := ra.CreditID == rb.CreditID && ra.TermCount == rb.TermCount && ra.PurchaseDate == rb.PurchaseDate &&
+		ra.ScoreBp != nil && rb.ScoreBp != nil && *ra.ScoreBp == *rb.ScoreBp
+	if after.EvaluatedCount != base.EvaluatedCount || !sameRec || afterBody != baseBody {
+		t.Fatalf("con la línea archivada el resultado no es el de solo la línea activa:\nsolo activa %s\ncon archivada %s", baseBody, afterBody)
+	}
+	// La misma línea archivada sí cuenta en la deuda viva de hoy y en los pagos del mes (RN-30, getLiveDebt).
+	var tt api.CreditTotals
+	must(t, e.c.Do("GET", "/api/v1/credits/totals", nil), 200, &tt)
+	var ld api.LiveDebt
+	must(t, e.c.Do("GET", "/api/v1/debt/live?date=2026-10-12", nil), 200, &ld)
+	if tt.LiveDebtCents != 2*389500 || tt.LiveDebtCents != ld.TotalCents || tt.MonthTotalCents != 2*97375 {
+		t.Fatalf("getCreditTotals: deuda viva %d (getLiveDebt %d), pagos del mes %d; esperaba 779000 y 194750 con la línea archivada",
+			tt.LiveDebtCents, ld.TotalCents, tt.MonthTotalCents)
+	}
+}
