@@ -5,9 +5,12 @@ import (
 	"strings"
 	"sync/atomic"
 	"testing"
+	"time"
 
 	"finanzas-hogar/internal/api"
 	"finanzas-hogar/internal/api/creditos"
+	"finanzas-hogar/internal/api/presupuesto"
+	"finanzas-hogar/internal/api/tablero"
 	"finanzas-hogar/internal/testutil"
 )
 
@@ -458,4 +461,135 @@ func TestOp_deleteCreditPayment(t *testing.T) {
 	m := e.pay(t, sp.ID, e.karen, 500, 201)
 	must(t, e.c.Do("DELETE", fmt.Sprintf("/api/v1/credit-payments/%d", m.ID), nil), 204, nil)
 	errCode(t, e.c.Do("DELETE", fmt.Sprintf("/api/v1/credit-payments/%d", m.ID), nil), 404, "not_found")
+}
+
+// Deuda viva «hoy» (M-12 a hoy, K-3 y P-17; PROVISIONAL, bloqueo S6-deuda-viva-hoy) y M-19 (K-3, C1 v1.5): una compra
+// programada a futuro no cuenta hoy, pero sí en el cierre del mes de su compra; la cifra es la misma que getLiveDebt
+// (motor S2) a la misma fecha. Pagos del mes: cuántos y la parte del hogar que falta pagar.
+func TestOp_getCreditTotals_DeudaVivaHoy(t *testing.T) {
+	s := testutil.NewServer(t, creditos.Register, presupuesto.Register)
+	e := &env{s: s, c: s.SessionFor(t, testutil.AxelUser), axel: s.Fx.AxelPersonID, karen: s.Fx.KarenPersonID}
+	var cr api.Credit
+	must(t, e.c.Do("POST", "/api/v1/credits", map[string]any{"name": "Kueski Pay", "kind": "revolving_line", "holder_person_id": e.axel,
+		"credit_limit_cents": 1000000, "payment_frequency": "fortnightly", "first_payment_min_days": 15}, "Idempotency-Key", key()), 201, &cr)
+	e.kueski = cr.ID
+	must(t, e.c.Do("POST", fmt.Sprintf("/api/v1/credits/%d/term-rates", e.kueski), map[string]any{"term_count": 4, "rate_num": 80050,
+		"rate_den": 309450, "source": "quote", "quote_date": "2026-10-10", "rate_decimals": 4}, "Idempotency-Key", key()), 201, nil)
+	e.purchase(t, 201)
+	future := e.purchaseBody()
+	future["purchase_date"] = "2026-12-10" // despensa programada (como las 2 a 4 de la semilla, S6-semilla-despensas-futuras)
+	must(t, e.c.Do("POST", "/api/v1/credit-purchases", future, "Idempotency-Key", key()), 201, nil)
+	live := func(date string) int64 {
+		var ld api.LiveDebt
+		must(t, e.c.Do("GET", "/api/v1/debt/live?date="+date, nil), 200, &ld)
+		return ld.TotalCents
+	}
+	var tt api.CreditTotals
+	must(t, e.c.Do("GET", "/api/v1/credits/totals", nil), 200, &tt)
+	if tt.LiveDebtCents != 389500 || tt.LiveDebtCents != live("2026-10-12") {
+		t.Fatalf("deuda viva hoy %d; getLiveDebt hoy %d; esperaba 389500 (sin la compra del 10-dic)", tt.LiveDebtCents, live("2026-10-12"))
+	}
+	if tt.MonthPaymentCount == nil || *tt.MonthPaymentCount != 1 || tt.MonthPendingHouseholdCents == nil ||
+		*tt.MonthPendingHouseholdCents != tt.MonthHouseholdCents || tt.MonthHouseholdCents == 0 {
+		t.Fatalf("pagos del mes: %+v", tt)
+	}
+	var c api.Credit
+	must(t, e.c.Do("GET", fmt.Sprintf("/api/v1/credits/%d", e.kueski), nil), 200, &c)
+	if c.LiveDebtCents == nil || *c.LiveDebtCents != 389500 {
+		t.Fatalf("deuda viva de la línea: %v", c.LiveDebtCents)
+	}
+	var dt api.DebtTrend
+	must(t, e.c.Do("GET", "/api/v1/credits/debt-trend", nil), 200, &dt)
+	if dt.Months[0].LiveDebtCents != 292125 || dt.Months[1].LiveDebtCents != 97375 || dt.Months[1].LiveDebtCents != live("2026-11-30") ||
+		dt.Months[2].LiveDebtCents <= dt.Months[1].LiveDebtCents || dt.Months[2].LiveDebtCents != live("2026-12-31") {
+		t.Fatalf("deuda viva proyectada: oct %d, nov %d, dic %d (getLiveDebt 30-nov %d, 31-dic %d)", dt.Months[0].LiveDebtCents,
+			dt.Months[1].LiveDebtCents, dt.Months[2].LiveDebtCents, live("2026-11-30"), live("2026-12-31"))
+	}
+	// Abono parcial de la parte del hogar al pago del 30-oct: falta solo el resto; la parte de Karen no lo cubre.
+	var oct int64
+	for _, p := range e.scheduled(t, "") {
+		if p.DueDate == "2026-10-30" {
+			oct = p.ID
+		}
+	}
+	if oct == 0 {
+		t.Fatal("no está el pago programado del 30-oct")
+	}
+	e.pay(t, oct, e.karen, 10000, 201)
+	e.pay(t, oct, e.axel, 20000, 201)
+	var t2 api.CreditTotals
+	must(t, e.c.Do("GET", "/api/v1/credits/totals", nil), 200, &t2)
+	if *t2.MonthPendingHouseholdCents != t2.MonthHouseholdCents-20000 || *t2.MonthPaymentCount != 1 {
+		t.Fatalf("falta del hogar tras abonar 200.00: %d (parte del hogar %d)", *t2.MonthPendingHouseholdCents, t2.MonthHouseholdCents)
+	}
+}
+
+// Línea archivada con pagos pendientes (hallazgo M-1 de REVISION-backend-cierre-r1; PROVISIONAL, bloqueo
+// S6-tablero-lineas-archivadas, punto 5, y S6-deuda-viva-hoy): getCreditTotals (K-3, P-17) y getDebtTrend (G-5) cuentan
+// todas las líneas, activas o archivadas, como getLiveDebt (motor S2) y el barómetro (RN-30). Una sola cifra hoy.
+func TestOp_getCreditTotals_LineaArchivada(t *testing.T) {
+	s := testutil.NewServer(t, creditos.Register, presupuesto.Register, tablero.Register)
+	e := &env{s: s, c: s.SessionFor(t, testutil.AxelUser), axel: s.Fx.AxelPersonID, karen: s.Fx.KarenPersonID}
+	line := func(name string) int64 {
+		var cr api.Credit
+		must(t, e.c.Do("POST", "/api/v1/credits", map[string]any{"name": name, "kind": "revolving_line", "holder_person_id": e.axel,
+			"credit_limit_cents": 1000000, "payment_frequency": "fortnightly", "first_payment_min_days": 15}, "Idempotency-Key", key()), 201, &cr)
+		must(t, e.c.Do("POST", fmt.Sprintf("/api/v1/credits/%d/term-rates", cr.ID), map[string]any{"term_count": 4, "rate_num": 80050,
+			"rate_den": 309450, "source": "quote", "quote_date": "2026-10-10", "rate_decimals": 4}, "Idempotency-Key", key()), 201, nil)
+		e.kueski = cr.ID
+		e.purchase(t, 201) // 3,895.00 de deuda hoy; pago del 30-oct 973.75, parte del hogar 598.82 (R-13)
+		return cr.ID
+	}
+	line("Kueski Pay")
+	archived := line("Línea archivada")
+	get := func(path string) string {
+		res := e.c.Do("GET", path, nil)
+		must(t, res, 200, nil)
+		return string(res.Body)
+	}
+	beforeTotals, beforeTrend := get("/api/v1/credits/totals"), get("/api/v1/credits/debt-trend")
+	must(t, e.c.Do("PATCH", fmt.Sprintf("/api/v1/credits/%d", archived), map[string]any{"is_active": false}), 200, nil)
+	// Archivar no cambia ninguna cifra de K-3, P-17 ni G-5.
+	if a, b := get("/api/v1/credits/totals"), get("/api/v1/credits/debt-trend"); a != beforeTotals || b != beforeTrend {
+		t.Fatalf("archivar cambió las cifras:\ntotales antes %s\ndespués %s\nserie antes %s\ndespués %s", beforeTotals, a, beforeTrend, b)
+	}
+	live := func(date string) int64 {
+		var ld api.LiveDebt
+		must(t, e.c.Do("GET", "/api/v1/debt/live?date="+date, nil), 200, &ld)
+		return ld.TotalCents
+	}
+	var tt api.CreditTotals
+	must(t, e.c.Do("GET", "/api/v1/credits/totals", nil), 200, &tt)
+	if tt.LiveDebtCents != 779000 || tt.LiveDebtCents != live("2026-10-12") {
+		t.Fatalf("deuda viva hoy %d; getLiveDebt hoy %d; esperaba 779000 (2 × 389500, con la línea archivada)", tt.LiveDebtCents, live("2026-10-12"))
+	}
+	var d api.DashboardDebtCapacity
+	must(t, e.c.Do("GET", "/api/v1/dashboard/debt-capacity", nil), 200, &d)
+	// Pagos del mes: los dos pagos del 30-oct (2 × 973.75), nada pagado; la misma cifra que el barómetro (RN-30).
+	if tt.MonthTotalCents != 2*97375 || tt.MonthHouseholdCents == 0 || tt.MonthHouseholdCents != d.PaymentsCents ||
+		tt.MonthTotalCents != d.PaymentsTotalCents || tt.MonthPaymentCount == nil || *tt.MonthPaymentCount != 2 || d.PaymentCount != 2 ||
+		tt.MonthPendingHouseholdCents == nil || *tt.MonthPendingHouseholdCents != tt.MonthHouseholdCents {
+		t.Fatalf("pagos del mes: K-3 hogar %d total %d; barómetro %d %d (%d pagos)", tt.MonthHouseholdCents, tt.MonthTotalCents,
+			d.PaymentsCents, d.PaymentsTotalCents, d.PaymentCount)
+	}
+	var dt api.DebtTrend
+	must(t, e.c.Do("GET", "/api/v1/credits/debt-trend", nil), 200, &dt)
+	if len(dt.Months) != 12 || dt.Months[0].LiveDebtCents != 2*292125 {
+		t.Fatalf("deuda viva proyectada: %+v", dt.Months)
+	}
+	for _, m := range dt.Months {
+		mt, err := time.Parse("2006-01", string(m.Month))
+		if err != nil {
+			t.Fatal(err)
+		}
+		end := mt.AddDate(0, 1, -1).Format("2006-01-02")
+		if l := live(end); m.LiveDebtCents != l {
+			t.Errorf("cierre de %s: getDebtTrend %d, getLiveDebt %d", m.Month, m.LiveDebtCents, l)
+		}
+	}
+	// Con credit_id, la línea nombrada cuenta aunque esté archivada.
+	must(t, e.c.Do("GET", fmt.Sprintf("/api/v1/credits/debt-trend?credit_id=%d", archived), nil), 200, &dt)
+	if dt.Months[0].LiveDebtCents != 292125 || len(dt.Months[0].Credits) != 1 || dt.Months[0].Credits[0].CreditID != archived {
+		t.Fatalf("deuda viva proyectada de la línea archivada: %+v", dt.Months[0])
+	}
 }

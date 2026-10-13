@@ -405,7 +405,6 @@ func TestOp_Dashboard_LineaArchivada(t *testing.T) {
 		t.Errorf("octubre: barómetro %d · %d, serie %d · %d", d.PaymentsCents, d.PaymentsTotalCents, after.CreditPaymentsCents, after.CreditPaymentsTotalCents)
 	}
 	t.Run("opcion_a_PROVISIONAL", func(t *testing.T) {
-		t.Skip("PENDIENTE: requiere la solicitud fuera de alcance a backend/internal/api/creditos/tablero.go (PaymentsByMonth con todas las líneas; bloqueo S6-tablero-lineas-archivadas, punto 4). Al aplicarla se quita este Skip.")
 		// S3: los pagos tampoco cambian, y son la parte de crédito del efectivo de S2 (efectivo − contado del mes).
 		if after.CreditPaymentsCents != before.CreditPaymentsCents || after.CreditPaymentsCents != cash-50000 ||
 			after.CreditPaymentsTotalCents != 750000 || val(after.DebtRatioPct) != int64(33) || val(after.DebtStatus) != "warning" {

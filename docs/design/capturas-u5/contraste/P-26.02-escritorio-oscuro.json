@@ -2,13 +2,13 @@
  "pantalla": "P-26.02",
  "combinacion": "escritorio-oscuro",
  "alcance": "body",
- "evaluados": 93,
+ "evaluados": 111,
  "pares_unicos": 13,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
   "deshabilitados": 0,
-  "ui_sin_limite_visible": 19,
+  "ui_sin_limite_visible": 24,
   "graficos_marcas_no_medibles_en_dom": 0
  },
  "bajos": [],
@@ -58,7 +58,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 7.975,
-   "elementos": 19,
+   "elementos": 31,
    "ejemplos": [
     {
      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
@@ -202,7 +202,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 10.76,
-   "elementos": 41,
+   "elementos": 47,
    "ejemplos": [
     {
      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",

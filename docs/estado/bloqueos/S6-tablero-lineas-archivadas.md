@@ -1,6 +1,12 @@
 # Bloqueo S6-tablero-lineas-archivadas · ¿los pagos de una línea de crédito archivada cuentan en el tablero? (RN-30, M-20, M-21; C1 v1.5)
 
-Abierto el 12-oct-2026 por el agente `correccion-tablero-backend-r1` (WF-3c), por el hallazgo M-2 de `docs/estado/wf3/REVISION-tablero-backend-r1.md`. Lo contesta Axel en la **puerta 4**. La propuesta PROVISIONAL es la opción (a) del punto 1 y la (a1) del punto 2. **Todavía no rige en el código**: hoy el servidor hace lo de la opción (b). Eso no es una elección: falta un cambio fuera del alcance de `api-tablero` (punto 4). Actualizado el 12-oct-2026 por `correccion-tablero-backend-r2` (hallazgo M-2 de `REVISION-tablero-backend-r2.md`).
+Abierto el 12-oct-2026 por el agente `correccion-tablero-backend-r1` (WF-3c), por el hallazgo M-2 de `docs/estado/wf3/REVISION-tablero-backend-r1.md`. Lo contesta Axel en la **puerta 4**. La propuesta PROVISIONAL es la opción (a) del punto 1 y la (a1) del punto 2. **Rige en el código desde WF-3c bis** (decisión 2 del orquestador, salida (i) del punto 4; la aplicó `backend-cierre`): `PaymentsByMonth` recorre todas las líneas y `has_credits` sigue la (a1). Hasta la ronda 2 el servidor hacía lo de la opción (b). Actualizado el 12-oct-2026 por `correccion-tablero-backend-r2` (hallazgo M-2 de `REVISION-tablero-backend-r2.md`).
+
+**Estado del código (12-oct-2026, WF-3c bis, `backend-cierre`).**
+- Aplicada la solicitud 1 de `correccion-tablero-backend-r2.md` tal cual en `backend/internal/api/creditos/tablero.go`: el calendario del motor S3 se arma con todas las líneas (`s.state(c)` de cada `credit`), `has_credits` = alguna línea activa o algún pago del calendario entre `from` y `to`.
+- Quitado el `t.Skip` del subtest `opcion_a_PROVISIONAL` de `TestOp_Dashboard_LineaArchivada`: pasa (RN-30 «de todas las líneas»).
+- Aplicada la solicitud 2: el texto de `has_credits` en C1 1.5.1 cita este bloqueo.
+- La pregunta que se abrió aquí sobre `getCreditTotals` pasó al **punto 5** (corrección r1 de `backend-cierre`, 12-oct-2026).
 
 **Estado del código (12-oct-2026, ronda 2).**
 - La opción PROVISIONAL **no está aplicada**. Vive en `backend/internal/api/creditos/tablero.go` (`PaymentsByMonth`). Ese archivo es del paquete de `api-creditos` (CONVENCIONES-backend §2) y no está en el alcance de `api-tablero` (`runs/wf3c-tablero.js`).
@@ -28,7 +34,7 @@ Abierto el 12-oct-2026 por el agente `correccion-tablero-backend-r1` (WF-3c), po
 | **(a1) PROVISIONAL** | true si hay al menos una línea activa **o** algún pago (de una línea archivada) con fecha en el mes. Se cumple siempre «con false, pagos = 0». | Pide afinar el texto de `has_credits` en C1 (`c1gen`): «…activa, o algún pago de una línea archivada en el mes». |
 | (a2) | true solo si hay una línea activa (texto literal de la primera mitad). | Puede salir false con pagos > 0: la PWA mostraría «sin créditos» junto a un porcentaje. |
 
-**Punto 3 · igualdad con `getCreditTotals`.** Con (a), el tablero y `getCreditTotals` solo difieren si una línea archivada tiene un pago con fecha en el mes en curso (raro: se archiva una línea liquidada). PROVISIONAL: `getCreditTotals` no cambia (es de `api-creditos` y de S3). Si Axel quiere que coincidan siempre, el cambio es de `api/creditos/creditos.go` (fuera de este alcance).
+**Punto 3 · igualdad con `getCreditTotals`.** Con (a), el tablero y `getCreditTotals` solo diferían si una línea archivada tenía un pago con fecha en el mes en curso. Desde la corrección r1 de `backend-cierre` ya no difieren: ver el punto 5.
 
 **Punto 4 · Decisión pendiente del orquestador: el alcance (no la regla).** Las rondas 1 y 2 de corrección son de `api-tablero` y no pueden tocar `api/creditos/` ni `c1gen`. M-2 solo se cierra de una de estas dos maneras:
 
@@ -38,6 +44,17 @@ Abierto el 12-oct-2026 por el agente `correccion-tablero-backend-r1` (WF-3c), po
 | (ii) | Que los artefactos digan lo mismo que el código: este bloqueo declara que hasta la puerta 4 rige la (b), el subtest comprueba la (b) y se pide corregir RN-30 y M-20/M-21. | El orquestador. | Cambia la opción PROVISIONAL propuesta. Por eso no la toma un agente de corrección. |
 
 PROPUESTA: la (i). Es un cambio chico, ya probado con overlay en dos rondas, y no mueve ninguna cifra del motor.
+
+**Punto 5 · deuda viva y pagos del mes de K-3, P-17 y G-5 (`getCreditTotals` y `getDebtTrend`).** Abierto el 12-oct-2026 por `correccion-backend-cierre-r1`, por el hallazgo M-1 de `docs/estado/wf3/REVISION-backend-cierre-r1.md`. Hasta esa corrección, `getCreditTotals` y `getDebtTrend` contaban solo las líneas activas (`states` en `backend/internal/api/creditos/motor.go` filtraba `credit.is_active`), mientras `getLiveDebt` (motor S2) y el barómetro cuentan todas. Archivar una línea con deuda está permitido (`updateCredit` no lo impide). Con una línea archivada con pagos pendientes, la prueba del revisor daba: deuda viva de K-3 11,250.00 contra `getLiveDebt` hoy 13,250.00; G-5 al cierre de octubre 3,750.00 contra `getLiveDebt` del 31-oct 4,750.00; y pagos del hogar del mes de K-3 6,500.00 contra el barómetro 7,500.00.
+
+| Opción | Qué hace | Consecuencia |
+|---|---|---|
+| **(a) PROVISIONAL, aplicada en el código** | `getCreditTotals` (la deuda viva, los pagos del mes y de la quincena, cuántos, lo que falta pagar y los intereses) y `getDebtTrend` sin `credit_id` cuentan todas las líneas, activas o archivadas. Con `credit_id`, cuentan las líneas nombradas aunque estén archivadas. | Una sola cifra: la deuda viva de K-3 y P-17 es la de `getLiveDebt` hoy, cada cierre de G-5 es la de `getLiveDebt` ese día y los pagos del hogar de K-3 son los del barómetro, como dicen RN-21 (FIRME, «de las compras no canceladas»), RN-30, U3 K-3 («de todas las líneas»), la decisión 1 del orquestador de WF-3c bis y el texto de `DashboardDebtCapacity.payments_cents` en C1. Archivar una línea no cambia ninguna cifra mientras le queden pagos. |
+| (b) | Solo las líneas activas, y la tarjeta K-3 y P-17 dicen que no cuentan las archivadas. | K-3, P-17 y G-5 dejan de coincidir con `getLiveDebt`, P-07 y el barómetro cuando hay una línea archivada con pagos pendientes. Pide corregir RN-21, RN-30, el texto de `CreditTotals` y `DebtTrend` en C1 y U3 K-3. |
+
+Por qué la (a): es la única que cumple a la vez la decisión 1 («la misma semántica de `getLiveDebt?date=hoy`») y la decisión 2 («de TODAS las líneas, como dice C1») del orquestador sin cambiar ningún texto FIRME. Ninguna cifra del motor cambia (solo qué líneas se le pasan) y la base de desarrollo no tiene líneas archivadas, así que sus cifras no se mueven (389500 hoy). Código: `states` en `backend/internal/api/creditos/motor.go`; prueba `TestOp_getCreditTotals_LineaArchivada` en `creditos_test.go` (archivar no cambia `getCreditTotals` ni `getDebtTrend`; deuda viva = `getLiveDebt` hoy y en los 12 cierres; pagos del mes = barómetro). C1 1.5.1 lo marca en `CreditTotals.live_debt_cents`, `CreditTotals.month_total_cents`, `DebtTrend.months[].live_debt_cents` y M-17/M-19.
+
+**Pregunta para Axel (punto 5).** Si archivas una línea que todavía tiene pagos por hacer, ¿quieres que su deuda y sus pagos sigan sumando en «Deuda viva», en «Créditos del mes» y en la gráfica de deuda proyectada (a), o que salgan aunque falte pagarlos (b)?
 
 **Impacto.** Ninguna cifra del motor cambia: S3 (`motor_cred.UnifiedCalendar`) entrega los mismos pagos; solo cambia qué líneas se le pasan. Afecta `payments_cents`, `payments_total_cents`, `payment_count`, `ratio_pct`, `status`, `headroom_cents` y `has_credits` de `getDashboardDebtCapacity`, y `credit_payments_*`, `debt_ratio_pct` y `debt_status` de `getDashboardMonthlyOverview`, solo cuando hay líneas archivadas con pagos en la ventana. Sin migración.
 

@@ -14,10 +14,11 @@ test('F-1 · Registrar gasto desde Inicio (U5-09: ≤ 3 toques, el gasto aparece
   await entrar(page)
   const f = new Flujo('F-1', 'Registrar gasto desde Inicio', page)
   let previo = ''
+  // U3 2.0 (K54): el gasto del mes lo muestra K-1 «Gasto del mes» del tablero (antes, la tarjeta 1 «Mes contra plan»).
   await f.paso('Partida: app abierta en Inicio (Resumen) con sesión (no cuenta toques)', 'P-01', async () => {
-    await expect(page.getByTestId('tarjeta-1')).toHaveJSProperty('tagName', 'A')
-    previo = norm(await page.getByTestId('tarjeta-1').innerText())
-    return `tarjeta «Mes contra plan» antes: ${previo.slice(0, 120)}`
+    await expect(page.getByTestId('tarjeta-K-1')).toHaveJSProperty('tagName', 'A')
+    previo = norm(await page.getByTestId('tarjeta-K-1').innerText())
+    return `K-1 «Gasto del mes» antes: ${previo.slice(0, 120)}`
   })
   await f.paso('Toque 1: «+» de la barra inferior', 'P-01 → P-03', async () => {
     await f.t.tocar(page.getByTestId('boton-mas'), '«+» barra inferior')
@@ -37,14 +38,14 @@ test('F-1 · Registrar gasto desde Inicio (U5-09: ≤ 3 toques, el gasto aparece
     await expect(page.getByRole('button', { name: 'Deshacer' })).toBeVisible()
     return 'aviso «Gasto guardado · Deshacer»'
   })
-  await f.paso('El gasto aparece en Inicio (tarjeta Mes contra plan y Detalle → Presupuesto por categoría)', 'P-01', async () => {
-    await expect.poll(async () => norm(await page.getByTestId('tarjeta-1').innerText()), { message: 'la tarjeta Mes contra plan cambió' }).not.toBe(previo)
-    const despues = norm(await page.getByTestId('tarjeta-1').innerText())
+  await f.paso('El gasto aparece en Inicio (K-1 «Gasto del mes» y Detalle → Presupuesto por categoría)', 'P-01', async () => {
+    await expect.poll(async () => norm(await page.getByTestId('tarjeta-K-1').innerText()), { message: 'K-1 «Gasto del mes» cambió' }).not.toBe(previo)
+    const despues = norm(await page.getByTestId('tarjeta-K-1').innerText())
     await page.getByRole('tab', { name: 'Detalle' }).tap()
     await expect(page.getByText('Presupuesto por categoría')).toBeVisible()
     await expect(page.getByText('$1,290.39 de $2,000.00')).toBeVisible() // 1,197.64 + 50 % de 185.50: Despensa se reparte Conjunto 50/50 y el presupuesto cuenta la parte del hogar
     await f.captura('F1-inicio-con-el-gasto')
-    return `tarjeta 1 después: ${despues.slice(0, 120)} · Detalle: Despensa $1,290.39 de $2,000.00 (antes $1,197.64; +$92.75 = parte del hogar del reparto 50/50 de $185.50)`
+    return `K-1 después: ${despues.slice(0, 120)} · Detalle: Despensa $1,290.39 de $2,000.00 (antes $1,197.64; +$92.75 = parte del hogar del reparto 50/50 de $185.50)`
   })
   await f.paso('El gasto aparece en la vista de tabla de Todos los gastos', 'P-02', async () => {
     await page.goto('/gastos?sub=detalle')
@@ -119,49 +120,26 @@ test('F-2 · Planear la semana de comidas', async ({ page }) => {
   expect(reg.ok, JSON.stringify(reg.pasos.filter((p) => !p.ok))).toBe(true)
 })
 
-test('F-3 · Comparar tienda para una canasta (ruta A: tarjeta de Inicio; ruta B: otra canasta)', async ({ page }) => {
+test('F-3 · Comparar tienda para una canasta (ruta A: condición de U1 §4 con la lista de F-2; ruta B: otra canasta)', async ({ page }) => {
   await entrar(page)
-  const f = new Flujo('F-3A', 'Comparar canasta · ruta A (tarjeta «Mejor canasta»)', page)
-  await f.paso('Observación (sin tocar): la tarjeta con la lista que generó F-2 (31 artículos de recetas, ninguno con precio en la semilla)', 'P-01', async () => {
-    await page.waitForTimeout(1500)
+  // U1 §4 F-3 (aclarado por u3-v2, opción (c) de C3-flujos punto 2, PROVISIONAL hasta la puerta 4): la ruta A exige una lista
+  // vigente con artículos y con TODOS sus precios en al menos una tienda. La lista que deja F-2 (artículos de recetas sin precio en
+  // la semilla) no la cumple: U1 manda que «Mejor canasta» muestre su vacío y lleve a P-15 «Registrar precios», no a P-14. Eso se
+  // comprueba aquí; la ruta A completa (3 toques, con una lista que sí cumple) la corre F-3A3 en pendientes.spec.ts.
+  const f = new Flujo('F-3A', 'Comparar canasta · ruta A: condición de U1 §4 con la lista que generó F-2', page)
+  await f.paso('Condición de la ruta A (no cuenta toques): la lista de F-2 no tiene todos sus precios en ninguna tienda → «Mejor canasta» en vacío con «Registrar precios» → P-15', 'P-01', async () => {
     const c = page.getByTestId('tarjeta-5')
-    const href = await c.evaluate((e) => (e as HTMLAnchorElement).getAttribute('href'))
-    return `tarjeta: «${norm(await c.innerText())}» → ${href} (SIN precios que comparar: ruta A no puede terminar tal cual; ver hallazgo)`
-  })
-  await f.paso('Preparación de datos (API, base de prueba): agregar a la lista 3 artículos con precio (la semilla solo trae precios de los 36 artículos del 10-oct)', 'API', async () => {
-    const prods = await api<{ items: { id: number; base_unit: string; best_price: unknown }[] }>(page, '/api/v1/products?limit=200')
-    const conPrecio = prods.json.items.filter((x) => x.best_price)
-    const unidad = new Map(conPrecio.map((x) => [x.id, x.base_unit]))
-    const ids = conPrecio.slice(0, 3).map((x) => x.id)
-    for (const id of ids) {
-      const r = await api(page, '/api/v1/shopping-list/items?week=2026-W42', { method: 'POST', headers: { 'Idempotency-Key': `u5flujos-prep-${id}-0000000000` }, body: { product_id: id, quantity_milli: unidad.get(id) === 'piece' ? 2000 : 500000 } })
-      expect(r.estado, JSON.stringify(r.json)).toBe(201)
-    }
-    await page.goto('/inicio'); await expect(page.getByTestId('tarjeta-5')).toHaveJSProperty('tagName', 'A')
-    await page.waitForTimeout(1500)
-    return `3 artículos agregados (productos ${ids.join(', ')}); tarjeta ahora: «${norm(await page.getByTestId('tarjeta-5').innerText())}»`
-  })
-  await f.paso('Toque 1: tarjeta «Mejor canasta»', 'P-01 → P-14', async () => {
-    await expect(page.getByTestId('tarjeta-5')).toHaveJSProperty('tagName', 'A')
-    await f.t.tocar(page.getByTestId('tarjeta-5'), 'tarjeta Mejor canasta')
-    await expect(page.getByRole('heading', { level: 1, name: 'Comparar canasta' })).toBeVisible()
-    await page.waitForTimeout(1500)
-    const t = norm(await page.locator('main').innerText())
-    expect(t, 'Resumen con total por tienda').toMatch(/\$[0-9,]+\.[0-9]{2}/)
-    return `Resumen: ${t.slice(0, 300)}`
-  })
-  await f.paso('Toque 2: pestaña «Detalle»', 'P-14', async () => {
-    await f.t.tocar(page.getByRole('tab', { name: 'Detalle' }), 'pestaña Detalle')
-    await page.waitForTimeout(1200)
-    return norm(await page.locator('main').innerText()).slice(0, 300)
-  })
-  await f.paso('Toque 3: «Usar <tienda ganadora>»', 'P-14 → P-13', async () => {
-    const b = page.getByRole('button', { name: /^Usar / })
-    await expect(b.first()).toBeVisible({ timeout: 4000 })
-    const nombre = norm(await b.first().innerText())
-    await f.t.tocar(b.first(), nombre)
-    await expect(page).toHaveURL(/\/compras(\?|$)/)
-    return `asignada: ${nombre}`
+    await expect(c).toHaveJSProperty('tagName', 'A')
+    await expect(c).toContainText('Aún no hay precios para comparar')
+    await expect(c).toContainText('Registrar precios')
+    const href = await c.getAttribute('href')
+    expect(href, 'la acción del vacío lleva a P-15 Productos y precios, no a P-14').toMatch(/^\/compras\/productos(\?|$)/)
+    const lista = await api<{ groups: { items: unknown[] }[] }>(page, '/api/v1/shopping-list?week=2026-W42')
+    expect(lista.estado).toBe(200)
+    const n = lista.json.groups.flatMap((g) => g.items).length
+    expect(n, 'F-2 dejó una lista con artículos').toBeGreaterThan(0)
+    await f.captura('F3A-tarjeta-sin-precios')
+    return `lista de la semana con ${n} artículos; tarjeta: «${norm(await c.innerText())}» → ${href}. Ruta A completa: F-3A3 (pendientes.spec.ts)`
   })
   const regA = f.guardar()
 
@@ -222,8 +200,11 @@ test('F-3 · Comparar tienda para una canasta (ruta A: tarjeta de Inicio; ruta B
 test('F-4 · Ver un crédito y su calendario de pagos', async ({ page }) => {
   await entrar(page)
   const f = new Flujo('F-4', 'Ver un crédito y su calendario de pagos', page)
-  await f.paso('Toque 1: tarjeta «Próximo pago»', 'P-01 → P-18', async () => {
-    await f.t.tocar(page.getByTestId('tarjeta-3'), 'tarjeta Próximo pago')
+  // U1 §4 F-4 paso 1 (U3 2.0, K54): se toca el pago en K-4 «Pagos próximos»; cada fila es un enlace a P-18 de su línea.
+  await f.paso('Toque 1: el pago del 30-oct-2026 en K-4 «Pagos próximos»', 'P-01 → P-18', async () => {
+    const fila = page.getByTestId('tarjeta-K-4').getByRole('link', { name: /^Vie 30 oct 2026/ })
+    await expect(fila).toHaveCount(1)
+    await f.t.tocar(fila, 'pago del 30-oct-2026 en K-4')
     await expect(page.getByRole('heading', { level: 1, name: 'Crédito' })).toBeVisible()
     await expect(page.getByText('Disponible · lectura A')).toBeVisible()
     const t = norm(await page.locator('main').innerText())

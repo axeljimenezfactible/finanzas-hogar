@@ -334,6 +334,23 @@ func TestOp_getIncomeMonth(t *testing.T) {
 		t.Fatalf("%+v", m)
 	}
 	e.get("/api/v1/incomes/month?period=2026", 422)
+	// K-2 (M-18, C1 v1.5): mes anterior con la misma cuenta y diferencia de quincenas con signo.
+	var sep api.IncomeMonth
+	e.get("/api/v1/incomes/month?period=2026-09", 200).JSON(t, &sep)
+	e.income("extra", 7000, "2026-09-05")
+	e.get("/api/v1/incomes/month?period=2026-10", 200).JSON(t, &m)
+	pf := sep.CapturedCents + sep.ExpectedPendingCents
+	if m.PreviousMonth == nil || *m.PreviousMonth != "2026-09" || m.PreviousFortnightsCents == nil || *m.PreviousFortnightsCents != pf ||
+		pf == 0 || *m.PreviousExtrasCents != 7000 || *m.FortnightsDifferenceCents != m.CapturedCents+m.ExpectedPendingCents-pf {
+		t.Fatalf("mes anterior: %+v (septiembre %+v)", m, sep)
+	}
+	// Mes anterior sin quincenas ni extras: sin datos no es cero (S6-tablero-sin-datos): cifras ausentes, mes presente.
+	var old api.IncomeMonth
+	e.get("/api/v1/incomes/month?period=2000-01", 200).JSON(t, &old)
+	if old.PreviousMonth == nil || *old.PreviousMonth != "1999-12" || old.PreviousFortnightsCents != nil || old.PreviousExtrasCents != nil ||
+		old.FortnightsDifferenceCents != nil {
+		t.Fatalf("mes anterior sin datos: %+v", old)
+	}
 }
 
 func TestOp_getIncomeMonthlyTrend(t *testing.T) {

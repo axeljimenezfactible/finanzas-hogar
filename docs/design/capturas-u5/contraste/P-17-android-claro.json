@@ -106,7 +106,7 @@
    "ejemplos": [
     {
      "nodo": "div.flex.flex-col > div.grid.grid-cols-1 > div.flex.w-full > span.whitespace-nowrap.text-title-2",
-     "texto": "$18,999.22"
+     "texto": "$3,895.00"
     }
    ]
   },

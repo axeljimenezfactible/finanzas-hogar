@@ -2,13 +2,13 @@
  "pantalla": "P-26.02",
  "combinacion": "android-claro",
  "alcance": "body",
- "evaluados": 39,
+ "evaluados": 57,
  "pares_unicos": 10,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
   "deshabilitados": 0,
-  "ui_sin_limite_visible": 9,
+  "ui_sin_limite_visible": 14,
   "graficos_marcas_no_medibles_en_dom": 0
  },
  "bajos": [],
@@ -22,7 +22,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 5.035,
-   "elementos": 5,
+   "elementos": 17,
    "ejemplos": [
     {
      "nodo": "article.flex.min-w-0 > div.flex.flex-col > section.flex.flex-col > p.text-small.tabular-nums",
@@ -170,7 +170,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 10.76,
-   "elementos": 15,
+   "elementos": 21,
    "ejemplos": [
     {
      "nodo": "h3#b-proyeccion",

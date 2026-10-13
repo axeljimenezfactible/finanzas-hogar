@@ -253,7 +253,7 @@ ids = [o['operationId'] for _, _, o in OPS]
 TAGS9 = ['Inicio', 'Gastos', 'Presupuesto', 'Comidas', 'Compras y tiendas', 'Créditos', 'Salud', 'Reportes', 'Ajustes']
 badtag = [o['operationId'] for _, _, o in OPS if not o.get('tags') or not set(o['tags']) <= set(TAGS9)]
 print(f'C1-13 operationId duplicadas: {len(ids) - len(set(ids))} · sin etiqueta válida: {badtag} · etiquetas: {[t["name"] for t in d["tags"]]} · info.version: {d["info"]["version"]}')
-ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.5' in c1 and d['info']['version'] == '1.5.0', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.5')
+ok(len(ids) == len(set(ids)) and not badtag and [t['name'] for t in d['tags']] == TAGS9 and 'C1 v1.5' in c1 and d['info']['version'] == '1.5.1', 'C1-13 ids únicas, 9 etiquetas de la barra lateral, C1 v1.5')
 # K44 (C1 v1.2, puerta 1b): cada parámetro @param de las migraciones tiene una sola lectura (GET con parameters) y un solo cambio con
 # «restablecer» (PATCH con parameters y reset_parameters); la tabla de §11.7 da su valor inicial y la base sembró ese valor.
 PRM = []

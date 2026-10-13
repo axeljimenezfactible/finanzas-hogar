@@ -65,8 +65,8 @@ func engine(reg *api.Registry, ctx context.Context) (*dominio.FinEngine, mf.Inpu
 // responden 422 (PROVISIONAL, bloqueo C1-tablero, punto 5).
 func monthParam(reg *api.Registry, r *http.Request) (mf.Month, error) {
 	p, err := api.QueryPeriod(r)
-	if err != nil {
-		return mf.Month{}, err
+	if err != nil { // 400 propio: aquí solo vale un mes, así que el ejemplo no propone una quincena (B-6 de REVISION-tablero-backend-r3)
+		return mf.Month{}, api.BadRequest(fmt.Sprintf("El periodo «%s» no tiene un formato válido. Aquí va un mes con el formato AAAA-MM, por ejemplo 2026-10.", r.URL.Query().Get("period")))
 	}
 	if p == nil {
 		return dominio.EngineMonth(today(reg)), nil
@@ -90,8 +90,8 @@ func thresholds(ctx context.Context, q dominio.Querier) (warning, limit int64, e
 }
 
 // scaleMaxPct es el fin de la escala del dibujo del barómetro (scale_max_pct de M-20): el múltiplo de 10 igual o
-// mayor que 1.5 × limit_pct, en enteros (60 con 40). PROVISIONAL, bloqueo U3-tablero-barometro. Está aparte para que
-// getDashboardMonthlyOverview use la misma escala si C1 agrega el campo (hallazgo M-R3-1 de REVISION-especificacion-r3).
+// mayor que 1.5 × limit_pct, en enteros (60 con 40). PROVISIONAL, bloqueo U3-tablero-barometro. La comparten
+// getDashboardDebtCapacity y getDashboardMonthlyOverview (C1 v1.5.1, hallazgo M-R3-1 de REVISION-especificacion-r3).
 func scaleMaxPct(limit int64) int64 { return (3*limit + 19) / 20 * 10 }
 
 // debtStatus aplica RN-30 al entero redondeado: fronteras inclusivas (30 es normal y 40 es warning).
@@ -213,7 +213,7 @@ func getDashboardMonthlyOverview(reg *api.Registry) api.HandlerFunc {
 			return err
 		}
 		current := monthIndex(dominio.EngineMonth(today(reg)))
-		out := api.DashboardMonthlyOverview{WarningPct: warning, LimitPct: limit, Months: make([]api.DashboardMonthlyOverviewMonthsItem, 0, n)}
+		out := api.DashboardMonthlyOverview{WarningPct: warning, LimitPct: limit, ScaleMaxPct: scaleMaxPct(limit), Months: make([]api.DashboardMonthlyOverviewMonthsItem, 0, n)}
 		for i := 0; i < n; i++ {
 			m := from.Add(i)
 			p := pays[m.String()]

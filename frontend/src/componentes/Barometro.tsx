@@ -58,7 +58,8 @@ export function Barometro({ titulo, valor, aviso, tope, escala, estado, textoAcc
         ? { role: 'meter', 'aria-label': titulo, 'aria-valuemin': 0, 'aria-valuemax': escala, 'aria-valuenow': valor, 'aria-valuetext': textoAccesible }
         : { role: 'img', 'aria-label': textoAccesible })}
         data-prueba="barometro" className="relative w-full max-w-80">
-        <svg aria-hidden viewBox={`0 0 ${ANCHO} 110`} className="block h-auto w-full overflow-visible forced-colors:[&_path]:stroke-[CanvasText]">
+        {/* `fill="none"` en la raíz: ningún hijo hereda el relleno negro inicial; cada trazo pinta con su token (U5-04). */}
+        <svg aria-hidden fill="none" viewBox={`0 0 ${ANCHO} 110`} className="block h-auto w-full overflow-visible forced-colors:[&_path]:stroke-[CanvasText]">
           {/* Arco de escala: tres tramos; separación de 2 px del color de la superficie en cada límite (§8.1). */}
           <path d={arco(0, fa, R_ESCALA)} fill="none" className={cn('stroke-role-success', GRUESO)} data-tramo="normal" />
           <path d={arco(fa, ft, R_ESCALA)} fill="none" className={cn('stroke-role-warning', GRUESO)} data-tramo="warning" />
@@ -66,15 +67,16 @@ export function Barometro({ titulo, valor, aviso, tope, escala, estado, textoAcc
           {[fa, ft].map((f) => { const [x1, y1] = punto(f, R_ESCALA - 7), [x2, y2] = punto(f, R_ESCALA + 7); return <line key={`s${f}`} x1={x1} y1={y1} x2={x2} y2={y2} className={cn('stroke-surface-card [stroke-width:var(--size-viz-gap)]', FINO)} /> })}
           {/* Marcas de umbral: 1 px en ui.viz.baseline, hacia afuera del arco. */}
           {[fa, ft].map((f) => { const [x1, y1] = punto(f, R_ESCALA + 5), [x2, y2] = punto(f, R_ESCALA + 9); return <line key={`m${f}`} data-marca={f} x1={x1} y1={y1} x2={x2} y2={y2} className={cn('stroke-viz-baseline [stroke-width:1px]', FINO)} /> })}
-          {/* Pista del valor y valor en el color del tramo donde cae. */}
-          <path d={arco(0, 1, R_PISTA)} fill="none" className={cn('stroke-viz-track', GRUESO)} />
+          {/* Pista del valor (decorativa, DESIGN §10.5 C-172: la mide U5-04 como excluida) y valor en el color del tramo donde cae. */}
+          <path d={arco(0, 1, R_PISTA)} fill="none" data-decorativo className={cn('stroke-viz-track', GRUESO)} />
           {conValor && fv > 0 && <path d={arco(0, fv, R_PISTA)} fill="none" className={cn(TRAMO[estado], GRUESO)} data-prueba="barometro-valor" />}
-          {/* Aguja con extremo redondeado y eje circular con anillo de 2 px de la superficie. */}
-          {conValor && <>
-            <line x1={CX} y1={CY} x2={ax} y2={ay} strokeLinecap="round" data-prueba="barometro-aguja" className={cn('stroke-text-default [stroke-width:var(--size-viz-line)]', FINO)} />
-            <circle cx={CX} cy={CY} r={5} className={cn('fill-text-default stroke-surface-card [stroke-width:var(--size-viz-gap)]', FINO)} />
-          </>}
+          {/* Aguja con extremo redondeado; su eje va encima en HTML (abajo) para medir `size.viz.marker` a cualquier ancho. */}
+          {conValor && <line x1={CX} y1={CY} x2={ax} y2={ay} strokeLinecap="round" data-prueba="barometro-aguja" className={cn('stroke-text-default [stroke-width:var(--size-viz-line)]', FINO)} />}
         </svg>
+        {/* Eje de la aguja (DESIGN §8.9; N-4 de la revisión r3 del tablero): punto de `size.viz.marker` (10 px) con anillo de 2 px de
+            `ui.surface.card`, en HTML como las marcas: un círculo dentro del SVG crece con el dibujo (medía 16 px a 320 px de ancho). */}
+        {conValor && <span aria-hidden data-prueba="barometro-eje" style={{ left: `${(CX / ANCHO) * 100}%`, top: `${(CY / 110) * 100}%` }}
+          className="absolute size-[var(--size-viz-marker)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-text-default outline-2 outline-solid outline-surface-card forced-colors:bg-[CanvasText]" />}
         {[aviso, tope].map((n, i) => (
           <span key={`${i}-${n}`} data-prueba="barometro-marca" style={marca(i ? ft : fa)} className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-caption text-text-secondary tabular-nums">{`${n} %`}</span>
         ))}

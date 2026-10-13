@@ -210,6 +210,20 @@ func (h *handlers) getIncomeMonth(w http.ResponseWriter, r *http.Request) error 
 	if err != nil {
 		return err
 	}
+	// K-2 del tablero (M-18, C1 v1.5): el mes anterior con la misma cuenta (quincenas = capturadas + esperadas sin
+	// capturar; extras aparte) y la diferencia de quincenas con signo. Un mes anterior sin quincenas ni extras no tiene
+	// datos y sus cifras van ausentes, porque sin datos no es cero (dominio.MonthHasData; PROVISIONAL, bloqueo
+	// S6-tablero-sin-datos).
+	pm := dominio.MonthStart(m.Year, m.Month-1)
+	prev, err := h.incomeMonth(r.Context(), pm)
+	if err != nil {
+		return err
+	}
+	out.PreviousMonth = api.Ptr(prev.Month)
+	if pf := prev.CapturedCents + prev.ExpectedPendingCents; dominio.MonthHasData(pf, prev.ExtrasCents) {
+		out.PreviousFortnightsCents, out.PreviousExtrasCents = api.Ptr(pf), api.Ptr(prev.ExtrasCents)
+		out.FortnightsDifferenceCents = api.Ptr(out.CapturedCents + out.ExpectedPendingCents - pf)
+	}
 	return api.WriteJSON(w, http.StatusOK, out)
 }
 

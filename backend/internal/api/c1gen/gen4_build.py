@@ -3,7 +3,7 @@ from gen3_ops import *
 from c1paths import OUT, WORK
 # Única constante de versión del contrato (C1 v1.2 · ronda 3, N-01 de docs/estado/p1c/REVISION-C1-r2.md): da info.version, y de
 # info.version salen los encabezados generados de openapi.yaml (abajo), routes.go (gen5_go.py) y los extractos (gen7_extractos.py).
-C1_VERSION = '1.5.0'
+C1_VERSION = '1.5.1'
 # C1 v1.4 (puerta 2 bis, K53): credencial de servicio del agente externo (solo en las operaciones con x-agente-externo).
 SERVICE_TOKEN = {'type': 'http', 'scheme': 'bearer', 'description': 'Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4.', 'x-provisional': True}
 VIEW_ENT = ['person', 'user_account', 'device_session', 'income', 'category', 'expense', 'savings_goal', 'savings_movement', 'credit', 'credit_term_rate', 'credit_purchase', 'scheduled_payment', 'promotion', 'store', 'product', 'price', 'recipe', 'meal_plan_entry', 'inventory_item', 'weight_entry', 'notification_delivery', 'job', 'backup']

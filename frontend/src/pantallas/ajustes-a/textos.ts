@@ -63,6 +63,21 @@ export const t = {
     disponibleBaja: (l: string, m: string) => `El disponible de ${l} baja ${m} el día de la compra.`, importarCsv: 'O importa el CSV desde Datos y respaldos',
     frecuencias: { weekly: 'Semanal', fortnightly: 'Quincenal', monthly: 'Mensual', yearly: 'Anual', once: 'Una vez' } as Record<string, string>,
     formas: { cash: 'Efectivo', debit: 'Débito', transfer: 'Transferencia', credit: 'Crédito' } as Record<string, string>,
+    // Parámetros del tablero (K54, K44; U1 §3.3 N-275 y N-278; decisión 4 del orquestador = opción A de C3-ajustes-tablero, PROVISIONAL)
+    tablero: 'Parámetros del tablero',
+    tableroNoCargo: 'No se pudieron cargar los parámetros del tablero. Revisa que estés en la red de casa.',
+    tableroTexto: 'Ajustan lo que muestra Inicio: los tramos del barómetro de capacidad de endeudamiento, cuántos pagos próximos se ven y cuándo se sugiere subir o recortar el presupuesto. No cambian ningún gasto, pago ni presupuesto guardado.',
+    tableroRangos: 'Rangos: fin del verde de 1 a 99 % y menor que el tope; tope de 1 a 100 %; pagos de 1 a 20; meses de 2 a 12; margen de 1 a 50 puntos. PROVISIONAL (bloqueo C1-tablero).',
+    pAviso: 'Barómetro: fin del tramo verde (% del ingreso del mes)', pTope: 'Barómetro: tope antes del rojo (% del ingreso del mes)',
+    pPagos: 'Pagos próximos que muestra Inicio', pMeses: 'Sugerencia de presupuesto: meses cerrados que compara', pMargen: 'Sugerencia de presupuesto: margen sobre el plan (puntos de %)',
+    // Unidad corta de cada clave: la primera palabra de la descripción que hoy manda la API en `unit` (tercera columna de @param de
+    // 00005_tablero.sql). PROVISIONAL, bloqueo docs/estado/bloqueos/C1-unidad-parametros-tablero.md (opción B aplicada mientras se decide).
+    unidades: { 'debt.capacity_warning_pct': '%', 'debt.capacity_limit_pct': '%', 'dashboard.payment_reminder_count': 'pagos', 'budget.signal_months': 'meses', 'budget.signal_margin_pct': 'puntos' },
+    tramos: 'Tramos del barómetro', tramosTexto: (a: number, b: number) => `Verde hasta ${a} % · amarillo hasta ${b} % · rojo arriba de ${b} %`,
+    escala: 'Escala del barómetro', escalaTexto: (n: number) => `De 0 a ${n} %`,
+    filasPagos: 'Filas de «Pagos próximos» en Inicio', filasPagosTexto: (n: number) => `Hasta ${n} ${n === 1 ? 'pago' : 'pagos'}`,
+    mesesSenal: 'Meses que compara la sugerencia', mesesSenalTexto: (n: number) => `Los últimos ${n} meses cerrados seguidos`,
+    margenSenal: 'Cuándo sugiere subir o recortar', margenSenalTexto: (n: number) => `Subir si pasa de ${100 + n} % del plan · recortar si queda abajo de ${100 - n} %`,
   },
   ingresos: {
     persona: 'Persona', frecuencia: 'Frecuencia', quincenal: 'Quincenal: días 15 y 30 (o último día)', q15: 'Monto de la quincena del 15', q30: 'Monto de la quincena del 30 (si es distinto)',

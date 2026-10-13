@@ -6,6 +6,7 @@ import { controlesChicos, dineroSinTabulares, textosEnIngles } from '../apoyo/me
 import { moverTarjetaA } from './tablero'
 import type { Cuerpo, Esquemas, Respuesta, RutasCon } from '../../src/api/tipos'
 import { erroresC1 } from './validar-c1'
+import { unidadesDelServidor } from './unidades-servidor'
 /** Ruta del contrato con cada {parámetro} cambiado por un número, p. ej. /api/v1/credits/1 (para tipar las respuestas falsas contra C1, H-11). */
 type Concreta<S extends string> = S extends `${infer A}{${string}}${infer B}` ? `${A}${number}${Concreta<B>}` : S
 type DatosC1 = { [P in RutasCon<'get'> & string as Concreta<P>]?: Respuesta<P, 'get'> }
@@ -28,6 +29,8 @@ const DATOS: Record<string, unknown> = {
     { id: 2, kind: 'income', description: 'Ingreso quincenal', amount_cents: 1500000, frequency: 'fortnightly', interval_count: 1, start_date: '2026-10-15', person_id: 1, accrual_months: 1, is_active: true, ...sello },
     { id: 3, kind: 'fixed_expense', description: 'Despensa bimestral', amount_cents: 309450, frequency: 'monthly', interval_count: 2, start_date: '2026-10-10', category_id: 1, payment_method: 'credit', credit_id: 1, term_count: 4, accrual_months: 2, is_active: true, ...sello }]),
   '/api/v1/settings/projection': { repeat_cadence_enabled: false },
+  // P-26.02 «Parámetros del tablero» (frontend-cierre): las cinco claves de K54 con sus valores iniciales (C1 v1.5.1, DashboardSettings) y la `unit` que manda el servidor (@param de 00005; M-1 de REVISION-frontend-cierre-r1).
+  '/api/v1/settings/dashboard': { parameters: { 'debt.capacity_warning_pct': param('debt.capacity_warning_pct', 30, unidadesDelServidor()['debt.capacity_warning_pct']), 'debt.capacity_limit_pct': param('debt.capacity_limit_pct', 40, unidadesDelServidor()['debt.capacity_limit_pct']), 'dashboard.payment_reminder_count': param('dashboard.payment_reminder_count', 5, unidadesDelServidor()['dashboard.payment_reminder_count']), 'budget.signal_months': param('budget.signal_months', 3, unidadesDelServidor()['budget.signal_months']), 'budget.signal_margin_pct': param('budget.signal_margin_pct', 10, unidadesDelServidor()['budget.signal_margin_pct']) } },
   '/api/v1/credits': pagina([
     KUESKI,
     { id: 2, name: 'Tarjeta de la casa', kind: 'bank_card', holder_person_id: 1, payment_frequency: 'monthly', availability_reading: 'B', availability_confirmed: true, is_active: true, missing_terms: ['annual_rate', 'rate_base', 'vat', 'min_payment_pct_bp', 'min_payment_fixed_cents'], ...sello }]),

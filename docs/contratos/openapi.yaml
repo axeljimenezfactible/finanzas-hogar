@@ -1,10 +1,10 @@
-# Finanzas Hogar · Contrato C1 v1.5.0 (OpenAPI 3.1). Archivo generado: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.1 (OpenAPI 3.1). Archivo generado: no se edita a mano.
 # Generador: backend/internal/api/c1gen/ (agente S6a-contrato-c1, WF-0, 2026-10-10; v1.1: agente C1-v1.1, puerta 1, 2026-10-11). Regenerar: python3 -I backend/internal/api/c1gen/build.py (con --check compara sin escribir).
 # Fuente: esquema de S1 (backend/db/migrations/*.sql, aplicadas en orden) + necesidades de U1 (docs/design/U1-arquitectura.md). Ver docs/contratos/C1-datos.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1)"
-  version: "1.5.0"
+  version: "1.5.1"
   summary: "Contrato C1 v1.5 del backend Go local de Finanzas Hogar."
   description: "Contrato C1 v1.5 (12-oct-2026, respuestas de las puertas 1, 1b, 2 y 2 bis, y tablero de control K54). Convenciones únicas (detalle en docs/contratos/C1-datos.md): dinero entero en centavos MXN con sufijo `_cents` (esquema MoneyCents, ROUND_HALF_UP, el último pago de una serie ajusta centavos); fechas ISO `AAAA-MM-DD` (Date) e instantes con desplazamiento de America/Mexico_City (DateTime; «Z» solo en entradas); un solo esquema de error (Error); paginación por cursor con la envoltura Page; seis filtros globales (person_id, family, category_id, store_id, period, credit_id); `Idempotency-Key` obligatoria en los POST de captura; parámetros operativos (K44) por clave de app_setting, con valor vigente, valor inicial y «restablecer», en las operaciones /api/v1/settings/*. Solo `POST /api/v1/auth/login` y `GET /health` son públicos; las cuatro operaciones del agente externo (`/api/v1/external-agent/*`, K53) usan la credencial de servicio `serviceToken` en lugar de la cookie; todo lo demás exige la cookie de sesión. Axel y Ximena tienen los mismos permisos; Karen no tiene cuenta. Extensiones: `x-tablas` (tablas de S1 que lee o escribe la operación), `x-necesidades` (necesidades N-xxx de U1), `x-calculado` (campo calculado, no es columna), `x-entrada` (dato de acción que no se guarda), `x-columna` (columna a la que corresponde una entrada en lista), `x-app-setting` (clave de app_setting), `x-tabla` (tabla de un esquema de entidad), `x-provisional` (depende de un bloqueo abierto) y `x-agente-externo` (operación del agente externo con credencial de servicio, K53)."
 servers:
@@ -16397,7 +16397,8 @@ components:
       properties:
         live_debt_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Deuda viva total."
+          x-provisional: true
+          description: "Deuda viva total hoy: la misma cifra que getLiveDebt con la fecha de hoy (solo compras con fecha hasta hoy; PROVISIONAL, bloqueo S6-deuda-viva-hoy, punto 1), de todas las líneas, activas o archivadas (PROVISIONAL, bloqueo S6-tablero-lineas-archivadas, punto 5)."
         fortnight_total_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Pagos con fecha en la quincena en curso."
@@ -16409,7 +16410,8 @@ components:
           description: "Parte de Karen."
         month_total_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Pagos del mes en curso."
+          x-provisional: true
+          description: "Pagos del mes en curso, de todas las líneas, activas o archivadas; su parte del hogar es la misma cifra que DashboardDebtCapacity.payments_cents del mes en curso (PROVISIONAL, bloqueo S6-tablero-lineas-archivadas, punto 5)."
         month_household_cents:
           $ref: "#/components/schemas/MoneyCents"
           description: "Parte del hogar."
@@ -16427,7 +16429,8 @@ components:
           description: "Pagos programados con fecha en el mes en curso. Nuevo en C1 v1.5 (K54)."
         month_pending_household_cents:
           $ref: "#/components/schemas/MoneyCents"
-          description: "Parte del hogar que falta pagar de los pagos del mes en curso. Nuevo en C1 v1.5 (K54)."
+          x-provisional: true
+          description: "Parte del hogar que falta pagar de los pagos del mes en curso: por cada pago que el motor S3 no da por pagado, su parte del hogar menos lo que ya abonaron personas del hogar a ese pago, nunca negativa; los abonos de Karen no la cubren (RN-04); un pago de corte de tarjeta pendiente cuenta su parte del hogar completa (PROVISIONAL, bloqueo S6-deuda-viva-hoy, punto 3). Nuevo en C1 v1.5 (K54)."
       required:
         - "live_debt_cents"
         - "fortnight_total_cents"
@@ -16749,7 +16752,8 @@ components:
                 description: "Mes."
               live_debt_cents:
                 $ref: "#/components/schemas/MoneyCents"
-                description: "Deuda viva al cierre."
+                x-provisional: true
+                description: "Deuda viva al cierre: la misma cifra que getLiveDebt con el último día del mes (solo compras con fecha hasta ese día; PROVISIONAL, bloqueo S6-deuda-viva-hoy, punto 2). Sin credit_id cuenta todas las líneas, activas o archivadas; con credit_id, las nombradas aunque estén archivadas (PROVISIONAL, bloqueo S6-tablero-lineas-archivadas, punto 5)."
               credits:
                 type: "array"
                 items:
@@ -19404,7 +19408,8 @@ components:
           description: "Margen antes del rojo, con signo: limit_pct × income_cents ÷ 100 (ROUND_HALF_UP) − payments_cents; negativo = arriba del tope. Ausente sin income_cents."
         has_credits:
           type: "boolean"
-          description: "true si hay al menos una línea de crédito activa; con false, payments_cents = 0 y ratio_pct = 0 (cifra real, no falta de dato)."
+          x-provisional: true
+          description: "true si hay al menos una línea de crédito activa o algún pago de una línea archivada con fecha en el mes (PROVISIONAL, bloqueo S6-tablero-lineas-archivadas); con false, payments_cents = 0 y ratio_pct = 0 (cifra real, no falta de dato)."
       required:
         - "month"
         - "income_is_expected"
@@ -19430,6 +19435,10 @@ components:
           type: "integer"
           description: "Tope, en %. Valor vigente de app_setting debt.capacity_limit_pct (K44; se cambia en updateDashboardSettings)."
           x-app-setting: "debt.capacity_limit_pct"
+        scale_max_pct:
+          type: "integer"
+          x-provisional: true
+          description: "Fin de la escala del eje Y de G-6, en %: la misma de getDashboardDebtCapacity (M-20), el múltiplo de 10 igual o mayor que 1.5 × limit_pct (60 con 40); G-6 dibuja de 0 al mayor entre este valor y el mayor debt_ratio_pct a la vista. Solo dibujo. Nuevo en C1 v1.5.1 (hallazgo M-R3-1; PROVISIONAL, bloqueo U3-tablero-barometro)."
         months:
           type: "array"
           items:
@@ -19490,12 +19499,13 @@ components:
       required:
         - "warning_pct"
         - "limit_pct"
+        - "scale_max_pct"
         - "months"
       x-calculado: true
       x-provisional: true
     BudgetSignals:
       type: "object"
-      description: "Sugerencia «subir o recortar presupuesto» por categoría (U3 2.0 G-3, métrica M-22, RN-31; K54, motor S2). Mira los months_considered meses cerrados anteriores al mes pedido: raise si en todos el % usado pasó de 100 + margin_pct; cut si en todos quedó abajo de 100 − margin_pct; none en otro caso. Un mes sin plan corta la racha; con plan y sin gasto cuenta 0 %. Solo sugiere: no cambia el presupuesto ni da un monto. PROVISIONAL (bloqueos U3-tablero-senal-presupuesto y C1-tablero): toda la regla."
+      description: "Sugerencia «subir o recortar presupuesto» por categoría (U3 2.0 G-3, métrica M-22, RN-31; K54, motor S2). Mira los months_considered meses cerrados anteriores al mes pedido: raise si en todos el % usado pasó de 100 + margin_pct; cut si en todos quedó abajo de 100 − margin_pct; none en otro caso. Un mes sin plan corta la racha; con plan y sin gasto cuenta 0 %. Solo sugiere: no cambia el presupuesto ni da un monto. Con un period posterior al mes en curso solo cuentan los meses ya cerrados: months puede venir más corto o vacío y entonces signal es none (PROVISIONAL, bloqueo S6-tablero-senal-periodo, opción a). PROVISIONAL (bloqueos U3-tablero-senal-presupuesto y C1-tablero): toda la regla."
       properties:
         month:
           $ref: "#/components/schemas/Month"

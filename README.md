@@ -2,6 +2,8 @@
 
 Sistema web de control financiero del hogar de Axel y Ximena. Corre en la máquina de casa, solo en la red local, y se usa desde el navegador del escritorio y como aplicación instalada (PWA) en sus teléfonos Android.
 
+**Estado al 12-oct-2026, WF-3c bis (cierre del tablero):** la deuda viva de K-3 y P-17 ya es la de hoy, **$3,895.00**, igual que el oráculo, y la «Deuda viva proyectada» arranca en $2,921.25. El barómetro, «Créditos del mes» y las gráficas cuentan los pagos de todas las líneas, también las archivadas. C1 pasó a **v1.5.1** (`scale_max_pct`: G-6 y el barómetro usan la misma escala, 0 a 60 %). En Ajustes › Presupuesto (P-26.02) ya se editan los 5 parámetros del tablero, con vista previa y «Restablecer». P-01 Detalle ya no desborda en Android, las 164 capturas se regeneraron y los flujos de U1 pasan contra el servidor real. **C3 v1.4 quedó FIRMADA** en la primera revisión, y `make verify-wf3` y `make verify-all` pasan. El servidor de desarrollo corre con el binario y el `dist` nuevos, por HTTP/2. **Faltan dos aprobaciones tras 2 rondas:** el backend tiene 1 alto, porque el comparador de escenarios recomienda tarjetas archivadas, y el frontend tiene 1 medio, porque D-3 de P-01 Detalle muestra un instante «Hogar $973.75» sin la parte de Karen. Lo PROVISIONAL (deuda viva de hoy, líneas archivadas, parámetros del tablero y sus unidades, K-4 sin personas y la ruta A de F-3) espera la puerta 4. Bloqueos: 154 archivos, 64 resueltos y 90 abiertos. Detalle, consolidado para la puerta 4 y propuesta de una corrección acotada: [`docs/estado/wf3/INTEGRACION-wf3c.md`](docs/estado/wf3/INTEGRACION-wf3c.md) §15.
+
 **Estado al 12-oct-2026, WF-3c (Inicio como tablero de control, K54):** Inicio › Resumen ya es un tablero de control. Arriba va el gasto real del mes, y junto a él el ingreso, los créditos y los pagos próximos. El **barómetro de capacidad de endeudamiento** divide los pagos de crédito del mes entre el ingreso neto: verde hasta 30 %, amarillo hasta 40 % y rojo arriba, con umbrales que se pueden cambiar. Debajo hay 6 gráficas para anticiparse y «Más del hogar». Para eso se hicieron U3 2.0, DESIGN 1.1 (sin tokens nuevos), el esquema 1.5 (migración 00005) y C1 v1.5.0 (221 operaciones, 176 rutas y 267 esquemas). El servidor de desarrollo ya habla **HTTP/2** y las 164 capturas se regeneraron con el tablero. `make verify-all` pasa. `make verify-wf3` falla solo en U5-04, con 2 pares del dibujo del barómetro que son un falso positivo comprobado. **Faltan aprobaciones:** la especificación y el backend quedaron con 1 medio cada uno tras 3 rondas, y C3 v1.3 volvió sin firma con 4 altos. El frontend sí quedó aprobado. Detalle y propuesta de una ronda acotada: [`docs/estado/wf3/INTEGRACION-wf3c.md`](docs/estado/wf3/INTEGRACION-wf3c.md) y `docs/estado/bloqueos/WF3c-ronda3-escalamiento.md`.
 
 **Estado al 12-oct-2026, WF-3b (verificación visual y C3):** las 41 pantallas de U1 ya tienen sus **164 capturas reales**: la aplicación en marcha con la semilla, en Android 412×915 táctil y en escritorio 1440×900, en claro y en oscuro. Cada captura trae su axe-core (0 violaciones serias o críticas), su contraste medido en el DOM (20,919 pares y 0 bajo umbral) y sus hosts (solo `finanzas.local`). Todo está versionado en `docs/design/capturas-u5/`. Los flujos de U1 se probaron de extremo a extremo contra el servidor real, en copias aisladas de la base. También se probó la cola sin conexión (U5-13: sin duplicados y con reenvío idempotente). Las 111 cifras de pantalla cuadran con el oráculo (C3-09). **U5 no quedó aprobado tras 3 rondas:** quedan 2 hallazgos medios. Uno es la barra lateral sin iconos de sección. El otro, la marca «capturado» en C3, ya está resuelto en C3 v1.2. **C3 v1.2 sigue sin firma tras 3 rondas:** pasan 7 de 8 flujos y F-3 «Comparar canasta» por la ruta A falla con la semilla, porque la lista del plan no tiene precios de ingredientes. Los dos casos se escalaron a Axel con opciones; la recomendada es una corrección y una verificación acotadas. Dentro del flujo se cerraron los 2 medios que el frontend arrastraba de WF-3a bis. La semilla aplicó las decisiones PROVISIONALES del orquestador: gastos proyectados y precios de Walmart. `make verify-wf3` (ahora con `verify-u5`, la evidencia U5 sin servidor) y `make verify-all` pasan. Hay 8 bloqueos nuevos (137 archivos en total). Para la puerta 4 quedan pendientes S6-11 en los Android (Axel), S7-07 con envío real (orquestador) y los valores K31. Detalle: [`docs/estado/wf3/INTEGRACION-wf3b.md`](docs/estado/wf3/INTEGRACION-wf3b.md).
@@ -85,10 +87,10 @@ finanzas-hogar/
 > **Cambios del 12-oct-2026 (WF-3c, K54)**, la tabla todavía no los refleja:
 >
 > - Esquema 1.5 (`00005_tablero.sql`), diccionario y reglas 1.5.
-> - C1 v1.5.0: 221 operaciones, 176 rutas y 267 esquemas.
+> - C1 v1.5.1 (WF-3c bis agregó `scale_max_pct` a `DashboardMonthlyOverview`): 221 operaciones, 176 rutas y 267 esquemas.
 > - U3 2.0 y DESIGN 1.1.
 > - Criterios: U3 1.4, U5 1.3, P3 1.4, C1 1.5 y S1 1.3.
-> - C3 v1.3, sin firma.
+> - C3 v1.4, **firmada** por `revisor-c3-cierre-r1` (WF-3c bis).
 >
 > Ver `docs/estado/wf3/INTEGRACION-wf3c.md` §4 y §5.
 
@@ -168,6 +170,30 @@ Inicio como tablero de control (K54). Detalle, rondas, hallazgos abiertos, bloqu
   
   La salida está en `docs/estado/bloqueos/WF3c-ronda3-escalamiento.md`.
 
+## Qué entregó WF-3c bis
+
+Cierre del tablero, una ronda acotada antes de la puerta 4. Detalle: [`docs/estado/wf3/INTEGRACION-wf3c.md`](docs/estado/wf3/INTEGRACION-wf3c.md) §15. En corto:
+
+- **Servidor:**
+  - `creditos.LiveDebtAt` da la deuda viva de hoy (K-3, P-17 y G-5);
+  - los pagos del mes cuentan todas las líneas;
+  - K-2 compara con el mes anterior y K-3 dice cuánto falta pagar;
+  - C1 v1.5.1 con `scale_max_pct`.
+- **Pantalla:**
+  - «Parámetros del tablero» en P-26.02;
+  - el barómetro sin falso positivo de contraste;
+  - la insignia de Detalle, que ya se parte en dos renglones;
+  - K-4, que espera a saber quién es Karen antes de repartir;
+  - G-6 con la escala de C1.
+- **Pruebas y evidencia:** los flujos y C3-09 a U3 2.0 (120 cifras, 0 diferencias), las 164 capturas regeneradas (contraste: 0 bajo umbral) y C3 v1.4 firmada.
+- **Abierto:**
+  - A-1 del backend: el comparador ofrece líneas archivadas;
+  - M-1 del frontend: D-3 reparte mal un instante mientras carga;
+  - 5 bajos del frontend;
+  - las solicitudes de documentos: `docs/criterios/C1.md` a 1.5.1, U3 G-6 y los ejemplos +$138.50 de U1 y U3.
+
+  La salida propuesta está en §15.5 de la integración.
+
 ## Cómo correr la verificación
 
 Desde la raíz del repositorio:
@@ -224,6 +250,12 @@ Para la colorimetría sin make, copia el script a un árbol espejo (`<espejo>/do
    - dónde se editan los parámetros del tablero;
    - qué pasa con las líneas archivadas;
    - los valores PROVISIONALES de K54, junto con lo que ya estaba pendiente de WF-3b.
+9. **WF-3c bis «Cierre del tablero» (integrado el 12-oct-2026).** Las 6 decisiones del orquestador sobre `WF3c-ronda3-escalamiento` están aplicadas, `verify-wf3` y `verify-all` pasan y C3 v1.4 está firmada: [`docs/estado/wf3/INTEGRACION-wf3c.md`](docs/estado/wf3/INTEGRACION-wf3c.md) §15. **Siguiente:** el orquestador decide si hace la corrección acotada de A-1 (backend) y M-1 (frontend), que es la recomendada (§15.5). Después viene la **puerta 4**. Ahí Axel:
+   - ratifica lo PROVISIONAL del tablero (§15.6.2 y §15.6.10);
+   - contesta los valores K31 (§15.6.1), las preguntas `U3-tablero-*`, `WF3a-bis-semilla-dev`, `C3-flujos` y `S5-agente-externo`;
+   - prueba S6-11 en sus Android.
+
+   Por su parte, el orquestador hace S7-07 (Telegram real). Después viene WF-4.
 
 Lo que WF-1 debe tomar de los flujos anteriores (insumos, pendientes y solicitudes abiertas) está en [`docs/estado/wf0/INTEGRACION.md`](docs/estado/wf0/INTEGRACION.md) §5 y §7, [`docs/estado/p1/INTEGRACION.md`](docs/estado/p1/INTEGRACION.md) §7 y [`docs/estado/p1c/INTEGRACION.md`](docs/estado/p1c/INTEGRACION.md) §7.
 

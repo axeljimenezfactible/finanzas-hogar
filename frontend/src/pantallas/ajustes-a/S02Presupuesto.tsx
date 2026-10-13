@@ -16,7 +16,7 @@ import { textos } from '../../textos/es-MX'
 import type { Cambio } from '../../vistas-bd/tipos'
 import { VistaBD } from '../../vistas-bd/VistaBD'
 import { fechasEnMes, mesDe, mesSiguiente, montoEn, proximas, repartir, totalEnMes, ultimoDia } from './calculos'
-import { Aviso, Bloque, DialogoCritico, Editable, ErrorGuardado, Fila, Interruptor, textoDinero, textoFallo, vDinero, vEntero, vFecha, vNombre, vOpcion, vPlazo, type Previa } from './comunes'
+import { Aviso, Bloque, DialogoCritico, Editable, ErrorGuardado, Fila, Interruptor, Parametro, textoDinero, textoFallo, vDinero, vEntero, vFecha, vNombre, vOpcion, vPlazo, type Previa } from './comunes'
 import { comoLista } from './comunes'
 import { guardarVarias, nota, siNo } from './grupo'
 import { t } from './textos'
@@ -54,8 +54,52 @@ export default function S02Presupuesto() {
       <Bloque titulo={p.despensa} id="b-despensa">
         <ConDatos consulta={partidas}>{(d) => <Despensa item={d.items.find(esDespensa)} creditos={ctx.creditos} hoy={hoy} alCambiar={partidas.recargar} />}</ConDatos>
       </Bloque>
+      <ParametrosTablero />
       <NuevoFijo abierta={nuevo} alCambiar={setNuevo} cats={ctx.cats} alCrear={partidas.recargar} />
     </div>
+  )
+}
+
+// ——— Parámetros del tablero (K54 y K44; U1 §3.3 «Parámetros del tablero», N-275 lee y N-278 escribe; U4 §0.5 y §0.2)
+// Decisión 4 del orquestador (WF-3a cierre) = opción A del bloqueo docs/estado/bloqueos/C3-ajustes-tablero.md: las cinco claves de
+// K54 en P-26.02 con getDashboardSettings / updateDashboardSettings y «Restablecer» (reset_parameters). PROVISIONAL hasta la puerta 4.
+// Cada fila guarda con Enter o al salir, después de su vista previa «Antes → Después» calculada aquí con lo ya cargado (U4 §0.2):
+// tramos con la regla de U3 §B-1 (verde ≤ fin del verde < amarillo ≤ tope < rojo) y la escala = múltiplo de 10 ≥ 1.5 × tope.
+// La API vuelve a validar los rangos (PROVISIONALES, C1 v1.5) y responde 422 con su mensaje si algo no cabe.
+type ClaveTablero = keyof Esquemas['DashboardSettings']['parameters']
+const escalaDe = (tope: number) => Math.ceil((3 * tope) / 20) * 10
+const CLAVES_TABLERO: ClaveTablero[] = ['debt.capacity_warning_pct', 'debt.capacity_limit_pct', 'dashboard.payment_reminder_count', 'budget.signal_months', 'budget.signal_margin_pct']
+function ParametrosTablero() {
+  const ajustes = usarConsulta('get', '/api/v1/settings/dashboard')
+  return (
+    <Bloque titulo={p.tablero} id="b-parametros-tablero">
+      <p className="text-small text-text-secondary">{p.tableroTexto}</p>
+      <ConDatos consulta={ajustes}>{(a) => {
+        const prm = a.parameters
+        // Una respuesta sin las cinco claves no tumba la página entera (BarreraErrores): solo este bloque dice que no cargó.
+        if (!prm || CLAVES_TABLERO.some((k) => !prm[k])) return <p role="alert" className="text-small text-text-secondary">{p.tableroNoCargo}</p>
+        const v = (k: ClaveTablero) => prm[k].value ?? prm[k].initial_value ?? 0
+        const patch = async (cuerpo: Esquemas['DashboardSettingsUpdate']) => { await pedir('patch', '/api/v1/settings/dashboard', { cuerpo }); ajustes.recargar() }
+        // `unidad`: la de textos.ts y no la `unit` de la API, que para estas 5 claves es una descripción larga (PROVISIONAL, bloqueo
+        // docs/estado/bloqueos/C1-unidad-parametros-tablero.md).
+        const prop = (k: ClaveTablero) => ({ param: prm[k], unidad: p.unidades[k], guardar: (n: number) => patch({ parameters: { [k]: n } }), restablecer: () => patch({ reset_parameters: [k] }) })
+        const aviso = v('debt.capacity_warning_pct'), tope = v('debt.capacity_limit_pct')
+        const tramos = (x: number, y: number): Cambio => ({ etiqueta: p.tramos, antes: p.tramosTexto(aviso, tope), despues: p.tramosTexto(x, y) })
+        const una = (etiqueta: string, antes: string, despues: string): Previa => ({ cambios: [{ etiqueta, antes, despues }] })
+        return <>
+          <Parametro etiqueta={p.pAviso} {...prop('debt.capacity_warning_pct')} validar={vEntero(1, Math.max(1, tope - 1))} vistaPrevia={(n) => ({ cambios: [tramos(n, tope)] })} />
+          <Parametro etiqueta={p.pTope} {...prop('debt.capacity_limit_pct')} validar={vEntero(Math.min(100, aviso + 1), 100)}
+            vistaPrevia={(n) => ({ cambios: [tramos(aviso, n), { etiqueta: p.escala, antes: p.escalaTexto(escalaDe(tope)), despues: p.escalaTexto(escalaDe(n)) }] })} />
+          <Parametro etiqueta={p.pPagos} {...prop('dashboard.payment_reminder_count')} validar={vEntero(1, 20)}
+            vistaPrevia={(n) => una(p.filasPagos, p.filasPagosTexto(v('dashboard.payment_reminder_count')), p.filasPagosTexto(n))} />
+          <Parametro etiqueta={p.pMeses} {...prop('budget.signal_months')} validar={vEntero(2, 12)}
+            vistaPrevia={(n) => una(p.mesesSenal, p.mesesSenalTexto(v('budget.signal_months')), p.mesesSenalTexto(n))} />
+          <Parametro etiqueta={p.pMargen} {...prop('budget.signal_margin_pct')} validar={vEntero(1, 50)}
+            vistaPrevia={(n) => una(p.margenSenal, p.margenSenalTexto(v('budget.signal_margin_pct')), p.margenSenalTexto(n))} />
+          <p className="text-caption text-text-secondary">{p.tableroRangos}</p>
+        </>
+      }}</ConDatos>
+    </Bloque>
   )
 }
 

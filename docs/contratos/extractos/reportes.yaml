@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.5.0 · extracto «reportes». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.1 · extracto «reportes». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto reportes"
-  version: "1.5.0"
+  version: "1.5.1"
   description: "Extracto de la etiqueta «Reportes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -945,7 +945,8 @@ components:
       properties:
         live_debt_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Deuda viva total."
+          x-provisional: true
+          description: "Deuda viva total hoy: la misma cifra que getLiveDebt con la fecha de hoy (solo compras con fecha hasta hoy; PROVISIONAL, bloqueo S6-deuda-viva-hoy, punto 1), de todas las líneas, activas o archivadas (PROVISIONAL, bloqueo S6-tablero-lineas-archivadas, punto 5)."
         fortnight_total_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Pagos con fecha en la quincena en curso."
@@ -957,7 +958,8 @@ components:
           description: "Parte de Karen."
         month_total_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Pagos del mes en curso."
+          x-provisional: true
+          description: "Pagos del mes en curso, de todas las líneas, activas o archivadas; su parte del hogar es la misma cifra que DashboardDebtCapacity.payments_cents del mes en curso (PROVISIONAL, bloqueo S6-tablero-lineas-archivadas, punto 5)."
         month_household_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
           description: "Parte del hogar."
@@ -975,7 +977,8 @@ components:
           description: "Pagos programados con fecha en el mes en curso. Nuevo en C1 v1.5 (K54)."
         month_pending_household_cents:
           $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
-          description: "Parte del hogar que falta pagar de los pagos del mes en curso. Nuevo en C1 v1.5 (K54)."
+          x-provisional: true
+          description: "Parte del hogar que falta pagar de los pagos del mes en curso: por cada pago que el motor S3 no da por pagado, su parte del hogar menos lo que ya abonaron personas del hogar a ese pago, nunca negativa; los abonos de Karen no la cubren (RN-04); un pago de corte de tarjeta pendiente cuenta su parte del hogar completa (PROVISIONAL, bloqueo S6-deuda-viva-hoy, punto 3). Nuevo en C1 v1.5 (K54)."
       required:
         - "live_debt_cents"
         - "fortnight_total_cents"

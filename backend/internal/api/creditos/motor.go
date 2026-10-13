@@ -201,7 +201,12 @@ func (s *snapshot) state(c dominio.CreditRow) mc.CreditState {
 	return st
 }
 
-// states arma los CreditState de los créditos activos (ids vacío = todos).
+// states arma los CreditState de todas las líneas, activas o archivadas (ids vacío = todas; con ids, las nombradas
+// aunque estén archivadas). Una línea archivada que todavía tiene pagos programados sigue en la deuda viva y en los
+// pagos del mes: RN-21 cuenta «las compras no canceladas» sin filtro de línea, y RN-30 y U3 K-3 dicen «de todas las
+// líneas». Así getCreditTotals (K-3, P-17) y getDebtTrend (G-5) dan la misma cifra que getLiveDebt (motor S2) a la misma
+// fecha y que el barómetro (PaymentsByMonth). PROVISIONAL, bloqueo S6-tablero-lineas-archivadas, opción (a) (punto 5,
+// que pidió el hallazgo M-1 de REVISION-backend-cierre-r1), y bloqueo S6-deuda-viva-hoy (decisión 1 del orquestador).
 func (s *snapshot) states(ids []int64) []mc.CreditState {
 	want := map[int64]bool{}
 	for _, id := range ids {
@@ -209,7 +214,7 @@ func (s *snapshot) states(ids []int64) []mc.CreditState {
 	}
 	var out []mc.CreditState
 	for _, c := range s.credits {
-		if c.IsActive && (len(ids) == 0 || want[c.ID]) {
+		if len(ids) == 0 || want[c.ID] {
 			out = append(out, s.state(c))
 		}
 	}
@@ -233,7 +238,49 @@ func (s *snapshot) timeline(c dominio.CreditRow) (mc.Timeline, error) {
 }
 
 func (s *snapshot) liveDebt(states []mc.CreditState) (mc.DebtSummary, error) {
-	return mc.LiveDebt(states, mdateOf(s.today))
+	return LiveDebtAt(states, mdateOf(s.today))
+}
+
+// LiveDebtAt es la deuda viva a la fecha at de las compras hechas hasta esa fecha (M-12 de C1, RN-21). El motor S3
+// calcula lo que queda por pagar después de at (mc.LiveDebt) y aquí solo se dejan fuera, sin recalcular nada, las
+// compras con fecha posterior a at, que a esa fecha todavía no existen: la misma regla que getLiveDebt con
+// motor_fin.LiveDebt. Así la deuda viva «hoy» de getCreditTotals, de cada línea y de la tarjeta, y la de cada cierre de
+// getDebtTrend, no cuentan las despensas programadas a futuro. PROVISIONAL, bloqueo S6-deuda-viva-hoy (decisión 1 del
+// orquestador de WF-3c bis; hallazgo H-4 de REVISION-c3-tablero y diferencias 1 y 2 de u5-tablero).
+func LiveDebtAt(states []mc.CreditState, at mc.Date) (mc.DebtSummary, error) {
+	debt, err := mc.LiveDebt(states, at)
+	if err != nil {
+		return debt, err
+	}
+	future := map[string]bool{}
+	for _, st := range states {
+		for _, p := range st.Purchases {
+			if p.Input.Date.Compare(at) > 0 {
+				future[p.Ref] = true
+			}
+		}
+	}
+	if len(future) == 0 {
+		return debt, nil
+	}
+	out := mc.DebtSummary{AsOf: debt.AsOf, ByPurchase: []mc.DebtLine{}, ByCredit: []mc.DebtLine{}}
+	idx := map[int64]int{}
+	for _, l := range debt.ByPurchase {
+		if future[l.PurchaseRef] {
+			continue
+		}
+		out.ByPurchase = append(out.ByPurchase, l)
+		i, ok := idx[l.CreditID]
+		if !ok {
+			i = len(out.ByCredit)
+			idx[l.CreditID] = i
+			out.ByCredit = append(out.ByCredit, mc.DebtLine{CreditID: l.CreditID})
+		}
+		out.ByCredit[i].Pending += l.Pending
+		out.ByCredit[i].PaymentCount += l.PaymentCount
+		out.Total += l.Pending
+	}
+	return out, nil
 }
 
 func (s *snapshot) isExternal(personID int64) bool {

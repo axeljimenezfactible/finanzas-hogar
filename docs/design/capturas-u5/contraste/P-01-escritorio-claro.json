@@ -2,18 +2,40 @@
  "pantalla": "P-01",
  "combinacion": "escritorio-claro",
  "alcance": "body",
- "evaluados": 605,
- "pares_unicos": 30,
+ "evaluados": 610,
+ "pares_unicos": 34,
  "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
   "deshabilitados": 0,
   "ui_sin_limite_visible": 22,
-  "graficos_marcas_no_medibles_en_dom": 156
+  "graficos_marcas_no_medibles_en_dom": 153,
+  "svg_separaciones_color_fondo": 2,
+  "svg_decorativos": 1
  },
  "bajos": [],
  "indeterminados_detalle": [],
  "pares": [
+  {
+   "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#808189",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 3.466,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > line.stroke-viz-baseline.[stroke-width:1px]",
+     "texto": ""
+    },
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > line.stroke-viz-baseline.[stroke-width:1px]",
+     "texto": ""
+    }
+   ]
+  },
   {
    "tipo": "ui",
    "subtipo": "boton",
@@ -27,6 +49,26 @@
     {
      "nodo": "main#contenido > div.flex.flex-col > div.flex.flex-wrap > button.inline-flex.select-none",
      "texto": "Foto de ticket"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#207B3E",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 4.738,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path.stroke-role-success.[vector-effect:non-scaling-stroke]",
+     "texto": "normal"
+    },
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path[data-prueba=\"barometro-valor\"]",
+     "texto": "barometro-valor"
     }
    ]
   },
@@ -147,30 +189,6 @@
    ]
   },
   {
-   "tipo": "texto",
-   "subtipo": null,
-   "fg": "#006FA4",
-   "bg": "#E7F5FF",
-   "umbral": 4.5,
-   "grande": false,
-   "razon": 4.962,
-   "elementos": 5,
-   "ejemplos": [
-    {
-     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.h-6",
-     "texto": "Ingreso esperado"
-    },
-    {
-     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.h-6",
-     "texto": "Ingreso esperado"
-    },
-    {
-     "nodo": "a[data-prueba=\"tarjeta-K-3\"] > span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6",
-     "texto": "Pendiente confirmar"
-    }
-   ]
-  },
-  {
    "tipo": "icono",
    "subtipo": null,
    "fg": "#006FA4",
@@ -181,16 +199,40 @@
    "elementos": 5,
    "ejemplos": [
     {
-     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
     },
     {
-     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
     },
     {
-     "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.min-h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#006FA4",
+   "bg": "#E7F5FF",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 4.962,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > span.min-w-0",
+     "texto": "Ingreso esperado"
+    },
+    {
+     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > span.min-w-0",
+     "texto": "Ingreso esperado"
+    },
+    {
+     "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.min-h-6 > span.min-w-0",
+     "texto": "Pendiente confirmar"
     }
    ]
   },
@@ -202,7 +244,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 5.035,
-   "elementos": 148,
+   "elementos": 147,
    "ejemplos": [
     {
      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.text-caption.font-normal",
@@ -239,6 +281,22 @@
     {
      "nodo": "li > div.flex.items-center > a.flex.h-8 > svg[data-prueba=\"icono-seccion\"]",
      "texto": "lucide lucide-receipt size-5 shrink-0 te"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#8B5D00",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.127,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path.stroke-role-warning.[vector-effect:non-scaling-stroke]",
+     "texto": "warning"
     }
    ]
   },
@@ -366,7 +424,7 @@
    "ejemplos": [
     {
      "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-3\"] > span.flex.flex-wrap > span.flex.items-center",
-     "texto": "$18,999.22"
+     "texto": "$3,895.00"
     }
    ]
   },
@@ -412,6 +470,22 @@
   },
   {
    "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#A34449",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 5.397,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path.stroke-role-error.[vector-effect:non-scaling-stroke]",
+     "texto": "exceeded"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
    "subtipo": null,
    "fg": "#66676E",
    "bg": "#FAFAFB",
@@ -421,7 +495,7 @@
    "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "span.flex.flex-wrap > span.flex.flex-col > span.inline-flex.h-6 > svg.lucide.lucide-circle-dashed",
+     "nodo": "span.flex.flex-wrap > span.flex.flex-col > span.inline-flex.min-h-6 > svg.lucide.lucide-circle-dashed",
      "texto": "lucide lucide-circle-dashed"
     }
    ]
@@ -532,6 +606,22 @@
   },
   {
    "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#36363A",
+   "bg": "#F2F2F4",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > line[data-prueba=\"barometro-aguja\"]",
+     "texto": "barometro-aguja"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
    "subtipo": null,
    "fg": "#36363A",
    "bg": "#FAFAFB",
@@ -579,22 +669,6 @@
     {
      "nodo": "h2#mas-del-hogar",
      "texto": "Más del hogar"
-    }
-   ]
-  },
-  {
-   "tipo": "icono",
-   "subtipo": null,
-   "fg": "#000000",
-   "bg": "#F2F2F4",
-   "umbral": 3,
-   "grande": false,
-   "razon": 18.783,
-   "elementos": 1,
-   "ejemplos": [
-    {
-     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto",
-     "texto": "block h-auto w-full overflow-visible for"
     }
    ]
   }

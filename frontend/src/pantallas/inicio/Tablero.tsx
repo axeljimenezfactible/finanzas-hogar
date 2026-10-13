@@ -177,11 +177,17 @@ function K4() {
   const proximos = usarConsulta('get', '/api/v1/scheduled-payments', { consulta: { status: 'pending', sort: 'due_date', limit: N, period: `${c.hoy}..${sumarDias(c.hoy, 30)}` } }, N !== undefined)
   const idK = karen(c)?.id, aviso = diasAviso(c)
   const sinN = c.ajustesTablero.error || c.ajustesTablero.nuncaCargada || (!c.ajustesTablero.cargando && N === undefined)
+  // «Hogar · Karen» y la insignia («Falta la parte de Karen», «Falta la parte del hogar») dependen de quién es Karen (listPersons).
+  // Mientras esa lectura no llega no se pinta ninguna fila (esqueleto): sin ella todo caería en el hogar («Hogar $973.75»), una
+  // cifra distinta del oráculo (M-2 de REVISION-frontend-cierre-r1). Si falla, el estado de error del bloque con «Reintentar»,
+  // igual que cuando falla la lectura de N (U3 §1.2); esta conducta es PROVISIONAL (bloqueo docs/estado/bloqueos/U3-tablero-k4-personas.md).
+  const sinPersonas = c.personas.datos === undefined && (Boolean(c.personas.error) || c.personas.nuncaCargada)
+  const reintentar = () => { if (sinN) c.ajustesTablero.recargar(); if (sinPersonas) c.personas.recargar() }
   return (
     <section data-prueba="tarjeta-K-4" aria-label={T.k4.titulo} className={CAJA}>
       <Titulo icono={<CalendarClock aria-hidden />} titulo={T.k4.titulo} />
-      {sinN ? <FallaBloque texto={T.k4.falla} alReintentar={c.ajustesTablero.recargar} />
-        : N === undefined ? <EsqueletoFilas n={3} />
+      {sinN || sinPersonas ? <FallaBloque texto={T.k4.falla} alReintentar={reintentar} />
+        : N === undefined || c.personas.datos === undefined ? <EsqueletoFilas n={3} />
         : <Estados consulta={proximos} falla={T.k4.falla} esqueleto={<EsqueletoFilas n={3} />}>{(d) => {
           const filas = [...(conVencidos ? vencidos.datos?.items ?? [] : []), ...d.items].slice(0, N)
           if (!filas.length) {
@@ -321,7 +327,9 @@ function G6({ q, escala }: { q: EstadoConsulta<Mensual>; escala?: number }) {
     const proyectados = m.filter((x) => x.is_projection && x.debt_ratio_pct !== undefined)
     const mayor = proyectados.reduce<typeof proyectados[number] | undefined>((a, b) => (!a || b.debt_ratio_pct! > a.debt_ratio_pct! ? b : a), undefined)
     const u = m[hoyI] ?? m[m.length - 1]
-    const tope = Math.max(escala ?? d.limit_pct, ...m.map((x) => x.debt_ratio_pct ?? 0))
+    // Escala de G-6 = la del barómetro (M-R3-1, decisión 3 del orquestador = opción B: `scale_max_pct` entero requerido en
+    // DashboardMonthlyOverview, C1 1.5.1). La de getDashboardDebtCapacity y `limit_pct` quedan solo si un servidor viejo no lo manda.
+    const tope = Math.max(d.scale_max_pct ?? escala ?? d.limit_pct, ...m.map((x) => x.debt_ratio_pct ?? 0))
     const c1 = token('--ui-chart-1'), base = token('--ui-viz-baseline'), sec = token('--ui-text-secondary')
     const referencia = (v: number) => ({ yAxis: v, lineStyle: { color: base, width: 1, type: 'solid' }, label: { formatter: `${v} %`, position: 'end', color: sec } })
     return <FiguraGrafica id="g6" titulo={T.g6.titulo} subtitulo={T.g1.subtitulo(cs[0], cs[cs.length - 1])} dependencias={[d, ancho, escala]}

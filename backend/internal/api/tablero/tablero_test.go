@@ -1,6 +1,7 @@
 package tablero_test
 
 import (
+	"strings"
 	"testing"
 
 	"finanzas-hogar/internal/api"
@@ -66,7 +67,7 @@ func TestOp_getDashboardMonthlyOverview(t *testing.T) {
 	res := c.Do("GET", "/api/v1/dashboard/monthly-overview?from=2026-09&to=2026-12", nil)
 	var out api.DashboardMonthlyOverview
 	res.JSON(t, &out)
-	if res.StatusCode != 200 || len(out.Months) != 4 || out.WarningPct != 30 || out.LimitPct != 40 {
+	if res.StatusCode != 200 || len(out.Months) != 4 || out.WarningPct != 30 || out.LimitPct != 40 || out.ScaleMaxPct != 60 { // scale_max_pct (C1 v1.5.1, M-R3-1): la escala de B-1
 		t.Fatalf("%d %+v", res.StatusCode, out)
 	}
 	for i, want := range []struct {
@@ -173,5 +174,15 @@ func TestOp_updateDashboardSettings(t *testing.T) {
 	}
 	if s.Anonymous(t).Do("PATCH", "/api/v1/settings/dashboard", map[string]any{"reset_parameters": []string{"budget.signal_months"}}).StatusCode != 401 {
 		t.Error("sin sesión debe ser 401")
+	}
+}
+
+// B-6 (REVISION-tablero-backend-r3): un period mal formado da 400 con un ejemplo de mes, no de quincena.
+func TestOp_getDashboardDebtCapacity_PeriodoMalFormado(t *testing.T) {
+	s := testutil.NewServer(t, tablero.Register)
+	c := s.SessionFor(t, testutil.AxelUser)
+	res := c.Do("GET", "/api/v1/dashboard/debt-capacity?period=2026-13", nil)
+	if res.StatusCode != 400 || !strings.Contains(string(res.Body), "por ejemplo 2026-10.") || strings.Contains(string(res.Body), "q1") {
+		t.Fatalf("%d %s", res.StatusCode, res.Body)
 	}
 }

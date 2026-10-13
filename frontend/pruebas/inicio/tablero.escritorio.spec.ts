@@ -188,6 +188,45 @@ test('P-01 estados del tablero: un bloque con falla no tumba los demás y «Rein
   await expect(bloque(page, 'K-4')).toContainText('Vie 30 oct 2026 · Kueski · $973.75 · Pendiente')
 })
 
+test('P-01 K-4 no pinta ninguna fila mientras listPersons no responde: nunca «Hogar $973.75» sin la parte de Karen (M-2 de REVISION-frontend-cierre-r1, C3-09, R-13)', async ({ page, context }) => {
+  const reg: string[] = []
+  // Registra si en algún instante la página dijo «Hogar $973.75» (el pago entero cargado al hogar porque aún no se sabe quién es Karen).
+  await page.addInitScript(() => {
+    const w = window as unknown as { __hogarTodo: boolean }; w.__hogarTodo = false
+    new MutationObserver(() => { if (document.body?.textContent?.includes('Hogar $973.75')) w.__hogarTodo = true }).observe(document, { subtree: true, childList: true, characterData: true })
+  })
+  await new ApiFalsa().instalar(context); await instalarInicio(context, {}, reg); await reloj(page)
+  let soltar = () => {}
+  const personas = new Promise<void>((r) => { soltar = r })
+  await context.route(/\/api\/v1\/persons(\?|$)/, async (route) => { await personas; await route.fallback() })
+  await page.goto('/inicio')
+  const k4 = bloque(page, 'K-4')
+  // Los pagos próximos ya respondieron y listPersons sigue retenida: esqueleto, sin filas ni cifras repartidas.
+  await expect.poll(() => reg.some((x) => x.startsWith('/api/v1/scheduled-payments') && x.includes('status=pending'))).toBe(true)
+  await page.waitForTimeout(400)
+  await expect(k4.getByRole('listitem')).toHaveCount(0)
+  await expect(k4).not.toContainText('$973.75')
+  await expect(k4).not.toContainText('Hogar')
+  soltar()
+  await expect(k4).toContainText('Vie 30 oct 2026 · Kueski · $973.75 · Pendiente')
+  await expect(k4).toContainText('Hogar $598.82 · Karen $374.93')
+  expect(await page.evaluate(() => (window as unknown as { __hogarTodo: boolean }).__hogarTodo)).toBe(false)
+})
+
+test('P-01 K-4 con listPersons en falla: estado de error con «Reintentar» y sin cifras repartidas; «Reintentar» lo recupera (PROVISIONAL, bloqueo U3-tablero-k4-personas)', async ({ page, context }) => {
+  await new ApiFalsa().instalar(context); await instalarInicio(context, { '/api/v1/persons': 500 }); await reloj(page)
+  await page.goto('/inicio')
+  const k4 = bloque(page, 'K-4')
+  await expect(k4).toContainText('No se pudieron cargar los pagos. Revisa que estés en la red de casa.')
+  await expect(k4).not.toContainText('$973.75')
+  await expect(bloque(page, 'K-1')).toContainText('$1,197.64') // los demás bloques siguen
+  await context.unrouteAll({ behavior: 'ignoreErrors' })
+  await new ApiFalsa().instalar(context); await instalarInicio(context)
+  await k4.getByRole('button', { name: 'Reintentar' }).click()
+  await expect(k4).toContainText('Vie 30 oct 2026 · Kueski · $973.75 · Pendiente')
+  await expect(k4).toContainText('Hogar $598.82 · Karen $374.93')
+})
+
 test('P-01 servidor anterior a C1 v1.5 (501 o 404 en las operaciones nuevas): B-1, G-1 y G-6 dicen «Disponible cuando el servidor se actualice», sin cifra ni «Reintentar» (U3 2.0 §2, U3-03)', async ({ page, context }) => {
   await reloj(page)
   for (const estado of [501, 404]) {

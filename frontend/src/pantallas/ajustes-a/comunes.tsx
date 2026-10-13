@@ -271,12 +271,14 @@ export function DialogoCritico({ abierto, alCambiar, titulo, verbo, children, al
 }
 
 // ——— Parámetro operativo K44 (U4 §0.5)
+// `unidad` reemplaza a `param.unit` solo donde la API manda una descripción larga en lugar de una unidad (las 5 claves de K54:
+// su `unit` es la tercera columna de @param de 00005_tablero.sql). PROVISIONAL, bloqueo docs/estado/bloqueos/C1-unidad-parametros-tablero.md.
 type Param = Esquemas['SettingParameterInteger']
-export function Parametro({ etiqueta, param, validar = vEntero(0), vistaPrevia, guardar, restablecer }: { etiqueta: string; param: Param; validar?: Validar; vistaPrevia?: (n: number) => Previa; guardar: (n: number) => Promise<void>; restablecer: () => Promise<void> }) {
+export function Parametro({ etiqueta, param, unidad, validar = vEntero(0), vistaPrevia, guardar, restablecer }: { etiqueta: string; param: Param; unidad?: string; validar?: Validar; vistaPrevia?: (n: number) => Previa; guardar: (n: number) => Promise<void>; restablecer: () => Promise<void> }) {
   const avisar = useAvisos()
   const conexion = useConexion()
   const v = param.value ?? param.initial_value
-  const conUnidad = (n: number | null) => (n == null ? t.comun.sinValor : `${n} ${param.unit}`)
+  const conUnidad = (n: number | null) => (n == null ? t.comun.sinValor : `${n} ${unidad ?? param.unit}`)
   return (
     <Fila etiqueta={etiqueta} nota={t.comun.valorInicial(conUnidad(param.initial_value))}>
       <div className="flex flex-wrap items-start gap-2" data-prueba={`parametro-${param.key}`}>

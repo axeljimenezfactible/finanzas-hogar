@@ -1,9 +1,9 @@
-# Finanzas Hogar · Contrato C1 v1.5.0 · extracto «inicio». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Finanzas Hogar · Contrato C1 v1.5.1 · extracto «inicio». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
 # Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
 openapi: "3.1.1"
 info:
   title: "Finanzas Hogar · API (C1) · extracto inicio"
-  version: "1.5.0"
+  version: "1.5.1"
   description: "Extracto de la etiqueta «Inicio» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
 security:
   - cookieAuth: []
@@ -1482,7 +1482,8 @@ components:
           description: "Margen antes del rojo, con signo: limit_pct × income_cents ÷ 100 (ROUND_HALF_UP) − payments_cents; negativo = arriba del tope. Ausente sin income_cents."
         has_credits:
           type: "boolean"
-          description: "true si hay al menos una línea de crédito activa; con false, payments_cents = 0 y ratio_pct = 0 (cifra real, no falta de dato)."
+          x-provisional: true
+          description: "true si hay al menos una línea de crédito activa o algún pago de una línea archivada con fecha en el mes (PROVISIONAL, bloqueo S6-tablero-lineas-archivadas); con false, payments_cents = 0 y ratio_pct = 0 (cifra real, no falta de dato)."
       required:
         - "month"
         - "income_is_expected"
@@ -1508,6 +1509,10 @@ components:
           type: "integer"
           description: "Tope, en %. Valor vigente de app_setting debt.capacity_limit_pct (K44; se cambia en updateDashboardSettings)."
           x-app-setting: "debt.capacity_limit_pct"
+        scale_max_pct:
+          type: "integer"
+          x-provisional: true
+          description: "Fin de la escala del eje Y de G-6, en %: la misma de getDashboardDebtCapacity (M-20), el múltiplo de 10 igual o mayor que 1.5 × limit_pct (60 con 40); G-6 dibuja de 0 al mayor entre este valor y el mayor debt_ratio_pct a la vista. Solo dibujo. Nuevo en C1 v1.5.1 (hallazgo M-R3-1; PROVISIONAL, bloqueo U3-tablero-barometro)."
         months:
           type: "array"
           items:
@@ -1568,12 +1573,13 @@ components:
       required:
         - "warning_pct"
         - "limit_pct"
+        - "scale_max_pct"
         - "months"
       x-calculado: true
       x-provisional: true
     BudgetSignals:
       type: "object"
-      description: "Sugerencia «subir o recortar presupuesto» por categoría (U3 2.0 G-3, métrica M-22, RN-31; K54, motor S2). Mira los months_considered meses cerrados anteriores al mes pedido: raise si en todos el % usado pasó de 100 + margin_pct; cut si en todos quedó abajo de 100 − margin_pct; none en otro caso. Un mes sin plan corta la racha; con plan y sin gasto cuenta 0 %. Solo sugiere: no cambia el presupuesto ni da un monto. PROVISIONAL (bloqueos U3-tablero-senal-presupuesto y C1-tablero): toda la regla."
+      description: "Sugerencia «subir o recortar presupuesto» por categoría (U3 2.0 G-3, métrica M-22, RN-31; K54, motor S2). Mira los months_considered meses cerrados anteriores al mes pedido: raise si en todos el % usado pasó de 100 + margin_pct; cut si en todos quedó abajo de 100 − margin_pct; none en otro caso. Un mes sin plan corta la racha; con plan y sin gasto cuenta 0 %. Solo sugiere: no cambia el presupuesto ni da un monto. Con un period posterior al mes en curso solo cuentan los meses ya cerrados: months puede venir más corto o vacío y entonces signal es none (PROVISIONAL, bloqueo S6-tablero-senal-periodo, opción a). PROVISIONAL (bloqueos U3-tablero-senal-presupuesto y C1-tablero): toda la regla."
       properties:
         month:
           $ref: "componentes-comunes.yaml#/components/schemas/Month"

@@ -22,7 +22,9 @@ export const decimas = (n: number) => `${Math.trunc(n / 10)}.${Math.abs(n % 10)}
 type RolInsignia = 'advertencia' | 'info' | 'exito' | 'neutro'
 const INSIGNIA: Record<RolInsignia, string> = { advertencia: 'bg-role-warning-surface text-role-warning', info: 'bg-role-info-surface text-role-info', exito: 'bg-role-success-surface text-role-success', neutro: 'bg-surface-raised text-text-secondary border border-border-divider' }
 export function Insignia({ rol, icono, children, etiqueta }: { rol: RolInsignia; icono: ReactNode; children: ReactNode; etiqueta?: string }) {
-  return <span aria-label={etiqueta} className={cn('inline-flex h-6 w-max items-center gap-1 rounded-sm px-2 text-small font-medium [&_svg]:size-5', INSIGNIA[rol])}>{icono}{children}</span>
+  // Ancho al contenido sin pasar del contenedor: el texto largo («Reposición de capital pendiente de confirmar con Kueski») se
+  // parte en renglones en vez de desbordar la página a 475 px en Android (u5-tablero, U5-06). `min-h-6` conserva los 24 px.
+  return <span aria-label={etiqueta} className={cn('inline-flex min-h-6 w-fit max-w-full items-center gap-1 rounded-sm px-2 text-small font-medium [&_svg]:size-5 [&_svg]:shrink-0', INSIGNIA[rol])}>{icono}<span className="min-w-0">{children}</span></span>
 }
 export const IconoAviso = () => <TriangleAlert aria-hidden />
 export const IconoInfo = () => <Info aria-hidden />

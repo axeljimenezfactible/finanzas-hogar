@@ -27,14 +27,14 @@
    "nodes": [
     {
      "target": [
-      ".-translate-y-1\\/2.-translate-x-1\\/2[data-prueba=\"barometro-marca\"]:nth-child(2)"
+      ".-translate-y-1\\/2.-translate-x-1\\/2[data-prueba=\"barometro-marca\"]:nth-child(3)"
      ],
      "html": "<span data-prueba=\"barometro-marca\" class=\"absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-caption text-text-secondary tabular-nums\" style=\"left: 50%; top: 1.81818%;\">30 %</span>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      ".-translate-y-1\\/2.-translate-x-1\\/2[data-prueba=\"barometro-marca\"]:nth-child(3)"
+      ".-translate-y-1\\/2.-translate-x-1\\/2[data-prueba=\"barometro-marca\"]:nth-child(4)"
      ],
      "html": "<span data-prueba=\"barometro-marca\" class=\"absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-caption text-text-secondary tabular-nums\" style=\"left: 74.5%; top: 13.7541%;\">40 %</span>",
      "message": "Element's background color could not be determined because element contains an image node"
@@ -232,112 +232,91 @@
      "target": [
       "text[transform=\"translate(227.2083 31)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" transform=\"translate(227.2083 31)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\" y=\"-4\">Hoy</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" transform=\"translate(227.2083 31)\" fill=\"#d1d2d8\" y=\"-4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">Hoy</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(52 264)\"]"
+      "text[transform=\"translate(47 264)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" transform=\"translate(52 264)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" transform=\"translate(47 264)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(52 231.4286)\"]"
+      "text[transform=\"translate(47 207)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 231.4286)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$3 mil</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(47 207)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$1 mil</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(52 198.8571)\"]"
+      "text[transform=\"translate(47 150)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 198.8571)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$6 mil</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(47 150)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$2 mil</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(52 166.2857)\"]"
+      "text[transform=\"translate(47 93)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 166.2857)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$9 mil</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(47 93)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$3 mil</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(52 133.7143)\"]"
+      "text[transform=\"translate(47 36)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 133.7143)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$12 mil</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(47 36)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$4 mil</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(52 101.1429)\"]"
+      "text[transform=\"translate(68.4583 272)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 101.1429)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$15 mil</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(68.4583 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">oct-2026</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(52 68.5714)\"]"
+      "text[transform=\"translate(149.2083 272)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 68.5714)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$18 mil</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(149.2083 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">ene-2027</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "div[_echarts_instance_=\"ec_1791845067517\"] > div:nth-child(1) > svg[version=\"1.1\"][baseProfile=\"full\"][width=\"498\"] > g > text[transform=\"translate(52 36)\"][text-anchor=\"end\"][fill=\"#d1d2d8\"]"
+      "text[transform=\"translate(229.9583 272)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 36)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$21 mil</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(229.9583 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">abr-2027</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(73.25 272)\"]"
+      "text[transform=\"translate(310.7083 272)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(73.25 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">oct-2026</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(310.7083 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">jul-2027</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(152.75 272)\"]"
+      "text[transform=\"translate(122.2917 39.7646)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(152.75 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">ene-2027</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"-4\" transform=\"translate(122.2917 39.7646)\" fill=\"#f2f2f4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$3,776.06</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(232.25 272)\"]"
+      "text[transform=\"translate(283.7917 255)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(232.25 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">abr-2027</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"-4\" transform=\"translate(283.7917 255)\" fill=\"#f2f2f4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0.00</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
      "target": [
-      "text[transform=\"translate(311.75 272)\"]"
+      "text[transform=\"translate(364.5417 255)\"]"
      ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"4\" transform=\"translate(311.75 272)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">jul-2027</text>",
-     "message": "Element's background color could not be determined because element contains an image node"
-    },
-    {
-     "target": [
-      "text[transform=\"translate(73.25 59.2949)\"]"
-     ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"start\" y=\"-4\" transform=\"translate(73.25 59.2949)\" fill=\"#f2f2f4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$18,025.47</text>",
-     "message": "Element's background color could not be determined because element contains an image node"
-    },
-    {
-     "target": [
-      "text[transform=\"translate(285.25 255)\"]"
-     ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"middle\" y=\"-4\" transform=\"translate(285.25 255)\" fill=\"#f2f2f4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0.00</text>",
-     "message": "Element's background color could not be determined because element contains an image node"
-    },
-    {
-     "target": [
-      "text[transform=\"translate(364.75 255)\"]"
-     ],
-     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" y=\"-4\" transform=\"translate(364.75 255)\" fill=\"#f2f2f4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0.00</text>",
+     "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" y=\"-4\" transform=\"translate(364.5417 255)\" fill=\"#f2f2f4\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$0.00</text>",
      "message": "Element's background color could not be determined because element contains an image node"
     },
     {
@@ -398,7 +377,7 @@
     },
     {
      "target": [
-      "div[_echarts_instance_=\"ec_1791845067520\"] > div:nth-child(1) > svg[version=\"1.1\"][baseProfile=\"full\"][width=\"498\"] > g > text[transform=\"translate(52 36)\"][text-anchor=\"end\"][fill=\"#d1d2d8\"]"
+      "text[transform=\"translate(52 36)\"]"
      ],
      "html": "<text dominant-baseline=\"central\" text-anchor=\"end\" xml:space=\"preserve\" transform=\"translate(52 36)\" fill=\"#d1d2d8\" style=\"font-size: 12px; font-family: Inter, ui-sans-serif, system-ui;\">$21 mil</text>",
      "message": "Element's background color could not be determined because element contains an image node"

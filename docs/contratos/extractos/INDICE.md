@@ -4,24 +4,24 @@ Generado por `backend/internal/api/c1gen/build.py` (sin opciones o con `--extrac
 
 **Regla (protocolo-agentes §4, K32):** estos archivos son los **únicos** archivos del contrato que leen los agentes de WF-1 y WF-3. `docs/contratos/openapi.yaml` es la fuente única y no se lee entero; si falta algo que no está en un extracto, se pide al integrador.
 
-- Contrato C1 v1.5.0: 221 operaciones en 176 rutas y 267 esquemas.
+- Contrato C1 v1.5.1: 221 operaciones en 176 rutas y 267 esquemas.
 - Cada operación aparece en exactamente un extracto. Cada extracto trae sus rutas y solo los esquemas que esas rutas usan, resueltos de forma transitiva y copiados en su `components`.
 - Parámetros, encabezados, respuestas, seguridad y los esquemas `Error`, `Page`, `MoneyCents`, `Date`, `DateTime` (y los que ellos referencian) están en `componentes-comunes.yaml`; los extractos los citan con `$ref: componentes-comunes.yaml#/components/...`.
 - Tope por archivo: 80 KB (80 000 bytes). Etiquetas divididas en partes consecutivas por orden de rutas: «Presupuesto» en `presupuesto-a.yaml`, `presupuesto-b.yaml`; «Compras y tiendas» en `compras-tiendas-a.yaml`, `compras-tiendas-b.yaml`; «Créditos» en `creditos-a.yaml`, `creditos-b.yaml`; «Ajustes» en `ajustes-a.yaml`, `ajustes-b.yaml`, `ajustes-c.yaml`, `ajustes-d.yaml`, `ajustes-e.yaml`.
 
 | Archivo | Etiqueta | Operaciones | Rutas | Esquemas propios | Tamaño |
 |---|---|---|---|---|---|
-| `inicio.yaml` | Inicio | 15 | 15 | 20 | 65.7 KB (67240 bytes) |
+| `inicio.yaml` | Inicio | 15 | 15 | 20 | 66.4 KB (68038 bytes) |
 | `gastos.yaml` | Gastos | 19 | 15 | 23 | 75.1 KB (76857 bytes) |
 | `presupuesto-a.yaml` | Presupuesto | 13 | 11 | 14 | 45.5 KB (46580 bytes) |
 | `presupuesto-b.yaml` | Presupuesto | 15 | 11 | 17 | 44.7 KB (45782 bytes) |
 | `comidas.yaml` | Comidas | 16 | 12 | 19 | 48.2 KB (49399 bytes) |
 | `compras-tiendas-a.yaml` | Compras y tiendas | 15 | 13 | 24 | 69.0 KB (70665 bytes) |
 | `compras-tiendas-b.yaml` | Compras y tiendas | 16 | 13 | 25 | 62.6 KB (64081 bytes) |
-| `creditos-a.yaml` | Créditos | 8 | 8 | 10 | 34.8 KB (35622 bytes) |
+| `creditos-a.yaml` | Créditos | 8 | 8 | 10 | 36.0 KB (36826 bytes) |
 | `creditos-b.yaml` | Créditos | 11 | 8 | 23 | 62.9 KB (64376 bytes) |
 | `salud.yaml` | Salud | 6 | 4 | 7 | 20.4 KB (20892 bytes) |
-| `reportes.yaml` | Reportes | 10 | 10 | 21 | 57.5 KB (58927 bytes) |
+| `reportes.yaml` | Reportes | 10 | 10 | 21 | 58.4 KB (59768 bytes) |
 | `ajustes-a.yaml` | Ajustes | 14 | 12 | 16 | 42.4 KB (43411 bytes) |
 | `ajustes-b.yaml` | Ajustes | 14 | 13 | 21 | 52.6 KB (53910 bytes) |
 | `ajustes-c.yaml` | Ajustes | 15 | 12 | 22 | 76.5 KB (78329 bytes) |

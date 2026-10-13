@@ -2,42 +2,33 @@
  "pantalla": "P-01",
  "combinacion": "android-oscuro",
  "alcance": "body",
- "evaluados": 574,
- "pares_unicos": 29,
- "bajo_umbral": 1,
+ "evaluados": 579,
+ "pares_unicos": 33,
+ "bajo_umbral": 0,
  "indeterminados": 0,
  "excluidos": {
   "deshabilitados": 0,
   "ui_sin_limite_visible": 12,
-  "graficos_marcas_no_medibles_en_dom": 156
+  "graficos_marcas_no_medibles_en_dom": 153,
+  "svg_separaciones_color_fondo": 2,
+  "svg_decorativos": 1
  },
- "bajos": [
-  {
-   "tipo": "icono",
-   "subtipo": null,
-   "nodo": "a[data-prueba=\"tarjeta-B-1\"] > div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto",
-   "texto": "block h-auto w-full overflow-visible for",
-   "fg": "#000000",
-   "bg": "#36363A",
-   "razon": 1.746,
-   "umbral": 3
-  }
- ],
+ "bajos": [],
  "indeterminados_detalle": [],
  "pares": [
   {
    "tipo": "icono",
-   "subtipo": null,
-   "fg": "#000000",
+   "subtipo": "svg-hijo",
+   "fg": "#FC9999",
    "bg": "#36363A",
    "umbral": 3,
    "grande": false,
-   "razon": 1.746,
+   "razon": 5.818,
    "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto",
-     "texto": "block h-auto w-full overflow-visible for"
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path.stroke-role-error.[vector-effect:non-scaling-stroke]",
+     "texto": "exceeded"
     }
    ]
   },
@@ -53,7 +44,7 @@
    "ejemplos": [
     {
      "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-3\"] > span.flex.flex-wrap > span.flex.items-center",
-     "texto": "$18,999.22"
+     "texto": "$3,895.00"
     }
    ]
   },
@@ -122,26 +113,38 @@
    ]
   },
   {
-   "tipo": "texto",
-   "subtipo": null,
-   "fg": "#6BC3FD",
-   "bg": "#003B5A",
-   "umbral": 4.5,
+   "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#E5AE5B",
+   "bg": "#36363A",
+   "umbral": 3,
    "grande": false,
-   "razon": 6.119,
-   "elementos": 5,
+   "razon": 6.036,
+   "elementos": 1,
    "ejemplos": [
     {
-     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.h-6",
-     "texto": "Ingreso esperado"
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path.stroke-role-warning.[vector-effect:non-scaling-stroke]",
+     "texto": "warning"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#B7B8C0",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.09,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > line.stroke-viz-baseline.[stroke-width:1px]",
+     "texto": ""
     },
     {
-     "nodo": "div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.h-6",
-     "texto": "Ingreso esperado"
-    },
-    {
-     "nodo": "a[data-prueba=\"tarjeta-K-3\"] > span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6",
-     "texto": "Pendiente confirmar"
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > line.stroke-viz-baseline.[stroke-width:1px]",
+     "texto": ""
     }
    ]
   },
@@ -156,16 +159,40 @@
    "elementos": 5,
    "ejemplos": [
     {
-     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
     },
     {
-     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
     },
     {
-     "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.h-6 > svg.lucide.lucide-info",
+     "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.min-h-6 > svg.lucide.lucide-info",
      "texto": "lucide lucide-info"
+    }
+   ]
+  },
+  {
+   "tipo": "texto",
+   "subtipo": null,
+   "fg": "#6BC3FD",
+   "bg": "#003B5A",
+   "umbral": 4.5,
+   "grande": false,
+   "razon": 6.119,
+   "elementos": 5,
+   "ejemplos": [
+    {
+     "nodo": "a[data-prueba=\"tarjeta-B-1\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > span.min-w-0",
+     "texto": "Ingreso esperado"
+    },
+    {
+     "nodo": "a[data-prueba=\"tarjeta-K-2\"] > span.flex.flex-wrap > span.inline-flex.min-h-6 > span.min-w-0",
+     "texto": "Ingreso esperado"
+    },
+    {
+     "nodo": "span.flex.flex-col > span.flex.flex-col > span.inline-flex.min-h-6 > span.min-w-0",
+     "texto": "Pendiente confirmar"
     }
    ]
   },
@@ -250,6 +277,26 @@
     {
      "nodo": "span.flex.flex-col > span.flex.flex-wrap > span.inline-flex.items-center > span.text-role-income",
      "texto": "+$12,000.00"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#7ECF90",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 6.425,
+   "elementos": 2,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path.stroke-role-success.[vector-effect:non-scaling-stroke]",
+     "texto": "normal"
+    },
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > path[data-prueba=\"barometro-valor\"]",
+     "texto": "barometro-valor"
     }
    ]
   },
@@ -357,7 +404,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 7.975,
-   "elementos": 147,
+   "elementos": 146,
    "ejemplos": [
     {
      "nodo": "section[data-prueba=\"tablero\"] > div.min-w-0.tablet:col-span-4 > a[data-prueba=\"tarjeta-K-1\"] > span.flex.items-center",
@@ -530,6 +577,22 @@
     {
      "nodo": "div.grid.grid-cols-1 > a[data-prueba=\"tarjeta-2\"] > span.flex.flex-wrap > span.flex.items-center",
      "texto": "$12,000.00"
+    }
+   ]
+  },
+  {
+   "tipo": "icono",
+   "subtipo": "svg-hijo",
+   "fg": "#F2F2F4",
+   "bg": "#36363A",
+   "umbral": 3,
+   "grande": false,
+   "razon": 10.76,
+   "elementos": 1,
+   "ejemplos": [
+    {
+     "nodo": "div.flex.flex-col > div[data-prueba=\"barometro\"] > svg.block.h-auto > line[data-prueba=\"barometro-aguja\"]",
+     "texto": "barometro-aguja"
     }
    ]
   },

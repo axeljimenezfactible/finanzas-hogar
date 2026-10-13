@@ -2,7 +2,7 @@
  "pantalla": "P-26.01",
  "combinacion": "escritorio-oscuro",
  "alcance": "body",
- "evaluados": 578,
+ "evaluados": 893,
  "pares_unicos": 17,
  "bajo_umbral": 0,
  "indeterminados": 0,
@@ -46,7 +46,7 @@
    "umbral": 3,
    "grande": false,
    "razon": 6.09,
-   "elementos": 65,
+   "elementos": 110,
    "ejemplos": [
     {
      "nodo": "tbody > tr.border-b.border-border-divider > td.px-2.py-1 > button.inline-flex.select-none",
@@ -242,7 +242,7 @@
    "umbral": 4.5,
    "grande": false,
    "razon": 10.76,
-   "elementos": 425,
+   "elementos": 695,
    "ejemplos": [
     {
      "nodo": "nav.flex.h-full > div.relative.mr-12 > button.flex.w-full > span.flex-1.truncate",

@@ -169,6 +169,6 @@ Agente `s1-c1-v15` (flujo WF-3c, 12-oct-2026). Aplica K54 con las operaciones de
 - `parse_schema.py`: el mínimo de una clave entera puede ser mayor que 1 (`budget.signal_months`, de 2 a 12): se busca entre 1 y el valor inicial con el mismo `SAVEPOINT`.
 - `gen2_schemas.py`: `DashboardDebtCapacity`, `DashboardMonthlyOverview`, `BudgetSignals`, `DashboardSettings` y `DashboardSettingsUpdate` (sección «Presupuesto»); 14 campos opcionales en `DashboardMonthVsPlan`, `IncomeMonth` y `CreditTotals`; `warning_pct`, `limit_pct`, `months_considered` y `margin_pct` con `x-app-setting`.
 - `gen3_ops.py`: `getDashboardDebtCapacity`, `getDashboardMonthlyOverview` y `getBudgetSignals` (etiqueta «Inicio»), `getDashboardSettings` y `updateDashboardSettings` (etiqueta «Ajustes»); sus N-xxx son PROVISIONALES (N-022, N-028, N-027, N-275 y N-278; bloqueo `C1-tablero`, punto 3).
-- `gen4_build.py`: `C1_VERSION` 1.5.0, textos de `info` y las llaves `OverviewFrom` (`from`) y `OverviewTo` (`to`).
+- `gen4_build.py`: `C1_VERSION` 1.5.1 (antes 1.5.0; `backend-cierre`, WF-3c bis: `scale_max_pct` en `DashboardMonthlyOverview`), textos de `info` y las llaves `OverviewFrom` (`from`) y `OverviewTo` (`to`).
 - `c1_plantilla.md`: cabecera, fila y detalle «C1 v1.5», llaves `from` y `to` en §6, métricas M-18 a M-22 en §9 y dos filas en §13.
-- `verify_c1.py`: exige 1.5.0 y «C1 v1.5».
+- `verify_c1.py`: exige 1.5.1 y «C1 v1.5».

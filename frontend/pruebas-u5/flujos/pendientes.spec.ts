@@ -58,8 +58,10 @@ test('F-4 · Marcar pago (U1 paso 4) y recálculo del disponible', async ({ page
   await entrar(page)
   const f = new Flujo('F-4b', 'Marcar pago de la parte del hogar', page)
   let antes = ''
-  await f.paso('Toques 1-3: tarjeta Próximo pago → Calendario → pago del 30-oct', 'P-01 → P-18 → G-06', async () => {
-    await f.t.tocar(page.getByTestId('tarjeta-3'), 'tarjeta Próximo pago')
+  await f.paso('Toques 1-3: pago del 30-oct en K-4 «Pagos próximos» → Calendario → pago del 30-oct', 'P-01 → P-18 → G-06', async () => {
+    const fila = page.getByTestId('tarjeta-K-4').getByRole('link', { name: /^Vie 30 oct 2026/ })
+    await expect(fila).toHaveCount(1)
+    await f.t.tocar(fila, 'pago del 30-oct-2026 en K-4')
     await expect(page.getByText('Disponible · lectura A')).toBeVisible()
     antes = norm(await page.locator('main').innerText())
     await f.t.tocar(page.getByRole('tab', { name: 'Calendario' }), 'pestaña Calendario')

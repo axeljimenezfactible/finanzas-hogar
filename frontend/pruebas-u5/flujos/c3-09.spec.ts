@@ -16,10 +16,17 @@ const aCentavos = (s: string) => { const m = /^-?\$?(-?)([0-9][0-9,]*\.[0-9]{2})
 
 interface Fila { n: number; pantalla: string; cifra: string; mostrado: string; esperado: string; dif: number }
 const filas: Fila[] = []
-function comparar(pantalla: string, cifra: string, mostradoC: number, esperadoC: number) {
-  const f = { n: filas.length + 1, pantalla, cifra, mostrado: Number.isNaN(mostradoC) ? 'NO ENCONTRADA' : (mostradoC / 100).toFixed(2), esperado: (esperadoC / 100).toFixed(2), dif: Number.isNaN(mostradoC) ? NaN : mostradoC - esperadoC }
+/** Compara una cifra de pantalla con su esperado: dinero en centavos (por omisión) o un porcentaje entero (`'%'`). */
+function comparar(pantalla: string, cifra: string, mostradoC: number, esperadoC: number, unidad: '$' | '%' = '$') {
+  const ver = (x: number) => (unidad === '%' ? `${x} %` : (x / 100).toFixed(2))
+  const f = { n: filas.length + 1, pantalla, cifra, mostrado: Number.isNaN(mostradoC) ? 'NO ENCONTRADA' : ver(mostradoC), esperado: ver(esperadoC), dif: Number.isNaN(mostradoC) ? NaN : mostradoC - esperadoC }
   filas.push(f)
 }
+const norm = (s: string) => s.replace(/\s+/g, ' ').trim()
+/** Hoy en la zona de la casa (AAAA-MM-DD), igual que hoyISO() de la app. */
+const hoyCasa = () => new Date().toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' })
+/** ROUND_HALF_UP de a ÷ b con enteros ≥ 0 (protocolo §6). */
+const divRedondeo = (a: number, b: number) => Math.floor((2 * a + b) / (2 * b))
 async function celdas(page: Page, tabla: ReturnType<Page['locator']>) {
   return tabla.locator('tr').evaluateAll((trs) => trs.map((tr) => [...tr.querySelectorAll('th,td')].map((c) => (c as HTMLElement).innerText.replace(/\s+/g, ' ').trim())))
 }
@@ -28,15 +35,57 @@ const primerDinero = (t: string, despuesDe: RegExp) => { const m = despuesDe.exe
 test('C3-09 · cifras de Inicio, créditos y flujo = oráculo (model.json)', async ({ page }) => {
   const ev = modelo.credito.eventos as { fecha: string; tipo: string; monto: number; disponible_A: number; disponible_B: number }[]
   await entrar(page)
-  await expect(page.getByTestId('tarjeta-3')).toHaveJSProperty('tagName', 'A')
+  const hoy = hoyCasa(), mesHoy = hoy.slice(0, 7)
+  type Despensa = { n: number; fecha: string; total: number; pagos: { fecha: string; monto: number; axel: number; karen: number }[] }
+  const despensas = modelo.despensas as Despensa[]
+  // Oráculo de la deuda viva a una fecha D (igual que horizonte.deuda_viva_10_abr): compras con fecha ≤ D, pagos con fecha > D.
+  // Decisión 1 del orquestador (WF-3a cierre, PROVISIONAL): la deuda viva «hoy» de K-3 y P-17 = getLiveDebt?date=hoy.
+  const deudaVivaAl = (d: string) => despensas.filter((x) => x.fecha <= d).flatMap((x) => x.pagos).filter((q) => q.fecha > d).reduce((a, q) => a + centavos(q.monto), 0)
+  // Pagos del mes en curso de todas las líneas (RN-30, M-19; decisión 2): suma de los pagos con fecha en el mes.
+  const pagosMes = despensas.flatMap((x) => x.pagos).filter((q) => q.fecha.startsWith(mesHoy))
+  const suma = (k: 'monto' | 'axel' | 'karen') => pagosMes.reduce((a, q) => a + centavos(q[k]), 0)
+  const MESES_LARGOS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+  const mesLargo = MESES_LARGOS[Number(mesHoy.slice(5)) - 1]
 
-  // ── Inicio · Resumen · tarjeta «Próximo pago» (tarjeta 3)
-  const t3 = (await page.getByTestId('tarjeta-3').innerText()).replace(/\s+/g, ' ')
-  comparar('Inicio · tarjeta Próximo pago', 'Próximo pago (30-oct-2026)', primerDinero(t3, /Próximo pago (\$[0-9,.]+)/), centavos(ev[1].monto))
-  expect(t3).toContain(diaCorto(modelo.despensas[0].pagos[0].fecha).replace('-', ' ').replace('-', ' ').replace('oct', 'oct')) // «30 oct 2026»
-  comparar('Inicio · tarjeta Próximo pago', 'Disponible hoy, lectura B', primerDinero(t3, /Disponible hoy (\$[0-9,.]+)/), centavos(ev[0].disponible_B))
-  comparar('Inicio · tarjeta Próximo pago', 'Parte del hogar del pago 1', primerDinero(t3, /Hogar (\$[0-9,.]+)/), centavos(modelo.despensas[0].pagos[0].axel))
-  comparar('Inicio · tarjeta Próximo pago', 'Parte de Karen del pago 1', primerDinero(t3, /Karen (\$[0-9,.]+)/), centavos(modelo.despensas[0].pagos[0].karen))
+  // ── Inicio · Resumen · K-4 «Pagos próximos» (U3 2.0): primera fila = pago del 30-oct-2026 con sus partes (R-13)
+  const p1 = despensas[0].pagos[0]
+  const k4 = page.getByTestId('tarjeta-K-4')
+  const fila1 = k4.getByRole('link', { name: /^Vie 30 oct 2026/ })
+  await expect(fila1).toBeVisible()
+  // La fila se lee ya asentada: con las personas cargadas aparece «Karen» (su parte > 0 en el oráculo, U3 K-4). Mientras no cargan,
+  // la fila dice un instante «Hogar $973.75» sin Karen (todo al hogar): queda como solicitud fuera de alcance para Tablero.tsx K-4.
+  await expect(fila1).toContainText('Karen')
+  const tk4 = norm(await fila1.innerText())
+  console.log(`K-4 · primera fila: «${tk4}»`)
+  expect(tk4).toContain(diaCorto(p1.fecha).replace(/-/g, ' ')) // «30 oct 2026»
+  comparar('Inicio · K-4 Pagos próximos', 'Próximo pago (30-oct-2026)', primerDinero(tk4, /^Vie 30 oct 2026 · [^$]*?(\$[0-9,.]+)/), centavos(p1.monto))
+  comparar('Inicio · K-4 Pagos próximos', 'Parte del hogar del pago 1', primerDinero(tk4, /Hogar (\$[0-9,.]+)/), centavos(p1.axel))
+  comparar('Inicio · K-4 Pagos próximos', 'Parte de Karen del pago 1', primerDinero(tk4, /Karen (\$[0-9,.]+)/), centavos(p1.karen))
+
+  // ── Inicio · Resumen · K-3 «Créditos»: deuda viva de hoy, pagos del mes y partes, disponible hoy (lectura B)
+  const k3 = page.getByTestId('tarjeta-K-3')
+  await expect(k3).toContainText('deuda viva total')
+  await expect(k3).toContainText('Disponible hoy') // getDashboardNextPayment ya respondió (bloque «Disponible hoy»)
+  await expect(k3).toContainText('Karen')
+  const tk3 = norm(await k3.innerText())
+  console.log(`K-3: «${tk3}»`)
+  comparar('Inicio · K-3 Créditos', `Deuda viva de hoy (${hoy})`, primerDinero(tk3, /(\$[0-9,.]+) deuda viva total/), deudaVivaAl(hoy))
+  comparar('Inicio · K-3 Créditos', `Pagos de ${mesLargo} (todas las líneas)`, primerDinero(tk3, new RegExp(`Pagos de ${mesLargo}: (\\$[0-9,.]+)`)), suma('monto'))
+  comparar('Inicio · K-3 Créditos', `Parte del hogar de los pagos de ${mesLargo}`, primerDinero(tk3, /Hogar (\$[0-9,.]+)/), suma('axel'))
+  comparar('Inicio · K-3 Créditos', `Parte de Karen de los pagos de ${mesLargo}`, primerDinero(tk3, /Karen (\$[0-9,.]+)/), suma('karen'))
+  comparar('Inicio · K-3 Créditos', 'Disponible hoy, lectura B', primerDinero(tk3, /Disponible hoy (\$[0-9,.]+)/), centavos(ev[0].disponible_B))
+
+  // ── Inicio · Resumen · B-1 barómetro: pagos del hogar del mes = oráculo; % y margen = fórmula de U3 §B-1 sobre las cifras
+  // de la pantalla (el ingreso no está en el oráculo: model.json no trae ingresos).
+  const b1 = page.getByTestId('tarjeta-B-1')
+  await expect(b1.getByTestId('barometro-digito')).toBeVisible()
+  const tb1 = norm(await b1.innerText())
+  const pagosB1 = primerDinero(tb1, /Pagos (\$[0-9,.]+) de un ingreso de/), ingreso = primerDinero(tb1, /de un ingreso de (\$[0-9,.]+)/)
+  const tope = Number(/de ([0-9]+) % de tope/.exec(tb1)?.[1] ?? NaN)
+  const digito = Number(/^([0-9]+) %$/.exec(norm(await b1.getByTestId('barometro-digito').innerText()))?.[1] ?? NaN)
+  comparar('Inicio · B-1 Capacidad de endeudamiento', `Pagos del hogar de ${mesLargo}`, pagosB1, suma('axel'))
+  comparar('Inicio · B-1 Capacidad de endeudamiento', 'Capacidad usada (pagos × 100 ÷ ingreso, ROUND_HALF_UP)', digito, divRedondeo(suma('axel') * 100, ingreso), '%')
+  comparar('Inicio · B-1 Capacidad de endeudamiento', 'Te caben (tope × ingreso ÷ 100 − pagos)', primerDinero(tb1, /Te caben (\$[0-9,.]+) más al mes/), divRedondeo(tope * ingreso, 100) - suma('axel'))
 
   // ── Inicio · Detalle · «Disponible por línea» y mínimos
   await page.getByRole('tab', { name: 'Detalle' }).click()
@@ -115,6 +164,14 @@ test('C3-09 · cifras de Inicio, créditos y flujo = oráculo (model.json)', asy
     comparar(pant, `${e.tipo} ${diaCorto(e.fecha)}: disponible B`, r ? aCentavos(r[cB]) : NaN, centavos(e.disponible_B))
   }
 
+  // ── Créditos · P-17 Todas las líneas · «Deuda viva total» y la de la línea, a hoy (decisión 1: = getLiveDebt?date=hoy)
+  await page.goto('/creditos')
+  await expect(page.getByText('Deuda viva total').first()).toBeVisible()
+  await page.waitForTimeout(800)
+  const p17 = norm(await page.locator('main').innerText())
+  comparar('Créditos · P-17 Todas las líneas', `Deuda viva total de hoy (${hoy})`, primerDinero(p17, /Deuda viva total (\$[0-9,.]+)/), deudaVivaAl(hoy))
+  comparar('Créditos · P-17 Todas las líneas', `Deuda viva de la línea de hoy (${hoy})`, primerDinero(p17, /Deuda viva (?!total)(\$[0-9,.]+)/), deudaVivaAl(hoy))
+
   // ── Flujo y proyección · Deuda viva al 10-abr-2027
   await page.goto('/presupuesto/flujo')
   await page.getByLabel('Fecha de deuda viva').fill('2027-04-10')
@@ -130,5 +187,6 @@ test('C3-09 · cifras de Inicio, créditos y flujo = oráculo (model.json)', asy
   console.log(`C3-09: ${filas.length} cifras leídas en pantalla · diferencias != 0: ${malas.length}`)
   for (const f of filas) console.log(`${String(f.n).padStart(3)} | ${f.pantalla} | ${f.cifra} | pantalla ${f.mostrado} | oráculo ${f.esperado} | dif ${f.dif}`)
   expect(filas.length, 'al menos 10 cifras').toBeGreaterThanOrEqual(10)
+  expect(filas.filter((f) => /^(Inicio · K-|Inicio · B-1|Créditos · P-17)/.test(f.pantalla)).length, 'C3-09 de U3 2.0: al menos 10 cifras del tablero y de P-17').toBeGreaterThanOrEqual(10)
   expect(malas, `diferencias: ${JSON.stringify(malas)}`).toEqual([])
 })

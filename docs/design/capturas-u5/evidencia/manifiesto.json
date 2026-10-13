@@ -66,12 +66,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 5235
+    "alto": 5283
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -79,12 +78,12 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 574,
+    "evaluados": 579,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -116,12 +115,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 5235
+    "alto": 5283
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -134,7 +132,7 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -295,12 +293,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 5235
+    "alto": 5283
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -308,12 +305,12 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 574,
-    "bajo_umbral": 1,
+    "evaluados": 579,
+    "bajo_umbral": 0,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -345,12 +342,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 3029
+    "alto": 3053
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -358,12 +354,12 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 605,
+    "evaluados": 610,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -395,12 +391,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 3029
+    "alto": 3053
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -408,12 +403,12 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 605,
-    "bajo_umbral": 1,
+    "evaluados": 610,
+    "bajo_umbral": 0,
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -629,12 +624,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 5235
+    "alto": 5283
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -647,7 +641,7 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -679,12 +673,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 3029
+    "alto": 3053
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -697,7 +690,7 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -729,12 +722,11 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 3029
+    "alto": 3053
    },
    "cifras_visibles": [
     "$6,905.50",
     "$973.75",
-    "$6,293.44",
     "$3,094.50"
    ],
    "axe": {
@@ -747,7 +739,7 @@
     "indeterminados": 0
    },
    "u5_07": {
-    "importes": 253,
+    "importes": 251,
     "importes_fuera_de_formato": [
      "$0"
     ],
@@ -4819,7 +4811,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 7353
+    "alto": 11358
    },
    "cifras_visibles": [],
    "axe": {
@@ -4827,7 +4819,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 468,
+    "evaluados": 783,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4862,7 +4854,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 7620
+    "alto": 11625
    },
    "cifras_visibles": [],
    "axe": {
@@ -4870,7 +4862,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 489,
+    "evaluados": 804,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4905,7 +4897,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 4270
+    "alto": 6379
    },
    "cifras_visibles": [],
    "axe": {
@@ -4913,7 +4905,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 557,
+    "evaluados": 872,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4948,7 +4940,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 4433
+    "alto": 6514
    },
    "cifras_visibles": [],
    "axe": {
@@ -4956,7 +4948,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 578,
+    "evaluados": 893,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -4991,7 +4983,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 1725
+    "alto": 2696
    },
    "cifras_visibles": [],
    "axe": {
@@ -4999,7 +4991,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 39,
+    "evaluados": 57,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5034,7 +5026,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 412,
-    "alto": 1725
+    "alto": 2696
    },
    "cifras_visibles": [],
    "axe": {
@@ -5042,7 +5034,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 39,
+    "evaluados": 57,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5077,7 +5069,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 999
+    "alto": 1618
    },
    "cifras_visibles": [],
    "axe": {
@@ -5085,7 +5077,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 93,
+    "evaluados": 111,
     "bajo_umbral": 0,
     "indeterminados": 0
    },
@@ -5120,7 +5112,7 @@
    },
    "dimensiones_pagina": {
     "ancho": 1440,
-    "alto": 999
+    "alto": 1618
    },
    "cifras_visibles": [],
    "axe": {
@@ -5128,7 +5120,7 @@
     "violaciones": 0
    },
    "contraste": {
-    "evaluados": 93,
+    "evaluados": 111,
     "bajo_umbral": 0,
     "indeterminados": 0
    },

@@ -10,4 +10,6 @@ Abierto el 12-oct-2026 por el agente `api-tablero` (WF-3c). Lo contesta Axel en 
 | (b) | Sin datos = mes **anterior al primer mes con algún gasto o pago registrado** (igual que la tendencia mensual, N-044). Después de ese mes, un cero es cero. | Distingue «no se usaba el sistema» de «no se gastó». | Una consulta más por petición; un gasto viejo capturado tarde cambia qué meses tienen datos. |
 | (c) | Nunca se omite: siempre se manda la cifra, aunque sea 0. | Lo más simple. | Contradice «sin datos no es cero» de C1 v1.5 y de U3. |
 
+**Actualizado en WF-3c bis (`backend-cierre`).** La misma función decide un cuarto lugar: el mes anterior de `getIncomeMonth` (M-18, K-2). Si el mes anterior no tiene quincenas (capturadas ni esperadas) ni extras, `previous_fortnights_cents`, `previous_extras_cents` y `fortnights_difference_cents` van ausentes; `previous_month` va siempre.
+
 **Impacto.** Solo cambia qué campos opcionales vienen ausentes y, por eso, si la PWA dibuja «—» o «$0.00» en K-1 (comparación con el mes anterior), G-1 y G-6. No cambia ninguna cifra del motor. Cambiar de opción toca solo `dominio.MonthHasData` (y, en la (b), una consulta en `dominio/tablero_*.go`); no hace falta migración ni cambio de C1.

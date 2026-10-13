@@ -88,12 +88,33 @@
       }
     }
     // Íconos (svg sueltos, no gráficas).
+    // Un <svg> raíz con trazo propio (lucide: stroke="currentColor") se mide por su trazo, como antes. Un <svg> raíz SIN trazo
+    // propio no pinta nada por sí mismo (su `fill` inicial negro no es un color de la interfaz): se mide lo que pintan sus hijos
+    // (decisión 5 del orquestador, WF-3a cierre; falso positivo del barómetro en `WF3c-ronda3-escalamiento` punto 4). De cada
+    // hijo se mide su trazo y su relleno contra el fondo efectivo; no se mide: (a) lo marcado `data-decorativo` (pares
+    // «decorativo» de DESIGN §10.5, p. ej. la pista del barómetro C-172) y (b) la pintura idéntica al fondo, que es la separación
+    // de 2 px del color de la superficie (DESIGN §8.1, §8.9). Ambos se cuentan en `excluidos`, no se esconden.
     if (tag === 'svg' && !enGrafica(el) && !el.closest('svg svg') && el.getBoundingClientRect().width >= 8) {
-      const trazo = cs.stroke !== 'none' && cs.stroke ? cs.stroke : cs.fill
-      if (trazo && trazo !== 'none') {
-        if (deshab(el)) { excl.deshabilitados++ } else {
-          const bg = fondo(el, false); const c = parse(trazo)
-          registrar('icono', el, sobre([c[0], c[1], c[2], c[3] * alfaOp], bg.c), bg, 3, false, el.getAttribute('aria-label') || el.getAttribute('class') || '', bg.indet)
+      const conTrazo = cs.stroke && cs.stroke !== 'none'
+      if (deshab(el)) { excl.deshabilitados++ }
+      else if (conTrazo) {
+        const bg = fondo(el, false); const c = parse(cs.stroke)
+        registrar('icono', el, sobre([c[0], c[1], c[2], c[3] * alfaOp], bg.c), bg, 3, false, el.getAttribute('aria-label') || el.getAttribute('class') || '', bg.indet)
+      } else {
+        const bg = fondo(el, false); const bgc = redondea(bg.c)
+        for (const h of el.querySelectorAll('path,line,circle,rect,polyline,polygon,ellipse')) {
+          const hs = getComputedStyle(h)
+          if (hs.display === 'none' || hs.visibility === 'hidden') continue
+          const hr = h.getBoundingClientRect(); if (hr.width + hr.height < 2) continue
+          if (h.closest('[data-decorativo]')) { excl.svg_decorativos = (excl.svg_decorativos || 0) + 1; continue }
+          const ah = opacidad(h)
+          for (const pintura of [hs.stroke, hs.fill]) {
+            if (!pintura || pintura === 'none' || pintura.startsWith('url(')) continue
+            const c = parse(pintura); if (c[3] <= 0) continue
+            const fg = sobre([c[0], c[1], c[2], c[3] * ah], bg.c)
+            if (hex(redondea(fg)) === hex(bgc)) { excl.svg_separaciones_color_fondo = (excl.svg_separaciones_color_fondo || 0) + 1; continue }
+            registrar('icono', h, fg, bg, 3, false, h.getAttribute('data-prueba') || h.getAttribute('data-tramo') || el.getAttribute('aria-label') || '', bg.indet, 'svg-hijo')
+          }
         }
       }
     }

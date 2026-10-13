@@ -6,6 +6,7 @@ package creditos
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -105,7 +106,7 @@ func (s *snapshot) view(c dominio.CreditRow) api.Credit {
 		RateBase: c.RateBase, MinPaymentPctBp: c.MinPaymentPctBp, MinPaymentFixedCents: c.MinPaymentFixedCents,
 		AnnualRateDecimals: c.AnnualRateDecimals, VatIncluded: c.VatIncluded}
 	st := s.state(c)
-	debt, derr := mc.LiveDebt([]mc.CreditState{st}, mdateOf(s.today))
+	debt, derr := LiveDebtAt([]mc.CreditState{st}, mdateOf(s.today))
 	if derr == nil {
 		out.LiveDebtCents = api.Ptr(int64(debt.Total))
 	}
@@ -251,12 +252,14 @@ func getCreditTotals(reg *api.Registry) api.HandlerFunc {
 		if err != nil {
 			return err
 		}
-		states := s.states(nil)
+		states := s.states(nil) // todas las líneas, activas o archivadas (PROVISIONAL, S6-tablero-lineas-archivadas, punto 5)
 		debt, err := s.liveDebt(states)
 		if err != nil {
 			return motorErr(err, "credit_id")
 		}
 		out := api.CreditTotals{LiveDebtCents: int64(debt.Total)}
+		hhPaid := s.householdPaid()
+		var count, pending int64
 		from, to := monthRange(s.today)
 		fFrom, fTo := from, mc.Date{Year: from.Year, Month: from.Month, Day: 15} // quincena del 1 al 15 y del 16 al último (K8)
 		if s.today.Day > 15 {
@@ -290,7 +293,12 @@ func getCreditTotals(reg *api.Registry) api.HandlerFunc {
 			if e.Status == "paid" {
 				out.InterestPaidMonthCents += int64(e.Interest)
 			}
+			count++
+			pending += s.pendingHousehold(e, hhPaid)
 		}
+		// M-19 (K-3 del tablero, C1 v1.5): cuántos pagos tiene el mes y la parte del hogar que falta pagar
+		// (PROVISIONAL, bloqueo S6-deuda-viva-hoy, punto 3).
+		out.MonthPaymentCount, out.MonthPendingHouseholdCents = api.Ptr(count), api.Ptr(pending)
 		ycal, err := mc.UnifiedCalendar(states, mc.Date{Year: s.today.Year, Month: time.January, Day: 1}, mc.Date{Year: s.today.Year, Month: time.December, Day: 31})
 		if err != nil {
 			return motorErr(err, "credit_id")
@@ -304,7 +312,43 @@ func getCreditTotals(reg *api.Registry) api.HandlerFunc {
 	}
 }
 
-// getDebtTrend: 12 meses desde el mes en curso (proyección; PROVISIONAL, bloqueo S6-creditos).
+// householdPaid suma, por pago programado de una compra (ref y número de pago), los abonos registrados por personas
+// del hogar (no externas). Karen paga su parte directo a la línea (RN-04): sus abonos no cubren la parte del hogar.
+func (s *snapshot) householdPaid() map[string]int64 {
+	out := map[string]int64{}
+	for _, m := range s.payments {
+		if m.PurchaseID != 0 && !s.isExternal(m.PayerPersonID) {
+			out[fmt.Sprintf("%s#%d", ref(m.PurchaseID), m.Seq)] += m.AmountCents
+		}
+	}
+	return out
+}
+
+// pendingHousehold es la parte del hogar que falta pagar de un pago del calendario del motor S3: 0 si el motor lo da
+// por pagado; si no, la parte del hogar menos lo que ya abonaron personas del hogar a ese pago (nunca negativa). Un
+// pago de corte de tarjeta (sin compra) pendiente o parcial cuenta su parte del hogar completa. PROVISIONAL, bloqueo
+// S6-deuda-viva-hoy, punto 3.
+func (s *snapshot) pendingHousehold(e mc.CalendarEntry, hhPaid map[string]int64) int64 {
+	if e.Status == "paid" {
+		return 0
+	}
+	var share int64
+	for _, sh := range e.Shares {
+		if !s.isExternal(sh.PersonID) {
+			share += int64(sh.Amount)
+		}
+	}
+	if e.PurchaseRef != "" {
+		share -= min(share, hhPaid[fmt.Sprintf("%s#%d", e.PurchaseRef, e.Seq)])
+	}
+	return share
+}
+
+// getDebtTrend: 12 meses desde el mes en curso (proyección; PROVISIONAL, bloqueo S6-creditos). La deuda de cada cierre
+// cuenta solo las compras con fecha hasta ese cierre: parte de la deuda de hoy menos los pagos que vencen antes del
+// cierre y crece con cada despensa programada en el mes de su compra (PROVISIONAL, bloqueo S6-deuda-viva-hoy). Sin
+// credit_id cuenta todas las líneas, activas o archivadas, y cada cierre es getLiveDebt a esa fecha (PROVISIONAL,
+// bloqueo S6-tablero-lineas-archivadas, punto 5).
 func getDebtTrend(reg *api.Registry) api.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) error {
 		ids, err := api.QueryIDs(r, "credit_id")
@@ -320,7 +364,7 @@ func getDebtTrend(reg *api.Registry) api.HandlerFunc {
 		d := dominio.NewDate(s.today.Year, s.today.Month, 1)
 		for i := 0; i < 12; i++ {
 			from, to := monthRange(d)
-			debt, err := mc.LiveDebt(states, to)
+			debt, err := LiveDebtAt(states, to) // al cierre del mes, solo las compras hechas hasta ese día (S6-deuda-viva-hoy)
 			if err != nil {
 				return motorErr(err, "credit_id")
 			}
@@ -407,7 +451,7 @@ func getCardStatus(reg *api.Registry) api.HandlerFunc {
 		}
 		st := s.state(c)
 		out := api.CardStatus{CreditID: c.ID, InstallmentPlans: []api.CardStatusInstallmentPlansItem{}}
-		if debt, err := mc.LiveDebt([]mc.CreditState{st}, mdateOf(s.today)); err == nil {
+		if debt, err := LiveDebtAt([]mc.CreditState{st}, mdateOf(s.today)); err == nil {
 			out.CurrentBalanceCents = int64(debt.Total) // saldo actual = deuda viva del motor (PROVISIONAL)
 		}
 		for _, t := range s.statements {
