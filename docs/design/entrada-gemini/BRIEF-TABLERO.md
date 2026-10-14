@@ -2,6 +2,8 @@
 
 Versión 1.1 · 13-oct-2026 · lo escribió Claude para Axel. Lo lee Gemini **con el repositorio completo clonado**: aquí solo están el contexto, las reglas y la lista de lo que falta; el detalle vive en los archivos que se citan. Si algo no está en los archivos, **no lo asumas** (regla 9).
 
+> **Si trabajas desde la web (sin terminal ni git), lee primero `BRIEF-WEB.md`: manda sobre este archivo en todo lo que dice cómo trabajar y entregar.**
+
 ## 0. Cómo arrancar (hazlo tú, en orden)
 1. `git clone https://github.com/axeljimenezfactible/finanzas-hogar.git && cd finanzas-hogar` (repositorio privado; Axel te da el acceso. Nunca escribas credenciales en ningún archivo).
 2. `git checkout -b gemini/tablero`. Trabaja y haz commits **solo en esa rama**; súbela con `git push -u origin gemini/tablero`. **No toques `main`** y no hagas merge: Axel y Claude lo revisan después.
