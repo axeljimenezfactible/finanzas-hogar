@@ -1,12 +1,12 @@
 # Puerta 4 · Respuestas de Axel
 
-Registro del orquestador (Fable 5.1) · 13-oct-2026, 00:20 · sobre `PUERTA-4.md` (commit e365a3f).
+Registro del orquestador (Fable 5.1) · 13-oct-2026, 23:40 · sobre `PUERTA-4.md` (commit e365a3f).
 
 ## Modo elegido
 
 Axel contestó por AskUserQuestion: **«Lo recomendado + excepciones»** (la misma regla de la puerta 2): toda pregunta con recomendación queda contestada con la opción recomendada; toda pregunta **sin recomendación** sigue **PROVISIONAL** con la opción en uso hasta que Axel la conteste aquí o en la puerta 5. Las excepciones y respuestas directas van abajo.
 
-## Respuestas directas (13-oct-2026, 00:15)
+## Respuestas directas (13-oct-2026, 23:35)
 
 | Id | Respuesta de Axel (opción elegida) | Nota |
 |---|---|---|
