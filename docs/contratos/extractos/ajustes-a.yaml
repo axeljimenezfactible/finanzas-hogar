@@ -1,0 +1,1106 @@
+# Finanzas Hogar · Contrato C1 v1.5.1 · extracto «ajustes-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto ajustes-a"
+  version: "1.5.1"
+  description: "Extracto de la etiqueta «Ajustes» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Ajustes"
+    description: "Las 14 secciones de Ajustes, sesiones y sistema."
+paths:
+  /openapi.yaml:
+    get:
+      operationId: "getOpenApiDocument"
+      tags:
+        - "Ajustes"
+      summary: "Contrato OpenAPI"
+      description: "Excepción técnica: sirve este contrato (C1) para desarrollo y pruebas de contrato (S6-03). Requiere sesión."
+      x-necesidades: []
+      x-tablas: []
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/yaml:
+              schema:
+                type: "string"
+                contentMediaType: "application/yaml"
+                description: "Este mismo documento."
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/auth/login:
+    post:
+      operationId: "login"
+      tags:
+        - "Ajustes"
+      summary: "Iniciar sesión"
+      description: "Público. Crea una sesión larga en este dispositivo y responde con la cookie `fh_session` (HttpOnly, Secure, SameSite=Strict). Credenciales incorrectas: 401 `invalid_credentials` con mensaje genérico «Usuario o contraseña incorrectos». Límite: tras 5 intentos fallidos en 15 minutos (valores iniciales de app_setting auth.max_failed_attempts y auth.lockout_window_minutes, decisión A; se usan los vigentes, que se cambian con updateSecuritySettings, K44) responde 429 `too_many_attempts`, mensaje «Demasiados intentos. Vuelve a intentar a las 21:45.» y `retry_at` aunque la contraseña sea correcta (N-011). Conteo por usuario y por IP en ventana deslizante de 15 minutos (el bloqueo se levanta cuando en los últimos 15 minutos hay menos de 5 fallos); la sesión dura 90 días (session.max_age_days, valor vigente; K11, K44) y se renueva con cada uso."
+      x-necesidades:
+        - "N-010"
+        - "N-011"
+      x-tablas:
+        - "app_setting"
+        - "device_session"
+        - "login_attempt"
+        - "person"
+        - "user_account"
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Set-Cookie:
+              $ref: "componentes-comunes.yaml#/components/headers/SetCookie"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrentSession"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        "429":
+          $ref: "componentes-comunes.yaml#/components/responses/TooManyRequests"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/auth/logout:
+    post:
+      operationId: "logout"
+      tags:
+        - "Ajustes"
+      summary: "Cerrar sesión de este dispositivo"
+      description: "Marca device_session.revoked_at y borra la cookie."
+      x-necesidades:
+        - "N-006"
+      x-tablas:
+        - "device_session"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/auth/password:
+    post:
+      operationId: "changeOwnPassword"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar la contraseña propia"
+      description: "Solo la propia. Contraseña actual incorrecta: 422 `invalid_current_password`. La nueva tiene al menos el mínimo vigente de app_setting auth.password_min_length (12 al sembrar; K6, K44); más corta: 422 `validation_failed` con el mínimo en el mensaje. El hash nuevo es argon2id."
+      x-necesidades:
+        - "N-273"
+      x-tablas:
+        - "audit_log"
+        - "device_session"
+        - "user_account"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordChangeRequest"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/users:
+    get:
+      operationId: "listUsers"
+      tags:
+        - "Ajustes"
+      summary: "Usuarios"
+      description: "Axel y Ximena (co-titulares, mismos permisos). Nunca incluye password_hash. No existe operación para crear cuentas: Karen no tiene cuenta (decisión A)."
+      x-necesidades:
+        - "N-270"
+      x-tablas:
+        - "device_session"
+        - "person"
+        - "user_account"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserAccountPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/sessions:
+    get:
+      operationId: "listSessions"
+      tags:
+        - "Ajustes"
+      summary: "Sesiones por dispositivo"
+      description: "Sesiones abiertas de ambos usuarios. Orden por defecto: -last_seen_at."
+      x-necesidades:
+        - "N-271"
+      x-tablas:
+        - "device_session"
+        - "user_account"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceSessionPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/sessions/{session_id}:
+    delete:
+      operationId: "revokeSession"
+      tags:
+        - "Ajustes"
+      summary: "Cerrar una sesión"
+      description: "Cualquiera de los dos puede cerrar sesiones de ambos (co-titulares). La siguiente petición con esa cookie responde 401."
+      x-necesidades:
+        - "N-272"
+      x-tablas:
+        - "audit_log"
+        - "device_session"
+      parameters:
+        - name: "session_id"
+          in: "path"
+          required: true
+          description: "Id del registro (session_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/sessions/revoke:
+    post:
+      operationId: "revokeSessions"
+      tags:
+        - "Ajustes"
+      summary: "Cerrar varias sesiones"
+      description: "Cerrar varias sesiones."
+      x-necesidades:
+        - "N-272"
+      x-tablas:
+        - "audit_log"
+        - "device_session"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SessionRevokeRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionRevokeResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/settings/projection:
+    get:
+      operationId: "getProjectionSettings"
+      tags:
+        - "Ajustes"
+      summary: "Interruptor de proyección"
+      description: "Lee projection.repeat_cadence_enabled (apagado por defecto, K21)."
+      x-necesidades:
+        - "N-318"
+      x-tablas:
+        - "app_setting"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectionSettings"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    patch:
+      operationId: "updateProjectionSettings"
+      tags:
+        - "Ajustes"
+      summary: "Cambiar el interruptor de proyección"
+      description: "Cambia projection.repeat_cadence_enabled (K21); afecta solo los meses 7 a 12 de la proyección."
+      x-necesidades:
+        - "N-319"
+      x-tablas:
+        - "app_setting"
+        - "audit_log"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectionSettingsUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectionSettings"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/planned-items:
+    get:
+      operationId: "listPlannedItems"
+      tags:
+        - "Ajustes"
+      summary: "Partidas planificadas"
+      description: "Ingreso esperado (N-279): en una partida quincenal, amount_cents es el monto de la quincena del 15 y second_half_amount_cents el de la del 30 (o último día) cuando difiere; ausente = las dos iguales."
+      x-necesidades:
+        - "N-276"
+        - "N-277"
+        - "N-279"
+      x-tablas:
+        - "category"
+        - "credit"
+        - "planned_item"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/CategoryId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+        - name: "kind"
+          in: "query"
+          required: false
+          description: "income (ingreso esperado), fixed_expense (gasto fijo) o upcoming_expense (venidero; la despensa programada lleva credit_id y accrual_months = 2)."
+          schema:
+            type: "string"
+            enum:
+              - "income"
+              - "fixed_expense"
+              - "upcoming_expense"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlannedItemPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createPlannedItem"
+      tags:
+        - "Ajustes"
+      summary: "Nueva partida planificada"
+      description: "Ingreso esperado (N-280): montos de la quincena del 15 (amount_cents) y de la del 30 (second_half_amount_cents, solo en frequency = fortnightly y si difiere) y desde cuándo rigen (start_date)."
+      x-necesidades:
+        - "N-278"
+        - "N-280"
+      x-tablas:
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "credit"
+        - "idempotency_key"
+        - "planned_item"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlannedItemCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlannedItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/planned-items/{planned_item_id}:
+    patch:
+      operationId: "updatePlannedItem"
+      tags:
+        - "Ajustes"
+      summary: "Editar o desactivar partida"
+      description: "Edita o desactiva una partida (is_active = false). En el ingreso esperado: montos de cada quincena (amount_cents, second_half_amount_cents) y fecha desde la que rigen (N-280)."
+      x-necesidades:
+        - "N-278"
+        - "N-280"
+      x-tablas:
+        - "audit_log"
+        - "planned_item"
+      parameters:
+        - name: "planned_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (planned_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlannedItemUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlannedItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/imports/planned-items/preview:
+    post:
+      operationId: "previewPlannedItemsImport"
+      tags:
+        - "Ajustes"
+      summary: "Vista previa de gastos_fijos_ingresos.csv"
+      description: "No escribe nada."
+      x-necesidades:
+        - "N-304"
+      x-tablas:
+        - "category"
+        - "cost_share_rule"
+        - "credit"
+        - "person"
+        - "planned_item"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              required:
+                - "file"
+              properties:
+                file:
+                  type: "string"
+                  contentMediaType: "application/octet-stream"
+                  description: "Archivo gastos_fijos_ingresos.csv (plantilla de plan.md §8.2). Tipos admitidos: text/csv."
+            encoding:
+              file:
+                contentType: "text/csv"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportPreview"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "413":
+          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
+        "415":
+          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
+  schemas:
+    LoginRequest:
+      type: "object"
+      description: "Credenciales de inicio de sesión. La contraseña nunca se guarda ni se registra."
+      properties:
+        username:
+          type: "string"
+          description: "Usuario (user_account.username), sin distinguir mayúsculas."
+        password:
+          type: "string"
+          description: "Contraseña en claro, solo de entrada."
+          writeOnly: true
+          x-entrada: true
+        device_label:
+          type: "string"
+          description: "Nombre legible del dispositivo (device_session.device_label), p. ej. «Chrome en Android»."
+      required:
+        - "username"
+        - "password"
+    CurrentSession:
+      type: "object"
+      description: "Sesión de quien hace la petición (N-001). Axel y Ximena tienen los mismos permisos."
+      properties:
+        user_account_id:
+          type: "integer"
+          description: "Cuenta (user_account.id)."
+        username:
+          type: "string"
+          description: "Usuario (user_account.username)."
+        person_id:
+          type: "integer"
+          description: "Persona dueña de la cuenta (user_account.person_id)."
+        display_name:
+          type: "string"
+          description: "Nombre visible (person.display_name)."
+        participation:
+          type: "string"
+          enum:
+            - "holder"
+            - "co_holder"
+          description: "Papel (person.participation): titular o co-titular, mismos permisos."
+        device_session_id:
+          type: "integer"
+          description: "Sesión de este dispositivo (device_session.id)."
+        expires_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Vencimiento de la sesión (device_session.expires_at)."
+        last_seen_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Último uso (device_session.last_seen_at)."
+      required:
+        - "user_account_id"
+        - "username"
+        - "person_id"
+        - "display_name"
+        - "participation"
+        - "device_session_id"
+        - "expires_at"
+        - "last_seen_at"
+      x-calculado: true
+    PasswordChangeRequest:
+      type: "object"
+      description: "Cambio de la contraseña propia (N-273). Solo entrada."
+      properties:
+        current_password:
+          type: "string"
+          description: "Contraseña actual."
+          writeOnly: true
+          x-entrada: true
+        new_password:
+          type: "string"
+          minLength: 1
+          description: "Contraseña nueva: al menos el mínimo vigente de app_setting auth.password_min_length (12 caracteres al sembrar; K6, K44; se cambia con updateSecuritySettings). Más corta: 422 validation_failed y el mensaje dice el mínimo vigente."
+          writeOnly: true
+          x-entrada: true
+      required:
+        - "current_password"
+        - "new_password"
+    SessionRevokeRequest:
+      type: "object"
+      description: "Cierre de varias sesiones (N-272)."
+      properties:
+        scope:
+          type: "string"
+          enum:
+            - "user_except_current"
+            - "all_except_current"
+            - "all"
+          description: "user_except_current = todas las de una cuenta salvo la actual; all_except_current = todas salvo la actual; all = todas, incluida la actual."
+          x-entrada: true
+        user_account_id:
+          type: "integer"
+          description: "Cuenta cuyas sesiones se cierran (obligatorio con user_except_current)."
+      required:
+        - "scope"
+    SessionRevokeResult:
+      type: "object"
+      description: "Resultado del cierre de sesiones."
+      properties:
+        revoked_count:
+          type: "integer"
+          description: "Número de sesiones cerradas."
+      required:
+        - "revoked_count"
+      x-calculado: true
+    UserAccount:
+      type: "object"
+      description: "Cuenta de usuario (tabla `user_account`). Cuenta para iniciar sesión. Solo dos: Axel y Ximena, con los mismos permisos (no hay roles). Karen nunca tiene cuenta. Campos ausentes = sin valor (NULL)."
+      x-tabla: "user_account"
+      required:
+        - "id"
+        - "person_id"
+        - "username"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        person_id:
+          type: "integer"
+          description: "Persona dueña de la cuenta"
+        username:
+          type: "string"
+          description: "Usuario para iniciar sesión"
+        is_active:
+          type: "boolean"
+          description: "0 = cuenta deshabilitada (no puede iniciar sesión)"
+        last_login_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Último inicio de sesión correcto"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        display_name:
+          type: "string"
+          description: "Nombre visible (person.display_name)."
+          x-calculado: true
+        participation:
+          type: "string"
+          enum:
+            - "holder"
+            - "co_holder"
+          description: "Papel de la persona (person.participation)."
+          x-calculado: true
+    DeviceSession:
+      type: "object"
+      description: "Sesión por dispositivo (tabla `device_session`). Sesión larga (meses) de una cuenta en un dispositivo. Se puede cerrar desde Ajustes. Campos ausentes = sin valor (NULL)."
+      x-tabla: "device_session"
+      required:
+        - "id"
+        - "user_account_id"
+        - "last_seen_at"
+        - "expires_at"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        user_account_id:
+          type: "integer"
+          description: "Cuenta dueña de la sesión"
+        device_label:
+          type: "string"
+          description: "Nombre legible del dispositivo (Chrome en Android)"
+        user_agent:
+          type: "string"
+          description: "Agente de usuario reportado por el navegador"
+        last_seen_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Último uso"
+        expires_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Vencimiento de la sesión"
+        revoked_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cierre manual desde Ajustes. NULL = vigente"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        is_current:
+          type: "boolean"
+          description: "true si es la sesión de esta petición."
+          x-calculado: true
+        username:
+          type: "string"
+          description: "Usuario dueño de la sesión."
+          x-calculado: true
+    PlannedItem:
+      type: "object"
+      description: "Partida planificada (tabla `planned_item`). Ingreso o gasto esperado con su periodicidad: sueldo quincenal, renta, despensa bimestral con Kueski, gastos venideros. Los motores proyectan sus ocurrencias, no se guardan una por una. Campos ausentes = sin valor (NULL)."
+      x-tabla: "planned_item"
+      required:
+        - "id"
+        - "kind"
+        - "description"
+        - "amount_cents"
+        - "frequency"
+        - "interval_count"
+        - "start_date"
+        - "accrual_months"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "income"
+            - "fixed_expense"
+            - "upcoming_expense"
+          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
+        second_half_amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales"
+        frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+            - "yearly"
+            - "once"
+          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
+        interval_count:
+          type: "integer"
+          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
+        end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Última fecha posible, inclusive. NULL = sin fin"
+        category_id:
+          type: "integer"
+          description: "Categoría del gasto"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Cómo se pagará cada ocurrencia. NULL = sin definir"
+        credit_id:
+          type: "integer"
+          description: "Crédito con que se planea pagar (despensa con Kueski)"
+        term_count:
+          type: "integer"
+          description: "Plazo planeado en pagos (4 quincenas)"
+        accrual_months:
+          type: "integer"
+          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        next_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Próxima ocurrencia desde hoy."
+          x-calculado: true
+    PlannedItemCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de partida planificada (tabla `planned_item`)."
+      x-tabla: "planned_item"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "income"
+            - "fixed_expense"
+            - "upcoming_expense"
+          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
+        second_half_amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales"
+        frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+            - "yearly"
+            - "once"
+          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
+        interval_count:
+          type: "integer"
+          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
+        end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Última fecha posible, inclusive. NULL = sin fin"
+        category_id:
+          type: "integer"
+          description: "Categoría del gasto"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Cómo se pagará cada ocurrencia. NULL = sin definir"
+        credit_id:
+          type: "integer"
+          description: "Crédito con que se planea pagar (despensa con Kueski)"
+        term_count:
+          type: "integer"
+          description: "Plazo planeado en pagos (4 quincenas)"
+        accrual_months:
+          type: "integer"
+          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "kind"
+        - "description"
+        - "amount_cents"
+        - "frequency"
+        - "start_date"
+    PlannedItemUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de partida planificada (tabla `planned_item`)."
+      x-tabla: "planned_item"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "income"
+            - "fixed_expense"
+            - "upcoming_expense"
+          description: "Tipo (columna «tipo» del CSV): ingreso, gasto fijo o gasto venidero"
+        description:
+          type: "string"
+          description: "Concepto"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de cada ocurrencia en centavos (sueldo por quincena, renta por mes). En quincenal es el de la quincena del 15, y también el del 30 si second_half_amount_cents es NULL"
+        second_half_amount_cents:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+            - type: "null"
+          description: "Monto de la quincena del 30 (o último día del mes) cuando difiere del de la quincena del 15 (N-279). NULL = las dos quincenas iguales · null borra el valor"
+        frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+            - "yearly"
+            - "once"
+          description: "Periodicidad. fortnightly cae en los días de pago 15 y 30 (o último día). Las demás se repiten desde start_date"
+        interval_count:
+          type: "integer"
+          description: "Cada cuántas unidades se repite (despensa bimestral = monthly cada 2)"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primera ocurrencia o fecha única. Su día del mes es el ancla y se recorta al último día en meses cortos"
+        end_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Última fecha posible, inclusive. NULL = sin fin · null borra el valor"
+        category_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Categoría del gasto · null borra el valor"
+        person_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Persona a quien se atribuye. En ingresos solo el titular (disparador). NULL = hogar en general · null borra el valor"
+        cost_share_rule_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Reparto del gasto. NULL = el de la categoría o el de por defecto · null borra el valor"
+        payment_method:
+          type:
+            - "string"
+            - "null"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+            - null
+          description: "Cómo se pagará cada ocurrencia. NULL = sin definir · null borra el valor"
+        credit_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Crédito con que se planea pagar (despensa con Kueski) · null borra el valor"
+        term_count:
+          type:
+            - "integer"
+            - "null"
+          description: "Plazo planeado en pagos (4 quincenas) · null borra el valor"
+        accrual_months:
+          type: "integer"
+          description: "Meses en que se devenga cada ocurrencia (despensa bimestral = 2)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    ImportPreview:
+      type: "object"
+      description: "Vista previa de la importación de gastos_fijos_ingresos.csv (N-304)."
+      properties:
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Renglón del CSV."
+            properties:
+              line_no:
+                type: "integer"
+                description: "Renglón."
+              planned_item:
+                $ref: "#/components/schemas/PlannedItemCreate"
+                description: "Partida que se crearía."
+              errors:
+                type: "array"
+                items:
+                  $ref: "componentes-comunes.yaml#/components/schemas/FieldError"
+                description: "Errores del renglón."
+            required:
+              - "line_no"
+              - "errors"
+            x-calculado: true
+          description: "Uno por renglón."
+        valid_count:
+          type: "integer"
+          description: "Renglones válidos."
+        error_count:
+          type: "integer"
+          description: "Renglones con error."
+      required:
+        - "rows"
+        - "valid_count"
+        - "error_count"
+      x-calculado: true
+    ProjectionSettings:
+      type: "object"
+      description: "Ajuste de la proyección de los meses 7 a 12 (N-318, K21)."
+      properties:
+        repeat_cadence_enabled:
+          type: "boolean"
+          description: "Interruptor de la proyección de los meses 7 a 12 (app_setting projection.repeat_cadence_enabled, K21): false (por defecto) = solo compromisos contratados, gastos fijos e ingresos del CSV; true = agrega la cadencia bimestral de despensa a crédito y el papel alterno de $199."
+          x-app-setting: "projection.repeat_cadence_enabled"
+      required:
+        - "repeat_cadence_enabled"
+    ProjectionSettingsUpdate:
+      type: "object"
+      description: "Cambio del interruptor de proyección (N-319, K21)."
+      properties:
+        repeat_cadence_enabled:
+          type: "boolean"
+          description: "Interruptor de la proyección de los meses 7 a 12 (app_setting projection.repeat_cadence_enabled, K21): false (por defecto) = solo compromisos contratados, gastos fijos e ingresos del CSV; true = agrega la cadencia bimestral de despensa a crédito y el papel alterno de $199."
+          x-app-setting: "projection.repeat_cadence_enabled"
+      required:
+        - "repeat_cadence_enabled"
+      additionalProperties: false
+    UserAccountPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/UserAccount"
+      description: "Página de UserAccount con la envoltura única (Page)."
+    DeviceSessionPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/DeviceSession"
+      description: "Página de DeviceSession con la envoltura única (Page)."
+    PlannedItemPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/PlannedItem"
+      description: "Página de PlannedItem con la envoltura única (Page)."

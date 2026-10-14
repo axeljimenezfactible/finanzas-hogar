@@ -1,0 +1,1938 @@
+# Finanzas Hogar · Contrato C1 v1.5.1 · extracto «gastos». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto gastos"
+  version: "1.5.1"
+  description: "Extracto de la etiqueta «Gastos» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Gastos"
+    description: "Gastos, adjuntos y captura de tickets con OCR."
+paths:
+  /api/v1/expenses:
+    get:
+      operationId: "listExpenses"
+      tags:
+        - "Gastos"
+      summary: "Lista de gastos"
+      description: "Periodo por defecto: mes en curso. Orden por defecto: -expense_date,-created_at; cualquier columna puede ordenar. `credit_id` filtra la forma de pago por línea. Páginas de 50."
+      x-necesidades:
+        - "N-040"
+        - "N-063"
+      x-tablas:
+        - "attachment"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "person"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Family"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CategoryId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+        - name: "kind"
+          in: "query"
+          required: false
+          description: "Tipo: fixed, variable o upcoming."
+          style: "form"
+          explode: false
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              enum:
+                - "fixed"
+                - "variable"
+                - "upcoming"
+        - name: "payment_method"
+          in: "query"
+          required: false
+          description: "Forma de pago."
+          style: "form"
+          explode: false
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              enum:
+                - "cash"
+                - "debit"
+                - "transfer"
+                - "credit"
+        - name: "has_attachment"
+          in: "query"
+          required: false
+          description: "Con ticket sí o no."
+          schema:
+            type: "boolean"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpensePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createExpense"
+      tags:
+        - "Gastos"
+      summary: "Registrar gasto"
+      description: "Devuelve el gasto con sus partes calculadas (expense_share; el resto y los centavos van a la persona del resto de la regla). Captura sin conexión (K9): la cola del teléfono manda cada gasto con su Idempotency-Key y su captured_at. La clave queda también en expense.idempotency_key, sin purga: un reintento con la misma clave responde 200 con el mismo gasto e Idempotent-Replayed: true, sin crear otro, aunque hayan pasado más de 24 h (pasadas las 24 h solo se compara la clave). Con la misma clave y otro cuerpo dentro de las 24 h, 409 `idempotency_key_reused`."
+      x-necesidades:
+        - "N-054"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "idempotency_key"
+        - "person"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpenseCreate"
+      responses:
+        "200":
+          description: "Reintento de una captura ya registrada con la misma Idempotency-Key (K9): devuelve el mismo recurso, sin crear otro, con Idempotent-Replayed: true."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Expense"
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Expense"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/totals:
+    get:
+      operationId: "getExpenseTotals"
+      tags:
+        - "Gastos"
+      summary: "Totales del filtro"
+      description: "Mismos filtros que listExpenses; suma todas las páginas."
+      x-necesidades:
+        - "N-041"
+      x-tablas:
+        - "attachment"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "person"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Family"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CategoryId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseTotals"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/summary:
+    get:
+      operationId: "getExpenseSummary"
+      tags:
+        - "Gastos"
+      summary: "Resumen del periodo"
+      description: "Resumen del periodo."
+      x-necesidades:
+        - "N-042"
+      x-tablas:
+        - "attachment"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "person"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Family"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CategoryId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseSummary"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/monthly-trend:
+    get:
+      operationId: "getExpenseMonthlyTrend"
+      tags:
+        - "Gastos"
+      summary: "Tendencia mensual de gasto"
+      description: "Tendencia mensual de gasto."
+      x-necesidades:
+        - "N-044"
+      x-tablas:
+        - "attachment"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "person"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Family"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CreditId"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseMonthlyTrend"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/{expense_id}:
+    get:
+      operationId: "getExpense"
+      tags:
+        - "Gastos"
+      summary: "Gasto"
+      description: "Gasto."
+      x-necesidades:
+        - "N-060"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "person"
+        - "scheduled_payment"
+        - "store"
+      parameters:
+        - name: "expense_id"
+          in: "path"
+          required: true
+          description: "Id del registro (expense_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Expense"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    patch:
+      operationId: "updateExpense"
+      tags:
+        - "Gastos"
+      summary: "Actualizar gasto"
+      description: "Edición en el lugar con guardado automático; recalcula las partes. `items` reemplaza los renglones."
+      x-necesidades:
+        - "N-047"
+        - "N-062"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "person"
+        - "store"
+      parameters:
+        - name: "expense_id"
+          in: "path"
+          required: true
+          description: "Id del registro (expense_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpenseUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Expense"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteExpense"
+      tags:
+        - "Gastos"
+      summary: "Eliminar gasto"
+      description: "Con compra a crédito vinculada responde 409 `has_credit_purchase` (primero se elimina la compra). Queda copia en audit_log."
+      x-necesidades:
+        - "N-055"
+        - "N-063"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "person"
+        - "store"
+      parameters:
+        - name: "expense_id"
+          in: "path"
+          required: true
+          description: "Id del registro (expense_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/{expense_id}/items:
+    get:
+      operationId: "listExpenseItems"
+      tags:
+        - "Gastos"
+      summary: "Renglones del ticket"
+      description: "Orden del ticket (line_no). Si Σ importes ≠ total, la diferencia viene como renglón «Ajuste del ticket»."
+      x-necesidades:
+        - "N-061"
+      x-tablas:
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "expense_item"
+        - "presentation"
+        - "product"
+      parameters:
+        - name: "expense_id"
+          in: "path"
+          required: true
+          description: "Id del registro (expense_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseItemPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/{expense_id}/duplicate:
+    post:
+      operationId: "duplicateExpense"
+      tags:
+        - "Gastos"
+      summary: "Duplicar gasto"
+      description: "Copia con fecha de hoy."
+      x-necesidades:
+        - "N-066"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "idempotency_key"
+        - "person"
+        - "store"
+      parameters:
+        - name: "expense_id"
+          in: "path"
+          required: true
+          description: "Id del registro (expense_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Expense"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/{expense_id}/mark-paid:
+    post:
+      operationId: "markExpensePaid"
+      tags:
+        - "Gastos"
+      summary: "Marcar venidero como pagado"
+      description: "Marcar venidero como pagado."
+      x-necesidades:
+        - "N-065"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "idempotency_key"
+        - "person"
+        - "store"
+      parameters:
+        - name: "expense_id"
+          in: "path"
+          required: true
+          description: "Id del registro (expense_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpenseMarkPaidRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Expense"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/expenses/{expense_id}/attachments:
+    post:
+      operationId: "uploadExpenseAttachment"
+      tags:
+        - "Gastos"
+      summary: "Adjuntar ticket"
+      description: "Imagen JPG, PNG o WebP, o PDF (U1 N-064). Tamaño máximo 10 MB (K43), el valor vigente de app_setting attachment.max_size_mb (K44; se cambia con updateDataSettings, N-325): un archivo mayor responde 413 `payload_too_large` y el mensaje dice el máximo vigente. El archivo se guarda con nombre generado por el servidor, nunca el del usuario."
+      x-necesidades:
+        - "N-064"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "expense"
+        - "idempotency_key"
+      parameters:
+        - name: "expense_id"
+          in: "path"
+          required: true
+          description: "Id del registro (expense_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              required:
+                - "file"
+              properties:
+                file:
+                  type: "string"
+                  contentMediaType: "application/octet-stream"
+                  description: "Adjunto de un gasto. Tipos admitidos: image/jpeg, image/png, image/webp, application/pdf."
+                kind:
+                  type: "string"
+                  enum:
+                    - "ticket_photo"
+                    - "invoice"
+                    - "bank_statement"
+                    - "other"
+                  description: "Tipo (attachment.kind)."
+            encoding:
+              file:
+                contentType: "image/jpeg, image/png, image/webp, application/pdf"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "413":
+          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
+        "415":
+          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/attachments/{attachment_id}/file:
+    get:
+      operationId: "downloadAttachment"
+      tags:
+        - "Gastos"
+      summary: "Descargar adjunto"
+      description: "Solo con sesión válida."
+      x-necesidades:
+        - "N-046"
+        - "N-060"
+        - "N-071"
+      x-tablas:
+        - "attachment"
+      parameters:
+        - name: "attachment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (attachment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/octet-stream:
+              schema:
+                type: "string"
+                contentMediaType: "application/octet-stream"
+                description: "Archivo del adjunto con su Content-Type real (image/jpeg, image/png, image/webp o application/pdf)."
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/attachments/{attachment_id}:
+    delete:
+      operationId: "deleteAttachment"
+      tags:
+        - "Gastos"
+      summary: "Quitar adjunto"
+      description: "Quitar adjunto."
+      x-necesidades:
+        - "N-064"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "credit_statement"
+        - "price"
+      parameters:
+        - name: "attachment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (attachment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/ticket-scans:
+    post:
+      operationId: "createTicketScan"
+      tags:
+        - "Gastos"
+      summary: "Leer ticket con OCR"
+      description: "Sube la foto y lanza el OCR local (Tesseract, spa). La lectura queda guardada sin confirmar (attachment con expense_id NULL), y «Guardar para después» guarda las correcciones como borrador con saveTicketScanDraft (N-075, K3)."
+      x-necesidades:
+        - "N-070"
+      x-tablas:
+        - "attachment"
+        - "idempotency_key"
+        - "job"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              required:
+                - "file"
+              properties:
+                file:
+                  type: "string"
+                  contentMediaType: "application/octet-stream"
+                  description: "Foto del ticket. Tipos admitidos: image/jpeg, image/png, image/webp."
+            encoding:
+              file:
+                contentType: "image/jpeg, image/png, image/webp"
+      responses:
+        "202":
+          description: "Aceptado: el trabajo quedó registrado o en curso."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketScan"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "413":
+          $ref: "componentes-comunes.yaml#/components/responses/PayloadTooLarge"
+        "415":
+          $ref: "componentes-comunes.yaml#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    get:
+      operationId: "listTicketScans"
+      tags:
+        - "Gastos"
+      summary: "Tickets por confirmar"
+      description: "Lecturas sin confirmar (ocr_status pending, done o failed). Cada una dice si tiene borrador (has_draft) y trae display_store_id y display_total_cents, que toman tienda y total del borrador cuando existe (N-076, K3). Orden: -created_at."
+      x-necesidades:
+        - "N-076"
+      x-tablas:
+        - "attachment"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketScanPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/ticket-scans/{attachment_id}:
+    get:
+      operationId: "getTicketScan"
+      tags:
+        - "Gastos"
+      summary: "Resultado de la lectura"
+      description: "Propuesta del OCR y, si existe, el borrador de correcciones guardado (draft, K3): la pantalla abre el borrador en lugar de la propuesta (N-071)."
+      x-necesidades:
+        - "N-071"
+      x-tablas:
+        - "attachment"
+        - "category"
+        - "cost_share_rule"
+        - "expense_item"
+        - "presentation"
+        - "price"
+        - "product"
+        - "store"
+      parameters:
+        - name: "attachment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (attachment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketScan"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/ticket-scans/{attachment_id}/draft:
+    put:
+      operationId: "saveTicketScanDraft"
+      tags:
+        - "Gastos"
+      summary: "Guardar correcciones para después"
+      description: "«Guardar para después» (K3): guarda como borrador las correcciones de encabezado y renglones de una lectura sin confirmar en attachment.ocr_draft_json y ocr_draft_saved_at, y reemplaza el borrador anterior. No crea gasto, precio ni inventario y no toca la lectura cruda. confirmTicketScan vacía el borrador. Una lectura ya confirmada responde 409 `conflict`."
+      x-necesidades:
+        - "N-075"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+      parameters:
+        - name: "attachment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (attachment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketScanDraft"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketScan"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/ticket-scans/{attachment_id}/confirm:
+    post:
+      operationId: "confirmTicketScan"
+      tags:
+        - "Gastos"
+      summary: "Confirmar ticket"
+      description: "Una sola transacción: gasto con renglones y cuenta por renglón, precios (fuente ticket_ocr, fecha del ticket, tienda), entradas de inventario de productos con stock (cada una con su inventory_movement de tipo purchase ligado al renglón del ticket) y, si aplica, la compra a crédito."
+      x-necesidades:
+        - "N-074"
+      x-tablas:
+        - "attachment"
+        - "audit_log"
+        - "category"
+        - "cost_share_rule"
+        - "cost_share_rule_part"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "credit_term_rate"
+        - "expense"
+        - "expense_item"
+        - "expense_share"
+        - "idempotency_key"
+        - "inventory_item"
+        - "inventory_movement"
+        - "person"
+        - "presentation"
+        - "price"
+        - "promotion"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+        - "store"
+      parameters:
+        - name: "attachment_id"
+          in: "path"
+          required: true
+          description: "Id del registro (attachment_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketConfirmRequest"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketConfirmResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
+  schemas:
+    BasisPoints:
+      type: "integer"
+      minimum: 0
+      maximum: 10000
+      description: "Porcentaje en puntos base: 10000 = 100 %, 5000 = 50 %."
+      examples:
+        - 5000
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    CostShareRulePartInput:
+      type: "object"
+      description: "Parte de una regla de reparto (entrada)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona (cost_share_rule_part.person_id)."
+        pct_bp:
+          $ref: "#/components/schemas/BasisPoints"
+          description: "Porcentaje (cost_share_rule_part.pct_bp)."
+        fixed_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto fijo (cost_share_rule_part.fixed_cents)."
+      required:
+        - "person_id"
+      additionalProperties: false
+    ShareLine:
+      type: "object"
+      description: "Parte de dinero de una persona."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona (expense_share.person_id): el titular representa al hogar."
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de la parte (expense_share.amount_cents)."
+      required:
+        - "person_id"
+        - "amount_cents"
+      x-calculado: true
+    Expense:
+      type: "object"
+      description: "Gasto (tabla `expense`). Gasto real: fijo, variable o venidero. Guarda la fecha que inicia el devengo, los meses de devengo, el medio de pago (si es crédito el efectivo sale por los pagos programados), quién pagó, a quién se atribuye y su reparto. Campos ausentes = sin valor (NULL)."
+      x-tabla: "expense"
+      required:
+        - "id"
+        - "kind"
+        - "category_id"
+        - "amount_cents"
+        - "expense_date"
+        - "accrual_months"
+        - "payment_method"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "variable"
+            - "upcoming"
+          description: "fixed = gasto fijo, variable = gasto del día a día, upcoming = gasto venidero que ya ocurrió o quedó comprometido"
+        description:
+          type: "string"
+          description: "Concepto o comercio. NULL = sin descripción: el registro en 3 toques no la pide (N-054) y la pantalla muestra la categoría"
+        category_id:
+          type: "integer"
+          description: "Categoría"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Importe de lo comprado en centavos, con IVA y descuentos y sin intereses de financiamiento (despensa 1 = 309450)"
+        expense_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra o consumo. El devengo empieza en su mes"
+        accrual_months:
+          type: "integer"
+          description: "Meses calendario en que se devenga desde el mes de expense_date (despensa bimestral = 2, mitad por mes)"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Medio de pago. credit = el efectivo sale según los pagos programados de su credit_purchase"
+        paid_by_person_id:
+          type: "integer"
+          description: "Quién pagó de su bolsillo (papel de contado de Karen). NULL = el titular"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se atribuye (comida fuera de Ximena). NULL = hogar en general"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto. NULL = la regla de la categoría o la de por defecto"
+        store_id:
+          type: "integer"
+          description: "Tienda donde se compró"
+        planned_item_id:
+          type: "integer"
+          description: "Partida planificada que cumple (gasto fijo o venidero)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        captured_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el gasto en el teléfono. En una captura atrasada es anterior a created_at. NULL = captura en línea: la hora de captura es created_at"
+        shares:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ShareLine"
+          description: "Partes congeladas del gasto (expense_share). Σ partes = amount_cents."
+          x-calculado: true
+        household_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte del hogar = parte a nombre del titular."
+          x-calculado: true
+        external_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte de personas externas (Karen) = amount_cents − parte del hogar."
+          x-calculado: true
+        has_attachment:
+          type: "boolean"
+          description: "true si tiene al menos un adjunto (attachment)."
+          x-calculado: true
+        credit_purchase_id:
+          type: "integer"
+          description: "Compra a crédito vinculada (credit_purchase.expense_id), solo con payment_method = credit."
+          x-calculado: true
+        accruals:
+          type: "array"
+          items:
+            type: "object"
+            description: "Devengo por mes (motor S2)."
+            properties:
+              month:
+                $ref: "componentes-comunes.yaml#/components/schemas/Month"
+                description: "Mes devengado."
+              amount_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto devengado en ese mes; el último mes ajusta centavos."
+            required:
+              - "month"
+              - "amount_cents"
+            x-calculado: true
+          description: "Devengo: mes o meses a los que se asigna el gasto (accrual_months)."
+          x-calculado: true
+        cash_flows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Salida de efectivo."
+            properties:
+              date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha en que sale el dinero."
+              amount_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Monto."
+            required:
+              - "date"
+              - "amount_cents"
+            x-calculado: true
+          description: "Efectivo: la fecha del gasto si es de contado o los pagos programados si es a crédito."
+          x-calculado: true
+        created_by_user_account_id:
+          type: "integer"
+          description: "Cuenta que lo creó (audit_log)."
+          x-calculado: true
+        updated_by_user_account_id:
+          type: "integer"
+          description: "Cuenta que lo cambió por última vez (audit_log)."
+          x-calculado: true
+    ExpenseItemInput:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de renglón de gasto (tabla `expense_item`)."
+      x-tabla: "expense_item"
+      properties:
+        line_no:
+          type: "integer"
+          description: "Orden del renglón en el ticket"
+        description:
+          type: "string"
+          description: "Texto del renglón como viene en el ticket"
+        presentation_id:
+          type: "integer"
+          description: "Presentación del catálogo. NULL mientras no se liga"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad de presentaciones ×1000: 3 piezas = 3000, 1.250 kg a granel = 1250"
+        unit_price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio por presentación en centavos"
+        line_total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Importe del renglón con descuentos e IVA. La suma de renglones es el importe del gasto"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del renglón (Hogar, Karen, Conjunto 50/50 o una regla de un solo uso para «mixto»). NULL = el del gasto"
+        cost_share_rule_parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePartInput"
+          description: "Reparto «mixto» del renglón: crea una regla de un solo uso (cost_share_rule.is_template = 0)."
+      required:
+        - "line_no"
+        - "description"
+        - "quantity_milli"
+        - "line_total_cents"
+    ExpenseItem:
+      type: "object"
+      description: "Renglón de gasto (tabla `expense_item`). Renglón de un gasto con ticket (la despensa): presentación, cantidad, importe y reparto del renglón (cuenta axel, karen, conjunto o mixto de data.json). Campos ausentes = sin valor (NULL)."
+      x-tabla: "expense_item"
+      required:
+        - "id"
+        - "expense_id"
+        - "line_no"
+        - "description"
+        - "quantity_milli"
+        - "line_total_cents"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        expense_id:
+          type: "integer"
+          description: "Gasto al que pertenece"
+        line_no:
+          type: "integer"
+          description: "Orden del renglón en el ticket"
+        description:
+          type: "string"
+          description: "Texto del renglón como viene en el ticket"
+        presentation_id:
+          type: "integer"
+          description: "Presentación del catálogo. NULL mientras no se liga"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad de presentaciones ×1000: 3 piezas = 3000, 1.250 kg a granel = 1250"
+        unit_price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio por presentación en centavos"
+        line_total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Importe del renglón con descuentos e IVA. La suma de renglones es el importe del gasto"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del renglón (Hogar, Karen, Conjunto 50/50 o una regla de un solo uso para «mixto»). NULL = el del gasto"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        household_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte del hogar del renglón."
+          x-calculado: true
+        external_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Parte de Karen del renglón."
+          x-calculado: true
+    ExpenseCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de un gasto (N-054). payment_method = credit no se acepta aquí: la compra a crédito crea su gasto (POST /api/v1/credit-purchases). kind por defecto: variable, o upcoming si la fecha es posterior a hoy. description es opcional: si falta, el gasto queda sin descripción (NULL) y la pantalla muestra la categoría; la API no inventa un texto de relleno (S1 C-16). captured_at (opcional) es el instante en que se capturó en el teléfono: una captura atrasada de la cola sin conexión lo manda junto con su Idempotency-Key (K9); sin valor, la hora de captura es la del alta."
+      x-tabla: "expense"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "variable"
+            - "upcoming"
+          description: "fixed = gasto fijo, variable = gasto del día a día, upcoming = gasto venidero que ya ocurrió o quedó comprometido"
+        description:
+          type: "string"
+          description: "Concepto o comercio. NULL = sin descripción: el registro en 3 toques no la pide (N-054) y la pantalla muestra la categoría"
+        category_id:
+          type: "integer"
+          description: "Categoría"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          minimum: 1
+          description: "Monto total en centavos, mayor que 0."
+        expense_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra o consumo. El devengo empieza en su mes"
+        accrual_months:
+          type: "integer"
+          description: "Meses calendario en que se devenga desde el mes de expense_date (despensa bimestral = 2, mitad por mes)"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Medio de pago. credit = el efectivo sale según los pagos programados de su credit_purchase"
+        paid_by_person_id:
+          type: "integer"
+          description: "Quién pagó de su bolsillo (papel de contado de Karen). NULL = el titular"
+        person_id:
+          type: "integer"
+          description: "Persona a quien se atribuye (comida fuera de Ximena). NULL = hogar en general"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto. NULL = la regla de la categoría o la de por defecto"
+        store_id:
+          type: "integer"
+          description: "Tienda donde se compró"
+        planned_item_id:
+          type: "integer"
+          description: "Partida planificada que cumple (gasto fijo o venidero)"
+        notes:
+          type: "string"
+          description: "notes"
+        captured_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Instante en que la persona capturó el gasto en el teléfono. En una captura atrasada es anterior a created_at. NULL = captura en línea: la hora de captura es created_at"
+        cost_share_rule_parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePartInput"
+          description: "Reparto propio del gasto («Conjunto con %»): crea una regla de un solo uso. Excluye cost_share_rule_id."
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExpenseItemInput"
+          description: "Renglones del ticket (expense_item). Σ line_total_cents = amount_cents."
+      required:
+        - "category_id"
+        - "amount_cents"
+        - "expense_date"
+        - "payment_method"
+    ExpenseUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de gasto (tabla `expense`)."
+      x-tabla: "expense"
+      properties:
+        kind:
+          type: "string"
+          enum:
+            - "fixed"
+            - "variable"
+            - "upcoming"
+          description: "fixed = gasto fijo, variable = gasto del día a día, upcoming = gasto venidero que ya ocurrió o quedó comprometido"
+        description:
+          type:
+            - "string"
+            - "null"
+          description: "Concepto o comercio. NULL = sin descripción: el registro en 3 toques no la pide (N-054) y la pantalla muestra la categoría · null borra el valor"
+        category_id:
+          type: "integer"
+          description: "Categoría"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Importe de lo comprado en centavos, con IVA y descuentos y sin intereses de financiamiento (despensa 1 = 309450)"
+        expense_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra o consumo. El devengo empieza en su mes"
+        accrual_months:
+          type: "integer"
+          description: "Meses calendario en que se devenga desde el mes de expense_date (despensa bimestral = 2, mitad por mes)"
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Medio de pago. credit = el efectivo sale según los pagos programados de su credit_purchase"
+        paid_by_person_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Quién pagó de su bolsillo (papel de contado de Karen). NULL = el titular · null borra el valor"
+        person_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Persona a quien se atribuye (comida fuera de Ximena). NULL = hogar en general · null borra el valor"
+        cost_share_rule_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Reparto del gasto. NULL = la regla de la categoría o la de por defecto · null borra el valor"
+        store_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Tienda donde se compró · null borra el valor"
+        planned_item_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Partida planificada que cumple (gasto fijo o venidero) · null borra el valor"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+        cost_share_rule_parts:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CostShareRulePartInput"
+          description: "Reparto propio del gasto («Conjunto con %»): crea una regla de un solo uso. Excluye cost_share_rule_id."
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExpenseItemInput"
+          description: "Renglones del ticket (expense_item). Σ line_total_cents = amount_cents."
+      minProperties: 1
+    ExpenseMarkPaidRequest:
+      type: "object"
+      additionalProperties: false
+      description: "Marca un gasto venidero como pagado (N-065): fecha real y monto real; kind pasa a variable o fixed según su partida."
+      x-tabla: "expense"
+      properties:
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Importe de lo comprado en centavos, con IVA y descuentos y sin intereses de financiamiento (despensa 1 = 309450)"
+        expense_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra o consumo. El devengo empieza en su mes"
+      required:
+        - "amount_cents"
+        - "expense_date"
+    ExpenseTotals:
+      type: "object"
+      description: "Totales sobre exactamente el conjunto filtrado (todas sus páginas) (N-041)."
+      properties:
+        expense_count:
+          type: "integer"
+          description: "Número de gastos."
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ amount_cents."
+        household_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ parte del hogar."
+        external_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ parte de Karen."
+      required:
+        - "expense_count"
+        - "amount_cents"
+        - "household_share_cents"
+        - "external_share_cents"
+      x-calculado: true
+    ExpenseSummary:
+      type: "object"
+      description: "Resumen del periodo con los filtros (N-042). Promedios de K20: diario = total del periodo ÷ días reales del periodo; semanal = diario × 7."
+      properties:
+        period_start:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Inicio del periodo."
+        period_end:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fin del periodo."
+        household_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ parte del hogar en el periodo."
+        previous_household_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ parte del hogar del periodo anterior equivalente."
+        difference_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "household_share_cents − previous_household_share_cents."
+        daily_average_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Promedio diario: total del periodo ÷ días reales del periodo, ROUND_HALF_UP (motor S2, K20)."
+        weekly_average_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Promedio semanal = promedio diario exacto (sin redondear) × 7, con un solo redondeo ROUND_HALF_UP al final (motor S2, K20, K39; RN-27)."
+        monthly_average_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Promedio mensual: total ÷ meses del periodo (motor S2; canon R-56 y R-57)."
+        top_category_id:
+          type: "integer"
+          description: "Categoría con mayor gasto."
+        top_category_household_share_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Su parte del hogar."
+      required:
+        - "period_start"
+        - "period_end"
+        - "household_share_cents"
+        - "previous_household_share_cents"
+        - "difference_cents"
+      x-calculado: true
+    ExpenseMonthlyTrend:
+      type: "object"
+      description: "Parte del hogar devengada por mes y categoría (N-044): 6 categorías con más gasto del rango y «Otras» (category_id ausente)."
+      properties:
+        months:
+          type: "array"
+          items:
+            type: "object"
+            description: "Mes."
+            properties:
+              month:
+                $ref: "componentes-comunes.yaml#/components/schemas/Month"
+                description: "Mes calendario."
+              categories:
+                type: "array"
+                items:
+                  type: "object"
+                  description: "Categoría."
+                  properties:
+                    category_id:
+                      type: "integer"
+                      description: "Categoría; ausente = «Otras»."
+                    household_share_cents:
+                      $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                      description: "Parte del hogar devengada."
+                  required:
+                    - "household_share_cents"
+                  x-calculado: true
+                description: "Hasta 7 filas."
+            required:
+              - "month"
+              - "categories"
+            x-calculado: true
+          description: "Del primer mes con datos al mes en curso, máximo 12."
+      required:
+        - "months"
+      x-calculado: true
+    Attachment:
+      type: "object"
+      description: "Adjunto (tabla `attachment`). Archivo adjunto: foto de ticket (con su OCR local), factura o estado de cuenta del banco. Ninguna cifra del OCR entra al sistema sin confirmación humana. Campos ausentes = sin valor (NULL)."
+      x-tabla: "attachment"
+      required:
+        - "id"
+        - "kind"
+        - "mime_type"
+        - "size_bytes"
+        - "sha256"
+        - "ocr_status"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        expense_id:
+          type: "integer"
+          description: "Gasto al que pertenece. NULL mientras el ticket espera confirmación"
+        kind:
+          type: "string"
+          enum:
+            - "ticket_photo"
+            - "invoice"
+            - "bank_statement"
+            - "other"
+          description: "Foto de ticket, factura, estado de cuenta del banco u otro"
+        original_name:
+          type: "string"
+          description: "Nombre original del archivo"
+        mime_type:
+          type: "string"
+          description: "Tipo MIME (image/jpeg, application/pdf)"
+        size_bytes:
+          type: "integer"
+          description: "Tamaño en bytes"
+        sha256:
+          type: "string"
+          description: "Huella del archivo (detecta duplicados y corrupción)"
+        ocr_status:
+          type: "string"
+          enum:
+            - "none"
+            - "pending"
+            - "done"
+            - "confirmed"
+            - "failed"
+          description: "Estado del OCR local: none, pending, done (falta confirmar), confirmed, failed"
+        ocr_engine:
+          type: "string"
+          description: "Motor y versión (tesseract 5.5.3 spa)"
+        ocr_text:
+          type: "string"
+          description: "Texto crudo reconocido"
+        uploaded_by_user_id:
+          type: "integer"
+          description: "Cuenta que lo subió"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        ocr_draft_saved_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "Cuándo se guardó el borrador por última vez"
+    TicketScan:
+      allOf:
+        - $ref: "#/components/schemas/Attachment"
+        - type: "object"
+          description: "Lectura de ticket (N-071, N-076). Si la persona guardó correcciones con «Guardar para después», las trae en draft (K3)."
+          properties:
+            has_draft:
+              type: "boolean"
+              description: "true si hay borrador de correcciones (attachment.ocr_draft_json)."
+            draft:
+              $ref: "#/components/schemas/TicketScanDraft"
+              description: "Borrador de correcciones guardado (K3); ausente si no hay."
+            display_store_id:
+              type: "integer"
+              description: "Tienda que muestra la lista de tickets por confirmar: la del borrador si existe; si no, la propuesta (N-076)."
+            display_total_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Total que muestra la lista de tickets por confirmar: el del borrador si existe; si no, el propuesto (N-076)."
+            proposed_store_id:
+              type: "integer"
+              description: "Tienda propuesta."
+            proposed_expense_date:
+              $ref: "componentes-comunes.yaml#/components/schemas/Date"
+              description: "Fecha propuesta."
+            proposed_total_cents:
+              $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+              description: "Total propuesto."
+            lines:
+              type: "array"
+              items:
+                type: "object"
+                description: "Renglón propuesto por el OCR (nada se guarda sin confirmación humana, decisión E)."
+                properties:
+                  line_no:
+                    type: "integer"
+                    description: "Orden en el ticket."
+                  text:
+                    type: "string"
+                    description: "Texto leído."
+                  product_id:
+                    type: "integer"
+                    description: "Producto sugerido."
+                  presentation_id:
+                    type: "integer"
+                    description: "Presentación sugerida."
+                  quantity_milli:
+                    $ref: "#/components/schemas/Milli"
+                    description: "Cantidad."
+                  unit_price_cents:
+                    $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                    description: "Precio unitario."
+                  line_total_cents:
+                    $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                    description: "Importe."
+                  cost_share_rule_id:
+                    type: "integer"
+                    description: "Cuenta sugerida (regla de reparto)."
+                  confidence:
+                    type: "string"
+                    enum:
+                      - "high"
+                      - "medium"
+                      - "low"
+                    description: "Confianza del renglón."
+                required:
+                  - "line_no"
+                  - "text"
+                  - "confidence"
+                x-calculado: true
+              description: "Renglones propuestos en el orden del ticket."
+          required:
+            - "has_draft"
+            - "lines"
+          x-calculado: true
+      description: "Adjunto de ticket con su propuesta de OCR (ocr_status pending, done o failed)."
+    TicketScanDraft:
+      type: "object"
+      description: "Borrador de correcciones de una lectura de ticket (K3): encabezado y renglones como la persona los dejó con «Guardar para después». Se guarda en attachment.ocr_draft_json (objeto JSON) con su hora en ocr_draft_saved_at; guardar otro reemplaza el anterior y confirmar el ticket lo vacía. La lectura cruda (ocr_text) no cambia."
+      properties:
+        store_id:
+          type: "integer"
+          description: "Tienda."
+        expense_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del gasto."
+        total_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Total del ticket."
+        category_id:
+          type: "integer"
+          description: "Categoría del gasto."
+        payment_method:
+          type: "string"
+          enum:
+            - "cash"
+            - "debit"
+            - "transfer"
+            - "credit"
+          description: "Medio de pago. credit = el efectivo sale según los pagos programados de su credit_purchase"
+        cost_share_rule_id:
+          type: "integer"
+          description: "Reparto del gasto (regla)."
+        lines:
+          type: "array"
+          items:
+            type: "object"
+            description: "Renglón del borrador tal como lo dejó la persona (K3). Nada crea gasto, precio ni inventario hasta confirmar; un renglón que la persona quitó no aparece."
+            properties:
+              line_no:
+                type: "integer"
+                description: "Orden en el ticket."
+              text:
+                type: "string"
+                description: "Texto leído o corregido."
+              product_id:
+                type: "integer"
+                description: "Producto."
+              presentation_id:
+                type: "integer"
+                description: "Presentación."
+              quantity_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Cantidad."
+              unit_price_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Precio unitario."
+              line_total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Importe."
+              cost_share_rule_id:
+                type: "integer"
+                description: "Cuenta (regla de reparto)."
+            required:
+              - "line_no"
+            additionalProperties: false
+          description: "Renglones en el orden del ticket (puede ir vacía)."
+      required:
+        - "lines"
+      additionalProperties: false
+    TicketConfirmRequest:
+      type: "object"
+      description: "Confirmación humana de un ticket (N-074): crea el gasto con renglones, los precios (fuente ticket_ocr) y las entradas de inventario; si la forma de pago es crédito, crea la compra (N-218)."
+      properties:
+        expense:
+          $ref: "#/components/schemas/ExpenseCreate"
+          description: "Gasto con sus renglones (items). Con payment_method = credit se exige credit_purchase."
+        credit_purchase:
+          $ref: "#/components/schemas/CreditPurchaseCreate"
+          description: "Datos de la compra a crédito (sin expense)."
+      required:
+        - "expense"
+    TicketConfirmResult:
+      type: "object"
+      description: "Registros creados al confirmar."
+      properties:
+        expense_id:
+          type: "integer"
+          description: "Gasto creado."
+        price_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Precios creados."
+        inventory_item_ids:
+          type: "array"
+          items:
+            type: "integer"
+          description: "Renglones de inventario creados o actualizados."
+        credit_purchase_id:
+          type: "integer"
+          description: "Compra a crédito creada."
+      required:
+        - "expense_id"
+        - "price_ids"
+        - "inventory_item_ids"
+      x-calculado: true
+    CreditPurchaseShareInput:
+      type: "object"
+      description: "Capital por persona (credit_purchase_share.principal_cents)."
+      properties:
+        person_id:
+          type: "integer"
+          description: "Persona (titular u externa)."
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital que compró esa persona."
+      required:
+        - "person_id"
+        - "principal_cents"
+      additionalProperties: false
+    CreditPurchaseCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de una compra a crédito (N-218). interest_cents de la cotización (interest_source quoted) o, sin cotización, del plazo con la tasa de la tabla (term_table); el motor S3 genera las partes y los pagos programados con el último ajustando centavos. Canon despensa 1: principal 309450, interest 80050, total 389500, 4 pagos de 97375."
+      x-tabla: "credit_purchase"
+      properties:
+        credit_id:
+          type: "integer"
+          description: "Crédito usado"
+        kind:
+          type: "string"
+          enum:
+            - "installment_plan"
+            - "single_charge"
+            - "loan_disbursement"
+          description: "installment_plan = pagos fijos (Kueski, meses sin intereses, abonos de tienda), single_charge = cargo normal de tarjeta, loan_disbursement = préstamo con tabla de amortización"
+        description:
+          type: "string"
+          description: "Descripción corta"
+        purchase_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha de la compra (2026-10-10)"
+        principal_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Capital: lo que usa la línea (309450)"
+        interest_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Intereses de todo el plazo, IVA incluido, tal como los cotizó el acreedor (80050). Nunca reponen la línea"
+        term_count:
+          type: "integer"
+          description: "Número de pagos (4)"
+        payment_frequency:
+          type: "string"
+          enum:
+            - "weekly"
+            - "fortnightly"
+            - "monthly"
+          description: "Frecuencia de los pagos (quincenal)"
+        first_payment_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer pago (2026-10-30)"
+        interest_source:
+          type: "string"
+          enum:
+            - "quoted"
+            - "term_table"
+            - "promotion"
+            - "amortization"
+          description: "Origen de los intereses: quoted = cotización del acreedor al pagar, term_table = tabla por plazo, promotion = promoción, amortization = tabla de amortización"
+        rate_num:
+          type: "integer"
+          description: "Numerador de la tasa de esta compra (cotización: intereses/capital = 80050/309450)"
+        rate_den:
+          type: "integer"
+          description: "Denominador de la tasa"
+        rate_basis:
+          type: "string"
+          enum:
+            - "term_total"
+            - "annual"
+          description: "term_total = sobre el capital por todo el plazo (Kueski), annual = tasa anual (préstamo)"
+        interest_includes_vat:
+          type: "boolean"
+          description: "1 = los intereses ya traen IVA (Kueski)"
+        promotion_id:
+          type: "integer"
+          description: "Promoción aplicada"
+        notes:
+          type: "string"
+          description: "notes"
+        rate_decimals:
+          type: "integer"
+          description: "Decimales con que se muestra la tasa de esta compra, los mismos con que se capturó o cotizó. NULL = sin tasa o sin dato"
+        expense_id:
+          type: "integer"
+          description: "Gasto existente que origina la compra (credit_purchase.expense_id)."
+        expense:
+          $ref: "#/components/schemas/ExpenseCreate"
+          description: "Gasto vinculado que se crea si no existe (payment_method = credit lo pone la API)."
+        shares:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CreditPurchaseShareInput"
+          description: "Capital por persona (desde los renglones del ticket o capturado). Sin partes: todo al titular."
+      required:
+        - "credit_id"
+        - "kind"
+        - "purchase_date"
+        - "principal_cents"
+        - "term_count"
+    ExpensePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Expense"
+      description: "Página de Expense con la envoltura única (Page)."
+    ExpenseItemPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/ExpenseItem"
+      description: "Página de ExpenseItem con la envoltura única (Page)."
+    TicketScanPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/TicketScan"
+      description: "Página de TicketScan con la envoltura única (Page)."

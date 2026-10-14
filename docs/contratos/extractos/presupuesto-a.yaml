@@ -1,0 +1,1074 @@
+# Finanzas Hogar · Contrato C1 v1.5.1 · extracto «presupuesto-a». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto presupuesto-a"
+  version: "1.5.1"
+  description: "Extracto de la etiqueta «Presupuesto» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Presupuesto"
+    description: "Presupuesto, flujo y proyección, ingresos y ahorro."
+paths:
+  /api/v1/periods:
+    get:
+      operationId: "listPeriods"
+      tags:
+        - "Presupuesto"
+      summary: "Periodos"
+      description: "Meses y quincenas para el selector de periodo. Orden: start_date."
+      x-necesidades:
+        - "N-080"
+        - "N-082"
+        - "N-100"
+      x-tablas:
+        - "period"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PeriodPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budgets:
+    get:
+      operationId: "listBudgets"
+      tags:
+        - "Presupuesto"
+      summary: "Presupuesto mensual por categoría"
+      description: "Renglones cuya vigencia toca el periodo `period` (por defecto el mes en curso). El monto de un mes es el del renglón cuya vigencia lo contiene (RN-22). Cada renglón trae is_single_month («solo este mes») y following_month_amount_cents, el monto que rige el mes siguiente (N-275, K2). Orden por defecto: category_id y valid_from_date."
+      x-necesidades:
+        - "N-275"
+      x-tablas:
+        - "budget"
+        - "category"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/CategoryId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BudgetPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createBudget"
+      tags:
+        - "Presupuesto"
+      summary: "Fijar monto de una categoría"
+      description: "Si la vigencia se traslapa con la de otro renglón de la misma categoría (o del total) responde 409 `budget_overlap` (invariante 7 de S1). Sirve cuando la categoría no tiene monto que rija ese mes: «solo este mes» (K2) = valid_from_date y valid_to_date del mismo mes; «de este mes en adelante» = sin valid_to_date. El alta solo llena meses sin monto y nunca cambia ni elimina otros renglones: si la categoría ya tiene un renglón posterior, una vigencia sin fin se traslapa (409) y el alta llega hasta el día anterior a ese renglón; reemplazar los renglones posteriores es el efecto de updateBudget con scope=onward (C1-datos.md §7.1). Cambiar un monto que ya rige se hace con updateBudget y su alcance (scope)."
+      x-necesidades:
+        - "N-087"
+        - "N-278"
+      x-tablas:
+        - "audit_log"
+        - "budget"
+        - "category"
+        - "idempotency_key"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BudgetCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Budget"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budgets/{budget_id}:
+    patch:
+      operationId: "updateBudget"
+      tags:
+        - "Presupuesto"
+      summary: "Ajustar presupuesto"
+      description: "Cambia el monto, cierra o reabre la vigencia (valid_to_date) o las notas. Un cambio de amount_cents aplica el alcance de K2 sobre el mes `month` (el que muestra la pantalla: en P-06 el elegido, en P-26.02 el mes en curso), que debe caer en la vigencia del renglón. Con `scope=onward` (por omisión) el monto nuevo rige desde `month` sin fin (valid_to_date NULL): el renglón termina el último día del mes anterior, otro renglón con el monto nuevo rige desde `month` y los renglones posteriores de la misma categoría (o del total) se eliminan, con su registro en audit_log, porque el monto nuevo los reemplaza (C1-datos.md §7.1). Con `scope=this_month` el monto nuevo rige solo ese mes, el anterior sigue desde el mes siguiente hasta el fin original y los renglones posteriores no cambian. Si el renglón empieza en `month`, el monto cambia en ese renglón (con onward queda sin fin y también se eliminan los posteriores; con this_month el resto de la vigencia queda en otro renglón con el monto anterior). Responde el renglón que rige en `month`. Los cambios de valid_to_date o notes no usan scope ni month. Una vigencia que se traslapa con otro renglón de la misma categoría responde 409 `budget_overlap`; `month` fuera de la vigencia, 422 `out_of_range`."
+      x-necesidades:
+        - "N-087"
+        - "N-278"
+      x-tablas:
+        - "audit_log"
+        - "budget"
+      parameters:
+        - name: "budget_id"
+          in: "path"
+          required: true
+          description: "Id del registro (budget_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/BudgetScope"
+        - $ref: "componentes-comunes.yaml#/components/parameters/BudgetMonth"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BudgetUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Budget"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteBudget"
+      tags:
+        - "Presupuesto"
+      summary: "Quitar monto"
+      description: "Quitar monto."
+      x-necesidades:
+        - "N-278"
+      x-tablas:
+        - "audit_log"
+        - "budget"
+      parameters:
+        - name: "budget_id"
+          in: "path"
+          required: true
+          description: "Id del registro (budget_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budget/month:
+    get:
+      operationId: "getBudgetMonth"
+      tags:
+        - "Presupuesto"
+      summary: "Resumen del mes"
+      description: "Resumen del mes."
+      x-necesidades:
+        - "N-080"
+      x-tablas:
+        - "budget"
+        - "category"
+        - "credit_purchase"
+        - "expense"
+        - "expense_share"
+        - "income"
+        - "period"
+        - "planned_item"
+        - "savings_goal"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BudgetMonth"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budget/categories:
+    get:
+      operationId: "getBudgetByCategory"
+      tags:
+        - "Presupuesto"
+      summary: "Presupuesto por categoría"
+      description: "Presupuesto por categoría."
+      x-necesidades:
+        - "N-081"
+        - "N-027"
+      x-tablas:
+        - "budget"
+        - "category"
+        - "credit_purchase"
+        - "expense"
+        - "expense_share"
+        - "period"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BudgetCategoryRows"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budget/fortnights:
+    get:
+      operationId: "getBudgetFortnights"
+      tags:
+        - "Presupuesto"
+      summary: "Quincenas del mes"
+      description: "Quincenas del mes."
+      x-necesidades:
+        - "N-082"
+      x-tablas:
+        - "budget"
+        - "category"
+        - "credit_purchase"
+        - "expense"
+        - "expense_share"
+        - "period"
+        - "planned_item"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BudgetFortnights"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budget/accrued-groceries:
+    get:
+      operationId: "getAccruedGroceries"
+      tags:
+        - "Presupuesto"
+      summary: "Despensa devengada"
+      description: "Despensa devengada."
+      x-necesidades:
+        - "N-083"
+      x-tablas:
+        - "category"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "expense_share"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccruedGroceries"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budget/alerts:
+    get:
+      operationId: "getBudgetAlerts"
+      tags:
+        - "Presupuesto"
+      summary: "Alertas activas"
+      description: "Alertas activas."
+      x-necesidades:
+        - "N-084"
+      x-tablas:
+        - "budget"
+        - "category"
+        - "credit_purchase"
+        - "expense"
+        - "expense_share"
+        - "period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BudgetAlerts"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/budget/monthly-trend:
+    get:
+      operationId: "getBudgetMonthlyTrend"
+      tags:
+        - "Presupuesto"
+      summary: "Plan contra real por mes"
+      description: "Plan contra real por mes."
+      x-necesidades:
+        - "N-085"
+        - "N-028"
+      x-tablas:
+        - "budget"
+        - "category"
+        - "credit_purchase"
+        - "expense"
+        - "expense_share"
+        - "period"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/CategoryId"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BudgetMonthlyTrend"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/cash-flow/fortnights:
+    get:
+      operationId: "getCashFlowFortnights"
+      tags:
+        - "Presupuesto"
+      summary: "Flujo por quincena"
+      description: "Los meses 7 a 12 siguen el interruptor projection.repeat_cadence_enabled (getProjectionSettings, N-318; K21) y la respuesta dice el modo usado en projection_mode."
+      x-necesidades:
+        - "N-090"
+        - "N-027"
+      x-tablas:
+        - "credit"
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "expense_share"
+        - "income"
+        - "person"
+        - "planned_item"
+        - "savings_goal"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CashFlowFortnights"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/cash-flow/accrual-vs-cash:
+    get:
+      operationId: "getAccrualVsCash"
+      tags:
+        - "Presupuesto"
+      summary: "Devengado contra efectivo, 12 meses"
+      description: "Los meses 7 a 12 siguen el interruptor projection.repeat_cadence_enabled (getProjectionSettings, N-318; K21) y la respuesta dice el modo usado en projection_mode."
+      x-necesidades:
+        - "N-091"
+        - "N-028"
+      x-tablas:
+        - "credit"
+        - "credit_payment"
+        - "credit_purchase"
+        - "credit_purchase_share"
+        - "expense"
+        - "expense_share"
+        - "person"
+        - "planned_item"
+        - "scheduled_payment"
+        - "scheduled_payment_share"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccrualVsCash"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
+  schemas:
+    Period:
+      type: "object"
+      description: "Periodo (tabla `period`). Mes calendario (periodo base del presupuesto) y sus dos quincenas (subperiodos). Los días de pago (15, y 30 o último día) son FIRMES (oráculo). Los rangos de la quincena (1 a 15 y 16 a fin de mes) son FIRMES (K8). Ambos se validan en la propia tabla. Campos ausentes = sin valor (NULL)."
+      x-tabla: "period"
+      required:
+        - "id"
+        - "kind"
+        - "year"
+        - "month"
+        - "start_date"
+        - "end_date"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        kind:
+          type: "string"
+          enum:
+            - "month"
+            - "fortnight"
+          description: "month = mes calendario, fortnight = quincena"
+        parent_id:
+          type: "integer"
+          description: "Mes al que pertenece la quincena. NULL en meses"
+        year:
+          type: "integer"
+          description: "Año"
+        month:
+          type: "integer"
+          description: "Mes"
+        half:
+          type: "integer"
+          enum:
+            - 1
+            - 2
+          description: "Quincena 1 (días 1 a 15) o 2 (día 16 a fin de mes). NULL en meses"
+        start_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer día (ISO)"
+        end_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Último día, inclusive (ISO)"
+        pay_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Día de pago de la quincena: 15, o 30 o el último día si el mes es más corto (28-feb-2027). NULL en meses"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        label:
+          type: "string"
+          description: "Clave del periodo en el formato del filtro `period` (2026-10 o 2026-10-q1)."
+          x-calculado: true
+    Budget:
+      type: "object"
+      description: "Presupuesto (tabla `budget`). Monto mensual planeado por categoría o total, con vigencia: rige desde un mes hasta otro (inclusive) o sin fin. El monto de un solo mes es un renglón que empieza y termina en ese mes. Sirve para «real contra plan» y para las alertas al 80 % y 100 %. Campos ausentes = sin valor (NULL)."
+      x-tabla: "budget"
+      required:
+        - "id"
+        - "amount_cents"
+        - "valid_from_date"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        category_id:
+          type: "integer"
+          description: "Categoría. NULL = presupuesto total del mes"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto planeado por mes en centavos"
+        valid_from_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer día del primer mes en que rige"
+        valid_to_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2) con el alcance `scope` de updateBudget: «de este mes en adelante» (`onward`, preseleccionada y valor por omisión) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» (`this_month`) pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        is_single_month:
+          type: "boolean"
+          description: "true si la vigencia es un solo mes («solo este mes», K2)."
+          x-calculado: true
+        following_month_amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto de la misma categoría (o del total) que rige el mes siguiente: al último mes del periodo pedido en listBudgets, o al mes del cambio en las respuestas de alta y cambio; ausente = sin monto (N-275, K2)."
+          x-calculado: true
+    BudgetCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de un monto mensual con vigencia (N-087, N-278). category_id ausente = presupuesto total. valid_from_date = día 1 del primer mes en que rige; valid_to_date = último día del último mes, ausente = sin fin. Un monto de un solo mes empieza y termina en ese mes (RN-22). Alcance de un cambio de monto (K2): «de este mes en adelante» (scope=onward, preseleccionado) o «solo este mes» (scope=this_month); lo aplica updateBudget partiendo los renglones sin traslapes; con onward el monto nuevo rige sin fin y reemplaza los renglones posteriores de la categoría (C1-datos.md §7.1)."
+      x-tabla: "budget"
+      properties:
+        category_id:
+          type: "integer"
+          description: "Categoría. NULL = presupuesto total del mes"
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto planeado por mes en centavos"
+        valid_from_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Primer día del primer mes en que rige"
+        valid_to_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2) con el alcance `scope` de updateBudget: «de este mes en adelante» (`onward`, preseleccionada y valor por omisión) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» (`this_month`) pone el último día de ese mes y el monto anterior sigue desde el mes siguiente"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "amount_cents"
+        - "valid_from_date"
+    BudgetUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de un renglón de presupuesto: monto, fin de la vigencia (valid_to_date; null = sin fin) o notas. Alcance de un cambio de monto (K2): «de este mes en adelante» (scope=onward, preseleccionado) o «solo este mes» (scope=this_month); lo aplica updateBudget partiendo los renglones sin traslapes; con onward el monto nuevo rige sin fin y reemplaza los renglones posteriores de la categoría (C1-datos.md §7.1)."
+      x-tabla: "budget"
+      properties:
+        amount_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Monto planeado por mes en centavos"
+        valid_to_date:
+          anyOf:
+            - $ref: "componentes-comunes.yaml#/components/schemas/Date"
+            - type: "null"
+          description: "Último día del último mes en que rige, inclusive. NULL = rige hasta que se cambie. Cada cambio hecho en Ajustes elige su vigencia (K2) con el alcance `scope` de updateBudget: «de este mes en adelante» (`onward`, preseleccionada y valor por omisión) deja NULL y elimina los renglones posteriores de la misma categoría, que el monto nuevo reemplaza (updateBudget, C1-datos.md §7.1); «solo este mes» (`this_month`) pone el último día de ese mes y el monto anterior sigue desde el mes siguiente · null borra el valor"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    BudgetMonth:
+      type: "object"
+      description: "Resumen del mes (N-080). Real = Σ parte del hogar devengada (motor S2)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        income_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Quincenas capturadas o esperadas + extras."
+        planned_spending_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ presupuesto de las categorías."
+        planned_savings_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ aportaciones mensuales planificadas."
+        unassigned_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "income − planned_spending − planned_savings."
+        actual_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Σ parte del hogar devengada en el mes."
+        remaining_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "planned_spending − actual (negativo si se rebasó)."
+        used_pct:
+          type: "integer"
+          description: "actual ÷ planned_spending × 100, entero ROUND_HALF_UP; ausente sin plan."
+        status:
+          type: "string"
+          enum:
+            - "normal"
+            - "warning"
+            - "exceeded"
+          description: "normal si % < 80; warning si ≥ 80; exceeded si ≥ 100 (decisión F)."
+        days_left:
+          type: "integer"
+          description: "Días que faltan para terminar el mes, contando hoy (0 en meses pasados)."
+      required:
+        - "month"
+        - "income_cents"
+        - "planned_spending_cents"
+        - "planned_savings_cents"
+        - "unassigned_cents"
+        - "actual_cents"
+        - "remaining_cents"
+        - "days_left"
+      x-calculado: true
+    BudgetCategoryRows:
+      type: "object"
+      description: "Presupuesto por categoría activa (N-081)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Categoría."
+            properties:
+              category_id:
+                type: "integer"
+                description: "Categoría."
+              planned_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Plan del mes."
+              actual_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte del hogar devengada."
+              difference_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "plan − real."
+              used_pct:
+                type: "integer"
+                description: "% usado entero."
+              status:
+                type: "string"
+                enum:
+                  - "normal"
+                  - "warning"
+                  - "exceeded"
+                description: "normal si % < 80; warning si ≥ 80; exceeded si ≥ 100 (decisión F)."
+              expense_count:
+                type: "integer"
+                description: "Número de gastos."
+            required:
+              - "category_id"
+              - "actual_cents"
+              - "expense_count"
+            x-calculado: true
+          description: "Orden por defecto: used_pct descendente."
+      required:
+        - "month"
+        - "rows"
+      x-calculado: true
+    BudgetFortnights:
+      type: "object"
+      description: "Quincenas del mes (N-082). Q1 del 1 al 15 y Q2 del 16 al último día (K8)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        fortnights:
+          type: "array"
+          items:
+            type: "object"
+            description: "Quincena."
+            properties:
+              half:
+                type: "integer"
+                enum:
+                  - 1
+                  - 2
+                description: "Q1 (1) o Q2 (2)."
+              start_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Inicio."
+              end_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fin."
+              pay_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Día de pago (15, o 30/último día)."
+              actual_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte del hogar por fecha del gasto."
+              planned_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte del plan de la quincena (motor S2)."
+            required:
+              - "half"
+              - "start_date"
+              - "end_date"
+              - "pay_date"
+              - "actual_cents"
+              - "planned_cents"
+            x-calculado: true
+          description: "Q1 y Q2."
+      required:
+        - "month"
+        - "fortnights"
+      x-calculado: true
+    AccruedGroceries:
+      type: "object"
+      description: "Despensas que devengan en el mes (N-083), mitad por mes (decisión B)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Despensa."
+            properties:
+              expense_id:
+                type: "integer"
+                description: "Gasto de la despensa."
+              credit_purchase_id:
+                type: "integer"
+                description: "Compra a crédito."
+              expense_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha de compra."
+              total_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Total con intereses."
+              accrued_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Devengado en el mes."
+              household_share_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte del hogar devengada."
+              external_share_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Parte de Karen devengada."
+            required:
+              - "expense_id"
+              - "expense_date"
+              - "total_cents"
+              - "accrued_cents"
+              - "household_share_cents"
+              - "external_share_cents"
+            x-calculado: true
+          description: "Por fecha de compra."
+      required:
+        - "month"
+        - "rows"
+      x-calculado: true
+    BudgetAlerts:
+      type: "object"
+      description: "Alertas activas del mes en curso (N-084)."
+      properties:
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Alerta."
+            properties:
+              category_id:
+                type: "integer"
+                description: "Categoría; ausente = total del mes."
+              used_pct:
+                type: "integer"
+                description: "% usado."
+              threshold_pct:
+                type: "integer"
+                description: "Umbral cruzado (80 o 100)."
+              crossed_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha en que cruzó el umbral."
+            required:
+              - "used_pct"
+              - "threshold_pct"
+              - "crossed_date"
+            x-calculado: true
+          description: "Categorías y total con % ≥ 80."
+      required:
+        - "rows"
+      x-calculado: true
+    BudgetMonthlyTrend:
+      type: "object"
+      description: "Plan contra real por mes (N-085)."
+      properties:
+        category_id:
+          type: "integer"
+          description: "Categoría elegida; ausente = total."
+        months:
+          type: "array"
+          items:
+            type: "object"
+            description: "Mes."
+            properties:
+              month:
+                $ref: "componentes-comunes.yaml#/components/schemas/Month"
+                description: "Mes."
+              planned_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Plan."
+              actual_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Real (parte del hogar devengada)."
+            required:
+              - "month"
+              - "actual_cents"
+            x-calculado: true
+          description: "Máximo 12 meses."
+      required:
+        - "months"
+      x-calculado: true
+    CashFlowFortnights:
+      type: "object"
+      description: "Flujo por quincena en efectivo, parte del hogar (N-090, motor S2)."
+      properties:
+        projection_mode:
+          type: "string"
+          enum:
+            - "contracted_only"
+            - "with_repeat_cadence"
+          description: "Modo de los meses 7 a 12 (K21; ajuste projection.repeat_cadence_enabled): contracted_only = solo compromisos contratados, gastos fijos e ingresos del CSV (por defecto); with_repeat_cadence = además la cadencia bimestral de despensa a crédito y el papel alterno de $199."
+        rows:
+          type: "array"
+          items:
+            type: "object"
+            description: "Quincena."
+            properties:
+              start_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Inicio."
+              end_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fin."
+              pay_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Día de pago."
+              income_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Ingresos (capturados o esperados)."
+              income_is_expected:
+                type: "boolean"
+                description: "true si usa el ingreso esperado."
+              credit_payments_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Partes del hogar de pagos de crédito."
+              fixed_and_upcoming_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Gastos fijos y venideros."
+              variable_estimate_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Gasto variable estimado (método en /cash-flow/assumptions)."
+              planned_savings_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                x-provisional: true
+                description: "Aportación planificada a ahorro de la quincena. PROVISIONAL (bloqueo S2-ahorro-quincenal): S2 1.3 §3.11 la entrega en null mientras no se decida su base mensual ni si resta del saldo; ausente = sin dato. No entra a balance_cents."
+              balance_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Saldo de la quincena = ingresos − gasto variable registrado − pagos de crédito − gastos fijos y venideros (S2 1.3 §3.11: income.total_cents − spent_cents − committed_cents, con spent_cents = variable_spent_cents + fixed_upcoming.paid_cents + credit_payments.household_paid_cents). El gasto variable registrado (variable_spent_cents de S2) no viene en esta fila. No resta el ahorro planificado (planned_savings_cents) ni el gasto variable estimado (variable_estimate_cents)."
+              cumulative_balance_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Saldo acumulado."
+              is_actual:
+                type: "boolean"
+                description: "true en quincenas ya transcurridas (cifras reales)."
+            required:
+              - "start_date"
+              - "end_date"
+              - "pay_date"
+              - "income_cents"
+              - "income_is_expected"
+              - "credit_payments_cents"
+              - "fixed_and_upcoming_cents"
+              - "variable_estimate_cents"
+              - "balance_cents"
+              - "cumulative_balance_cents"
+              - "is_actual"
+            x-calculado: true
+          description: "Desde la Q1 del mes en curso, 24 quincenas."
+      required:
+        - "projection_mode"
+        - "rows"
+      x-calculado: true
+    AccrualVsCash:
+      type: "object"
+      description: "Devengado contra efectivo por mes (N-091, motor S2). cumulative_difference_cents = devengado acumulado − efectivo acumulado (periodos[i].diferencia_acumulada de model.json); no se rotula deuda viva. cumulative_accrued_cents y cumulative_cash_cents tienen el mismo origen (Q2-65 A), así que la cima de T-2 es el devengado acumulado sea cual sea el mes en curso."
+      properties:
+        projection_mode:
+          type: "string"
+          enum:
+            - "contracted_only"
+            - "with_repeat_cadence"
+          description: "Modo de los meses 7 a 12 (K21; ajuste projection.repeat_cadence_enabled): contracted_only = solo compromisos contratados, gastos fijos e ingresos del CSV (por defecto); with_repeat_cadence = además la cadencia bimestral de despensa a crédito y el papel alterno de $199."
+        months:
+          type: "array"
+          items:
+            type: "object"
+            description: "Mes."
+            properties:
+              month:
+                $ref: "componentes-comunes.yaml#/components/schemas/Month"
+                description: "Mes."
+              accrued_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Devengado total."
+              cash_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Efectivo total."
+              accrued_household_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Devengado, parte del hogar."
+              accrued_external_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Devengado, parte de Karen."
+              cash_household_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Efectivo, parte del hogar."
+              cash_external_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Efectivo, parte de Karen."
+              cumulative_accrued_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Devengado acumulado al cierre del mes, con el mismo origen que cumulative_difference_cents (motor S2; Q2-65 A). Cima de la gráfica T-2 de Inicio."
+              cumulative_cash_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Efectivo acumulado al cierre del mes, con el mismo origen que cumulative_difference_cents (motor S2; Q2-65 A)."
+              cumulative_difference_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Devengado acumulado − efectivo acumulado = cumulative_accrued_cents − cumulative_cash_cents (periodos[i].diferencia_acumulada de model.json)."
+              is_canonical:
+                type: "boolean"
+                description: "true si el mes tiene cifra canon en model.json (oct-2026 a mar-2027); los demás siguen el modo de projection_mode (K21)."
+            required:
+              - "month"
+              - "accrued_cents"
+              - "cash_cents"
+              - "accrued_household_cents"
+              - "accrued_external_cents"
+              - "cash_household_cents"
+              - "cash_external_cents"
+              - "cumulative_accrued_cents"
+              - "cumulative_cash_cents"
+              - "cumulative_difference_cents"
+              - "is_canonical"
+            x-calculado: true
+          description: "Del mes en curso a 11 meses después."
+      required:
+        - "projection_mode"
+        - "months"
+      x-calculado: true
+    PeriodPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Period"
+      description: "Página de Period con la envoltura única (Page)."
+    BudgetPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Budget"
+      description: "Página de Budget con la envoltura única (Page)."

@@ -1,0 +1,1596 @@
+# Finanzas Hogar · Contrato C1 v1.5.1 · extracto «compras-tiendas-b». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto compras-tiendas-b"
+  version: "1.5.1"
+  description: "Extracto de la etiqueta «Compras y tiendas» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Compras y tiendas"
+    description: "Lista de compras, comparar canasta, productos, precios e inventario."
+paths:
+  /api/v1/products/{product_id}/prices:
+    get:
+      operationId: "listProductPrices"
+      tags:
+        - "Compras y tiendas"
+      summary: "Precios de un producto"
+      description: "Orden por defecto: -observed_date (historial para Tendencias)."
+      x-necesidades:
+        - "N-171"
+      x-tablas:
+        - "app_setting"
+        - "presentation"
+        - "price"
+        - "store"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/StoreId"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - name: "source"
+          in: "query"
+          required: false
+          description: "Fuente."
+          schema:
+            type: "string"
+            enum:
+              - "ticket_manual"
+              - "ticket_ocr"
+              - "site_assisted"
+              - "profeco"
+              - "manual"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PricePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/products/{product_id}/nutrition-facts:
+    get:
+      operationId: "listNutritionFacts"
+      tags:
+        - "Compras y tiendas"
+      summary: "Nutrición del producto"
+      description: "Nutrición del producto."
+      x-necesidades:
+        - "N-173"
+      x-tablas:
+        - "nutrition_fact"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NutritionFactPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createNutritionFact"
+      tags:
+        - "Compras y tiendas"
+      summary: "Capturar dato nutricional con cita"
+      description: "Capturar dato nutricional con cita."
+      x-necesidades:
+        - "N-175"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "nutrition_fact"
+      parameters:
+        - name: "product_id"
+          in: "path"
+          required: true
+          description: "Id del registro (product_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NutritionFactCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NutritionFact"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/prices/summary:
+    get:
+      operationId: "getPriceSummary"
+      tags:
+        - "Compras y tiendas"
+      summary: "Resumen de precios"
+      description: "Resumen de precios."
+      x-necesidades:
+        - "N-172"
+      x-tablas:
+        - "app_setting"
+        - "presentation"
+        - "price"
+        - "product"
+        - "store"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceSummary"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/prices:
+    post:
+      operationId: "createPrice"
+      tags:
+        - "Compras y tiendas"
+      summary: "Capturar precio"
+      description: "Capturar precio."
+      x-necesidades:
+        - "N-174"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "price"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PriceCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Price"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/prices/{price_id}:
+    patch:
+      operationId: "updatePrice"
+      tags:
+        - "Compras y tiendas"
+      summary: "Corregir precio"
+      description: "Los precios de PROFECO no se editan: 403 `read_only_source`."
+      x-necesidades:
+        - "N-176"
+      x-tablas:
+        - "audit_log"
+        - "price"
+      parameters:
+        - name: "price_id"
+          in: "path"
+          required: true
+          description: "Id del registro (price_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PriceUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Price"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "403":
+          $ref: "componentes-comunes.yaml#/components/responses/Forbidden"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deletePrice"
+      tags:
+        - "Compras y tiendas"
+      summary: "Eliminar precio"
+      description: "PROFECO: 403 `read_only_source`."
+      x-necesidades:
+        - "N-176"
+      x-tablas:
+        - "audit_log"
+        - "price"
+      parameters:
+        - name: "price_id"
+          in: "path"
+          required: true
+          description: "Id del registro (price_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "403":
+          $ref: "componentes-comunes.yaml#/components/responses/Forbidden"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/reference:
+    get:
+      operationId: "getExternalAgentReference"
+      tags:
+        - "Compras y tiendas"
+      summary: "Referencia para el agente externo"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Devuelve los ids de tiendas, grupos de producto y tiempos de comida con los que el agente arma sus lotes. Solo lectura. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "meal_slot"
+        - "product_group"
+        - "store"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalAgentReference"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/catalog:
+    post:
+      operationId: "importExternalCatalog"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar productos y presentaciones"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Alta o actualización por lotes. Llaves naturales: product.name (sin distinguir mayúsculas) y, dentro del producto, presentation.name. Repetir el mismo lote deja sus renglones en unchanged; además la petición lleva Idempotency-Key, como toda captura. Un renglón inválido sale rejected en el resultado sin detener a los demás; un lote vacío o de más de 500 renglones responde 422 (PROVISIONAL, bloqueo S5-agente-externo, pregunta g: tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel). PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "product"
+        - "product_group"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalCatalogImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/prices:
+    post:
+      operationId: "importExternalPrices"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar precios"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Precios por lotes con tienda, fecha y referencia del agente (external_ref, que se guarda en price.source_ref). Llave natural: la llave UNIQUE de price (presentación, tienda, fecha, fuente y promoción); repetir un precio lo actualiza o lo deja en unchanged, sin duplicarlo. Una tienda o presentación desconocida o una fecha futura sale rejected en su renglón. PROVISIONAL (bloqueo S5-agente-externo, preguntas a y d): source = site_assisted, que la documentación llama «agente externo», y compite como manual, con la misma frescura. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "presentation"
+        - "price"
+        - "store"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalPriceImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/external-agent/recipes:
+    post:
+      operationId: "importExternalRecipes"
+      tags:
+        - "Compras y tiendas"
+      summary: "Importar recetas en borrador"
+      description: "Agente externo (K53): la aplicación no lee sitios de tiendas; una sesión de Claude Code de Axel con Claude in Chrome obtiene los datos y los mete por esta operación con la credencial de servicio (serviceToken), no con la cookie de sesión. Recetas por lotes, con la forma de RecipeCreate. Llave natural: recipe.name (sin distinguir mayúsculas). PROVISIONAL (bloqueo S5-agente-externo, preguntas c y f): cada receta entra como borrador, con origen «external_agent», y no aparece en el plan hasta que una persona la confirma; una receta que ya existe con ese nombre no se sobrescribe (sale rejected); el esquema 1.4 todavía no guarda ni el borrador ni ese origen. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): dónde vive la credencial y a nombre de quién quedan audit_log e idempotency_key."
+      x-provisional: true
+      x-necesidades: []
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "meal_slot"
+        - "presentation"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      security:
+        - serviceToken: []
+      x-agente-externo: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalRecipeImport"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory-items:
+    get:
+      operationId: "listInventoryItems"
+      tags:
+        - "Compras y tiendas"
+      summary: "Inventario"
+      description: "Orden por defecto: out, reorder, sufficient y luego nombre."
+      x-necesidades:
+        - "N-180"
+        - "N-314"
+      x-tablas:
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+        - name: "tracking_mode"
+          in: "query"
+          required: false
+          description: "stock o consumption_rate."
+          schema:
+            type: "string"
+            enum:
+              - "stock"
+              - "consumption_rate"
+        - name: "status"
+          in: "query"
+          required: false
+          description: "sufficient, reorder u out."
+          schema:
+            type: "string"
+            enum:
+              - "sufficient"
+              - "reorder"
+              - "out"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItemPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createInventoryItem"
+      tags:
+        - "Compras y tiendas"
+      summary: "Alta de inventario o sobrante"
+      description: "Una existencia inicial mayor que cero escribe su inventory_movement en la misma transacción (invariante 12 de S1): recipe_leftover en un sobrante; adjustment con motivo count (conteo inicial) en un producto."
+      x-necesidades:
+        - "N-184"
+        - "N-315"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "inventory_item"
+        - "inventory_movement"
+        - "product"
+        - "recipe"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryItemCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory/summary:
+    get:
+      operationId: "getInventorySummary"
+      tags:
+        - "Compras y tiendas"
+      summary: "Resumen de inventario"
+      description: "Resumen de inventario."
+      x-necesidades:
+        - "N-182"
+      x-tablas:
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventorySummary"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory-items/{inventory_item_id}/movements:
+    get:
+      operationId: "listInventoryMovements"
+      tags:
+        - "Compras y tiendas"
+      summary: "Movimientos de un artículo"
+      description: "Movimientos guardados del renglón (inventory_movement): fecha, tipo (compra, sobrante de receta, consumo del plan o ajuste), motivo en los ajustes, diferencia y origen (renglón de ticket o entrada del plan). Orden por defecto: -movement_date."
+      x-necesidades:
+        - "N-181"
+      x-tablas:
+        - "expense_item"
+        - "inventory_item"
+        - "inventory_movement"
+        - "meal_plan_entry"
+      parameters:
+        - name: "inventory_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (inventory_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryMovementPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/inventory-items/{inventory_item_id}/adjustments:
+    post:
+      operationId: "adjustInventoryItem"
+      tags:
+        - "Compras y tiendas"
+      summary: "Ajustar existencia"
+      description: "Cantidad nueva o diferencia, con motivo (conteo, consumo o merma): cambia la existencia y escribe el movimiento adjustment en la misma transacción."
+      x-necesidades:
+        - "N-183"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "inventory_item"
+        - "inventory_movement"
+      parameters:
+        - name: "inventory_item_id"
+          in: "path"
+          required: true
+          description: "Id del registro (inventory_item_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryAdjustmentRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
+  schemas:
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    RecipeIngredientInput:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de ingrediente de receta (tabla `recipe_ingredient`)."
+      x-tabla: "recipe_ingredient"
+      properties:
+        product_id:
+          type: "integer"
+          description: "Ingrediente (producto genérico)"
+        presentation_id:
+          type: "integer"
+          description: "Presentación comprable sugerida"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad para base_servings en milésimas de la unidad base (250 g = 250000, media pieza = 500)"
+        display_text:
+          type: "string"
+          description: "Cantidad como la escribe la receta (1/2 taza)"
+        is_optional:
+          type: "boolean"
+          description: "1 = ingrediente opcional"
+        sort_order:
+          type: "integer"
+          description: "Orden en la receta"
+      required:
+        - "product_id"
+        - "quantity_milli"
+    RecipeCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de receta (N-136). origin = household y author_person_id = persona de la sesión los pone la API."
+      x-tabla: "recipe"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre"
+        description:
+          type: "string"
+          description: "Descripción corta"
+        instructions:
+          type: "string"
+          description: "Pasos de preparación"
+        base_servings:
+          type: "integer"
+          description: "Porciones para las que están escritas las cantidades (base 2)"
+        prep_minutes:
+          type: "integer"
+          description: "Minutos de preparación"
+        cook_minutes:
+          type: "integer"
+          description: "Minutos de cocción"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        meal_slot_ids:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "integer"
+            minimum: 1
+          description: "Tiempos aptos (una fila de recipe_meal_slot por tiempo)."
+          x-columna: "recipe_meal_slot.meal_slot_id"
+        ingredients:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RecipeIngredientInput"
+          description: "Ingredientes (recipe_ingredient) en orden."
+      required:
+        - "name"
+    NutritionFact:
+      type: "object"
+      description: "Dato nutricional (tabla `nutrition_fact`). Kilocalorías por 100 g de un producto (o de una presentación específica) con fuente citada. Macronutrientes previstos, se llenan después. Campos ausentes = sin valor (NULL)."
+      x-tabla: "nutrition_fact"
+      required:
+        - "id"
+        - "product_id"
+        - "kcal_milli_per_100g"
+        - "source"
+        - "is_preferred"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto"
+        presentation_id:
+          type: "integer"
+          description: "Presentación específica (etiqueta, Open Food Facts). NULL = valor genérico del producto"
+        kcal_milli_per_100g:
+          type: "integer"
+          description: "Milésimas de kilocaloría por 100 g (884 kcal = 884000)"
+        protein_mg_per_100g:
+          type: "integer"
+          description: "Proteína en mg por 100 g (previsto)"
+        fat_mg_per_100g:
+          type: "integer"
+          description: "Grasa en mg por 100 g (previsto)"
+        carbs_mg_per_100g:
+          type: "integer"
+          description: "Carbohidratos en mg por 100 g (previsto)"
+        fiber_mg_per_100g:
+          type: "integer"
+          description: "Fibra en mg por 100 g (previsto)"
+        source:
+          type: "string"
+          enum:
+            - "usda_fdc"
+            - "open_food_facts"
+            - "mx_table"
+            - "store_label"
+            - "manual"
+          description: "Fuente: USDA FoodData Central, Open Food Facts, tabla mexicana citada, etiqueta de tienda o captura manual"
+        source_ref:
+          type: "string"
+          description: "Cita: fdc_id, código de barras, tabla y página o URL de la etiqueta"
+        source_license:
+          type: "string"
+          description: "Licencia de la fuente (CC0, ODbL)"
+        is_preferred:
+          type: "boolean"
+          description: "1 = valor que usan los cálculos"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    NutritionFactCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Dato nutricional manual con cita (source manual, mx_table o store_label; N-175)."
+      x-tabla: "nutrition_fact"
+      properties:
+        presentation_id:
+          type: "integer"
+          description: "Presentación específica (etiqueta, Open Food Facts). NULL = valor genérico del producto"
+        kcal_milli_per_100g:
+          type: "integer"
+          description: "Milésimas de kilocaloría por 100 g (884 kcal = 884000)"
+        protein_mg_per_100g:
+          type: "integer"
+          description: "Proteína en mg por 100 g (previsto)"
+        fat_mg_per_100g:
+          type: "integer"
+          description: "Grasa en mg por 100 g (previsto)"
+        carbs_mg_per_100g:
+          type: "integer"
+          description: "Carbohidratos en mg por 100 g (previsto)"
+        fiber_mg_per_100g:
+          type: "integer"
+          description: "Fibra en mg por 100 g (previsto)"
+        source:
+          type: "string"
+          enum:
+            - "usda_fdc"
+            - "open_food_facts"
+            - "mx_table"
+            - "store_label"
+            - "manual"
+          description: "Fuente: USDA FoodData Central, Open Food Facts, tabla mexicana citada, etiqueta de tienda o captura manual"
+        source_ref:
+          type: "string"
+          description: "Cita: fdc_id, código de barras, tabla y página o URL de la etiqueta"
+        source_license:
+          type: "string"
+          description: "Licencia de la fuente (CC0, ODbL)"
+        is_preferred:
+          type: "boolean"
+          description: "1 = valor que usan los cálculos"
+      required:
+        - "kcal_milli_per_100g"
+        - "source"
+    Price:
+      type: "object"
+      description: "Precio (tabla `price`). Precio observado de una presentación en una tienda, con fecha y fuente autorizada. Un precio es viejo a los 30 días y pesa menos en la comparativa. Campos ausentes = sin valor (NULL)."
+      x-tabla: "price"
+      required:
+        - "id"
+        - "presentation_id"
+        - "store_id"
+        - "price_cents"
+        - "observed_date"
+        - "source"
+        - "is_promotional"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        presentation_id:
+          type: "integer"
+          description: "Presentación"
+        store_id:
+          type: "integer"
+          description: "Tienda del precio (sucursal, cadena o mercado)"
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación en centavos con IVA (Nutrioli Oli 500 ml en Bodega Aurrera: 15000)"
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del precio. Es viejo cuando tiene 30 días o más"
+        source:
+          type: "string"
+          enum:
+            - "ticket_manual"
+            - "ticket_ocr"
+            - "site_assisted"
+            - "profeco"
+            - "manual"
+          description: "Fuente del precio: ticket_manual (ticket capturado a mano), ticket_ocr (ticket por OCR ya confirmado), site_assisted (agente externo desde K53: PROVISIONAL, bloqueo S5-agente-externo, pregunta d), profeco (referencia) o manual (captura a mano sin ticket)."
+        is_promotional:
+          type: "boolean"
+          description: "1 = precio de promoción (sexta lata de atún a 2100), no se toma como precio regular"
+        source_ref:
+          type: "string"
+          description: "Referencia de la fuente (mes del dataset PROFECO, URL)"
+        expense_item_id:
+          type: "integer"
+          description: "Renglón de ticket que originó el precio"
+        attachment_id:
+          type: "integer"
+          description: "Foto del ticket"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        base_unit_price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio por 1 kg, 1 l o 1 pieza (K7)."
+          x-calculado: true
+        age_days:
+          type: "integer"
+          description: "Días desde observed_date."
+          x-calculado: true
+        is_stale:
+          type: "boolean"
+          description: "Viejo: 30 días o más (K22)."
+          x-calculado: true
+    PriceCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Captura manual de un precio (N-174); source = manual lo pone la API."
+      x-tabla: "price"
+      properties:
+        presentation_id:
+          type: "integer"
+          description: "Presentación"
+        store_id:
+          type: "integer"
+          description: "Tienda del precio (sucursal, cadena o mercado)"
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación en centavos con IVA (Nutrioli Oli 500 ml en Bodega Aurrera: 15000)"
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del precio. Es viejo cuando tiene 30 días o más"
+        is_promotional:
+          type: "boolean"
+          description: "1 = precio de promoción (sexta lata de atún a 2100), no se toma como precio regular"
+        source_ref:
+          type: "string"
+          description: "Referencia de la fuente (mes del dataset PROFECO, URL)"
+      required:
+        - "presentation_id"
+        - "store_id"
+        - "price_cents"
+        - "observed_date"
+    PriceUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de precio (tabla `price`)."
+      x-tabla: "price"
+      properties:
+        store_id:
+          type: "integer"
+          description: "Tienda del precio (sucursal, cadena o mercado)"
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación en centavos con IVA (Nutrioli Oli 500 ml en Bodega Aurrera: 15000)"
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del precio. Es viejo cuando tiene 30 días o más"
+      minProperties: 1
+    PriceSummary:
+      type: "object"
+      description: "Resumen de precios (N-172)."
+      properties:
+        fresh_count:
+          type: "integer"
+          description: "Productos con precio fresco."
+        stale_count:
+          type: "integer"
+          description: "Con precio viejo."
+        no_price_count:
+          type: "integer"
+          description: "Sin precio."
+        stores:
+          type: "array"
+          items:
+            type: "object"
+            description: "Por tienda."
+            properties:
+              store_id:
+                type: "integer"
+                description: "Tienda."
+              latest_observed_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Precio más reciente."
+            required:
+              - "store_id"
+            x-calculado: true
+          description: "Tiendas activas."
+      required:
+        - "fresh_count"
+        - "stale_count"
+        - "no_price_count"
+        - "stores"
+      x-calculado: true
+    ExternalAgentReference:
+      type: "object"
+      description: "Datos de referencia para el agente externo (K53): ids de tiendas, grupos de producto y tiempos de comida con los que arma sus lotes. Los ids de productos y presentaciones los devuelve importExternalCatalog."
+      properties:
+        stores:
+          type: "array"
+          items:
+            type: "object"
+            description: "Tienda o mercado."
+            properties:
+              id:
+                type: "integer"
+                description: "store.id."
+              kind:
+                type: "string"
+                enum:
+                  - "chain"
+                  - "branch"
+                  - "market"
+                description: "store.kind."
+              name:
+                type: "string"
+                description: "store.name."
+              parent_id:
+                type: "integer"
+                description: "Cadena de la sucursal (store.parent_id); solo en branch."
+            required:
+              - "id"
+              - "kind"
+              - "name"
+            x-calculado: true
+          description: "Tiendas y mercados dados de alta, en orden de id."
+        product_groups:
+          type: "array"
+          items:
+            type: "object"
+            description: "Grupo de producto."
+            properties:
+              id:
+                type: "integer"
+                description: "product_group.id."
+              name:
+                type: "string"
+                description: "product_group.name."
+              purchase_channel:
+                type: "string"
+                enum:
+                  - "market"
+                  - "chain"
+                description: "product_group.purchase_channel."
+            required:
+              - "id"
+              - "name"
+              - "purchase_channel"
+            x-calculado: true
+          description: "Grupos de producto, en orden de id."
+        meal_slots:
+          type: "array"
+          items:
+            type: "object"
+            description: "Tiempo de comida."
+            properties:
+              id:
+                type: "integer"
+                description: "meal_slot.id."
+              code:
+                type: "string"
+                enum:
+                  - "breakfast"
+                  - "lunch"
+                  - "dinner"
+                  - "snack"
+                description: "meal_slot.code."
+              name:
+                type: "string"
+                description: "meal_slot.name."
+            required:
+              - "id"
+              - "code"
+              - "name"
+            x-calculado: true
+          description: "Tiempos de comida, en orden de sort_order."
+      required:
+        - "stores"
+        - "product_groups"
+        - "meal_slots"
+      x-calculado: true
+    ExternalCatalogItem:
+      type: "object"
+      description: "Producto del lote con sus presentaciones (entrada)."
+      properties:
+        name:
+          type: "string"
+          description: "Nombre genérico en español (product.name). Llave del alta o actualización, sin distinguir mayúsculas."
+        base_unit:
+          type: "string"
+          enum:
+            - "g"
+            - "ml"
+            - "piece"
+          description: "Unidad base (product.base_unit). Si el producto ya existe con otra unidad base, el renglón sale rejected: la unidad base no cambia por lote."
+        grams_per_unit_milli:
+          type: "integer"
+          description: "Gramos por unidad base ×1000 (product.grams_per_unit_milli); no se manda si base_unit = g."
+        product_group_id:
+          type: "integer"
+          description: "Grupo (product.product_group_id; ids de getExternalAgentReference)."
+        presentations:
+          type: "array"
+          items:
+            type: "object"
+            description: "Presentación del lote (entrada)."
+            properties:
+              name:
+                type: "string"
+                description: "Presentación como se ve en tienda (presentation.name). Llave dentro del producto: si ya existe, se actualizan los demás campos."
+              size_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Contenido en milésimas de la unidad base (presentation.size_milli), mayor que 0."
+              brand:
+                type: "string"
+                description: "Marca (presentation.brand)."
+              is_bulk:
+                type: "boolean"
+                description: "A granel (presentation.is_bulk); false si falta."
+              barcode:
+                type: "string"
+                description: "Código de barras EAN o UPC de 8 a 14 dígitos (presentation.barcode). Si ya pertenece a otra presentación, el renglón sale rejected."
+            required:
+              - "name"
+              - "size_milli"
+          description: "Presentaciones del producto (1 o más)."
+      required:
+        - "name"
+        - "base_unit"
+        - "presentations"
+    ExternalCatalogImport:
+      type: "object"
+      description: "Lote de productos y presentaciones del agente externo (K53): alta o actualización por nombre. PROVISIONAL (bloqueo S5-agente-externo, pregunta b): el agente escribe solo productos, presentaciones, precios y recetas; inventario no."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExternalCatalogItem"
+          description: "De 1 a 500 productos. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalPriceItem:
+      type: "object"
+      description: "Precio del lote (entrada)."
+      properties:
+        presentation_id:
+          type: "integer"
+          description: "Presentación (presentation.id; la devuelve importExternalCatalog)."
+        store_id:
+          type: "integer"
+          description: "Tienda (store.id; de getExternalAgentReference)."
+        price_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Precio de una presentación con IVA (price.price_cents)."
+        observed_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha en que el agente vio el precio (price.observed_date); no puede ser futura."
+        is_promotional:
+          type: "boolean"
+          description: "Precio de promoción (price.is_promotional); false si falta."
+        external_ref:
+          type: "string"
+          description: "Referencia del agente externo: URL de la ficha o clave del producto en la tienda. Se guarda en price.source_ref."
+      required:
+        - "presentation_id"
+        - "store_id"
+        - "price_cents"
+        - "observed_date"
+    ExternalPriceImport:
+      type: "object"
+      description: "Lote de precios del agente externo (K53). La API pone price.source; el lote no la manda. PROVISIONAL (bloqueo S5-agente-externo, preguntas a y d): source = site_assisted, que la documentación llama «agente externo», y en la comparativa compite como manual, con la misma frescura."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExternalPriceItem"
+          description: "De 1 a 500 precios. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalRecipeImport:
+      type: "object"
+      description: "Lote de recetas del agente externo (K53), con la forma de RecipeCreate. PROVISIONAL (bloqueo S5-agente-externo, preguntas c y f): cada receta entra como borrador, con origen «external_agent», y no aparece en el plan de comidas hasta que una persona la confirma; el esquema 1.4 todavía no guarda ni el borrador ni ese origen."
+      properties:
+        items:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RecipeCreate"
+          description: "De 1 a 100 recetas. PROVISIONAL (bloqueo S5-agente-externo, pregunta g): tamaño máximo del lote, supuesto de k53-aplicar; no es decisión de Axel."
+      required:
+        - "items"
+    ExternalImportResult:
+      type: "object"
+      description: "Resultado de un lote del agente externo, renglón por renglón y en el orden recibido. Un renglón rechazado no detiene a los demás."
+      properties:
+        created_count:
+          type: "integer"
+          description: "Renglones creados."
+        updated_count:
+          type: "integer"
+          description: "Renglones que ya existían y cambiaron."
+        unchanged_count:
+          type: "integer"
+          description: "Renglones que ya existían iguales: repetir el lote no duplica nada."
+        rejected_count:
+          type: "integer"
+          description: "Renglones rechazados."
+        items:
+          type: "array"
+          items:
+            type: "object"
+            description: "Resultado de un renglón."
+            properties:
+              index:
+                type: "integer"
+                description: "Posición del renglón en el lote, desde 0."
+              status:
+                type: "string"
+                enum:
+                  - "created"
+                  - "updated"
+                  - "unchanged"
+                  - "rejected"
+                description: "Qué pasó con el renglón."
+              id:
+                type: "integer"
+                description: "Id del registro creado o actualizado (product, price o recipe, según la operación). Ausente si se rechazó."
+              presentation_ids:
+                type: "array"
+                items:
+                  type: "integer"
+                description: "Ids de las presentaciones del producto, en el orden recibido (solo importExternalCatalog)."
+              error:
+                $ref: "componentes-comunes.yaml#/components/schemas/FieldError"
+                description: "Motivo del rechazo, con el formato de FieldError. Solo si status = rejected."
+            required:
+              - "index"
+              - "status"
+            x-calculado: true
+          description: "Un resultado por renglón."
+      required:
+        - "created_count"
+        - "updated_count"
+        - "unchanged_count"
+        - "rejected_count"
+        - "items"
+      x-calculado: true
+    InventoryItem:
+      type: "object"
+      description: "Renglón de inventario (tabla `inventory_item`). Inventario híbrido: existencia por unidad (básicos, no perecederos y sobrantes de recetas) o ritmo de consumo (el resto). Campos ausentes = sin valor (NULL)."
+      x-tabla: "inventory_item"
+      required:
+        - "id"
+        - "tracking_mode"
+        - "quantity_milli"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        product_id:
+          type: "integer"
+          description: "Producto en existencia"
+        recipe_id:
+          type: "integer"
+          description: "Sobrante de una receta (en porciones)"
+        tracking_mode:
+          type: "string"
+          enum:
+            - "stock"
+            - "consumption_rate"
+          description: "stock = existencia por unidad, consumption_rate = ritmo de consumo"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia en milésimas de la unidad base (en sobrantes, porciones ×1000): la vigente en stock y la del último conteo en ritmo de consumo. Cada cambio deja su inventory_movement"
+        counted_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último conteo, base de la estimación por ritmo"
+        rate_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Ritmo: cantidad que se consume (milésimas de la unidad base)"
+        rate_period_days:
+          type: "integer"
+          description: "Ritmo: en cuántos días se consume esa cantidad"
+        reorder_level_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Nivel que pone el producto en la lista de compras. NULL = sin aviso"
+        expires_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Caducidad (sobrantes y perecederos)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        status:
+          type: "string"
+          enum:
+            - "sufficient"
+            - "reorder"
+            - "out"
+          description: "Suficiente, reponer o agotado (motor S4, K7: reponer si la existencia ≤ nivel de reposición; agotado si es 0)."
+          x-calculado: true
+        estimated_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia estimada hoy (ritmo de consumo, motor S4)."
+          x-calculado: true
+        weekly_consumption_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Consumo estimado por semana."
+          x-calculado: true
+        days_left:
+          type: "integer"
+          description: "Días restantes estimados."
+          x-calculado: true
+    InventoryItemCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de un renglón de inventario: producto con su modo (N-315) o sobrante de receta (recipe_id, N-184)."
+      x-tabla: "inventory_item"
+      properties:
+        product_id:
+          type: "integer"
+          description: "Producto en existencia"
+        recipe_id:
+          type: "integer"
+          description: "Sobrante de una receta (en porciones)"
+        tracking_mode:
+          type: "string"
+          enum:
+            - "stock"
+            - "consumption_rate"
+          description: "stock = existencia por unidad, consumption_rate = ritmo de consumo"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Existencia en milésimas de la unidad base (en sobrantes, porciones ×1000): la vigente en stock y la del último conteo en ritmo de consumo. Cada cambio deja su inventory_movement"
+        counted_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del último conteo, base de la estimación por ritmo"
+        rate_quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Ritmo: cantidad que se consume (milésimas de la unidad base)"
+        rate_period_days:
+          type: "integer"
+          description: "Ritmo: en cuántos días se consume esa cantidad"
+        reorder_level_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Nivel que pone el producto en la lista de compras. NULL = sin aviso"
+        expires_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Caducidad (sobrantes y perecederos)"
+        notes:
+          type: "string"
+          description: "notes"
+      required:
+        - "tracking_mode"
+    InventoryAdjustmentRequest:
+      type: "object"
+      additionalProperties: false
+      description: "Ajuste de existencia (N-183): cantidad nueva o diferencia, y motivo (count = conteo, consumption = consumo, waste = merma). En una sola transacción cambia inventory_item.quantity_milli y escribe un inventory_movement de tipo adjustment con su motivo (RN-15, invariante 12 de S1). movement_date ausente = hoy."
+      x-tabla: "inventory_movement"
+      properties:
+        movement_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del movimiento"
+        reason:
+          type: "string"
+          enum:
+            - "count"
+            - "consumption"
+            - "waste"
+          description: "Motivo del ajuste: count = conteo, consumption = consumo, waste = merma (N-183)"
+        quantity_delta_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Diferencia en milésimas de la unidad base (en sobrantes, porciones ×1000): positiva entra, negativa sale. Un ajuste por «cantidad nueva» guarda la diferencia"
+        notes:
+          type: "string"
+          description: "notes"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad nueva (inventory_item.quantity_milli); la API guarda la diferencia en inventory_movement.quantity_delta_milli. Exactamente uno de quantity_milli o quantity_delta_milli."
+          x-columna: "inventory_item.quantity_milli"
+        counted_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del conteo (inventory_item.counted_date); por defecto la fecha del movimiento. En ritmo de consumo es la base de la estimación."
+          x-columna: "inventory_item.counted_date"
+      required:
+        - "reason"
+    InventoryMovement:
+      type: "object"
+      description: "Movimiento de inventario (tabla `inventory_movement`). Cada entrada o salida de un renglón de inventario: compra, sobrante de receta, consumo del plan o ajuste a mano con su motivo (conteo, consumo o merma). La API lo escribe en la misma transacción que cambia la existencia. Campos ausentes = sin valor (NULL)."
+      x-tabla: "inventory_movement"
+      required:
+        - "id"
+        - "inventory_item_id"
+        - "movement_date"
+        - "kind"
+        - "quantity_delta_milli"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        inventory_item_id:
+          type: "integer"
+          description: "Renglón de inventario"
+        movement_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fecha del movimiento"
+        kind:
+          type: "string"
+          enum:
+            - "purchase"
+            - "recipe_leftover"
+            - "plan_consumption"
+            - "adjustment"
+          description: "purchase = entrada por compra, recipe_leftover = sobrante de receta, plan_consumption = consumo del plan, adjustment = ajuste a mano (N-181)"
+        reason:
+          type: "string"
+          enum:
+            - "count"
+            - "consumption"
+            - "waste"
+          description: "Motivo del ajuste: count = conteo, consumption = consumo, waste = merma (N-183)"
+        quantity_delta_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Diferencia en milésimas de la unidad base (en sobrantes, porciones ×1000): positiva entra, negativa sale. Un ajuste por «cantidad nueva» guarda la diferencia"
+        expense_item_id:
+          type: "integer"
+          description: "Renglón del ticket que le dio origen (compra)"
+        meal_plan_entry_id:
+          type: "integer"
+          description: "Entrada del plan que le dio origen (consumo o sobrante)"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        expense_id:
+          type: "integer"
+          description: "Gasto al que pertenece el renglón de ticket de origen (expense_item.expense_id), para abrir el origen en una compra."
+          x-calculado: true
+    InventorySummary:
+      type: "object"
+      description: "Conteo por estado (N-182)."
+      properties:
+        sufficient_count:
+          type: "integer"
+          description: "Suficiente."
+        reorder_count:
+          type: "integer"
+          description: "Reponer."
+        out_count:
+          type: "integer"
+          description: "Agotado."
+      required:
+        - "sufficient_count"
+        - "reorder_count"
+        - "out_count"
+      x-calculado: true
+    PricePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Price"
+      description: "Página de Price con la envoltura única (Page)."
+    NutritionFactPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/NutritionFact"
+      description: "Página de NutritionFact con la envoltura única (Page)."
+    InventoryItemPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/InventoryItem"
+      description: "Página de InventoryItem con la envoltura única (Page)."
+    InventoryMovementPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/InventoryMovement"
+      description: "Página de InventoryMovement con la envoltura única (Page)."

@@ -1,0 +1,1422 @@
+# Finanzas Hogar · Contrato C1 v1.5.1 · extracto «comidas». Archivo generado por backend/internal/api/c1gen/build.py: no se edita a mano.
+# Fuente única: docs/contratos/openapi.yaml. Índice y regla de uso: docs/contratos/extractos/INDICE.md.
+openapi: "3.1.1"
+info:
+  title: "Finanzas Hogar · API (C1) · extracto comidas"
+  version: "1.5.1"
+  description: "Extracto de la etiqueta «Comidas» del contrato C1 (docs/contratos/openapi.yaml): sus rutas y los esquemas que usan. Parámetros, encabezados, respuestas y esquemas base viven en componentes-comunes.yaml."
+security:
+  - cookieAuth: []
+tags:
+  - name: "Comidas"
+    description: "Plan de comidas y recetario."
+paths:
+  /api/v1/meal-slots:
+    get:
+      operationId: "listMealSlots"
+      tags:
+        - "Comidas"
+      summary: "Tiempos de comida"
+      description: "Catálogo fijo de 4 (desayuno, comida, cena, colación). Solo lectura."
+      x-necesidades:
+        - "N-120"
+        - "N-294"
+      x-tablas:
+        - "meal_slot"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MealSlotPage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/meal-plan/week:
+    get:
+      operationId: "getMealPlanWeek"
+      tags:
+        - "Comidas"
+      summary: "Plan de la semana"
+      description: "`period` en formato de semana (`2026-W42`, lunes a domingo, K8). Sin `period`, la semana en curso y, los domingos, la siguiente (la que empieza el lunes): es la semana por defecto de U1 §0.2 (K38). La lista de compras y comparar canasta no tienen semana por omisión: llevan `week` (R3-01)."
+      x-necesidades:
+        - "N-120"
+        - "N-121"
+        - "N-027"
+        - "N-231"
+      x-tablas:
+        - "health_profile"
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "meal_slot"
+        - "nutrition_fact"
+        - "person"
+        - "presentation"
+        - "price"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MealPlanWeek"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/meal-plan/month:
+    get:
+      operationId: "getMealPlanMonth"
+      tags:
+        - "Comidas"
+      summary: "Calendario mensual del plan"
+      description: "Calendario mensual del plan."
+      x-necesidades:
+        - "N-128"
+      x-tablas:
+        - "meal_plan_entry"
+        - "meal_slot"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MealPlanMonth"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/meal-plan/trends:
+    get:
+      operationId: "getMealPlanTrends"
+      tags:
+        - "Comidas"
+      summary: "Tendencias de comidas"
+      description: "Tendencias de comidas."
+      x-necesidades:
+        - "N-129"
+        - "N-028"
+        - "N-233"
+      x-tablas:
+        - "health_profile"
+        - "inventory_item"
+        - "meal_plan_entry"
+        - "meal_slot"
+        - "nutrition_fact"
+        - "person"
+        - "presentation"
+        - "price"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/PersonId"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MealPlanTrends"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/meal-plan-entries:
+    post:
+      operationId: "createMealPlanEntries"
+      tags:
+        - "Comidas"
+      summary: "Asignar receta o «fuera»"
+      description: "Mismo día, tiempo y persona no mezcla «fuera» con recetas (409 `slot_conflict`). Solo Axel y Ximena."
+      x-necesidades:
+        - "N-123"
+        - "N-124"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "meal_plan_entry"
+        - "meal_slot"
+        - "person"
+        - "recipe"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MealPlanEntryCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MealPlanEntryList"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/meal-plan-entries/{meal_plan_entry_id}:
+    patch:
+      operationId: "updateMealPlanEntry"
+      tags:
+        - "Comidas"
+      summary: "Cambiar casilla"
+      description: "Cambiar casilla."
+      x-necesidades:
+        - "N-123"
+      x-tablas:
+        - "audit_log"
+        - "meal_plan_entry"
+      parameters:
+        - name: "meal_plan_entry_id"
+          in: "path"
+          required: true
+          description: "Id del registro (meal_plan_entry_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MealPlanEntryUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MealPlanEntry"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteMealPlanEntry"
+      tags:
+        - "Comidas"
+      summary: "Vaciar casilla"
+      description: "Vaciar casilla."
+      x-necesidades:
+        - "N-125"
+      x-tablas:
+        - "audit_log"
+        - "meal_plan_entry"
+      parameters:
+        - name: "meal_plan_entry_id"
+          in: "path"
+          required: true
+          description: "Id del registro (meal_plan_entry_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/meal-plan/copy-previous-week:
+    post:
+      operationId: "copyPreviousWeek"
+      tags:
+        - "Comidas"
+      summary: "Copiar semana anterior"
+      description: "Copia a la semana `period` las casillas de la semana previa, solo en casillas vacías."
+      x-necesidades:
+        - "N-126"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "meal_plan_entry"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Period"
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CopyWeekResult"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/recipes:
+    get:
+      operationId: "listRecipes"
+      tags:
+        - "Comidas"
+      summary: "Recetas"
+      description: "Orden por defecto: name; alternativos: cost_per_serving_cents, kcal_per_serving, -times_used_8w (N-122)."
+      x-necesidades:
+        - "N-122"
+        - "N-135"
+      x-tablas:
+        - "meal_plan_entry"
+        - "meal_slot"
+        - "nutrition_fact"
+        - "presentation"
+        - "price"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/Q"
+        - name: "meal_slot_id"
+          in: "query"
+          required: false
+          description: "Tiempo apto (recipe_meal_slot.meal_slot_id): recetas que sirven para ese tiempo."
+          schema:
+            type: "integer"
+        - name: "origin"
+          in: "query"
+          required: false
+          description: "Origen."
+          schema:
+            type: "string"
+            enum:
+              - "claude_seed"
+              - "household"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Cursor"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Limit"
+        - $ref: "componentes-comunes.yaml#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipePage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    post:
+      operationId: "createRecipe"
+      tags:
+        - "Comidas"
+      summary: "Crear receta"
+      description: "Crear receta."
+      x-necesidades:
+        - "N-136"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "meal_slot"
+        - "presentation"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeCreate"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/recipes/ai-suggestions:
+    post:
+      operationId: "suggestRecipeWithAi"
+      tags:
+        - "Comidas"
+      summary: "Sugerir receta con IA"
+      description: "Solo si algún proveedor de IA está activo (desactivados por defecto, decisión H); si no, 409 `ai_disabled`. Devuelve un borrador; no guarda nada."
+      x-necesidades:
+        - "N-137"
+      x-tablas:
+        - "app_setting"
+        - "meal_slot"
+        - "presentation"
+        - "product"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AiRecipeRequest"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeCreate"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/recipes/{recipe_id}:
+    get:
+      operationId: "getRecipe"
+      tags:
+        - "Comidas"
+      summary: "Receta escalada"
+      description: "Receta escalada."
+      x-necesidades:
+        - "N-140"
+      x-tablas:
+        - "nutrition_fact"
+        - "presentation"
+        - "price"
+        - "product"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - name: "recipe_id"
+          in: "path"
+          required: true
+          description: "Id del registro (recipe_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - name: "servings_milli"
+          in: "query"
+          required: false
+          description: "Porciones ×1000 (por defecto las base)."
+          schema:
+            $ref: "#/components/schemas/Milli"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeDetail"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    patch:
+      operationId: "updateRecipe"
+      tags:
+        - "Comidas"
+      summary: "Actualizar receta"
+      description: "Actualizar receta."
+      x-necesidades:
+        - "N-142"
+      x-tablas:
+        - "audit_log"
+        - "meal_slot"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - name: "recipe_id"
+          in: "path"
+          required: true
+          description: "Id del registro (recipe_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeUpdate"
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        "422":
+          $ref: "componentes-comunes.yaml#/components/responses/UnprocessableEntity"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+    delete:
+      operationId: "deleteRecipe"
+      tags:
+        - "Comidas"
+      summary: "Eliminar receta"
+      description: "Eliminar receta."
+      x-necesidades:
+        - "N-144"
+      x-tablas:
+        - "audit_log"
+        - "meal_plan_entry"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - name: "recipe_id"
+          in: "path"
+          required: true
+          description: "Id del registro (recipe_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - name: "confirm_planned"
+          in: "query"
+          required: false
+          description: "true para confirmar aunque aparezca en planes de hoy en adelante (si no, 409 `recipe_planned`)."
+          schema:
+            type: "boolean"
+      responses:
+        "204":
+          description: "Hecho, sin contenido."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/recipes/{recipe_id}/usage:
+    get:
+      operationId: "getRecipeUsage"
+      tags:
+        - "Comidas"
+      summary: "Uso de la receta"
+      description: "Uso de la receta."
+      x-necesidades:
+        - "N-141"
+      x-tablas:
+        - "meal_plan_entry"
+      parameters:
+        - name: "recipe_id"
+          in: "path"
+          required: true
+          description: "Id del registro (recipe_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+      responses:
+        "200":
+          description: "Correcto."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeUsage"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+  /api/v1/recipes/{recipe_id}/duplicate:
+    post:
+      operationId: "duplicateRecipe"
+      tags:
+        - "Comidas"
+      summary: "Duplicar receta"
+      description: "Copia con «(copia)», sus tiempos aptos y origen household."
+      x-necesidades:
+        - "N-143"
+      x-tablas:
+        - "audit_log"
+        - "idempotency_key"
+        - "recipe"
+        - "recipe_ingredient"
+        - "recipe_meal_slot"
+      parameters:
+        - name: "recipe_id"
+          in: "path"
+          required: true
+          description: "Id del registro (recipe_id)."
+          schema:
+            type: "integer"
+            minimum: 1
+        - $ref: "componentes-comunes.yaml#/components/parameters/IdempotencyKey"
+      responses:
+        "201":
+          description: "Creado."
+          headers:
+            X-Request-Id:
+              $ref: "componentes-comunes.yaml#/components/headers/RequestId"
+            Idempotent-Replayed:
+              $ref: "componentes-comunes.yaml#/components/headers/IdempotentReplayed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        "400":
+          $ref: "componentes-comunes.yaml#/components/responses/BadRequest"
+        "401":
+          $ref: "componentes-comunes.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "componentes-comunes.yaml#/components/responses/NotFound"
+        "409":
+          $ref: "componentes-comunes.yaml#/components/responses/Conflict"
+        default:
+          $ref: "componentes-comunes.yaml#/components/responses/Error"
+components:
+  securitySchemes:
+    cookieAuth:
+      type: "apiKey"
+      in: "cookie"
+      name: "fh_session"
+      description: "Sesión larga por dispositivo. Cookie HttpOnly, Secure y SameSite=Strict; el token en claro solo viaja en la cookie (la base guarda su SHA-256 en device_session.token_hash). Duración 90 días renovable con el uso (K11, app_setting session.max_age_days)."
+    serviceToken:
+      type: "http"
+      scheme: "bearer"
+      description: "Credencial de servicio del agente externo (K53): encabezado Authorization: Bearer con un token propio, distinto de la cookie de sesión. Solo lo aceptan las operaciones con x-agente-externo (/api/v1/external-agent/*), que no aceptan la cookie; ninguna otra operación lo acepta. El token en claro nunca se guarda ni se registra. PROVISIONAL (bloqueo S5-agente-externo, pregunta e): el esquema 1.4 no tiene dónde guardar la credencial; dónde vive y a nombre de quién quedan audit_log e idempotency_key se decide en la puerta 4."
+      x-provisional: true
+  schemas:
+    Milli:
+      type: "integer"
+      description: "Cantidad en milésimas de la unidad base (g, ml o pieza): 1000 = 1 g, 1 ml o 1 pieza; en porciones, 1000 = 1 porción."
+      examples:
+        - 1000
+    MealSlot:
+      type: "object"
+      description: "Tiempo de comida (tabla `meal_slot`). Los cuatro tiempos del día: desayuno, comida, cena y colación (cuarto tiempo opcional con costo y calorías). Datos de referencia que crea esta migración. Campos ausentes = sin valor (NULL)."
+      x-tabla: "meal_slot"
+      required:
+        - "id"
+        - "code"
+        - "name"
+        - "sort_order"
+        - "is_optional"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        code:
+          type: "string"
+          enum:
+            - "breakfast"
+            - "lunch"
+            - "dinner"
+            - "snack"
+          description: "breakfast = desayuno, lunch = comida, dinner = cena, snack = colación"
+        name:
+          type: "string"
+          description: "Nombre en pantalla"
+        sort_order:
+          type: "integer"
+          description: "Orden en el día"
+        is_optional:
+          type: "boolean"
+          description: "1 = tiempo opcional (colación)"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    MealPlanEntry:
+      type: "object"
+      description: "Entrada del plan de comidas (tabla `meal_plan_entry`). Un renglón del plan: día × tiempo × persona × receta × porciones, o «fuera» (sin receta ni calorías). Solo Axel y Ximena. Campos ausentes = sin valor (NULL)."
+      x-tabla: "meal_plan_entry"
+      required:
+        - "id"
+        - "plan_date"
+        - "meal_slot_id"
+        - "person_id"
+        - "is_eating_out"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        plan_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Día del plan"
+        meal_slot_id:
+          type: "integer"
+          description: "Tiempo de comida"
+        person_id:
+          type: "integer"
+          description: "Axel o Ximena"
+        recipe_id:
+          type: "integer"
+          description: "Receta. NULL si come fuera"
+        servings_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Porciones que come la persona ×1000 (1 porción = 1000)"
+        is_eating_out:
+          type: "boolean"
+          description: "1 = come fuera: sin receta ni calorías, el gasto va a la categoría «comida fuera»"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+    MealPlanEntryCreate:
+      type: "object"
+      description: "Asignar receta o «fuera» a una o varias casillas (N-123, N-124). Crea una entrada por fecha × persona."
+      properties:
+        plan_dates:
+          type: "array"
+          minItems: 1
+          items:
+            $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Fechas (meal_plan_entry.plan_date)."
+          x-columna: "plan_date"
+        meal_slot_id:
+          type: "integer"
+          description: "Tiempo de comida (meal_plan_entry.meal_slot_id)."
+        person_ids:
+          type: "array"
+          minItems: 1
+          items:
+            type: "integer"
+          description: "Axel, Ximena o ambos (meal_plan_entry.person_id)."
+          x-columna: "person_id"
+        recipe_id:
+          type: "integer"
+          description: "Receta (ausente con is_eating_out)."
+        servings_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Porciones por persona ×1000 (1000 por defecto)."
+        is_eating_out:
+          type: "boolean"
+          description: "true = «fuera», sin receta ni kcal."
+        notes:
+          type: "string"
+          description: "Nota."
+      required:
+        - "plan_dates"
+        - "meal_slot_id"
+        - "person_ids"
+        - "is_eating_out"
+      additionalProperties: false
+    MealPlanEntryUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de entrada del plan de comidas (tabla `meal_plan_entry`)."
+      x-tabla: "meal_plan_entry"
+      properties:
+        recipe_id:
+          type:
+            - "integer"
+            - "null"
+          description: "Receta. NULL si come fuera · null borra el valor"
+        servings_milli:
+          anyOf:
+            - $ref: "#/components/schemas/Milli"
+            - type: "null"
+          description: "Porciones que come la persona ×1000 (1 porción = 1000) · null borra el valor"
+        is_eating_out:
+          type: "boolean"
+          description: "1 = come fuera: sin receta ni calorías, el gasto va a la categoría «comida fuera»"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+      minProperties: 1
+    MealPlanEntryList:
+      type: "object"
+      description: "Entradas creadas."
+      properties:
+        entries:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/MealPlanEntry"
+          description: "Entradas."
+      required:
+        - "entries"
+      x-calculado: true
+    MealPlanWeek:
+      type: "object"
+      description: "Plan de la semana con totales (N-120, N-121). Semana de lunes a domingo (K8)."
+      properties:
+        week_start:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Lunes."
+        week_end:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Domingo."
+        cells:
+          type: "array"
+          items:
+            type: "object"
+            description: "Casilla del plan."
+            properties:
+              plan_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Día."
+              meal_slot_id:
+                type: "integer"
+                description: "Tiempo."
+              person_id:
+                type: "integer"
+                description: "Persona."
+              meal_plan_entry_id:
+                type: "integer"
+                description: "Entrada."
+              recipe_id:
+                type: "integer"
+                description: "Receta."
+              servings_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Porciones."
+              is_eating_out:
+                type: "boolean"
+                description: "«Fuera»."
+              cost_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Costo de la casilla (motor S4)."
+              kcal:
+                type: "integer"
+                description: "kcal de la persona (motor S4)."
+              price_store_id:
+                type: "integer"
+                description: "Tienda de la base de precio."
+              price_observed_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha de la base de precio."
+            required:
+              - "plan_date"
+              - "meal_slot_id"
+              - "person_id"
+              - "is_eating_out"
+            x-calculado: true
+          description: "Casillas con receta o «fuera»."
+        days:
+          type: "array"
+          items:
+            type: "object"
+            description: "Día."
+            properties:
+              plan_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Día."
+              cost_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Costo del día."
+              persons:
+                type: "array"
+                items:
+                  type: "object"
+                  description: "Persona."
+                  properties:
+                    person_id:
+                      type: "integer"
+                      description: "Persona."
+                    kcal:
+                      type: "integer"
+                      description: "kcal del día."
+                    daily_kcal_target:
+                      type: "integer"
+                      description: "Meta."
+                    difference_kcal:
+                      type: "integer"
+                      description: "kcal − meta."
+                  required:
+                    - "person_id"
+                    - "kcal"
+                  x-calculado: true
+                description: "Axel y Ximena."
+            required:
+              - "plan_date"
+              - "cost_cents"
+              - "persons"
+            x-calculado: true
+          description: "7 días."
+        week_cost_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo de la semana."
+        unplanned_slots:
+          type: "integer"
+          description: "Casillas sin armar (definición de M-05)."
+        leftovers:
+          type: "array"
+          items:
+            type: "object"
+            description: "Sobrante previsto."
+            properties:
+              recipe_id:
+                type: "integer"
+                description: "Receta."
+              servings_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Porciones sobrantes."
+            required:
+              - "recipe_id"
+              - "servings_milli"
+            x-calculado: true
+          description: "Entran al inventario como sobrante."
+      required:
+        - "week_start"
+        - "week_end"
+        - "cells"
+        - "days"
+        - "week_cost_cents"
+        - "unplanned_slots"
+        - "leftovers"
+      x-calculado: true
+    CopyWeekResult:
+      type: "object"
+      description: "Copia de la semana anterior (N-126)."
+      properties:
+        created_count:
+          type: "integer"
+          description: "Casillas copiadas (solo vacías)."
+      required:
+        - "created_count"
+      x-calculado: true
+    MealPlanMonth:
+      type: "object"
+      description: "Calendario mensual del plan (N-128)."
+      properties:
+        month:
+          $ref: "componentes-comunes.yaml#/components/schemas/Month"
+          description: "Mes."
+        days:
+          type: "array"
+          items:
+            type: "object"
+            description: "Día."
+            properties:
+              plan_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Día."
+              status:
+                type: "string"
+                enum:
+                  - "complete"
+                  - "incomplete"
+                  - "empty"
+                description: "Plan completo, incompleto o vacío."
+            required:
+              - "plan_date"
+              - "status"
+            x-calculado: true
+          description: "Días del mes."
+      required:
+        - "month"
+        - "days"
+      x-calculado: true
+    MealPlanTrends:
+      type: "object"
+      description: "Tendencias de comidas (N-129, N-233): últimas 12 semanas con plan."
+      properties:
+        weeks:
+          type: "array"
+          items:
+            type: "object"
+            description: "Semana."
+            properties:
+              week_start:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Lunes."
+              cost_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Costo semanal."
+              persons:
+                type: "array"
+                items:
+                  type: "object"
+                  description: "Persona."
+                  properties:
+                    person_id:
+                      type: "integer"
+                      description: "Persona."
+                    avg_kcal_per_day:
+                      type: "integer"
+                      description: "kcal promedio por día."
+                    daily_kcal_target:
+                      type: "integer"
+                      description: "Meta."
+                  required:
+                    - "person_id"
+                  x-calculado: true
+                description: "Axel y Ximena."
+            required:
+              - "week_start"
+              - "cost_cents"
+              - "persons"
+            x-calculado: true
+          description: "Máximo 12."
+      required:
+        - "weeks"
+      x-calculado: true
+    Recipe:
+      type: "object"
+      description: "Receta (tabla `recipe`). Receta con porciones base (2), tiempos y origen: recetario inicial escrito por Claude o recetas de Axel y Ximena. Editable. Campos ausentes = sin valor (NULL)."
+      x-tabla: "recipe"
+      required:
+        - "id"
+        - "name"
+        - "base_servings"
+        - "origin"
+        - "is_active"
+        - "created_at"
+        - "updated_at"
+      properties:
+        id:
+          type: "integer"
+          description: "id"
+        name:
+          type: "string"
+          description: "Nombre"
+        description:
+          type: "string"
+          description: "Descripción corta"
+        instructions:
+          type: "string"
+          description: "Pasos de preparación"
+        base_servings:
+          type: "integer"
+          description: "Porciones para las que están escritas las cantidades (base 2)"
+        prep_minutes:
+          type: "integer"
+          description: "Minutos de preparación"
+        cook_minutes:
+          type: "integer"
+          description: "Minutos de cocción"
+        origin:
+          type: "string"
+          enum:
+            - "claude_seed"
+            - "household"
+          description: "claude_seed = recetario inicial escrito por Claude, household = de Axel o Ximena"
+        author_person_id:
+          type: "integer"
+          description: "Quién la dio de alta (en household)"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        created_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "created_at"
+        updated_at:
+          $ref: "componentes-comunes.yaml#/components/schemas/DateTime"
+          description: "updated_at"
+        cost_per_serving_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo por porción (motor S4, base de precio vigente)."
+          x-calculado: true
+        kcal_per_serving:
+          type: "integer"
+          description: "kcal por porción (motor S4)."
+          x-calculado: true
+        times_used_8w:
+          type: "integer"
+          description: "Veces en el plan en las últimas 8 semanas."
+          x-calculado: true
+        meal_slot_ids:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "integer"
+            minimum: 1
+          description: "Tiempos aptos de la receta (recipe_meal_slot.meal_slot_id): desayuno, comida, cena o colación; una receta puede servir para varios (N-122, N-135)."
+          x-columna: "recipe_meal_slot.meal_slot_id"
+    RecipeIngredientInput:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de ingrediente de receta (tabla `recipe_ingredient`)."
+      x-tabla: "recipe_ingredient"
+      properties:
+        product_id:
+          type: "integer"
+          description: "Ingrediente (producto genérico)"
+        presentation_id:
+          type: "integer"
+          description: "Presentación comprable sugerida"
+        quantity_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Cantidad para base_servings en milésimas de la unidad base (250 g = 250000, media pieza = 500)"
+        display_text:
+          type: "string"
+          description: "Cantidad como la escribe la receta (1/2 taza)"
+        is_optional:
+          type: "boolean"
+          description: "1 = ingrediente opcional"
+        sort_order:
+          type: "integer"
+          description: "Orden en la receta"
+      required:
+        - "product_id"
+        - "quantity_milli"
+    RecipeCreate:
+      type: "object"
+      additionalProperties: false
+      description: "Alta de receta (N-136). origin = household y author_person_id = persona de la sesión los pone la API."
+      x-tabla: "recipe"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre"
+        description:
+          type: "string"
+          description: "Descripción corta"
+        instructions:
+          type: "string"
+          description: "Pasos de preparación"
+        base_servings:
+          type: "integer"
+          description: "Porciones para las que están escritas las cantidades (base 2)"
+        prep_minutes:
+          type: "integer"
+          description: "Minutos de preparación"
+        cook_minutes:
+          type: "integer"
+          description: "Minutos de cocción"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type: "string"
+          description: "notes"
+        meal_slot_ids:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "integer"
+            minimum: 1
+          description: "Tiempos aptos (una fila de recipe_meal_slot por tiempo)."
+          x-columna: "recipe_meal_slot.meal_slot_id"
+        ingredients:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RecipeIngredientInput"
+          description: "Ingredientes (recipe_ingredient) en orden."
+      required:
+        - "name"
+    RecipeUpdate:
+      type: "object"
+      additionalProperties: false
+      description: "Cambios parciales (JSON Merge Patch, RFC 7396) de receta (tabla `recipe`)."
+      x-tabla: "recipe"
+      properties:
+        name:
+          type: "string"
+          description: "Nombre"
+        description:
+          type:
+            - "string"
+            - "null"
+          description: "Descripción corta · null borra el valor"
+        instructions:
+          type:
+            - "string"
+            - "null"
+          description: "Pasos de preparación · null borra el valor"
+        base_servings:
+          type: "integer"
+          description: "Porciones para las que están escritas las cantidades (base 2)"
+        prep_minutes:
+          type:
+            - "integer"
+            - "null"
+          description: "Minutos de preparación · null borra el valor"
+        cook_minutes:
+          type:
+            - "integer"
+            - "null"
+          description: "Minutos de cocción · null borra el valor"
+        is_active:
+          type: "boolean"
+          description: "is_active"
+        notes:
+          type:
+            - "string"
+            - "null"
+          description: "notes · null borra el valor"
+        meal_slot_ids:
+          type: "array"
+          uniqueItems: true
+          items:
+            type: "integer"
+            minimum: 1
+          description: "Reemplaza los tiempos aptos (recipe_meal_slot), N-142."
+          x-columna: "recipe_meal_slot.meal_slot_id"
+        ingredients:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RecipeIngredientInput"
+          description: "Reemplaza los ingredientes."
+      minProperties: 1
+    RecipeDetail:
+      type: "object"
+      description: "Receta escalada (N-140)."
+      properties:
+        recipe:
+          $ref: "#/components/schemas/Recipe"
+          description: "Receta."
+        servings_milli:
+          $ref: "#/components/schemas/Milli"
+          description: "Porciones pedidas ×1000."
+        ingredients:
+          type: "array"
+          items:
+            type: "object"
+            description: "Ingrediente escalado (motor S4)."
+            properties:
+              recipe_ingredient_id:
+                type: "integer"
+                description: "Ingrediente."
+              product_id:
+                type: "integer"
+                description: "Producto."
+              presentation_id:
+                type: "integer"
+                description: "Presentación comprable sugerida."
+              quantity_milli:
+                $ref: "#/components/schemas/Milli"
+                description: "Cantidad escalada."
+              display_text:
+                type: "string"
+                description: "Texto."
+              is_optional:
+                type: "boolean"
+                description: "Opcional."
+              packages_to_buy:
+                type: "integer"
+                description: "Piezas a comprar."
+              cost_cents:
+                $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+                description: "Costo."
+              price_store_id:
+                type: "integer"
+                description: "Tienda del precio."
+              price_observed_date:
+                $ref: "componentes-comunes.yaml#/components/schemas/Date"
+                description: "Fecha del precio."
+              kcal:
+                type: "integer"
+                description: "kcal."
+              nutrition_source:
+                type: "string"
+                enum:
+                  - "usda_fdc"
+                  - "open_food_facts"
+                  - "mx_table"
+                  - "store_label"
+                  - "manual"
+                description: "Fuente del dato nutricional."
+            required:
+              - "recipe_ingredient_id"
+              - "product_id"
+              - "quantity_milli"
+              - "is_optional"
+            x-calculado: true
+          description: "En el orden de la receta."
+        total_cost_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo total."
+        cost_per_serving_cents:
+          $ref: "componentes-comunes.yaml#/components/schemas/MoneyCents"
+          description: "Costo por porción."
+        total_kcal:
+          type: "integer"
+          description: "kcal total."
+        kcal_per_serving:
+          type: "integer"
+          description: "kcal por porción."
+      required:
+        - "recipe"
+        - "servings_milli"
+        - "ingredients"
+      x-calculado: true
+    RecipeUsage:
+      type: "object"
+      description: "Uso de la receta (N-141)."
+      properties:
+        times_used_8w:
+          type: "integer"
+          description: "Veces en 8 semanas."
+        next_plan_date:
+          $ref: "componentes-comunes.yaml#/components/schemas/Date"
+          description: "Próxima fecha planeada."
+      required:
+        - "times_used_8w"
+      x-calculado: true
+    AiRecipeRequest:
+      type: "object"
+      description: "Petición de borrador de receta a la IA opcional (N-137)."
+      properties:
+        description:
+          type: "string"
+          description: "Idea o ingredientes disponibles (recipe.description)."
+        meal_slot_id:
+          type: "integer"
+          description: "Tiempo de comida para el que se pide la receta (recipe_meal_slot.meal_slot_id del borrador)."
+      required:
+        - "description"
+    MealSlotPage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/MealSlot"
+      description: "Página de MealSlot con la envoltura única (Page)."
+    RecipePage:
+      allOf:
+        - $ref: "componentes-comunes.yaml#/components/schemas/Page"
+        - type: "object"
+          properties:
+            items:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Recipe"
+      description: "Página de Recipe con la envoltura única (Page)."
